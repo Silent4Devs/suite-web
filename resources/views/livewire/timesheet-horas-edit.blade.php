@@ -41,18 +41,18 @@
                     <tbody>
                         {{-- {{ $contador }} --}}
                         @php
-                            $i_hora = 0;
+                            $lastIndex = count($horas);
                         @endphp
-                        @foreach ($horas as $hora)
-                            @php
-                                $i_hora++;
-                            @endphp
-                            <tr id="tr_time_{{ $i_hora }}" data-model="{{ $hora->id }}" wire:ignore>
+                        @foreach ($horas as $i_hora => $hora)
+                            {{-- @php
+                                $i_hora = $horas->;
+                            @endphp --}}
+                            <tr id="tr_time_{{ $i_hora + 1 }}" data-model="{{ $hora->id }}" wire:ignore>
                                 <td wire:ignore>
-                                    <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]"
+                                    <input type="hidden" name="timesheet[{{ $i_hora + 1 }}][id_hora]"
                                         value="{{ $hora->id }}">
-                                    <select id="select_proyectos{{ $i_hora }}" data-contador="{{ $i_hora }}"
-                                        data-type="parent" name="timesheet[{{ $i_hora }}][proyecto]"
+                                    <select id="select_proyectos{{ $i_hora + 1 }}" data-contador="{{ $i_hora + 1 }}"
+                                        data-type="parent" name="timesheet[{{ $i_hora + 1 }}][proyecto]"
                                         class="select2">
                                         <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">
                                             {{ $hora->proyecto ? $hora->proyecto->identificador . ' - ' . $hora->proyecto->proyecto : '' }}
@@ -62,7 +62,7 @@
                                                 {{ $proyecto['proyecto'] }}</option>
                                         @endforeach
                                     </select>
-                                    <small class="timesheet_{{ $i_hora }}_proyecto errores text-danger"></small>
+                                    <small class="timesheet_{{ $i_hora + 1 }}_proyecto errores text-danger"></small>
                                 </td>
                                 <td>
                                     @php
@@ -70,100 +70,100 @@
                                             ->where('id', '!=', $hora->tarea->id)
                                             ->get();
                                     @endphp
-                                    <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}"
-                                        name="timesheet[{{ $i_hora }}][tarea]" class="select2">
+                                    <select id="select_tareas{{ $i_hora + 1 }}" data-contador="{{ $i_hora + 1 }}"
+                                        name="timesheet[{{ $i_hora + 1 }}][tarea]" class="select2">
                                         <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}
                                         </option>
                                         @foreach ($tareas as $tarea)
                                             <option value="{{ $tarea->id }}">{{ $tarea->tarea }}</option>
                                         @endforeach
                                     </select>
-                                    <small class="timesheet_{{ $i_hora }}_tarea errores text-danger"></small>
+                                    <small class="timesheet_{{ $i_hora + 1 }}_tarea errores text-danger"></small>
                                 </td>
                                 <td>
                                     @if ($hora->facturable)
                                         <input type="checkbox" checked
-                                            name="timesheet[{{ $i_hora }}][facturable]" style="min-width: 50px;">
+                                            name="timesheet[{{ $i_hora + 1 }}][facturable]" style="min-width: 50px;">
                                     @else
-                                        <input type="checkbox" name="timesheet[{{ $i_hora }}][facturable]"
+                                        <input type="checkbox" name="timesheet[{{ $i_hora + 1 }}][facturable]"
                                             style="min-width: 50px;">
                                     @endif
                                 </td>
                                 <td>
-                                    <input id="ingresar_hora_lunes_{{ $i_hora }}" type="number"
-                                        name="timesheet[{{ $i_hora }}][lunes]" data-dia="lunes"
-                                        data-i="{{ $i_hora }}" class="ingresar_horas form-control"
+                                    <input id="ingresar_hora_lunes_{{ $i_hora + 1 }}" type="number"
+                                        name="timesheet[{{ $i_hora + 1 }}][lunes]" data-dia="lunes"
+                                        data-i="{{ $i_hora + 1 }}" class="ingresar_horas form-control"
                                         value="{{ $hora->horas_lunes }}" min="0" max="24" step=".1">
-                                    <small class="timesheet_{{ $i_hora }}_horas errores text-danger"
+                                    <small class="timesheet_{{ $i_hora + 1 }}_horas errores text-danger"
                                         style="position:absolute; margin-top:3px;"></small>
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][martes]"
-                                        data-dia="martes" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_martes_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][martes]"
+                                        data-dia="martes" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_martes_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_martes }}">
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][miercoles]"
-                                        data-dia="miercoles" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_miercoles_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][miercoles]"
+                                        data-dia="miercoles" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_miercoles_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_miercoles }}">
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][jueves]"
-                                        data-dia="jueves" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_jueves_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][jueves]"
+                                        data-dia="jueves" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_jueves_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_jueves }}">
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][viernes]"
-                                        data-dia="viernes" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_viernes_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][viernes]"
+                                        data-dia="viernes" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_viernes_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_viernes }}">
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][sabado]"
-                                        data-dia="sabado" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_sabado_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][sabado]"
+                                        data-dia="sabado" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_sabado_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_sabado }}">
                                 </td>
                                 <td>
-                                    <input type="number" name="timesheet[{{ $i_hora }}][domingo]"
-                                        data-dia="domingo" data-i="{{ $i_hora }}"
-                                        id="ingresar_hora_domingo_{{ $i_hora }}"
+                                    <input type="number" name="timesheet[{{ $i_hora + 1 }}][domingo]"
+                                        data-dia="domingo" data-i="{{ $i_hora + 1 }}"
+                                        id="ingresar_hora_domingo_{{ $i_hora + 1 }}"
                                         class="ingresar_horas  form-control" min="0" max="24"
                                         step=".1" value="{{ $hora->horas_domingo }}">
                                 </td>
                                 <td>
-                                    <textarea name="timesheet[{{ $i_hora }}][descripcion]" class="form-control"
+                                    <textarea name="timesheet[{{ $i_hora + 1 }}][descripcion]" class="form-control"
                                         style="min-height:50px !important; resize: none;">{{ $hora->descripcion }}</textarea>
                                 </td>
                                 <td class="td_opciones">
-                                    @if ($i_hora == 1)
-                                        <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i_hora }}"
+                                    @if ($i_hora + 1 == 1)
+                                        <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i_hora + 1 }}"
                                             style="color:red; font-size:20px;" title="Eliminar fila"><i
                                                 class="fa-solid fa-trash-can"></i></div>
                                     @endif
-                                    @if ($i_hora > 1)
-                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i_hora }}"
+                                    @if ($i_hora + 1 > 1)
+                                        <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i_hora + 1 }}"
                                             style="color:red; font-size:20px;" title="Eliminar fila"><i
                                                 class="fa-solid fa-trash-can"></i></div>
                                     @endif
                                 </td>
                                 <td>
                                     <div class="form-control">
-                                        <label id="suma_horas_fila_{{ $i_hora }}" class="total_filas"></label>
+                                        <label id="suma_horas_fila_{{ $i_hora + 1 }}" class="total_filas"></label>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
 
-                        @for ($i = $i_hora + 1; $i <= $contador; $i++)
+                        @for ($i = $lastIndex; $i <= $contador; $i++)
                             <tr id="tr_time_{{ $i }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i }}][id_hora]"
@@ -369,7 +369,7 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
-            @this.set('contador', @json($i_hora));
+            @this.set('contador', @json($i_hora + 1));
             Livewire.on('filaAgregada', () => {
                 $('.select2').select2({
                     'theme': 'bootstrap4',
