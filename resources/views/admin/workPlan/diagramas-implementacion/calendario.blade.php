@@ -6,8 +6,8 @@
 
 @section('scripts')
     @parent
-    <script src="{{ asset('../js/calendar/calendar/index.global.js') }}"></script>
-    <script src="{{ asset('../js/calendar/calendar/locales/locales-all.global.js') }}"></script>
+    <script src="{{ asset('js/calendar/calendar/index.global.js') }}"></script>
+    <script src="{{ asset('js/calendar/calendar/locales/locales-all.global.js') }}"></script>
 
     <script>
         var calendar;
