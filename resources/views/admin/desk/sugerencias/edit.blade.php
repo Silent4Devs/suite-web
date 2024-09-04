@@ -396,16 +396,10 @@
                                 <strong style="font-size:13pt;">Folio: {{ $sugerencias->folio }}</strong>
                             </div>
                         </div>
-                        <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Sugerencia</b></h5>
-                            <button style="position:absolute; right: 2px; top:2px;"
-                                class="btn btn-success btn_modal_form">Agregar actividad</button>
-                            @if (count($sugerencias->planes))
-                                <a style="position:absolute; right: 170px; top:2px;"
-                                    href="{{ route('admin.planes-de-accion.show', $sugerencias->planes->first()->id) }}"
-                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
-                                    Acción</a>
-                            @endif
+                        <div
+                            style="display: flex; justify-content: flex-start; align-items: center; position: relative;">
+                            <h5 style="margin: 0; flex-grow: 1;"><b>Acciones para la Atención de la Sugerencia</b></h5>
+                            <button class="btn btn-success btn_modal_form">Agregar actividad</button>
                         </div>
                         <div class="mt-4 datatable-fix" style="width: 100%;">
                             <table id="tabla_plan_accion_sugerencias" class="table">

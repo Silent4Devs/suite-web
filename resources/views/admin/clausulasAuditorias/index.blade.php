@@ -58,6 +58,43 @@
 @section('scripts')
     @parent
     <script>
+        function confirmDelete(id) {
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, redirigimos a la ruta de eliminación
+                    window.location.href = "{{ url('admin/auditorias/clausulas-auditorias/delete/') }}/" + id;
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+                Swal.fire({
+                    icon: status === 'success' ? 'success' : 'error',
+                    title: status === 'success' ? '¡Éxito!' : '¡Error!',
+                    text: message,
+                });
+            }
+        });
+    </script>
+
+    <script>
         $(function() {
             let dtButtons = [];
             // {

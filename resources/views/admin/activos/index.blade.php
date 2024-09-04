@@ -268,7 +268,6 @@
                 text: '<i class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
                 className: "btn btn_cargar" ,
-                url:"{{ route('descarga-activo_inventario') }}",
                 action: function(e, dt, node, config) {
                 let {
                 url

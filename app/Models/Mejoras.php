@@ -27,7 +27,7 @@ class Mejoras extends Model implements Auditable
     {
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('mejoras_all', 3600, function () {
-            return self::orderBy('id')->get();
+            return self::select('id', 'estatus', 'fecha_cierre', 'descripcion', 'beneficios', 'titulo', 'area_mejora', 'proceso_mejora', 'tipo', 'otro', 'archivado')->with('mejoro:id,name,foto,email,telefono')->where('archivado', false)->get();
         });
     }
 

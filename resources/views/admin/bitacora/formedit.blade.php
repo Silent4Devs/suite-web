@@ -127,7 +127,53 @@
             <p class="instrucciones">Edite los datos del contrato</p>
         </div>
     </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+    @if (!$show_contrato)
+        <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+            @if (!$firmado)
+                <div class="col-12">
+                    <label for="">Activar flujo de aprobación </label>
+                    {!! Form::checkbox(
+                        'firma_check',
+                        1,
+                        isset($aprobacionFirmaContratoHisotricoLast->firma_check)
+                            ? $aprobacionFirmaContratoHisotricoLast->firma_check
+                            : false,
+                        [
+                            'id' => 'aprobadores_firma',
+                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                        ],
+                    ) !!}
+                </div>
+            @endif
+            @if (!$firmado)
+                <div class="col-12 {{ isset($aprobacionFirmaContratoHisotricoLast->firma_check) ? ($aprobacionFirmaContratoHisotricoLast->firma_check ? '' : 'd-none') : 'd-none' }}"
+                    id="aprobadores-firma-box">
+                    <div class="form-group">
+                        <label for="">Asignar Aprobadores</label>
+                        <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                        @if ($firma && $firma->aprobadores)
+                        @foreach ($firma->aprobadores as $aprobador)
+                            <option value="{{ $aprobador->id }}"
+                                {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                {{ $aprobador->name }}
+                            </option>
+                        @endforeach
+                        @else
+                            <option disabled>No hay aprobadores disponibles</option>
+                        @endif
+                        </select>
+                    </div>
+                </div>
+            @else
+                <div class="col-12">
+                    <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                </div>
+            @endif
+        </div>
+    @endif
+
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
     </div>
 

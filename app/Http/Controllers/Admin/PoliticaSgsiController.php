@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;

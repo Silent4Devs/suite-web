@@ -118,8 +118,9 @@ class ClausulasAuditoriasController extends Controller
     {
         //
         abort_if(Gate::denies('clausulas_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required',
+        $validatedData = $request->validate([
+            'identificador' => 'unique:clausulas_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas,' . $id . '',
         ]);
         // dd('validacion');
         $editClausula = ClausulasAuditorias::find($id);
@@ -141,8 +142,12 @@ class ClausulasAuditoriasController extends Controller
         abort_if(Gate::denies('clausulas_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $deleteClausula = ClausulasAuditorias::find($id);
         // dd($deleteClausula);
-        $deleteClausula->delete();
 
-        return redirect(route('admin.auditoria-clausula'));
+        if ($deleteClausula && $deleteClausula->delete()) {
+            // Redirige con un parámetro de éxito
+            return redirect()->route('admin.auditoria-clausula', ['status' => 'success', 'message' => 'Registro eliminado correctamente.']);
+        }
+
+        return redirect()->route('admin.auditoria-clausula', ['status' => 'error', 'message' => 'Error al eliminar el registro.']);
     }
 }
