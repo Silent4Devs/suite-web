@@ -46,6 +46,8 @@ class AnswerEvaluationUser extends Component
 
     public $quizPercentage;
 
+    public $percentage;
+
     public $correctQuestions;
 
     public $percentageEvaluationUser;
@@ -64,6 +66,7 @@ class AnswerEvaluationUser extends Component
 
     public function mount($course_id, $evaluacion_id)
     {
+
         $this->course_id = $course_id;
         $this->evaluacion_id = $evaluacion_id;
     }
@@ -181,7 +184,6 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
-        // dd('s');
         $this->course = Course::getAll()->find($this->course_id);
         $evaluation = Evaluation::find($this->evaluacion_id);
         $this->getEvaluation($evaluation);
