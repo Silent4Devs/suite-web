@@ -303,37 +303,38 @@
 
     <script>
         mobiscroll.setOptions({
-            locale: mobiscroll
-                .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
-            theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
-            themeVariant: 'light', // More info about themeVariant: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-themeVariant
+            locale: mobiscroll.localeEs, // Idioma: español
+            theme: 'ios', // Tema: iOS
+            themeVariant: 'light', // Variante del tema: claro
         });
 
         var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
-            view: { // More info about view: https://mobiscroll.com/docs/javascript/eventcalendar/api#opt-view
-                calendar: {
-                    type: 'week'
-                },
+            view: {
                 agenda: {
                     type: 'day'
                 },
             },
-            onEventClick: function(
-                args
-            ) { // More info about onEventClick: https://mobiscroll.com/docs/javascript/eventcalendar/api#event-onEventClick
+            data: [ // Aquí defines tus propios eventos
+                {
+                    start: new Date(2024, 8, 3, 9, 0), // Evento el 3 de septiembre de 2024 a las 9:00 AM
+                    end: new Date(2024, 8, 3, 10, 0), // Termina a las 10:00 AM
+                    title: 'Reunión de equipo',
+                    color: '#ff0000', // Color rojo
+                },
+                {
+                    start: new Date(2024, 8, 3, 11, 0), // Otro evento el mismo día a las 11:00 AM
+                    end: new Date(2024, 8, 3, 12, 0), // Termina a las 12:00 PM
+                    title: 'Llamada con cliente',
+                    color: '#00ff00', // Color verde
+                },
+                // Añade más eventos aquí
+            ],
+            onEventClick: function(args) {
                 mobiscroll.toast({
                     message: args.event.title,
                 });
             },
         });
-
-        mobiscroll.getJson(
-            'https://trial.mobiscroll.com/events/?vers=5',
-            function(events) {
-                inst.setEvents(events);
-            },
-            'jsonp',
-        );
     </script>
 
     <script>
