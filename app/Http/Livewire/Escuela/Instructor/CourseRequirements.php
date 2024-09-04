@@ -6,6 +6,7 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Requirement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CourseRequirements extends Component
@@ -16,16 +17,14 @@ class CourseRequirements extends Component
 
     public $course;
 
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
+    public $formName;
+
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
     public $name;
 
-    protected $rules = [
-        'requirement.name' => 'required',
-    ];
-
-    protected $messages = [
-        'requirement.name.required' => 'El campo nombre es obligatorio',
-        'requirement.name.max' => 'El campo nombre es obligatorio',
-    ];
 
     public function mount($course)
     {
@@ -40,12 +39,7 @@ class CourseRequirements extends Component
 
     public function store()
     {
-        $this->validate([
-            'name' => 'required|max:255',
-        ], [
-            'name.required' => 'El campo nombre es obligatorio',
-            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
-        ]);
+        $this->validateOnly('name');
 
         $this->course->requirements()->create([
             'name' => $this->name,
@@ -59,11 +53,14 @@ class CourseRequirements extends Component
     public function edit(Requirement $requirement)
     {
         $this->requirement = $requirement;
+        $this->formName = $requirement->name;
     }
 
     public function update()
     {
-        $this->validate();
+        $this->validateOnly('formName');
+
+        $this->requirement->name = $this->formName;
 
         $this->requirement->save();
 

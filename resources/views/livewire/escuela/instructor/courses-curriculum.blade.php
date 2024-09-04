@@ -8,6 +8,10 @@
         .sortable-chosen>.card-header {
             background-color: #15b6b9 !important;
         }
+
+        .test {
+            display: block !important;
+        }
     </style>
 
     <h4>Lecciones</h4>

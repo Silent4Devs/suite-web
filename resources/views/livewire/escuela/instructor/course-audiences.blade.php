@@ -5,9 +5,9 @@
     @foreach ($course->audiences as $item)
         @if ($audience->id == $item->id)
             <div class="registro rounded p-2">
-                <form wire:submit.prevent='update'>
-                    <input wire:model.debounce.800ms="audience.name" class="form-control">
-                    @error('audience.name')
+                <form wire:submit='update'>
+                    <input wire:model.live="formName" class="form-control">
+                    @error('formName')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </form>
@@ -36,7 +36,7 @@
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*', [
                             'class' => 'pl-0',
                         ]) !!} --}}
-                        <input wire:model.debounce.800ms="name" class="form-control" placeholder="">
+                        <input wire:model.live="name" class="form-control" placeholder="">
                         <label for="name">Agregar el nombre del requisito*</label>
                         @error('name')
                                 <span class="text-danger">{{ $message }}</span>
