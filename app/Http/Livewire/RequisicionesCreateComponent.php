@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
