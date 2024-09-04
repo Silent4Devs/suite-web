@@ -22,7 +22,7 @@
                     class="table table-responsive dataTables_scrollBody tabla-llenar-horas">
                     <thead>
                         <tr>
-                            <th style="min-width:150px;">Proyecto </th>
+                            <th style="min-width:150px;">Proyecto {{ $contador }} </th>
                             <th style="min-width:150px;">Tarea</th>
                             <th>Facturable</th>
                             <th style="min-width:40px;">Lunes</th>
@@ -39,11 +39,13 @@
                     </thead>
 
                     <tbody>
-                        {{-- {{ $contador }} --}}
                         @php
-                            $lastIndex = count($horas);
+                            $i_hora = 0;
                         @endphp
-                        @foreach ($horas as $i_hora => $hora)
+                        @foreach ($horas as $cuentaHora => $hora)
+                            @php
+                                $i_hora = $cuentaHora;
+                            @endphp
                             <tr id="tr_time_{{ $i_hora }}" data-model="{{ $hora->id }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]"
@@ -160,7 +162,11 @@
                             </tr>
                         @endforeach
 
-                        @for ($i = $lastIndex; $i <= $contador; $i++)
+                        @php
+                            $nuevasFilas = $i_hora;
+                        @endphp
+
+                        @for ($i = $nuevasFilas; $i <= $contador; $i++)
                             <tr id="tr_time_{{ $i }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i }}][id_hora]"
