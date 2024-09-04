@@ -527,7 +527,6 @@ class InicioUsuarioController extends Controller
         } catch (\Throwable $e) {
             Log::channel('logstash')->info('Error al cargar inicio de usuario: '.$e->getMessage(), [
                 'exception' => $e,
-                'input' => $request->all(),
             ]);
 
             // Retornar una respuesta de error al cliente
