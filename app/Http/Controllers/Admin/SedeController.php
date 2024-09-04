@@ -114,36 +114,41 @@ class SedeController extends Controller
 
         $sede = Sede::create($request->all());
 
-        if ($request->hasFile('foto_sedes')) {
-            $file = $request->file('foto_sedes');
-            $extension = $file->getClientOriginalExtension();
-            $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
+        $file = $request->file('foto_sedes');
+        $extension = $file->getClientOriginalExtension();
+        $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
+        
+        // if ($request->hasFile('foto_sedes')) {
+        //     $file = $request->file('foto_sedes');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        //     $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
 
-            // Call the ImageService to consume the external API
-            $apiResponse = ImageService::consumeImageCompresorApi($file);
+        //     // Call the ImageService to consume the external API
+        //     $apiResponse = ImageService::consumeImageCompresorApi($file);
 
-            // Verificar si la solicitud fue exitosa
-            if ($apiResponse['status'] == 200) {
-                $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
-                file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+        //     // Verificar si la solicitud fue exitosa
+        //     if ($apiResponse['status'] == 200) {
+        //         $rutaGuardada = '/sedes/imagenes/'.$new_name_image;
+        //         file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
-                $sede->update([
-                    'foto_sedes' => $new_name_image,
-                ]);
+        //         $sede->update([
+        //             'foto_sedes' => $new_name_image,
+        //         ]);
 
-                return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
+        //         return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
 
-            } else {
-                $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+        //     } else {
+        //         $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
 
-                return Redirect::back()->with('mensajeError', $mensajeError);
-            }
-        } else {
-            $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
+        //         return Redirect::back()->with('mensajeError', $mensajeError);
+        //     }
+        // } else {
+        //     $mensajeError = 'Intentelo de nuevo, Ingrese  el campo foto';
 
-            return Redirect::back()->with('mensajeError', $mensajeError);
-        }
+        //     return Redirect::back()->with('mensajeError', $mensajeError);
+        // }
 
         $sede->update([
             'foto_sedes' => $new_name_image,
