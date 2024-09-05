@@ -36,12 +36,12 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    {{-- <div class="box-iframe-video-courses d-none">
+                    <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
 
-                    </div> --}}
-                    {{-- <div id="player3" class="w-100"></div> --}}
-                    <lite-youtube videoid="{{$this->current->videoId}}"></lite-youtube>
+                    </div>
+                    <div id="player3" class="w-100"></div>
+                    {{-- <lite-youtube videoid="{{$this->current->videoId}}"></lite-youtube> --}}
                 @else
                     <p>Sin registro</p>
                 @endif
