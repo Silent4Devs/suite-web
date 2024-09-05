@@ -16,6 +16,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,17 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
+
+        $agregarUsuarios = false;
+
+        $users = User::getUserWithRole()->where('is_active', true)->count();
+
+        $dataCliente = $this->fetchData();
+
+        if ($dataCliente["numeroUsuarios"] <= $dataCliente) {
+            $agregarUsuarios = true;
+        }
+
         try {
             abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -33,10 +45,10 @@ class UsersController extends Controller
 
             $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
-            return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
+            return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados', 'agregarUsuarios'));
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al cargar usuarios: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al cargar usuarios: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -59,10 +71,9 @@ class UsersController extends Controller
             });
 
             return datatables()->of($query)->toJson();
-
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al cargar usuarios: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al cargar usuarios: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -89,10 +100,9 @@ class UsersController extends Controller
             $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
             return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
-
         } catch (\Exception $e) {
             // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al crear usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -113,7 +123,7 @@ class UsersController extends Controller
 
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al guardar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al guardar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -142,7 +152,7 @@ class UsersController extends Controller
 
             return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al editar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al editar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -162,7 +172,7 @@ class UsersController extends Controller
 
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al actualizar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al actualizar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -181,7 +191,7 @@ class UsersController extends Controller
 
             return view('users.tbUserShow', compact('user'));
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al mostrar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al mostrar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -205,7 +215,7 @@ class UsersController extends Controller
 
             return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al eliminar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al eliminar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -222,7 +232,7 @@ class UsersController extends Controller
 
             return response(null, Response::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al eliminar usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al eliminar usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -237,18 +247,17 @@ class UsersController extends Controller
         try {
             if ($request->ajax()) {
                 $nombre = $request->nombre;
-                $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
+                $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
+                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
                 }
                 $lista .= '</ul>';
 
                 return $lista;
             }
-
         } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al obtener usuario: '.$e->getMessage(), [
+            Log::channel('logstash')->info('Error al obtener usuario: ' . $e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
             ]);
@@ -326,5 +335,34 @@ class UsersController extends Controller
         $usuarios = User::withTrashed()->where('deleted_at', '<>', null)->get();
 
         return view('admin.users.eliminados', compact('usuarios'));
+    }
+
+    public function fetchData()
+    {
+        try {
+            // Realiza la solicitud GET a la API externa
+            $response = Http::get('https://66d8dc314ad2f6b8ed52d80a.mockapi.io/example2');
+
+            // Verifica si la solicitud fue exitosa
+            if ($response->successful()) {
+                // Procesa los datos si es necesario y devuelve la respuesta
+                $data = $response->json();
+                // Retornar los datos procesados o directamente
+                return $data[0];
+            }
+
+            // Si la solicitud no fue exitosa, maneja el error
+            return response()->json([
+                'message' => 'Error al obtener los datos de la API externa',
+                'status' => $response->status(),
+                'error' => $response->body(),
+            ], $response->status());
+        } catch (\Exception $e) {
+            // Manejo de excepciones genéricas
+            return response()->json([
+                'message' => 'Hubo un error al intentar conectar con la API externa',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

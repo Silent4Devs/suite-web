@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDa
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\V1\Timesheet\tbApiMobileControllerTimesheet;
+use App\Http\Controllers\tbApiPanelControlController;
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
@@ -24,6 +25,8 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
+
+    Route::get('/api-data', [tbApiPanelControlController::class, 'getData']);
 
     Route::prefix('solicitud-dayoff')->group(function () {
         Route::get('', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionIndex']);
