@@ -1,6 +1,6 @@
  <div class="dropdown-menu dropdown-menu-lg">
      @if (count($last_unread_notifications))
-         <div class="dropdown-header bg-light"><strong>Tú1 tienes {{ $notificaciones_sin_leer }}
+         <div class="dropdown-header bg-light"><strong>Tú tienes {{ $notificaciones_sin_leer }}
                  notificaciones</strong>
          </div>
          @foreach ($last_unread_notifications as $last_unread_notification)
