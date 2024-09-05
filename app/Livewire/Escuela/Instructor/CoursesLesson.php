@@ -80,7 +80,7 @@ class CoursesLesson extends Component
             $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
 
-        $this->validate($rules);
+        // $this->validate($rules);
 
         $resource = Lesson::create([
             'name' => $this->name,

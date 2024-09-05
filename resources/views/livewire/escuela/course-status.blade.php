@@ -41,7 +41,7 @@
 
                     </div> --}}
                     {{-- <div id="player3" class="w-100"></div> --}}
-                    <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
+                    <lite-youtube videoid="{{$this->current->videoId}}"></lite-youtube>
                 @else
                     <p>Sin registro</p>
                 @endif

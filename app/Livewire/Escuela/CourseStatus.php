@@ -42,12 +42,13 @@ class CourseStatus extends Component
                 if (! $lesson->completed) {
                     // dd($lesson);
                     $this->current = $lesson;
+                    $this->current->videoId = $this->getVideoId($this->current->url);
                     //break para que salga del bucle
                     break;
                 }
             }
             if ($this->current) {
-                // dd($lesson);
+                // $this->current->videoId = $this->getVideoId($this->current->url);
                 //break para que salga del bucle
                 break;
             }
@@ -56,6 +57,7 @@ class CourseStatus extends Component
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
         if (! $this->current) {
             $this->current = $course->lessons->last();
+            $this->current->videoId = $this->getVideoId($this->current->url);
         }
 
         // dd($this->current->iframe);
@@ -229,5 +231,20 @@ class CourseStatus extends Component
         $cursoLastReview->update([
             'last_review' => $time,
         ]);
+    }
+
+    public function getVideoId($url)
+    {
+        // Expresión regular para identificar el ID del video
+        $pattern = '/(youtu\.be\/|v\/|watch\?v=|\/embed\/|\/v\/|watch\?v%3D|%2Fvideos%2F|watch%3Fv%3D|\/videos\/|embed%2F|youtu\.be%2F|\/v%2F)([^#&?]*).*/';
+        preg_match($pattern, $url, $matches);
+
+        // Verifica si el ID es válido y tiene 11 caracteres
+        if (isset($matches[2]) && strlen($matches[2]) === 11) {
+            return $matches[2]; // Retorna el ID del video
+        }
+
+        // Retorna null si no se encuentra un ID válido
+        return null;
     }
 }
