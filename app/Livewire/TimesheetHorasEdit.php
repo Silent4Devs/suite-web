@@ -20,7 +20,7 @@ class TimesheetHorasEdit extends Component
 
     public $timesheet_id;
 
-    public $contador = 1;
+    public $contador;
 
     public $horas_excluidas;
 
