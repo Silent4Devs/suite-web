@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -21,7 +22,8 @@ class ListaTareasNotificacionesComponent extends Component
 
     public function render()
     {
-        $last_unread_notifications = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->latest()->take(5)->get();
+
+        $last_unread_notifications = User::getCurrentUser()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->latest()->take(5)->get();
 
         return view('livewire.lista-tareas-notificaciones-component', [
             'last_unread_notifications' => $last_unread_notifications,
