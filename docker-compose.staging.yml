@@ -40,7 +40,7 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
-      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     env_file:
       - .env
     ports:
