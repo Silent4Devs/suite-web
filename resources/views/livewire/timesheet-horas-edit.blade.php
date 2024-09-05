@@ -387,7 +387,7 @@
             if (element.classList.contains('btn_destroy_tr')) {
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
                 let tr_element = element.closest('tr');
-                Livewire.dispatch('removerFila', [tr_element.getAttribute('data-model'), tr_seleccionado]);
+                Livewire.emit('removerFila', [tr_element.getAttribute('data-model'), tr_seleccionado]);
                 $(tr_seleccionado).remove();
             }
             Livewire.on('removeTr', (tr_select_live) => {
