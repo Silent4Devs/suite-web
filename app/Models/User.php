@@ -95,6 +95,14 @@ class User extends Authenticatable implements Auditable
         });
     }
 
+
+    public static function usuariosActivos(){
+        return Cache::remember('Users:users_count', 3600 * 12, function () {
+            return self::where('is_active', true)->count();
+        });
+    }
+
+
     public static function getCurrentUser()
     {
         $cacheKey = 'Auth_user:user'.auth()->user()->id;
