@@ -22,7 +22,7 @@
                     class="table table-responsive dataTables_scrollBody tabla-llenar-horas">
                     <thead>
                         <tr>
-                            <th style="min-width:150px;">Proyecto {{ $contador }} </th>
+                            <th style="min-width:150px;">Proyecto </th>
                             <th style="min-width:150px;">Tarea</th>
                             <th>Facturable</th>
                             <th style="min-width:40px;">Lunes</th>
@@ -39,12 +39,13 @@
                     </thead>
 
                     <tbody>
+                        {{-- {{ $contador }} --}}
                         @php
                             $i_hora = 0;
                         @endphp
-                        @foreach ($horas as $cuentaHora => $hora)
+                        @foreach ($horas as $hora)
                             @php
-                                $i_hora = $cuentaHora;
+                                $i_hora++;
                             @endphp
                             <tr id="tr_time_{{ $i_hora }}" data-model="{{ $hora->id }}" wire:ignore>
                                 <td wire:ignore>
@@ -162,11 +163,7 @@
                             </tr>
                         @endforeach
 
-                        @php
-                            $nuevasFilas = $i_hora;
-                        @endphp
-
-                        @for ($i = $nuevasFilas; $i <= $contador; $i++)
+                        @for ($i = $i_hora + 1; $i <= $contador; $i++)
                             <tr id="tr_time_{{ $i }}" wire:ignore>
                                 <td wire:ignore>
                                     <input type="hidden" name="timesheet[{{ $i }}][id_hora]"
@@ -390,7 +387,7 @@
             if (element.classList.contains('btn_destroy_tr')) {
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
                 let tr_element = element.closest('tr');
-                Livewire.emit('removerFila', tr_element.getAttribute('data-model'), tr_seleccionado);
+                Livewire.dispatch('removerFila', [tr_element.getAttribute('data-model'), tr_seleccionado]);
                 $(tr_seleccionado).remove();
             }
             Livewire.on('removeTr', (tr_select_live) => {
