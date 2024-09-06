@@ -186,7 +186,7 @@
                             </li>
                         @endforeach
 
-                        @foreach ($section->evaluations as $evaluation)
+                        {{-- @foreach ($section->evaluations as $evaluation)
                             @php
                                 $totalLectionSection = $section->lessons->count();
                                 $completedLectionSection = $section->lessons->where('completed', true)->count();
@@ -216,7 +216,7 @@
                                     </li>
                                 @endif
                             @endif
-                        @endforeach
+                        @endforeach --}}
                     </ul>
                 </li>
             @endforeach
