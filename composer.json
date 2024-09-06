@@ -45,6 +45,7 @@
     "yajra/laravel-datatables-oracle": "^10.0"
   },
   "require-dev": {
+    "barryvdh/laravel-debugbar": "^3.13",
     "barryvdh/laravel-ide-helper": "^3.0",
     "friendsofphp/php-cs-fixer": "^3.2",
     "jason-guru/laravel-make-repository": "^0.0.3",
