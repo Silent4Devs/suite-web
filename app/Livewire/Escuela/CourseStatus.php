@@ -59,6 +59,7 @@ class CourseStatus extends Component
 
     public function render()
     {
+        // dd($this->course);
         // dd($this->course->lessons->where('completed', true)->count());
         // dd($this->current);
         // $fechaYHora = $this->fecha.' '.$this->hora;
@@ -69,7 +70,7 @@ class CourseStatus extends Component
         // $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
-        $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        // $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //dd($this->course);
 
