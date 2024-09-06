@@ -31,6 +31,7 @@
     {{-- <x-loading-indicator /> --}}
 
     <div style="width: 100%; ">
+        <h1>hola</h1>
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
