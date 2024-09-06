@@ -222,7 +222,7 @@
             @endforeach
         </ul>
     </div>
-    @section('scripts')
+    {{-- @section('scripts')
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
             var player;
@@ -301,5 +301,5 @@
                 }, 1000); // Actualiza cada segundo
             }
         </script>
-    @endsection
+    @endsection --}}
 </div>
