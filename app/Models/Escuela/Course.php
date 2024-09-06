@@ -21,7 +21,7 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
-    protected $append = ['sections_order','rating', 'last_finished_lesson'];
+    protected $append = ['sections_order', 'rating', 'last_finished_lesson'];
 
     const BORRADOR = 1;
 
@@ -35,7 +35,7 @@ class Course extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('Courses:courses_all', 3600 * 7, function () {
-            return self::with('sections.lessons','lessons')->get();
+            return self::with('sections.lessons', 'lessons', 'instructor')->get();
         });
     }
 
@@ -130,7 +130,7 @@ class Course extends Model implements Auditable
 
     public function instructor()
     {
-        return $this->belongsTo('App\Models\User', 'empleado_id');
+        return $this->belongsTo('App\Models\User', 'empleado_id')->select('id', 'name', 'email', 'empleado_id', 'n_empleado')->with('empleado:id,name,email,area_id,puesto_id,foto,n_empleado');
     }
 
     public function level()

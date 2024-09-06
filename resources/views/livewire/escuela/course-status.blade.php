@@ -118,7 +118,7 @@
 
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
-        {{-- <div class="d-flex align-items-start" wire:ignore>
+        <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name }}">
@@ -130,7 +130,7 @@
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>
-        </div> --}}
+        </div>
 
         {{-- <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
