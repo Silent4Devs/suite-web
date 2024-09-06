@@ -36,9 +36,8 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
+                    <div class="box-iframe-video-courses">
                         {!! $current->iframe !!}
-
                     </div>
                     <div id="player3" class="w-100"></div>
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}

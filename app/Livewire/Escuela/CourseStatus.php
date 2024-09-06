@@ -48,7 +48,8 @@ class CourseStatus extends Component
 
         // $this->lecciones_orden = collect();
         $this->course = $course;
-        // $this->current = $course->last_finished_lesson;
+        $this->current = $course->last_finished_lesson;
+        // dd($this->current);
         //determinamos cual es la lección actual
 
         // dd($this->current->iframe);
@@ -57,6 +58,7 @@ class CourseStatus extends Component
 
     public function render()
     {
+        // dd($this->current);
         // $fechaYHora = $this->fecha.' '.$this->hora;
         // $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
         //     ->where('user_id', $this->usuario->id)->first();
@@ -91,9 +93,9 @@ class CourseStatus extends Component
         // }
 
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (! $this->current) {
-            $this->current = $this->course->lessons->last();
-        }
+        // if (!$this->current) {
+        //     $this->current = $this->course->lessons->last();
+        // }
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
