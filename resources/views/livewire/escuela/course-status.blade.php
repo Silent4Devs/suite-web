@@ -147,7 +147,7 @@
         </div>
 
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
-            @foreach ($course->sections_order as $section)
+            {{-- @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                     <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                     </i>
@@ -219,7 +219,7 @@
                         @endforeach
                     </ul>
                 </li>
-            @endforeach
+            @endforeach --}}
         </ul>
     </div>
     {{-- @section('scripts')
