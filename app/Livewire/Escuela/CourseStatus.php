@@ -31,32 +31,25 @@ class CourseStatus extends Component
 
     public $lecciones_orden;
 
+    public $usuario;
+    public $fecha;
+    public $hora;
+
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
-    public function mount(Course $course, $evaluacionesLeccion)
+    public function mount($course, $evaluacionesLeccion)
     {
+        // dd($course);
+        $this->evaluacionesGenerales = $evaluacionesLeccion;
+
+        $this->usuario = User::getCurrentUser();
+        $this->fecha = Carbon::now()->toDateString();
+        $this->hora = Carbon::now()->format('H:i:s');
+
         $this->lecciones_orden = collect();
         $this->course = $course;
+        $this->current = $course->last_finished_lesson;
         //determinamos cual es la lección actual
-        foreach ($course->sections_order as $secciones_lecciones) {
-            foreach ($secciones_lecciones->lessons as $lesson) {
-                if (! $lesson->completed) {
-                    // dd($lesson);
-                    $this->current = $lesson;
-                    //break para que salga del bucle
-                    break;
-                }
-            }
-            if ($this->current) {
-                // dd($lesson);
-                //break para que salga del bucle
-                break;
-            }
-        }
-
-        // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (! $this->current) {
-            $this->current = $course->lessons->last();
-        }
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
@@ -64,21 +57,46 @@ class CourseStatus extends Component
 
     public function render()
     {
-        $usuario = User::getCurrentUser();
-        $fecha = Carbon::now()->toDateString();
-        $hora = Carbon::now()->format('H:i:s');
-        $fechaYHora = $fecha.' '.$hora;
+        $fechaYHora = $this->fecha.' '.$this->hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
-            ->where('user_id', $usuario->id)->first();
+            ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
 
         $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
-        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
-        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //dd($this->course);
+
+        // dd($this->current);
+
+        // foreach ($this->course->sections_order as $secciones_lecciones) {
+        //     dump($secciones_lecciones);
+        //     foreach ($secciones_lecciones->lessons as $lesson) {
+        //         dump($lesson);
+        //         if (! $lesson->completed) {
+        //             // dd($lesson);
+        //             $this->current = $lesson;
+        //             //break para que salga del bucle
+        //             dd($this->current);
+        //             break;
+        //         }
+        //     }
+        //     if ($this->current) {
+        //         // dd($lesson);
+        //         //break para que salga del bucle
+        //         break;
+        //     }
+        // }
+
+        // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
+        if (! $this->current) {
+            $this->current = $this->course->lessons->last();
+        }
+        // else{
+        //     $this->current = $this->course->lastfinishedlesson;
+        // }
 
         return view('livewire.escuela.course-status');
     }
