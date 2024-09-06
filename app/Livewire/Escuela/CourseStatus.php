@@ -32,35 +32,35 @@ class CourseStatus extends Component
     public $lecciones_orden;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
-    public function mount(Course $course, $evaluacionesLeccion)
-    {
-        $this->lecciones_orden = collect();
-        $this->course = $course;
-        //determinamos cual es la lección actual
-        // foreach ($course->sections_order as $secciones_lecciones) {
-        //     foreach ($secciones_lecciones->lessons as $lesson) {
-        //         if (! $lesson->completed) {
-        //             // dd($lesson);
-        //             $this->current = $lesson;
-        //             //break para que salga del bucle
-        //             break;
-        //         }
-        //     }
-        //     if ($this->current) {
-        //         // dd($lesson);
-        //         //break para que salga del bucle
-        //         break;
-        //     }
-        // }
+    // public function mount(Course $course, $evaluacionesLeccion)
+    // {
+    //     $this->lecciones_orden = collect();
+    //     $this->course = $course;
+    //     //determinamos cual es la lección actual
+    //     // foreach ($course->sections_order as $secciones_lecciones) {
+    //     //     foreach ($secciones_lecciones->lessons as $lesson) {
+    //     //         if (! $lesson->completed) {
+    //     //             // dd($lesson);
+    //     //             $this->current = $lesson;
+    //     //             //break para que salga del bucle
+    //     //             break;
+    //     //         }
+    //     //     }
+    //     //     if ($this->current) {
+    //     //         // dd($lesson);
+    //     //         //break para que salga del bucle
+    //     //         break;
+    //     //     }
+    //     // }
 
-        // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (! $this->current) {
-            $this->current = $course->lessons->last();
-        }
+    //     // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
+    //     if (! $this->current) {
+    //         $this->current = $course->lessons->last();
+    //     }
 
-        // dd($this->current->iframe);
-        // $this->authorize('enrolled', $course);
-    }
+    //     // dd($this->current->iframe);
+    //     // $this->authorize('enrolled', $course);
+    // }
 
     public function render()
     {
@@ -75,8 +75,8 @@ class CourseStatus extends Component
         // $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
-        $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
-        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        // $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
+        // $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //dd($this->course);
 
