@@ -45,10 +45,11 @@ class CourseStatus extends Component
         $this->usuario = User::getCurrentUser();
         $this->fecha = Carbon::now()->toDateString();
         $this->hora = Carbon::now()->format('H:i:s');
-
         // $this->lecciones_orden = collect();
         $this->course = $course;
+        // dd($course->sections);
         $this->current = $course->last_finished_lesson;
+        $this->lecciones_orden = $this->course->sections_order;
         // dd($this->current);
         //determinamos cual es la lección actual
 
@@ -58,6 +59,7 @@ class CourseStatus extends Component
 
     public function render()
     {
+        // dd($this->course->lessons->where('completed', true)->count());
         // dd($this->current);
         // $fechaYHora = $this->fecha.' '.$this->hora;
         // $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
@@ -67,7 +69,7 @@ class CourseStatus extends Component
         // $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
-        // $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //dd($this->course);
 
@@ -105,149 +107,157 @@ class CourseStatus extends Component
 
     //METODOS
     //cambiamos la lección actual
-    // public function changeLesson(Lesson $lesson, $atras = null)
-    // {
-    //     // dd($this->previous);
+    public function changeLesson(Lesson $lesson, $atras = null)
+    {
 
-    //     if ($atras == 'previous') {
-    //         $this->current = $lesson;
+        // dd($lesson);
+        // dd($this->previous);
 
-    //         return;
-    //     }
+        if ($atras == 'previous') {
+            $this->current = $lesson;
 
-    //     if ($this->current->completed) {
+            return;
+        }
 
-    //         $this->dispatch('completado');
+        if ($this->current->completed) {
 
-    //         $this->current = $lesson;
+            $this->dispatch('completado');
 
-    //         return;
-    //     }
+            $this->current = $lesson;
 
-    //     if (! $this->current->completed) {
-    //         $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
+            return;
+        }
 
-    //         return;
-    //     }
+        // if (! $this->current->completed) {
+        //     $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
 
-    //     //$this->current = $lesson;
-    // }
+        //     return;
+        // }
 
-    // public function completed()
-    // {
-    //     $usuario = User::getCurrentUser();
-    //     if ($this->current->completed) {
-    //         //Eliminar registro
-    //         // Metodo auth me recupera el dato del usuario autentificado
-    //         $this->current->users()->detach($usuario->id);
-    //     } else {
-    //         //Agregar registro
-    //         $this->current->users()->attach($usuario->id);
-    //     }
-    //     $this->current = Lesson::find($this->current->id);
-    //     $this->course = Course::getAll()->find($this->course->id);
-    // }
+        //$this->current = $lesson;
+    }
 
-    // //PROPIEDADES COMPUTADAS
-    // //definimos la propiedad index, lo que va hacer es calcular el indice
-    // public function getIndexProperty()
-    // {
-    //     // Check if $this->course exists and is not null
-    //     if ($this->course && $this->lecciones_orden && $this->current) {
-    //         // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
+    public function completed()
+    {
+        $usuario = User::getCurrentUser();
+        if ($this->current->completed) {
+            //Eliminar registro
+            // Metodo auth me recupera el dato del usuario autentificado
+            $this->current->users()->detach($usuario->id);
+        } else {
+            //Agregar registro
+            $this->current->users()->attach($usuario->id);
+        }
+        $this->current = Lesson::find($this->current->id);
+        $this->course = Course::getAll()->find($this->course->id);
+    }
 
-    //         $lecciones_ordenadas = collect();
+    //PROPIEDADES COMPUTADAS
+    //definimos la propiedad index, lo que va hacer es calcular el indice
+    public function getIndexProperty()
+    {
+        // Check if $this->course exists and is not null
+        if ($this->course && $this->lecciones_orden && $this->current) {
+            // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
 
-    //         foreach ($this->course->sections_order as $secciones_lecciones) {
-    //             foreach ($secciones_lecciones->lessons as $lesson) {
-    //                 $lecciones_ordenadas->push($lesson);
-    //             }
-    //         }
-    //         $this->lecciones_orden = $lecciones_ordenadas;
+            $lecciones_ordenadas = collect();
 
-    //         return optional($lecciones_ordenadas->pluck('id'))->search($this->current->id);
-    //     }
+            foreach ($this->course->sections_order as $secciones_lecciones) {
+                foreach ($secciones_lecciones->lessons as $lesson) {
+                    $lecciones_ordenadas->push($lesson);
+                }
+            }
+            $this->lecciones_orden = $lecciones_ordenadas;
 
-    //     return null; // or handle the situation based on your logic
-    // }
+            return optional($lecciones_ordenadas->pluck('id'))->search($this->current->id);
+        }
 
-    // //calculamos la propiedad previous
-    // public function getPreviousProperty()
-    // {
-    //     if ($this->index == 0) {
-    //         return null;
-    //     } else {
-    //         return $this->lecciones_orden[$this->index - 1];
-    //     }
-    // }
+        return null; // or handle the situation based on your logic
+    }
 
-    // //propiedad next
-    // public function getNextProperty()
-    // {
-    //     if ($this->index == $this->lecciones_orden->count() - 1) {
-    //         return null;
-    //     } else {
-    //         return $this->lecciones_orden[$this->index + 1];
-    //     }
-    // }
+    //calculamos la propiedad previous
+    public function getPreviousProperty()
+    {
+        if ($this->index == 0) {
+            return null;
+        } else {
+            return $this->lecciones_orden[$this->index - 1];
+        }
+    }
 
-    // public function getAdvanceProperty()
-    // {
-    //     $i = 0;
+    //propiedad next
+    public function getNextProperty()
+    {
+        if ($this->index == $this->lecciones_orden->count() - 1) {
+            return null;
+        } else {
+            return $this->lecciones_orden[$this->index + 1];
+        }
+    }
 
-    //     foreach ($this->lecciones_orden as $lesson) {
-    //         if ($lesson->completed) {
-    //             $i++;
-    //         }
-    //     }
+    public function getAdvanceProperty()
+    {
+        $i = 0;
 
-    //     //calcular el porcentaje de la
-    //     $advance = ($i * 100) / ($this->lecciones_orden->count());
+        foreach ($this->lecciones_orden as $lesson) {
+            if ($lesson->completed) {
+                $i++;
+            }
+        }
 
-    //     return round($advance, 2);
-    // }
+        //calcular el porcentaje de la
+        $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-    // public function getSectionAdvanceProperty()
-    // {
-    //     $i = 0;
+        return round($advance, 2);
+    }
 
-    //     foreach ($this->lecciones_orden as $lesson) {
-    //         if ($lesson->completed) {
-    //             $i++;
-    //         }
-    //     }
+    public function getSectionAdvanceProperty()
+    {
+        $i = 0;
 
-    //     //calcular el porcentaje de la
-    //     $advance = ($i * 100) / ($this->lecciones_orden->count());
+        foreach ($this->lecciones_orden as $lesson) {
+            if ($lesson->completed) {
+                $i++;
+            }
+        }
 
-    //     return round($advance, 2);
-    // }
+        //calcular el porcentaje de la
+        $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-    // public function download()
-    // {
-    //     // dd($this->current->resource);
-    //     return response()->download(storage_path('app/'.$this->current->resource->url));
-    // }
+        return round($advance, 2);
+    }
 
-    // public function alertSection()
-    // {
-    //     $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
-    // }
+    public function download()
+    {
+        // dd($this->current->resource);
+        return response()->download(storage_path('app/'.$this->current->resource->url));
+    }
 
-    // public function alertaEmergente($message)
-    // {
-    //     $this->alert('warning', $message, [
-    //         'position' => 'center',
-    //         'timer' => 3000,
-    //         'toast' => false,
-    //         'timerProgressBar' => true,
-    //     ]);
-    // }
+    public function alertSection()
+    {
+        $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
+    }
 
-    // public function updateLastReview($time, $cursoLastReview)
-    // {
-    //     $cursoLastReview->update([
-    //         'last_review' => $time,
-    //     ]);
-    // }
+    public function alertaEmergente($message)
+    {
+        $this->alert('warning', $message, [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => false,
+            'timerProgressBar' => true,
+        ]);
+    }
+
+    public function updateLastReview($time, $cursoLastReview)
+    {
+        $cursoLastReview->update([
+            'last_review' => $time,
+        ]);
+    }
+
+    public function test(Lesson $lesson){
+        // dump($this->current);
+        $this->current = $lesson;
+        // dump($this->current);
+    }
 }

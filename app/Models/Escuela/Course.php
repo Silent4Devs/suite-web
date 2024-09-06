@@ -187,4 +187,5 @@ class Course extends Model implements Auditable
         }
         return null;
     }
+
 }

@@ -36,7 +36,7 @@
             <!--Para que me traiga correctamente el video hay que agregar -->
             <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses">
+                    <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
                     </div>
                     <div id="player3" class="w-100"></div>
@@ -74,41 +74,41 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            {{-- @if ($this->previous)
+                            @if ($this->previous)
                                 <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
-                                    style="cursor: pointer;">
+                                    style="cursor: pointer;" onclick="refreshPage('boton')">
                                     < Tema anterior </a>
                                     @else
                                         <a href="#" id="test" class="text-muted">
                                             < Tema anterior</a>
                             @endif
                             <div wire:target="changeLesson({{ $this->previous }})">
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            {{-- @if ($this->next)
+                            @if ($this->next)
                                 <a wire:click="changeLesson({{ $this->next }})" class="text-primary"
-                                    style="cursor: pointer;">
+                                    style="cursor: pointer;" onclick="refreshPage()">
                                     Siguiente tema >
                                 </a>
                             @else
                                 <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
                             @endif
                             <div wire:target="changeLesson({{ $this->next }})">
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div>
-                {{-- @if ($current->resource)
+                @if ($current->resource)
                     <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
                         style="cursor: pointer;">
                         <i class="text-lg fas fa-download d-inline"></i>
                         <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
                     </div>
-                @endif --}}
+                @endif
             </div>
 
 
@@ -131,7 +131,7 @@
             </div>
         </div>
 
-        {{-- <div class="caja-info-card-mc">
+        <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
             <div class="curso-progreso-barra">
                 <div class="indicador-progreso-barra" style="width: {{ $this->advance . '%' }};"></div>
@@ -143,7 +143,7 @@
                     class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
             @foreach ($course->sections_order as $section)
@@ -160,12 +160,12 @@
                                         @if ($current->id == $lesson->id)
                                             <span style="color:green;">
                                                 <a class="cursor:pointer;"
-                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                                    wire:click="changeLesson({{ $lesson }})" onclick="refreshPage()">{{ $lesson->name }}</a>
                                             </span>
                                         @else
                                             <span style="color:rgb(0, 179, 0);">
                                                 <a class="cursor:pointer;"
-                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                                    wire:click="changeLesson({{ $lesson }})" onclick="refreshPage()">{{ $lesson->name }}</a>
                                             </span>
                                         @endif
                                     @else
@@ -185,47 +185,62 @@
                             </li>
                         @endforeach
 
-                        {{-- @foreach ($section->evaluations as $evaluation)
-                            @php
-                                $totalLectionSection = $section->lessons->count();
-                                $completedLectionSection = $section->lessons->where('completed', true)->count();
-                            @endphp
-                            @if ($totalLectionSection != $completedLectionSection)
+                        @foreach ($section->evaluations as $evaluation)
+                        @php
+                            $totalLectionSection = $section->lessons->count();
+                            $completedLectionSection = $section->lessons;
+                            $completedLessonsCount = $section->lessons->filter(function($lesson) {
+                                return $lesson->completed;
+                            })->count();
+                        @endphp
+                        @if ($totalLectionSection != $completedLessonsCount)
+                            <li style="list-style-type: disc;">
+                                <div>
+                                    <span class="inline-block rounded-full border-2 border-gray-500"></span>
+                                    <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
+                                    </a>
+                                </div>
+                            </li>
+                        @else
+                            @if ($evaluation->questions->count() > 0)
+                                @php
+                                    $completed = in_array($evaluation->id, $evaluationsUser);
+                                @endphp
                                 <li style="list-style-type: disc;">
                                     <div>
-                                        <span class="inline-block rounded-full border-2 border-gray-500"></span>
-                                        <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
+                                        <span
+                                            class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                        <a class="cursor:pointer;"
+                                            href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                            wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
                                         </a>
                                     </div>
                                 </li>
-                            @else
-                                @if ($evaluation->questions->count() > 0)
-                                    @php
-                                        $completed = in_array($evaluation->id, $evaluationsUser);
-                                    @endphp
-                                    <li style="list-style-type: disc;">
-                                        <div>
-                                            <span
-                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
-                                            <a class="cursor:pointer;"
-                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
-                                            </a>
-                                        </div>
-                                    </li>
-                                @endif
                             @endif
-                        @endforeach --}}
+                        @endif
+                    @endforeach
                     </ul>
                 </li>
             @endforeach
         </ul>
     </div>
-    {{-- @section('scripts')
+    @section('scripts')
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
             var player;
             var complet;
+
+            function refreshPage($type) {
+                if($type==="boton"){
+                    setTimeout(function() {
+                        initializeYouTubePlayer();
+                    }, 1000); // Puedes ajustar el tiempo de espera si es necesario
+                }else {
+                    setTimeout(function() {
+                        initializeYouTubePlayer();
+                    }, 1500);
+                }
+            }
             document.addEventListener('livewire:update', function() {
                 console.log('Componente Livewire actualizado');
                 initializeYouTubePlayer();
@@ -300,5 +315,5 @@
                 }, 1000); // Actualiza cada segundo
             }
         </script>
-    @endsection --}}
+    @endsection
 </div>
