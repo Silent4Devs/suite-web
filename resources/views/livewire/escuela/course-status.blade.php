@@ -118,14 +118,14 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
         <div class="d-flex align-items-start" wire:ignore>
-            {{-- <div class="img-person" style="min-width: 40px; min-height: 40px;">
+            <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name }}">
                 {{ $course->instructor->name }}
-            </div> --}}
+            </div>
             <div>
                 {{-- {{ $course->instructor->name }} --}}
-                {{-- <p class="ml-2">{{ $course->instructor->name }} </p> --}}
+                <p class="ml-2">{{ $course->instructor->name }} </p>
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>
@@ -202,7 +202,7 @@
                                 </div>
                             </li>
                         @else
-                            {{-- @if ($evaluation->questions->count() > 0)
+                            @if ($evaluation->questions->count() > 0)
                                 @php
                                     $completed = in_array($evaluation->id, $evaluationsUser);
                                 @endphp
@@ -216,7 +216,7 @@
                                         </a>
                                     </div>
                                 </li>
-                            @endif --}}
+                            @endif
                         @endif
                     @endforeach
                     </ul>
