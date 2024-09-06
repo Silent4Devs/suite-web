@@ -28,105 +28,93 @@ class CuestionarioEvDesempenoPrincipal extends Component
 
     public $competencias_autoevaluado;
 
-    public $dataFromChild1;
+    public $dataFromChild1 = null;
 
-    public $dataFromChild2;
+    public $dataFromChild2 = null;
 
     protected $listeners = ['dataFromChild1', 'dataFromChild2'];
 
     public function mount($evD, $evld, $per, $ao, $ac)
     {
-        $this->evaluacionDesempeno = $evD;
-        $this->evaluado = $evld;
         $this->periodo = $per;
         $this->acceso_objetivos = $ao;
         $this->acceso_competencias = $ac;
 
         $evaluador = User::getCurrentUser()->empleado;
 
-        $evaluacion = EvaluacionDesempeno::find($evD->id);
-        $evaluado = $evaluacion->evaluados->find($this->evaluado->id);
+        $evaluacion = EvaluacionDesempeno::find($evD);
+        $this->evaluacionDesempeno = $evaluacion;
+        $evaluado = $evaluacion->evaluados->find($evld);
+        $this->evaluado = $evaluado;
 
-        if ($evaluacion->activar_objetivos == true) {
-            $this->buscarObjetivos($evaluador, $evaluacion, $evaluado);
+        if ($evaluacion->activar_objetivos) {
+            $this->buscarEvaluacion($evaluador, $evaluado, 'Objetivos');
         }
 
-        if ($evaluacion->activar_competencias == true) {
-            $this->buscarCompetencias($evaluador, $evaluacion, $evaluado);
+        if ($evaluacion->activar_competencias) {
+            $this->buscarEvaluacion($evaluador, $evaluado, 'Competencias');
         }
 
-        if ($evaluado->empleado->id == $evaluador->id) {
-            $this->autoevaluacion = true;
-        }
-
-        if ($evaluado->empleado->id == $evaluador->id) {
-            $this->autoevaluacion = true;
-        }
-
-        $this->progresoEvaluacion();
+        $this->autoevaluacion = ($evaluado->empleado->id == $evaluador->id);
     }
 
     public function render()
     {
+        $this->progresoEvaluacion();
+
         return view('livewire.cuestionario-ev-desempeno-principal');
     }
 
-    // Method to receive data from Child1
-    public function dataFromChild1($data)
+    public function dataFromChild1($data = null)
     {
         $this->dataFromChild1 = $data;
     }
 
-    public function dataFromChild2($data)
+    public function dataFromChild2($data = null)
     {
         $this->dataFromChild2 = $data;
     }
 
-    public function buscarCompetencias($evaluador, $evaluacion, $evaluado)
+    private function buscarEvaluacion($evaluador, $evaluado, $tipo)
     {
-        $busqueda_evaluador = $evaluado->evaluadoresCompetencias($this->periodo)->where('evaluador_desempeno_id', $evaluador->id)->first();
-        $busqueda_autoevaluador = $evaluado->evaluadoresCompetencias($this->periodo)->where('evaluador_desempeno_id', $evaluado->evaluado_desempeno_id)->first();
+        $metodo = 'evaluadores'.$tipo;
+        $busqueda_evaluador = $evaluado->$metodo($this->periodo)->where('evaluador_desempeno_id', $evaluador->id)->first();
+        $busqueda_autoevaluador = $evaluado->$metodo($this->periodo)->where('evaluador_desempeno_id', $evaluado->evaluado_desempeno_id)->first();
 
         if ($busqueda_evaluador || $busqueda_autoevaluador) {
+            $prop_evaluado = 'competencias_evaluado';
+            $prop_autoevaluado = 'competencias_autoevaluado';
+
+            if ($tipo === 'Objetivos') {
+                $prop_evaluado = 'objetivos_evaluado';
+                $prop_autoevaluado = 'objetivos_autoevaluado';
+            }
 
             if ($busqueda_evaluador) {
-                $this->competencias_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
+                $this->$prop_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
             }
 
             if ($busqueda_autoevaluador) {
-                $this->competencias_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
-            }
-        }
-    }
-
-    public function buscarObjetivos($evaluador, $evaluacion, $evaluado)
-    {
-        $busqueda_evaluador = $evaluado->evaluadoresObjetivos($this->periodo)->where('evaluador_desempeno_id', $evaluador->id)->first();
-        $busqueda_autoevaluador = $evaluado->evaluadoresObjetivos($this->periodo)->where('evaluador_desempeno_id', $evaluado->evaluado_desempeno_id)->first();
-
-        if ($busqueda_evaluador || $busqueda_autoevaluador) {
-            if ($busqueda_evaluador) {
-                $this->objetivos_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
-            }
-
-            if ($busqueda_autoevaluador) {
-                $this->objetivos_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
+                $this->$prop_autoevaluado = $busqueda_autoevaluador->preguntasCuestionario->where('periodo_id', $this->periodo)->sortBy('id');
             }
         }
     }
 
     public function progresoEvaluacion()
     {
-        if ($this->evaluacionDesempeno->activar_objetivos == true) {
-            $nPreguntasC = $this->competencias_evaluado->count();
-            $contestadasC = $this->competencias_evaluado->where('estatus_calificado', true)->count();
-            $this->dataFromChild2 = round((($contestadasC / $nPreguntasC) * 100), 2);
-        }
+        $this->calcularProgreso('competencias_evaluado', 'dataFromChild2');
+        $this->calcularProgreso('objetivos_evaluado', 'dataFromChild1');
+    }
 
-        if ($this->evaluacionDesempeno->activar_competencias == true) {
-            $nPreguntasO = $this->objetivos_evaluado->count();
-            $contestadasO = $this->objetivos_evaluado->where('estatus_calificado', true)->count();
-            $this->dataFromChild1 = round((($contestadasO / $nPreguntasO) * 100), 2);
+    private function calcularProgreso($propiedad, $destino)
+    {
+        if ($this->evaluacionDesempeno->{'activar_'.str_replace('_evaluado', '', $propiedad)}) {
+            $total = $this->$propiedad->count();
+            $contestadas = $this->$propiedad->where('estatus_calificado', true)->count();
+            $this->$destino = round((($contestadas / $total) * 100), 2);
+            if ($this->$destino == 100.0) {
+                $this->$destino = 100;
+            }
         }
     }
 }

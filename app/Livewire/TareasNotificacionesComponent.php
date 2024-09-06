@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -18,13 +19,13 @@ class TareasNotificacionesComponent extends Component
 
     public function render()
     {
-        $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
+        $this->notificaciones_sin_leer = User::getCurrentUser()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
 
         return view('livewire.tareas-notificaciones-component');
     }
 
     public function getTotalNotificaciones()
     {
-        $this->notificaciones_sin_leer = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
+        $this->notificaciones_sin_leer = User::getCurrentUser()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->count();
     }
 }

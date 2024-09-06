@@ -24,7 +24,7 @@
                             @endif
                         </div>
                         <div class="col-6">
-                            <span><strong>Grupo:</strong> {{$area->grupo->nombre}}</span>
+                            <span><strong>Grupo:</strong> {{ $area->grupo->nombre ?? '' }}</span>
                             <br>
                             <span><strong>Reportará a:</strong> {{$area->supervisor->name}}</span>
                             <br>

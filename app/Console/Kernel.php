@@ -7,6 +7,7 @@ use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
 use App\Console\Commands\NotificarRecursos;
 use App\Console\Commands\NotificarUsuarioCapacitacion;
+use App\Console\Commands\SendCertificateReminder;
 use App\Console\Commands\TransferFile;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -61,7 +62,7 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
 
         //dump automatico de base de datos
-        $schedule->command('php artisan snapshot:cleanup --keep=15')
+        $schedule->command('php artisan snapshot:cleanup --keep=7')
             ->timezone('America/Mexico_City')
             //->days([2, 5])
             ->daily()
@@ -102,6 +103,14 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
+
+        //Schedule certificates the command to run mouthn
+        // $schedule->command(SendCertificateReminder::class)
+        //     ->timezone('America/Mexico_City')
+        //     ->daily()
+        //     ->withoutOverlapping()
+        //     ->onOneServer()
+        //     ->sentryMonitor();
     }
 
     /**

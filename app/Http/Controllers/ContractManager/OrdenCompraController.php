@@ -57,7 +57,7 @@ class OrdenCompraController extends Controller
     {
         $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin') || $user->roles->contains('title', 'Compras')) {
+        if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getOCAll();
 
             return datatables()->of($requisiciones)->toJson();
@@ -422,18 +422,17 @@ class OrdenCompraController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = true;
         $user = User::getCurrentUser();
+        $empleadoActual = $user->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->roles->contains('title', 'Compras')) {
+        if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getOCAll()->where('firma_comprador_orden', null);
             toast('Filtro compradores aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         } else {
-            $requisiciones = KatbolRequsicion::getOCAll()->where('firma_comprador_orden', null)->where('id_user', $user->id);
+            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'comprador');
             toast('Filtro compradores aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         }
+
+        return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado2()
@@ -442,19 +441,19 @@ class OrdenCompraController extends Controller
         $buttonSolicitante = true;
         $buttonFinanzas = false;
         $buttonCompras = false;
-        $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin') || $user->roles->contains('title', 'Compras')) {
+        $user = User::getCurrentUser();
+        $empleadoActual = $user->empleado;
+
+        if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null);
             toast('Filtro solicitante aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         } else {
-            $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null)->where('id_user', $user->id);
+            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'solicitante');
             toast('Filtro solicitante aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         }
+
+        return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function filtrarPorEstado()
@@ -463,21 +462,20 @@ class OrdenCompraController extends Controller
         $buttonSolicitante = false;
         $buttonFinanzas = true;
         $buttonCompras = false;
-        $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin') || $user->roles->contains('title', 'Compras')) {
+        $user = User::getCurrentUser();
+        $empleadoActual = $user->empleado;
+
+        if ($user->roles->contains('title', 'Admin')) {
 
             $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null);
             toast('Filtro finanzas aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         } else {
-
-            $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null)->where('id_user', $user->id);
+            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'finanzas');
             toast('Filtro finanzas aplicado!', 'success');
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         }
+
+        return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function indexAprobadores()
@@ -486,18 +484,17 @@ class OrdenCompraController extends Controller
         $buttonSolicitante = false;
         $buttonFinanzas = false;
         $buttonCompras = false;
+
         $user = User::getCurrentUser();
+        $empleadoActual = $user->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->roles->contains('title', 'Compras')) {
+        if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getOCAll();
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
         } else {
-
-            $requisiciones = KatbolRequsicion::getOCAll()->where('id_user', $user->id);
-
-            return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
+            $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'general');
         }
+
+        return view('contract_manager.ordenes-compra.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras'));
     }
 
     public function firmarAprobadores($id)

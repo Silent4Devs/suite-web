@@ -50,6 +50,99 @@
         </div>
     </div>
 
+    <div class="card card-body">
+        <div class="card-filtros-fodas mt-3">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="">Fecha</label>
+                    <input id="input-search-fechas" type="date" class="form-control" onchange="buscadorGlobal()">
+                </div>
+
+                <div class="col-md-8">
+                    <label for="">Buscar</label>
+                    <input id="input-search" type="text" class="form-control" onkeyup="buscadorGlobal()">
+                </div>
+            </div>
+        </div>
+
+        <div class="text-left mt-4">
+            <a href="{{ route('admin.rh.evaluaciones-desempeno.create-evaluacion') }}" class="btn btn-info"
+                style="background-color: #59BB87 !important; color:#fff !important;">
+                Crear Evaluación
+            </a>
+        </div>
+
+        <div class="caja-cards mt-5">
+            @foreach ($evaluaciones as $evaluacion)
+                <div class="card card-foda" style="min-height: 260px !important;">
+                    <div class="card-header">
+                        <strong> {{ Carbon\Carbon::parse($evaluacion->created_at)->format('d/m/Y') }}</strong>
+                        <div class="dropdown btn-options-foda-card">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                                @endif
+                                @if ($evaluacion->estatus == 0)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                @endif
+                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
+                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-top: 5px;">
+                        <h3>
+                            {{ $evaluacion->nombre }}
+                        </h3>
+                        @switch($evaluacion->estatus)
+                            @case(0)
+                                <span class="badge"
+                                    style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Borrador</small>
+                                </span>
+                            @break
+
+                            @case(1)
+                                <span class="badge"
+                                    style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Activa</small>
+                                </span>
+                            @break
+
+                            @case(2)
+                                <span class="badge"
+                                    style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Cancelada</small>
+                                </span>
+                            @break
+
+                            @case(3)
+                                <span class="badge"
+                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Finalizada</small>
+                                </span>
+                            @break
+
+                            @default
+                                <span class="badge"
+                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
+                                    <small>Borrador</small>
+                                </span>
+                        @endswitch
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
     <div class="card card-body mt-3">
         <div class="row">
             <div class="col-6">
@@ -209,7 +302,8 @@
             </div>
             <div class="col-2">
                 <div class="anima-focus">
-                    <select class="form-control" name="area_mensual" id="area_mensual" wire:model.live="area_mensual">
+                    <select class="form-control" name="area_mensual" id="area_mensual"
+                        wire:model.live="area_mensual">
                         <option value="todas">Todas</option>
                         @foreach ($areas as $key => $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -225,99 +319,6 @@
                     <canvas id="resultadosmensuales"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="card card-body">
-        <div class="card-filtros-fodas mt-3">
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="">Fecha</label>
-                    <input id="input-search-fechas" type="date" class="form-control" onchange="buscadorGlobal()">
-                </div>
-
-                <div class="col-md-8">
-                    <label for="">Buscar</label>
-                    <input id="input-search" type="text" class="form-control" onkeyup="buscadorGlobal()">
-                </div>
-            </div>
-        </div>
-
-        <div class="text-left mt-4">
-            <a href="{{ route('admin.rh.evaluaciones-desempeno.create-evaluacion') }}" class="btn btn-info"
-                style="background-color: #59BB87 !important; color:#fff !important;">
-                Crear Evaluación
-            </a>
-        </div>
-
-        <div class="caja-cards mt-5">
-            @foreach ($evaluaciones as $evaluacion)
-                <div class="card card-foda" style="min-height: 260px !important;">
-                    <div class="card-header">
-                        <strong> {{ Carbon\Carbon::parse($evaluacion->created_at)->format('d/m/Y') }}</strong>
-                        <div class="dropdown btn-options-foda-card">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
-                                    <a class="dropdown-item"
-                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
-                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
-                                @endif
-                                @if ($evaluacion->estatus == 0)
-                                    <a class="dropdown-item"
-                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
-                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                @endif
-                                <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
-                                    <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin-top: 5px;">
-                        <h3>
-                            {{ $evaluacion->nombre }}
-                        </h3>
-                        @switch($evaluacion->estatus)
-                            @case(0)
-                                <span class="badge"
-                                    style="color: #FF9900; background-color: 'rgba(255, 200, 0, 0.2)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Borrador</small>
-                                </span>
-                            @break
-
-                            @case(1)
-                                <span class="badge"
-                                    style="color: #039C55; background-color: 'rgba(3, 156, 85, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Activa</small>
-                                </span>
-                            @break
-
-                            @case(2)
-                                <span class="badge"
-                                    style="color: #FF0000; background-color: 'rgba(221, 4, 131, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Cancelada</small>
-                                </span>
-                            @break
-
-                            @case(3)
-                                <span class="badge"
-                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Finalizada</small>
-                                </span>
-                            @break
-
-                            @default
-                                <span class="badge"
-                                    style="color: #0080FF; background-color: 'rgba(0, 128, 255, 0.1)'; border-radius: 7px; padding: 5px; font-weight: 300; font-size:16px;">
-                                    <small>Borrador</small>
-                                </span>
-                        @endswitch
-                    </div>
-                </div>
-            @endforeach
         </div>
     </div>
 </div>
@@ -431,7 +432,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
             const data = @json($datos_evaluaciones_anuales);
             const general_anual = @json($general_anual);
             const objetivos_anual = @json($objetivos_anual);
@@ -440,8 +441,11 @@
             // Extract keys (years) and values (data points)
             const anos = Object.keys(data);
             const objetivos = anos.map(year => data[year]['objetivos']);
+            const colorObjetivos = anos.map(year => data[year]['colorObjetivos']);
             const competencias = anos.map(year => data[year]['competencias']);
+            const colorCompetencias = anos.map(year => data[year]['colorCompetencias']);
             const general = anos.map(year => data[year]['general']);
+            const colorGeneral = anos.map(year => data[year]['colorGeneral']);
 
             // Construct datasets based on boolean values
             const datasets = [];
@@ -450,6 +454,7 @@
                 datasets.push({
                     label: 'Objetivos',
                     data: objetivos,
+                    backgroundColor: colorObjetivos,
                     borderWidth: 1
                 });
             }
@@ -458,6 +463,7 @@
                 datasets.push({
                     label: 'Competencias',
                     data: competencias,
+                    backgroundColor: colorCompetencias,
                     borderWidth: 1
                 });
             }
@@ -466,6 +472,7 @@
                 datasets.push({
                     label: 'General',
                     data: general,
+                    backgroundColor: colorGeneral,
                     borderWidth: 1
                 });
             }
@@ -489,34 +496,43 @@
     </script>
     {{-- Codigo cambio de filtros --}}
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('dataAnual', (datosAnuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataAnual', (datosAnualesWrapper) => {
+                const datosAnuales = datosAnualesWrapper.datosAnuales;
+
                 const anosAnual = datosAnuales.labels;
 
                 const datasets = [];
                 if (datosAnuales.filtro_objetivos_anual) {
                     const objetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].objetivos);
+                    const colorObjetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].colorObjetivos);
                     datasets.push({
                         label: 'Objetivos',
                         data: objetivosAnual,
+                        backgroundColor: colorObjetivosAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_competencias_anual) {
                     const competenciasAnual = anosAnual.map(ano => datosAnuales.data[ano].competencias);
+                    const colorCompetenciasAnual = anosAnual.map(ano => datosAnuales.data[ano]
+                        .colorCompetencias);
                     datasets.push({
                         label: 'Competencias',
                         data: competenciasAnual,
+                        backgroundColor: colorCompetenciasAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_general_anual) {
                     const generalAnual = anosAnual.map(ano => datosAnuales.data[ano].general);
+                    const colorGeneralAnual = anosAnual.map(ano => datosAnuales.data[ano].colorGeneral);
                     datasets.push({
                         label: 'General',
                         data: generalAnual,
+                        backgroundColor: colorGeneralAnual,
                         borderWidth: 1
                     });
                 }
@@ -547,7 +563,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const anos = @json($anos_evaluaciones);
             const data = @json($datos_evaluaciones_anuales);
@@ -584,41 +600,43 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:init', function() {
-            Livewire.on('dataMensual', (datosMensuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataMensual', (datosMensualesWrapper) => {
+                const datosMensuales = datosMensualesWrapper.datosMensuales;
+
                 const mesSeleccionado = datosMensuales.labels[0]; // Solo un mes
                 const datosMes = datosMensuales.data[mesSeleccionado];
 
                 const datasets = [];
                 if (datosMensuales.filtro_objetivos_mensual) {
                     const objetivosMensual = datosMes?.objetivos || 0;
+                    const colorObjetivosMensual = datosMes?.colorObjetivos || 0;
                     datasets.push({
                         label: 'Objetivos',
                         data: [objetivosMensual],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: colorObjetivosMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_competencias_mensual) {
                     const competenciasMensual = datosMes?.competencias || 0;
+                    const colorCompetenciasMensual = datosMes?.colorCompetencias || 0;
                     datasets.push({
                         label: 'Competencias',
                         data: [competenciasMensual],
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: colorCompetenciasMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_general_mensual) {
                     const generalMensual = datosMes?.general || 0;
+                    const colorGeneralMensual = datosMes?.colorGeneral || 0;
                     datasets.push({
                         label: 'General',
                         data: [generalMensual],
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: colorGeneralMensual,
                         borderWidth: 1
                     });
                 }

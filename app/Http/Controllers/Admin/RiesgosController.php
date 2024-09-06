@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\RiesgosEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRiesgosRequest;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
 use App\Models\AprobadorSeleccionado;
@@ -17,7 +18,6 @@ use App\Models\Proceso;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
-use App\Http\Requests\StoreRiesgosRequest;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -97,7 +97,7 @@ class RiesgosController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $riesgo = RiesgoIdentificado::with('reporto')->where('archivado', false)->get();
+        $riesgo = RiesgoIdentificado::with('reporto:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
     }
@@ -110,7 +110,7 @@ class RiesgosController extends Controller
 
         $submodulo = 4;
 
-        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos');
+        $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos')->load('reporto');
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
         if (is_null($analisis)) {

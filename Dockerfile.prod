@@ -1,59 +1,46 @@
-# Use unit:php as the base image
-FROM unit:php8.2
-
-# Prepare workfir
-# RUN mkdir -p /var/www/html
-# WORKDIR /var/www/html
-
-# Set timezone
-ENV TZ=America/Mexico_City
+FROM dunglas/frankenphp:latest-builder-php8.2-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     bash \
     curl \
-    libfreetype6-dev \
+    freetype-dev \
     g++ \
     gcc \
     git \
-    libicu-dev \
-    #libicu63 \
+    icu-dev \
+    icu-libs \
     libc-dev \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
-    libonig-dev \
+    oniguruma-dev \
     yarn \
     openssh-client \
-    libpq5 \
+    postgresql-libs \
     postgresql-client \
     rsync \
-    zlib1g-dev \
+    zlib-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    cron
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -64,13 +51,28 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sodium \
     excimer \
     pcntl \
-    posix
+    posix \
+    amqp \
+    ftp
 
-COPY config.json /docker-entrypoint.d/config.json
+COPY composer.json ./
+COPY composer.lock ./
+#RUN composer update
+RUN composer dump-autoload
+RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
 
-COPY entrypoint.sh /docker-entrypoint.d/entrypoint.sh
-# If you want to include entrypoint.sh, uncomment the line above
+# Set working directory
+WORKDIR /app
 
-RUN chmod +x /docker-entrypoint.d/entrypoint.sh
-# If entrypoint.sh needs execution permission,
-EXPOSE 9090 443
+# Copy application files
+COPY . /app
+
+# Ensure permissions are correct
+RUN chown -R www-data:www-data /app \
+    && chmod 755 -R /app
+
+EXPOSE 80 443 8000
+
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1

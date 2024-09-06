@@ -26,6 +26,8 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 {
     use LivewireAlert;
 
+    protected $listeners = ['enviarPapelera'];
+
     public $id_emp;
 
     public $front_usuario;
@@ -92,18 +94,18 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     protected $rules = [
         'objetivo_estrategico' => 'required|string|max:255',
-        'descripcion' => 'string',
+        'descripcion' => 'nullable|string',
         'select_categoria' => 'required|integer',
         'KPI' => 'required|string|max:255',
         'select_unidad' => 'required|integer',
         'id_emp' => 'required|integer',
-        'ev360' => 'required|boolean',
-        'mensual' => 'required|boolean',
-        'bimestral' => 'required|boolean',
-        'trimestral' => 'required|boolean',
-        'semestral' => 'required|boolean',
-        'anualmente' => 'required|boolean',
-        'abierta' => 'required|boolean',
+        'ev360' => 'nullable|boolean',
+        'mensual' => 'nullable|boolean',
+        'bimestral' => 'nullable|boolean',
+        'trimestral' => 'nullable|boolean',
+        'semestral' => 'nullable|boolean',
+        'anualmente' => 'nullable|boolean',
+        'abierta' => 'nullable|boolean',
         'array_escalas_objetivos.*.condicional' => 'required|integer|between:1,5',
         'array_escalas_objetivos.*.valor' => 'required|numeric',
         'array_escalas_objetivos.*.parametro' => 'required|string|max:255',
@@ -300,17 +302,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $estatus = 0;
         }
 
-        DB::beginTransaction();
-
         try {
+            DB::beginTransaction();
             $objetivo = Objetivo::create([
                 'nombre' => $this->objetivo_estrategico,
-                'descripcion' => $this->descripcion,
-                'tipo_id' => $this->select_categoria,
+                'descripcion_meta' => $this->descripcion,
+                'tipo_id' => intval($this->select_categoria),
                 'KPI' => $this->KPI,
-                'metrica_id' => $this->select_unidad,
-                'empleado_id' => $this->id_emp,
-                'estatus' => $estatus,
+                'metrica_id' => intval($this->select_unidad),
+                'esta_aprobado' => $estatus,
             ]);
 
             ObjetivoEmpleado::create([
@@ -403,12 +403,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 ]);
             }
 
-            DB::commit();
-
-            $this->resetInputsObjetivo();
-            $this->resetInputsPeriodos();
-            $this->resetInputsEscalas();
-
             $this->alert('success', 'Objetivo Creado', [
                 'position' => 'center',
                 'timer' => 6000,
@@ -418,10 +412,12 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 'confirmButtonText' => 'Entendido',
                 'timerProgressBar' => true,
             ]);
+
+            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $this->forgetCache();
-
+            dd($th);
             $this->alert('error', 'Error al crear Objetivo', [
                 'position' => 'center',
                 'timer' => 6000,
@@ -432,25 +428,35 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 'timerProgressBar' => true,
             ]);
         }
+
+        $this->resetInputsObjetivo();
+        $this->resetInputsPeriodos();
+        $this->resetInputsEscalas();
+    }
+
+    public function confirmarEnvioPapelera($objetivoId)
+    {
+        $this->dispatch('confirmarEnvioPapelera', ['objetivoId' => $objetivoId]);
     }
 
     public function enviarPapelera($id_obj)
     {
+        // dump(1, $id_obj);
         $objetivo = ObjetivoEmpleado::find($id_obj);
-
+        // dump(2, $objetivo);
         $objetivo->update([
             'papelera' => true,
         ]);
 
-        // $this->alert('success', 'Objetivo Desechado', [
-        //     'position' => 'center',
-        //     'timer' => 6000,
-        //     'toast' => false,
-        //     'text' => 'El objetivo ha sido enviado a la papelera.',
-        //     'showConfirmButton' => true,
-        //     'confirmButtonText' => 'Entendido',
-        //     'timerProgressBar' => true,
-        // ]);
+        $this->alert('success', 'Objetivo Desechado', [
+            'position' => 'center',
+            'timer' => 6000,
+            'toast' => false,
+            'text' => 'El objetivo ha sido enviado a la papelera.',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Entendido',
+            'timerProgressBar' => true,
+        ]);
     }
 
     public function crearUnidad()

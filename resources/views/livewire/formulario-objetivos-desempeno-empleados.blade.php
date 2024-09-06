@@ -57,7 +57,7 @@
                                     class="form-control" placeholder="">
                                     <option value="">Seleccione Unidad</option>
                                     @foreach ($unidades as $unidad)
-                                        <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
+                                        <option value={{ $unidad->id }}>{{ $unidad->definicion }}</option>
                                     @endforeach
                                 </select>
                                 <label for="unidad-medida" class="required">Unidad de medida</label>
@@ -282,15 +282,16 @@
                 </div>
 
                 <div class="text-right">
-                    <a wire:click.prevent="crearObjetivo" class="btn btn-outline-primary"
+                    <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"
                         style="background-color: #ECFBFF; color: #006DDB; border-radius: 100px !important;">
                         Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+                    </button>
                 </div>
             @endif
 
         </div>
     @endif
+
     <div class="card card-body">
         <div class="info-first-config">
             <div class="col-6">
@@ -314,12 +315,8 @@
             <hr class="my-4">
         </div>
 
-        <div wire:loading>
-            <h1>Guardando</h1>
-        </div>
-
         <div class="datatable-rds">
-            <table class="table datatable" id="your-table-id'">
+            <table class="table datatable">
                 <thead>
                     <tr>
                         <th>Categoría</th>
@@ -352,7 +349,8 @@
 
                                     @case(2)
                                         <span class="badge badge-danger">Rechazado
-                                            <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                                            <i class="fas fa-comment ml-1"
+                                                title="{{ $obj->objetivo->comentarios_aprobacion }}"></i>
                                         </span>
                                     @break
 
@@ -368,7 +366,6 @@
                                     <a
                                         wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
                                 @endif
-
                             </td>
                             <td>
                                 <div class="dropdown btn-options-foda-card">
@@ -378,7 +375,7 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                            wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
+                                            onclick="confirmarEnvioPapelera({{ $obj->id }})">Enviar a la
                                             Papelera</a>
                                     </div>
                                 </div>
@@ -392,4 +389,32 @@
     <div>
         <a href="{{ route('admin.ev360-objetivos-periodo.config') }}" class="btn btn-outline-primary">Regresar</a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.confirmarEnvioPapelera = function(objetivoId) {
+                window.dispatchEvent(new CustomEvent('confirmarEnvioPapelera', {
+                    detail: {
+                        objetivoId
+                    }
+                }));
+            };
+
+            window.addEventListener('confirmarEnvioPapelera', event => {
+                Swal.fire({
+                    title: 'Enviar a Papelera',
+                    text: "¿Esta seguro que desea enviar este objetivo a la papelera?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, enviar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('enviarPapelera', [event.detail.objetivoId]);
+                    }
+                });
+            });
+        });
+    </script>
 </div>

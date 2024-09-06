@@ -285,7 +285,7 @@
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
                                     html += `
-                                            <button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
+                                            <button class="btn" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
                                                 <i class="fas fa-archive" ></i></a>
                                             </button>
 				       					</div>`;
@@ -327,7 +327,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_denuncias_desk.ajax.reload();
+                                    tabla_denuncias_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Denuncia Archivada',
                                         '',

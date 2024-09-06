@@ -7,6 +7,7 @@ use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Platform;
 use App\Models\Escuela\Section;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -33,41 +34,53 @@ class CoursesLesson extends Component
 
     public $openElementId;
 
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
+    public $formName;
+
+    #[Validate('required', message: 'El campo es requerido')]
+    public $formPlatformId = 1;
+
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x')]
+    public $formUrl;
+
     protected $listeners = ['closeCollapse'];
 
-    protected $rules = [
-        'lesson.name' => 'required',
-        'lesson.platform_id' => 'required',
-        'lesson.url' => ['regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
-    ];
+    // protected $rules = [
+    //     'lesson.name' => 'required',
+    //     'lesson.platform_id' => 'required',
+    //     'lesson.url' => ['regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
+    // ];
 
     public function mount(Section $section)
     {
         $this->section = $section;
-        $this->lesson = new Lesson;
+        // $this->lesson = new Lesson;
     }
 
     public function render()
     {
         $this->platforms = Platform::get();
+        // dd($this->lesson);
 
         return view('livewire.escuela.instructor.courses-lesson');
     }
 
     public function store()
     {
-        $rules = [
-            'name' => 'required',
-            'platform_id' => 'required',
-            'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
-            // 'file' => 'required',
-        ];
+        // $rules = [
+        //     'name' => 'required',
+        //     'platform_id' => 'required',
+        //     'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
+        //     // 'file' => 'required',
+        // ];
 
         if ($this->platform_id == 2) {
             $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
 
-        $this->validate($rules);
+        // $this->validate($rules);
 
         $resource = Lesson::create([
             'name' => $this->name,
@@ -95,26 +108,36 @@ class CoursesLesson extends Component
 
     public function edit(Lesson $lesson)
     {
-        // dd($lesson->resource);
+
         $this->resetValidation();
         $this->lesson = $lesson;
+        // dd($lesson->name);
+        $this->formName = $lesson->name;
+        $this->formPlatformId = $lesson->platform_id;
+        $this->formUrl = $lesson->url;
+
     }
 
     public function update()
     {
         // dd($this->lesson);
-        $rules = [
-            'lesson.name' => 'required',
-            'platform_id' => 'required',
-            'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
-            // 'file' => 'required',
-        ];
+        // $rules = [
+        //     'lesson.name' => 'required',
+        //     'platform_id' => 'required',
+        //     'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
+        //     // 'file' => 'required',
+        // ];
+        $this->validateOnly('formName');
+        $this->validateOnly('formPlatformId');
+        $this->validateOnly('formUrl');
 
         if ($this->lesson->platform_id == 2) {
             $this->rules['lesson.url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
 
-        $this->validate();
+        $this->lesson->name = $this->formName;
+        $this->lesson->platform_id = $this->formPlatformId;
+        $this->lesson->url = $this->formUrl;
 
         $this->lesson->save();
         if ($this->file) {

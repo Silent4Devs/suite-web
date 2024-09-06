@@ -63,7 +63,7 @@ class Ev360ResumenTabla extends Component
             return [
                 'evaluado' => $evaluado->name,
                 'puesto' => $evaluado->puesto,
-                'area' => $evaluado->area->area,
+                'area' => ! empty($evaluado->area->area) ? $evaluado->area->area : 'Sin área',
                 'informacion_evaluacion' => $informacion,
             ];
         });
@@ -341,7 +341,8 @@ class Ev360ResumenTabla extends Component
                     ->orderBy('id')->get();
 
                 $evaluadores_objetivos->push([
-                    'id' => $evaluado->supervisor_id, 'nombre' => $evaluado->name,
+                    'id' => $evaluado->supervisor_id,
+                    'nombre' => $evaluado->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
@@ -375,7 +376,8 @@ class Ev360ResumenTabla extends Component
                 ->orderBy('id')->get();
 
             $evaluadores_objetivos->push([
-                'id' => $evaluado->id, 'nombre' => $evaluado->name,
+                'id' => $evaluado->id,
+                'nombre' => $evaluado->name,
                 'esSupervisor' => false,
                 'esAutoevaluacion' => true,
                 'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {

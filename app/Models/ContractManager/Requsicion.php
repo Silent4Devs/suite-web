@@ -272,6 +272,106 @@ class Requsicion extends Model implements Auditable
         return $coleccion;
     }
 
+    public static function ordenesCompraAprobador($id_empleado, $filtro)
+    {
+        $requisiciones = self::where('archivo', false)
+            ->orderByDesc('id')
+            ->get();
+
+        $coleccion = collect();
+
+        $ordenes = $requisiciones->where('firma_compras', '!=', null);
+
+        switch ($filtro) {
+            case 'general':
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        if (! is_null($ord->firma_comprador_orden) && $registro->solicitante_id == $id_empleado && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+
+            case 'comprador':
+                // code...
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+
+            case 'solicitante':
+                // code...
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if (! is_null($ord->firma_comprador_orden) && $registro->solicitante_id == $id_empleado && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+
+            case 'finanzas':
+                // code...
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+
+            default:
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        if (! is_null($ord->firma_comprador_orden) && $registro->solicitante_id == $id_empleado && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+        }
+
+        // Retornamos la colección al final
+        return $coleccion;
+    }
+
     //relacion-contrato
     public function contrato()
     {

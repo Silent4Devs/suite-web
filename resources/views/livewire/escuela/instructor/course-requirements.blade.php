@@ -6,8 +6,8 @@
                 @if ($requirement->id == $item->id)
                 <div class="registro rounded p-2">
                     <form wire:submit='update'>
-                        <input wire:model.live="requirement.name" class="form-control">
-                        @error('requirement.name') <span class="text-danger">{{ $message }}</span> @enderror
+                        <input wire:model.live="formName" class="form-control">
+                        @error('formName') <span class="text-danger">{{ $message }}</span> @enderror
                     </form>
                 </div>
                 @else

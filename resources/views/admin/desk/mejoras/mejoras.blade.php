@@ -1,5 +1,5 @@
 <style>
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -47,38 +47,38 @@
 
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
-<div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/mejoras')}}">Crear reporte</a>
-</div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}">Crear reporte</a>
+    </div>
 @endcan
-    @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
-        <table class="datatable tabla_mejoras" id="tabla_mejoras">
-            <thead>
-             <tr style="border: none !important;">
-                 <th colspan="4" style="background-color: #F5F7FA;"></th>
-                 <th colspan="7" style="border:1px solid #ccc; text-align:center;">Reporto</th>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_mejoras" id="tabla_mejoras">
+        <thead>
+            <tr style="border: none !important;">
+                <th colspan="4" style="background-color: #F5F7FA;"></th>
+                <th colspan="7" style="border:1px solid #ccc; text-align:center;">Reporto</th>
 
-             </tr>
-                <tr>
-                    <th>Folio</th>
-                 <th style="min-width:200px;">Estatus</th>
-                 <th style="min-width:200px;">Fecha de identificación</th>
-                 <th style="min-width:200px;">Fecha de recepción</th>
-                 <th style="min-width:200px;">Fecha de cierre</th>
-                    <th style="min-width:200px;">Nombre</th>
-                 <th style="min-width:200px;">Área</th>
-                 <th style="min-width:200px;">Puesto</th>
-                    <th style="min-width:200px;">Correo</th>
-                    <th style="min-width:200px;">Teléfono</th>
-                 <th style="min-width: 500px;">Mejora</th>
-                 <th style="min-width:200px;">Tipo de mejora</th>
-                 <th style="min-width:200px;">Proceso</th>
-                    <th style="min-width: 500px;">Descripción</th>
-                 <th style="min-width: 500px;">Beneficios</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
+                <th style="min-width:200px;">Fecha de recepción</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Correo</th>
+                <th style="min-width:200px;">Teléfono</th>
+                <th style="min-width: 500px;">Mejora</th>
+                <th style="min-width:200px;">Tipo de mejora</th>
+                <th style="min-width:200px;">Proceso</th>
+                <th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 500px;">Beneficios</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
     </table>
 </div>
 
@@ -168,7 +168,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -184,7 +184,7 @@
                     ajax: '/admin/desk/mejoras',
                     columnDefs: [
                         {
-                            "targets": [ 2,3,4,8,9,10,12,14 ],
+                            "targets": [2, 3, 4, 8, 9, 10, 12, 14],
                             "visible": false,
                             "searchable": true
                         },
@@ -299,7 +299,7 @@
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
                                     html += `
-                                        <button class="btn archivar" onclick='ArchivarMejora("/admin/desk/${data}/archivarMejoras"); return false;' style="margin-top:-10px">
+                                        <button class="btn" onclick='ArchivarMejora("/admin/desk/${data}/archivarMejoras"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
@@ -327,34 +327,26 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-
                             type: "post",
-
                             url: url,
-
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
-
                             dataType: "json",
-
                             success: function(response) {
-                                console.log(response);
+
                                 if (response.success) {
-                                    tabla_mejoras_desk.ajax.reload();
+                                    tabla_mejoras_desk.ajax.reload(null,false);
                                     Swal.fire(
                                         'Mejora Archivada',
                                         '',
                                         'success'
-                                    )
+                                    );
                                 }
-
                             }
-
                         });
-
                     }
-                })
+                });
             }
 
             let botones_archivar = document.querySelectorAll('.archivar');
@@ -362,7 +354,7 @@
                 boton.addEventListener('click', function(e) {
                     e.preventDefault();
                     let incidente_id = this.getAttribute('data-id');
-                    // console.log(incidente_id);
+
                     let url = `/admin/desk/${incidente_id}/archivarMejoras`;
                 });
             });

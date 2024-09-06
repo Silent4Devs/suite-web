@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DenunciasEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\AnalisisSeguridad;
@@ -9,8 +10,13 @@ use App\Models\AprobadorSeleccionado;
 use App\Models\Denuncias;
 use App\Models\Empleado;
 use App\Models\EvidenciasDenuncia;
+use App\Models\FirmaCentroAtencion;
+use App\Models\FirmaModule;
+use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\User;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -91,7 +97,7 @@ class DenunciasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_denuncias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $denuncias = Denuncias::with('denuncio', 'denunciado')->where('archivado', false)->get();
+        $denuncias = Denuncias::with('denuncio:id,name,foto,email,telefono', 'denunciado:id,name,foto,email,telefono')->where('archivado', false)->get();
 
         return datatables()->of($denuncias)->toJson();
     }
@@ -185,6 +191,8 @@ class DenunciasController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $denuncias->update([
             'anonimo' => $request->anonimo,
             'descripcion' => $request->descripcion,
@@ -193,7 +201,7 @@ class DenunciasController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
-            'fecha_cierre' => $request->fecha_cierre,
+            'fecha_cierre' => $fecha,
         ]);
 
         if ($denuncias->estatus === 'cerrado' || $denuncias->estatus === 'cancelado') {
@@ -267,10 +275,7 @@ class DenunciasController extends Controller
     public function archivadoDenuncia(Request $request, $incidente)
     {
         if ($request->ajax()) {
-            $denuncia = Denuncias::findOrfail(intval($incidente));
-            $denuncia->update([
-                'archivado' => true,
-            ]);
+            Denuncias::where('id', $incidente)->update(['archivado' => true]);
 
             return response()->json(['success' => true]);
         }
@@ -285,10 +290,7 @@ class DenunciasController extends Controller
 
     public function recuperarArchivadoDenuncia($id)
     {
-        $queja = Denuncias::find($id);
-        $queja->update([
-            'archivado' => false,
-        ]);
+        Denuncias::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }
