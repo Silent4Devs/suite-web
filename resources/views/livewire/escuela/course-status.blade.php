@@ -34,20 +34,20 @@
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            <div class="video-curso-box">
+            {{-- <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    {{-- <div class="box-iframe-video-courses d-none">
+                    <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
 
-                    </div> --}}
-                    {{-- <div id="player3" class="w-100"></div> --}}
+                    </div>
+                    <div id="player3" class="w-100"></div>
                     <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
                 @else
                     <p>Sin registro</p>
                 @endif
-            </div>
+            </div> --}}
 
-            <div class="row" style="margin-top: 36px;">
+            {{-- <div class="row" style="margin-top: 36px;">
                 <div class="col-md-6">
                     @if ($current)
                         <h4>{{ $current->name }}</h4>
@@ -58,7 +58,7 @@
                 <div class="col-md-6">
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
-                        {{-- @if ($current->completed)
+                        @if ($current->completed)
                             <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
                                 style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
@@ -66,10 +66,10 @@
                             <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
                                 style="font-size: 30px; cursor: pointer;"></i>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="mt-2 card">
                 <div class="card-body">
@@ -118,19 +118,19 @@
 
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
-        <div class="d-flex align-items-start" wire:ignore>
+        {{-- <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name }}">
-                {{-- {{ $course->instructor->name }} --}}
+                {{ $course->instructor->name }}
             </div>
             <div>
-                {{-- {{ $course->instructor->name }} --}}
+                {{ $course->instructor->name }}
                 <p class="ml-2">{{ $course->instructor->name }} </p>
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
