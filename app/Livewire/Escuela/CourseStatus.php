@@ -62,7 +62,7 @@ class CourseStatus extends Component
             ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
 
-        $this->updateLastReview($fechaYHora, $cursoLastReview);
+        // $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
         $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
@@ -103,149 +103,149 @@ class CourseStatus extends Component
 
     //METODOS
     //cambiamos la lección actual
-    public function changeLesson(Lesson $lesson, $atras = null)
-    {
-        // dd($this->previous);
+    // public function changeLesson(Lesson $lesson, $atras = null)
+    // {
+    //     // dd($this->previous);
 
-        if ($atras == 'previous') {
-            $this->current = $lesson;
+    //     if ($atras == 'previous') {
+    //         $this->current = $lesson;
 
-            return;
-        }
+    //         return;
+    //     }
 
-        if ($this->current->completed) {
+    //     if ($this->current->completed) {
 
-            $this->dispatch('completado');
+    //         $this->dispatch('completado');
 
-            $this->current = $lesson;
+    //         $this->current = $lesson;
 
-            return;
-        }
+    //         return;
+    //     }
 
-        if (! $this->current->completed) {
-            $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
+    //     if (! $this->current->completed) {
+    //         $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
 
-            return;
-        }
+    //         return;
+    //     }
 
-        //$this->current = $lesson;
-    }
+    //     //$this->current = $lesson;
+    // }
 
-    public function completed()
-    {
-        $usuario = User::getCurrentUser();
-        if ($this->current->completed) {
-            //Eliminar registro
-            // Metodo auth me recupera el dato del usuario autentificado
-            $this->current->users()->detach($usuario->id);
-        } else {
-            //Agregar registro
-            $this->current->users()->attach($usuario->id);
-        }
-        $this->current = Lesson::find($this->current->id);
-        $this->course = Course::getAll()->find($this->course->id);
-    }
+    // public function completed()
+    // {
+    //     $usuario = User::getCurrentUser();
+    //     if ($this->current->completed) {
+    //         //Eliminar registro
+    //         // Metodo auth me recupera el dato del usuario autentificado
+    //         $this->current->users()->detach($usuario->id);
+    //     } else {
+    //         //Agregar registro
+    //         $this->current->users()->attach($usuario->id);
+    //     }
+    //     $this->current = Lesson::find($this->current->id);
+    //     $this->course = Course::getAll()->find($this->course->id);
+    // }
 
-    //PROPIEDADES COMPUTADAS
-    //definimos la propiedad index, lo que va hacer es calcular el indice
-    public function getIndexProperty()
-    {
-        // Check if $this->course exists and is not null
-        if ($this->course && $this->lecciones_orden && $this->current) {
-            // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
+    // //PROPIEDADES COMPUTADAS
+    // //definimos la propiedad index, lo que va hacer es calcular el indice
+    // public function getIndexProperty()
+    // {
+    //     // Check if $this->course exists and is not null
+    //     if ($this->course && $this->lecciones_orden && $this->current) {
+    //         // Use optional() to safely access 'id' property of each lesson and search for $this->current->id
 
-            $lecciones_ordenadas = collect();
+    //         $lecciones_ordenadas = collect();
 
-            foreach ($this->course->sections_order as $secciones_lecciones) {
-                foreach ($secciones_lecciones->lessons as $lesson) {
-                    $lecciones_ordenadas->push($lesson);
-                }
-            }
-            $this->lecciones_orden = $lecciones_ordenadas;
+    //         foreach ($this->course->sections_order as $secciones_lecciones) {
+    //             foreach ($secciones_lecciones->lessons as $lesson) {
+    //                 $lecciones_ordenadas->push($lesson);
+    //             }
+    //         }
+    //         $this->lecciones_orden = $lecciones_ordenadas;
 
-            return optional($lecciones_ordenadas->pluck('id'))->search($this->current->id);
-        }
+    //         return optional($lecciones_ordenadas->pluck('id'))->search($this->current->id);
+    //     }
 
-        return null; // or handle the situation based on your logic
-    }
+    //     return null; // or handle the situation based on your logic
+    // }
 
-    //calculamos la propiedad previous
-    public function getPreviousProperty()
-    {
-        if ($this->index == 0) {
-            return null;
-        } else {
-            return $this->lecciones_orden[$this->index - 1];
-        }
-    }
+    // //calculamos la propiedad previous
+    // public function getPreviousProperty()
+    // {
+    //     if ($this->index == 0) {
+    //         return null;
+    //     } else {
+    //         return $this->lecciones_orden[$this->index - 1];
+    //     }
+    // }
 
-    //propiedad next
-    public function getNextProperty()
-    {
-        if ($this->index == $this->lecciones_orden->count() - 1) {
-            return null;
-        } else {
-            return $this->lecciones_orden[$this->index + 1];
-        }
-    }
+    // //propiedad next
+    // public function getNextProperty()
+    // {
+    //     if ($this->index == $this->lecciones_orden->count() - 1) {
+    //         return null;
+    //     } else {
+    //         return $this->lecciones_orden[$this->index + 1];
+    //     }
+    // }
 
-    public function getAdvanceProperty()
-    {
-        $i = 0;
+    // public function getAdvanceProperty()
+    // {
+    //     $i = 0;
 
-        foreach ($this->lecciones_orden as $lesson) {
-            if ($lesson->completed) {
-                $i++;
-            }
-        }
+    //     foreach ($this->lecciones_orden as $lesson) {
+    //         if ($lesson->completed) {
+    //             $i++;
+    //         }
+    //     }
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+    //     //calcular el porcentaje de la
+    //     $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-        return round($advance, 2);
-    }
+    //     return round($advance, 2);
+    // }
 
-    public function getSectionAdvanceProperty()
-    {
-        $i = 0;
+    // public function getSectionAdvanceProperty()
+    // {
+    //     $i = 0;
 
-        foreach ($this->lecciones_orden as $lesson) {
-            if ($lesson->completed) {
-                $i++;
-            }
-        }
+    //     foreach ($this->lecciones_orden as $lesson) {
+    //         if ($lesson->completed) {
+    //             $i++;
+    //         }
+    //     }
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+    //     //calcular el porcentaje de la
+    //     $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-        return round($advance, 2);
-    }
+    //     return round($advance, 2);
+    // }
 
-    public function download()
-    {
-        // dd($this->current->resource);
-        return response()->download(storage_path('app/'.$this->current->resource->url));
-    }
+    // public function download()
+    // {
+    //     // dd($this->current->resource);
+    //     return response()->download(storage_path('app/'.$this->current->resource->url));
+    // }
 
-    public function alertSection()
-    {
-        $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
-    }
+    // public function alertSection()
+    // {
+    //     $this->alertaEmergente('Es necesario terminar esta sección para poder seguir avanzando en tu curso');
+    // }
 
-    public function alertaEmergente($message)
-    {
-        $this->alert('warning', $message, [
-            'position' => 'center',
-            'timer' => 3000,
-            'toast' => false,
-            'timerProgressBar' => true,
-        ]);
-    }
+    // public function alertaEmergente($message)
+    // {
+    //     $this->alert('warning', $message, [
+    //         'position' => 'center',
+    //         'timer' => 3000,
+    //         'toast' => false,
+    //         'timerProgressBar' => true,
+    //     ]);
+    // }
 
-    public function updateLastReview($time, $cursoLastReview)
-    {
-        $cursoLastReview->update([
-            'last_review' => $time,
-        ]);
-    }
+    // public function updateLastReview($time, $cursoLastReview)
+    // {
+    //     $cursoLastReview->update([
+    //         'last_review' => $time,
+    //     ]);
+    // }
 }

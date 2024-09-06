@@ -28,7 +28,7 @@
         }
     </style>
 
-    <x-loading-indicator />
+    {{-- <x-loading-indicator /> --}}
 
     <div style="width: 100%; ">
         <div style="position: sticky; top:80px;">
@@ -41,7 +41,7 @@
 
                     </div> --}}
                     {{-- <div id="player3" class="w-100"></div> --}}
-                    <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
+                    {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
                 @else
                     <p>Sin registro</p>
                 @endif
@@ -75,7 +75,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
-                            @if ($this->previous)
+                            {{-- @if ($this->previous)
                                 <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
                                     style="cursor: pointer;">
                                     < Tema anterior </a>
@@ -84,10 +84,10 @@
                                             < Tema anterior</a>
                             @endif
                             <div wire:target="changeLesson({{ $this->previous }})">
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            @if ($this->next)
+                            {{-- @if ($this->next)
                                 <a wire:click="changeLesson({{ $this->next }})" class="text-primary"
                                     style="cursor: pointer;">
                                     Siguiente tema >
@@ -96,7 +96,7 @@
                                 <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
                             @endif
                             <div wire:target="changeLesson({{ $this->next }})">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
             </div>
         </div>
 
-        <div class="caja-info-card-mc">
+        {{-- <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
             <div class="curso-progreso-barra">
                 <div class="indicador-progreso-barra" style="width: {{ $this->advance . '%' }};"></div>
@@ -144,10 +144,10 @@
                     class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
-            @foreach ($course->sections_order as $section)
+            {{-- @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                     <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                     </i>
@@ -219,7 +219,7 @@
                         @endforeach
                     </ul>
                 </li>
-            @endforeach
+            @endforeach --}}
         </ul>
     </div>
     {{-- @section('scripts')
