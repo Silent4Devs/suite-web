@@ -46,9 +46,9 @@ class CourseStatus extends Component
         $this->fecha = Carbon::now()->toDateString();
         $this->hora = Carbon::now()->format('H:i:s');
 
-        $this->lecciones_orden = collect();
+        // $this->lecciones_orden = collect();
         $this->course = $course;
-        $this->current = $course->last_finished_lesson;
+        // $this->current = $course->last_finished_lesson;
         //determinamos cual es la lección actual
 
         // dd($this->current->iframe);
@@ -65,7 +65,7 @@ class CourseStatus extends Component
         // $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
-        $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        // $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //dd($this->course);
 
