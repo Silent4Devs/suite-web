@@ -34,20 +34,20 @@
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            {{-- <div class="video-curso-box">
+            <div class="video-curso-box">
                 @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
+                    {{-- <div class="box-iframe-video-courses d-none">
                         {!! $current->iframe !!}
 
                     </div>
-                    <div id="player3" class="w-100"></div>
+                    <div id="player3" class="w-100"></div> --}}
                     <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
                 @else
                     <p>Sin registro</p>
                 @endif
-            </div> --}}
+            </div>
 
-            {{-- <div class="row" style="margin-top: 36px;">
+            <div class="row" style="margin-top: 36px;">
                 <div class="col-md-6">
                     @if ($current)
                         <h4>{{ $current->name }}</h4>
@@ -55,7 +55,7 @@
                         <p>No current data available</p>
                     @endif
                 </div>
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
                         @if ($current->completed)
@@ -68,8 +68,8 @@
                                 style="font-size: 30px; cursor: pointer;"></i>
                         @endif
                     </div>
-                </div>
-            </div> --}}
+                </div> --}}
+            </div>
 
             <div class="mt-2 card">
                 <div class="card-body">
@@ -147,7 +147,7 @@
         </div> --}}
 
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
-            {{-- @foreach ($course->sections_order as $section)
+            @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                     <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                     </i>
@@ -219,7 +219,7 @@
                         @endforeach
                     </ul>
                 </li>
-            @endforeach --}}
+            @endforeach
         </ul>
     </div>
     {{-- @section('scripts')
