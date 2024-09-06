@@ -16,6 +16,8 @@ class Lesson extends Model implements Auditable
 
     protected $guarded = ['id'];
 
+    protected $appends = ['completed', 'completed_user'];
+
     // Funcion para indicar a que usuario permanece el avance del curso
     public function getCompletedAttribute()
     {
