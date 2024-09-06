@@ -184,7 +184,6 @@ return [
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         \VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
