@@ -3,5 +3,5 @@
     @livewire('escuela.course-status', [$curso, $evaluacionesLeccion])
 @endsection
 
-{{-- @section('scripts')
-@endsection --}}
+@section('scripts')
+@endsection

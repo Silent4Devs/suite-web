@@ -28,7 +28,7 @@
         }
     </style>
 
-    <x-loading-indicator />
+    {{-- <x-loading-indicator /> --}}
 
     <div style="width: 100%; ">
         <div style="position: sticky; top:80px;">
@@ -41,7 +41,7 @@
 
                     </div> --}}
                     {{-- <div id="player3" class="w-100"></div> --}}
-                    <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
+                    {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
                 @else
                     <p>Sin registro</p>
                 @endif
