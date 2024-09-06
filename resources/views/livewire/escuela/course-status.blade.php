@@ -28,10 +28,9 @@
         }
     </style>
 
-    {{-- <x-loading-indicator /> --}}
+    <x-loading-indicator />
 
     <div style="width: 100%; ">
-        <h1>hola</h1>
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
@@ -42,7 +41,7 @@
 
                     </div> --}}
                     {{-- <div id="player3" class="w-100"></div> --}}
-                    {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
+                    <lite-youtube videoid="guJLfqTFfIw"></lite-youtube>
                 @else
                     <p>Sin registro</p>
                 @endif
@@ -59,15 +58,15 @@
                 <div class="col-md-6">
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
                         style="cursor: pointer;">
-                        @if ($current->completed)
-                            {{-- <h4 class="mr-2 text-primary">Lección terminada</h4>
+                        {{-- @if ($current->completed)
+                            <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
-                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i> --}}
+                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
                         @else
-                            {{-- <h4 class="mr-2">Marcar esta lección como terminada</h4>
+                            <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
-                                style="font-size: 30px; cursor: pointer;"></i> --}}
-                        @endif
+                                style="font-size: 30px; cursor: pointer;"></i>
+                        @endif --}}
                     </div>
                 </div>
             </div>
@@ -104,13 +103,13 @@
             </div>
 
             <div>
-                @if ($current->resource)
+                {{-- @if ($current->resource)
                     <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
                         style="cursor: pointer;">
                         <i class="text-lg fas fa-download d-inline"></i>
                         <p class="ml-2 text-sm d-inline">Descargar Recurso</p>
                     </div>
-                @endif
+                @endif --}}
             </div>
 
 
@@ -148,7 +147,7 @@
         </div> --}}
 
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
-            {{-- @foreach ($course->sections_order as $section)
+            @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
                     <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
                     </i>
@@ -220,7 +219,7 @@
                         @endforeach
                     </ul>
                 </li>
-            @endforeach --}}
+            @endforeach
         </ul>
     </div>
     {{-- @section('scripts')
