@@ -18,7 +18,6 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\ProcesosListaDistribucion;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -84,48 +83,15 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsis = PoliticaSgsi::getAll();
 
-        $teams = Team::get();
-
-        $empleados = Empleado::getAltaEmpleadosWithArea();
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
-
-        $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
-
-        $listavacia = 'cumple';
-        if (! isset($modulo)) {
-            $listavacia = 'vacia';
-        } elseif ($modulo->participantes->isEmpty()) {
-            $listavacia = 'vacia';
-        } else {
-            foreach ($modulo->participantes as $participante) {
-                if ($participante->empleado->estatus != 'alta') {
-                    $listavacia = 'baja';
-
-                    return view('admin.politicaSgsis.index', compact(
-                        'politicaSgsis',
-                        'teams',
-                        'empleados',
-                        'organizacion_actual',
-                        'logo_actual',
-                        'empresa_actual',
-                        'direccion',
-                        'rfc',
-                        'listavacia',
-                    ));
-                }
-            }
-        }
+        $listavacia = 'baja';
 
         return view('admin.politicaSgsis.index', compact(
             'politicaSgsis',
-            'teams',
-            'empleados',
-            'organizacion_actual',
             'logo_actual',
             'empresa_actual',
             'direccion',

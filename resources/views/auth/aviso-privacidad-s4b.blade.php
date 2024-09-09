@@ -1,71 +1,8 @@
-<style type="text/css">
-    #modal_aviso {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        overflow: auto;
-        display: none;
-    }
-
-    .contenido_modal {
-        width: 90%;
-        height: auto;
-        padding: 34px;
-        max-width: 1000px;
-        background-color: #fff;
-        border-radius: 6px;
-        margin: auto;
-        margin-top: 70px;
-    }
-
-    .modal_header {
-        display: flex;
-    }
-
-    .modal_header img {
-        height: 70px;
-    }
-
-    .modal_header h4 {
-        width: 100%;
-        height: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal-body {
-        height: auto;
-    }
-
-    .modal-body {
-        text-align: justify;
-    }
-
-    #btn_closed_modal {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 18pt;
-        color: #bbb;
-        cursor: pointer;
-    }
-
-    #btn_closed_modal:hover {
-        color: #aaa;
-    }
-
-    .modal_body p {
-        text-align: justify;
-    }
-</style>
 <div id="modal_aviso">
-    <div class="contenido_modal card">
-        <i class="fas fa-times" id="btn_closed_modal"></i>
+    <div class="contenido_modal">
+        <button id="btn_closed_modal">
+            <img src="{{ asset('img/auth/icon-close.svg') }}" alt="cerrar aviso">
+        </button>
         <div class="modal_header">
             <img src="{{ asset('img/global/silent4business.png') }}">
             <h4>SILENT4BUSINESS S.A. DE C.V.</h4>

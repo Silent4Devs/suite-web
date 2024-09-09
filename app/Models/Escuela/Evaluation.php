@@ -40,7 +40,8 @@ class Evaluation extends Model implements Auditable
         return $this->users->contains(auth()->user()->id);
     }
 
-    public static function getAll(){
+    public static function getAll()
+    {
         return Cache::remember('Evaluations:evaluations_all', 3600 * 7, function () {
             return self::get();
         });

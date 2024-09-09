@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="submitForm(Object.fromEntries(new FormData($event.target)))">
         <div class="card card-body mt-5">
-            <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
+            <div style="color:var(--color-tbj); font-size:16px;">Datos Generales</div>
             <hr style="">
             <div class="row">
                 <div class="col-md-6">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="card card-body mt-5">
-            <div class="col-m-12" style="color:#306BA9; font-size:16px;">
+            <div class="col-m-12" style="color:var(--color-tbj); font-size:16px;">
                 Define el valor de los parámetros con los que se evaluará tu cuestionario
             </div>
             <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">

@@ -577,7 +577,7 @@ input::file-selector-button {
 }
 
 .kanban-title-board {
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .gdfColHeader {
