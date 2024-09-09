@@ -49,15 +49,15 @@
                     show: false
                 },
                 data: [{
-                        value: 40,
+                        value: @json($vacaciones),
                         name: 'Vacaciones'
                     },
                     {
-                        value: 10,
+                        value: @json($dayOff),
                         name: 'Day Off'
                     },
                     {
-                        value: 50,
+                        value: @json($permisos),
                         name: 'Permisos'
                     },
                 ]

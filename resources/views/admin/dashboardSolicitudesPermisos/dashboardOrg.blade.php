@@ -235,7 +235,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @foreach ($dayOffMounth as $vacTable)
+                    @foreach ($dayOffMounth as $dayTable)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
@@ -247,7 +247,7 @@
                                 </div>
                             </td>
                             <td>
-                                Vacaciones
+                                DayOff
                             </td>
                             <td>
                                 {{ $dayTable->fecha_inicio }}
@@ -257,7 +257,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @foreach ($permisoMounth as $dayTable)
+                    @foreach ($permisoMounth as $permisoTable)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
@@ -265,17 +265,17 @@
                                         <img src="" alt="">
                                     </div>
 
-                                    <span>{{ $dayTable->name }}</span>
+                                    <span>{{ $permisoTable->name }}</span>
                                 </div>
                             </td>
                             <td>
-                                Vacaciones
+                                Permiso
                             </td>
                             <td>
-                                {{ $dayTable->fecha_inicio }}
+                                {{ $permisoTable->fecha_inicio }}
                             </td>
                             <td>
-                                {{ $dayTable->fecha_fin }}
+                                {{ $permisoTable->fecha_fin }}
                             </td>
                         </tr>
                     @endforeach
@@ -284,14 +284,14 @@
         </div>
     </div>
 
-    @livewire('dashboard-permisos.graph-areas', ['user' => 'd'])
+    @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
 
     <div class="row">
         <div class="col-md-6">
-            @livewire('dashboard-permisos.graph-dona', ['user' => 'd'])
+            @livewire('dashboard-permisos.graph-dona', ['areaSeleccionada' => $areaSeleccionada])
         </div>
         <div class="col-md-6">
-            @livewire('dashboard-permisos.graph-types', ['user' => 'd'])
+            @livewire('dashboard-permisos.graph-types', ['areaSeleccionada' => $areaSeleccionada])
         </div>
     </div>
 @endsection

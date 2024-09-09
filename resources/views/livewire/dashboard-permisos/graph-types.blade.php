@@ -22,10 +22,10 @@
             tooltip: {},
             dataset: {
                 source: [
-                    ['Nacimiento', 43.3],
-                    ['Exámen profesional', 83.1],
-                    ['Cumpleaños', 86.4],
-                    ['Muerte familiar', 72.4]
+                    ['Nacimiento', 0],
+                    ['Exámen profesional', 0],
+                    ['Cumpleaños', 0],
+                    ['Muerte familiar', 0]
                 ]
             },
             xAxis: {
