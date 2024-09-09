@@ -21,6 +21,31 @@
         </div>
         @if ($empleado)
             <ul class="ml-auto c-header-nav gap-3">
+                <li class="time-custom d-none">
+                    <a href="{{ route('admin.timesheet-create') }}">
+                        <i class="bi bi-calendar-plus"></i>
+                    </a>
+                </li>
+                <li class="calendar-custom d-none">
+                    <a href="{{ route('admin.systemCalendar') }}">
+                        <i class="bi bi-calendar3"></i>
+                    </a>
+                </li>
+                <li class="document-custom d-none">
+                    <a href="{{ route('admin.documentos.publicados') }}">
+                        <i class="bi bi-folder"></i>
+                    </a>
+                </li>
+                <li class="planes-custom d-none">
+                    <a href="{{ route('admin.planes-de-accion.index') }}">
+                        <i class="bi bi-file-earmark-check"></i>
+                    </a>
+                </li>
+                <li class="centro-custom d-none">
+                    <a href="{{ route('admin.desk.index') }}">
+                        <i class="bi bi-person-workspace"></i>
+                    </a>
+                </li>
                 <li>
                     <button class="" data-toggle="modal" data-target="#modalCustomLinks">
                         <i class="material-symbols-outlined"> add_circle</i>
@@ -564,33 +589,32 @@
 
                 <div class="mt-5">
                     <div class="d-flex jsutify-content-center flex-wrap gap-3">
-                        <button
-                            class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3 active"
-                            style="color: #606060;">
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                            style="color: #606060;" data-custom="time-custom">
                             <i class="bi bi-calendar-plus" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Timesheet</small>
                         </button>
 
                         <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;">
+                            style="color: #606060;" data-custom="calendar-custom">
                             <i class="bi bi-calendar3" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Calendario</small>
                         </button>
 
                         <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;">
+                            style="color: #606060;" data-custom="document-custom">
                             <i class="bi bi-folder" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Documentos</small>
                         </button>
 
                         <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;">
+                            style="color: #606060;" data-custom="planes-custom">
                             <i class="bi bi-file-earmark-check" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Planes de Trabajo</small>
                         </button>
 
                         <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;">
+                            style="color: #606060;" data-custom="centro-custom">
                             <i class="bi bi-person-workspace" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Centro de atención</small>
                         </button>
@@ -602,10 +626,54 @@
 </div>
 
 <script>
-    document.querySelectorAll('.btn-acces-custom').forEach(element => {
-        element
-    });
-    document.querySelector('.btn-acces-custom').addEventListener('click', (e) => {
-        e.target.classList.toggle('active');
+    // Función para inicializar los botones y contenido según localStorage
+    function initializeButtons() {
+        document.querySelectorAll('.btn-acces-custom').forEach(element => {
+            const customClass = element.getAttribute('data-custom');
+
+            // Obtener y aplicar el estado del botón desde localStorage
+            const isActive = localStorage.getItem(`btn-${customClass}-active`);
+            if (isActive === 'true') {
+                element.classList.add('active');
+            } else {
+                element.classList.remove('active');
+            }
+
+            // Obtener y aplicar el estado del contenido desde localStorage
+            const isHidden = localStorage.getItem(`content-${customClass}-hidden`);
+            const contentElement = document.querySelector('.' + customClass);
+            if (isHidden === 'true') {
+                contentElement.classList.add('d-none');
+            } else {
+                contentElement.classList.remove('d-none');
+            }
+        });
+    }
+
+    // Función para agregar eventos a los botones y guardar el estado en localStorage
+    function setupButtonListeners() {
+        document.querySelectorAll('.btn-acces-custom').forEach(element => {
+            element.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                const customClass = target.getAttribute('data-custom');
+                const contentElement = document.querySelector('.' + customClass);
+
+                // Cambiar el estado de "active" y guardarlo en localStorage
+                target.classList.toggle('active');
+                const isActive = target.classList.contains('active');
+                localStorage.setItem(`btn-${customClass}-active`, isActive);
+
+                // Cambiar el estado de "d-none" en el contenido y guardarlo en localStorage
+                contentElement.classList.toggle('d-none');
+                const isHidden = contentElement.classList.contains('d-none');
+                localStorage.setItem(`content-${customClass}-hidden`, isHidden);
+            });
+        });
+    }
+
+    // Ejecutar la inicialización al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeButtons();
+        setupButtonListeners();
     });
 </script>

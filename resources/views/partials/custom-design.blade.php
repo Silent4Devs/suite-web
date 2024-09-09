@@ -9,7 +9,7 @@
         </strong>
     </p>
 
-    <p class="mt-5">
+    {{-- <p class="mt-5">
         Modo
     </p>
 
@@ -20,7 +20,7 @@
         <button class="btn border" onclick="document.querySelector('body').classList.add('dark');">
             <i class="material-symbols-outlined" style="color: #7a7a7a">bedtime</i>
         </button>
-    </div>
+    </div> --}}
 
     <p class="mt-5">
         Colores
@@ -79,3 +79,55 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Función para guardar el estado de la configuración en el localStorage
+    function saveSettings() {
+        const color = getComputedStyle(document.documentElement).getPropertyValue('--color-tbj').trim();
+        const menuPosition = Array.from(document.querySelector('body').classList).find(cls => cls.startsWith(
+            'menu-global-position-'));
+        const style = Array.from(document.querySelector('body').classList).find(cls => cls === 'transparente') ?
+            'transparente' : 'clasico';
+
+        localStorage.setItem('customSettings', JSON.stringify({
+            color,
+            menuPosition,
+            style
+        }));
+    }
+
+    // Función para aplicar la configuración guardada desde el localStorage
+    function applySettings() {
+        const settings = JSON.parse(localStorage.getItem('customSettings'));
+        if (settings) {
+            // Aplicar el color
+            document.documentElement.style.setProperty('--color-tbj', settings.color);
+
+            // Aplicar la posición del menú
+            if (settings.menuPosition) {
+                document.querySelector('body').classList.add(settings.menuPosition);
+            }
+
+            // Aplicar el estilo
+            if (settings.style === 'transparente') {
+                document.querySelector('body').classList.add('transparente');
+            }
+        }
+    }
+
+    // Añadir event listeners a los elementos para guardar la configuración
+    document.querySelectorAll('.item-color-tbj').forEach(item => {
+        item.addEventListener('click', saveSettings);
+    });
+
+    document.querySelectorAll('.example-menu-position').forEach(item => {
+        item.addEventListener('click', saveSettings);
+    });
+
+    document.querySelectorAll('.d-flex > div').forEach(item => {
+        item.addEventListener('click', saveSettings);
+    });
+
+    // Aplicar la configuración guardada al cargar la página
+    window.addEventListener('load', applySettings);
+</script>

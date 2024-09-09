@@ -940,5 +940,11 @@ header.mostrar-menu {
 }
 
 .transparente *{
-    opacity: 0.95 !important;
+    opacity: 0.97 !important;
+}
+.transparente{
+    background-color: #4ab5db !important;
+}
+*{
+    transition: 0.2s;
 }
