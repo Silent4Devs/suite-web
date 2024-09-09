@@ -382,22 +382,12 @@
                                             </select>
                                         </td>
                                         <td>
-<<<<<<< HEAD
-                                            <textarea wire:model.lazy="evidenciaValues.{{ $pregunta->id }}" wire:change="saveEvidencia('{{ $pregunta->id }}')"
+                                            <textarea wire:model.blur="evidenciaValues.{{ $pregunta->id }}" wire:change="saveEvidencia('{{ $pregunta->id }}')"
                                                 value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}"
                                                 style="height:100%; width: 100%;"></textarea>
                                         </td>
                                         <td>
-                                            <textarea wire:model.lazy="recomendacionValues.{{ $pregunta->id }}"
-=======
-                                            <textarea  wire:model.blur="evidenciaValues.{{ $pregunta->id }}"
-                                                wire:change="saveEvidencia('{{ $pregunta->id }}')"
-                                                value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}" style="height:100%; width: 100%;"></textarea>
-                                        </td>
-                                        <td>
-                                            <textarea
-                                                wire:model.blur="recomendacionValues.{{ $pregunta->id }}"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
+                                            <textarea wire:model.blur="recomendacionValues.{{ $pregunta->id }}"
                                                 wire:change="saveRecomendacion('{{ $pregunta->id }}')"
                                                 value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}"
                                                 style="height:100%; width: 100%;"></textarea>
@@ -756,11 +746,7 @@
         {{-- script para graficas total y del modal cuando se carga la primera vez --}}
         <script>
             console.log("cargando");
-<<<<<<< HEAD
-            document.addEventListener('livewire:load', function() {
-=======
-            document.addEventListener('livewire:init', function () {
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
+            document.addEventListener('livewire:init', function() {
 
                 const data = @json($grafica_cuentas2);
                 const colores = @json($grafica_colores2);
@@ -818,13 +804,8 @@
 
         {{-- script para graficas del modal cuando se cambia de seccion --}}
         <script>
-<<<<<<< HEAD
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 Livewire.on('renderGraficsModal', (data, resultskeys) => {
-=======
-             document.addEventListener('livewire:init', function() {
-                Livewire.on('renderGraficsModal', (data,resultskeys) => {
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
                     console.log(resultskeys);
                     const colores = @json($grafica_colores2);
                     const values = Object.values(data);

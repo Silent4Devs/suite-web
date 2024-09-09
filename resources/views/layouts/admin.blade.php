@@ -67,15 +67,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
-<<<<<<< HEAD
-=======
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1.5.0/lite-youtube.js"></script>
-
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
-    @yield('styles')
-
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
     @livewireStyles
 
     {{-- Laravel vite --}}
@@ -251,7 +242,6 @@
     <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
-<<<<<<< HEAD
     <script defer src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -259,10 +249,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
-=======
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    {{-- <script defer src="//unpkg.com/alpinejs" defer></script> --}}
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
     <script src="{{ asset('js/main.js') }}"></script>
     <!-- x editable -->
     </script>
