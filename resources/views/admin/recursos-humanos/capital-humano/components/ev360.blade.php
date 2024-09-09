@@ -1,5 +1,5 @@
 <ul class="mt-4">
-    {{-- <li>
+    <li>
         <a href="#" data-ventana="evaluaciones-periodo" class="btn_ventana_menu">
             <div>
                 <i class="bi bi-patch-check"></i><br>
@@ -39,7 +39,7 @@
                 </a>
             </li>
         </ul>
-    </div> --}}
+    </div>
     <li>
         <a href="#" data-ventana="evaluaciones-secc" class="btn_ventana_menu">
             <div>

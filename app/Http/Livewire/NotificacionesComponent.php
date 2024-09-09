@@ -95,7 +95,7 @@ class NotificacionesComponent extends Component
 
     public function markAllAsRead()
     {
-        $notificaciones_campana = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->get();
+        $notificaciones_campana = User::getCurrentUser()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->get();
         foreach ($notificaciones_campana as $notificacion_campana) {
             $notificacion_campana->markAsRead();
         }

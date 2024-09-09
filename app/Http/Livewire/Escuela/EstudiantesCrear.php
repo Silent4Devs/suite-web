@@ -29,6 +29,7 @@ class EstudiantesCrear extends Component
     public $area_seleccionada;
 
     public $usuarios_manual;
+
     public $areas;
 
     protected $rules = [

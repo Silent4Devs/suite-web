@@ -26,9 +26,9 @@ class BroadcastUserLoginNotification
     public function handle(Login $event)
     {
         // Check if the user is authenticated
-        if ($event->user) {
-            // User is authenticated, broadcast login notification
-            broadcast(new UserSessionChanged("{$event->user->name} is online", 'success'));
-        }
+        // if ($event->user) {
+        //     // User is authenticated, broadcast login notification
+        //     broadcast(new UserSessionChanged("{$event->user->name} is online", 'success'));
+        // }
     }
 }

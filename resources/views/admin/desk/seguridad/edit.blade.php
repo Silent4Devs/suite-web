@@ -1369,24 +1369,6 @@
     });
 </script>
 
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        let incidentesSeguridad = @json($incidentesSeguridad);
-        if (incidentesSeguridad.estatus == 'No procedente' || incidentesSeguridad.estatus == 'Cerrado') {
-            $('#campo_estatus').removeClass('d-none');
-        }
-    })
-    $(document).on('change', '.estatus_campo', function(event) {
-        if ($('.estatus_campo option:selected').attr('value') == 'No procedente' || $(
-                '.estatus_campo option:selected').attr('value') == 'Cerrado') {
-            console.log('ocultar');
-            $('#campo_estatus').removeClass('d-none');
-        } else {
-            $('#campo_estatus').addClass('d-none');
-        }
-    });
-</script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 

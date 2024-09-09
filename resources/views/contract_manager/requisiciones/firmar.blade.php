@@ -255,7 +255,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_solicitante)
                         <img src="{{ $requisicion->firma_solicitante }}" class="img-firma">
-                        <p>{{ $requisicion->user }}</p>
+                        <p>{{ $firma_siguiente->solicitante->name ?? '' }}</p>
                         <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>

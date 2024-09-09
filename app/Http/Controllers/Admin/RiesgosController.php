@@ -199,10 +199,13 @@ class RiesgosController extends Controller
 
         $organizacion = Organizacion::first();
 
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+
         $riesgos->update([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
             'estatus' => $request->estatus,
+            'fecha_cierre' => $fecha,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,

@@ -126,8 +126,8 @@ class ClasificacionesAuditoriasController extends Controller
         // Validación
 
         $validatedData = $request->validate([
-            'identificador' => 'unique:clasificaciones_auditorias,identificador,' . $id . '', // Ignora el actual en la validación
-            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,' . $id . '',
+            'identificador' => 'unique:clasificaciones_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
         ]);
 
         return redirect(route('admin.auditoria-clasificacion'));

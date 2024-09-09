@@ -46,9 +46,15 @@ class AnswerEvaluationUser extends Component
 
     public $quizPercentage;
 
+    public $percentage;
+
     public $correctQuestions;
 
     public $percentageEvaluationUser;
+
+    public $course_id;
+
+    public $evaluacion_id;
 
     protected $rules = [
         'answer' => 'required',
@@ -60,6 +66,7 @@ class AnswerEvaluationUser extends Component
 
     public function mount($course_id, $evaluacion_id)
     {
+
         $this->course_id = $course_id;
         $this->evaluacion_id = $evaluacion_id;
     }

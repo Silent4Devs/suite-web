@@ -37,8 +37,10 @@ class CoursesLesson extends Component
     #[Validate('required', message: 'El campo es requerido')]
     #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
     public $formName;
+
     #[Validate('required', message: 'El campo es requerido')]
-    public $formPlatformId =1;
+    public $formPlatformId = 1;
+
     #[Validate('required', message: 'El campo es requerido')]
     #[Validate('regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x')]
     public $formUrl;
@@ -78,7 +80,7 @@ class CoursesLesson extends Component
             $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
 
-        $this->validate($rules);
+        // $this->validate($rules);
 
         $resource = Lesson::create([
             'name' => $this->name,
@@ -132,8 +134,6 @@ class CoursesLesson extends Component
         if ($this->lesson->platform_id == 2) {
             $this->rules['lesson.url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
         }
-
-
 
         $this->lesson->name = $this->formName;
         $this->lesson->platform_id = $this->formPlatformId;

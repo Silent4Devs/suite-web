@@ -28,11 +28,17 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-db:/var/lib/postgresql/data
+<<<<<<< HEAD
       - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=homestead
+=======
+      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    env_file:
+      - .env
+>>>>>>> develop
     ports:
       - "5432:5432"
     networks:
@@ -92,6 +98,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
+    mem_limit: 1g
 
   schedule-worker:
     build:
@@ -109,6 +116,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
+    mem_limit: 1g
 
   redis-tabantaj:
     image: redis:alpine

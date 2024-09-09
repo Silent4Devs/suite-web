@@ -37,10 +37,13 @@ class TimesheetHorasEdit extends Component
         $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
+
+        $this->contador = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->count();
     }
 
     public function removerFila($id, $tr)
     {
+        // dd($id, $tr, $this->contador);
         if ($id != null) {
             TimesheetHoras::find($id)->delete();
         }
