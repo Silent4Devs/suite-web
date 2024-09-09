@@ -18,7 +18,6 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\ProcesosListaDistribucion;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;

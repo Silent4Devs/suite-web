@@ -3,7 +3,6 @@
 namespace App\Livewire\Escuela;
 
 use App\Models\Escuela\Course;
-use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
@@ -32,9 +31,10 @@ class CourseStatus extends Component
     public $lecciones_orden;
 
     public $usuario;
-    public $fecha;
-    public $hora;
 
+    public $fecha;
+
+    public $hora;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
@@ -256,7 +256,8 @@ class CourseStatus extends Component
         ]);
     }
 
-    public function test(Lesson $lesson){
+    public function test(Lesson $lesson)
+    {
         // dump($this->current);
         $this->current = $lesson;
         // dump($this->current);
