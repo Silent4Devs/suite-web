@@ -208,7 +208,7 @@ table.dataTable {
 
 .iconos-crear {
     font-size: 15pt;
-    color: #3086AF;
+    color: var(--color-tbj);
     margin-right: 10px;
 }
 
@@ -931,7 +931,7 @@ table.dataTable tr th {
 }
 
 .titulo_general_funcion {
-    color: #3086AF;
+    color: var(--color-tbj);
     margin-bottom: 40px;
 }
 
@@ -941,7 +941,7 @@ table.dataTable tr th {
 }
 
 .form-group label {
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .titulo-formulario {
@@ -999,7 +999,7 @@ table.dataTable tr th {
 .line-active-nav {
     width: 0px;
     height: 1px;
-    background-color: #3086AF;
+    background-color: var(--color-tbj);
     position: absolute;
     transition: 0.4s;
 }

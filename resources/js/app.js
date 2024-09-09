@@ -1,30 +1,31 @@
 // Laravel Echo
-import "./bootstrap";
 
-Echo.private("user-notifications").listen("UserSessionChanged", e => {
-  Push.create("TABANTAJ", {
-    body: e.message,
-    icon:
-      "https://media.licdn.com/dms/image/C560BAQEAAuwsMNj7PQ/company-logo_200_200/0/1648073467411/tabantaj_logo?e=2147483647&v=beta&t=_qmqbkyFGaUr6pZAW9UXk7NE6zowZLlgSyNs-YSf_QI",
-    timeout: 5000, // Notification will close after 4 seconds
-    onClick: function() {
-      // Handle notification click event if needed
-      window.focus();
-      this.close();
-    }
-  });
+import "bootstrap/dist/css/bootstrap.min.css"; // Importar CSS
+import "bootstrap"; // Importar JavaScript de Bootstrap
+
+Echo.private("user-notifications").listen("UserSessionChanged", (e) => {
+    Push.create("TABANTAJ", {
+        body: e.message,
+        icon: "https://media.licdn.com/dms/image/C560BAQEAAuwsMNj7PQ/company-logo_200_200/0/1648073467411/tabantaj_logo?e=2147483647&v=beta&t=_qmqbkyFGaUr6pZAW9UXk7NE6zowZLlgSyNs-YSf_QI",
+        timeout: 5000, // Notification will close after 4 seconds
+        onClick: function () {
+            // Handle notification click event if needed
+            window.focus();
+            this.close();
+        },
+    });
 });
 
-Echo.private("user-notifications").listen("UserSessionChanged", e => {
-  // Mostrar el toast con SweetAlert2
-  Swal.fire({
-    title: e.message,
-    icon: "info",
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 4000 // Duración del toast en milisegundos (3 segundos)
-  });
+Echo.private("user-notifications").listen("UserSessionChanged", (e) => {
+    // Mostrar el toast con SweetAlert2
+    Swal.fire({
+        title: e.message,
+        icon: "info",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 4000, // Duración del toast en milisegundos (3 segundos)
+    });
 });
 
 // Echo.channel(

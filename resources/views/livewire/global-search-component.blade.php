@@ -6,9 +6,9 @@
                 <input type="search" class="" placeholder="Buscar ..." wire:model.live="search">
             </div>
 
-            <div class="spinner-border text-red ml-2" role="status" wire:loading wire:target="search">
+            {{-- <div class="spinner-border text-red ml-2" role="status" wire:loading wire:target="search">
                 <span class="sr-only">Loading...</span>
-            </div>
+            </div> --}}
         </div>
 
         <div class="caja-list-search-global scroll_estilo">
