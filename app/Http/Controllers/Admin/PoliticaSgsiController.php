@@ -98,11 +98,9 @@ class PoliticaSgsiController extends Controller
         $listavacia = 'cumple';
         if (! isset($modulo)) {
             $listavacia = 'vacia';
-        } elseif ($modulo->participantes->isEmpty()) {
-            $listavacia = 'vacia';
         } else {
             foreach ($modulo->participantes as $participante) {
-                if ($participante->empleado->estatus != 'alta') {
+                // if ($participante->empleado->estatus != 'alta') {
                     $listavacia = 'baja';
 
                     return view('admin.politicaSgsis.index', compact(
@@ -116,21 +114,9 @@ class PoliticaSgsiController extends Controller
                         'rfc',
                         'listavacia',
                     ));
-                }
+                // }
             }
         }
-
-        return view('admin.politicaSgsis.index', compact(
-            'politicaSgsis',
-            'teams',
-            'empleados',
-            'organizacion_actual',
-            'logo_actual',
-            'empresa_actual',
-            'direccion',
-            'rfc',
-            'listavacia',
-        ));
     }
 
     public function create()
