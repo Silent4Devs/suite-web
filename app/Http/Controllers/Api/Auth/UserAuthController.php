@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -70,11 +71,16 @@ class UserAuthController extends Controller
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $expiration = config('sanctum.expiration');
+
+        $expiration = Carbon::now()->addMinutes($expiration)->timestamp;
+
         //devuelve una respuesta JSON con el token generado y el tipo de token
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),
             'supervisor' => $supervisor,
+            'expiration' => $expiration,
         ]);
     }
 

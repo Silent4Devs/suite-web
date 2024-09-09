@@ -30,8 +30,7 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    ftp
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -39,7 +38,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     @composer \
     redis-stable \
     #imagick-stable \
-    #xdebug-stable \
+    xdebug \
     bcmath \
     calendar \
     exif \
@@ -57,7 +56,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     excimer \
     pcntl \
     posix \
-    amqp
+    amqp \
+    ftp
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
@@ -72,7 +72,7 @@ RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
 # Install npm
-RUN npm install -g npm@latest
+# RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

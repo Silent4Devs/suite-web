@@ -8,6 +8,10 @@
         .sortable-chosen>.card-header {
             background-color: #15b6b9 !important;
         }
+
+        .test {
+            display: block !important;
+        }
     </style>
 
     <h4>Lecciones</h4>
@@ -29,8 +33,8 @@
                     <div class="card-header" style="background: var(--color-tbj); color: #FFFFFF;">
                         <div class="row ">
                             <div class="col-10">
-                                <form class="flex-1" wire:submit.prevent="update">
-                                    <input wire:model="section.name" type="text"
+                                <form class="flex-1" wire:submit="update">
+                                    <input wire:model.live="section.name" type="text"
                                         class="form-control w-full @if ($errors->has('section.name')) invalid @endif"
                                         placeholder="Escribir...">
                                     @error('section.name')

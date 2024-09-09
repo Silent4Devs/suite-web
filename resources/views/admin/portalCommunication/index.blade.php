@@ -480,7 +480,7 @@
                                         <span class="title-item-carr-port">{{ $cumple->name }} </span> <br>
                                         <p>
                                             {{ $cumple->puesto }} <br>
-                                            {{ $cumple->area->area }}
+                                            {{ $cumple->area->area ?? '' }}
                                             <br>
                                             <br>
                                             @php

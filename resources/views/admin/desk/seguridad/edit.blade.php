@@ -2,9 +2,8 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
     <style>
-
         .caja-firmas-doc .flex {
             justify-content: center;
             gap: 50px;
@@ -36,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-            height: 100%; */
+                                    height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -215,7 +214,7 @@
         }
 
         .select2-container--default .select2-selection--multiple {
-                border: 1px solid #ADD8E6 !important;
+            border: 1px solid #ADD8E6 !important;
         }
 
         #info-bar {
@@ -272,34 +271,41 @@
                             </div>
 
                             @if (is_null($firma_validacion))
-                            <div style="position: relative; left: 2rem;">
-                                <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de firma(s)
-                                </label>
-                                <br>
-                            </div>
-
-                            <div class="mt-2 form-group col-md-12">
-                                <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
-                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
-                                        @if($firmaModules && $firmaModules->empleados)
-                                            @if(count($firmaModules->empleados) > 0)
-                                                @foreach($firmaModules->empleados as $empleado)
-                                                    <option  value="{{ $empleado->id }}"   @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
-                                                        {{ $empleado->name }}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option value="" disabled>No hay participantes disponibles.</option>
-                                            @endif
-                                        @else
-                                            <option value="" disabled>No hay participantes disponibles.</option>
-                                        @endif
-                                    </select>
+                                <div style="position: relative; left: 2rem;">
+                                    <label>
+                                        <input type="checkbox" id="toggle-info"
+                                            {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
+                                        Activar flujo de firma(s)
+                                    </label>
+                                    <br>
                                 </div>
-                            </div>
+
+                                <div class="mt-2 form-group col-md-12">
+                                    <div class="info-bar" id="info-bar"
+                                        style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
+                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                        <select id="participantes" name="participantes[]" class="form-control"
+                                            multiple="multiple"
+                                            style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                            @if ($firmaModules && $firmaModules->empleados)
+                                                @if (count($firmaModules->empleados) > 0)
+                                                    @foreach ($firmaModules->empleados as $empleado)
+                                                        <option value="{{ $empleado->id }}"
+                                                            @if (is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                            {{ $empleado->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>No hay participantes disponibles.
+                                                    </option>
+                                                @endif
+                                            @else
+                                                <option value="" disabled>No hay participantes disponibles.
+                                                </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                             @endif
 
 
@@ -335,9 +341,9 @@
 
 
                             <div class="col-12 d-none" id="campo_estatus">
-                                    <label class="form-label"><i
-                                            class="fas fa-comment-dots iconos-crear"></i>Justificación</label>
-                                    <textarea name="justificacion"  value="{{ $incidentesSeguridad->fecha_cierre }}" class="form-control">{{ $incidentesSeguridad->justificacion }}</textarea>
+                                <label class="form-label"><i
+                                        class="fas fa-comment-dots iconos-crear"></i>Justificación</label>
+                                <textarea name="justificacion" value="{{ $incidentesSeguridad->fecha_cierre }}" class="form-control">{{ $incidentesSeguridad->justificacion }}</textarea>
                             </div>
 
 
@@ -369,7 +375,8 @@
                                     name="empleado_asignado_id" id="empleado_asignado_id">
                                     <option value="" selected disabled>Selecciona una opción</option>
                                     @foreach ($empleados as $id => $empleado)
-                                        <option value="{{ $empleado->id }}" data-puesto="{{ $empleado->puesto }}" data-area="{{ $empleado->area->area }}"
+                                        <option value="{{ $empleado->id }}" data-puesto="{{ $empleado->puesto }}"
+                                            data-area="{{ $empleado->area->area }}"
                                             {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) == $empleado->id ? 'selected' : '' }}>
                                             {{ $empleado->name }}
                                         </option>
@@ -382,12 +389,14 @@
                                 @endif
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="id_registro_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                <label for="id_registro_puesto"><i
+                                        class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                 <div class="form-control" id="id_registro_puesto" readonly></div>
 
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="id_registro_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                                <label for="id_registro_area"><i
+                                        class="fas fa-street-view iconos-crear"></i>Área</label>
                                 <div class="form-control" id="id_registro_area" readonly></div>
                             </div>
 
@@ -400,15 +409,18 @@
                                     corto del incidente</label><sup>*</sup>
                                 <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Describa de forma breve y con palabras clave el motivo del incidente de seguridad."></i>
-                                <input type="text" name="titulo" maxlength="255" value="{{ old('titulo', $incidentesSeguridad->titulo) }}"
-                                    class="form-control" required>
+                                <input type="text" name="titulo" maxlength="255"
+                                    value="{{ old('titulo', $incidentesSeguridad->titulo) }}" class="form-control"
+                                    required>
                             </div>
 
                             <div class="mt-2 form-group col-5">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                    y hora de ocurrencia</label><sup>*</sup><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    y hora de ocurrencia</label><sup>*</sup><i class="fas fa-info-circle"
+                                    style="font-size:12pt; float: right;"
                                     title="Fecha y hora aproximada en la que ocurrió el evento que motivó el incidente de seguridad."></i>
-                                <input type="datetime-local" min="1-45-01-01T00:00" name="fecha" class="form-control"
+                                <input type="datetime-local" min="1-45-01-01T00:00" name="fecha"
+                                    class="form-control"
                                     value="{{ old('fecha', \Carbon\Carbon::parse($incidentesSeguridad->fecha)->format('Y-m-d\TH:i')) }}"
                                     required>
                                 @if ($errors->has('fecha'))
@@ -433,17 +445,17 @@
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación
                                     exacta</label>
-                                    <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
                                 <input type="" name="ubicacion" class="form-control"
-                                value="{{ old('ubicacion', $incidentesSeguridad->ubicacion) }}">
+                                    value="{{ old('ubicacion', $incidentesSeguridad->ubicacion) }}">
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                                <select  class="form-control"
-                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
+                                <select class="form-control" value="{{ $incidentesSeguridad->categoria }}"
+                                    name="categoria_id">
                                     <option selected disabled>Seleccione categoría</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}"
@@ -457,12 +469,11 @@
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                                <select  class="form-control"
-                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
-                                    <option selected disabled >Seleccione subcategoría</option>
+                                <select class="form-control" value="{{ $incidentesSeguridad->subcategoria }}"
+                                    name="subcategoria_id">
+                                    <option selected disabled>Seleccione subcategoría</option>
                                     @foreach ($subcategorias as $subcategoria)
-                                        <option
-                                            value="{{ $subcategoria->id }}"
+                                        <option value="{{ $subcategoria->id }}"
                                             {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
                                             {{ $subcategoria->subcategoria }}
                                         </option>
@@ -475,7 +486,8 @@
                                     del incidente</label><sup>*</sup>
                                 <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                                <textarea name="descripcion" value="{{ old('descripcion', $incidentesSeguridad->descripcion) }}"  class="form-control" required>{{ $incidentesSeguridad->descripcion }}
+                                <textarea name="descripcion" value="{{ old('descripcion', $incidentesSeguridad->descripcion) }}"
+                                    class="form-control" required>{{ $incidentesSeguridad->descripcion }}
                                     </textarea>
                             </div>
 
@@ -845,10 +857,9 @@
                                 <strong style="font-size:13pt;">Folio: {{ $incidentesSeguridad->folio }}</strong>
                             </div>
                         </div>
-                        <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención del Incidente de Seguridad</b></h5>
-                            <button style="position:absolute; right: 2px; top:2px;"
-                                class="btn btn-success btn_modal_form">Agregar actividad</button>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h5 style="margin: 0;"><b>Acciones para la Atención del Incidente de Seguridad</b></h5>
+                            <button class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($incidentesSeguridad->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
                                     href="{{ route('admin.planes-de-accion.show', $incidentesSeguridad->planes->first()->id) }}"
@@ -965,7 +976,9 @@
 
 @php
     $userIsAuthorized = false;
-    $existingRecord = App\Models\FirmaCentroAtencion::where('id_seguridad', $incidentesSeguridad->id)->where('user_id', Auth::id())->first();
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_seguridad', $incidentesSeguridad->id)
+        ->where('user_id', Auth::id())
+        ->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -974,67 +987,70 @@
     }
 @endphp
 
-@if($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente')
-@if ($userIsAuthorized)
-@if (!$existingRecord)
-<form method="POST" action="{{ route('admin.module_firmas.seguridad', ['id' => $incidentesSeguridad->id]) }}" enctype="multipart/form-data">
-@csrf
-<div class="card card-body">
-    <div class="" style="position: relative; left: 2rem;">
-        <br>
-        <h5><strong>Firma*</strong></h5>
-        <p>
-            Indispensable firmar  antes de guardar y enviarla a aprobación.
-        </p>
-    </div>
-    <div class="flex caja-firmar">
-        <div class="flex-item"
-            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-            <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <canvas id="firma_requi" width="500px" height="300px">
-                    Navegador no compatible
-                </canvas>
-                <input type="hidden" name="firma" id="firma">
-            </div>
-            <div>
-                <div class="btn"
-                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                    id="clear">Limpiar</div>
-            </div>
-            <div class="flex my-4" style="justify-content: end;">
-                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
-            </div>
-        </div>
-    </div>
-    </div>
-</form>
-@endif
-@endif
+@if ($incidentesSeguridad->estatus === 'Cerrado' || $incidentesSeguridad->estatus === 'No procedente')
+    @if ($userIsAuthorized)
+        @if (!$existingRecord)
+            <form method="POST"
+                action="{{ route('admin.module_firmas.seguridad', ['id' => $incidentesSeguridad->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
+                    <div class="" style="position: relative; left: 2rem;">
+                        <br>
+                        <h5><strong>Firma*</strong></h5>
+                        <p>
+                            Indispensable firmar antes de guardar y enviarla a aprobación.
+                        </p>
+                    </div>
+                    <div class="flex caja-firmar">
+                        <div class="flex-item"
+                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                            <div id="firma_content" class="caja-space-firma"
+                                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                <canvas id="firma_requi" width="500px" height="300px">
+                                    Navegador no compatible
+                                </canvas>
+                                <input type="hidden" name="firma" id="firma">
+                            </div>
+                            <div>
+                                <div class="btn"
+                                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                    id="clear">Limpiar</div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endif
+    @endif
 @endif
 
 @if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
-<div class="card card-content" style="margin-bottom: 30px">
-    <div class="caja-firmas-doc">
-        @foreach($firmas as $firma)
-        <div class="flex" style="margin-top: 70px;">
-            <div class="flex-item">
-                @if($firma->firma)
-                    <img src="{{ $firma->firma_ruta_seguridad }}" class="img-firma" width="200" height="100">
-                    <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
-                    <p>Firmante: {{ $firma->empleado->name }}</p>
-                @else
-                    <div style="height: 137px;"></div>
-                @endif
-                <hr>
-                <p>
-                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-                </p>
-            </div>
+    <div class="card card-content" style="margin-bottom: 30px">
+        <div class="caja-firmas-doc">
+            @foreach ($firmas as $firma)
+                <div class="flex" style="margin-top: 70px;">
+                    <div class="flex-item">
+                        @if ($firma->firma)
+                            <img src="{{ $firma->firma_ruta_seguridad }}" class="img-firma" width="200"
+                                height="100">
+                            <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
+                            <p>Firmante: {{ $firma->empleado->name }}</p>
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                        <hr>
+                        <p>
+                            <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
-</div>
 @endif
 
 
@@ -1087,6 +1103,16 @@
             var canvas = document.getElementById('firma_requi');
             var dataUrl = canvas.toDataURL();
             $('#firma').val(dataUrl);
+        });
+
+        const select = document.getElementById('prioridad');
+        const options = ['Alta', 'Media', 'Baja'];
+
+        options.forEach(option => {
+            let opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            select.appendChild(opt);
         });
 
         function renderCanvas(contenedor, clearBtnCanvas) {
@@ -1234,7 +1260,7 @@
             tokenSeparators: [',', ' '],
             templateResult: formatEmpleado,
             templateSelection: formatEmpleadoSelection,
-            maximumSelectionLength: 5  // Limita a un máximo de 5 selecciones
+            maximumSelectionLength: 5 // Limita a un máximo de 5 selecciones
         });
 
         function formatEmpleado(empleado) {
@@ -1672,24 +1698,6 @@
                 '/',
             ]
         });
-    });
-</script>
-
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        let incidentesSeguridad = @json($incidentesSeguridad);
-        if (incidentesSeguridad.estatus == 'No procedente' || incidentesSeguridad.estatus == 'Cerrado') {
-            $('#campo_estatus').removeClass('d-none');
-        }
-    })
-    $(document).on('change', '.estatus_campo', function(event) {
-        if ($('.estatus_campo option:selected').attr('value') == 'No procedente' || $(
-                '.estatus_campo option:selected').attr('value') == 'Cerrado') {
-            console.log('ocultar');
-            $('#campo_estatus').removeClass('d-none');
-        } else {
-            $('#campo_estatus').addClass('d-none');
-        }
     });
 </script>
 

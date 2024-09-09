@@ -40,6 +40,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -74,6 +75,8 @@ class EmpleadoController extends Controller
 
                 return $empleado;
             });
+
+        // Log::channel('logstash')->info('Index Empleados.');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1726,7 +1729,7 @@ class EmpleadoController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new EmpleadosGeneralExport();
+        $export = new EmpleadosGeneralExport;
 
         return Excel::download($export, 'Empleados.xlsx');
     }

@@ -186,22 +186,34 @@
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio'
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'anonimo'
+                            data: 'anonimo',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_creacion'
+                            data: 'fecha_creacion',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'fecha_de_cierre'
+                            data: 'fecha_de_cierre',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
                             data: 'id',
@@ -235,25 +247,39 @@
                             }
                         },
                         {
-                            data: 'colaborador_quejado'
+                            data: 'colaborador_quejado',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'area_quejado'
+                            data: 'area_quejado',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'proceso_quejado'
+                            data: 'proceso_quejado',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'sede'
+                            data: 'sede',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'ubicacion'
+                            data: 'ubicacion',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'externo_quejado'
+                            data: 'externo_quejado',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                            return data ? data : ''; }
                         },
                         {
                             data: 'id',
@@ -271,7 +297,7 @@
 
                                     html += `
 
-                                        <button class="btn archivar" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
+                                        <button class="btn" onclick='ArchivarQueja("/admin/desk/${data}/archivarQuejas"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 
@@ -314,7 +340,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_quejas_desk.ajax.reload();
+                                    tabla_quejas_desk.ajax.reload(null,false);
                                     Swal.fire(
                                         'Queja Archivada',
                                         '',

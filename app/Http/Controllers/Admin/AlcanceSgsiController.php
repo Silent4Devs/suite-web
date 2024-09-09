@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\AlcancesEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAlcanceSgsiRequest;
 use App\Mail\DeterminacionAlcance\NotificacionAprobacionAlcance;
@@ -299,8 +300,7 @@ class AlcanceSgsiController extends Controller
         // dd($alcance);
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        // $no_niveles = $lista->niveles;
-        // dd($lista, $no_niveles);
+        event(new AlcancesEvent($alcance, 'solicitudAprobacion', 'alcance_sgsis', 'Alcance'));
 
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
@@ -389,12 +389,12 @@ class AlcanceSgsiController extends Controller
                                 $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
-                                // dd($proceso);
-                                // dd($alcanceSgsi, $part);
-
                                 return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
                                 break;
-                            } else {
+                            } elseif (
+                                ! ($part->estatus == 'Pendiente')
+                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                            ) {
                                 $acceso_restringido = 'turno';
 
                                 return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
@@ -422,12 +422,14 @@ class AlcanceSgsiController extends Controller
 
     public function aprobado($id, Request $request)
     {
-        // dd($id, $request->all());
+
         $aprobador = User::getCurrentUser()->empleado->id;
 
         $alcance = AlcanceSgsi::find($id);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+
+        event(new AlcancesEvent($alcance, 'aprobado', 'alcance_sgsis', 'Alcance'));
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -502,11 +504,12 @@ class AlcanceSgsiController extends Controller
 
     public function rechazado($id, Request $request)
     {
-        // dd($id, $request->all());
+
         $alcance = AlcanceSgsi::with('empleado')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
-        // dd($aprobacion);
+
+        event(new AlcancesEvent($alcance, 'rechazado', 'alcance_sgsis', 'Alcance'));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
@@ -533,7 +536,7 @@ class AlcanceSgsiController extends Controller
         Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoAlcance($alcance_nombre));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoAlcance($alcance_nombre));
         }
 
         return redirect(route('admin.alcance-sgsis.index'));
@@ -582,20 +585,38 @@ class AlcanceSgsiController extends Controller
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
+        $proceso_actualizado = ProcesosListaDistribucion::with('participantes')
+            ->where('id', '=', $proceso->id)
+            ->with([
+                'modulo' => function ($query) {
+                    $query->where('modelo', '=', $this->modelo);
+                },
+            ])
+            ->first();
+
         $no_niveles = $lista->niveles;
 
+        $breakLoop = false;
+
         for ($i = 1; $i <= $no_niveles; $i++) {
-            foreach ($proceso->participantes as $part) {
+            foreach ($proceso_actualizado->participantes as $part) {
                 if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                            $breakLoop = true;
                             break;
                         }
                     }
+                    if ($breakLoop) {
+                        break;
+                    }
                 }
+            }
+            if ($breakLoop) {
+                break;
             }
         }
     }

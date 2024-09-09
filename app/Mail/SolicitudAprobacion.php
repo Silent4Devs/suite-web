@@ -63,10 +63,15 @@ class SolicitudAprobacion extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        $empleado = $this->empleado->first();
+
+        $nombre = $empleado->name ?? '';
+        $email = $empleado->email ?? '';
+
         return $this->view('emails.empleados')
             ->with([
-                'nombre' => $this->empleado->name,
-                'email' => $this->empleado->email,
+                'nombre' => $nombre,
+                'email' => $email,
                 'status' => $this->status,
                 'id' => $this->id,
                 'logo' => $this->getBase64($this->organizacion->logotipo),

@@ -128,6 +128,11 @@
                                         <a href="mailto:{{ $empleado_cargo->email }}">
                                             <i class="bi bi-envelope"></i>
                                         </a>
+                                        <a href="{{ route('admin.editarCompetencias', $empleado_cargo) }}">
+                                            <i class="material-symbols-outlined">
+                                                contract_edit
+                                            </i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -235,6 +240,36 @@
                 </div>
             </a>
 
+            @if ($mostrarCargaObjetivos)
+            <a
+                href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado', ['empleado' => $empleado->id]) }}">
+                <div class="item-ob-ev" style="background-color: #2478B8;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/inicio_usuario/objetivos.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Cargar Objetivos</h5>
+                        <p><small>Cargar objetivos de la Evaluación por Periodo</small></p>
+                    </div>
+                </div>
+            </a>
+            @endif
+
+            @if ($mostrarCargaObjetivosArea)
+            <a
+                href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-area', ['area' => $empleado->area_id]) }}">
+                <div class="item-ob-ev" style="background-color: #117994;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/reunion.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Equipo: Mis Objetivos</h5>
+                        <p><small>Habilitado</small></p>
+                    </div>
+                </div>
+            </a>
+            @endif
+
             <a href="" class="d-none">
                 <div class="item-ob-ev" style="background-color: #249AB8;">
                     <div class="img-ob-ev">
@@ -246,6 +281,25 @@
                     </div>
                 </div>
             </a>
+
+            @if ($redirigirEvaluacion)
+                <a
+                    href="{{ route('admin.rh.evaluaciones-desempeno.cuestionario', [
+                        'evaluacion' => $id_evaluacion,
+                        'evaluado' => $id_evaluado,
+                        'periodo' => $id_periodo,
+                    ]) }}">
+                    <div class="item-ob-ev" style="background-color: #19A877;">
+                        <div class="img-ob-ev">
+                            <img src="{{ asset('img/inicio_usuario/ev360.png') }}" alt="">
+                        </div>
+                        <div class="info-ob-ev">
+                            <h5>Evaluación de Desempeño</h5>
+                            <p><small>Calificar Evaluación de Desempeño</small></p>
+                        </div>
+                    </div>
+                </a>
+            @endif
 
             @if (isset($mis_evaluaciones->evaluacion) && $mis_evaluaciones->evaluacion->estatus == 2)
                 <a

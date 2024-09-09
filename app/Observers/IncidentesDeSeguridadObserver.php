@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Models\IncidentesDeSeguridad;
-use Illuminate\Support\Facades\Queue;
 
 class IncidentesDeSeguridadObserver
 {
@@ -15,9 +14,7 @@ class IncidentesDeSeguridadObserver
      */
     public function created(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        Queue::push(function () use ($incidentesDeSeguridad) {
-            event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'create', 'incidentes-de-seguridad', 'Incidente de Seguridad'));
-        });
+        event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'create', 'incidentes_de_seguridads', 'Incidente de Seguridad'));
     }
 
     /**
@@ -27,9 +24,8 @@ class IncidentesDeSeguridadObserver
      */
     public function updated(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        Queue::push(function () use ($incidentesDeSeguridad) {
-            event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'update', 'incidentes-de-seguridad', 'Incidente de Seguridad'));
-        });
+
+        event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'update', 'incidentes_de_seguridads', 'Incidente de Seguridad'));
     }
 
     /**
@@ -39,9 +35,8 @@ class IncidentesDeSeguridadObserver
      */
     public function deleted(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        Queue::push(function () use ($incidentesDeSeguridad) {
-            event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'delete', 'incidentes-de-seguridad', 'Incidente de Seguridad'));
-        });
+
+        event(new IncidentesDeSeguridadEvent($incidentesDeSeguridad, 'delete', 'incidentes_de_seguridads', 'Incidente de Seguridad'));
     }
 
     /**

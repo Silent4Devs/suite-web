@@ -10,7 +10,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                @include('admin.tipos_objetivos_sistema._form')
+                @include('admin.tiposObjetivosSistema._form')
                 <div class="form-group text-right">
                     <a href="{{ route('admin.tipos-objetivos.index') }}" class="btn btn_cancelar">
                         {{ __('Cancelar') }}

@@ -1,0 +1,7 @@
+# Ignore node_modules and other unwanted paths
+node_modules
+.git
+.env
+#vendor
+storage
+tests

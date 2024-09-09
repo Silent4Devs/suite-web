@@ -156,11 +156,87 @@
                                             title="{{ $evOb->empleado->name }}" width="40" height="37">
                                     @endforeach
                                 </div>
-                                <button class="toggle-button-objetivos" data-index="{{ $key }}">Modificar
-                                    Evaluadores
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modificarEvaluadoresObjetivos">
+                                    Evaluadores Objetivos
                                 </button>
-                            </div>
+                                <!-- Modal -->
+                                <div wire:ignore.self class="modal fade" id="modificarEvaluadoresObjetivos"
+                                    data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                    aria-labelledby="modificarEvaluadoresObjetivosLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modificarEvaluadoresObjetivosLabel">
+                                                    Modificar Evaluadores - Objetivos
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @foreach ($array_mod_evaluadores_objetivos[$key] as $key_evaluador => $evaluador)
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <select class="form-control"
+                                                                name="modificar_obj_evaluador_{{ $key_evaluador }}"
+                                                                id="modificar_obj_evaluador_{{ $key_evaluador }}"
+                                                                wire:model="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                                                <option value={{ $evaluador['id_empleado_evaluador'] }}
+                                                                    default>
+                                                                    {{ $evaluador['nombre_evaluador'] }}</option>
+                                                                @foreach ($modificar_empleados as $me)
+                                                                    <option value="{{ $me->id }}">
+                                                                        {{ $me->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                for="modificar_obj_evaluador_{{ $key_evaluador }}">Evaluador</label>
+                                                        </div>
 
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <input class="form-control" type="number" placeholder=""
+                                                                class="form-input"
+                                                                id="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
+                                                                name="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
+                                                                wire:model="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.porcentaje_objetivos">
+                                                            <label
+                                                                for="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}">Porcentaje</label>
+                                                        </div>
+                                                        @if ($key_evaluador > 0)
+                                                            <div class="col-md-4">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="confirmDeleteEvaluadorObjetivos({{ $key }}, {{ $key_evaluador }})">
+                                                                    Eliminar
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-primary"
+                                                        wire:click="agregarEvaluadorPeriodoObjetivos({{ $key }})">
+                                                        + Agregar Evaluador
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="confirmarModificacionObjetivos({{ $key }})">
+                                                    Modificar Evaluadores
+                                                </button>
+                                                {{-- <button class="btn btn-primary" type="button"
+                                                wire:click="modificarEvaluadoresPeriodoObjetivos({{ $key }})">
+                                                Modificar Evaluadores</button> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-6">
                                 <small>Competencias</small><br>
@@ -172,9 +248,84 @@
                                             title="{{ $evComp->empleado->name }}" width="40" height="37">
                                     @endforeach
                                 </div>
-                                <button class="toggle-button-competencias" data-index="{{ $key }}">Modificar
-                                    Evaluadores
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modificarEvaluadoresCompetencias">
+                                    Evaluadores Competencias
                                 </button>
+                                <div wire:ignore.self class="modal fade" id="modificarEvaluadoresCompetencias"
+                                    data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                    aria-labelledby="modificarEvaluadoresCompetenciasLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modificarEvaluadoresCompetenciasLabel">
+                                                    Modificar Evaluadores - Competencias</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @foreach ($array_mod_evaluadores_competencias[$key] as $key_evaluador => $evaluador)
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <select class="form-control"
+                                                                name="modificar_comp_evaluador_{{ $key_evaluador }}"
+                                                                id="modificar_comp_evaluador_{{ $key_evaluador }}"
+                                                                wire:model="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
+                                                                <option value={{ $evaluador['id_empleado_evaluador'] }}
+                                                                    default>
+                                                                    {{ $evaluador['nombre_evaluador'] }}</option>
+                                                                @foreach ($modificar_empleados as $me)
+                                                                    <option value="{{ $me->id }}">
+                                                                        {{ $me->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <label
+                                                                for="modificar_comp_evaluador_{{ $key_evaluador }}">Evaluador</label>
+                                                        </div>
+
+                                                        <div class="form-group col-md-4 anima-focus">
+                                                            <input class="form-control" type="number" placeholder=""
+                                                                class="form-input"
+                                                                id="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
+                                                                name="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
+                                                                wire:model="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.porcentaje_competencias">
+                                                            <label
+                                                                for="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}">Porcentaje</label>
+                                                        </div>
+                                                        @if ($key_evaluador > 0)
+                                                            <div class="col-md-4">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="confirmDeleteEvaluadorCompetencias({{ $key }}, {{ $key_evaluador }})">
+                                                                    Eliminar
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-primary"
+                                                        wire:click="agregarEvaluadorPeriodoCompetencias({{ $key }})">
+                                                        + Agregar Evaluador
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="confirmarModificacionCompetencias({{ $key }})">
+                                                    Modificar Evaluadores
+                                                </button>
+                                                {{-- <button type="button" type="button" class="btn btn-primary"
+                                                    wire:click="modificarEvaluadoresPeriodoCompetencias({{ $key }})">
+                                                    Modificar Evaluadores</button> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -201,104 +352,6 @@
             </div>
         @endforeach
     </div>
-
-    @foreach ($array_periodos as $key => $periodo)
-        <div class="hidden-div-objetivos" id="hidden-div-objetivos-{{ $key }}">
-            <div class="card card-body">
-                @foreach ($array_mod_evaluadores_objetivos[$key] as $key_evaluador => $evaluador)
-                    <div class="form-row">
-                        <div class="form-group col-md-4 anima-focus">
-                            <select class="form-control" name="modificar_obj_evaluador_{{ $key_evaluador }}"
-                                id="modificar_obj_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
-                                <option value={{ $evaluador['id_empleado_evaluador'] }} default>
-                                    {{ $evaluador['nombre_evaluador'] }}</option>
-                                @foreach ($modificar_empleados as $me)
-                                    <option value="{{ $me->id }}">
-                                        {{ $me->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <label for="modificar_obj_evaluador_{{ $key_evaluador }}">Evaluador</label>
-                        </div>
-
-                        <div class="form-group col-md-4 anima-focus">
-                            <input class="form-control" type="number" placeholder="" class="form-input"
-                                id="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
-                                name="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_objetivos.{{ $key }}.{{ $key_evaluador }}.porcentaje_objetivos">
-                            <label for="porcentaje_modificar_obj_evaluador_{{ $key_evaluador }}">Porcentaje</label>
-                        </div>
-                        <div class="col-md-4">
-                            <a class="btn btn-primary"
-                                onclick="confirmDeleteEvaluadorObjetivos({{ $evaluador['id_registro_evaluador'] }}, {{ $key }}, {{ $key_evaluador }})">
-                                Eliminar
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="row">
-                    <a class="btn btn-primary"
-                        wire:click.prevent="agregarEvaluadorPeriodoObjetivos({{ $key }})">
-                        + Agregar Evaluador
-                    </a>
-                </div>
-                <div class="row">
-                    <a class="btn btn-primary"
-                        wire:click.prevent="modificarEvaluadoresPeriodoObjetivos({{ $key }})">
-                        Modificar Evaluadores</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="hidden-div-competencias" id="hidden-div-competencias-{{ $key }}">
-            <div class="card card-body">
-                @foreach ($array_mod_evaluadores_competencias[$key] as $key_evaluador => $evaluador)
-                    <div class="form-row">
-                        <div class="form-group col-md-4 anima-focus">
-                            <select class="form-control" name="modificar_comp_evaluador_{{ $key_evaluador }}"
-                                id="modificar_comp_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.id_empleado_evaluador">
-                                <option value={{ $evaluador['id_empleado_evaluador'] }} default>
-                                    {{ $evaluador['nombre_evaluador'] }}</option>
-                                @foreach ($modificar_empleados as $me)
-                                    <option value="{{ $me->id }}">
-                                        {{ $me->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <label for="modificar_comp_evaluador_{{ $key_evaluador }}">Evaluador</label>
-                        </div>
-
-                        <div class="form-group col-md-4 anima-focus">
-                            <input class="form-control" type="number" placeholder="" class="form-input"
-                                id="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
-                                name="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}"
-                                wire:model.defer="array_mod_evaluadores_competencias.{{ $key }}.{{ $key_evaluador }}.porcentaje_competencias">
-                            <label for="porcentaje_modificar_comp_evaluador_{{ $key_evaluador }}">Porcentaje</label>
-                        </div>
-                        <div class="col-md-4">
-                            <a class="btn btn-primary"
-                                onclick="confirmDeleteEvaluadorCompetencias({{ $evaluador['id_registro_evaluador'] }}, {{ $key }}, {{ $key_evaluador }})">
-                                Eliminar
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="row">
-                    <a class="btn btn-primary"
-                        wire:click.prevent="agregarEvaluadorPeriodoCompetencias({{ $key }})">
-                        + Agregar Evaluador
-                    </a>
-                </div>
-                <div class="row">
-                    <a class="btn btn-primary"
-                        wire:click.prevent="modificarEvaluadoresPeriodoCompetencias({{ $key }})">
-                        Modificar Evaluadores</a>
-                </div>
-            </div>
-        </div>
-    @endforeach
 
     @if ($evaluacion->activar_objetivos)
         <div class="row mt-4">
@@ -746,8 +799,110 @@
             </div>
         </div>
     </div>
-</div>
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('validacionObjetivos', (erroresDetectadosObjetivos) => {
+                console.log('Mostrar alerta', erroresDetectadosObjetivos);
+                if (Array.isArray(erroresDetectadosObjetivos)) {
+                    erroresDetectadosObjetivos = erroresDetectadosObjetivos[0];
+                }
 
-@section('scripts')
+                Swal.fire({
+                    title: erroresDetectadosObjetivos.title,
+                    text: erroresDetectadosObjetivos.text,
+                    icon: erroresDetectadosObjetivos.icon,
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('validacionCompetencias', (erroresDetectadosCompetencias) => {
+                console.log('Mostrar alerta', erroresDetectadosCompetencias);
+                if (Array.isArray(erroresDetectadosCompetencias)) {
+                    erroresDetectadosCompetencias = erroresDetectadosCompetencias[0];
+                }
+
+                Swal.fire({
+                    title: erroresDetectadosCompetencias.title,
+                    text: erroresDetectadosCompetencias.text,
+                    icon: erroresDetectadosCompetencias.icon,
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('evaluadoresObjetivosModificados', () => {
+                Swal.fire({
+                    title: 'Evaluadores Modificados - Objetivos',
+                    text: 'Evaluadores de objetivos modificados correctamente',
+                    icon: 'success',
+                    timer: 3000, // Puedes ajustar el tiempo de cierre automático si lo deseas
+                    showConfirmButton: false,
+                }).then(() => {
+                    // Cerrar el modal después de la alerta
+                    $('#modificarEvaluadoresObjetivos').modal('hide');
+                    $('.modal-backdrop').remove();
+                })
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('evaluadoresCompetenciasModificados', () => {
+                Swal.fire({
+                    title: 'Evaluadores Modificados - Competencias',
+                    text: 'Evaluadores de competencias modificados correctamente',
+                    icon: 'success',
+                    timer: 3000, // Puedes ajustar el tiempo de cierre automático si lo deseas
+                    showConfirmButton: false,
+                }).then(() => {
+                    // Cerrar el modal después de la alerta
+                    $('#modificarEvaluadoresCompetencias').modal('hide');
+                    $('.modal-backdrop').remove();
+                })
+            });
+        });
+    </script>
+    <script>
+        function confirmarModificacionObjetivos(keyObj) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción modificará los evaluadores de objetivos.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, modificar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(keyObj);
+                    Livewire.dispatch('modificarEvaluadoresPeriodoObjetivos', {
+                        keyObj
+                    });
+                }
+            });
+        }
+    </script>
+    <script>
+        function confirmarModificacionCompetencias(keyComp) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción modificará los evaluadores de objetivos.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, modificar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(keyComp);
+                    Livewire.dispatch('modificarEvaluadoresPeriodoCompetencias', {
+                        keyComp
+                    });
+                }
+            });
+        }
+    </script>
     @include('admin.recursos-humanos.evaluaciones-desempeno.scriptsEvaluadoPersonal')
-@endsection
+</div>

@@ -336,7 +336,7 @@
 
         <div class="row">
             <div class="col-md-3 form-group">
-                <select name="colaborador_tabla" id="colaborador_tabla" wire:model.defer="select_colaborador_tabla"
+                <select name="colaborador_tabla" id="colaborador_tabla" wire:model="select_colaborador_tabla"
                     class="form-control">
                     <option value="todos">Colaborador</option>
                     @foreach ($evaluacion->evaluados as $evaluado)
@@ -556,15 +556,25 @@
         </div>
     </div>
     @section('scripts')
+        <script>
+            function generarColorAleatorio() {
+                let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+                while (color.length < 7) {
+                    color = color + '0';
+                }
+                return color;
+            }
+        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         @if ($evaluacion->activar_objetivos)
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
-                    console.log(tipos, resultados);
+
                     var ctx2 = document.getElementById('cumplimientoObjetivos').getContext('2d');
                     ChartCO = new Chart(ctx2, {
                         type: 'bar',
@@ -572,6 +582,7 @@
                             labels: tipos,
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
+                                backgroundColor: generarColorAleatorio(),
                                 data: resultados,
                                 borderWidth: 1
                             }]
@@ -588,9 +599,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('cumplimientoObj', (cumpObj) => {
-
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                        const cumpObj = cumpObjWrapper.cumpObj;
                         document.getElementById('cumplimientoObjetivos').remove();
                         let canvas = document.createElement("canvas");
                         canvas.id = "cumplimientoObjetivos";
@@ -605,6 +616,7 @@
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
                                     data: cumpObj.data,
+                                    backgroundColor: generarColorAleatorio(),
                                     borderWidth: 1
                                 }]
                             },
@@ -621,7 +633,7 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const escalas = @json($escalas['nombres'][$periodo_seleccionado]);
                     const colores = @json($escalas['colores'][$periodo_seleccionado]);
@@ -651,8 +663,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('escalasObj', (escObj) => {
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('escalasObj', (escObjWrapper) => {
+                        const escObj = escObjWrapper.escObj;
 
                         document.getElementById('escalas').remove();
                         let canvas = document.createElement("canvas");
@@ -687,7 +700,7 @@
 
         @if ($evaluacion->activar_competencias)
             <script>
-                document.addEventListener('livewire:load', function() {
+                document.addEventListener('livewire:initialized', function() {
 
                     const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
                     const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -700,6 +713,7 @@
                             datasets: [{
                                 label: 'Porcentaje de cumplimiento',
                                 data: resultados,
+                                backgroundColor: '#BB68A8', // Color de las barras
                                 borderWidth: 1
                             }]
                         },
@@ -715,10 +729,9 @@
             </script>
 
             <script>
-                document.addEventListener('livewire:load', function() {
-                    Livewire.on('cumplimientoComp', (cumpComp) => {
-
-                        console.log(cumpComp);
+                document.addEventListener('livewire:initialized', function() {
+                    @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                        const cumpComp = cumpCompWrapper.cumpComp;
 
                         document.getElementById('cumplimientoCompetencias').remove();
                         let canvas = document.createElement("canvas");
@@ -734,6 +747,7 @@
                                 labels: cumpComp.labels,
                                 datasets: [{
                                     label: 'Porcentaje de cumplimiento',
+                                    backgroundColor: '#BB68A8', // Color de las barras
                                     data: cumpComp.data,
                                     borderWidth: 1
                                 }]

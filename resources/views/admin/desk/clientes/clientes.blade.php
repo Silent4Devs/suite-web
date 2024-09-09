@@ -67,8 +67,6 @@
                         <thead>
                             <tr>
                                 <th style="min-width:60px;">Folio</th>
-                                <th style="min-width:200px;">Cliente</th>
-                                <th style="min-width:200px;">Proyecto</th>
                                 <th style="min-width:200px;">Nombre del Cliente</th>
                                 <th style="min-width:200px;">Puesto</th>
                                 <th style="min-width:200px;">Teléfono</th>
@@ -214,31 +212,35 @@
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio'
-                        },
-                        {
-                            data: 'cliente',
+                            data: 'folio',
                             render: function(data, type, row, meta) {
-                                return row.cliente.nombre
+                                return data ? data : '';
                             }
                         },
                         {
-                            data: 'proyectos',
+                            data: 'nombre',
                             render: function(data, type, row, meta) {
-                                return row.proyectos.proyecto
+                                return data ? data : '';
+                            }
+
+                        },
+                        {
+                            data: 'puesto',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
                             }
                         },
                         {
-                            data: 'nombre'
+                            data: 'telefono',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'puesto'
-                        },
-                        {
-                            data: 'telefono'
-                        },
-                        {
-                            data: 'correo'
+                            data: 'correo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'titulo',
@@ -247,28 +249,52 @@
                             }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_de_cierre'
+                            data: 'fecha_de_cierre',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'proceso_quejado'
+                            data: 'proceso_quejado',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'ubicacion'
+                            data: 'ubicacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'otro_quejado'
+                            data: 'otro_quejado',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'prioridad',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'desea_levantar_ac',

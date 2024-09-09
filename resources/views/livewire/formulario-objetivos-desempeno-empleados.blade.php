@@ -23,21 +23,21 @@
             @if ($mostrar)
                 <div class="row">
                     <div class="col-12 form-group anima-focus">
-                        <input wire:model="objetivo_estrategico" id="objetivo_estrategico" type="text"
+                        <input wire:model.live="objetivo_estrategico" id="objetivo_estrategico" type="text"
                             class="form-control" placeholder="">
                         <label for="objetivo_estrategico" class="required">Objetivo Estratégico</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 form-group anima-focus">
-                        <textarea wire:model="descripcion" name="descripcion" id="descripcion" cols="30" rows="10" placeholder=""
+                        <textarea wire:model.live="descripcion" name="descripcion" id="descripcion" cols="30" rows="10" placeholder=""
                             class="form-control"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 form-group anima-focus">
-                        <select wire:model="select_categoria" id="categoria" type="text" class="form-control"
+                        <select wire:model.live="select_categoria" id="categoria" type="text" class="form-control"
                             placeholder="">
                             <option value="">Seleccione Categoria</option>
                             @foreach ($categorias as $categoria)
@@ -47,17 +47,17 @@
                         <label for="categoria" class="required">Categoría</label>
                     </div>
                     <div class="col-md-3 form-group anima-focus">
-                        <input wire:model="KPI" id="KPI" type="text" class="form-control" placeholder="">
+                        <input wire:model.live="KPI" id="KPI" type="text" class="form-control" placeholder="">
                         <label for="KPI" class="required">KPI</label>
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex" style="gap: 10px;">
                             <div class="form-group anima-focus w-100">
-                                <select wire:model="select_unidad" id="unidad-medida" type="text"
+                                <select wire:model.live="select_unidad" id="unidad-medida" type="text"
                                     class="form-control" placeholder="">
                                     <option value="">Seleccione Unidad</option>
                                     @foreach ($unidades as $unidad)
-                                        <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
+                                        <option value={{ $unidad->id }}>{{ $unidad->definicion }}</option>
                                     @endforeach
                                 </select>
                                 <label for="unidad-medida" class="required">Unidad de medida</label>
@@ -75,31 +75,31 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <input type="checkbox" wire:model="ev360">
+                        <input type="checkbox" wire:model.live="ev360">
                         <label for="">Evaluación 360</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="mensual">
+                        <input type="checkbox" wire:model.live="mensual">
                         <label for="">Mensual</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="bimestral">
+                        <input type="checkbox" wire:model.live="bimestral">
                         <label for="">Bimestral</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="trimestral">
+                        <input type="checkbox" wire:model.live="trimestral">
                         <label for="">Trimestral</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="semestral">
+                        <input type="checkbox" wire:model.live="semestral">
                         <label for="">Semestral</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="anualmente">
+                        <input type="checkbox" wire:model.live="anualmente">
                         <label for="">Anualmente</label>
                     </div>
                     <div class="col-3">
-                        <input type="checkbox" wire:model="abierta">
+                        <input type="checkbox" wire:model.live="abierta">
                         <label for="">Abierta</label>
                     </div>
                 </div>
@@ -121,19 +121,19 @@
                                 {{-- This is the content of the modal. --}}
                                 <div class="row">
                                     <div class="col-12 form-group anima-focus">
-                                        <input wire:model="nombre_unidad" id="nombre_unidad" type="text"
+                                        <input wire:model.live="nombre_unidad" id="nombre_unidad" type="text"
                                             class="form-control" placeholder="">
                                         <label for="nombre_unidad">Unidad</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model="minimo_unidad" id="minimo_unidad" type="number"
+                                        <input wire:model.live="minimo_unidad" id="minimo_unidad" type="number"
                                             class="form-control" placeholder="">
                                         <label for="minimo_unidad">Valor Minimo</label>
                                     </div>
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model="maximo_unidad" id="maximo_unidad" type="number"
+                                        <input wire:model.live="maximo_unidad" id="maximo_unidad" type="number"
                                             class="form-control" placeholder="">
                                         <label for="maximo_unidad">Valor Maximo</label>
                                     </div>
@@ -165,20 +165,20 @@
                                 {{-- This is the content of the modal. --}}
                                 <div class="row">
                                     <div class="col-12 form-group anima-focus">
-                                        <input wire:model="nombre_edit_unidad" id="nombre_edit_unidad" type="text"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="nombre_edit_unidad" id="nombre_edit_unidad"
+                                            type="text" class="form-control" placeholder="">
                                         <label for="nombre_edit_unidad">Unidad</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model="minimo_edit_unidad" id="minimo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="minimo_edit_unidad" id="minimo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="minimo_edit_unidad">Valor Minimo</label>
                                     </div>
                                     <div class="col-6 form-group anima-focus">
-                                        <input wire:model="maximo_edit_unidad" id="maximo_edit_unidad" type="number"
-                                            class="form-control" placeholder="">
+                                        <input wire:model.live="maximo_edit_unidad" id="maximo_edit_unidad"
+                                            type="number" class="form-control" placeholder="">
                                         <label for="maximo_edit_unidad">Valor Maximo</label>
                                     </div>
                                 </div>
@@ -247,12 +247,12 @@
                                 <div class="form-row mt-3">
                                     <div class="d-flex align-tiems-center" style="gap: 20px;">
                                         <div class="form-group anima-focus" style="width: 60px;">
-                                            <input wire:model="array_escalas_objetivos.{{ $key }}.color"
+                                            <input wire:model.live="array_escalas_objetivos.{{ $key }}.color"
                                                 type="color" name="" id="" class="form-control">
                                         </div>
                                         <div class="form-group anima-focus" style="min-width: 60px;">
                                             <select
-                                                wire:model="array_escalas_objetivos.{{ $key }}.condicional"
+                                                wire:model.live="array_escalas_objetivos.{{ $key }}.condicional"
                                                 type="text" name="escala_{{ $key }}" id=""
                                                 class="form-control">
                                                 <option value="0" disabled selected>Seleccione una Condición
@@ -267,7 +267,7 @@
                                                 class="required">Condicional</label>
                                         </div>
                                         <div class="form-group anima-focus" style="min-width: 60px;">
-                                            <input wire:model="array_escalas_objetivos.{{ $key }}.valor"
+                                            <input wire:model.live="array_escalas_objetivos.{{ $key }}.valor"
                                                 type="number" name="escalas_objetivos{{ $key }}valor"
                                                 id="escalas_objetivos{{ $key }}valor" class="form-control"
                                                 min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}">
@@ -282,15 +282,16 @@
                 </div>
 
                 <div class="text-right">
-                    <a wire:click.prevent="crearObjetivo" class="btn btn-outline-primary"
+                    <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"
                         style="background-color: #ECFBFF; color: #006DDB; border-radius: 100px !important;">
                         Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+                    </button>
                 </div>
             @endif
 
         </div>
     @endif
+
     <div class="card card-body">
         <div class="info-first-config">
             <div class="col-6">
@@ -348,7 +349,8 @@
 
                                     @case(2)
                                         <span class="badge badge-danger">Rechazado
-                                            <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
+                                            <i class="fas fa-comment ml-1"
+                                                title="{{ $obj->objetivo->comentarios_aprobacion }}"></i>
                                         </span>
                                     @break
 
@@ -364,7 +366,6 @@
                                     <a
                                         wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
                                 @endif
-
                             </td>
                             <td>
                                 <div class="dropdown btn-options-foda-card">
@@ -374,7 +375,7 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                            wire:click.prevent="enviarPapelera({{ $obj->id }})">Enviar a la
+                                            onclick="confirmarEnvioPapelera({{ $obj->id }})">Enviar a la
                                             Papelera</a>
                                     </div>
                                 </div>
@@ -385,4 +386,35 @@
             </table>
         </div>
     </div>
+    <div>
+        <a href="{{ route('admin.ev360-objetivos-periodo.config') }}" class="btn btn-outline-primary">Regresar</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.confirmarEnvioPapelera = function(objetivoId) {
+                window.dispatchEvent(new CustomEvent('confirmarEnvioPapelera', {
+                    detail: {
+                        objetivoId
+                    }
+                }));
+            };
+
+            window.addEventListener('confirmarEnvioPapelera', event => {
+                Swal.fire({
+                    title: 'Enviar a Papelera',
+                    text: "¿Esta seguro que desea enviar este objetivo a la papelera?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, enviar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('enviarPapelera', [event.detail.objetivoId]);
+                    }
+                });
+            });
+        });
+    </script>
 </div>

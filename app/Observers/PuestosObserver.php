@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\PuestosEvent;
 use App\Models\Puesto;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,7 @@ class PuestosObserver
      */
     public function created(Puesto $puesto)
     {
+        event(new PuestosEvent($puesto, 'create', 'puestos', 'Puestos'));
         $this->forgetCache();
     }
 
@@ -24,6 +26,7 @@ class PuestosObserver
      */
     public function updated(Puesto $puesto)
     {
+        event(new PuestosEvent($puesto, 'update', 'puestos', 'Puestos'));
         $this->forgetCache();
     }
 
@@ -34,26 +37,7 @@ class PuestosObserver
      */
     public function deleted(Puesto $puesto)
     {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Puesto "restored" event.
-     *
-     * @return void
-     */
-    public function restored(Puesto $puesto)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Puesto "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(Puesto $puesto)
-    {
+        event(new PuestosEvent($puesto, 'delete', 'puestos', 'Puestos'));
         $this->forgetCache();
     }
 

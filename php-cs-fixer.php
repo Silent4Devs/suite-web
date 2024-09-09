@@ -141,7 +141,7 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-$config = new Config();
+$config = new Config;
 
 return $config->setFinder($finder)
     ->setRules($rules)

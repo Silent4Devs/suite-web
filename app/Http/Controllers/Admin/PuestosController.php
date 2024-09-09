@@ -139,7 +139,6 @@ class PuestosController extends Controller
         $perfiles = PerfilEmpleado::getAll();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
-        // dd($idis);
 
         $firma = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
 

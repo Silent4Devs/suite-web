@@ -67,7 +67,7 @@ class CompradoresController extends Controller
             DB::beginTransaction();
 
             $empledo = Empleado::where('id', $request->nombre)->first();
-            $compradores = new Comprador();
+            $compradores = new Comprador;
             $compradores->clave = $request->clave;
             $compradores->id_user = $request->nombre;
             $compradores->estado = $request->estado;

@@ -1,0 +1,13 @@
+.titulo {
+    /* Layout Properties */
+    top: 99px;
+    left: 286px;
+    width: 133px;
+    height: 24px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal 600 18px/24px Segoe UI;
+    letter-spacing: 0px;
+    color: #2567AE;
+    opacity: 1;
+}

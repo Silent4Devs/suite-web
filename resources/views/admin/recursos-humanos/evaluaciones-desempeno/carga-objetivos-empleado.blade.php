@@ -3,6 +3,36 @@
     <link rel="stylesheet" href="{{ asset('css/evaluations/evaluations.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
+    <style>
+        .custom-switch-xl .custom-control-label::before {
+            left: -6.75rem;
+            /* Triple the original left offset */
+            width: 10.5rem;
+            /* Triple the original width */
+            height: 5.25rem;
+            /* Triple the original height */
+            border-radius: 5.25rem;
+            /* Triple the original border-radius */
+        }
+
+        .custom-switch-xl .custom-control-label::after {
+            top: calc(0.375rem + 6px);
+            /* Triple the original top offset */
+            left: calc(-6.75rem + 6px);
+            /* Triple the original left offset */
+            width: calc(5.25rem - 12px);
+            /* Triple the original width */
+            height: calc(5.25rem - 12px);
+            /* Triple the original height */
+            border-radius: 5.25rem;
+            /* Triple the original border-radius */
+        }
+
+        .custom-switch-xl .custom-control-input:checked~.custom-control-label::after {
+            transform: translateX(5.25rem);
+            /* Triple the original translateX */
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <h5 class="titulo_general_funcion"> Carga de Objetivos: {{ $empleado->name }} </h5>
@@ -25,184 +55,6 @@
     </div>
 
     @livewire('formulario-objetivos-desempeno-empleados', ['id_empleado' => $empleado->id])
-    {{-- <div class="card card-body">
-        <div class="info-first-config">
-            <h4 class="title-config">Nuevo Objetivo</h4>
-            <p>Define los Valores y Escalas con los que se medirán los objetivos.</p>
-            <hr class="my-4">
-        </div>
-        <div class="row">
-            <div class="col-12 form-group anima-focus">
-                <input id="objetivo-estrategico" type="text" class="form-control" placeholder="">
-                <label for="objetivo-estrategico">Objetivo Estratégico</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 form-group anima-focus">
-                <textarea name="" id="descripcion" cols="30" rows="10" placeholder="" class="form-control"></textarea>
-                <label for="descripcion">Descripción</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 form-group anima-focus">
-                <input id="categoria" type="text" class="form-control" placeholder="">
-                <label for="categoria">Categoría</label>
-            </div>
-            <div class="col-md-3 form-group anima-focus">
-                <input id="KPI" type="text" class="form-control" placeholder="">
-                <label for="KPI">KPI</label>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex" style="gap: 10px;">
-                    <div class="form-group anima-focus w-100">
-                        <input id="unidad-medida" type="text" class="form-control" placeholder="">
-                        <label for="unidad-medida">Unidad de medida</label>
-                    </div>
-                    <button class="btn tb-btn-primary" style="height: 45px;">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <button class="btn tb-btn-primary" style="height: 45px;">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="p-3 rounded-lg" style="color: #818181; background-color: #FFFEE5;">
-                    <i>
-                        *Esta sección estará activa hasta que establezcas los periodos de la evaluación en la
-                        <a href="" style="color: #006DDB; text-decoration: underline;">
-                            Configuración de la Evaluación.
-                        </a>
-                        (Asigna un periodo para hacer estos ajustes en la calibración de objetivos)
-                    </i>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4" style="width: 300px;">
-            <div class="form-group anima-focus">
-                <div class="form-control" style="height: auto !important;">
-                    <div class="d-flex flex-column py-3" style="gap: 15px;">
-                        @for ($i = 0; $i < 3; $i++)
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Trimestre 1</label>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
-                <label for="">Periodos</label>
-            </div>
-        </div>
-
-
-        <div class="info-first-config mt-5">
-            <h4 class="title-config">Escalas del objetivo</h4>
-            <p>Define las Escalas con los que se medirá este objetivo.</p>
-            <hr class="my-4">
-        </div>
-
-        <div class="d-flex align-items-center" style="gap: 20px;">
-            <input type="checkbox">
-            <span><strong>Variante</strong></span>
-            <span>Selecciona esta opción si deseas agregar una o más variantes a tus valores por periodo.</span>
-        </div>
-
-        <div class="mt-5">
-            <table class="table-escalas-objetivos">
-                <thead>
-                    <tr>
-                        <th>
-                            No Satisfactorio
-                        </th>
-                        <th>
-                            Mín. Requerido
-                        </th>
-                        <th>
-                            Satisfactorio
-                        </th>
-                        <th>
-                            Sobresaliente
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-tiems-center" style="gap: 20px;">
-                                <div class="form-group anima-focus" style="width: 60px;">
-                                    <input type="color" name="" id="" class="form-control">
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Condicional</label>
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Valor</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex align-tiems-center" style="gap: 20px;">
-                                <div class="form-group anima-focus" style="width: 60px;">
-                                    <input type="color" name="" id="" class="form-control">
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Condicional</label>
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Valor</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex align-tiems-center" style="gap: 20px;">
-                                <div class="form-group anima-focus" style="width: 60px;">
-                                    <input type="color" name="" id="" class="form-control">
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Condicional</label>
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Valor</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex align-tiems-center" style="gap: 20px;">
-                                <div class="form-group anima-focus" style="width: 60px;">
-                                    <input type="color" name="" id="" class="form-control">
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Condicional</label>
-                                </div>
-                                <div class="form-group anima-focus" style="min-width: 60px;">
-                                    <input type="text" name="" id="" class="form-control">
-                                    <label for="">Valor</label>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="text-right">
-            <button class="btn btn-outline-primary"
-                style="background-color: #ECFBFF; color: #006DDB; border-radius: 100px !important;">
-                Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
-            </button>
-        </div>
-
-    </div> --}}
 @endsection
 
 @section('scripts')

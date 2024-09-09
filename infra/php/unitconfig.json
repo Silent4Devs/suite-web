@@ -1,0 +1,15 @@
+{
+    "listeners": {
+        "*:8080": {
+            "pass": "applications/myapp"
+        }
+    },
+    "applications": {
+        "myapp": {
+            "type": "php",
+            "processes": 2,
+            "root": "/var/www/html/public",
+            "script": "index.php"
+        }
+    }
+}

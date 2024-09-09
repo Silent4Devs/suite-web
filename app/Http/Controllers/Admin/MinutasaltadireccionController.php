@@ -32,7 +32,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PDF;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -254,92 +253,44 @@ class MinutasaltadireccionController extends Controller
 
             $actividades = json_decode($request->actividades);
 
-            if (! $edit) {
+            if ($actividades && ! $edit) {
                 foreach ($actividades as $actividad) {
-                    $asignados = [];
-                    $tmp_id = null;
-                    $dur = null;
-                    $desc = null;
+                    if (isset($actividad[4], $actividad[5]->id, $actividad[5]->duration, $actividad[5]->participantes_id)) {
+                        $asignados = $actividad[5]->participantes_id;
+                        $tmp_id = $actividad[5]->id;
+                        $dur = $actividad[5]->duration;
+                        $desc = $actividad[4];
 
-                    $desc = $actividad[4];
-                    $tmp_id = $actividad[5]->id;
-                    $dur = $actividad[5]->duration;
-                    $asignados = $actividad[5]->participantes_id;
+                        $assigs = [];
+                        foreach ($asignados as $asignado) {
+                            $id = intval($asignado);
+                            $assigs[] = [
+                                'id' => 'tmp_'.time().'_'.$id,
+                                'effort' => '0',
+                                'roleId' => '1',
+                                'resourceId' => $id,
+                            ];
+                        }
 
-                    $assigs = [];
-                    foreach ($asignados as $asignado) {
-                        $id = intval($asignado);
-                        $assigs[] = [
-                            'id' => 'tmp_'.time().'_'.$id,
-                            'effort' => '0',
-                            'roleId' => '1',
-                            'resourceId' => $id,
-                        ];
+                        $planImplementacion = new PlanImplementacion;
+                        $planImplementacion->tasks = $tasks;
+                        $planImplementacion->canAdd = true;
+                        $planImplementacion->canWrite = true;
+                        $planImplementacion->canWriteOnParent = true;
+                        $planImplementacion->changesReasonWhy = false;
+                        $planImplementacion->selectedRow = 0;
+                        $planImplementacion->zoom = '3d';
+                        $planImplementacion->parent = $request->tema_reunion;
+                        $planImplementacion->norma = 'ISO 27001';
+                        $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
+                        $planImplementacion->objetivo = null;
+                        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
+
+                        $minuta->planes()->save($planImplementacion);
                     }
-
-                    $tasks[] = [
-                        'id' => $tmp_id,
-                        'end' => strtotime($actividad[2]) * 1000,
-                        'name' => $actividad[0],
-                        'level' => 1,
-                        'start' => strtotime($actividad[1]) * 1000,
-                        'canAdd' => true,
-                        'status' => 'STATUS_ACTIVE',
-                        'canWrite' => true,
-                        'duration' => $dur,
-                        'progress' => 0,
-                        'canDelete' => true,
-                        'collapsed' => false,
-                        'relevance' => '0',
-                        'canAddIssue' => true,
-                        'description' => $desc,
-                        'endIsMilestone' => false,
-                        'startIsMilestone' => false,
-                        'progressByWorklog' => false,
-                        'assigs' => $assigs,
-                        'resources' => [],
-                        'subtasks' => [],
-                        'historic' => [],
-                    ];
-
-                    $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
-                    $planImplementacion->tasks = $tasks;
-                    $planImplementacion->canAdd = true;
-                    $planImplementacion->canWrite = true;
-                    $planImplementacion->canWriteOnParent = true;
-                    $planImplementacion->changesReasonWhy = false;
-                    $planImplementacion->selectedRow = 0;
-                    $planImplementacion->zoom = '3d';
-                    $planImplementacion->parent = $request->tema_reunion;
-                    $planImplementacion->norma = 'ISO 27001';
-                    $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
-                    $planImplementacion->objetivo = null;
-                    $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
-
-                    $minuta->planes()->save($planImplementacion);
                 }
             }
         }
-    }
-
-    public function createPDF($minutasaltadireccion, $actividades)
-    {
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
-        $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades', 'participantesWithAsistencia'));
-        Storage::makeDirectory('public/minutas/en aprobacion');
-        Storage::makeDirectory('public/minutas/aprobadas');
-        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '').'_'.$minutasaltadireccion->fechareunion.'.pdf';
-        $nombre = preg_replace('([^A-Za-z0-9-À-ÿ_.])', '', $nombre_pdf);
-        $pdf->save(public_path('storage/minutas/en aprobacion').'/'.$nombre);
-
-        $minutasaltadireccion->documento = $nombre;
-        $minutasaltadireccion->save();
     }
 
     public function edit($id)
@@ -632,8 +583,7 @@ class MinutasaltadireccionController extends Controller
         Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionMinutaRechazadaResponsable($minuta->id, $tema_minuta, User::getCurrentUser()->empleado->name));
 
         foreach ($minuta->participantes as $participante) {
-
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionMinutaRechazada($tema_minuta));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionMinutaRechazada($tema_minuta));
         }
 
         return redirect(route('admin.minutasaltadireccions.index'));
@@ -695,7 +645,7 @@ class MinutasaltadireccionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        $model = new Minutasaltadireccion();
+        $model = new Minutasaltadireccion;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
@@ -713,7 +663,7 @@ class MinutasaltadireccionController extends Controller
 
     public function createPlanAccion(Minutasaltadireccion $id)
     {
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
@@ -736,7 +686,7 @@ class MinutasaltadireccionController extends Controller
             'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
-        $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+        $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [];
         $planImplementacion->canAdd = true;
         $planImplementacion->canWrite = true;

@@ -1,9 +1,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    function generarColorAleatorio() {
+        let color = '#' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase();
+        while (color.length < 7) {
+            color = color + '0';
+        }
+        return color;
+    }
+</script>
+
 @if ($evaluacion->activar_objetivos)
     {{-- Codigo primera vez que carga --}}
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const tipos = @json($resObj['nombres'][$periodo_seleccionado]);
             const resultados = @json($resObj['resultados'][$periodo_seleccionado]);
@@ -16,6 +26,7 @@
                     datasets: [{
                         label: 'Porcentaje de cumplimiento',
                         data: resultados,
+                        backgroundColor: generarColorAleatorio(),
                         borderWidth: 1
                     }]
                 },
@@ -31,9 +42,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('cumplimientoObj', (cumpObj) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoObj', (cumpObjWrapper) => {
+                const cumpObj = cumpObjWrapper.cumpObj;
                 document.getElementById('cumplimientoObjetivos').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoObjetivos";
@@ -48,6 +59,7 @@
                         datasets: [{
                             label: 'Porcentaje de cumplimiento',
                             data: cumpObj.data,
+                            backgroundColor: generarColorAleatorio(),
                             borderWidth: 1
                         }]
                     },
@@ -64,7 +76,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const escalas = @json($escalas['nombres']);
             const colores = @json($escalas['colores']);
@@ -94,9 +106,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('escalasObj', (escObj) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('escalasObj', (escObjWrapper) => {
+                const escObj = escObjWrapper.escObj;
                 document.getElementById('escalas').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "escalas";
@@ -130,7 +142,7 @@
 
 @if ($evaluacion->activar_competencias)
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultados'][$periodo_seleccionado]);
@@ -143,6 +155,7 @@
                     datasets: [{
                         label: 'Porcentaje de cumplimiento',
                         data: resultados,
+                        backgroundColor: '#BB68A8', // Color de las barras
                         borderWidth: 1
                     }]
                 },
@@ -158,9 +171,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('cumplimientoComp', (cumpComp) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoComp', (cumpCompWrapper) => {
+                const cumpComp = cumpCompWrapper.cumpComp;
                 document.getElementById('cumplimientoCompetencias').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoCompetencias";
@@ -176,6 +189,7 @@
                         datasets: [{
                             label: 'Porcentaje de cumplimiento',
                             data: cumpComp.data,
+                            backgroundColor: '#BB68A8', // Color de las barras
                             borderWidth: 1
                         }]
                     },
@@ -192,7 +206,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const competencias = @json($resComp['nombres'][$periodo_seleccionado]);
             const resultados = @json($resComp['resultado_competencia'][$periodo_seleccionado]);
@@ -227,9 +241,9 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('cumplimientoRadarComp', (cumpCompRadar) => {
-
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('cumplimientoRadarComp', (cumpCompRadarWrapper) => {
+                const cumpCompRadar = cumpCompRadarWrapper.cumpCompRadar;
                 document.getElementById('cumplimientoCompetenciasRadar').remove();
                 let canvas = document.createElement("canvas");
                 canvas.id = "cumplimientoCompetenciasRadar";
@@ -266,85 +280,46 @@
         });
     </script>
 @endif
-<script>
-    // Your JavaScript file or script tag
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all toggle buttons
-        const toggleButtonsObjetivos = document.querySelectorAll('.toggle-button-objetivos');
-
-        toggleButtonsObjetivos.forEach(function(button) {
-            // Add click event listener to each button
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const hiddenDiv = document.getElementById('hidden-div-objetivos-' + index);
-
-                // Toggle the display of the corresponding hidden div
-                if (hiddenDiv.style.display === 'none') {
-                    hiddenDiv.style.display = 'block';
-                } else {
-                    hiddenDiv.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
 
 <script>
-    // Your JavaScript file or script tag
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all toggle buttons
-        const toggleButtonsCompetencias = document.querySelectorAll('.toggle-button-competencias');
-
-        toggleButtonsCompetencias.forEach(function(button) {
-            // Add click event listener to each button
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const hiddenDiv = document.getElementById('hidden-div-competencias-' + index);
-
-                // Toggle the display of the corresponding hidden div
-                if (hiddenDiv.style.display === 'none') {
-                    hiddenDiv.style.display = 'block';
-                } else {
-                    hiddenDiv.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
-
-<script>
-    function confirmDeleteEvaluadorObjetivos(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+    function confirmDeleteEvaluadorObjetivos(keyPeriodo, keyEvaluador) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+            title: 'Eliminar Evaluador - Objetivos',
+            text: '¿Seguro que desea eliminar al evaluador?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Sí, confirmar!',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.emit('deleteEvaluadorObjetivos', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorObjetivos', {
+                    keyPeriodo,
+                    keyEvaluador,
+                });
             }
         });
     }
 </script>
 
 <script>
-    function confirmDeleteEvaluadorCompetencias(idRegistroEvaluador, keyPeriodo, keyEvluador) {
+    function confirmDeleteEvaluadorCompetencias(keyPeriodo, keyEvaluador) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to delete this evaluator from the period. This action cannot be undone.',
+            title: 'Eliminar Evaluador - Competencias',
+            text: '¿Seguro que desea eliminar al evaluador?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Sí, confirmar!',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.emit('deleteEvaluadorCompetencias', idRegistroEvaluador, keyPeriodo, keyEvluador);
+                Livewire.dispatch('deleteEvaluadorCompetencias', {
+                    keyPeriodo,
+                    keyEvaluador
+                });
             }
         });
     }

@@ -93,7 +93,7 @@
                                     La primera posición que asigne será la responsable de firmar u rechazar la
                                     ordenen de compra la segunda y/o tercera posición del colaborador que asigne en el
                                     mismo
-                                    campo sólo serán notificadas por corrreo en copia.
+                                    campo sólo serán notificadas por correo en copia.
                                 </div>
                             </div>
                             <div class="mt-4 col-12">

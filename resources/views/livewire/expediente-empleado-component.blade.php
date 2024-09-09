@@ -12,7 +12,7 @@
                         <div class="card-body">
                             @if (!$documentoIne)
                                 <div class="input-group mb-3">
-                                    <input wire:model.lazy="documentoIne" type="file" id="INE"
+                                    <input wire:model.blur="documentoIne" type="file" id="INE"
                                         aria-describedby="INE01">
                                     @error('documentoIne')
                                         <small class="text-danger">{{ $message }}</small>
@@ -48,7 +48,7 @@
                         <div class="card-body">
                             @if (!$documentoImss)
                                 <div class="input-group mb-3">
-                                    <input wire:model.lazy="documentoImss" type="file" id="IMSS"
+                                    <input wire:model.blur="documentoImss" type="file" id="IMSS"
                                         aria-describedby="IMSS01">
                                     @error('documentoImss')
                                         <small class="text-danger">{{ $message }}</small>
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             @if (!$documentoCurp)
                                 <div class="input-group mb-3">
-                                    <input wire:model.lazy="documentoCurp" type="file" id="CURP"
+                                    <input wire:model.blur="documentoCurp" type="file" id="CURP"
                                         aria-describedby="CURP01">
                                     @error('documentoCurp')
                                         <small class="text-danger">{{ $message }}</small>

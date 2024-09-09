@@ -1,53 +1,34 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('contract_manager.requisiciones.show', $last_unread_notification->data['id']) }}">
+            href="{{ route('contract_manager.requisiciones.firmarAprobadores', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada</p>
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada solicita su firma</p>
                     </div>
                 @break
-
-                @case(' update')
-                    <div class="d-flex align-items-center justify-content-start">
-                        @if (!empty($last_unread_notification->data['avatar_ruta']))
-                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
-                                class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
-                        @else
-                            <i class="pr-2 fas fa-tools text-info"></i>
-                        @endif
-                        &nbsp;&nbsp;
-                        <p class="p-0 m-0">
-                            La {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['updated_at'] ?? '' }} ha
-                            sido actualizada
-                        </p>
-                    </div>
-                @break
-
                 @case(' delete')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido eliminada
                         </p>
                     </div>

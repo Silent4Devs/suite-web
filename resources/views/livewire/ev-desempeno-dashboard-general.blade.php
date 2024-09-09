@@ -50,184 +50,6 @@
         </div>
     </div>
 
-    <div class="card card-body mt-3">
-        <div class="row">
-            <div class="col-6">
-                <h5>Resultado Anual</h5>
-            </div>
-            <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="ano_anual" id="ano_anual" wire:model="ano_anual">
-                        <option value="todos" selected>Todos</option>
-                        @foreach ($anos_evaluaciones as $key => $ano)
-                            <option value="{{ $ano }}">{{ $ano }}</option>
-                        @endforeach
-                    </select>
-                    <label for="ano_anual">Año</label>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="dropdown">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
-                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"
-                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
-                        Tipo
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
-                        style="max-height: 200px; overflow-y: auto;">
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="general_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="general_anual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        General
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="objetivos_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="objetivos_anual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        Objetivos
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="competencias_anual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="competencias_anual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        Competencias
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="area_anual" id="area_anual" wire:model="area_anual">
-                        <option value="todas">Todas</option>
-                        @foreach ($areas as $key => $area)
-                            <option value="{{ $area->id }}">{{ $area->area }}</option>
-                        @endforeach
-                    </select>
-                    <label for="area_anual">Área</label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="contenedor-principal" style="height:600px;">
-                    <canvas id="resultadosanuales"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-body mt-3">
-        <div class="row">
-            <div class="col-6">
-                <h5>Resultado Mensual</h5>
-            </div>
-            <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model="mes_mensual">
-                        <option value="ninguno" selected>Seleccione un Mes del Año elegido</option>
-                        @foreach ($meses_evaluaciones as $key => $mes)
-                            <option value="{{ $key }}">{{ $mes }}</option>
-                        @endforeach
-                    </select>
-                    <label for="ano_mensual">Mes</label>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="dropdown">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
-                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"
-                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
-                        Tipo
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
-                        style="max-height: 200px; overflow-y: auto;">
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="general_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="general_mensual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        General
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="objetivos_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="objetivos_mensual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        Objetivos
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-3">
-                                    <input type="checkbox" id="competencias_mensual" class="form-check-input"
-                                        style="transform: scale(2);" wire:model="competencias_mensual">
-                                </div>
-                                <div class="col-9">
-                                    <div class="text-wrap">
-                                        Competencias
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="anima-focus">
-                    <select class="form-control" name="area_mensual" id="area_mensual" wire:model="area_mensual">
-                        <option value="todas">Todas</option>
-                        @foreach ($areas as $key => $area)
-                            <option value="{{ $area->id }}">{{ $area->area }}</option>
-                        @endforeach
-                    </select>
-                    <label for="area_mensual">Area</label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div id="contenedor-mensual" style="height:600px;">
-                    <canvas id="resultadosmensuales"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="card card-body">
         <div class="card-filtros-fodas mt-3">
             <div class="row">
@@ -261,12 +83,16 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item"
-                                    href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
-                                    <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
-                                {{-- <a class="dropdown-item"
-                                    href="{{ asset('admin/entendimiento-organizacions-foda-edit') }}/{{ $evaluacion->id }}">
-                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a> --}}
+                                @if ($evaluacion->estatus == 1 || $evaluacion->estatus == 3)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluacion', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-eye"></i>&nbsp;Dashboard</a>
+                                @endif
+                                @if ($evaluacion->estatus == 0)
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.rh.evaluaciones-desempeno.edit-borrador', $evaluacion->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                @endif
                                 <a class="dropdown-item delete-item" onclick="deleteItem({{ $evaluacion->id }})">
                                     <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                             </div>
@@ -314,6 +140,185 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+
+    <div class="card card-body mt-3">
+        <div class="row">
+            <div class="col-6">
+                <h5>Resultado Anual</h5>
+            </div>
+            <div class="col-2">
+                <div class="anima-focus">
+                    <select class="form-control" name="ano_anual" id="ano_anual" wire:model.live="ano_anual">
+                        <option value="todos" selected>Todos</option>
+                        @foreach ($anos_evaluaciones as $key => $ano)
+                            <option value="{{ $ano }}">{{ $ano }}</option>
+                        @endforeach
+                    </select>
+                    <label for="ano_anual">Año</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
+                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
+                        Tipo
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
+                        style="max-height: 200px; overflow-y: auto;">
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="general_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="general_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        General
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="objetivos_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="objetivos_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Objetivos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="competencias_anual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="competencias_anual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Competencias
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="anima-focus">
+                    <select class="form-control" name="area_anual" id="area_anual" wire:model.live="area_anual">
+                        <option value="todas">Todas</option>
+                        @foreach ($areas as $key => $area)
+                            <option value="{{ $area->id }}">{{ $area->area }}</option>
+                        @endforeach
+                    </select>
+                    <label for="area_anual">Área</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="contenedor-principal" style="height:600px;">
+                    <canvas id="resultadosanuales"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body mt-3">
+        <div class="row">
+            <div class="col-6">
+                <h5>Resultado Mensual</h5>
+            </div>
+            <div class="col-2">
+                <div class="anima-focus">
+                    <select class="form-control" name="mes_mensual" id="mes_mensual" wire:model.live="mes_mensual">
+                        <option value="ninguno" selected>Seleccione un Mes del Año elegido</option>
+                        @foreach ($meses_evaluaciones as $key => $mes)
+                            <option value="{{ $key }}">{{ $mes }}</option>
+                        @endforeach
+                    </select>
+                    <label for="ano_mensual">Mes</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle form-control" type="button"
+                        id="dropdownMenuButtonEmpleados" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        style="text-align: initial; background-color:#fff; color:#3086AF !important; border: 1px solid #ced4da !important">
+                        Tipo
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEmpleados"
+                        style="max-height: 200px; overflow-y: auto;">
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="general_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="general_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        General
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="objetivos_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="objetivos_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Objetivos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="row mt-2 mb-2">
+                                <div class="col-3">
+                                    <input type="checkbox" id="competencias_mensual" class="form-check-input"
+                                        style="transform: scale(2);" wire:model.live="competencias_mensual">
+                                </div>
+                                <div class="col-9">
+                                    <div class="text-wrap">
+                                        Competencias
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="anima-focus">
+                    <select class="form-control" name="area_mensual" id="area_mensual"
+                        wire:model.live="area_mensual">
+                        <option value="todas">Todas</option>
+                        @foreach ($areas as $key => $area)
+                            <option value="{{ $area->id }}">{{ $area->area }}</option>
+                        @endforeach
+                    </select>
+                    <label for="area_mensual">Area</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="contenedor-mensual" style="height:600px;">
+                    <canvas id="resultadosmensuales"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -427,7 +432,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
             const data = @json($datos_evaluaciones_anuales);
             const general_anual = @json($general_anual);
             const objetivos_anual = @json($objetivos_anual);
@@ -436,8 +441,11 @@
             // Extract keys (years) and values (data points)
             const anos = Object.keys(data);
             const objetivos = anos.map(year => data[year]['objetivos']);
+            const colorObjetivos = anos.map(year => data[year]['colorObjetivos']);
             const competencias = anos.map(year => data[year]['competencias']);
+            const colorCompetencias = anos.map(year => data[year]['colorCompetencias']);
             const general = anos.map(year => data[year]['general']);
+            const colorGeneral = anos.map(year => data[year]['colorGeneral']);
 
             // Construct datasets based on boolean values
             const datasets = [];
@@ -446,6 +454,7 @@
                 datasets.push({
                     label: 'Objetivos',
                     data: objetivos,
+                    backgroundColor: colorObjetivos,
                     borderWidth: 1
                 });
             }
@@ -454,6 +463,7 @@
                 datasets.push({
                     label: 'Competencias',
                     data: competencias,
+                    backgroundColor: colorCompetencias,
                     borderWidth: 1
                 });
             }
@@ -462,6 +472,7 @@
                 datasets.push({
                     label: 'General',
                     data: general,
+                    backgroundColor: colorGeneral,
                     borderWidth: 1
                 });
             }
@@ -485,34 +496,43 @@
     </script>
     {{-- Codigo cambio de filtros --}}
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('dataAnual', (datosAnuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataAnual', (datosAnualesWrapper) => {
+                const datosAnuales = datosAnualesWrapper.datosAnuales;
+
                 const anosAnual = datosAnuales.labels;
 
                 const datasets = [];
                 if (datosAnuales.filtro_objetivos_anual) {
                     const objetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].objetivos);
+                    const colorObjetivosAnual = anosAnual.map(ano => datosAnuales.data[ano].colorObjetivos);
                     datasets.push({
                         label: 'Objetivos',
                         data: objetivosAnual,
+                        backgroundColor: colorObjetivosAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_competencias_anual) {
                     const competenciasAnual = anosAnual.map(ano => datosAnuales.data[ano].competencias);
+                    const colorCompetenciasAnual = anosAnual.map(ano => datosAnuales.data[ano]
+                        .colorCompetencias);
                     datasets.push({
                         label: 'Competencias',
                         data: competenciasAnual,
+                        backgroundColor: colorCompetenciasAnual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosAnuales.filtro_general_anual) {
                     const generalAnual = anosAnual.map(ano => datosAnuales.data[ano].general);
+                    const colorGeneralAnual = anosAnual.map(ano => datosAnuales.data[ano].colorGeneral);
                     datasets.push({
                         label: 'General',
                         data: generalAnual,
+                        backgroundColor: colorGeneralAnual,
                         borderWidth: 1
                     });
                 }
@@ -543,7 +563,7 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:initialized', function() {
 
             const anos = @json($anos_evaluaciones);
             const data = @json($datos_evaluaciones_anuales);
@@ -580,41 +600,43 @@
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('dataMensual', (datosMensuales) => {
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('dataMensual', (datosMensualesWrapper) => {
+                const datosMensuales = datosMensualesWrapper.datosMensuales;
+
                 const mesSeleccionado = datosMensuales.labels[0]; // Solo un mes
                 const datosMes = datosMensuales.data[mesSeleccionado];
 
                 const datasets = [];
                 if (datosMensuales.filtro_objetivos_mensual) {
                     const objetivosMensual = datosMes?.objetivos || 0;
+                    const colorObjetivosMensual = datosMes?.colorObjetivos || 0;
                     datasets.push({
                         label: 'Objetivos',
                         data: [objetivosMensual],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: colorObjetivosMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_competencias_mensual) {
                     const competenciasMensual = datosMes?.competencias || 0;
+                    const colorCompetenciasMensual = datosMes?.colorCompetencias || 0;
                     datasets.push({
                         label: 'Competencias',
                         data: [competenciasMensual],
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: colorCompetenciasMensual,
                         borderWidth: 1
                     });
                 }
 
                 if (datosMensuales.filtro_general_mensual) {
                     const generalMensual = datosMes?.general || 0;
+                    const colorGeneralMensual = datosMes?.colorGeneral || 0;
                     datasets.push({
                         label: 'General',
                         data: [generalMensual],
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: colorGeneralMensual,
                         borderWidth: 1
                     });
                 }

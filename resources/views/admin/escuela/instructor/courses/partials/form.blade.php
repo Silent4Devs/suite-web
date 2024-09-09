@@ -5,6 +5,7 @@
             {!! Form::text('title', null, [
                 'class' => 'form-control ' . ($errors->has('title') ? ' border-red-600' : ''),
                 'placeholder' => '',
+                'id' => 'title',
             ]) !!}
             <label for="title">Titulo del curso*:</label>
             @error('title')
@@ -15,6 +16,7 @@
             {!! Form::text('slug', null, [
                 'class' => 'form-control' . ($errors->has('slug') ? ' border-red-600' : ''),
                 'placeholder' => '',
+                'id' => 'slug',
             ]) !!}
             <label for="slug">Slug del curso*:</label>
             @error('slug')
@@ -62,7 +64,7 @@
         </div>
     </div>
     {{-- <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"
-        aria-describedby="title" wire:model.defer="title" value="{{ old('title') }}" autocomplete="off">
+        aria-describedby="title" wire:model="title" value="{{ old('title') }}" autocomplete="off">
         @if ($errors->has('title'))
         <span class="invalid-feedback">{{ $errors->first('title') }}</span>
         @endif

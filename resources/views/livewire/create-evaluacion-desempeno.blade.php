@@ -34,13 +34,13 @@
                         </div>
 
                         <div class="form-group anima-focus">
-                            <input type="text" placeholder="" name="nombre_evaluacion" wire:model="nombre_evaluacion"
+                            <input type="text" placeholder="" name="nombre_evaluacion" wire:model.live="nombre_evaluacion"
                                 class="form-control">
                             <label for="nombre-evaluacion">Nombre</label>
                         </div>
 
                         <div class="form-group anima-focus">
-                            <textarea placeholder="" name="descripcion_evaluacion" wire:model="descripcion_evaluacion" class="form-control"></textarea>
+                            <textarea placeholder="" name="descripcion_evaluacion" wire:model.live="descripcion_evaluacion" class="form-control"></textarea>
                             <label for="descripcion-evaluacion">Descripción</label>
                         </div>
                     </div>
@@ -60,12 +60,12 @@
                                 <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
                                     style="background-color: #8C91D6;">
                                     <div class="d-flex align-items-center" style="gap: 10px;">
-                                        <input type="checkbox" name="activar_objetivos" wire:model="activar_objetivos">
+                                        <input type="checkbox" name="activar_objetivos" wire:model.live="activar_objetivos">
                                         <label for="activar_objetivos" style="color: #fff;" class="mb-0"> Objetivos
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="form-control" type="number" wire:model="porcentaje_objetivos"
+                                        <input class="form-control" type="number" wire:model.live="porcentaje_objetivos"
                                             name="porcentaje_objetivos" style="width: 90px;">
                                     </div>
                                 </div>
@@ -74,12 +74,13 @@
                                 <div class="p-4 rounded-lg d-flex align-items-center justify-content-between"
                                     style="background-color: #BB68A8;">
                                     <div class="d-flex align-items-center" style="gap: 10px;">
-                                        <input type="checkbox" name="activar_competencias" wire:model="activar_competencias">
+                                        <input type="checkbox" name="activar_competencias"
+                                            wire:model.live="activar_competencias">
                                         <label for="activar_competencias" style="color: #fff;" class="mb-0"> Competencias
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="form-control" type="number" wire:model="porcentaje_competencias"
+                                        <input class="form-control" type="number" wire:model.live="porcentaje_competencias"
                                             name="porcentaje_competencias" style="width: 90px;">
                                     </div>
                                 </div>
@@ -105,7 +106,7 @@
 
         @case('2')
             <div class="tab-content" id="nav-create-2" role="tabpanel" aria-labelledby="nav-create-2">
-                {{-- <form wire:submit.prevent="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
+                {{-- <form wire:submit="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
                 <div class="card card-body">
                     <div class="info-first-config">
                         <h4 class="title-config">Periodos de los Objetivos</h4>
@@ -184,7 +185,7 @@
                                             <div class="form-group anima-focus">
                                                 <input type="text" name="nombre_evaluacion[]"
                                                     id="nombre_evaluacion_{{ $index }}"
-                                                    wire:model="arreglo_periodos.{{ $index }}.nombre_evaluacion"
+                                                    wire:model.live="arreglo_periodos.{{ $index }}.nombre_evaluacion"
                                                     class="form-control"
                                                     value="{{ $ap['nombre_evaluacion'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Evaluación*</label>
@@ -193,7 +194,7 @@
                                         <td>
                                             <div class="form-group anima-focus">
                                                 <input type="date" placeholder=""
-                                                    wire:model="arreglo_periodos.{{ $index }}.fecha_inicio"
+                                                    wire:model.live="arreglo_periodos.{{ $index }}.fecha_inicio"
                                                     class="form-control"
                                                     value="{{ $ap['fecha_inicio'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Inicio de la evaluación</label>
@@ -202,7 +203,7 @@
                                         <td>
                                             <div class="form-group anima-focus">
                                                 <input type="date" placeholder=""
-                                                    wire:model="arreglo_periodos.{{ $index }}.fecha_fin"
+                                                    wire:model.live="arreglo_periodos.{{ $index }}.fecha_fin"
                                                     class="form-control"
                                                     value="{{ $ap['fecha_fin'] }}"@if ($index == 0) required @endif>
                                                 <label for="">Fin de la evaluación</label>
@@ -211,7 +212,7 @@
                                         <td>
                                             <div class="form-group">
                                                 <input type="checkbox" class="form-control"
-                                                    wire:model="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
+                                                    wire:model.live="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
                                             </div>
                                         </td>
                                         @if ($abierta)
@@ -266,7 +267,7 @@
                     </div>
                     <div class="d-flex align-items-center mb-2" style="gap: 20px;">
                         <select name="se" id="se" class="form-control" style="max-width: 350px;"
-                            wire:change="seleccionarEvaluados($event.target.value)" wire:model="select_evaluados">
+                            wire:change="seleccionarEvaluados($event.target.value)" wire:model.live="select_evaluados">
                             <option value="toda">Toda la empresa</option>
                             <option value="areas">Area</option>
                             <option value="manualmente">Manualmente</option>
@@ -297,7 +298,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
                                                     class="form-control {{ $errors->has('nombreGrupo') ? 'is-invalid' : '' }}"
-                                                    id="nombre" aria-describedby="nombre" wire:model.defer="nombreGrupo"
+                                                    id="nombre" aria-describedby="nombre" wire:model="nombreGrupo"
                                                     value="{{ old('nombreGrupo') }}" autocomplete="off">
                                                 <small>Ingresa el nombre del grupo</small>
                                                 @if ($errors->has('nombreGrupo'))
@@ -307,7 +308,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-lg-12">
-                                            <select class="form-control" wire:model.defer="empleados_grupo" multiple
+                                            <select class="form-control" wire:model="empleados_grupo" multiple
                                                 id="empleadosPertenecientes">
                                                 @foreach ($empleados as $empleado)
                                                     <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
@@ -338,7 +339,7 @@
 
                             @case('areas')
                                 <select class="form-control" name="evaluados_areas" id="evaluados_areas"
-                                    wire:model="evaluados_areas">
+                                    wire:model.live="evaluados_areas">
                                     <option value="" disabled selected>Seleccione una opcion</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -348,7 +349,7 @@
 
                             @case('manualmente')
                                 <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
-                                    wire:model="evaluados_manual" multiple wire:ignore>
+                                    wire:model.live="evaluados_manual" multiple wire:ignore>
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
                                     @endforeach
@@ -357,7 +358,7 @@
 
                             @case('grupo')
                                 <select class="form-control" name="evaluados_grupos" id="evaluados_grupos"
-                                    wire:model="evaluados_grupos">
+                                    wire:model.live="evaluados_grupos">
                                     <option value="" disabled selected>Seleccione una opcion</option>
                                     @foreach ($grupos as $grupo)
                                         <option value="{{ $grupo->id }}">{{ $grupo->nombre }}</option>
@@ -372,7 +373,8 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" class="btn btn-success"
+                            style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
@@ -538,7 +540,7 @@
 
                     <div class="mt-3">
                         @foreach ($array_evaluados as $key => $evaluado)
-                            <div class="row">
+                            <div class="row mt-1 mb-1">
                                 <div class="col-2">
                                     <div class="row">
                                         {{ $evaluado['name'] }}
@@ -549,7 +551,7 @@
                                 </div>
                                 <div class="col-10">
                                     @if ($activar_objetivos)
-                                        <div class="row">
+                                        <div class="row mt-1 mb-1">
                                             <div class="col-2">
                                                 Objetivos
                                             </div>
@@ -561,7 +563,7 @@
                                                                 <select class="form-control"
                                                                     name="evaluador_objetivo_{{ $key }}"
                                                                     id="evaluador_objetivo_{{ $key }}"
-                                                                    wire:model="array_evaluadores.{{ $key }}.evaluador_objetivos.{{ $index_obj }}">
+                                                                    wire:model.live="array_evaluadores.{{ $key }}.evaluador_objetivos.{{ $index_obj }}">
                                                                     <option value="" selected>Seleccione un Evaluador
                                                                     </option>
                                                                     @foreach ($colaboradores as $colaborador)
@@ -580,7 +582,7 @@
                                                                     id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
                                                                     type="number" min="0" max="100"
                                                                     class="form-control"
-                                                                    wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
+                                                                    wire:model.live="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_objetivos.{{ $index_obj }}">
                                                                 <label
                                                                     for="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}">Porcentaje
                                                                     (%)
@@ -597,16 +599,16 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-2">
+                                                    <div class="col-3">
                                                         <a class="btn btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+Agregar</a>
+                                                            wire:click.prevent="agregarEvaluadorObjetivos({{ $key }})">+Agregar</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                     @if ($activar_competencias)
-                                        <div class="row">
+                                        <div class="row mt-1 mb-1">
                                             <div class="col-2">
                                                 Competencias
                                             </div>
@@ -618,7 +620,7 @@
                                                                 <select class="form-control"
                                                                     name="evaluador_competencia_{{ $key }}"
                                                                     id="evaluador_competencia_{{ $key }}"
-                                                                    wire:model="array_evaluadores.{{ $key }}.evaluador_competencias.{{ $index_comp }}">
+                                                                    wire:model.live="array_evaluadores.{{ $key }}.evaluador_competencias.{{ $index_comp }}">
                                                                     <option value="" selected>Seleccione un Evaluador
                                                                     </option>
                                                                     @foreach ($colaboradores as $colaborador)
@@ -637,7 +639,7 @@
                                                                     id="porcentaje_objetivos_evaluador_{{ $key }}_{{ $index_obj }}"
                                                                     type="number" min="0" max="100"
                                                                     class="form-control"
-                                                                    wire:model="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
+                                                                    wire:model.live="array_porcentaje_evaluadores.{{ $key }}.porcentaje_evaluador_competencias.{{ $index_comp }}">
                                                                 <label
                                                                     for="porcentaje_competencias_evaluador_{{ $key }}_{{ $index_comp }}">Porcentaje
                                                                     (%)
@@ -654,10 +656,9 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-4">
+                                                    <div class="col-3 mb-2">
                                                         <a class="btn-link" style="color: #3490dc;"
-                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar
-                                                        </a>
+                                                            wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -677,7 +678,16 @@
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <a wire:click.prevent="cuartoPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                        <a
+                            @if ($bloquear_evaluacion) class="btn btn-success disabled"
+        style="width: 170px; pointer-events: none; opacity: 0.5;"
+    @else
+        wire:click.prevent="cuartoPaso"
+        class="btn btn-success"
+        style="width: 170px;" @endif>
+                            FINALIZAR
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -710,6 +720,12 @@
 
                 document.addEventListener('click', (e) => {
                     if (e.target && e.target.id == 'btn-paso3') {
+                        e.preventDefault();
+                        console.log(dataEmpleados);
+                        @this.set('empleados_seleccionados', dataEmpleados);
+                    }
+
+                    if (e.target && e.target.id == 'btn-borrador-paso3') {
                         e.preventDefault();
                         console.log(dataEmpleados);
                         @this.set('empleados_seleccionados', dataEmpleados);

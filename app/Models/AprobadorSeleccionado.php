@@ -9,6 +9,8 @@ class AprobadorSeleccionado extends Model
 {
     use HasFactory;
 
+    protected $table = 'aprobador_seleccionados';
+
     protected $fillable = [
         'modulo_id',
         'submodulo_id',

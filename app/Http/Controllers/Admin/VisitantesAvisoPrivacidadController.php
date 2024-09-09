@@ -22,7 +22,7 @@ class VisitantesAvisoPrivacidadController extends Controller
         if (AvisoPrivacidadVisitante::count() > 0) {
             $aviso_privacidad = AvisoPrivacidadVisitante::first();
         } else {
-            $aviso_privacidad = new AvisoPrivacidadVisitante();
+            $aviso_privacidad = new AvisoPrivacidadVisitante;
         }
 
         return view('admin.visitantes.aviso-privacidad.index', compact('aviso_privacidad'));
