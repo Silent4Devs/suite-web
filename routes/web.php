@@ -229,6 +229,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'destroy' => 'vacaciones.destroy',
         ]);
 
+        // dashboard permisos
+        Route::get('dashboardPermisos/dashboardOrg/{id}', 'DashboardPermisosController@dashboardOrg')->name('dashboardPermisos.dashboardOrg');
+
         Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
         Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
         Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
