@@ -18,7 +18,7 @@ ul {
 .menu-pasos-guia ul li {
     width: 100%;
     font-size: 16px;
-    color: #3086AF;
+    color: var(--color-tbj);
     display: flex;
     height: 60px;
     display: flex;
@@ -47,7 +47,7 @@ li.active-paso {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #306BA9;
+    background-color: var(--color-tbj);
 }
 
 .info-iso {
@@ -74,7 +74,7 @@ li.active-paso {
     margin-left: -14px;
     margin-top: -10px;
     font-size: 27px;
-    color: #3086AF;
+    color: var(--color-tbj);
     /* or whatever color you prefer */
     position: absolute;
 }
@@ -97,7 +97,7 @@ li.active-paso {
 }
 
 .title-info-iso {
-    color: #3086AF;
+    color: var(--color-tbj);
     font-size: 28px;
 }
 
@@ -114,7 +114,7 @@ li.active-paso {
 
 .card-iso-guia {
     background-color: #fff;
-    color: #3086AF;
+    color: var(--color-tbj);
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 1px 4px #00000024;
@@ -281,7 +281,7 @@ li.active-paso {
 }
 
 .title-normas-iso {
-    color: #3086AF;
+    color: var(--color-tbj);
     font-size: 30px;
 }
 

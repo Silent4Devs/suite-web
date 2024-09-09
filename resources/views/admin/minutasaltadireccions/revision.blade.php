@@ -43,7 +43,7 @@
                         <form method="POST"
                             action="{{ route('admin.minutasaltadireccions.pdf', ['id' => $minutas->id]) }}">
                             @csrf
-                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                            <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
                                 IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                             </button>
                         </form>
@@ -79,7 +79,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="6">
                                             <center>Minuta reunión</center>
                                         </th>
@@ -112,7 +112,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="4">
                                             <center>Participantes</center>
                                         </th>
@@ -138,7 +138,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="2">
                                             <center style="color: white;">Temas tratados</center>
                                         </th>
