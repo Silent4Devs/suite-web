@@ -25,20 +25,19 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
+        abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $agregarUsuarios = false;
 
-        $users = User::getUserWithRole()->where('is_active', true)->count();
+        $cuentaUsers = User::usuariosActivos();
 
         $dataCliente = $this->fetchData();
 
-        if ($dataCliente["numeroUsuarios"] <= $dataCliente) {
+        if ($cuentaUsers <= $dataCliente["numeroUsuarios"]) {
             $agregarUsuarios = true;
         }
 
         try {
-            abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
             $existsVinculoEmpleadoAdmin = User::getExists();
 
             $users = User::getUserWithRole();
