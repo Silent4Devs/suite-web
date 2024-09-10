@@ -10,7 +10,7 @@ pipeline {
                         string(credentialsId: 'IpProsuite', variable: 'SERVER_IP')
                     ]) {
                         sh '''
-                            echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/tabantaj && sudo -S git pull"
+                            echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedores/tabantaj && sudo -S git pull"
                         '''
                     }
                 }
