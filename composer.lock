@@ -3566,7 +3566,6 @@
         },
         {
             "name": "maatwebsite/excel",
-<<<<<<< HEAD
             "version": "3.1.58",
             "source": {
                 "type": "git",
@@ -3577,18 +3576,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/18495a71b112f43af8ffab35111a58b4e4ba4a4d",
                 "reference": "18495a71b112f43af8ffab35111a58b4e4ba4a4d",
-=======
-            "version": "3.1.57",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SpartnerNL/Laravel-Excel.git",
-                "reference": "3571496c00ca1812c25ee19cda50faad216b7909"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SpartnerNL/Laravel-Excel/zipball/3571496c00ca1812c25ee19cda50faad216b7909",
-                "reference": "3571496c00ca1812c25ee19cda50faad216b7909",
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
                 "shasum": ""
             },
             "require": {
@@ -3644,11 +3631,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SpartnerNL/Laravel-Excel/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.58"
-=======
-                "source": "https://github.com/SpartnerNL/Laravel-Excel/tree/3.1.57"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
             },
             "funding": [
                 {
@@ -3660,11 +3643,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2024-09-07T13:53:36+00:00"
-=======
-            "time": "2024-09-04T07:37:43+00:00"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
         },
         {
             "name": "maennchen/zipstream-php",
@@ -11587,16 +11566,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.22.3",
+            "version": "v1.22.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96"
+                "reference": "1b5cabe0ce013134cf595bfa427bbf2f6abcd989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
-                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/1b5cabe0ce013134cf595bfa427bbf2f6abcd989",
+                "reference": "1b5cabe0ce013134cf595bfa427bbf2f6abcd989",
                 "shasum": ""
             },
             "require": {
@@ -11649,9 +11628,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maximebf/php-debugbar/issues",
-                "source": "https://github.com/maximebf/php-debugbar/tree/v1.22.3"
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.22.5"
             },
-            "time": "2024-04-03T19:39:26+00:00"
+            "time": "2024-09-09T08:05:55+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -12371,7 +12350,6 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-<<<<<<< HEAD
             "version": "1.30.1",
             "source": {
                 "type": "git",
@@ -12382,18 +12360,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/51b95ec8670af41009e2b2b56873bad96682413e",
                 "reference": "51b95ec8670af41009e2b2b56873bad96682413e",
-=======
-            "version": "1.30.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "5ceb0e384997db59f38774bf79c2a6134252c08f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5ceb0e384997db59f38774bf79c2a6134252c08f",
-                "reference": "5ceb0e384997db59f38774bf79c2a6134252c08f",
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
                 "shasum": ""
             },
             "require": {
@@ -12425,7 +12391,6 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/phpstan/phpdoc-parser/tree/1.30.1"
             },
             "time": "2024-09-07T20:13:05+00:00"
@@ -12442,24 +12407,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0fcbf194ab63d8159bb70d9aa3e1350051632009",
                 "reference": "0fcbf194ab63d8159bb70d9aa3e1350051632009",
-=======
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.30.0"
-            },
-            "time": "2024-08-29T09:54:52+00:00"
-        },
-        {
-            "name": "phpstan/phpstan",
-            "version": "1.12.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d8ed7fffa66de1db0d2972267d8ed1d8fa0fe5a2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d8ed7fffa66de1db0d2972267d8ed1d8fa0fe5a2",
-                "reference": "d8ed7fffa66de1db0d2972267d8ed1d8fa0fe5a2",
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
                 "shasum": ""
             },
             "require": {
@@ -12504,11 +12451,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2024-09-09T08:10:35+00:00"
-=======
-            "time": "2024-09-03T19:55:22+00:00"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12833,7 +12776,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
             "version": "10.5.33",
             "source": {
                 "type": "git",
@@ -12844,18 +12786,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4def7a9cda75af9c2bc179ed53a8e41313e7f7cf",
                 "reference": "4def7a9cda75af9c2bc179ed53a8e41313e7f7cf",
-=======
-            "version": "10.5.32",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f069f46840445d37a4e6f0de8c5879598f9c4327"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f069f46840445d37a4e6f0de8c5879598f9c4327",
-                "reference": "f069f46840445d37a4e6f0de8c5879598f9c4327",
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
                 "shasum": ""
             },
             "require": {
@@ -12927,11 +12857,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.33"
-=======
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.32"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
             },
             "funding": [
                 {
@@ -12947,11 +12873,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
             "time": "2024-09-09T06:06:56+00:00"
-=======
-            "time": "2024-09-04T13:33:39+00:00"
->>>>>>> f6b1792f7727ae93475b72414f9ea514b37ad056
         },
         {
             "name": "psy/psysh",
