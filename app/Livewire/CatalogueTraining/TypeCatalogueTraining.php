@@ -52,6 +52,7 @@ class TypeCatalogueTraining extends Component
             'name' => $this->name,
         ]);
         $this->clearInput();
+        $this->dispatch('edited');
     }
 
     public function save()
