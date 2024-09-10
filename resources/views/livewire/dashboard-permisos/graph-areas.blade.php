@@ -6,7 +6,6 @@
         </div>
         <div id="chart-container-solicitudes-areas" style="width: 100%; height: 300px;"></div>
     </div>
-
     <script>
         var dom = document.getElementById('chart-container-solicitudes-areas');
         var myChart = echarts.init(dom, null, {
@@ -31,10 +30,13 @@
             // ['Ciberinteligencia', 72.4, 53.9, 39.1],
             // ['Soporte', 72.4, 53.9, 39.1],
         ];
-        let areasDataBase = @json($areas);
-        areasDataBase.array.forEach(area => {
-            dataAreas.push([area['name'], area['vacaciones'], area['dayOff'], area['permisos']]);
+        let areasDataBase = @json($areasCollect);
+        areasDataBase.forEach(area => {
+            dataAreas.push([area['area'], area['vacaciones'], area['dayOff'], area['permisos']]);
         });
+
+        console.log(dataAreas);
+
 
         option = {
             legend: {},

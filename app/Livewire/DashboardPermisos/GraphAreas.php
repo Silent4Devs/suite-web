@@ -23,6 +23,8 @@ class GraphAreas extends Component
 
         $areas = Area::get();
 
+        $areasCollect = collect();
+
         foreach ($areas as $area) {
 
             $vacaciones = $vacaciones->filter(function ($vacacion) use ( $area) {
@@ -40,8 +42,15 @@ class GraphAreas extends Component
             $area->vacaciones = $vacaciones->count();
             $area->dayOff = $dayOff->count();
             $area->permisos = $permisos->count();
+
+            $areasCollect->push([
+                'area' => $area->area,
+                'vacaciones' => $area->vacaciones,
+                'dayOff' => $area->dayOff,
+                'permisos' => $area->permisos,
+            ]);
         }
 
-        return view('livewire.dashboard-permisos.graph-areas', compact('areas'));
+        return view('livewire.dashboard-permisos.graph-areas', compact('areasCollect'));
     }
 }
