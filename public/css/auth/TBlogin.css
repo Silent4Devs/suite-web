@@ -1,49 +1,45 @@
-body{
-    background-image: url(none);
+:root {
+    --aside-width: 400px;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+html * {
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
     margin: 0;
     padding: 0;
-    background-color: #F5F7FA !important;
 }
-body::before{
-    content: "";
-    background: url(../../img/auth/chip_a.png);
-    background-size: auto 600px;
-    background-position: -200px -200px;
-    opacity: 40%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    animation: anima_fondo 3s linear;
+
+a {
+    color: #293c76;
+    text-decoration: underline;
 }
-body::after{
-    content: "";
-    background:  url(../../img/auth/chip_a.png);
-    background-size: auto 700px;
-    opacity: 40%;
-    background-position: 100% 70px;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    animation: anima_fondo 3s linear;
-    z-index: 0;
+
+button {
+    background-color: unset;
+    color: unset;
+    border: none;
+    cursor: pointer;
 }
-.c-app.flex-row.align-items-center{
-}
-.fondo{
+
+/* login ----------- */
+.content-main {
     width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    background: rgba(0,0,0,0);
-    z-index: 1;
+    height: 100dvh;
+    display: flex;
+    overflow: hidden;
 }
 
 .btn-animation-stop {
@@ -74,33 +70,8 @@ body::after{
     justify-content: center;
     align-items: center;
 }
-.marca{
-    width: 100%;
-    text-align: center;
-}
-.marca img{
-    width: 380px;
-}
-.marca .by{
-    width: 400px;
-    text-align: right;
-    margin: auto;
-}
-.marca .bienvenidos{
-    margin-top: 30px;
-    font-size: 20pt;
-}
-.caja_form{
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: rgba(28, 39, 74, 0.07);
-    width: 450px;
-    height: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-}
-form{
+
+.logo-box {
     width: 350px;
     height: 350px;
     border-radius: 1000px;
@@ -321,27 +292,31 @@ body.animate-active {
     }
 }
 
-
-
-
-
-
-.clase_animacion .marca{
-    animation-duration: 2s;
-    animation-name: marca;
+@keyframes fadeInContentMain {
+    0% {
+        min-width: 100%;
+    }
 }
-@keyframes marca{
-    0%{
-        transform: scale(0.8);
-        opacity: 0;
+
+@keyframes logoCircle {
+    from {
+        transform: rotate(0deg);
     }
-    50%{
-        transform: scale(0.8);
-        opacity: 0;
+
+    to {
+        transform: rotate(360deg);
     }
-    100%{
-        transform: scale(1);
-        opacity: 1;
+}
+
+@keyframes logoBox {
+    from {
+        border: 5px #00000000 solid;
+    }
+}
+
+@keyframes boxCircleColor {
+    from {
+        opacity: 0;
     }
 }
 
