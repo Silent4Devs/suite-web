@@ -84,10 +84,6 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsis = PoliticaSgsi::getAll();
 
-        $teams = Team::get();
-
-        $empleados = Empleado::getAltaEmpleadosWithArea();
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -101,8 +97,6 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
-                'teams',
-                'empleados',
                 'organizacion_actual',
                 'logo_actual',
                 'empresa_actual',
@@ -117,8 +111,6 @@ class PoliticaSgsiController extends Controller
             
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
-                'teams',
-                'empleados',
                 'organizacion_actual',
                 'logo_actual',
                 'empresa_actual',
