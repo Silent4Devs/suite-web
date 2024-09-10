@@ -69,6 +69,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- End Extra Styles -->
 
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1.5.0/lite-youtube.js"></script>
+
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('css/rds.css') }}{{ config('app.cssVersion') }}">
     @yield('styles')
@@ -118,7 +120,7 @@
             @if ($empleado)
                 <ul class="ml-auto c-header-nav">
                     <li style="position: relative; right:2rem;">
-                        @livewire('campana-notificaciones-component')
+                        {{-- @livewire('campana-notificaciones-component') --}}
                     </li>
                     <li class="c-header-nav-item dropdown show">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"

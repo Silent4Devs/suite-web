@@ -112,7 +112,7 @@ class SedeController extends Controller
         $extension = $file->getClientOriginalExtension();
         $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.png';
-        
+
         // if ($request->hasFile('foto_sedes')) {
         //     $file = $request->file('foto_sedes');
         //     $extension = $file->getClientOriginalExtension();

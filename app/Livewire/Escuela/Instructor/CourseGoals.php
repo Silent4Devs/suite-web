@@ -6,6 +6,7 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Goal;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CourseGoals extends Component
@@ -14,18 +15,15 @@ class CourseGoals extends Component
 
     public Goal $goal;
 
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
+    public $formName;
+
     public $course;
 
+    #[Validate('required', message: 'El campo es requerido')]
+    #[Validate('max:255', message: 'El campo debe ser menor a 255 caracteres')]
     public $name;
-
-    protected $rules = [
-        'goal.name' => 'required|max:255',
-    ];
-
-    protected $messages = [
-        'goal.name.required' => 'El campo nombre es obligatorio',
-        'goal.name.max' => 'El campo nombre es obligatorio',
-    ];
 
     public function mount($course)
     {
@@ -40,12 +38,7 @@ class CourseGoals extends Component
 
     public function store()
     {
-        $this->validate([
-            'name' => 'required|max:255',
-        ], [
-            'name.required' => 'El campo nombre es obligatorio',
-            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
-        ]);
+        $this->validateOnly('name');
 
         $this->course->goals()->create([
             'name' => $this->name,
@@ -59,11 +52,15 @@ class CourseGoals extends Component
     public function edit(Goal $goal)
     {
         $this->goal = $goal;
+        $this->formName = $goal->name;
     }
 
     public function update()
     {
-        $this->validate($this->rules, $this->messages);
+        // dd($this->formName);
+        $this->validateOnly('formName');
+
+        $this->goal->name = $this->formName;
 
         $this->goal->save();
 

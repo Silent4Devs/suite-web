@@ -54,7 +54,6 @@ class QuejasClienteController extends Controller
 
         $quejasClientes = QuejasCliente::where('archivado', false)->get();
 
-
         return datatables()->of($quejasClientes)->toJson();
     }
 
