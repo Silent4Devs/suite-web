@@ -30,7 +30,6 @@
             if (btn.classList.contains('btn-top')) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-
         });
     </script>
 @endsection
