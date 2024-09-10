@@ -97,8 +97,6 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
-                'teams',
-                'empleados',
                 'organizacion_actual',
                 'logo_actual',
                 'empresa_actual',
@@ -113,8 +111,6 @@ class PoliticaSgsiController extends Controller
             
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
-                'teams',
-                'empleados',
                 'organizacion_actual',
                 'logo_actual',
                 'empresa_actual',
