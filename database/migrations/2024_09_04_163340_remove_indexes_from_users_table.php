@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-             // Eliminar índices
-             $table->dropIndex(['id']);
-             $table->dropIndex(['email']);
-             $table->dropIndex(['n_empleado']);
-             $table->dropIndex(['empleado_id']);
+            // Eliminar índices
+            $table->dropIndex(['id']);
+            $table->dropIndex(['email']);
+            $table->dropIndex(['n_empleado']);
+            $table->dropIndex(['empleado_id']);
         });
     }
 

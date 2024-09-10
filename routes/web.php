@@ -1028,7 +1028,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('directorio', 'DirectorioEmpleadosController@index')->name('directorio.index');
 
-
         // Implementacions
 
         Route::resource('implementacions', 'ImplementacionController');

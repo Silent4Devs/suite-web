@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use App\Models\Area;
-use App\Models\SolicitudVacaciones;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Message;
 
 class DashboardPermisosController extends Controller
 {
@@ -38,15 +36,15 @@ class DashboardPermisosController extends Controller
 
             $area = Area::find($id);
 
-            $vacaciones = $vacaciones->filter(function ($vacacion) use ( $area) {
+            $vacaciones = $vacaciones->filter(function ($vacacion) use ($area) {
                 return $vacacion->empleado->area_id === $area->id;
             });
 
-            $dayOff->filter(function ($day) use ( $area) {
+            $dayOff->filter(function ($day) use ($area) {
                 return $day->empleado->area_id === $area->id;
             });
 
-            $permisos->filter(function ($permiso) use ( $area) {
+            $permisos->filter(function ($permiso) use ($area) {
                 return $permiso->empleado->area_id === $area->id;
             });
         }
