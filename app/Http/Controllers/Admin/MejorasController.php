@@ -268,6 +268,8 @@ class MejorasController extends Controller
         if ($request->ajax()) {
             Mejoras::where('id', $incidente)->update(['archivado' => true]);
 
+            \Artisan::call('optimize:clear');
+
             return response()->json(['success' => true]);
         }
     }
@@ -276,12 +278,16 @@ class MejorasController extends Controller
     {
         $mejoras = Mejoras::where('archivado', true)->get();
 
+        \Artisan::call('optimize:clear');
+
         return view('admin.desk.mejoras.archivo', compact('mejoras'));
     }
 
     public function recuperarArchivadoMejora($id)
     {
         Mejoras::where('id', $id)->update(['archivado' => false]);
+
+        \Artisan::call('optimize:clear');
 
         return redirect()->route('admin.desk.index');
     }
