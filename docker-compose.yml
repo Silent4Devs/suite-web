@@ -39,10 +39,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-database:/var/lib/postgresql/data
-
-      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -148,7 +145,6 @@ services:
     environment:
       - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
       - REDIS_1_PORT=6379 # Replace with your Redis container port
-      #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
 
@@ -186,7 +182,6 @@ services:
     restart: unless-stopped
     networks:
       - tabantajnetwork
-
 
   newrelic-go:
     container_name: newrelic-go
