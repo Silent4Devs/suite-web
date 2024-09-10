@@ -61,12 +61,12 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" wire:click="edit({{$register->id}})">
                                             <div class="d-flex align-items-start">
-                                                <i class="material-icons-outlined"
+                                                <i class="material-icons-outlined btn-top"
                                                     style="width: 24px;font-size:18px;">edit_outline</i>
                                                 Editar
                                             </div>
                                         </a>
-                                        @if (!$register->default)
+                                        {{-- @if (!$register->default) --}}
                                         <a class="dropdown-item" wire:click="deleteMessage({{$register->id}})">
                                             <div class="d-flex align-items-start">
                                                 <i class="material-symbols-outlined"
@@ -74,7 +74,7 @@
                                                 Eliminar
                                             </div>
                                         </a>
-                                        @endif
+                                        {{-- @endif --}}
                                     </div>
                                 </div>
                             </td>
