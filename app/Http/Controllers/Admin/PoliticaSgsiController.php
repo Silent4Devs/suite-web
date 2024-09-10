@@ -96,42 +96,38 @@ class PoliticaSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        $listavacia = 'cumple';
-        if (! isset($modulo)) {
+        if (!isset($modulo)  ||  $modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
-        } elseif ($modulo->participantes->isEmpty()) {
-            $listavacia = 'vacia';
-        } else {
-            foreach ($modulo->participantes as $participante) {
-                if ($participante->empleado->estatus != 'alta') {
-                    $listavacia = 'baja';
 
-                    return view('admin.politicaSgsis.index', compact(
-                        'politicaSgsis',
-                        'teams',
-                        'empleados',
-                        'organizacion_actual',
-                        'logo_actual',
-                        'empresa_actual',
-                        'direccion',
-                        'rfc',
-                        'listavacia',
-                    ));
-                }
-            }
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'teams',
+                'empleados',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
+
+        } else {
+
+            $listavacia = 'cumple';
+            
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'teams',
+                'empleados',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
         }
 
-        return view('admin.politicaSgsis.index', compact(
-            'politicaSgsis',
-            'teams',
-            'empleados',
-            'organizacion_actual',
-            'logo_actual',
-            'empresa_actual',
-            'direccion',
-            'rfc',
-            'listavacia',
-        ));
     }
 
     public function create()
