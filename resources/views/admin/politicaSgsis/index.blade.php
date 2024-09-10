@@ -420,6 +420,7 @@
 @endsection
 @section('scripts')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script>
         $(function() {
