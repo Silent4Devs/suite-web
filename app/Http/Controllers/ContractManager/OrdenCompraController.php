@@ -57,7 +57,7 @@ class OrdenCompraController extends Controller
     {
         $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::getOCAll();
 
             return datatables()->of($requisiciones)->toJson();
