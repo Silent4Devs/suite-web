@@ -1,36 +1,36 @@
 services:
-  nginx-tabantaj:
-    image: nginx:stable-alpine
-    container_name: nginx-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 80:80
-      - 443:443
-      # - 8080:8080
-    volumes:
-      - .:/var/www/html
-      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./infra/nginx/ssl:/etc/nginx/ssl
-    depends_on:
-      - php
-      - postgres-tabantaj
-      - redis-tabantaj
-    env_file:
-      - .env
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "30m"
-        max-file: "1"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-    networks:
-      - tabantajnetwork
+  # nginx-tabantaj:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #     # - 8080:8080
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./infra/nginx/ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - php
+  #     - postgres-tabantaj
+  #     - redis-tabantaj
+  #   env_file:
+  #     - .env
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "30m"
+  #       max-file: "1"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 20s
+  #   networks:
+  #     - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:16-alpine
@@ -54,31 +54,36 @@ services:
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
+      context: "."
+      dockerfile: Dockerfile.prod
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
     # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
+    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
-      - .:/var/www/html
+      - .:/app
+      - caddy_data:/data
+      - caddy_config:/config
     ports:
-      - 9000:80
+      - 80:8000
+      - 443:443
+      - 443:443/udp
     networks:
       - tabantajnetwork
 
   queue-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
+      context: "."
+      dockerfile: Dockerfile.prod
     volumes:
-      - .:/var/www/html
-    command: php artisan queue:work --tries=6
+      - .:/app
+    command: php artisan queue:work --tries=3
     depends_on:
       - php
     container_name: queue-worker-tabantaj
@@ -88,25 +93,23 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
-    mem_limit: 1g
 
   schedule-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
+      context: "."
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
     tty: true
     container_name: schedule-worker-tabantaj
     volumes:
-      - .:/var/www/html
+      - .:/app
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
-    mem_limit: 1g
 
   redis-tabantaj:
     image: redis:alpine
@@ -317,7 +320,11 @@ volumes:
   #   driver: local
   # elasticsearch-logs:
   #   driver: local
-
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+    
 networks:
   tabantajnetwork:
     driver: bridge
