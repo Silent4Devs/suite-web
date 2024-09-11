@@ -6,7 +6,7 @@
             <form class="row"  wire:submit="form">
                 <div class="col-12 col-sm-6 ">
                     <div class="form-group pl-0 anima-focus" >
-                        <input id="inputName" class="form-control" placeholder="" style="min-width:200px;" name="name" type="text" wire:model.live="name" required>
+                        <input id="inputName" class="form-control" placeholder="" style="min-width:200px;" name="name" type="text" wire:model="name" required>
                         <label for="name">Agregar nombre de la Capacitación*</label>
                     </div>
                 </div>
@@ -16,6 +16,7 @@
                         @else
                             <button class="btn btn-primary" style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;" type="submit" >Editar registro</button>
                         @endif
+                        <button class="btn btn-primary" style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;" type="button" wire:click="registersRestore">Recuperar registros</button>
                 </div>
             </form>
         </div>
@@ -61,12 +62,12 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" wire:click="edit({{$register->id}})">
                                             <div class="d-flex align-items-start">
-                                                <i class="material-icons-outlined"
+                                                <i class="btn-top material-icons-outlined"
                                                     style="width: 24px;font-size:18px;">edit_outline</i>
                                                 Editar
                                             </div>
                                         </a>
-                                        @if (!$register->default)
+                                        {{-- @if (!$register->default) --}}
                                         <a class="dropdown-item" wire:click="deleteMessage({{$register->id}})">
                                             <div class="d-flex align-items-start">
                                                 <i class="material-symbols-outlined"
@@ -74,7 +75,7 @@
                                                 Eliminar
                                             </div>
                                         </a>
-                                        @endif
+                                        {{-- @endif --}}
                                     </div>
                                 </div>
                             </td>
@@ -98,13 +99,36 @@
             }).then((result) => {
             if (result.isConfirmed) {
                 @this.call('delete');
+                // Swal.fire({
+                // title: "Eliminado",
+                // text: "El registro se eliminó exitosamente",
+                // icon: "success"
+                // });
+            }
+            });
+        });
+
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('useRegister', () => {
+                // Swal.fire(
+                //     'Error',
+                //     'Este registro está en uso y no puede ser eliminado.',
+                //     'error'
+                // );
+                Swal.fire({
+                title: "Error",
+                text: "Este registro está en uso y no puede ser eliminado.",
+                icon: "error"
+                });
+            });
+            Livewire.on('registerDelete', () => {
                 Swal.fire({
                 title: "Eliminado",
                 text: "El registro se eliminó exitosamente",
                 icon: "success"
                 });
-            }
             });
         });
+
     </script>
 </div>

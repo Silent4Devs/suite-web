@@ -2,6 +2,7 @@
 
 namespace App\Livewire\CatalogueTraining;
 
+use App\Models\TBCatalogueTrainingModel;
 use App\Models\TBTypeCatalogueTrainingModel;
 use Carbon\Carbon;
 use Livewire\Attributes\Validate;
@@ -20,6 +21,11 @@ class TypeCatalogueTraining extends Component
 
     public $deleteRegister;
 
+    public function registersRestore(){
+        // dd("click");
+        TBTypeCatalogueTrainingModel::onlyTrashed()->restore();
+    }
+
     public function clearInput()
     {
         $this->reset('name', 'status', 'editRegister');
@@ -27,7 +33,12 @@ class TypeCatalogueTraining extends Component
 
     public function delete()
     {
-        $this->deleteRegister->delete();
+        if(TBCatalogueTrainingModel::where('type_id',$this->deleteRegister->id)->exists()){
+            $this->dispatch('useRegister');
+        }else{
+            $this->dispatch('registerDelete');
+            $this->deleteRegister->delete();
+        }
     }
 
     public function deleteMessage($id)
@@ -52,6 +63,7 @@ class TypeCatalogueTraining extends Component
             'name' => $this->name,
         ]);
         $this->clearInput();
+        $this->dispatch('edited');
     }
 
     public function save()

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
     @php
         use App\Models\Organizacion;
     @endphp
@@ -28,7 +28,7 @@
                         {{ \Carbon\Carbon::parse($timesheet->fecha_dia)->format('d/m/Y') }}</div>
                     <form method="POST" action="{{ route('admin.timesheet.pdf', ['id' => $timesheet->id]) }}">
                         @csrf
-                        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
                             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                         </button>
                     </form>
@@ -200,8 +200,7 @@
             </div>
 
 
-            @if (asset('admin/timesheet/aprobaciones') ==
-                    redirect()->getUrlGenerator()->previous())
+            @if (asset('admin/timesheet/aprobaciones') == redirect()->getUrlGenerator()->previous())
                 <div class="col-12 d-flex justify-content-between">
                     <a href="{{ route('admin.timesheet-create') }}" class="btn_cancelar">Regresar</a>
                     <div class="">

@@ -157,7 +157,8 @@
 
                     <hr>
 
-                    <div class="card card-body p-2 " style="background-color: #FFF3F3; color: #3086AF; font-size: 12px;">
+                    <div class="card card-body p-2 "
+                        style="background-color: #FFF3F3; color: var(--color-tbj); font-size: 12px;">
                         <div>
                             El periodo de carga de objetivos esta corriendo del <strong> 01/01/24 </strong> al <strong>
                                 15/03/24

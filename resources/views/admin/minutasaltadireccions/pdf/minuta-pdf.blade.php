@@ -128,7 +128,7 @@
 
         .table-product strong,
         .table-proveedor strong {
-            color: #3086AF;
+            color: var(--color-tbj);
         }
 
         .caja-proveedor {

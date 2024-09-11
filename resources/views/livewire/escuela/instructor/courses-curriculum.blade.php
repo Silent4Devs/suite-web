@@ -30,7 +30,7 @@
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
             <div class="card shadow-none" id="seccion-{{ $item['id'] }}" data-id="seccion-{{ $item['id'] }}">
                 @if ($section->id == $item['id'])
-                    <div class="card-header" style="background: #306BA9; color: #FFFFFF;">
+                    <div class="card-header" style="background: var(--color-tbj); color: #FFFFFF;">
                         <div class="row ">
                             <div class="col-10">
                                 <form class="flex-1" wire:submit="update">
@@ -47,7 +47,7 @@
                 @else
                     {{-- show section --}}
                     <div class="card-header"
-                        style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                        style="background: var(--color-tbj); color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                         id="secction-show-{{ $item['id'] }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="">

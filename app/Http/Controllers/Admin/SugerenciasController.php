@@ -78,7 +78,7 @@ class SugerenciasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_sugerencias_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $riesgo = Sugerencias::with('sugirio:id,name,foto,email,telefono')->where('archivado', false)->get();
+        $riesgo = Sugerencias::with('sugirio:id,name,foto,email')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
     }
