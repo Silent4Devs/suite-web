@@ -17,7 +17,7 @@ class Timesheet extends Model implements Auditable
 
     protected $table = 'timesheet';
 
-    protected $appends = ['semana', 'proyectos', 'semana_y', 'semana_text', 'total_horas'];
+    protected $appends = ['semana', 'proyectos', 'proyectos_movil', 'semana_y', 'semana_text', 'total_horas'];
 
     protected $fillable = [
         'fecha_semana',
@@ -211,6 +211,20 @@ class Timesheet extends Model implements Auditable
 
             $proyectos->push($proyecto);
         }
+
+        return $proyectos;
+    }
+
+    public function getProyectosMovilAttribute()
+    {
+        // Obtener los IDs de los proyectos en una sola consulta
+        $proyecto_ids = TimesheetHoras::where('timesheet_id', $this->id)
+            ->pluck('proyecto_id');
+
+        // // Obtener los proyectos relacionados en una sola consulta
+        $proyectos = TimesheetProyecto::whereIn('id', $proyecto_ids)
+            ->select('id', 'proyecto')
+            ->get();
 
         return $proyectos;
     }

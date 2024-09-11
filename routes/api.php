@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
+use App\Http\Controllers\Api\tbApiMobileControllerTest;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
@@ -14,6 +15,9 @@ use App\Http\Controllers\Api\V1\Timesheet\tbApiMobileControllerTimesheet;
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
+
+Route::get('/test', [tbApiMobileControllerTest::class, 'test']);
+Route::get('/testComunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);

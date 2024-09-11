@@ -37,10 +37,10 @@ class tbApiMobileControllerTimesheet extends Controller
         // $id_empleado = User::getCurrentUser()->empleado->id;
 
         // try {
-        $timesheet = Timesheet::findOrFail($id)->makeHidden(['created_at', 'updated_at', 'proyectos']);
-
+        $timesheet = Timesheet::where('id',$id)->first()->makeHidden(['created_at', 'updated_at', 'proyectos']);
+        // dump($id, $timesheet);
         $timesheet->empleado->makeHidden([
-            'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+            'created_at', 'updated_at', 'proyectos', 'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
             'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet', 'area', 'supervisor',
         ]);
 
@@ -56,41 +56,75 @@ class tbApiMobileControllerTimesheet extends Controller
             $ruta = asset('storage/empleados/imagenes/'.$timesheet->empleado->foto);
         }
 
-        // Encode spaces in the URL
+        $dataTimesheet=collect();
+
+        $dataTimesheet['id'] = $timesheet->id;
+        $dataTimesheet['fecha_dia'] = $timesheet->fecha_dia;
+        $dataTimesheet['empleado_id'] = $timesheet->empleado_id;
+        $dataTimesheet['total_horas'] = $timesheet->total_horas;
+// dd($timesheet);
+        // // Encode spaces in the URL
         $timesheet->nombre_empleado = $timesheet->empleado->name;
         $timesheet->ruta_foto = $this->encodeSpecialCharacters($ruta);
 
         // Transformar los proyectos ocultando las propiedades
-        $proyectos = $timesheet->proyectos->map(function ($proyecto) {
-            return collect($proyecto)->except([
-                'created_at',
-                'updated_at',
-                'areas',
-                'fecha_inicio',
-                'fecha_fin',
-                'sede_id',
-                'tipo',
-                'horas_proyecto',
-            ]);
-        });
+        $proyectos = $timesheet->proyectos_movil;
 
-        // Obtener y ocultar propiedades en las horas
+        $dataProyectos=[];
+
+        foreach($proyectos as $keyProyecto => $proyecto){
+$dataProyectos[]=[
+    'id'=>$proyecto->id,
+    'proyecto'=> $proyecto->proyecto
+];
+
+        }
+
+        $dataHoras=[];
+        // // Obtener y ocultar propiedades en las horas
         $horas = TimesheetHoras::where('timesheet_id', $id)->get()->map(function ($hora) {
             return $hora->makeHidden(['created_at', 'updated_at', 'tarea']);
         });
 
         foreach ($horas as $key => $hora) {
-            $hora->nombre_tarea = $hora->tarea->tarea;
+
+            $dataHoras[] = [
+                'facturable' => $hora->facturable,
+                'timesheet_id' => $hora->timesheet_id,
+                'proyecto_id' => $hora->proyecto_id,
+                'tarea_id' => $hora->tarea_id,
+                'horas_lunes' => $hora->horas_lunes,
+                'horas_martes' => $hora->horas_martes,
+                'horas_miercoles' => $hora->horas_miercoles,
+                'horas_jueves' => $hora->horas_jueves,
+                'horas_viernes' => $hora->horas_viernes,
+                'horas_sabado' => $hora->horas_sabado,
+                'horas_domingo' => $hora->horas_domingo,
+                'descripcion' => $hora->descripcion,
+                'empleado_id' => $hora->empleado_id,
+                'nombre_tarea' => $hora->tarea->tarea,
+            ];
+
+            // $hora->nombre_tarea = $hora->tarea->tarea;
         }
 
         $horas_count = $horas->count();
 
-        return response(json_encode([
-            'timesheet' => $timesheet,
-            'proyectos' => $proyectos,
-            'horas' => $horas,
-            'horas_count' => $horas_count,
-        ]), 200)->header('Content-Type', 'application/json');
+        // dd($timesheet, $proyectos, $horas, $horas_count);
+// dd($d);
+// dd($data);
+        return json_encode(['timesheet' => $dataTimesheet,
+    'proyectos'=>$dataProyectos,
+'horas'=>$dataHoras,
+'horas_count'=> $horas_count
+], 200);
+        // return response(json_encode([
+        //     'data' => "test",
+        //     'timesheet' => $timesheet,
+        //     // 'proyectos' => $proyectos,
+        //     // 'horas' => $horas,
+        //     // 'horas_count' => $horas_count,
+        // ]), 200)->header('Content-Type', 'application/json');
         //         return view('admin.timesheet.show', compact('timesheet', 'horas', 'hoy_format', 'horas_count'));
         //     } else {
         //         abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
