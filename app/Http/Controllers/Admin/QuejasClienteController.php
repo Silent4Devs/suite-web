@@ -492,6 +492,8 @@ class QuejasClienteController extends Controller
                 'archivado' => true,
             ]);
 
+            \Artisan::call('cache:clear');
+
             return response()->json(['success' => true]);
         }
     }
@@ -503,6 +505,8 @@ class QuejasClienteController extends Controller
         $queja->update([
             'archivado' => false,
         ]);
+
+        \Artisan::call('cache:clear');
 
         return redirect()->route('admin.desk.index');
     }
