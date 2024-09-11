@@ -30,15 +30,15 @@ class UserAuthController extends Controller
         }
 
         //Busca al usuario en la base de datos por email
-        // $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
-        //     ->where('email', request('email'))
-        //     ->firstOrFail()
-        //     ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
+        $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
+            ->where('email', request('email'))
+            ->firstOrFail()
+            ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
 
-        $user = User::with(['empleado.puestoRelacionado', 'empleado.area'])
-            ->select(['id', 'name', 'email'])
-            ->where('email', $request->email)
-            ->firstOrFail();
+        // $user = User::with(['empleado.puestoRelacionado', 'empleado.area'])
+        //     ->select(['id', 'name', 'email'])
+        //     ->where('email', $request->email)
+        //     ->firstOrFail();
 
         function encodeSpecialCharacters($url)
         {
