@@ -289,6 +289,8 @@ class RiesgosController extends Controller
                 'archivado' => true,
             ]);
 
+            \Artisan::call('cache:clear');
+
             return response()->json(['success' => true]);
         }
     }
@@ -307,6 +309,8 @@ class RiesgosController extends Controller
         $riesgo->update([
             'archivado' => false,
         ]);
+
+        \Artisan::call('cache:clear');
 
         return redirect()->route('admin.desk.index');
     }
