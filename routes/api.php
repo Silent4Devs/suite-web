@@ -17,6 +17,7 @@ Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
 Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
+    Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
     Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);

@@ -26,6 +26,7 @@ class TimesheetTarea extends Model implements Auditable
         'todos',
     ];
 
+
     //Redis methods
     public static function getAll()
     {
