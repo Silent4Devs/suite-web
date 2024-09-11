@@ -17,16 +17,17 @@
 
         var option;
 
+        let dataPermisos = [];
+        let permisosDataBase = @json($permisosCollect);
+        permisosDataBase.forEach(permiso => {
+            dataPermisos.push([permiso['nombre'], permiso['noPermisos']]);
+        });
+
         option = {
             legend: {},
             tooltip: {},
             dataset: {
-                source: [
-                    ['Nacimiento', 0],
-                    ['Exámen profesional', 0],
-                    ['Cumpleaños', 0],
-                    ['Muerte familiar', 0]
-                ]
+                source: dataPermisos,
             },
             xAxis: {
                 type: 'category'

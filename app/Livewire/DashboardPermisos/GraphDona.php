@@ -31,11 +31,11 @@ class GraphDona extends Component
                 return $vacacion->empleado->area_id === $area->id;
             });
 
-            $dayOff->filter(function ($day) use ( $area) {
+            $dayOff = $dayOff->filter(function ($day) use ( $area) {
                 return $day->empleado->area_id === $area->id;
             });
 
-            $permisos->filter(function ($permiso) use ( $area) {
+            $permisos = $permisos->filter(function ($permiso) use ( $area) {
                 return $permiso->empleado->area_id === $area->id;
             });
         }

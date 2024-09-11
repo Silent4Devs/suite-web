@@ -27,21 +27,21 @@ class GraphAreas extends Component
 
         foreach ($areas as $area) {
 
-            $vacaciones = $vacaciones->filter(function ($vacacion) use ( $area) {
+            $vacacionesArea = $vacaciones->filter(function ($vacacion) use ( $area) {
                 return $vacacion->empleado->area_id === $area->id;
             });
 
-            $dayOff->filter(function ($day) use ( $area) {
+            $dayOffArea = $dayOff->filter(function ($day) use ( $area) {
                 return $day->empleado->area_id === $area->id;
             });
 
-            $permisos->filter(function ($permiso) use ( $area) {
+            $permisosArea = $permisos->filter(function ($permiso) use ( $area) {
                 return $permiso->empleado->area_id === $area->id;
             });
 
-            $area->vacaciones = $vacaciones->count();
-            $area->dayOff = $dayOff->count();
-            $area->permisos = $permisos->count();
+            $area->vacaciones = $vacacionesArea->count();
+            $area->dayOff = $dayOffArea->count();
+            $area->permisos = $permisosArea->count();
 
             $areasCollect->push([
                 'area' => $area->area,

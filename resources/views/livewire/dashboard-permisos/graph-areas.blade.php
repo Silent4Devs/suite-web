@@ -35,9 +35,6 @@
             dataAreas.push([area['area'], area['vacaciones'], area['dayOff'], area['permisos']]);
         });
 
-        console.log(dataAreas);
-
-
         option = {
             legend: {},
             tooltip: {},
