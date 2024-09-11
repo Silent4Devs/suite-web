@@ -45,7 +45,7 @@ class RequisicionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoFalseAll();
 
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
@@ -418,7 +418,7 @@ class RequisicionesController extends Controller
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoTrueAll();
         } else {
             $requisiciones = KatbolRequsicion::getArchivoTrueAll()->where('id_user', $user->id);
@@ -746,7 +746,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -791,7 +791,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->where('firma_jefe', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -834,7 +834,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -876,7 +876,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->whereNotNull('firma_finanzas')->where('firma_compras', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
