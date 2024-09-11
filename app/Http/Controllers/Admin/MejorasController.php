@@ -278,8 +278,6 @@ class MejorasController extends Controller
     {
         $mejoras = Mejoras::where('archivado', true)->get();
 
-        \Artisan::call('optimize:clear');
-
         return view('admin.desk.mejoras.archivo', compact('mejoras'));
     }
 
