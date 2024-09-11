@@ -288,6 +288,8 @@ class RiesgosController extends Controller
 
             \Artisan::call('optimize:clear');
 
+            \Artisan::call('cache:clear');
+
             return response()->json(['success' => true]);
         }
     }
@@ -302,6 +304,8 @@ class RiesgosController extends Controller
     public function recuperarArchivadoRiesgo($id)
     {
         RiesgoIdentificado::where('id', $id)->update(['archivado' => false]);
+
+        \Artisan::call('cache:clear');
 
         return redirect()->route('admin.desk.index');
     }
