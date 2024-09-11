@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
         'general_tabantaj' => \App\Http\Middleware\GeneralTabantaj::class,
         'gestion_contractual' => \App\Http\Middleware\GestionContractual::class,
+        'gestion_financiera' => \App\Http\Middleware\GestionFinancieraMiddleware::class,
         'silent_4_university' => \App\Http\Middleware\Silent4University::class,
         'gestion_talento' => \App\Http\Middleware\GestionTalento::class,
         'gestion_normativa' => \App\Http\Middleware\GestionNormativa::class,
