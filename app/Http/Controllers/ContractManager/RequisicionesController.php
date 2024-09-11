@@ -746,7 +746,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -791,7 +791,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->where('firma_jefe', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -834,7 +834,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -876,7 +876,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->whereNotNull('firma_finanzas')->where('firma_compras', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;

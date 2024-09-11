@@ -445,7 +445,7 @@ class OrdenCompraController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = $user->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null);
             toast('Filtro solicitante aplicado!', 'success');
         } else {
@@ -466,7 +466,7 @@ class OrdenCompraController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = $user->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
 
             $requisiciones = KatbolRequsicion::getOCAll()->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null);
             toast('Filtro finanzas aplicado!', 'success');
@@ -488,7 +488,7 @@ class OrdenCompraController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = $user->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
             $requisiciones = KatbolRequsicion::getOCAll();
         } else {
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'general');
