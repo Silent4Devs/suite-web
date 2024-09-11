@@ -55,6 +55,7 @@ class TablaTareasTimesheet extends Component
 
     public function render()
     {
+
         if ($this->origen == 'tareas') {
             // Eager load projects with their tasks
             $this->proyectos = TimesheetProyecto::getAllWithData();
