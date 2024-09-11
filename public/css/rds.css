@@ -934,10 +934,7 @@ header.mostrar-menu {
 
 
 
-.dark *{
-    background-color: #2E2E2E !important;
-    color: #fff !important;
-}
+
 
 .transparente *{
     opacity: 0.97 !important;

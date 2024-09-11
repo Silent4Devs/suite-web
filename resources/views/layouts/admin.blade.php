@@ -19,8 +19,10 @@
     @vite(['public/css/global/style.css'])
     @vite(['public/css/global/admin.css'])
     @vite(['public/css/rds.css'])
+    @vite(['public/css/global/darkMode.css'])
     <link rel="stylesheet" type="text/css"
         href="{{ asset('css/global/responsive.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}{{ config('app.cssVersion') }}">
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
