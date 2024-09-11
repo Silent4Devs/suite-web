@@ -438,7 +438,7 @@ class RequisicionesController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoFalseAll();
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
