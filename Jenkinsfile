@@ -14,9 +14,9 @@ pipeline {
                             ssh-keygen -f "/root/.ssh/known_hosts" -R $SERVER_IP || true
 
                             # Realiza la conexión SSH y ejecuta los comandos
-                            sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP <<EOF
+                            sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP <<'EOF'
                             cd /var/contenedor/suite-web
-                            sudo git pull
+                            echo $SSH_PASSWORD | sudo -S git pull
                             EOF
                         '''
                     }
