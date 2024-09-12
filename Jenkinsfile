@@ -5,7 +5,7 @@ pipeline {
         stage('Git Pull via SSH') {
             steps {
                 script {
-                    withCredentials([
+                    withCredentials([ 
                         usernamePassword(credentialsId: 'TabantajQa', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD'),
                         string(credentialsId: 'IpQaTabantaj', variable: 'SERVER_IP')
                     ]) {
