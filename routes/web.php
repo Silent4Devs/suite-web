@@ -130,7 +130,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('recursos-humanos/contactos-emergencia-empleados', 'RH\ContactosEmergenciaEmpleadoController');
         Route::resource('recursos-humanos/beneficiarios-empleados', 'RH\BeneficiariosEmpleadoController');
 
-
         // Puestos
         Route::resource('puestos', 'PuestosController');
         Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
@@ -185,6 +184,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('roles', 'RolesController');
 
         // Users
+        // Route::get('users/fetchData', 'UsersController@fetchData')->name('users.fetchData');
         Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
         Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
         Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
@@ -192,6 +192,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
         Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
         Route::resource('users', 'UsersController');
+
+        // Visitantes
+        Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
+        Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
+        Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
+        Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
+        Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
+        Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
+        Route::resource('visitantes', 'VisitantesController');
 
         Route::post('inicioUsuario/estado-disponibilidad', [InicioUsuarioController::class, 'cambiarEstadoDisponibilidad'])->name('estado-disponibilidad');
         Route::post('inicioUsuario/versioniso', [InicioUsuarioController::class, 'updateVersionIso'])->name('inicio-Usuario.updateVersionIso');
@@ -265,25 +274,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('firmas_module/minutas/{id}', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
 
     Route::group(['middleware' => 'primeros.pasos'], function () {
+        Route::group(['middleware' => ['timesheet']], function () {
+            // Timesheet
+            Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
+            Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
+            Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
+            Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
+            Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
+            Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
+            Route::get('timesheet/reporte-aprobador/{id}', 'TimesheetController@reporteAprobador')->name('timesheet-reporte-aprobador');
+            Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
+            Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
+            Route::get('timesheet/aprobados', 'TimesheetController@aprobados')->name('timesheet-aprobados');
+            Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
+            Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+            Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
+            Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
+            Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
+            Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+            Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
+        });
+    });
 
-        // Timesheet
-        Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
-        Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
-        Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
-        Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
-        Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
-        Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
-        Route::get('timesheet/reporte-aprobador/{id}', 'TimesheetController@reporteAprobador')->name('timesheet-reporte-aprobador');
-        Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
-        Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
-        Route::get('timesheet/aprobados', 'TimesheetController@aprobados')->name('timesheet-aprobados');
-        Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
-        Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
-        Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
-        Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
-        Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
-        Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
-        Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
+
+    Route::group(['middleware' => 'primeros.pasos'], function () {
 
         Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
         Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
@@ -1582,29 +1596,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('estatus-plan-trabajos/destroy', 'EstatusPlanTrabajoController@massDestroy')->name('estatus-plan-trabajos.massDestroy');
         Route::resource('estatus-plan-trabajos', 'EstatusPlanTrabajoController');
     });
-
-    Route::group(['middleware' => ['visitantes']], function () {
-        // Visitantes
-        Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
-        Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
-        Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
-        Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
-        Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
-        Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
-        Route::resource('visitantes', 'VisitantesController');
-
-        Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
-            Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
-            Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
-            Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
-            Route::resource('/', RegistroVisitantesController::class);
-            Route::resource('/', MejorasController::class);
-        });
-        // Fin visitantes
-    });
-
     // pasarela de pago
     Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
+});
+
+Route::group(['middleware' => ['visitantes']], function () {
+
+    Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
+    Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
+    Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
+    Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
+    Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
+    Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
+    Route::resource('visitantes', 'VisitantesController');
+
+    Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
+        Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+        Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
+        Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
+        Route::resource('/', RegistroVisitantesController::class);
+        Route::resource('/', MejorasController::class);
+    });
+    // Fin visitantes
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -1772,88 +1785,9 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
             Route::get('cedula/{id_cedula}/historico', 'HistoricoCedulaController@index')->name('cedula.historico');
 
-            //Productos
-            Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
-            Route::post('productos/list/get/archivados', 'ProductoController@getArchivadosIndex')->name('productos.getArchivadosIndex');
-            Route::resource('productos', 'ProductoController');
-            Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
-            Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
-
-            //Sucursales
-            Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
-            Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
-            Route::resource('sucursales', 'SucursalController');
-            Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
-            Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
-
-            //Proveedores
-            Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
-            Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
-            Route::resource('proveedores', 'ProveedoresOController');
-            Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
-            Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
-
-            //Compradores
-            Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
-            Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
-            Route::resource('compradores', 'CompradoresController');
-            Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
-            Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
-            Route::post('compradores/pdf', 'CompradoresController@pdfCompradores')->name('compradores.pdf');
-
-            //Centro Costos
-            Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
-            Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
-            Route::resource('centro-costos', 'CentroCostosController');
-            Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
-            Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
-
             //Reportes
             Route::resource('reportes', 'ReporteRequisicionController');
             Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
-
-            //requisiciones
-            Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-            Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
-            Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
-            Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-            // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
-            // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
-            Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
-            Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
-            Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
-            Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
-            Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
-            Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
-            Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
-            Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
-            Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
-            Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
-            Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
-            Route::get('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
-            Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
-            Route::get('requisiciones/filtrar', 'RequisicionesController@filtrarPorEstado')->name('requisiciones.filtrarPorEstado');
-            Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
-            Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
-            Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
-            Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
-
-            // ordenes de compra
-            Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
-            Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
-            Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
-            Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
-            Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
-            Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
-            Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
-            Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
-            Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
-            Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
-            Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
-            Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
-            Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
-            Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
-            Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
         });
 
         Route::group(['middleware' => ['gestion_financiera']], function () {
@@ -1927,10 +1861,6 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
             Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
             Route::post('compradores/pdf', 'CompradoresController@pdfCompradores')->name('compradores.pdf');
 
-            //Reportes
-            Route::resource('reportes', 'ReporteRequisicionController');
-            Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
-
             //Centro Costos
             Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
             Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
@@ -1944,6 +1874,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
             Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
             Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
             Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
+
+            //Timesheet tambien
         });
     });
 });

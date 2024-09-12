@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\tbApiPanelControlController;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -336,32 +337,41 @@ class UsersController extends Controller
         return view('admin.users.eliminados', compact('usuarios'));
     }
 
-    public function fetchData()
-    {
-        try {
-            // Realiza la solicitud GET a la API externa
-            $response = Http::get('https://66d8dc314ad2f6b8ed52d80a.mockapi.io/example2');
+    // public function fetchData()
+    // {
+    //     try {
+    //         // Realiza la solicitud GET a la API externa
+    //         $response = $this->consultaApi();
 
-            // Verifica si la solicitud fue exitosa
-            if ($response->successful()) {
-                // Procesa los datos si es necesario y devuelve la respuesta
-                $data = $response->json();
-                // Retornar los datos procesados o directamente
-                return $data[0];
-            }
+    //         // Verifica si la solicitud fue exitosa
+    //         if ($response->successful()) {
+    //             // Procesa los datos si es necesario y devuelve la respuesta
+    //             $data = $response->json();
+    //             // Retornar los datos procesados o directamente
+    //             return $data[0];
+    //         }
 
-            // Si la solicitud no fue exitosa, maneja el error
-            return response()->json([
-                'message' => 'Error al obtener los datos de la API externa',
-                'status' => $response->status(),
-                'error' => $response->body(),
-            ], $response->status());
-        } catch (\Exception $e) {
-            // Manejo de excepciones genéricas
-            return response()->json([
-                'message' => 'Hubo un error al intentar conectar con la API externa',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
+    //         // Si la solicitud no fue exitosa, maneja el error
+    //         return response()->json([
+    //             'message' => 'Error al obtener los datos de la API externa',
+    //             'status' => $response->status(),
+    //             'error' => $response->body(),
+    //         ], $response->status());
+    //     } catch (\Exception $e) {
+    //         // Manejo de excepciones genéricas
+    //         return response()->json([
+    //             'message' => 'Hubo un error al intentar conectar con la API externa',
+    //             'error' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
+
+    // public function consultaApi()
+    // {
+    //     $apiController = new tbApiPanelControlController();
+    //     $response = $apiController->getData();
+
+    //     // Procesa la respuesta según sea necesario
+    //     return $response;
+    // }
 }

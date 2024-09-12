@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Silent4University
+class GestorDocumentalMiddleware
 {
     /**
      * Handle an incoming request.

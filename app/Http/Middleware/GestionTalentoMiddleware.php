@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GeneralTabantaj
+class GestionTalentoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,12 +15,6 @@ class GeneralTabantaj
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $estado = true;
-
-        if ($estado) {
-            return $next($request);
-        }
-
-        return redirect()->back()->with('flash_message', 'No tiene permitido accesar a la version historica');
+        return $next($request);
     }
 }

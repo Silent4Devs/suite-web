@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CentroAtencion
+class GestionNormativaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class CentroAtencion
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $estado = true;
+        $estado = false;
 
         if ($estado) {
             return $next($request);
