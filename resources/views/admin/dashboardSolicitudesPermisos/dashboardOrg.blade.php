@@ -7,6 +7,11 @@
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 @endsection
 @section('content')
+    <style>
+        .dataTables_scroll .datatable-historial.dataTable.no-footer {
+            width: 100% !important;
+        }
+    </style>
     {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
 
     <h5 class="titulo_general_funcion">Solicitudes: <span style="font-weight: lighter;">Dashboard</span></h5>
@@ -22,7 +27,7 @@
                             <span>{{ $currentUser->empleado->name }}</span>
                         </div>
                         <div class="img-person" style="width: 80px; height: 80px;">
-                            <img src="" alt="">
+                            <img src="{{ $currentUser->empleado->avatar_ruta }}" alt="{{ $currentUser->empleado->name }}">
                         </div>
                     </div>
                 </div>
@@ -44,7 +49,8 @@
                 </div>
             </div>
         </div>
-        <div class="card card-body text-center justify-content-center" style="max-width: 200px; cursor:pointer;">
+        <div class="card card-body text-center justify-content-center" style="max-width: 200px; cursor:pointer;"
+            onclick="window.print();">
             <strong>Reporte</strong>
             <i class="material-symbols-outlined" style="font-size: 60px; color:#006DDB;">print</i>
         </div>
@@ -115,8 +121,14 @@
                             {{ $permisoMounth->count() }}
                         @else
                             @php
-                                $permisoMounth = $permisoMounth->filter(function ($permiso) use ($areaSeleccionada) {
-                                    return $permiso->empleado->area_id === $areaSeleccionada;
+                                $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) {
+                                    return $vacation->aprobacion === 3;
+                                });
+                                $dayOffMounth = $dayOffMounth->filter(function ($dayOff) {
+                                    return $dayOff->aprobacion === 3;
+                                });
+                                $permisoMounth = $permisoMounth->filter(function ($permiso) {
+                                    return $permiso->aprobacion === 3;
                                 });
                             @endphp
                             {{ $permisoMounth->count() }}
@@ -136,7 +148,15 @@
                     </span>
                 </div>
                 <span>
-                    <strong>0</strong>
+                    <strong>
+
+                        @php
+                            $permisoMounth = $permisoMounth->filter(function ($permiso) {
+                                return $permiso->aprobacion === 3;
+                            });
+                        @endphp
+                        {{ $permisoMounth->count() }}
+                    </strong>
                 </span>
             </div>
         </div>
@@ -213,7 +233,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($vacacionesMounth as $vacTable)
+                    @foreach ($vacaciones as $vacTable)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
@@ -235,7 +255,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @foreach ($dayOffMounth as $vacTable)
+                    @foreach ($dayOff as $dayTable)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
@@ -247,7 +267,7 @@
                                 </div>
                             </td>
                             <td>
-                                Vacaciones
+                                DayOff
                             </td>
                             <td>
                                 {{ $dayTable->fecha_inicio }}
@@ -257,7 +277,7 @@
                             </td>
                         </tr>
                     @endforeach
-                    @foreach ($permisoMounth as $dayTable)
+                    @foreach ($permisos as $permisoTable)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
@@ -265,17 +285,17 @@
                                         <img src="" alt="">
                                     </div>
 
-                                    <span>{{ $dayTable->name }}</span>
+                                    <span>{{ $permisoTable->name }}</span>
                                 </div>
                             </td>
                             <td>
-                                Vacaciones
+                                Permiso
                             </td>
                             <td>
-                                {{ $dayTable->fecha_inicio }}
+                                {{ $permisoTable->fecha_inicio }}
                             </td>
                             <td>
-                                {{ $dayTable->fecha_fin }}
+                                {{ $permisoTable->fecha_fin }}
                             </td>
                         </tr>
                     @endforeach
@@ -284,14 +304,14 @@
         </div>
     </div>
 
-    @livewire('dashboard-permisos.graph-areas', ['user' => 'd'])
+    @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
 
     <div class="row">
         <div class="col-md-6">
-            @livewire('dashboard-permisos.graph-dona', ['user' => 'd'])
+            @livewire('dashboard-permisos.graph-dona', ['areaSeleccionada' => $areaSeleccionada])
         </div>
         <div class="col-md-6">
-            @livewire('dashboard-permisos.graph-types', ['user' => 'd'])
+            @livewire('dashboard-permisos.graph-types', ['areaSeleccionada' => $areaSeleccionada])
         </div>
     </div>
 @endsection
@@ -308,27 +328,73 @@
             themeVariant: 'light', // Variante del tema: claro
         });
 
+        let dataVacaciones = [];
+        let vacacionesEvents = @json($vacacionesEvents);
+        vacacionesEvents.forEach(vacacion => {
+            dataVacaciones.push({
+                title: vacacion['title'],
+                start: new Date(
+                    vacacion['inicio']['año'],
+                    vacacion['inicio']['mes'],
+                    vacacion['inicio']['dia'],
+                ),
+                end: new Date(
+                    vacacion['fin']['año'],
+                    vacacion['fin']['mes'],
+                    vacacion['fin']['dia'],
+                ),
+                color: vacacion['color'],
+            });
+        });
+
+        let dataDayOff = [];
+        let dayOffEvents = @json($dayOffEvents);
+        dayOffEvents.forEach(day => {
+            dataDayOff.push({
+                title: day['title'],
+                start: new Date(
+                    day['inicio']['año'],
+                    day['inicio']['mes'],
+                    day['inicio']['dia'],
+                ),
+                end: new Date(
+                    day['fin']['año'],
+                    day['fin']['mes'],
+                    day['fin']['dia'],
+                ),
+                color: day['color'],
+            });
+        });
+
+        let dataPermisos = [];
+
+        let permisosEvents = @json($permisosEvents);
+        permisosEvents.forEach(permiso => {
+            dataPermisos.push({
+                title: permiso['title'],
+                start: new Date(
+                    permiso['inicio']['año'],
+                    permiso['inicio']['mes'],
+                    permiso['inicio']['dia'],
+                ),
+                end: new Date(
+                    permiso['fin']['año'],
+                    permiso['fin']['mes'],
+                    permiso['fin']['dia'],
+                ),
+                color: permiso['color'],
+            });
+        });
+
+        console.log(dataPermisos);
+
         var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
             view: {
                 agenda: {
                     type: 'day'
                 },
             },
-            data: [ // Aquí defines tus propios eventos
-                {
-                    start: new Date(2024, 8, 3, 9, 0), // Evento el 3 de septiembre de 2024 a las 9:00 AM
-                    end: new Date(2024, 8, 3, 10, 0), // Termina a las 10:00 AM
-                    title: 'Reunión de equipo',
-                    color: '#ff0000', // Color rojo
-                },
-                {
-                    start: new Date(2024, 8, 3, 11, 0), // Otro evento el mismo día a las 11:00 AM
-                    end: new Date(2024, 8, 3, 12, 0), // Termina a las 12:00 PM
-                    title: 'Llamada con cliente',
-                    color: '#00ff00', // Color verde
-                },
-                // Añade más eventos aquí
-            ],
+            data: dataVacaciones.concat(dataDayOff).concat(dataPermisos),
             onEventClick: function(args) {
                 mobiscroll.toast({
                     message: args.event.title,
