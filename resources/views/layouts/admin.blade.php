@@ -83,19 +83,19 @@
     </div>
     @php
 
-        use App\Models\Organizacion;
-        use App\Models\User;
-        use App\Models\Empleado;
-        $usuario = User::getCurrentUser();
-        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
-        $organizacion = Organizacion::getLogo();
-        if (!is_null($organizacion)) {
-            $logotipo = $organizacion->logotipo;
-        } else {
-            $logotipo = 'logotipo-tabantaj.png';
-        }
+    use App\Models\Organizacion;
+    use App\Models\User;
+    use App\Models\Empleado;
+    $usuario = User::getCurrentUser();
+    $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+    $organizacion = Organizacion::getLogo();
+    if (!is_null($organizacion)) {
+    $logotipo = $organizacion->logotipo;
+    } else {
+    $logotipo = 'logotipo-tabantaj.png';
+    }
 
-        $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
+    $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
     @endphp
 
     @include('partials.header')
@@ -112,22 +112,22 @@
                 <div class="container-fluid" id="app">
 
                     @if (session('message'))
-                        <div class="mb-2 row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                            </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                         </div>
+                    </div>
                 </div>
                 @endif
                 <div id="errores_generales_admin_quitar_recursos">
                     @if ($errors->count() > 0)
-                        <div class="alert alert-danger">
-                            <ul class="list-unstyled">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
                 </div>
                 @yield('content')
@@ -246,6 +246,15 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
+    <!-- CSS de Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- JS de Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
@@ -254,8 +263,7 @@
     </script>
     <!-- termina sección de script -->
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    
+
     <script async>
         document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
@@ -307,10 +315,12 @@
 
     {{-- daterangepicker --}}
     <script defer>
-        @if ($usuario->empleado)
-            window.NotificationUser = {!! json_encode(['user' => auth()->check() ? $usuario->empleado->id : null]) !!};
+        @if($usuario -> empleado)
+        window.NotificationUser = {
+            !!json_encode(['user' => auth() - > check() ? $usuario - > empleado - > id : null]) !!
+        };
         @else
-            window.NotificationUser = 1
+        window.NotificationUser = 1
         @endif
     </script>
 
@@ -348,14 +358,22 @@
 
     <script>
         $(function() {
-            let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
-            let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
-            let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
-            let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
-            let printButtonTrans = '{{ trans('global.datatables.print') }}'
-            let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
-            let selectAllButtonTrans = '{{ trans('global.select_all') }}'
-            let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
+            let copyButtonTrans = '{{ trans('
+            global.datatables.copy ') }}'
+            let csvButtonTrans = '{{ trans('
+            global.datatables.csv ') }}'
+            let excelButtonTrans = '{{ trans('
+            global.datatables.excel ') }}'
+            let pdfButtonTrans = '{{ trans('
+            global.datatables.pdf ') }}'
+            let printButtonTrans = '{{ trans('
+            global.datatables.print ') }}'
+            let colvisButtonTrans = '{{ trans('
+            global.datatables.colvis ') }}'
+            let selectAllButtonTrans = '{{ trans('
+            global.select_all ') }}'
+            let selectNoneButtonTrans = '{{ trans('
+            global.deselect_all ') }}'
 
             let languages = {
                 //'es': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
@@ -664,7 +682,7 @@
             let cambiar = isChecked ? 1 : 2;
 
             $.ajax({
-                url: '{{ route('admin.estado-disponibilidad') }}',
+                url: "{{ route('admin.estado-disponibilidad') }}",
                 type: 'POST', // Change the request method to POST
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
