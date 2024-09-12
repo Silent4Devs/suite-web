@@ -313,7 +313,7 @@
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarRiesgo("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
+                                    html += `<button class="" onclick='ArchivarRiesgo("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 
@@ -342,34 +342,26 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-
                             type: "post",
-
                             url: url,
-
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
-
                             dataType: "json",
-
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_riesgos_desk.ajax.reload();
+                                    tabla_riesgos_desk.ajax.reload(null,false);
                                     Swal.fire(
                                         'Riesgo Archivado',
                                         '',
                                         'success'
-                                    )
+                                    );
                                 }
-
                             }
-
                         });
-
                     }
-                })
+                });
             }
 
             let botones_archivar = document.querySelectorAll('.archivar');
