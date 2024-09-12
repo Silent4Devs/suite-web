@@ -6,7 +6,6 @@
         </div>
         <div id="chart-container-solicitudes-areas" style="width: 100%; height: 300px;"></div>
     </div>
-
     <script>
         var dom = document.getElementById('chart-container-solicitudes-areas');
         var myChart = echarts.init(dom, null, {
@@ -17,24 +16,30 @@
 
         var option;
 
+        let dataAreas = [
+            ['', 'Vacaciones', 'Day Off', 'Permisos'],
+            // ['Dearrollo', 43.3, 85.8, 93.7],
+            // ['Innovación', 83.1, 73.4, 55.1],
+            // ['Soporte', 86.4, 65.2, 82.5],
+            // ['Marketing', 72.4, 53.9, 39.1],
+            // ['Ciberinteligencia', 72.4, 53.9, 39.1],
+            // ['Contabilida', 72.4, 53.9, 39.1],
+            // ['Dearrollo', 72.4, 53.9, 39.1],
+            // ['Innovación', 72.4, 53.9, 39.1],
+            // ['SOC/NOC', 72.4, 53.9, 39.1],
+            // ['Ciberinteligencia', 72.4, 53.9, 39.1],
+            // ['Soporte', 72.4, 53.9, 39.1],
+        ];
+        let areasDataBase = @json($areasCollect);
+        areasDataBase.forEach(area => {
+            dataAreas.push([area['area'], area['vacaciones'], area['dayOff'], area['permisos']]);
+        });
+
         option = {
             legend: {},
             tooltip: {},
             dataset: {
-                source: [
-                    ['', 'Vacaciones', 'Day Off', 'Permisos'],
-                    ['Dearrollo', 43.3, 85.8, 93.7],
-                    ['Innovación', 83.1, 73.4, 55.1],
-                    ['Soporte', 86.4, 65.2, 82.5],
-                    ['Marketing', 72.4, 53.9, 39.1],
-                    ['Ciberinteligencia', 72.4, 53.9, 39.1],
-                    ['Contabilida', 72.4, 53.9, 39.1],
-                    ['Dearrollo', 72.4, 53.9, 39.1],
-                    ['Innovación', 72.4, 53.9, 39.1],
-                    ['SOC/NOC', 72.4, 53.9, 39.1],
-                    ['Ciberinteligencia', 72.4, 53.9, 39.1],
-                    ['Soporte', 72.4, 53.9, 39.1],
-                ]
+                source: dataAreas,
             },
             xAxis: {
                 type: 'category'
