@@ -10,7 +10,14 @@ pipeline {
                         string(credentialsId: 'IpQaTabantaj', variable: 'SERVER_IP')
                     ]) {
                         sh '''
-                            echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
+                            # Elimina la clave antigua del archivo known_hosts
+                            ssh-keygen -f "/root/.ssh/known_hosts" -R $SERVER_IP || true
+
+                            # Realiza la conexión SSH y ejecuta los comandos
+                            sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP <<EOF
+                            cd /var/contenedor/suite-web
+                            sudo git pull
+                            EOF
                         '''
                     }
                 }
