@@ -67,6 +67,7 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($vacacion->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $vacacion->empleado->avatar_ruta,
             ]);
         }
 
@@ -84,6 +85,7 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($day->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $day->empleado->avatar_ruta,
             ]);
         }
 
@@ -101,6 +103,7 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($permiso->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $permiso->empleado->avatar_ruta,
             ]);
         }
 
@@ -110,6 +113,6 @@ class DashboardPermisosController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', '', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents'));
+        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', 'permisos', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents'));
     }
 }

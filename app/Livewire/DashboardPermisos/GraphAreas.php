@@ -7,19 +7,32 @@ use App\Models\Area;
 use App\Models\SolicitudVacaciones;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
+use Carbon\Carbon;
 
 class GraphAreas extends Component
 {
-
     public $areaSeleccionada;
+    public $mes_año;
 
+    function mounth($areaSeleccionada) {
+        $this->areaSeleccionada = $areaSeleccionada;
+    }
 
+    function updatedMesAño($value) {
+        $this->mes_año = $value;
+    }
 
     public function render()
     {
-        $vacaciones = SolicitudVacaciones::get();
-        $dayOff = SolicitudDayOff::get();
-        $permisos = SolicitudPermisoGoceSueldo::get();
+        if ($this->mes_año) {
+            $mes_año = Carbon::parse($this->mes_año);
+        }else{
+            $mes_año = Carbon::now();
+        }
+
+        $vacaciones = SolicitudVacaciones::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
+        $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
+        $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
 
         $areas = Area::get();
 
@@ -50,6 +63,8 @@ class GraphAreas extends Component
                 'permisos' => $area->permisos,
             ]);
         }
+
+        $this->dispatch('renderScripts');
 
         return view('livewire.dashboard-permisos.graph-areas', compact('areasCollect'));
     }
