@@ -21,7 +21,6 @@ class TimesheetProyecto extends Model implements Auditable
     protected $appends = ['areas'];
 
     protected $fillable = [
-        'id',
         'proyecto',
         'cliente_id',
         'estatus',
