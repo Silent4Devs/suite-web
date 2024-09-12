@@ -227,8 +227,6 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-
-    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -259,7 +257,7 @@
     @endcan
 
     <div class="row d-flex align-items-center">
-        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión   Saul</h5>
+        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
