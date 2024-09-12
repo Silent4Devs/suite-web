@@ -254,7 +254,8 @@
     </script>
     <!-- termina sección de script -->
 
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    
     <script async>
         document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
