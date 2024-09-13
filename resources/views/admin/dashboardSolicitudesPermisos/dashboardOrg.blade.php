@@ -391,6 +391,8 @@
     </div>
 @endsection
 
+
+
 @section('scripts')
     @parent
     <script>
@@ -411,14 +413,11 @@
                 dataVacaciones.push({
                     name: vacacion['title'],
                     image: vacacion['empleado_img'],
-                    startDate: vacacion['inicio']['año'] + '-' + (parseInt(vacacion['inicio'][
-                        'mes'
-                    ]) + 2).toString().padStart(2, '0') + '-' + vacacion['inicio'][
-                        'dia'
-                    ].toString().padStart(2, '0'),
-                    endDate: vacacion['fin']['año'] + '-' + (parseInt(vacacion['fin']['mes']) + 2)
-                        .toString().padStart(2, '0') + '-' + vacacion['fin']['dia'].toString()
-                        .padStart(2, '0')
+                    startDate: vacacion['inicio']['año'] + '-' + vacacion['inicio']['mes'] + '-' +
+                        vacacion[
+                            'inicio']['dia'],
+                    endDate: vacacion['fin']['año'] + '-' + vacacion['fin']['mes'] + '-' + vacacion[
+                        'fin']['dia'],
                 });
             });
 
@@ -427,11 +426,10 @@
                 dataDayOff.push({
                     name: day['title'],
                     image: day['empleado_img'],
-                    startDate: day['inicio']['año'] + '-' + (parseInt(day['inicio']['mes']) + 2)
-                        .toString().padStart(2, '0') + '-' + day['inicio']['dia'].toString()
-                        .padStart(2, '0'),
-                    endDate: day['fin']['año'] + '-' + (parseInt(day['fin']['mes']) + 2).toString()
-                        .padStart(2, '0') + '-' + day['fin']['dia'].toString().padStart(2, '0')
+                    startDate: day['inicio']['año'] + '-' + day['inicio']['mes'] + '-' + day[
+                        'inicio']['dia'],
+                    endDate: day['fin']['año'] + '-' + day['fin']['mes'] + '-' + day[
+                        'fin']['dia'],
                 });
             });
 
@@ -440,14 +438,11 @@
                 dataPermisos.push({
                     name: permiso['title'],
                     image: permiso['empleado_img'],
-                    startDate: permiso['inicio']['año'] + '-' + (parseInt(permiso['inicio'][
-                        'mes'
-                    ]) + 2).toString().padStart(2, '0') + '-' + permiso['inicio'][
-                        'dia'
-                    ].toString().padStart(2, '0'),
-                    endDate: permiso['fin']['año'] + '-' + (parseInt(permiso['fin']['mes']) + 2)
-                        .toString().padStart(2, '0') + '-' + permiso['fin']['dia'].toString()
-                        .padStart(2, '0')
+                    startDate: permiso['inicio']['año'] + '-' + permiso['inicio']['mes'] + '-' +
+                        permiso[
+                            'inicio']['dia'],
+                    endDate: permiso['fin']['año'] + '-' + permiso['fin']['mes'] + '-' + permiso[
+                        'fin']['dia'],
                 });
             });
 
@@ -564,14 +559,8 @@
                 const day = new Date(dayKey);
                 const startDate = new Date(event.startDate);
                 const endDate = new Date(event.endDate);
-
-                // Restar 1 al mes porque JavaScript cuenta los meses desde 0
-                startDate.setMonth(startDate.getMonth() - 1);
-                endDate.setMonth(endDate.getMonth() - 1);
-
                 return day >= startDate && day <= endDate;
             }
-
 
             function showEventModal(day, eventPeople) {
                 document.getElementById("modalDay").textContent = day;
@@ -582,7 +571,7 @@
                     const listItem = document.createElement("li");
                     listItem.classList.add("d-flex", "align-items-center", "mb-2");
                     listItem.innerHTML =
-                        `<div class="img-person"><img src="${person.image}" alt="${person.name}"></div> <span class="ml-3">${person.name}</span>`;
+                        `<img src="${person.image}" alt="${person.name}"> <span>${person.name}</span>`;
                     eventList.appendChild(listItem);
                 });
 
@@ -744,7 +733,20 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
                         orthogonal: "empleadoText"
-                        '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
+                    className: "btn-sm rounded pr-2",
+                    titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
                 <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
                     <div class="col-2 p-2" style="border-right: 2px solid #ccc">
@@ -761,8 +763,8 @@
                 `);
 
                         $(doc.document.body).find('table')
-                        .css('font-size', '12px')
-                        .css('margin-top', '15px')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
                         // .css('margin-bottom', '60px')
                         $(doc.document.body).find('th').each(function(index) {
                             $(this).css('font-size', '18px');
