@@ -78,9 +78,11 @@
     </table>
 </div>
 
+
+
+
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 

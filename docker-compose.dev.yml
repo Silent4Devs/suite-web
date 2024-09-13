@@ -31,6 +31,32 @@ services:
   #   networks:
   #     - tabantajnetwork
 
+  php:
+    #uncomment this if you will use only docker compose
+    build:
+      context: "."
+      dockerfile: Dockerfile.prod
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
+    #uncomment this if you will use only docker compose
+    #image: johnvo95/tabantaj_php-tabantaj:latest
+    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
+    container_name: php-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/app
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - 80:8000
+      - 443:443
+      - 443:443/udp
+    networks:
+      - tabantajnetwork
+
   postgres-tabantaj:
     image: postgres:16-alpine
     container_name: postgres-tabantaj
@@ -50,36 +76,11 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  php:
-    #uncomment this if you will use only docker compose
-    build:
-      context: "."
-      dockerfile: Dockerfile
-    #     # target: php-production  # Specify the target build stage if applicable
-    #     # args:
-    #     # - BUILD_ENV=production  # Pass any necessary build arguments
-    # #container_name: php-tabantaj
-    #uncomment this if you will use only docker compose
-    #image: johnvo95/tabantaj_php-tabantaj:latest
-    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=250
-    container_name: php-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/app
-      - caddy_data:/data
-      - caddy_config:/config
-    ports:
-      - 80:8000
-      - 443:443
-      - 443:443/udp
-    networks:
-      - tabantajnetwork
 
   queue-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - .:/app
     command: php artisan queue:work --tries=3
@@ -96,7 +97,7 @@ services:
   schedule-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
@@ -153,17 +154,17 @@ services:
     # networks:
     #   - tabantajnetwork
 
-  reportservice:
-    image: ghcr.io/silent4devs/reportservice:latest
-    container_name: reportservice
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3301:3301"
-    volumes:
-      - reportservice_data:/reportservice
-    networks:
-      - tabantajnetwork
+  # reportservice:
+  #   image: ghcr.io/silent4devs/reportservice:latest
+  #   container_name: reportservice
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3301:3301"
+  #   volumes:
+  #     - reportservice_data:/reportservice
+  #   networks:
+  #     - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 
@@ -174,12 +175,12 @@ volumes:
     driver: local
   caddy_config:
     driver: local
-  # rabbitmq_data:
-  #   driver: local
+  rabbitmq_data:
+    driver: local
   # pgadmin-data:
   #   driver: local
-  # goservices_data:
-  #   driver: local
+  goservices_data:
+    driver: local
   # elasticsearch:
   #   driver: local
   # elasticsearch-logs:

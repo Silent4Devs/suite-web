@@ -77,7 +77,6 @@
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -300,7 +299,7 @@
 
                 window.Archivar = function(url) {
                     Swal.fire({
-                        title: '¿Archivar incidente?',
+                        title: '¿Archivar Sugerencia?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

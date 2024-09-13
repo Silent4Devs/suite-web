@@ -999,7 +999,7 @@ table.dataTable tr th {
 .line-active-nav {
     width: 0px;
     height: 1px;
-    background-color: var(--color-tbj);
+    /* background-color: #3086AF; */
     position: absolute;
     transition: 0.4s;
 }

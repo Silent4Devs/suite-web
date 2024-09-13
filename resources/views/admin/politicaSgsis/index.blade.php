@@ -227,8 +227,6 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-
-    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -420,6 +418,7 @@
 @endsection
 @section('scripts')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script>
         $(function() {

@@ -176,7 +176,10 @@ class SugerenciasController extends Controller
 
         $organizacion = Organizacion::first();
 
-        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+        
+
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->estatus === 'cerrado' ? Carbon::now()->format('Y-m-d H:i:s') : null);
+
         $sugerencias->update([
             'area_sugerencias' => $request->area_sugerencias,
             'proceso_sugerencias' => $request->proceso_sugerencias,

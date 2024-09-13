@@ -90,14 +90,36 @@ class PoliticaSgsiController extends Controller
         $rfc = $organizacion_actual->rfc;
         $listavacia = 'baja';
 
-        return view('admin.politicaSgsis.index', compact(
-            'politicaSgsis',
-            'logo_actual',
-            'empresa_actual',
-            'direccion',
-            'rfc',
-            'listavacia',
-        ));
+        $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+
+        if (!isset($modulo)  ||  $modulo->participantes->isEmpty()) {
+            $listavacia = 'vacia';
+
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
+
+        } else {
+
+            $listavacia = 'cumple';
+            
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
+        }
+
     }
 
     public function create()
