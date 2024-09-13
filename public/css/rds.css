@@ -934,17 +934,11 @@ header.mostrar-menu {
 
 
 
-.dark *{
-    background-color: #2E2E2E !important;
-    color: #fff !important;
-}
+
 
 .transparente *{
     opacity: 0.97 !important;
 }
 .transparente{
     background-color: #4ab5db !important;
-}
-*{
-    transition: 0.2s;
 }
