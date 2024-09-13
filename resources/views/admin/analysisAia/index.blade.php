@@ -197,7 +197,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Cuestinoario',
-                url: "{{ route('admin.analysisAia.create') }}",
+                url: "{{ route('admin.analisis-aia.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
                     let {
@@ -238,7 +238,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
-                    url: "{{ route('admin.analysisAia.massDestroy') }}",
+                    url: "{{ route('admin.analisis-aia.massDestroy') }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -279,7 +279,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.analysisAia.index') }}",
+                ajax: "{{ route('admin.analisis-aia.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
