@@ -42,6 +42,7 @@ class CoursesCurriculum extends Component
 
     public function store()
     {
+        // dump($this->course->sections);
         // dd($this->course);
         $count = Section::where('course_id', '=', $this->course->id)->count();
         // dd($count);
@@ -67,8 +68,10 @@ class CoursesCurriculum extends Component
         // ]);
 
         // $this->reset('name');
-        $this->course = Course::getAll()->find($this->course->id);
+        // dd(Course::getAll()->find($this->course->id));
+        $this->course = Course::find($this->course->id);
         $this->render_alerta('success', 'Registro añadido exitosamente');
+        // dd($this->course->sections);
     }
 
     public function edit(Section $section)
@@ -89,8 +92,9 @@ class CoursesCurriculum extends Component
 
     public function destroy(Section $section)
     {
+        // dump($section);
         $section->delete();
-        $this->course = Course::getAll()->find($this->course->id);
+        $this->course = Course::find($this->course->id);
         $this->render_alerta('success', 'Registro eliminado exitosamente');
     }
 
