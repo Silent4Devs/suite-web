@@ -18,12 +18,14 @@ class DashboardPermisosController extends Controller
     public function dashboardOrg($id)
     {
         $currentUser = User::getCurrentUser();
-        $hoy = Carbon::now();
-        $inicioMes = Carbon::now()->subMonth();
 
-        $vacacionesMounth = SolicitudVacaciones::where('fecha_inicio', '>=', $inicioMes)->where('fecha_fin', '<=', $hoy)->get();
-        $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicioMes)->where('fecha_fin', '<=', $hoy)->get();
-        $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicioMes)->where('fecha_fin', '<=', $hoy)->get();
+        $mes_año = Carbon::now();  // Puedes reemplazar esto con el mes que desees
+        $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
+        $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
+
+        $vacacionesMounth = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
 
         $vacaciones = SolicitudVacaciones::where('aprobacion', 3)->get();
         $dayOff = SolicitudDayOff::where('aprobacion', 3)->get();
@@ -62,11 +64,12 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($vacacion->fecha_inicio)->format('Y'),
                 ],
                 'fin' => [
-                    'mes' => Carbon::parse($vacacion->fecha_fin)->format('m'),
                     'dia' => Carbon::parse($vacacion->fecha_fin)->format('d'),
+                    'mes' => Carbon::parse($vacacion->fecha_fin)->format('m'),
                     'año' => Carbon::parse($vacacion->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $vacacion->empleado->avatar_ruta,
             ]);
         }
 
@@ -79,11 +82,12 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($day->fecha_inicio)->format('Y'),
                 ],
                 'fin' => [
-                    'mes' => Carbon::parse($day->fecha_fin)->format('m'),
                     'dia' => Carbon::parse($day->fecha_fin)->format('d'),
+                    'mes' => Carbon::parse($day->fecha_fin)->format('m'),
                     'año' => Carbon::parse($day->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $day->empleado->avatar_ruta,
             ]);
         }
 
@@ -101,6 +105,7 @@ class DashboardPermisosController extends Controller
                     'año' => Carbon::parse($permiso->fecha_fin)->format('Y'),
                 ],
                 'color' => '#428BEC',
+                'empleado_img' => $permiso->empleado->avatar_ruta,
             ]);
         }
 
@@ -110,6 +115,6 @@ class DashboardPermisosController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', '', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents'));
+        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', 'permisos', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents'));
     }
 }

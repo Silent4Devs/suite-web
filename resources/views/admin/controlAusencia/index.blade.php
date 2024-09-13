@@ -131,6 +131,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('dashboard_solicitudes_directivo')
+                            <li>
+                                <a href="{{ route('admin.dashboardPermisos.dashboardOrg') }}/all">
+                                    <div>
+                                        <i class="bi bi-bar-chart-line-fill"></i><br>
+                                        Dashboard Solicitudes
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
 
                 </div>

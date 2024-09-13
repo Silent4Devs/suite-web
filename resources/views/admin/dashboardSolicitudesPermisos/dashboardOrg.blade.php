@@ -21,7 +21,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center justify-content-between gap-1 mr-5">
-                        <span style="font-size: 25px;">Directivo</span>
+                        <span style="font-size: 25px;" class="text-center">
+                            @can('dashboard_solicitudes_directivo')
+                                Directivo
+                            @else
+                                Líder
+                            @endcan
+                        </span>
                         <div>
                             <strong>Nombre del colaborador</strong> <br>
                             <span>{{ $currentUser->empleado->name }}</span>
@@ -31,26 +37,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <hr class="line-vertical" style="height: 100%;">
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="">Área</label>
-                        <select name="area" id="area" class="form-control" onchange="redirectToPage()">
-                            <option value="all">Todas las Áreas</option>
-                            @foreach ($areasToSelect as $area)
-                                <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
-                                    {{ $area->area }}
-                                </option>
-                            @endforeach
-                        </select>
+                @can('dashboard_solicitudes_directivo')
+                    <div class="col-md-1">
+                        <hr class="line-vertical" style="height: 100%;">
                     </div>
-                </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Área</label>
+                            <select name="area" id="area" class="form-control" onchange="redirectToPage()">
+                                <option value="all">Todas las Áreas</option>
+                                @foreach ($areasToSelect as $area)
+                                    <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
+                                        {{ $area->area }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endcan
             </div>
         </div>
-        <div class="card card-body text-center justify-content-center" style="max-width: 200px; cursor:pointer;"
-            onclick="window.print();">
+        <div class="card card-body text-center justify-content-center btn-reporte-print"
+            style="max-width: 200px; cursor:pointer;" onclick="window.print();">
             <strong>Reporte</strong>
             <i class="material-symbols-outlined" style="font-size: 60px; color:#006DDB;">print</i>
         </div>
@@ -121,14 +129,8 @@
                             {{ $permisoMounth->count() }}
                         @else
                             @php
-                                $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) {
-                                    return $vacation->aprobacion === 3;
-                                });
-                                $dayOffMounth = $dayOffMounth->filter(function ($dayOff) {
-                                    return $dayOff->aprobacion === 3;
-                                });
-                                $permisoMounth = $permisoMounth->filter(function ($permiso) {
-                                    return $permiso->aprobacion === 3;
+                                $permisoMounth = $permisoMounth->filter(function ($permiso) use ($areaSeleccionada) {
+                                    return $permiso->empleado->area_id === $areaSeleccionada;
                                 });
                             @endphp
                             {{ $permisoMounth->count() }}
@@ -151,11 +153,17 @@
                     <strong>
 
                         @php
-                            $permisoMounth = $permisoMounth->filter(function ($permiso) {
+                            $vacacionesMounthAprobadas = $vacacionesMounth->filter(function ($vacation) {
+                                return $vacation->aprobacion === 3;
+                            });
+                            $dayOffMounthAprobadas = $dayOffMounth->filter(function ($dayOff) {
+                                return $dayOff->aprobacion === 3;
+                            });
+                            $permisoMounthAprobadas = $permisoMounth->filter(function ($permiso) {
                                 return $permiso->aprobacion === 3;
                             });
                         @endphp
-                        {{ $permisoMounth->count() }}
+                        {{ $vacacionesMounthAprobadas->count() + $dayOffMounthAprobadas->count() + $permisoMounthAprobadas->count() }}
                     </strong>
                 </span>
             </div>
@@ -169,7 +177,20 @@
                     </span>
                 </div>
                 <span>
-                    <strong>0</strong>
+                    <strong>
+                        @php
+                            $vacacionesMounthPendientes = $vacacionesMounth->filter(function ($vacation) {
+                                return $vacation->aprobacion === 1;
+                            });
+                            $dayOffMounthPendientes = $dayOffMounth->filter(function ($dayOff) {
+                                return $dayOff->aprobacion === 1;
+                            });
+                            $permisoMounthPendientes = $permisoMounth->filter(function ($permiso) {
+                                return $permiso->aprobacion === 1;
+                            });
+                        @endphp
+                        {{ $vacacionesMounthPendientes->count() + $dayOffMounthPendientes->count() + $permisoMounthPendientes->count() }}
+                    </strong>
                 </span>
             </div>
         </div>
@@ -182,7 +203,20 @@
                     </span>
                 </div>
                 <span>
-                    <strong>0</strong>
+                    <strong>
+                        @php
+                            $vacacionesMounthRechazadas = $vacacionesMounth->filter(function ($vacation) {
+                                return $vacation->aprobacion === 2;
+                            });
+                            $dayOffMounthRechazadas = $dayOffMounth->filter(function ($dayOff) {
+                                return $dayOff->aprobacion === 2;
+                            });
+                            $permisoMounthRechazadas = $permisoMounth->filter(function ($permiso) {
+                                return $permiso->aprobacion === 2;
+                            });
+                        @endphp
+                        {{ $vacacionesMounthRechazadas->count() + $dayOffMounthRechazadas->count() + $permisoMounthRechazadas->count() }}
+                    </strong>
                 </span>
             </div>
         </div>
@@ -192,19 +226,55 @@
         <div class="col-md-6">
 
             <div class="card card-body">
-                <div class="calendar calendar-first" id="calendar_first" style="">
-                    <div class="calendar_header">
-                        <h2></h2>
-                        <button class="switch-month switch-left btn">
-                            <i class="fa fa-chevron-left"></i>
-                        </button>
-                        <button class="switch-month switch-right btn">
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
+
+                <div class="container">
+                    <div class="calendar">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <button id="prevMonth" class="btn">
+                                <i class="material-symbols-outlined">arrow_back_ios</i>
+                            </button>
+                            <h3 id="monthYear"></h3>
+                            <button id="nextMonth" class="btn">
+                                <i class="material-symbols-outlined">arrow_forward_ios</i>
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Lun</th>
+                                        <th>Mar</th>
+                                        <th>Mié</th>
+                                        <th>Jue</th>
+                                        <th>Vie</th>
+                                        <th>Sáb</th>
+                                        <th>Dom</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calendarDays"></tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="calendar_weekdays"></div>
-                    <div class="calendar_content"></div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eventModalLabel">Personas en el día <span id="modalDay"></span>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul id="eventList" class="list-unstyled"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -238,20 +308,21 @@
                             <td>
                                 <div class="d-flex align-items-center gap-4">
                                     <div class="img-person">
-                                        <img src="" alt="">
+                                        <img src="{{ $vacTable->empleado->avatar_ruta }}"
+                                            alt="{{ $vacTable->empleado->name }}">
                                     </div>
 
-                                    <span>{{ $vacTable->name }}</span>
+                                    <span>{{ $vacTable->empleado->name }}</span>
                                 </div>
                             </td>
                             <td>
                                 Vacaciones
                             </td>
                             <td>
-                                {{ $vacTable->fecha_inicio }}
+                                {{ Carbon\Carbon::parse($vacTable->fecha_inicio)->format('d/m/Y') }}
                             </td>
                             <td>
-                                {{ $vacTable->fecha_fin }}
+                                {{ Carbon\Carbon::parse($vacTable->fecha_fin)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @endforeach
@@ -260,20 +331,21 @@
                             <td>
                                 <div class="d-flex align-items-center gap-4">
                                     <div class="img-person">
-                                        <img src="" alt="">
+                                        <img src="{{ $dayTable->empleado->avatar_ruta }}"
+                                            alt="{{ $dayTable->empleado->name }}">
                                     </div>
 
-                                    <span>{{ $dayTable->name }}</span>
+                                    <span>{{ $dayTable->empleado->name }}</span>
                                 </div>
                             </td>
                             <td>
                                 DayOff
                             </td>
                             <td>
-                                {{ $dayTable->fecha_inicio }}
+                                {{ Carbon\Carbon::parse($dayTable->fecha_inicio)->format('d/m/Y') }}
                             </td>
                             <td>
-                                {{ $dayTable->fecha_fin }}
+                                {{ Carbon\Carbon::parse($dayTable->fecha_fin)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @endforeach
@@ -282,20 +354,21 @@
                             <td>
                                 <div class="d-flex align-items-center gap-4">
                                     <div class="img-person">
-                                        <img src="" alt="">
+                                        <img src="{{ $permisoTable->empleado->avatar_ruta }}"
+                                            alt="{{ $permisoTable->empleado->name }}">
                                     </div>
 
-                                    <span>{{ $permisoTable->name }}</span>
+                                    <span>{{ $permisoTable->empleado->name }}</span>
                                 </div>
                             </td>
                             <td>
                                 Permiso
                             </td>
                             <td>
-                                {{ $permisoTable->fecha_inicio }}
+                                {{ Carbon\Carbon::parse($permisoTable->fecha_inicio)->format('d/m/Y') }}
                             </td>
                             <td>
-                                {{ $permisoTable->fecha_fin }}
+                                {{ Carbon\Carbon::parse($permisoTable->fecha_fin)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @endforeach
@@ -304,7 +377,9 @@
         </div>
     </div>
 
-    @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
+    @can('dashboard_solicitudes_directivo')
+        @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
+    @endcan
 
     <div class="row">
         <div class="col-md-6">
@@ -318,88 +393,277 @@
 
 @section('scripts')
     @parent
-    <script src="{{ asset('js/calendar-comunicado.js') }}"></script>
-    <script src="{{ asset('js/calendario-comunicacion.js') }}"></script>
-
     <script>
-        mobiscroll.setOptions({
-            locale: mobiscroll.localeEs, // Idioma: español
-            theme: 'ios', // Tema: iOS
-            themeVariant: 'light', // Variante del tema: claro
-        });
+        document.addEventListener("DOMContentLoaded", () => {
 
-        let dataVacaciones = [];
-        let vacacionesEvents = @json($vacacionesEvents);
-        vacacionesEvents.forEach(vacacion => {
-            dataVacaciones.push({
-                title: vacacion['title'],
-                start: new Date(
-                    vacacion['inicio']['año'],
-                    vacacion['inicio']['mes'],
-                    vacacion['inicio']['dia'],
-                ),
-                end: new Date(
-                    vacacion['fin']['año'],
-                    vacacion['fin']['mes'],
-                    vacacion['fin']['dia'],
-                ),
-                color: vacacion['color'],
-            });
-        });
+            let vacacionesEvents = @json($vacacionesEvents);
+            let dayOffEvents = @json($dayOffEvents);
+            let permisosEvents = @json($permisosEvents);
 
-        let dataDayOff = [];
-        let dayOffEvents = @json($dayOffEvents);
-        dayOffEvents.forEach(day => {
-            dataDayOff.push({
-                title: day['title'],
-                start: new Date(
-                    day['inicio']['año'],
-                    day['inicio']['mes'],
-                    day['inicio']['dia'],
-                ),
-                end: new Date(
-                    day['fin']['año'],
-                    day['fin']['mes'],
-                    day['fin']['dia'],
-                ),
-                color: day['color'],
-            });
-        });
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+                "Septiembre",
+                "Octubre", "Noviembre", "Diciembre"
+            ];
+            let currentDate = new Date();
 
-        let dataPermisos = [];
-
-        let permisosEvents = @json($permisosEvents);
-        permisosEvents.forEach(permiso => {
-            dataPermisos.push({
-                title: permiso['title'],
-                start: new Date(
-                    permiso['inicio']['año'],
-                    permiso['inicio']['mes'],
-                    permiso['inicio']['dia'],
-                ),
-                end: new Date(
-                    permiso['fin']['año'],
-                    permiso['fin']['mes'],
-                    permiso['fin']['dia'],
-                ),
-                color: permiso['color'],
-            });
-        });
-
-        console.log(dataPermisos);
-
-        var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
-            view: {
-                agenda: {
-                    type: 'day'
-                },
-            },
-            data: dataVacaciones.concat(dataDayOff).concat(dataPermisos),
-            onEventClick: function(args) {
-                mobiscroll.toast({
-                    message: args.event.title,
+            let dataVacaciones = [];
+            vacacionesEvents.forEach(vacacion => {
+                dataVacaciones.push({
+                    name: vacacion['title'],
+                    image: vacacion['empleado_img'],
+                    startDate: vacacion['inicio']['año'] + '-' + (parseInt(vacacion['inicio'][
+                        'mes'
+                    ]) + 2).toString().padStart(2, '0') + '-' + vacacion['inicio'][
+                        'dia'
+                    ].toString().padStart(2, '0'),
+                    endDate: vacacion['fin']['año'] + '-' + (parseInt(vacacion['fin']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + vacacion['fin']['dia'].toString()
+                        .padStart(2, '0')
                 });
-            },
+            });
+
+            let dataDayOff = [];
+            dayOffEvents.forEach(day => {
+                dataDayOff.push({
+                    name: day['title'],
+                    image: day['empleado_img'],
+                    startDate: day['inicio']['año'] + '-' + (parseInt(day['inicio']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + day['inicio']['dia'].toString()
+                        .padStart(2, '0'),
+                    endDate: day['fin']['año'] + '-' + (parseInt(day['fin']['mes']) + 2).toString()
+                        .padStart(2, '0') + '-' + day['fin']['dia'].toString().padStart(2, '0')
+                });
+            });
+
+            let dataPermisos = [];
+            permisosEvents.forEach(permiso => {
+                dataPermisos.push({
+                    name: permiso['title'],
+                    image: permiso['empleado_img'],
+                    startDate: permiso['inicio']['año'] + '-' + (parseInt(permiso['inicio'][
+                        'mes'
+                    ]) + 2).toString().padStart(2, '0') + '-' + permiso['inicio'][
+                        'dia'
+                    ].toString().padStart(2, '0'),
+                    endDate: permiso['fin']['año'] + '-' + (parseInt(permiso['fin']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + permiso['fin']['dia'].toString()
+                        .padStart(2, '0')
+                });
+            });
+
+
+            // Ejemplo de eventos con rango de fechas (inicio, fin)
+            const events = dataVacaciones.concat(dataDayOff).concat(dataPermisos);
+
+
+            renderCalendar();
+
+            document.getElementById("prevMonth").addEventListener("click", function() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.getElementById("nextMonth").addEventListener("click", function() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            function renderCalendar() {
+                const month = currentDate.getMonth();
+                const year = currentDate.getFullYear();
+                document.getElementById("monthYear").textContent = `${monthNames[month]} ${year}`;
+
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+
+                const calendarDays = document.getElementById("calendarDays");
+                calendarDays.innerHTML = "";
+
+                let row = document.createElement("tr");
+                let dayCellCount = 0;
+
+                // Ajustar primer día (Lunes es 1)
+                const startDay = (firstDayOfMonth + 6) % 7;
+
+                // Fill empty cells before the start of the month
+                for (let i = 0; i < startDay; i++) {
+                    row.appendChild(createEmptyDay());
+                    dayCellCount++;
+                }
+
+                // Fill the actual days of the month
+                for (let day = 1; day <= lastDateOfMonth; day++) {
+                    if (dayCellCount === 7) {
+                        calendarDays.appendChild(row);
+                        row = document.createElement("tr");
+                        dayCellCount = 0;
+                    }
+
+                    const dayKey =
+                        `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                    const dayCell = createDayCell(day, dayKey);
+                    row.appendChild(dayCell);
+
+                    dayCellCount++;
+                }
+
+                // Fill remaining empty cells
+                while (dayCellCount < 7) {
+                    row.appendChild(createEmptyDay());
+                    dayCellCount++;
+                }
+                calendarDays.appendChild(row);
+            }
+
+            function createDayCell(day, dayKey) {
+                const cell = document.createElement("td");
+                cell.classList.add("day");
+                cell.innerHTML = `<span class="date">${day}</span>`;
+
+                const dayEvents = events.filter(event => isEventInDay(event, dayKey));
+
+                if (dayEvents.length > 0) {
+                    const imgContainer = document.createElement("div");
+                    imgContainer.classList.add("event-images");
+
+                    dayEvents.slice(0, 2).forEach(person => {
+                        const imgPersonContainer = document.createElement("div");
+                        imgPersonContainer.classList.add("img-person");
+
+                        const img = document.createElement("img");
+                        img.src = person.image;
+                        img.alt = person.name;
+
+                        imgPersonContainer.appendChild(img);
+                        imgContainer.appendChild(imgPersonContainer);
+                    });
+
+                    if (dayEvents.length > 2) {
+                        const moreIndicator = document.createElement("span");
+                        moreIndicator.textContent = `+${dayEvents.length - 2}`;
+                        imgContainer.appendChild(moreIndicator);
+                    }
+
+                    cell.appendChild(imgContainer);
+
+                    cell.addEventListener('click', function() {
+                        showEventModal(day, dayEvents);
+                    });
+                }
+
+                return cell;
+            }
+
+            function createEmptyDay() {
+                const cell = document.createElement("td");
+                cell.classList.add("empty");
+                return cell;
+            }
+
+            function isEventInDay(event, dayKey) {
+                const day = new Date(dayKey);
+                const startDate = new Date(event.startDate);
+                const endDate = new Date(event.endDate);
+
+                // Restar 1 al mes porque JavaScript cuenta los meses desde 0
+                startDate.setMonth(startDate.getMonth() - 1);
+                endDate.setMonth(endDate.getMonth() - 1);
+
+                return day >= startDate && day <= endDate;
+            }
+
+
+            function showEventModal(day, eventPeople) {
+                document.getElementById("modalDay").textContent = day;
+                const eventList = document.getElementById("eventList");
+                eventList.innerHTML = '';
+
+                eventPeople.forEach(person => {
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("d-flex", "align-items-center", "mb-2");
+                    listItem.innerHTML =
+                        `<div class="img-person"><img src="${person.image}" alt="${person.name}"></div> <span class="ml-3">${person.name}</span>`;
+                    eventList.appendChild(listItem);
+                });
+
+                const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                eventModal.show();
+            }
+
+            // calendar agenda --------------------------------------------
+            mobiscroll.setOptions({
+                locale: mobiscroll.localeEs, // Idioma: español
+                theme: 'ios', // Tema: iOS
+                themeVariant: 'light', // Variante del tema: claro
+            });
+
+            let dataVacacionesAgenda = [];
+            vacacionesEvents.forEach(vacacion => {
+                dataVacacionesAgenda.push({
+                    title: vacacion['title'],
+                    start: new Date(
+                        vacacion['inicio']['año'],
+                        vacacion['inicio']['mes'],
+                        vacacion['inicio']['dia'],
+                    ),
+                    end: new Date(
+                        vacacion['fin']['año'],
+                        vacacion['fin']['mes'],
+                        vacacion['fin']['dia'],
+                    ),
+                    color: vacacion['color'],
+                });
+            });
+
+            let dataDayOffAgenda = [];
+            dayOffEvents.forEach(day => {
+                dataDayOffAgenda.push({
+                    title: day['title'],
+                    start: new Date(
+                        day['inicio']['año'],
+                        day['inicio']['mes'],
+                        day['inicio']['dia'],
+                    ),
+                    end: new Date(
+                        day['fin']['año'],
+                        day['fin']['mes'],
+                        day['fin']['dia'],
+                    ),
+                    color: day['color'],
+                });
+            });
+
+            let dataPermisosAgenda = [];
+            permisosEvents.forEach(permiso => {
+                dataPermisosAgenda.push({
+                    title: permiso['title'],
+                    start: new Date(
+                        permiso['inicio']['año'],
+                        permiso['inicio']['mes'],
+                        permiso['inicio']['dia'],
+                    ),
+                    end: new Date(
+                        permiso['fin']['año'],
+                        permiso['fin']['mes'],
+                        permiso['fin']['dia'],
+                    ),
+                    color: permiso['color'],
+                });
+            });
+
+            var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
+                view: {
+                    agenda: {
+                        type: 'day'
+                    },
+                },
+                data: dataVacacionesAgenda.concat(dataDayOffAgenda).concat(dataPermisosAgenda),
+                onEventClick: function(args) {
+                    mobiscroll.toast({
+                        message: args.event.title,
+                    });
+                },
+            });
         });
     </script>
 
@@ -458,72 +722,6 @@
     </script>
 
     <script>
-        let currentTime = new Date();
-        let options = {
-            timeStyle: 'short',
-            hour12: true
-        };
-        let hora_complete = currentTime.toLocaleTimeString('en-US', options);
-        let [hora, med] = hora_complete.split(' ');
-
-        document.getElementById('hora-portal').innerHTML = hora;
-        document.getElementById('med-portal>').innerHTML = med;
-
-        const fechaActual = new Date();
-
-        // Opciones para el formato de fecha
-        const opcionesFecha = {
-            month: 'long',
-            day: 'numeric',
-            weekday: 'long'
-        };
-
-        // Convertir la fecha actual a formato humano en español
-        const fechaHumana = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(' de ', ' ');
-
-        // Mostrar la fecha en la consola
-        document.getElementById('fecha-completa').innerHTML = fechaHumana;
-
-        function carruselPortal(tipo) {
-            if (tipo == 'advance') {
-                console.log('iso');
-                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft += 400;
-            }
-            if (tipo == 'retreat') {
-                document.querySelector('.carrusel-portal:hover .caja-items-carrusel-portal').scrollLeft -= 400;
-            }
-        }
-
-        $(document).ready(function() {
-            // Reemplaza '82a605d0' y '010461c49fd2f4a8f1968e0236b802fa' con tus credenciales de WeatherUnlocked
-            const appId = '82a605d0';
-            const apiKey = '010461c49fd2f4a8f1968e0236b802fa';
-
-            // Coordenadas para una ubicación específica (51.50, -0.12 es Londres, puedes cambiarlo)
-            const latitude = 51.50;
-            const longitude = -0.12;
-
-            // URL de la API de WeatherUnlocked para obtener datos del tiempo en una ubicación específica
-            const apiUrl =
-                `http://api.weatherunlocked.com/api/current/${latitude},${longitude}?app_id=${appId}&app_key=${apiKey}`;
-
-            // Realiza la solicitud a la API utilizando jQuery AJAX
-            $.ajax({
-                url: apiUrl,
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // Muestra la información del tiempo en el elemento con id 'weather-info'
-                    console.log(data);
-                },
-                error: function(error) {
-                    console.error('Error al obtener datos del tiempo:', error);
-                }
-            });
-        });
-    </script>
-
-    <script>
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -546,7 +744,6 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
                         orthogonal: "empleadoText"
-
                     }
                 },
                 {
