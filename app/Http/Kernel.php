@@ -73,6 +73,7 @@ class Kernel extends HttpKernel
         'gestion_talento' => \App\Http\Middleware\GestionTalentoMiddleware::class,
         'gestion_normativa' => \App\Http\Middleware\GestionNormativaMiddleware::class,
         'centro_atencion' => \App\Http\Middleware\CentroAtencionMiddleware::class,
+        'timesheet' => \App\Http\Middleware\TimesheetMiddleware::class,
         'visitantes' => \App\Http\Middleware\Visitantes::class,
         'planes_trabajo' => \App\Http\Middleware\PlanesTrabajoMiddleware::class,
         'gestor_documental' => \App\Http\Middleware\GestorDocumentalMiddleware::class,

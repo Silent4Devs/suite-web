@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\tbApiPanelControlController;
+use App\Http\Controllers\Api\tbApiPanelControlController;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -15,6 +15,7 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -366,12 +367,27 @@ class UsersController extends Controller
     //     }
     // }
 
-    // public function consultaApi()
-    // {
-    //     $apiController = new tbApiPanelControlController();
-    //     $response = $apiController->getData();
+    public function consultaApi()
+    {
+        $apiController = new tbApiPanelControlController();
+        $response = $apiController->getData();
 
-    //     // Procesa la respuesta según sea necesario
-    //     return $response;
-    // }
+        $client = $response->original[0];
+
+        if ($client['uuid'] == env('CLIENT_UUID')) {
+            // Filtrar el módulo que cumpla con las condiciones deseadas
+            $modulo = array_filter($client["modulos"], function ($modulo) {
+                return $modulo["nombre_catalogo"] == "Gestión Contractual" && $modulo["estatus"] == true;
+            });
+
+            // Verificar si existe un módulo que cumpla con la condición
+            $estatus = !empty($modulo);
+            dump($estatus ? 3 : 4);
+        } else {
+            dd(5);
+        }
+
+        // Procesa la respuesta según sea necesario
+        return $response;
+    }
 }

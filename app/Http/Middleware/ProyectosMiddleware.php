@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Silent4UniversityMiddleware
+class ProyectosMiddleware
 {
     /**
      * Handle an incoming request.
@@ -31,12 +31,15 @@ class Silent4UniversityMiddleware
         $client = $response->original[0];
 
         if ($client['uuid'] == env('CLIENT_UUID')) {
-            // Filtrar el módulo que cumpla con las condiciones deseadas
-            $modulo = array_filter($client["modulos"], function ($modulo) {
-                return $modulo["nombre_catalogo"] == "Silent4University" && $modulo["estatus"] == true;
+            // Definir los nombres de los módulos que son válidos
+            $modulosValidos = ["Gestión Contractual"]; // Agrega todos los nombres de módulos válidos aquí
+
+            // Filtrar los módulos que cumplan con las condiciones deseadas
+            $modulo = array_filter($client["modulos"], function ($modulo) use ($modulosValidos) {
+                return in_array($modulo["nombre_catalogo"], $modulosValidos) && $modulo["estatus"] == true;
             });
 
-            // Verificar si existe un módulo que cumpla con la condición
+            // Verificar si existe algún módulo que cumpla con la condición
             $estatus = !empty($modulo);
             return $estatus ? true : false;
         }
