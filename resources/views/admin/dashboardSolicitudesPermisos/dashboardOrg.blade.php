@@ -21,7 +21,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center justify-content-between gap-1 mr-5">
-                        <span style="font-size: 25px;">Directivo</span>
+                        <span style="font-size: 25px;" class="text-center">
+                            @can('dashboard_solicitudes_directivo')
+                                Directivo
+                            @else
+                                Líder
+                            @endcan
+                        </span>
                         <div>
                             <strong>Nombre del colaborador</strong> <br>
                             <span>{{ $currentUser->empleado->name }}</span>
@@ -31,26 +37,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <hr class="line-vertical" style="height: 100%;">
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="">Área</label>
-                        <select name="area" id="area" class="form-control" onchange="redirectToPage()">
-                            <option value="all">Todas las Áreas</option>
-                            @foreach ($areasToSelect as $area)
-                                <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
-                                    {{ $area->area }}
-                                </option>
-                            @endforeach
-                        </select>
+                @can('dashboard_solicitudes_directivo')
+                    <div class="col-md-1">
+                        <hr class="line-vertical" style="height: 100%;">
                     </div>
-                </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Área</label>
+                            <select name="area" id="area" class="form-control" onchange="redirectToPage()">
+                                <option value="all">Todas las Áreas</option>
+                                @foreach ($areasToSelect as $area)
+                                    <option value="{{ $area->id }}" {{ $areaSeleccionada == $area->id ? 'selected' : '' }}>
+                                        {{ $area->area }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endcan
             </div>
         </div>
-        <div class="card card-body text-center justify-content-center" style="max-width: 200px; cursor:pointer;"
-            onclick="window.print();">
+        <div class="card card-body text-center justify-content-center btn-reporte-print"
+            style="max-width: 200px; cursor:pointer;" onclick="window.print();">
             <strong>Reporte</strong>
             <i class="material-symbols-outlined" style="font-size: 60px; color:#006DDB;">print</i>
         </div>
@@ -222,9 +230,13 @@
                 <div class="container">
                     <div class="calendar">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <button id="prevMonth" class="btn btn-primary">&lt;</button>
+                            <button id="prevMonth" class="btn">
+                                <i class="material-symbols-outlined">arrow_back_ios</i>
+                            </button>
                             <h3 id="monthYear"></h3>
-                            <button id="nextMonth" class="btn btn-primary">&gt;</button>
+                            <button id="nextMonth" class="btn">
+                                <i class="material-symbols-outlined">arrow_forward_ios</i>
+                            </button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
@@ -266,7 +278,7 @@
             </div>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex">
             <div class="card card-body">
 
 
@@ -365,7 +377,9 @@
         </div>
     </div>
 
-    @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
+    @can('dashboard_solicitudes_directivo')
+        @livewire('dashboard-permisos.graph-areas', ['areaSeleccionada' => $areaSeleccionada])
+    @endcan
 
     <div class="row">
         <div class="col-md-6">
@@ -382,6 +396,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
+            let vacacionesEvents = @json($vacacionesEvents);
+            let dayOffEvents = @json($dayOffEvents);
+            let permisosEvents = @json($permisosEvents);
+
             const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
                 "Septiembre",
                 "Octubre", "Noviembre", "Diciembre"
@@ -389,43 +407,47 @@
             let currentDate = new Date();
 
             let dataVacaciones = [];
-            let vacacionesEvents = @json($vacacionesEvents);
             vacacionesEvents.forEach(vacacion => {
                 dataVacaciones.push({
                     name: vacacion['title'],
                     image: vacacion['empleado_img'],
-                    startDate: vacacion['inicio']['año'] + '-' + vacacion['inicio']['mes'] + '-' +
-                        vacacion[
-                            'inicio']['dia'],
-                    endDate: vacacion['fin']['año'] + '-' + vacacion['fin']['mes'] + '-' + vacacion[
-                        'fin']['dia'],
+                    startDate: vacacion['inicio']['año'] + '-' + (parseInt(vacacion['inicio'][
+                        'mes'
+                    ]) + 2).toString().padStart(2, '0') + '-' + vacacion['inicio'][
+                        'dia'
+                    ].toString().padStart(2, '0'),
+                    endDate: vacacion['fin']['año'] + '-' + (parseInt(vacacion['fin']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + vacacion['fin']['dia'].toString()
+                        .padStart(2, '0')
                 });
             });
 
             let dataDayOff = [];
-            let dayOffEvents = @json($dayOffEvents);
             dayOffEvents.forEach(day => {
                 dataDayOff.push({
                     name: day['title'],
                     image: day['empleado_img'],
-                    startDate: day['inicio']['año'] + '-' + day['inicio']['mes'] + '-' + day[
-                        'inicio']['dia'],
-                    endDate: day['fin']['año'] + '-' + day['fin']['mes'] + '-' + day[
-                        'fin']['dia'],
+                    startDate: day['inicio']['año'] + '-' + (parseInt(day['inicio']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + day['inicio']['dia'].toString()
+                        .padStart(2, '0'),
+                    endDate: day['fin']['año'] + '-' + (parseInt(day['fin']['mes']) + 2).toString()
+                        .padStart(2, '0') + '-' + day['fin']['dia'].toString().padStart(2, '0')
                 });
             });
 
             let dataPermisos = [];
-            let permisosEvents = @json($permisosEvents);
             permisosEvents.forEach(permiso => {
                 dataPermisos.push({
                     name: permiso['title'],
                     image: permiso['empleado_img'],
-                    startDate: permiso['inicio']['año'] + '-' + permiso['inicio']['mes'] + '-' +
-                        permiso[
-                            'inicio']['dia'],
-                    endDate: permiso['fin']['año'] + '-' + permiso['fin']['mes'] + '-' + permiso[
-                        'fin']['dia'],
+                    startDate: permiso['inicio']['año'] + '-' + (parseInt(permiso['inicio'][
+                        'mes'
+                    ]) + 2).toString().padStart(2, '0') + '-' + permiso['inicio'][
+                        'dia'
+                    ].toString().padStart(2, '0'),
+                    endDate: permiso['fin']['año'] + '-' + (parseInt(permiso['fin']['mes']) + 2)
+                        .toString().padStart(2, '0') + '-' + permiso['fin']['dia'].toString()
+                        .padStart(2, '0')
                 });
             });
 
@@ -542,8 +564,14 @@
                 const day = new Date(dayKey);
                 const startDate = new Date(event.startDate);
                 const endDate = new Date(event.endDate);
+
+                // Restar 1 al mes porque JavaScript cuenta los meses desde 0
+                startDate.setMonth(startDate.getMonth() - 1);
+                endDate.setMonth(endDate.getMonth() - 1);
+
                 return day >= startDate && day <= endDate;
             }
+
 
             function showEventModal(day, eventPeople) {
                 document.getElementById("modalDay").textContent = day;
@@ -554,29 +582,24 @@
                     const listItem = document.createElement("li");
                     listItem.classList.add("d-flex", "align-items-center", "mb-2");
                     listItem.innerHTML =
-                        `<img src="${person.image}" alt="${person.name}"> <span>${person.name}</span>`;
+                        `<div class="img-person"><img src="${person.image}" alt="${person.name}"></div> <span class="ml-3">${person.name}</span>`;
                     eventList.appendChild(listItem);
                 });
 
                 const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
                 eventModal.show();
             }
-        });
-    </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-
+            // calendar agenda --------------------------------------------
             mobiscroll.setOptions({
                 locale: mobiscroll.localeEs, // Idioma: español
                 theme: 'ios', // Tema: iOS
                 themeVariant: 'light', // Variante del tema: claro
             });
 
-            let dataVacaciones = [];
-            let vacacionesEvents = @json($vacacionesEvents);
+            let dataVacacionesAgenda = [];
             vacacionesEvents.forEach(vacacion => {
-                dataVacaciones.push({
+                dataVacacionesAgenda.push({
                     title: vacacion['title'],
                     start: new Date(
                         vacacion['inicio']['año'],
@@ -592,10 +615,9 @@
                 });
             });
 
-            let dataDayOff = [];
-            let dayOffEvents = @json($dayOffEvents);
+            let dataDayOffAgenda = [];
             dayOffEvents.forEach(day => {
-                dataDayOff.push({
+                dataDayOffAgenda.push({
                     title: day['title'],
                     start: new Date(
                         day['inicio']['año'],
@@ -611,10 +633,9 @@
                 });
             });
 
-            let dataPermisos = [];
-            let permisosEvents = @json($permisosEvents);
+            let dataPermisosAgenda = [];
             permisosEvents.forEach(permiso => {
-                dataPermisos.push({
+                dataPermisosAgenda.push({
                     title: permiso['title'],
                     start: new Date(
                         permiso['inicio']['año'],
@@ -636,7 +657,7 @@
                         type: 'day'
                     },
                 },
-                data: dataVacaciones.concat(dataDayOff).concat(permisosEvents),
+                data: dataVacacionesAgenda.concat(dataDayOffAgenda).concat(dataPermisosAgenda),
                 onEventClick: function(args) {
                     mobiscroll.toast({
                         message: args.event.title,

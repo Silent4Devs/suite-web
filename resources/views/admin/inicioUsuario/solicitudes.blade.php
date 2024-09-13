@@ -104,7 +104,7 @@
                     @endcan
                     @can('solicitud_mensajeria_acceder')
                         <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                          <i class="bi bi-send"></i></><br><span>Mensajería</span>
+                            <i class="bi bi-send"></i></><br><span>Mensajería</span>
                         </a>
                     @endcan
                     @php
@@ -126,6 +126,14 @@
                                 </div>
                             </a>
                         @endcan
+
+                        @if (auth()->user()->empleado->es_supervisor)
+                            <a href="{{ asset('admin/dashboardPermisos/dashboardOrg') }}/{{ auth()->user()->empleado->area_id }}"
+                                class="btn_reporte">
+                                <i class="bi bi-coin"></i><br><span>Permisos</span>
+                            </a>
+                        @endif
+
 
                     </div>
                 </div>

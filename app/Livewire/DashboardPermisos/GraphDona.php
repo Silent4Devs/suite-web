@@ -30,9 +30,12 @@ class GraphDona extends Component
             $mes_año = Carbon::now();
         }
 
-        $vacaciones = SolicitudVacaciones::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
-        $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
-        $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
+        $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
+        $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
+
+        $vacaciones = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
+        $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
+        $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
 
         if($this->areaSeleccionada == 'all'){
 
@@ -55,6 +58,8 @@ class GraphDona extends Component
         $vacaciones = $vacaciones->count();
         $dayOff = $dayOff->count();
         $permisos = $permisos->count();
+
+        $this->dispatch('renderScripts');
 
         return view('livewire.dashboard-permisos.graph-dona', compact('vacaciones', 'dayOff', 'permisos'));
     }

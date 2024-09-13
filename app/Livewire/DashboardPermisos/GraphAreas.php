@@ -30,9 +30,12 @@ class GraphAreas extends Component
             $mes_año = Carbon::now();
         }
 
-        $vacaciones = SolicitudVacaciones::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
-        $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
-        $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $mes_año)->where('fecha_fin', '<=', $mes_año)->get();
+        $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
+        $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
+
+        $vacaciones = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
 
         $areas = Area::get();
 

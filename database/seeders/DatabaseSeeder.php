@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DatabaseSeeder extends Seeder
 {
@@ -144,6 +145,9 @@ class DatabaseSeeder extends Seeder
                 PermissionsCatalogueTrainingSeeder::class,
                 CatalogueTrainingLDSeeder::class,
                 PermissionsProfileProfessionalEditSeeder::class,
+
+                // Dashboard solicitudes
+                PermissionsDashboardSolicitudesSeeder::class,
             ]
         );
     }
