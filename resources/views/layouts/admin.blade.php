@@ -22,7 +22,7 @@
     {{--  @vite(['public/css/global/darkMode.css'])  --}}
     <link rel="stylesheet" type="text/css"
         href="{{ asset('css/global/responsive.css') }}{{ config('app.cssVersion') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}{{ config('app.cssVersion') }}">
+    {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}{{ config('app.cssVersion') }}">  --}}
     @yield('css')
     @yield('styles')
     <!-- End Principal Styles -->
