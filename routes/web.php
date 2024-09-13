@@ -253,6 +253,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ]);
 
         Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
+        Route::get('ExportPermisoGoceSueldo', 'PermisosGoceSueldoController@exportExcel')->name('descarga-permiso-goce-sueldo');
         Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
         Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
             'index' => 'permisos-goce-sueldo.index',
