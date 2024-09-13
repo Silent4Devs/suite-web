@@ -8,55 +8,6 @@
         </button>
         <div class="caja-items-menu-slider scroll_estilo">
 
-            @can('escuela_estudiante')
-                <div class="item-ms">
-                    <a href="{{ asset('/admin/mis-cursos') }}">
-                        <i class="material-symbols-outlined">school</i>
-                        <span>Capacitaciones</span>
-                    </a>
-                </div>
-            @endcan
-            @can('mi_perfil_acceder')
-                <div class="item-ms">
-                    <a href="{{ route('admin.solicitud') }}">
-                        <i class="material-symbols-outlined">assignment_turned_in</i>
-                        <span>Solicitudes</span>
-                    </a>
-                </div>
-            @endcan
-            @can('mi_perfil_acceder')
-                <div class="item-ms">
-                    <a href="{{ route('admin.inicio-Usuario.index') }}">
-                        <i class="material-symbols-outlined">account_circle</i>
-                        <span>Perfil</span>
-                    </a>
-                </div>
-            @endcan
-            @can('timesheet_acceder')
-                <div class="item-ms">
-                    <a href="{{ route('admin.timesheet-create') }}">
-                        <i class="material-symbols-outlined">date_range</i>
-                        <span>Timesheet</span>
-                    </a>
-                </div>
-            @endcan
-            @can('calendario_organizacional_acceder')
-                <div class="item-ms">
-                    <a href="{{ route('admin.systemCalendar') }}">
-                        <i class="material-symbols-outlined">calendar_today</i>
-                        <span>Calendario</span>
-                    </a>
-                </div>
-            @endcan
-            @can('katbol_requisiciones_acceso')
-                <div class="item-ms">
-                    <a href="{{ asset('contract_manager/requisiciones') }}">
-                        <i class="material-symbols-outlined">contract</i>
-                        <span>Requisiciones </span>
-                    </a>
-                </div>
-            @endcan
-
             @can('mi_organizacion_acceder')
                 <div class="item-ms">
                     <a href="{{ route('admin.organizacions.index') }}">
@@ -162,7 +113,7 @@
                 </div>
             @endcan
 
-            @can('control_documentar_acceder')
+            {{-- @can('control_documentar_acceder')
                 <div class="item-ms">
                     <a href="{{ route('admin.documentos.index') }}">
                         <i class="material-symbols-outlined">description</i>
@@ -170,7 +121,54 @@
                     </a>
                 </div>
             @endcan
-
+            @can('escuela_estudiante')
+                <div class="item-ms">
+                    <a href="{{ asset('/admin/mis-cursos') }}">
+                        <i class="material-symbols-outlined">school</i>
+                        <span>Capacitaciones</span>
+                    </a>
+                </div>
+            @endcan
+            @can('mi_perfil_acceder')
+                <div class="item-ms">
+                    <a href="{{ route('admin.solicitud') }}">
+                        <i class="material-symbols-outlined">assignment_turned_in</i>
+                        <span>Solicitudes</span>
+                    </a>
+                </div>
+            @endcan --}}
+            {{-- @can('mi_perfil_acceder')
+                <div class="item-ms">
+                    <a href="{{ route('admin.inicio-Usuario.index') }}">
+                        <i class="material-symbols-outlined">account_circle</i>
+                        <span>Perfil</span>
+                    </a>
+                </div>
+            @endcan
+            @can('timesheet_acceder')
+                <div class="item-ms">
+                    <a href="{{ route('admin.timesheet-create') }}">
+                        <i class="material-symbols-outlined">date_range</i>
+                        <span>Timesheet</span>
+                    </a>
+                </div>
+            @endcan
+            @can('calendario_organizacional_acceder')
+                <div class="item-ms">
+                    <a href="{{ route('admin.systemCalendar') }}">
+                        <i class="material-symbols-outlined">calendar_today</i>
+                        <span>Calendario</span>
+                    </a>
+                </div>
+            @endcan
+            @can('katbol_requisiciones_acceso')
+                <div class="item-ms">
+                    <a href="{{ asset('contract_manager/requisiciones') }}">
+                        <i class="material-symbols-outlined">contract</i>
+                        <span>Requisiciones </span>
+                    </a>
+                </div>
+            @endcan --}}
         </div>
         <button class="btn-menu-ar" onclick="menuSileder('advance');">
             <i class="material-symbols-outlined">arrow_forward_ios</i>
