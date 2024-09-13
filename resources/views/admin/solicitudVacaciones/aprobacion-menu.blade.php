@@ -111,9 +111,10 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá aprobar/rechazar las solicitudes de Vacaciones, Day Off y Permisos de sus colaborador(es).
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá aprobar/rechazar las
+                        solicitudes de Vacaciones, Day Off y Permisos de sus colaborador(es).
                     </p>
-    
+
                 </div>
             </div>
         </div>
@@ -128,19 +129,21 @@
                                     <i class="bi bi-sun"></i>
                                     <br>
                                     Vacaciones
-                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px" class="offset-4 mt-4">
-                                        <p > {{ $solicitud_vacacion }}</p>
+                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px"
+                                        class="offset-4 mt-4">
+                                        <p> {{ $solicitud_vacacion }}</p>
                                     </div>
                                 </div>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.solicitud-dayoff.aprobacion') }}">
-                                
+
                                 <div style="position: relative !important;">
                                     <i class="bi bi-bicycle"></i><br>
                                     Days Off´s
-                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px" class="offset-4 mt-4">
+                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px"
+                                        class="offset-4 mt-4">
                                         <p> {{ $solicitud_dayoff }}</p>
                                     </div>
                                 </div>
@@ -151,13 +154,31 @@
                                 <div style="position: relative !important;">
                                     <i class="bi bi-coin"></i><br>
                                     Permisos
-                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px" class="offset-4 mt-4">
+                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px"
+                                        class="offset-4 mt-4">
                                         <p> {{ $solicitud_permiso }}</p>
                                     </div>
                                 </div>
                             </a>
 
                         </li>
+
+                        @if (auth()->user()->empleado->es_supervisor)
+                            <li>
+                                <a
+                                    href="{{ asset('admin/dashboardPermisos/dashboardOrg') }}/{{ auth()->user()->empleado->area_id }}">
+                                    <div style="position: relative !important;">
+                                        <i class="bi bi-coin"></i><br>
+                                        Dashboard Solicitudes
+                                        <div id="circulo" style="position:absolute; top:-70px; right:-50px"
+                                            class="offset-4 mt-4">
+                                            <p> {{ $solicitud_permiso }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                        @endif
 
                     </ul>
 
