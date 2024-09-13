@@ -9,7 +9,7 @@
         </strong>
     </p>
 
-    <p class="mt-5">
+    {{-- <p class="mt-5">
         Modo
     </p>
 
@@ -20,7 +20,7 @@
         <button class="btn border" onclick="document.querySelector('body').classList.add('dark');">
             <i class="material-symbols-outlined" style="color: #7a7a7a">bedtime</i>
         </button>
-    </div>
+    </div> --}}
 
     <p class="mt-5">
         Colores
