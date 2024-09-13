@@ -110,7 +110,7 @@
 
     <div class="c-wrapper" id="contenido_body_general_wrapper">
         <div class="c-body">
-            <main class="c-main" style="zoom: 90%;">
+            <main class="c-main">
                 <div class="container-fluid" id="app">
 
                     @if (session('message'))
