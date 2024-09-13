@@ -744,20 +744,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible'],
                         orthogonal: "empleadoText"
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Comite Seguridad ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    customize: function(doc) {
-                        let logo_actual = @json($logo_actual);
-                        let empresa_actual = @json($empresa_actual);
-
-                        var now = new Date();
-                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
                 <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
                     <div class="col-2 p-2" style="border-right: 2px solid #ccc">
@@ -774,8 +761,8 @@
                 `);
 
                         $(doc.document.body).find('table')
-                            .css('font-size', '12px')
-                            .css('margin-top', '15px')
+                        .css('font-size', '12px')
+                        .css('margin-top', '15px')
                         // .css('margin-bottom', '60px')
                         $(doc.document.body).find('th').each(function(index) {
                             $(this).css('font-size', '18px');

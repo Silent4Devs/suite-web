@@ -23,9 +23,32 @@ class DashboardPermisosController extends Controller
         $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
         $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
 
-        $vacacionesMounth = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
-        $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
-        $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $vacacionesMounth = SolicitudVacaciones::where(function($query) use ($inicio_mes, $fin_mes) {
+            $query->whereBetween('fecha_inicio', [$inicio_mes, $fin_mes])
+                ->orWhereBetween('fecha_fin', [$inicio_mes, $fin_mes])
+                ->orWhere(function($query) use ($inicio_mes, $fin_mes) {
+                    $query->where('fecha_inicio', '<=', $fin_mes)
+                            ->where('fecha_fin', '>=', $inicio_mes);
+                });
+        })->get();
+
+        $dayOffMounth = SolicitudDayOff::where(function($query) use ($inicio_mes, $fin_mes) {
+            $query->whereBetween('fecha_inicio', [$inicio_mes, $fin_mes])
+                ->orWhereBetween('fecha_fin', [$inicio_mes, $fin_mes])
+                ->orWhere(function($query) use ($inicio_mes, $fin_mes) {
+                    $query->where('fecha_inicio', '<=', $fin_mes)
+                            ->where('fecha_fin', '>=', $inicio_mes);
+                });
+        })->get();
+
+        $permisoMounth = SolicitudPermisoGoceSueldo::where(function($query) use ($inicio_mes, $fin_mes) {
+            $query->whereBetween('fecha_inicio', [$inicio_mes, $fin_mes])
+                ->orWhereBetween('fecha_fin', [$inicio_mes, $fin_mes])
+                ->orWhere(function($query) use ($inicio_mes, $fin_mes) {
+                    $query->where('fecha_inicio', '<=', $fin_mes)
+                            ->where('fecha_fin', '>=', $inicio_mes);
+                });
+        })->get();
 
         $vacaciones = SolicitudVacaciones::where('aprobacion', 3)->get();
         $dayOff = SolicitudDayOff::where('aprobacion', 3)->get();

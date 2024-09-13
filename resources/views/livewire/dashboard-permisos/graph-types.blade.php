@@ -33,14 +33,24 @@
                             source: dataPermisos,
                         },
                         xAxis: {
-                            type: 'category'
+                            type: 'category',
+                            axisLabel: {
+                                rotate: 45, // Rotar las etiquetas 45 grados
+                                formatter: function(value) {
+                                    // Ajustar el valor de 10 según el espacio disponible
+                                    var maxLength = 10;
+                                    if (value.length > maxLength) {
+                                        return value.slice(0, maxLength) +
+                                        '...'; // Mostrar solo una parte del texto
+                                    }
+                                    return value;
+                                }
+                            }
                         },
                         yAxis: {},
-                        // Declare several bar series, each will be mapped
-                        // to a column of dataset.source by default.
                         series: [{
                             type: 'bar'
-                        }, ]
+                        }]
                     };
 
                     if (option && typeof option === 'object') {
@@ -48,6 +58,7 @@
                     }
 
                     window.addEventListener('resize', myChart.resize);
+
                 }, 500);
             });
         </script>

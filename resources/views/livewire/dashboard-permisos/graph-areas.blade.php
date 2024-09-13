@@ -4,7 +4,7 @@
             <input type="month" placeholder="Mes | Año" name="mes_año" wire:model.live="mes_año" id=""
                 class="form-control" style="width: 200px;">
         </div>
-        <div id="chart-container-solicitudes-areas" style="width: 100%; height: 300px;"></div>
+        <div id="chart-container-solicitudes-areas" style="width: 100%; height: 400px;"></div>
     </div>
 
     @section('scripts')
@@ -48,11 +48,21 @@
                             source: dataAreas,
                         },
                         xAxis: {
-                            type: 'category'
+                            type: 'category',
+                            axisLabel: {
+                                rotate: 45,
+                                formatter: function(value) {
+                                    // Puedes ajustar el valor de 10 según el espacio disponible
+                                    var maxLength = 10;
+                                    if (value.length > maxLength) {
+                                        return value.slice(0, maxLength) +
+                                            '...'; // Mostrar solo una parte del texto
+                                    }
+                                    return value;
+                                }
+                            }
                         },
                         yAxis: {},
-                        // Declare several bar series, each will be mapped
-                        // to a column of dataset.source by default.
                         series: [{
                             type: 'bar'
                         }, {
