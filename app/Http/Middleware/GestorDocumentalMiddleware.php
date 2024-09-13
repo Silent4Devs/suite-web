@@ -30,7 +30,7 @@ class GestorDocumentalMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_UUID')) {
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
             $modulo = array_filter($client["modulos"], function ($modulo) {
                 return $modulo["nombre_catalogo"] == "Gestor Documental" && $modulo["estatus"] == true;

@@ -128,6 +128,10 @@
 
 @section('scripts')
     @parent
+    <script>
+        // Pasar la variable de PHP a JavaScript
+        var agregarUsuarios = @json($agregarUsuarios); // Esto convierte la variable PHP a un formato JSON que JavaScript puede entender
+    </script>
     <script src="{{ asset('js/users/userDeleteAlert.js') }}"></script>
     <script src="{{ asset('js/users/tableIndexUsers.js') }}"></script>
 @endsection

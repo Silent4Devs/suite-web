@@ -30,9 +30,9 @@ class ProyectosMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_UUID')) {
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Definir los nombres de los módulos que son válidos
-            $modulosValidos = ["Gestión Contractual"]; // Agrega todos los nombres de módulos válidos aquí
+            $modulosValidos = ["Gestión de Talento", "Gestión Financiera", 'Gestión Contractual']; // Agrega todos los nombres de módulos válidos aquí
 
             // Filtrar los módulos que cumplan con las condiciones deseadas
             $modulo = array_filter($client["modulos"], function ($modulo) use ($modulosValidos) {

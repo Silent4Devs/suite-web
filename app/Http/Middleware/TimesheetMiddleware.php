@@ -30,7 +30,7 @@ class TimesheetMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_UUID')) {
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Definir los nombres de los módulos que son válidos
             $modulosValidos = ["Gestión de Talento", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
 

@@ -283,6 +283,12 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function empleadosActivos(){
+        return Cache::remember('Empleados:empleados_count', 3600 * 12, function () {
+            return self::select('id', 'estatus')->where('estatus', 'alta')->count();
+        });
+    }
+
     public function registrosHistorico()
     {
         return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');

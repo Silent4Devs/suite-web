@@ -30,7 +30,7 @@ class PlanesTrabajoMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_UUID')) {
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Definir los nombres de los módulos que son válidos
             $modulosValidos = ["Centro de Atención", "Planes de Trabajo"]; // Agrega todos los nombres de módulos válidos aquí
 

@@ -220,8 +220,6 @@ $(document).ready(function () {
             },
             customize: function (doc) {
                 doc.pageMargins = [5, 20, 5, 20];
-                // doc.styles.tableHeader.fontSize = 6.5;
-                // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
             },
         },
         {
@@ -254,26 +252,29 @@ $(document).ready(function () {
             titleAttr: "Restaurar a estado anterior",
         },
     ];
-    let btnAgregar = {
-        text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-        titleAttr: "Agregar empleado",
-        url: "users/create",
-        className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-        action: function (e, dt, node, config) {
-            let { url } = config;
-            window.location.href = url;
-        },
-    };
 
-    dtButtons.push(btnAgregar);
+    // Validar si agregarUsuarios es true antes de agregar el botón
+    if (typeof agregarUsuarios !== 'undefined' && agregarUsuarios) {
+        let btnAgregar = {
+            text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+            titleAttr: "Agregar empleado",
+            url: "users/create",
+            className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            action: function (e, dt, node, config) {
+                let { url } = config;
+                window.location.href = url;
+            },
+        };
+
+        // Agregar btnAgregar a los botones solo si agregarUsuarios es true
+        dtButtons.push(btnAgregar);
+    }
 
     var table = $("#dom").DataTable({
         buttons: dtButtons,
         language: {
             url: "{{ asset('js/Spanish.json') }}",
         },
-
-        // dom: 'AlBfrtip',
         dom:
             "<'row align-items-center justify-content-center col-12'<'text-center col-12 col-sm-12 col-md-12 col-lg-12'A><'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-5 col-lg-5'B><'col-md-4 col-12 col-sm-12 m-0'f>>" +
             "<'row'<'col-sm-12'tr>>" +

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\EmpleadosGeneralExport;
 use App\Exports\HistorialEmpleadoExport;
 use App\Functions\CountriesFunction;
+use App\Http\Controllers\Api\tbApiPanelControlController;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
@@ -69,19 +70,21 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $agregarEmpleados= $this->consultaApiNoUsers();
+
         $empleados = Empleado::select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->alta()->get()
             ->map(function ($empleado) {
                 $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
 
                 return $empleado;
             });
-
+        $empleados = $empleados->sortBy('name');
         // Log::channel('logstash')->info('Index Empleados.');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.empleados.index', compact('empleados', 'logo_actual', 'empresa_actual'));
+        return view('admin.empleados.index', compact('empleados', 'logo_actual', 'empresa_actual', 'agregarEmpleados'));
     }
 
     /**
@@ -164,30 +167,36 @@ class EmpleadoController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::getaltaAll();
-        $ceo_exists = Empleado::getCeoExists();
-        $areas = Area::getAll();
-        $sedes = Sede::getAll();
-        $experiencias = ExperienciaEmpleados::getAll();
-        $educacions = EducacionEmpleados::get();
-        $cursos = CursosDiplomasEmpleados::get();
-        $documentos = EvidenciasDocumentosEmpleados::getAll();
-        $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::getAll();
-        $perfiles = PerfilEmpleado::getAll();
-        $perfiles_seleccionado = null;
-        $puestos_seleccionado = null;
-        //$perfiles = PerfilEmpleado::all();
-        $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
-        $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $empleado = new Empleado;
-        $idiomas = Language::get();
-        $globalCountries = new CountriesFunction;
-        $organizacion = Organizacion::getFirst();
-        $countries = $globalCountries->getCountries('ES');
+        $agregarEmpleados= $this->consultaApiNoUsers();
 
-        return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
+        if ($agregarEmpleados) {
+            abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $empleados = Empleado::getaltaAll();
+            $ceo_exists = Empleado::getCeoExists();
+            $areas = Area::getAll();
+            $sedes = Sede::getAll();
+            $experiencias = ExperienciaEmpleados::getAll();
+            $educacions = EducacionEmpleados::get();
+            $cursos = CursosDiplomasEmpleados::get();
+            $documentos = EvidenciasDocumentosEmpleados::getAll();
+            $certificaciones = CertificacionesEmpleados::get();
+            $puestos = Puesto::getAll();
+            $perfiles = PerfilEmpleado::getAll();
+            $perfiles_seleccionado = null;
+            $puestos_seleccionado = null;
+            //$perfiles = PerfilEmpleado::all();
+            $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
+            $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
+            $empleado = new Empleado;
+            $idiomas = Language::get();
+            $globalCountries = new CountriesFunction;
+            $organizacion = Organizacion::getFirst();
+            $countries = $globalCountries->getCountries('ES');
+
+            return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
+        } else{
+            abort(403);
+        }
     }
 
     public function onlyStore($request)
@@ -518,42 +527,53 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
-        $empleado = $this->onlyStore($request);
+        $agregarEmpleados= $this->consultaApiNoUsers();
 
-        return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
+        if ($agregarEmpleados) {
+            $empleado = $this->onlyStore($request);
 
+            return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
+        } else {
+            abort(403);
+        }
         // return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)
     {
-        $empleado = $this->onlyStore($request);
+        $agregarEmpleados= $this->consultaApiNoUsers();
 
-        return redirect()->route('admin.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
+        if ($agregarEmpleados) {
+            $empleado = $this->onlyStore($request);
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasDocumentosEmpleados::create([
-                        'documentos' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
+            return redirect()->route('admin.empleados.edit', $empleado)->with('success', 'Guardado con éxito');
+
+            if ($request->hasFile('files')) {
+                $files = $request->file('files');
+                foreach ($files as $file) {
+                    if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
+                        EvidenciasDocumentosEmpleados::create([
+                            'documentos' => $file->getClientOriginalName(),
+                            'empleado_id' => $empleado->id,
+                        ]);
+                    }
                 }
             }
-        }
-        // dd($request->hasFile('files'));
+            // dd($request->hasFile('files'));
 
-        if ($request->hasFile('files')) {
-            $files = $request->file('files');
-            foreach ($files as $file) {
-                if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
-                    EvidenciasCertificadosEmpleados::create([
-                        'evidencia' => $file->getClientOriginalName(),
-                        'empleado_id' => $empleado->id,
-                    ]);
+            if ($request->hasFile('files')) {
+                $files = $request->file('files');
+                foreach ($files as $file) {
+                    if (Storage::putFileAs('public/certificados_empleados', $file, $file->getClientOriginalName())) {
+                        EvidenciasCertificadosEmpleados::create([
+                            'evidencia' => $file->getClientOriginalName(),
+                            'empleado_id' => $empleado->id,
+                        ]);
+                    }
                 }
             }
+        } else {
+            abort(403);
         }
     }
 
@@ -1741,5 +1761,27 @@ class EmpleadoController extends Controller
         $registrosHistorico = $empleado->registrosHistorico->toArray(); // Asegúrate de que esto sea correcto
 
         return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_'.$id.'.xlsx');
+    }
+
+    public function consultaApiNoUsers()
+    {
+        $apiController = new tbApiPanelControlController();
+        $response = $apiController->getData();
+
+        $client = $response->original[0];
+
+        $cuentaUsers = User::usuariosActivos();
+        $cuentaEmpleados = Empleado::empleadosActivos();
+        
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+            // Filtrar el módulo que cumpla con las condiciones deseadas
+            if(($cuentaUsers <= $client['numeroUsuarios']) && ($cuentaEmpleados <= $client['numeroUsuarios'])){
+                return true;
+            }else{
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

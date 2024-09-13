@@ -29,20 +29,12 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $agregarUsuarios = false;
-
-        $cuentaUsers = User::usuariosActivos();
-
-        $dataCliente = $this->fetchData();
-
-        if ($cuentaUsers <= $dataCliente["numeroUsuarios"]) {
-            $agregarUsuarios = true;
-        }
+        $agregarUsuarios = $this->consultaApiNoUsers();
 
         try {
             $existsVinculoEmpleadoAdmin = User::getExists();
 
-            $users = User::getUserWithRole();
+            $users = User::getUserWithRole()->sortBy('name');
 
             $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
@@ -86,51 +78,64 @@ class UsersController extends Controller
 
     public function create()
     {
-        try {
+        $agregarUsuarios = $this->consultaApiNoUsers();
+        
+        if($agregarUsuarios){
+            try {
 
-            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+                abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $roles = Role::getAll()->pluck('title', 'id');
+                $roles = Role::getAll()->pluck('title', 'id');
 
-            $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::getAllPluck();
+                $areas = Area::getAllPluck();
 
-            $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
-        } catch (\Exception $e) {
-            // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
+                return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
+            } catch (\Exception $e) {
+                // Registrar el error en los logs
+                Log::channel('logstash')->info('Error al crear usuario: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'input' => $request->all(),
+                ]);
 
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al crear usuario'], 500);
+                // Retornar una respuesta de error al cliente
+                return response()->json(['message' => 'Error al crear usuario'], 500);
+            }
+        }
+        else{
+            abort(403);
         }
     }
 
     public function store(StoreUserRequest $request)
     {
-        try {
-            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $agregarUsuarios = $this->consultaApiNoUsers();
+        
+        if($agregarUsuarios){
+            try {
+                abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $user = User::create($request->all());
-            $user->roles()->sync($request->input('roles', []));
-            Alert::success('éxito', 'Información añadida con éxito');
+                $user = User::create($request->all());
+                $user->roles()->sync($request->input('roles', []));
+                Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al guardar usuario: ' . $e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
+                return redirect()->route('admin.users.index');
+            } catch (\Exception $e) {
+                Log::channel('logstash')->info('Error al guardar usuario: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'input' => $request->all(),
+                ]);
 
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al guardar usuario'], 500);
+                // Retornar una respuesta de error al cliente
+                return response()->json(['message' => 'Error al guardar usuario'], 500);
+            }
+        }else{
+            abort(403);
         }
     }
 
@@ -367,27 +372,25 @@ class UsersController extends Controller
     //     }
     // }
 
-    public function consultaApi()
+    public function consultaApiNoUsers()
     {
         $apiController = new tbApiPanelControlController();
         $response = $apiController->getData();
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_UUID')) {
+        $cuentaUsers = User::usuariosActivos();
+        $cuentaEmpleados = Empleado::empleadosActivos();
+        
+        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
-            $modulo = array_filter($client["modulos"], function ($modulo) {
-                return $modulo["nombre_catalogo"] == "Gestión Contractual" && $modulo["estatus"] == true;
-            });
-
-            // Verificar si existe un módulo que cumpla con la condición
-            $estatus = !empty($modulo);
-            dump($estatus ? 3 : 4);
+            if(($cuentaUsers <= $client['numeroUsuarios']) && ($cuentaEmpleados <= $client['numeroUsuarios'])){
+                return true;
+            }else{
+                return false;
+            }
         } else {
-            dd(5);
+            return false;
         }
-
-        // Procesa la respuesta según sea necesario
-        return $response;
     }
 }

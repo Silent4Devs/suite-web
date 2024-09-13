@@ -4,7 +4,10 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.empleados.create') }}" type="button" class="btn tb-btn-primary">Registrar Empleados</a>
+
+            @if ($agregarEmpleados)
+                <a href="{{ route('admin.empleados.create') }}" type="button" class="btn tb-btn-primary">Registrar Empleados</a>
+            @endif
 
             <a href="{{ url('admin/panel-inicio') }}" style="text-align: right;padding-right: 20px;"
             class="btn tb-btn-primary btn-sm active" role="button" aria-pressed="true"><i
