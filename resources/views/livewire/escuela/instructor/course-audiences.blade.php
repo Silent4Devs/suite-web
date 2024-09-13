@@ -13,10 +13,10 @@
                 </form>
             </div>
         @else
-            <div class="registro rounded pt-2 pl-4 pr-4">
+            <div class="registro py-2 pl-4 pr-4" style="border-radius:12px;">
                 <div class="row justify-content-start">
                     <div class="col-9">
-                        <h4 style="color:var(--color-tbj);">{{ $item->name }}</h4>
+                        <p style="color:var(--color-tbj); margin:0px;">{{ $item->name }}</p>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <i wire:click="edit({{ $item }})"
@@ -28,11 +28,11 @@
         @endif
     @endforeach
 
-    <article class="card shadow-none">
-        <div class="card-body">
-            <form wire:submit="store" class="form-group">
-                <div class="mt-2 row justify-content-start align-items-baseline">
-                    <div class="form-group col-9 pl-0 anima-focus">
+    <div class="card shadow-none">
+        <div class="card-body" style="padding-bottom: 17px; padding-top:17px;">
+            <form wire:submit="store" class="form-group mb-0">
+                <div class="row justify-content-start align-items-baseline">
+                    <div class="form-group col-9 pl-0 anima-focus mb-0">
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*', [
                             'class' => 'pl-0',
                         ]) !!} --}}
@@ -49,5 +49,5 @@
                 </div>
             </form>
         </div>
-    </article>
+    </div>
 </section>
