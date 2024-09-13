@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('BIA') }}
+    {{-- {{ Breadcrumbs::render('BIA') }} --}}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -90,7 +90,7 @@
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.index') }}">
+                                <a href="{{ route('admin.analisis-impacto.index') }}">
                                     <div>
                                         <i class="fas fa-clipboard-list"></i><br>
                                         Cuestionarios
@@ -100,7 +100,7 @@
                         @endcan
                         @can('matriz_bia_matriz')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.matriz') }}">
+                                <a href="{{ route('admin.analisis-impacto.matriz') }}">
                                     <div>
                                         <i class="fas fa-border-none"></i><br>
                                         Matriz BIA

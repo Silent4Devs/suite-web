@@ -118,6 +118,7 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
         <div class="d-flex align-items-start" wire:ignore>
+            {{$course->instructor->empleado}}
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name }}">
