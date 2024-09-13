@@ -406,6 +406,11 @@
                                         <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                     </a>
                                     <ul>
+                                        @can('matriz_bia_menu_acceder')
+                                            <li><a href="{{ route('admin.analisis-impacto.menu') }}">Análisis de
+                                                    Impacto</a>
+                                            </li>
+                                        @endcan
                                         @can('clausulas_auditorias_acceder')
                                             <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                             </li>
