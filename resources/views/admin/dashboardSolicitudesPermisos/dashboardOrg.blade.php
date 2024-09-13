@@ -571,7 +571,7 @@
                     const listItem = document.createElement("li");
                     listItem.classList.add("d-flex", "align-items-center", "mb-2");
                     listItem.innerHTML =
-                        `<img src="${person.image}" alt="${person.name}"> <span>${person.name}</span>`;
+                        `<div class="img-person"> <img src="${person.image}" alt="${person.name}"> </div> <span class="ms-3">${person.name}</span>`;
                     eventList.appendChild(listItem);
                 });
 
@@ -592,13 +592,13 @@
                     title: vacacion['title'],
                     start: new Date(
                         vacacion['inicio']['año'],
-                        vacacion['inicio']['mes'],
-                        vacacion['inicio']['dia'],
+                        vacacion['inicio']['mes'] - 1,
+                        vacacion['inicio']['dia'], 0, 0,
                     ),
                     end: new Date(
                         vacacion['fin']['año'],
-                        vacacion['fin']['mes'],
-                        vacacion['fin']['dia'],
+                        vacacion['fin']['mes'] - 1,
+                        vacacion['fin']['dia'], 0, 0,
                     ),
                     color: vacacion['color'],
                 });
@@ -610,13 +610,13 @@
                     title: day['title'],
                     start: new Date(
                         day['inicio']['año'],
-                        day['inicio']['mes'],
-                        day['inicio']['dia'],
+                        day['inicio']['mes'] - 1,
+                        day['inicio']['dia'], 0, 0,
                     ),
                     end: new Date(
                         day['fin']['año'],
-                        day['fin']['mes'],
-                        day['fin']['dia'],
+                        day['fin']['mes'] - 1,
+                        day['fin']['dia'], 0, 0,
                     ),
                     color: day['color'],
                 });
@@ -628,13 +628,13 @@
                     title: permiso['title'],
                     start: new Date(
                         permiso['inicio']['año'],
-                        permiso['inicio']['mes'],
-                        permiso['inicio']['dia'],
+                        permiso['inicio']['mes'] - 1,
+                        permiso['inicio']['dia'], 0, 0,
                     ),
                     end: new Date(
                         permiso['fin']['año'],
-                        permiso['fin']['mes'],
-                        permiso['fin']['dia'],
+                        permiso['fin']['mes'] - 1,
+                        permiso['fin']['dia'], 0, 0,
                     ),
                     color: permiso['color'],
                 });
@@ -670,44 +670,6 @@
                 window.location.href = baseUrl;
             }
         }
-    </script>
-
-    <script>
-        mobiscroll.setOptions({
-            locale: mobiscroll
-                .localeEs, // Specify language like: locale: mobiscroll.localePl or omit setting to use default
-            theme: 'ios', // Specify theme like: theme: 'ios' or omit setting to use default
-            themeVariant: 'light' // More info about themeVariant: https://mobiscroll.com/docs/jquery/eventcalendar/api#opt-themeVariant
-        });
-
-        $(function() {
-            var inst = $('#demo-daily-events')
-                .mobiscroll()
-                .eventcalendar({
-
-                    view: { // More info about view: https://mobiscroll.com/docs/jquery/eventcalendar/api#opt-view
-                        calendar: {
-                            type: 'week'
-                        },
-                        agenda: {
-                            type: 'day'
-                        },
-                    },
-                    onEventClick: function(
-                        args
-                    ) { // More info about onEventClick: https://mobiscroll.com/docs/jquery/eventcalendar/api#event-onEventClick
-                        mobiscroll.toast({
-
-                            message: args.event.title,
-                        });
-                    },
-                })
-                .mobiscroll('getInst');
-
-            $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function(events) {
-                inst.setEvents(events);
-            });
-        });
     </script>
 
     <script>
