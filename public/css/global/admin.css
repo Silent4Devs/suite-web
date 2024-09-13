@@ -1445,3 +1445,7 @@ table td {
 .cke_notifications_area{
     display: none !important;
 }
+
+.select2-dropdown{
+    z-index: 999999999999999999 !important;
+}
