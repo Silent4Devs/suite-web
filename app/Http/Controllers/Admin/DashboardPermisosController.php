@@ -27,9 +27,9 @@ class DashboardPermisosController extends Controller
         $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
         $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
 
-        $vacaciones = SolicitudVacaciones::where('aprobacion', 3)->get();
-        $dayOff = SolicitudDayOff::where('aprobacion', 3)->get();
-        $permisos = SolicitudPermisoGoceSueldo::where('aprobacion', 3)->get();
+        $vacaciones = SolicitudVacaciones::get();
+        $dayOff = SolicitudDayOff::get();
+        $permisos = SolicitudPermisoGoceSueldo::get();
 
         $vacacionesEvents = collect();
         $dayOffEvents = collect();
