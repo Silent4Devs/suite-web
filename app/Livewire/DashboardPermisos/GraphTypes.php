@@ -5,6 +5,7 @@ namespace App\Livewire\DashboardPermisos;
 use Livewire\Component;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\PermisosGoceSueldo;
+use App\Models\Area;
 use Carbon\Carbon;
 
 class GraphTypes extends Component
@@ -31,11 +32,21 @@ class GraphTypes extends Component
         $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
         $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
 
-        $permisos = PermisosGoceSueldo::get();
+        $permisosTipos = PermisosGoceSueldo::get();
         $permisosSolicitudes = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
 
+        if($this->areaSeleccionada == 'all'){
+
+        }else{
+            $area = Area::find($this->areaSeleccionada);
+
+            $permisosSolicitudes = $permisosSolicitudes->filter(function ($permiso) use ( $area) {
+                return $permiso->empleado->area_id === $area->id;
+            });
+        }
+
         $permisosCollect = collect();
-        foreach ($permisos as $permiso) {
+        foreach ($permisosTipos as $permiso) {
 
             $permisosSolicitudesFilter = $permisosSolicitudes->filter(function($permisoSolicitud) use ($permiso) {
                 return $permisoSolicitud->permiso_id === $permiso->id;
