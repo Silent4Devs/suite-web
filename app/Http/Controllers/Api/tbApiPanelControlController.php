@@ -12,7 +12,7 @@ class tbApiPanelControlController extends Controller
     {
         // Realiza la solicitud a la API externa
         // $response = Http::get('https://66d8dc314ad2f6b8ed52d80a.mockapi.io/example2');
-        $response = Http::get('https://192.168.9.113/api/onPremise/clientes');
+        $response = Http::get('http://192.168.9.113/api/onPremise/clientes');
 
         // Verifica si la solicitud fue exitosa
         if ($response->successful()) {
