@@ -21,7 +21,8 @@ class TypeCatalogueTraining extends Component
 
     public $deleteRegister;
 
-    public function registersRestore(){
+    public function registersRestore()
+    {
         // dd("click");
         TBTypeCatalogueTrainingModel::onlyTrashed()->restore();
     }
@@ -33,9 +34,9 @@ class TypeCatalogueTraining extends Component
 
     public function delete()
     {
-        if(TBCatalogueTrainingModel::where('type_id',$this->deleteRegister->id)->exists()){
+        if (TBCatalogueTrainingModel::where('type_id', $this->deleteRegister->id)->exists()) {
             $this->dispatch('useRegister');
-        }else{
+        } else {
             $this->dispatch('registerDelete');
             $this->deleteRegister->delete();
         }

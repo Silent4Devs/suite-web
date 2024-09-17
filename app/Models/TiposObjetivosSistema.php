@@ -12,7 +12,7 @@ class TiposObjetivosSistema extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
 
     protected $table = 'tipo_objetivo_sistema';
 
