@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDa
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\V1\Timesheet\tbApiMobileControllerTimesheet;
-use App\Http\Controllers\tbApiPanelControlController;
+use App\Http\Controllers\Api\tbApiPanelControlController;
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
