@@ -29,17 +29,17 @@
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.mark" required>
+                        wire:model.live="form.mark" >
                     <label for="name">Marca</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.manufacturer" required>
+                        wire:model.live="form.manufacturer" >
                     <label for="name">Fabricante</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.norma" required>
+                        wire:model.live="form.norma" >
                     <label for="name">Norma</label>
                 </div>
                 <button class="btn btn-primary"
