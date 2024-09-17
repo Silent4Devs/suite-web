@@ -2,23 +2,26 @@
 
 namespace App\Livewire\DashboardPermisos;
 
-use Livewire\Component;
 use App\Models\Area;
-use App\Models\SolicitudVacaciones;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
 use Carbon\Carbon;
+use Livewire\Component;
 
 class GraphAreas extends Component
 {
     public $areaSeleccionada;
+
     public $mes_año;
 
-    function mounth($areaSeleccionada) {
+    public function mounth($areaSeleccionada)
+    {
         $this->areaSeleccionada = $areaSeleccionada;
     }
 
-    function updatedMesAño($value) {
+    public function updatedMesAño($value)
+    {
         $this->mes_año = $value;
     }
 
@@ -26,7 +29,7 @@ class GraphAreas extends Component
     {
         if ($this->mes_año) {
             $mes_año = Carbon::parse($this->mes_año);
-        }else{
+        } else {
             $mes_año = Carbon::now();
         }
 
@@ -43,15 +46,15 @@ class GraphAreas extends Component
 
         foreach ($areas as $area) {
 
-            $vacacionesArea = $vacaciones->filter(function ($vacacion) use ( $area) {
+            $vacacionesArea = $vacaciones->filter(function ($vacacion) use ($area) {
                 return $vacacion->empleado->area_id === $area->id;
             });
 
-            $dayOffArea = $dayOff->filter(function ($day) use ( $area) {
+            $dayOffArea = $dayOff->filter(function ($day) use ($area) {
                 return $day->empleado->area_id === $area->id;
             });
 
-            $permisosArea = $permisos->filter(function ($permiso) use ( $area) {
+            $permisosArea = $permisos->filter(function ($permiso) use ($area) {
                 return $permiso->empleado->area_id === $area->id;
             });
 

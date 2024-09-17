@@ -2,23 +2,26 @@
 
 namespace App\Livewire\DashboardPermisos;
 
-use Livewire\Component;
 use App\Models\Area;
-use App\Models\SolicitudVacaciones;
 use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
 use Carbon\Carbon;
+use Livewire\Component;
 
 class GraphDona extends Component
 {
     public $areaSeleccionada;
+
     public $mes_año;
 
-    function mounth($areaSeleccionada) {
+    public function mounth($areaSeleccionada)
+    {
         $this->areaSeleccionada = $areaSeleccionada;
     }
 
-    function updatedMesAño($value) {
+    public function updatedMesAño($value)
+    {
         $this->mes_año = $value;
     }
 
@@ -26,7 +29,7 @@ class GraphDona extends Component
     {
         if ($this->mes_año) {
             $mes_año = Carbon::parse($this->mes_año);
-        }else{
+        } else {
             $mes_año = Carbon::now();
         }
 
@@ -37,20 +40,20 @@ class GraphDona extends Component
         $dayOff = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
         $permisos = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
 
-        if($this->areaSeleccionada == 'all'){
+        if ($this->areaSeleccionada == 'all') {
 
-        }else{
+        } else {
             $area = Area::find($this->areaSeleccionada);
 
-            $vacaciones = $vacaciones->filter(function ($vacacion) use ( $area) {
+            $vacaciones = $vacaciones->filter(function ($vacacion) use ($area) {
                 return $vacacion->empleado->area_id === $area->id;
             });
 
-            $dayOff = $dayOff->filter(function ($day) use ( $area) {
+            $dayOff = $dayOff->filter(function ($day) use ($area) {
                 return $day->empleado->area_id === $area->id;
             });
 
-            $permisos = $permisos->filter(function ($permiso) use ( $area) {
+            $permisos = $permisos->filter(function ($permiso) use ($area) {
                 return $permiso->empleado->area_id === $area->id;
             });
         }

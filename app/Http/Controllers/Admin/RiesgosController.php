@@ -297,7 +297,7 @@ class RiesgosController extends Controller
     public function archivoRiesgo()
     {
         $riesgos = RiesgoIdentificado::where('archivado', true)->get();
-        
+
         return view('admin.desk.riesgos.archivo', compact('riesgos'));
     }
 

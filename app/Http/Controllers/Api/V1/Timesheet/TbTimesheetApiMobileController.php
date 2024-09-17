@@ -3,35 +3,18 @@
 namespace App\Http\Controllers\Api\V1\Timesheet;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Jobs\NuevoProyectoJob;
-use App\Mail\TimesheetHorasSobrepasadas;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
-use App\Models\Area;
-use App\Models\ContractManager\Fiscale;
 use App\Models\Empleado;
-use App\Models\ListaInformativa;
-use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\Timesheet;
-use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoArea;
-use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetTarea;
 use App\Models\User;
-use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
-use PDF;
 use Throwable;
 
 class TbTimesheetApiMobileController extends Controller
@@ -50,6 +33,7 @@ class TbTimesheetApiMobileController extends Controller
             },
             $url,
         );
+
         return $url;
     }
 
@@ -72,7 +56,7 @@ class TbTimesheetApiMobileController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $timesheet->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$timesheet->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -84,7 +68,7 @@ class TbTimesheetApiMobileController extends Controller
         // $proyectos = $timesheet->proyectos;//[0]->makeHidden(['created_at', 'updated_at', 'areas', 'fecha_inicio', 'fecha_fin', 'sede_id', 'tipo', 'horas_proyecto'])->toJson();
         $proyectos = [];
 
-        foreach($timesheet->proyectos as $proyecto){
+        foreach ($timesheet->proyectos as $proyecto) {
             // arra_push($prueba)
             $proyectos[] = $proyecto->makeHidden(['created_at', 'updated_at', 'areas', 'fecha_inicio', 'fecha_fin', 'sede_id', 'tipo', 'horas_proyecto']);
 
@@ -176,7 +160,7 @@ class TbTimesheetApiMobileController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $usuario->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$usuario->empleado->foto);
         }
 
         $usuario->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -218,7 +202,7 @@ class TbTimesheetApiMobileController extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $aprobacion->empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$aprobacion->empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -314,4 +298,3 @@ class TbTimesheetApiMobileController extends Controller
         )->header('Content-Type', 'application/json');
     }
 }
-

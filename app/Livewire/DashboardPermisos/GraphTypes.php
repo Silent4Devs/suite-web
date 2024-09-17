@@ -2,22 +2,25 @@
 
 namespace App\Livewire\DashboardPermisos;
 
-use Livewire\Component;
-use App\Models\SolicitudPermisoGoceSueldo;
-use App\Models\PermisosGoceSueldo;
 use App\Models\Area;
+use App\Models\PermisosGoceSueldo;
+use App\Models\SolicitudPermisoGoceSueldo;
 use Carbon\Carbon;
+use Livewire\Component;
 
 class GraphTypes extends Component
 {
     public $areaSeleccionada;
+
     public $mes_año;
 
-    function mounth($areaSeleccionada) {
+    public function mounth($areaSeleccionada)
+    {
         $this->areaSeleccionada = $areaSeleccionada;
     }
 
-    function updatedMesAño($value) {
+    public function updatedMesAño($value)
+    {
         $this->mes_año = $value;
     }
 
@@ -25,7 +28,7 @@ class GraphTypes extends Component
     {
         if ($this->mes_año) {
             $mes_año = Carbon::parse($this->mes_año);
-        }else{
+        } else {
             $mes_año = Carbon::now();
         }
 
@@ -35,12 +38,12 @@ class GraphTypes extends Component
         $permisosTipos = PermisosGoceSueldo::get();
         $permisosSolicitudes = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
 
-        if($this->areaSeleccionada == 'all'){
+        if ($this->areaSeleccionada == 'all') {
 
-        }else{
+        } else {
             $area = Area::find($this->areaSeleccionada);
 
-            $permisosSolicitudes = $permisosSolicitudes->filter(function ($permiso) use ( $area) {
+            $permisosSolicitudes = $permisosSolicitudes->filter(function ($permiso) use ($area) {
                 return $permiso->empleado->area_id === $area->id;
             });
         }
@@ -48,7 +51,7 @@ class GraphTypes extends Component
         $permisosCollect = collect();
         foreach ($permisosTipos as $permiso) {
 
-            $permisosSolicitudesFilter = $permisosSolicitudes->filter(function($permisoSolicitud) use ($permiso) {
+            $permisosSolicitudesFilter = $permisosSolicitudes->filter(function ($permisoSolicitud) use ($permiso) {
                 return $permisoSolicitud->permiso_id === $permiso->id;
             });
 

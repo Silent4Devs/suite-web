@@ -92,7 +92,7 @@ class PoliticaSgsiController extends Controller
 
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        if (!isset($modulo)  ||  $modulo->participantes->isEmpty()) {
+        if (! isset($modulo) || $modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
 
             return view('admin.politicaSgsis.index', compact(
@@ -108,7 +108,7 @@ class PoliticaSgsiController extends Controller
         } else {
 
             $listavacia = 'cumple';
-            
+
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
                 'organizacion_actual',

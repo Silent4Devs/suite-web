@@ -12,8 +12,7 @@ class TimeSheetTareaObserver
      *
      * @return void
      */
-
-     public function created(TimeSheetTarea $timeSheetTarea)
+    public function created(TimeSheetTarea $timeSheetTarea)
     {
         $this->forgetCache();
     }
