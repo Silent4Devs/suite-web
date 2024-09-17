@@ -381,9 +381,9 @@ class UsersController extends Controller
         $cuentaUsers = User::usuariosActivos();
         $cuentaEmpleados = Empleado::empleadosActivos();
 
-        if ($client['key'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+        if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
-            if (($cuentaUsers <= $client['numeroUsuarios']) && ($cuentaEmpleados <= $client['numeroUsuarios'])) {
+            if (($cuentaUsers <= $client['Numero_Usuario']) && ($cuentaEmpleados <= $client['Numero_Usuario'])) {
                 return true;
             } else {
                 return false;

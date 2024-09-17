@@ -32,7 +32,7 @@ class TimesheetMiddleware
 
         $client = $response->original[0];
 
-        if ($client['key'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+        if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
             // Definir los nombres de los módulos que son válidos
             $modulosValidos = ["Gestión de Talento", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
 

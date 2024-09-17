@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GestionFinancieraMiddleware
+class VisitantesMiddleware
 {
     /**
      * Handle an incoming request.
@@ -35,7 +35,7 @@ class GestionFinancieraMiddleware
         if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
             $modulo = array_filter($client["modulos"], function ($modulo) {
-                return $modulo["nombre_catalogo"] == "Gestión Financiera" && $modulo["estatus"] == true;
+                return $modulo["nombre_catalogo"] == "Visitantes" && $modulo["estatus"] == true;
             });
 
             // Verificar si existe un módulo que cumpla con la condición
