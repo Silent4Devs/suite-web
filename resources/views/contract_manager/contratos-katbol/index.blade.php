@@ -85,7 +85,7 @@
                         </div>
                     </nav>
 
-                    <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-content pb-4" id="nav-tabContent">
                         <div class="tab-pane mb-4 fade show active" id="nav-contarea" role="tabpanel"
                             aria-labelledby="nav-contarea-tab">
                             @include('contract_manager.contratos-katbol.table')

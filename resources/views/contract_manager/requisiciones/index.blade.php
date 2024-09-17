@@ -1,35 +1,20 @@
 @extends('layouts.admin')
 @section('content')
-    <style type="text/css">
-        table {
-            table-layout: fixed;
-            width: 500px;
-        }
-
-        th,
-        td {
-            border: 1px solid blue;
-            width: 130px;
-            word-wrap: break-word
-        }
-    </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
-        <div class="card-body datatable-fix">
+        <div class="card-body">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
-                <a style="color: white;" class="btn btn-primary"
-                    href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
+                <a class="btn btn-primary" href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
                 <button class="btn btn-primary" type="submit" title="Aprobadores">
                     Aprobadores
                 </button>
-                <a style="color: white;" class="btn btn-primary"
-                    href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
+                <a class="btn btn-primary" href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
             </form>
-            <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
-                <thead class="thead-dark">
+            <table id="dom" class="table w-100 datatable-perspectiva" style="width: 100%">
+                <thead class="">
                     <tr>
-                        <th style="vertical-align: top">Folio</th>
+                        <th style="vertical-align: top; min-width: 100px;">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>

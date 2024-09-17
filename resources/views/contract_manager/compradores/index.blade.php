@@ -38,8 +38,8 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Comprador">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Comprador">
+                <thead class="">
                     <tr>
 
                         <th style="vertical-align: top">

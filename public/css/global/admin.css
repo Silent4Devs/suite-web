@@ -1449,3 +1449,8 @@ table td {
 .select2-dropdown{
     z-index: 999999999999999999 !important;
 }
+
+
+.nav.nav-tabs{
+    margin-bottom: 20px;
+}
