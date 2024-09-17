@@ -38,6 +38,7 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
         'titulo',
         'fecha',
         'sede',
+        'fecha_cierre',
         'ubicacion',
         'descripcion',
         'areas_afectados',
