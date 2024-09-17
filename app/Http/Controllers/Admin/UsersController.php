@@ -79,8 +79,8 @@ class UsersController extends Controller
     public function create()
     {
         $agregarUsuarios = $this->consultaApiNoUsers();
-        
-        if($agregarUsuarios){
+
+        if ($agregarUsuarios) {
             try {
 
                 abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -106,8 +106,7 @@ class UsersController extends Controller
                 // Retornar una respuesta de error al cliente
                 return response()->json(['message' => 'Error al crear usuario'], 500);
             }
-        }
-        else{
+        } else {
             abort(403);
         }
     }
@@ -115,8 +114,8 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $agregarUsuarios = $this->consultaApiNoUsers();
-        
-        if($agregarUsuarios){
+
+        if ($agregarUsuarios) {
             try {
                 abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -134,7 +133,7 @@ class UsersController extends Controller
                 // Retornar una respuesta de error al cliente
                 return response()->json(['message' => 'Error al guardar usuario'], 500);
             }
-        }else{
+        } else {
             abort(403);
         }
     }
@@ -381,12 +380,12 @@ class UsersController extends Controller
 
         $cuentaUsers = User::usuariosActivos();
         $cuentaEmpleados = Empleado::empleadosActivos();
-        
-        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+
+        if ($client['key'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
-            if(($cuentaUsers <= $client['numeroUsuarios']) && ($cuentaEmpleados <= $client['numeroUsuarios'])){
+            if (($cuentaUsers <= $client['numeroUsuarios']) && ($cuentaEmpleados <= $client['numeroUsuarios'])) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } else {

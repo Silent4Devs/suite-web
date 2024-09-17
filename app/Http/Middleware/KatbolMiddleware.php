@@ -20,6 +20,8 @@ class KatbolMiddleware
 
         if ($estado) {
             return $next($request);
+        } else {
+            abort(403);
         }
     }
 
@@ -30,7 +32,7 @@ class KatbolMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+        if ($client['key'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Definir los nombres de los módulos que son válidos
             $modulosValidos = ["Gestión Contractual", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
 

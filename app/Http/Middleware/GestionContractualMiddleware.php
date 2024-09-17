@@ -20,6 +20,8 @@ class GestionContractualMiddleware
 
         if ($estado) {
             return $next($request);
+        } else {
+            abort(403);
         }
     }
 
@@ -30,7 +32,7 @@ class GestionContractualMiddleware
 
         $client = $response->original[0];
 
-        if ($client['uuid'] == env('CLIENT_KEY') && $client['estatus'] == true) {
+        if ($client['key'] == env('CLIENT_KEY') && $client['estatus'] == true) {
             // Filtrar el módulo que cumpla con las condiciones deseadas
             $modulo = array_filter($client["modulos"], function ($modulo) {
                 return $modulo["nombre_catalogo"] == "Gestión Contractual" && $modulo["estatus"] == true;
