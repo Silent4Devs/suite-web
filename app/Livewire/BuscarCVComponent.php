@@ -55,9 +55,10 @@ class BuscarCVComponent extends Component
 
     public $normaId;
 
-    public $enableField=false;
+    public $enableField = false;
 
-    public function enableFields(){
+    public function enableFields()
+    {
         $this->enableField = false;
     }
 
