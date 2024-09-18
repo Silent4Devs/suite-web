@@ -78,10 +78,16 @@ class ClasificacionesAuditoriasController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
         $validatedData = $request->validate([
             'identificador' => 'unique:clasificaciones_auditorias,identificador', // Ignora el actual en la validación
             'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
+
 
         try {
             $nuevaClasificacion = ClasificacionesAuditorias::create([
@@ -136,6 +142,10 @@ class ClasificacionesAuditoriasController extends Controller
         $validatedData = $request->validate([
             'identificador' => 'unique:clasificaciones_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
             'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
         try {
