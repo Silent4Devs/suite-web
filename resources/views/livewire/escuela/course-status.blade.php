@@ -102,7 +102,7 @@
             </div>
 
             <div>
-                @if ($current->resource)
+                @if (isset($current->resource))
                     <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download"
                         style="cursor: pointer;">
                         <i class="text-lg fas fa-download d-inline"></i>
