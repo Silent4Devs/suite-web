@@ -577,7 +577,13 @@
                     const listItem = document.createElement("li");
                     listItem.classList.add("d-flex", "align-items-center", "mb-2");
                     listItem.innerHTML =
-                        `<div class="img-person"> <img src="${person.image}" alt="${person.name}"> </div> <span class="ms-3">${person.name}</span>`;
+                        `
+                            <div class="img-person">
+                                <img src="${person.image}" alt="${person.name}">
+                            </div>
+                            <span class="ms-3">${person.name}</span>
+
+                        `;
                     eventList.appendChild(listItem);
                 });
 

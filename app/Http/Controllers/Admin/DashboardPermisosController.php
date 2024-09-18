@@ -23,9 +23,9 @@ class DashboardPermisosController extends Controller
         $inicio_mes = $today->copy()->startOfMonth();  // Primer día del mes
         $fin_mes = $today->copy()->endOfMonth();       // Último día del mes
 
-        $vacacionesMounth = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
-        $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
-        $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
+        $vacacionesMounth = SolicitudVacaciones::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
+        $dayOffMounth = SolicitudDayOff::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
+        $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
 
         $vacaciones = SolicitudVacaciones::get();
         $dayOff = SolicitudDayOff::get();
