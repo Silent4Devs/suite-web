@@ -230,6 +230,11 @@ class MejorasController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function updateAnalisisMejoras(Request $request, $id_mejoras)
     {
 
