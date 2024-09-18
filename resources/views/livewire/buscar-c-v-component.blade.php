@@ -100,7 +100,7 @@
             <div class="col-sm-3 col-3 col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Filtros</h4>
+                        <h4 style="color: #3086AF;">Filtros</h4>
                         <hr>
                         <div class="row">
                             <div class="col-12 col-sm-12 px-3">
@@ -218,7 +218,7 @@
             <div class="card" style="{{$isPersonal ? "border:none;" : null}}">
                 <div class="card-body {{ $isPersonal ? 'p-0 m-0' : null }}" style="{{$isPersonal ? 'border:none;': null}}">
                     @if (!$isPersonal)
-                        <h4>Curriculum Vitae</h4>
+                        <h4 style="color: #3086AF;">Curriculum Vitae</h4>
                         <hr>
                         <div class="text-center" wire:loading>
                             <i class="fas fa-circle-notch fa-spin mr-2"></i> Buscando Coincidencias
