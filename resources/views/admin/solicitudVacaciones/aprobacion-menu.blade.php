@@ -170,10 +170,6 @@
                                     <div style="position: relative !important;">
                                         <i class="bi bi-coin"></i><br>
                                         Dashboard Solicitudes
-                                        <div id="circulo" style="position:absolute; top:-70px; right:-50px"
-                                            class="offset-4 mt-4">
-                                            <p> {{ $solicitud_permiso }}</p>
-                                        </div>
                                     </div>
                                 </a>
 
