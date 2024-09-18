@@ -19,7 +19,7 @@
             <button id="btnGuardarResumen" class="mr-3 btn btn-sm btn-success">Guardar</button>
         </div>
     </div>
-    <livewire:training.training :id='$id'/>
+    <livewire:training.training :id={{ $id }} />
 
     <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
         <span style="font-size: 17px; font-weight: bold;">
@@ -220,8 +220,8 @@
         <div class="row">
             <div class="form-group col-sm-5">
                 <label for="id_language"><i class="fas fa-school iconos-crear"></i>Nombre</label>
-                <select class="form-control {{ $errors->has('id_language') ? 'is-invalid' : '' }}"
-                    name="id_language" id="nombre_idioma" value="{{ old('id_language', '') }}">
+                <select class="form-control {{ $errors->has('id_language') ? 'is-invalid' : '' }}" name="id_language"
+                    id="nombre_idioma" value="{{ old('id_language', '') }}">
                     <option value="">Seleccione una opción</option>
                     @foreach ($idiomas as $id => $idioma)
                         <option value="{{ $idioma->id }}">

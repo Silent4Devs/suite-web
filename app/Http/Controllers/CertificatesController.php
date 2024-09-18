@@ -264,7 +264,7 @@ class CertificatesController extends Controller
                     for ($j = 1; $j <= 5; $j++) {
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
-                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new CertificatesMail($catalogueTraining->id, $catalogueTraining));
+                            Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new CertificatesMail($catalogueTraining->id, $catalogueTraining->name));
                             $breakLoop = true;
                             break;
                         }
