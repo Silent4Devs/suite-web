@@ -19,9 +19,9 @@ class DashboardPermisosController extends Controller
     {
         $currentUser = User::getCurrentUser();
 
-        $mes_año = Carbon::now();  // Puedes reemplazar esto con el mes que desees
-        $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
-        $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
+        $today = Carbon::now();  // Puedes reemplazar esto con el mes que desees
+        $inicio_mes = $today->copy()->startOfMonth();  // Primer día del mes
+        $fin_mes = $today->copy()->endOfMonth();       // Último día del mes
 
         $vacacionesMounth = SolicitudVacaciones::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
         $dayOffMounth = SolicitudDayOff::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '>=', $fin_mes)->get();
@@ -68,7 +68,7 @@ class DashboardPermisosController extends Controller
                     'mes' => Carbon::parse($vacacion->fecha_fin)->format('m'),
                     'año' => Carbon::parse($vacacion->fecha_fin)->format('Y'),
                 ],
-                'color' => '#428BEC',
+                'color' => '#5899ef',
                 'empleado_img' => $vacacion->empleado->avatar_ruta,
             ]);
         }
@@ -86,7 +86,7 @@ class DashboardPermisosController extends Controller
                     'mes' => Carbon::parse($day->fecha_fin)->format('m'),
                     'año' => Carbon::parse($day->fecha_fin)->format('Y'),
                 ],
-                'color' => '#428BEC',
+                'color' => '#2962d4',
                 'empleado_img' => $day->empleado->avatar_ruta,
             ]);
         }
@@ -104,7 +104,7 @@ class DashboardPermisosController extends Controller
                     'mes' => Carbon::parse($permiso->fecha_fin)->format('m'),
                     'año' => Carbon::parse($permiso->fecha_fin)->format('Y'),
                 ],
-                'color' => '#428BEC',
+                'color' => '#0808a9',
                 'empleado_img' => $permiso->empleado->avatar_ruta,
             ]);
         }

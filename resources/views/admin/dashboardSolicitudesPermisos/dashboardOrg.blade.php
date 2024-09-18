@@ -66,7 +66,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="card-indicator-permiso" style="background-color: #428BEC;">
+            <div class="card-indicator-permiso" style="background-color: #5899ef;">
                 <div class="d-flex align-items-center gap-3">
                     <i class="material-symbols-outlined">water_lux</i>
                     <span>
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card-indicator-permiso" style="background-color: #2972D4;">
+            <div class="card-indicator-permiso" style="background-color: #2962d4;">
                 <div class="d-flex align-items-center gap-3">
                     <i class="material-symbols-outlined">work_history</i>
                     <span>
@@ -116,7 +116,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card-indicator-permiso" style="background-color: #1757AB;">
+            <div class="card-indicator-permiso" style="background-color: #0808a9;">
                 <div class="d-flex align-items-center gap-3">
                     <i class="material-symbols-outlined">license</i>
                     <span>
@@ -316,7 +316,9 @@
                                 </div>
                             </td>
                             <td>
-                                Vacaciones
+                                <span class="type-permiso-span" style="background-color: #5899ef">
+                                    Vacaciones
+                                </span>
                             </td>
                             <td>
                                 {{ Carbon\Carbon::parse($vacTable->fecha_inicio)->format('d/m/Y') }}
@@ -339,7 +341,9 @@
                                 </div>
                             </td>
                             <td>
-                                DayOff
+                                <span class="type-permiso-span" style="background-color: #2962d4">
+                                    DayOff
+                                </span>
                             </td>
                             <td>
                                 {{ Carbon\Carbon::parse($dayTable->fecha_inicio)->format('d/m/Y') }}
@@ -362,7 +366,9 @@
                                 </div>
                             </td>
                             <td>
-                                Permiso
+                                <span class="type-permiso-span" style="background-color: #0808a9">
+                                    Permiso
+                                </span>
                             </td>
                             <td>
                                 {{ Carbon\Carbon::parse($permisoTable->fecha_inicio)->format('d/m/Y') }}
