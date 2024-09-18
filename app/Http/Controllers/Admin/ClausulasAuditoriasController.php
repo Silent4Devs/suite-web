@@ -78,6 +78,10 @@ class ClausulasAuditoriasController extends Controller
         $validatedData = $request->validate([
             'identificador' => 'unique:clausulas_auditorias,identificador', // Ignora el actual en la validación
             'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
         try {
@@ -131,6 +135,10 @@ class ClausulasAuditoriasController extends Controller
         $validatedData = $request->validate([
             'identificador' => 'unique:clausulas_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
             'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas,'.$id.'',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
         try {

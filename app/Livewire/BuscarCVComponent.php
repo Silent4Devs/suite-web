@@ -55,6 +55,13 @@ class BuscarCVComponent extends Component
 
     public $normaId;
 
+    public $enableField = false;
+
+    public function enableFields()
+    {
+        $this->enableField = false;
+    }
+
     public function resetFilter()
     {
         // $this->reset(
@@ -68,6 +75,7 @@ class BuscarCVComponent extends Component
 
         $this->employedCv = $this->catalog;
         $this->names = null;
+        $this->employess = Empleado::getaltaAll();
     }
 
     public function filterNorma()
@@ -88,6 +96,7 @@ class BuscarCVComponent extends Component
 
     public function filterArea()
     {
+        $this->employ_id = null;
         $this->filters();
     }
 
@@ -225,6 +234,7 @@ class BuscarCVComponent extends Component
     {
         $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
         $this->documents = TBUserTrainingModel::where('empleado_id', $empleadoID)->get();
+        $this->enableField = true;
         $this->dispatch('tagify');
     }
 

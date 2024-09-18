@@ -152,7 +152,6 @@ integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFc
 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const recurso = @json($recurso);
         document.getElementById('descargarFormato').addEventListener('click', function(e) {
             let html = `
             <div class="w-100">

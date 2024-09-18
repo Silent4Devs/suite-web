@@ -250,6 +250,11 @@ class RiesgosController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function updateAnalisisReisgos(Request $request, $id_riesgos)
     {
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_riesgos));

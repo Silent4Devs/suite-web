@@ -18,6 +18,7 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -469,10 +470,6 @@ class RequisicionesCreateComponent extends Component
                     'cotizacion' => $name,
                 ]);
 
-                $this->requisicionCreada->update([
-                    'proveedor_catalogo' => $this->proveedores_catalogo->nombre,
-                    'proveedoroc_id' => $this->proveedores_catalogo->id,
-                ]);
             }
 
             foreach ($dataProvedoresCatalogo as $key => $provCat) {
@@ -481,6 +478,13 @@ class RequisicionesCreateComponent extends Component
                     'proveedor_id' => $provCat['proveedor_id'],
                     'fecha_inicio' => $provCat['fecha_inicio'],
                     'fecha_fin' => $provCat['fecha_fin'],
+                ]);
+            }
+
+            foreach ($this->provedores_colllection as $keyProvCol => $provCol) {
+                $this->requisicionCreada->update([
+                    'proveedor_catalogo' => $provCol->nombre,
+                    // 'proveedoroc_id' => $this->provCol->id,
                 ]);
             }
 
@@ -624,5 +628,13 @@ class RequisicionesCreateComponent extends Component
 
             return redirect(route('contract_manager.requisiciones'));
         }
+    }
+
+    public function forgetCache()
+    {
+        Cache::forget('Requisiciones:all');
+        Cache::forget('Requisiciones:archivo_false_all');
+        Cache::forget('Requisiciones:ordenes_compra_false');
+        Cache::forget('Requisiciones:archivo_true_all');
     }
 }

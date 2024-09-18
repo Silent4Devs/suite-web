@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="type" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName">
+                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -122,7 +122,7 @@
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="name" style="max-width:614px; width:100%;" class="form-control"
-                                    name="name" wire:model.live="name_id" wire:change="filterName">
+                                    name="name" wire:model.live="name_id" wire:change="filterName" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="area" style="max-width:614px; width:100%;" class="form-control"
-                                    name="area" wire:model.live="area_id" wire:change="filterArea">
+                                    name="area" wire:model.live="area_id" wire:change="filterArea" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -152,11 +152,11 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <label for="area">Area</label>
+                                <label for="area">Área</label>
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
                                 <select id="employees" style="max-width:614px; width:100%;" class="form-control"
-                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy">
+                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -173,7 +173,7 @@
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
                                 <select id="issuing_company" style="max-width:614px; width:100%;" class="form-control"
-                                    name="issuing_company" wire:model.live="issuingCompanyId" wire:change="filterIssuingCompany">
+                                    name="issuing_company" wire:model.live="issuingCompanyId" wire:change="filterIssuingCompany" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -190,7 +190,7 @@
                             </div>
                             <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="norma" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="normaId" wire:change="filterNorma">
+                                    name="type" wire:model.live="normaId" wire:change="filterNorma" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -239,7 +239,7 @@
                                                     <span>{{ $item->area->area }}</span>
                                                 </p>
                                                 <p class="m-0 text-muted" style="font-size:10px"
-                                                    title="{{ $item->empleado->name }}">
+                                                    title="{{ $item->name }}">
                                                     {{ Str::limit($item->name, 20, '...') }}
                                                 </p>
                                             </div>
@@ -280,7 +280,7 @@
                             <div x-show="!open">
                                 <div class="row justify-content-center">
                                     <div class="col-10">
-                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true"><i
+                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true" wire:click="enableFields"><i
                                                 class="fas fa-arrow-left"></i> Regresar</button>
 
                                         <button onclick="imprimirElemento('imp1');" class="btn btn-sm btn-success">

@@ -80,18 +80,6 @@
     <script type="module">
         import timer from '{{ asset('js/timer/timer.js') }}';
         document.addEventListener('DOMContentLoaded', function() {
-            const recurso = @json($recurso);
-            let mensajeInicioFin = 'La Capacitación ha Iniciado';
-            if (recurso.ya_finalizo) {
-                mensajeInicioFin = 'La Capacitación ha Finalizado';
-            }
-            if (recurso.estatus.toLowerCase() != 'cancelado') {
-                timer(new Date(recurso.fecha_inicio_ymd), 'Iniciar La Capacitación', mensajeInicioFin);
-            } else {
-                document.getElementById('timer').innerHTML =
-                    '<i class="fas fa-exclamation-triangle mr-2"></i>Capacitación Cancelada'
-            }
-
             let empleado = null;
             const formularioModal = document.getElementById('formularioModal');
             const urlDataTable = @json(route('admin.recursos.participantes', $recurso));
