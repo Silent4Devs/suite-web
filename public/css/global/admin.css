@@ -1308,7 +1308,10 @@ a:hover {
 }
 
 a {
-    color: unset;
+    text-decoration: none !important;
+}
+a:not(a.btn){
+    color: unset !important;
 }
 
 .table .thead-dark th {

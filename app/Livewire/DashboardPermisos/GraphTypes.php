@@ -36,7 +36,7 @@ class GraphTypes extends Component
         $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
 
         $permisosTipos = PermisosGoceSueldo::get();
-        $permisosSolicitudes = SolicitudPermisoGoceSueldo::where('fecha_inicio', '>=', $inicio_mes)->orWhere('fecha_fin', '<=', $fin_mes)->get();
+        $permisosSolicitudes = SolicitudPermisoGoceSueldo::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
 
         if ($this->areaSeleccionada == 'all') {
 
