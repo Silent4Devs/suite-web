@@ -44,7 +44,7 @@
                 </div>
                 <button class="btn btn-primary"
                     style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;"
-                    type="submit">Agregar a capacitación</button>
+                    type="submit">{{$status === 'create' ? 'Agregar a capacitación':'Editar capacitación'}}</button>
             </form>
         </div>
     </div>
