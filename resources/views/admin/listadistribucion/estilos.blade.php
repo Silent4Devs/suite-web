@@ -8,7 +8,7 @@
 
 <style>
     .card-btns-distribucion {
-        background-color: #F0F2FF91;
+        background-color: #ff000091;
         height: 300px;
         width: 100%;
         border-radius: 14px;
@@ -108,5 +108,31 @@
     .anima-focus label {
         margin-top: -7px !important;
 
+    }
+
+    .select2{
+        max-width: 100%;
+    }
+
+    .select2.select2-container.select2-container--default.select2-container--below{
+        max-width: 100%;
+    }
+
+    .select2-container {
+    min-width: 100%; /* Establece el tamaño mínimo */
+    max-width: 100%;  /* O usa un tamaño fijo, si prefieres */
+}
+
+
+    .select2.select2-container.select2-container--default{
+        max-width: 100%;
+    }
+
+    .select2.select2-container.select2-container--default.select2-container--focus.select2-container--below.select2-container--open{
+        max-width: 100%;
+    }
+
+    .select2-selection.select2-selection--multiple{
+        max-width: 100%;
     }
 </style>
