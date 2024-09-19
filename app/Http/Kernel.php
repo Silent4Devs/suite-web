@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
+        'course' => \App\Http\Middleware\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 
