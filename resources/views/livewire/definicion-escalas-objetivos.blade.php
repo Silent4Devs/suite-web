@@ -117,7 +117,7 @@
                         class="btn btn-outline-primary btn-block">Cancelar</a>
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-primary btn-block" type="submit">Generar Escalas</button>
+                    <button class="btn btn-primary btn-block" type="submit">Guardar</button>
                 </div>
             </div>
         </form>
