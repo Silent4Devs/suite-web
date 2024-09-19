@@ -408,51 +408,62 @@
                 ]
             };
             let table = $('.datatable-Recurso').DataTable(dtOverrideGlobals);
-            document.querySelector('#DataTables_Table_0').addEventListener('click', function(e) {
+            // Función para mostrar la alerta de confirmación
+            function showDeleteConfirmation(url) {
+                return Swal.fire({
+                    title: '¿Quieres eliminar esta capacitación?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'No',
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        await handleDelete(url);
+                    }
+                });
+            }
+
+            // Función para manejar la solicitud de eliminación
+            async function handleDelete(url) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        },
+                    });
+                    const data = await response.json();
+                    if (data.estatus === 200) {
+                        toastr.success(data.mensaje);
+                        window.location.reload();
+                        // Aquí necesitas acceso a la tabla para recargarla
+                        // table.ajax.reload();
+                    } else if (data.estatus === 500) {
+                        toastr.error(data.mensaje);
+                    }
+                } catch (error) {
+                    toastr.error(error);
+                }
+            }
+
+            // Event listener para capturar los clics en el documento
+            document.addEventListener('click', function(e) {
                 let target = e.target;
-                if (e.target.tagName == 'I') {
-                    target = e.target.closest('button')
+                if (target.tagName === 'I') {
+                    target = target.closest('button');
                 }
 
-                if (target.classList.contains('btn-eliminar')) {
-                    const url = e.target.getAttribute('data-url');
-                    Swal.fire({
-                        title: '¿Quieres eliminar esta capacitación?',
-                        text: "¡No podrás revertir esto!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: '¡Sí, eliminar!',
-                        cancelButtonText: 'No',
-                    }).then(async (result) => {
-                        if (result.isConfirmed) {
-                            try {
-                                const response = await fetch(url, {
-                                    method: 'DELETE',
-                                    body: {},
-                                    headers: {
-                                        Accept: "application/json",
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                            .attr(
-                                                'content'),
-                                    },
-                                })
-                                const data = await response.json();
-                                if (data.estatus == 200) {
-                                    toastr.success(data.mensaje);
-                                    table.ajax.reload();
-                                }
-                                if (data.estatus == 500) {
-                                    toastr.error(data.mensaje);
-                                }
-                            } catch (error) {
-                                toastr.error(error);
-                            }
-                        }
-                    })
+                if (target && target.classList.contains('btn-eliminar')) {
+                    const url = target.getAttribute('data-url');
+                    if (url) {
+                        showDeleteConfirmation(url);
+                    }
                 }
-            })
+            });
         });
     </script>
 @endsection
