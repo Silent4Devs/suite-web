@@ -2,7 +2,7 @@
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <div class="card card-body">
         <div class="info-first-config">
-            <h4 class="title-config">Categorias</h4>
+            <h4 class="title-config">Categorías</h4>
             <p>Da de alta los grupos en los que clasificaras los objetivos.</p>
             <hr class="my-4">
         </div>
@@ -18,7 +18,7 @@
                                     name="categoria_arreglo_{{ $key }}" class="form-control" placeholder=""
                                     maxlength="120" wire:model.live="categoria.{{ $key }}.nombre"
                                     wire:change="agregarCategoria({{ $key }})">
-                                <label for="categoria_arreglo_{{ $key }}">Categoria</label>
+                                <label for="categoria_arreglo_{{ $key }}">Categoría</label>
                             </div>
                         </div>
                         {{-- Cada pregunta agregada cuenta con boton de eliminacion, el key indica cual posicion tiene en el arreglo y la elimina  --}}
@@ -49,7 +49,7 @@
         </div>
         <div class="col-3" style="justify-content: right;">
             <button class="btn btn-link" wire:click.prevent="addCategoria">
-                Añadir Criterio
+                Añadir Categoría
                 <i class="bi bi-plus-circle"></i>
             </button>
         </div>
