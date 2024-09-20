@@ -77,7 +77,7 @@
                             @if ($empleado)
                                 <div style="overflow:hidden; border-radius: 100px; background-color: #00000045;"
                                     class="mr-2">
-                                    <img class="img-person" style="width: 30px; height: 30px;"
+                                    <img class="img_empleado" style="width: 30px; height: 30px;"
                                         src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
                                         alt="{{ $empleado->name }}">
 
