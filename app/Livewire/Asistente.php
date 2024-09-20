@@ -8,10 +8,15 @@ use Livewire\Component;
 class Asistente extends Component
 {
     public $search = '';
+
     public $respuesta;
+
     public $lineas;
+
     public $filename;
+
     public $filePath;
+
     public $chatboxOpen = false;
 
     public function toggleChatbox()
@@ -25,6 +30,7 @@ class Asistente extends Component
     {
         $asistenService = app(AsistentService::class);
         $result = $asistenService->postDataTextPythonAPI($this->filePath, $this->filename);
+
         return $result;
     }
 
@@ -32,6 +38,7 @@ class Asistente extends Component
     {
         $asistenService = app(AsistentService::class);
         $result = $asistenService->postDataToPythonAPI($this->filename);
+
         return $result;
     }
 

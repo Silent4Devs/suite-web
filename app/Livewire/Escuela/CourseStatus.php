@@ -96,7 +96,7 @@ class CourseStatus extends Component
         // }
 
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
-        if (!$this->current) {
+        if (! $this->current) {
             $this->current = $this->course->lessons->last();
         }
         // else{

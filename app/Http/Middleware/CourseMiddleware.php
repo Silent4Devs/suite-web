@@ -20,13 +20,12 @@ class CourseMiddleware
         $usuario = User::getCurrentUser();
         $courseId = intval($request->route('course'));
 
-        $course = CourseUser::where('course_id',$courseId)->where('user_id',$usuario->id)->first();
-        if($course){
+        $course = CourseUser::where('course_id', $courseId)->where('user_id', $usuario->id)->first();
+        if ($course) {
             return $next($request);
         }
 
         return redirect()->route('admin.mis-cursos');
-
 
     }
 }
