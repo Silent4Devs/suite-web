@@ -37,9 +37,9 @@ class Asistente extends Component
 
     public function askAsistenText()
     {
-        $this->filename = 'guia3.pdf';
+        $this->filename = 'requisicion.pdf';
         $this->postData();
-        $this->filePath = storage_path('GuiaV3.pdf');
+        $this->filePath = storage_path('requisicion.pdf');
         $this->postDataText();
     }
 
