@@ -59,7 +59,6 @@
         <div class="row">
             <div class="col-12">
                 <h3 class="title-card-time">Clientes</h3>
-                <hr class="my-4">
             </div>
         </div>
         <div class="row">
