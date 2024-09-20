@@ -177,7 +177,6 @@ class Course extends Model implements Auditable
     {
         foreach ($this->sections_order as $secciones_lecciones) {
             foreach ($secciones_lecciones->lessons as $lesson) {
-
                 if (! $lesson->completed) {
                     // dd($lesson);
                     return $lesson;
