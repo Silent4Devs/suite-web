@@ -121,7 +121,7 @@
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{  $course->instructor->name ?? 'Sin asignar' }}">
-                {{ $course->instructor->name ?? 'Sin asignar'  }}
+                {{-- {{ $course->instructor->name ?? 'Sin asignar'  }} --}}
             </div>
             <div>
                 {{-- {{ $course->instructor->name }} --}}
