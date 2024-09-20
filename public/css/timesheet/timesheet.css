@@ -580,7 +580,7 @@ table.dataTable tbody tr.selected td {
     left: 0;
     margin-top: -80px;
     z-index: 10;
-    background-color: #7195C9;
+    background-color: var(--color-tbj);
     border: 1px solid #bdbdbd;
     color: #fff;
     border-top-right-radius: 18px;
