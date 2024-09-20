@@ -23,8 +23,8 @@
         </div>
         <div class="card-body datatable-fix">
             @if ($courses->count())
-                <table class="table table-bordered w-100 datatable-User">
-                    <thead class="thead-dark">
+                <table class="table w-100 datatable-User">
+                    <thead class="">
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">

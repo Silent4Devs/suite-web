@@ -97,7 +97,7 @@ class RiesgosController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $riesgo = RiesgoIdentificado::with('reporto')->where('archivado', false)->get();
+        $riesgo = RiesgoIdentificado::with('reporto:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($riesgo)->toJson();
     }
@@ -111,7 +111,6 @@ class RiesgosController extends Controller
         $submodulo = 4;
 
         $riesgos = RiesgoIdentificado::findOrfail(intval($id_riesgos))->load('evidencias_riesgos')->load('reporto');
-
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
         if (is_null($analisis)) {
@@ -154,7 +153,7 @@ class RiesgosController extends Controller
         $firmas = FirmaCentroAtencion::with('empleado')->where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_riesgos', $riesgos->id)->get();
 
         $firma_validacion = FirmaCentroAtencion::where('modulo_id', $modulo)->where('submodulo_id', $submodulo)->where('id_riesgos', $riesgos->id)->first();
-       
+
         return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis', 'firmaModules', 'firmas', 'aprobadores', 'aprobadoresArray', 'participantsSelected', 'firma_validacion'));
     }
 
@@ -200,7 +199,7 @@ class RiesgosController extends Controller
 
         $organizacion = Organizacion::first();
 
-        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->estatus === 'cerrado' ? Carbon::now()->format('Y-m-d H:i:s') : null);
 
         $riesgos->update([
             'titulo' => $request->titulo,
@@ -251,6 +250,11 @@ class RiesgosController extends Controller
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function updateAnalisisReisgos(Request $request, $id_riesgos)
     {
         $analisis_seguridad = AnalisisSeguridad::findOrfail(intval($id_riesgos));
@@ -285,10 +289,11 @@ class RiesgosController extends Controller
     public function archivadoRiesgo(Request $request, $incidente)
     {
         if ($request->ajax()) {
-            $riesgo = RiesgoIdentificado::findOrfail(intval($incidente));
-            $riesgo->update([
-                'archivado' => true,
-            ]);
+            RiesgoIdentificado::where('id', $incidente)->update(['archivado' => true]);
+
+            \Artisan::call('optimize:clear');
+
+            \Artisan::call('cache:clear');
 
             return response()->json(['success' => true]);
         }
@@ -296,18 +301,16 @@ class RiesgosController extends Controller
 
     public function archivoRiesgo()
     {
-        $riesgos = RiesgoIdentificado::getAll()->where('archivado', true);
+        $riesgos = RiesgoIdentificado::where('archivado', true)->get();
 
         return view('admin.desk.riesgos.archivo', compact('riesgos'));
     }
 
     public function recuperarArchivadoRiesgo($id)
     {
-        $riesgo = RiesgoIdentificado::find($id);
+        RiesgoIdentificado::where('id', $id)->update(['archivado' => false]);
 
-        $riesgo->update([
-            'archivado' => false,
-        ]);
+        \Artisan::call('cache:clear');
 
         return redirect()->route('admin.desk.index');
     }

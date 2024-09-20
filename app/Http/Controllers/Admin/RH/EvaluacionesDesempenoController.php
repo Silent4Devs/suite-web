@@ -118,6 +118,32 @@ class EvaluacionesDesempenoController extends Controller
         return view('admin.recursos-humanos.evaluaciones-desempeno.carga-objetivos-empleado', compact('empleado', 'organizacion'));
     }
 
+    public function cargaObjetivosArea($AreaID)
+    {
+        $empleado = User::getCurrentUser()->empleado;
+        if (($empleado->area_id == $AreaID) && $empleado->es_supervisor) {
+            return view('admin.recursos-humanos.evaluacion-360.objetivos-periodo.cargar-por-area', compact('AreaID'));
+        } else {
+            return view('admin.inicioUsuario.index');
+        }
+    }
+
+    public function cargarObjetivosNotificacion()
+    {
+        $usuario = User::getCurrentUser();
+        $empleado = $usuario->empleado;
+
+        $AreaID = $empleado->area_id;
+
+        if ($usuario->roles->contains('title', 'Admin')) {
+            return redirect(route('admin.ev360-objetivos-periodo.config'));
+        } elseif ($empleado->es_supervisor) {
+            return view('admin.recursos-humanos.evaluacion-360.objetivos-periodo.cargar-por-area', compact('AreaID'));
+        } else {
+            return redirect(route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado,', ['empleado' => $empleado->id]));
+        }
+    }
+
     public function objetivosImportar()
     {
         return view('admin.recursos-humanos.evaluaciones-desempeno.objetivos-importar');

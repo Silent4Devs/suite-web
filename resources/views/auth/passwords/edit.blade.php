@@ -30,7 +30,7 @@
         }
 
         .form-group label {
-            color: #3086AF;
+            color: var(--color-tbj);
         }
 
         .card {

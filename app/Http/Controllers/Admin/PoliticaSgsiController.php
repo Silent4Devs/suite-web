@@ -18,11 +18,11 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\ProcesosListaDistribucion;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,64 +83,53 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsis = PoliticaSgsi::getAll();
 
-        $teams = Team::get();
-
-        $empleados = Empleado::getAltaEmpleadosWithArea();
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
+        $listavacia = 'baja';
 
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        $listavacia = 'cumple';
-        if (! isset($modulo)) {
+        if (! isset($modulo) || $modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
-        } elseif ($modulo->participantes->isEmpty()) {
-            $listavacia = 'vacia';
-        } else {
-            foreach ($modulo->participantes as $participante) {
-                if ($participante->empleado->estatus != 'alta') {
-                    $listavacia = 'baja';
 
-                    return view('admin.politicaSgsis.index', compact(
-                        'politicaSgsis',
-                        'teams',
-                        'empleados',
-                        'organizacion_actual',
-                        'logo_actual',
-                        'empresa_actual',
-                        'direccion',
-                        'rfc',
-                        'listavacia',
-                    ));
-                }
-            }
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
+
+        } else {
+
+            $listavacia = 'cumple';
+
+            return view('admin.politicaSgsis.index', compact(
+                'politicaSgsis',
+                'organizacion_actual',
+                'logo_actual',
+                'empresa_actual',
+                'direccion',
+                'rfc',
+                'listavacia',
+            ));
         }
 
-        return view('admin.politicaSgsis.index', compact(
-            'politicaSgsis',
-            'teams',
-            'empleados',
-            'organizacion_actual',
-            'logo_actual',
-            'empresa_actual',
-            'direccion',
-            'rfc',
-            'listavacia',
-        ));
     }
 
     public function create()
     {
-       try {
-        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::getAltaEmpleadosWithArea();
+            $empleados = Empleado::getAltaEmpleadosWithArea();
 
-        return view('admin.politicaSgsis.create', compact('empleados'));
+            return view('admin.politicaSgsis.create', compact('empleados'));
 
         } catch (\Exception $e) {
             Log::channel('logstash')->info('Error al crear politica: '.$e->getMessage(), [
@@ -155,31 +144,31 @@ class PoliticaSgsiController extends Controller
 
     public function store(StorePoliticaSgsiRequest $request)
     {
-       try {
-        abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre_politica' => 'required',
-            'politicasgsi' => 'required',
-            'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date',
-        ]);
+            $request->validate([
+                'nombre_politica' => 'required',
+                'politicasgsi' => 'required',
+                'fecha_publicacion' => 'required|date',
+                'fecha_revision' => 'required|date',
+            ]);
 
-        $politicaSgsi = PoliticaSgsi::create([
-            'nombre_politica' => $request->input('nombre_politica'),
-            'politicasgsi' => $request->input('politicasgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'Pendiente',
-            'id_reviso_politica' => User::getCurrentUser()->empleado->id,
-        ]);
+            $politicaSgsi = PoliticaSgsi::create([
+                'nombre_politica' => $request->input('nombre_politica'),
+                'politicasgsi' => $request->input('politicasgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+                'id_reviso_politica' => User::getCurrentUser()->empleado->id,
+            ]);
 
-        //envio de corrreo
-        $this->solicitudAprobacion($politicaSgsi->id);
+            //envio de corrreo
+            $this->solicitudAprobacion($politicaSgsi->id);
 
-        $politicaSgsi->estatus = 'Pendiente';
+            $politicaSgsi->estatus = 'Pendiente';
 
-        return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+            return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
 
         } catch (\Exception $e) {
             Log::channel('logstash')->info('Error al guardar politica: '.$e->getMessage(), [
@@ -217,7 +206,7 @@ class PoliticaSgsiController extends Controller
 
             return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
         } catch (\Exception $e) {
-            
+
             Log::channel('logstash')->info('Error al editar politica: '.$e->getMessage(), [
                 'exception' => $e,
                 'input' => $request->all(),
@@ -298,11 +287,11 @@ class PoliticaSgsiController extends Controller
     {
         try {
 
-        abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicaSgsi->delete();
+            $politicaSgsi->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+            return back()->with('deleted', 'Registro eliminado con éxito');
 
         } catch (\Exception $e) {
 

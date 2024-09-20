@@ -512,7 +512,7 @@
             position: absolute;
             top: 30px;
             background: white;
-            z-index: 1;
+            z-index: 101;
         }
 
         .grupos_funciones .caja_grupos {

@@ -50,15 +50,15 @@ class UsersController extends Controller
     {
         try {
 
-        $key = 'Users:users_index_data';
+            $key = 'Users:users_index_data';
 
-        $query = Cache::remember($key, now()->addMinutes(120), function () {
-            return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-                $q->with('area');
-            }])->get();
-        });
+            $query = Cache::remember($key, now()->addMinutes(120), function () {
+                return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+                    $q->with('area');
+                }])->get();
+            });
 
-        return datatables()->of($query)->toJson();
+            return datatables()->of($query)->toJson();
 
         } catch (\Exception $e) {
             // Registrar el error en los logs
@@ -76,19 +76,19 @@ class UsersController extends Controller
     {
         try {
 
-        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::getAll()->pluck('title', 'id');
+            $roles = Role::getAll()->pluck('title', 'id');
 
-        $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::getAllPluck();
+            $areas = Area::getAllPluck();
 
-        $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
+            return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
 
         } catch (\Exception $e) {
             // Registrar el error en los logs
@@ -234,18 +234,18 @@ class UsersController extends Controller
 
     public function getUsers(Request $request)
     {
-       try {
-        if ($request->ajax()) {
-            $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
-            $lista = "<ul class='list-group' id='empleados-lista'>";
-            foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
-            }
-            $lista .= '</ul>';
+        try {
+            if ($request->ajax()) {
+                $nombre = $request->nombre;
+                $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
+                $lista = "<ul class='list-group' id='empleados-lista'>";
+                foreach ($usuarios as $usuario) {
+                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
+                }
+                $lista .= '</ul>';
 
-            return $lista;
-        }
+                return $lista;
+            }
 
         } catch (\Exception $e) {
             Log::channel('logstash')->info('Error al obtener usuario: '.$e->getMessage(), [

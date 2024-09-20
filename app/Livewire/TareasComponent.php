@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -63,14 +62,14 @@ class TareasComponent extends Component
 
     public function getUnreadTasks()
     {
-        $this->lista_tareas = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
+        $this->lista_tareas = User::getCurrentUser()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
 
         return response()->noContent();
     }
 
     public function getReadedTasks()
     {
-        $this->lista_tareas = Auth::user()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
+        $this->lista_tareas = User::getCurrentUser()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->orderByDesc('id')->cursorPaginate();
 
         return response()->noContent();
     }
@@ -88,7 +87,7 @@ class TareasComponent extends Component
 
     public function markAllTasksAsRead()
     {
-        $notificaciones_campana = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->get();
+        $notificaciones_campana = User::getCurrentUser()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->get();
         foreach ($notificaciones_campana as $notificacion_campana) {
             $notificacion_campana->markAsRead();
         }

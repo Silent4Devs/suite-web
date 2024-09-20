@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:latest-builder-php8.2-alpine
+FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -58,16 +58,15 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     posix \
     amqp \
     ftp
- 
-# Set working directory
-WORKDIR /app
- 
+
+# Enable phpredis extension
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
-COPY . /app
-
-EXPOSE 80 443 8000
+# Install npm
+RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

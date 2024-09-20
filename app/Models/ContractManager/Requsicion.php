@@ -3,6 +3,8 @@
 namespace App\Models\ContractManager;
 
 use App\Models\FirmasRequisiciones;
+use App\Models\ListaDistribucion;
+use App\Models\User;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -147,6 +149,61 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($req->id_user == $user->id && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqLider = ListaDistribucion::where('modelo', 'Empleado')->first();
+                        $listaPartLider = $listaReqLider->participantes;
+
+                        $jefe = $user->empleado->supervisor;
+                        $supListLider = $listaPartLider->where('empleado_id', $jefe->id)->first();
+
+                        $nivel = $supListLider->nivel;
+
+                        $participantesNivelLider = $listaPartLider->where('nivel', $nivel)->sortBy('numero_orden');
+
+                        foreach ($participantesNivelLider as $key => $partNivLider) {
+                            if ($partNivLider->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableLider = $partNivLider->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && $responsableLider->id == $id_empleado && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqFinanzas = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                        $listaPartFinanzas = $listaReqFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaReqFinanzas->niveles; $i++) {
+
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && $responsableFinanzas->id == $id_empleado && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
                     }
                 }
                 break;
@@ -159,6 +216,13 @@ class Requsicion extends Model implements Auditable
                         $registro = $req->registroFirmas;
 
                         if ($registro->solicitante_id == $id_empleado && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                            $coleccion->push($req);
+                        }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($req->id_user == $user->id && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
                             $coleccion->push($req);
                         }
                     }
@@ -175,6 +239,32 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        $listaReqLider = ListaDistribucion::where('modelo', 'Empleado')->first();
+                        $listaPartLider = $listaReqLider->participantes;
+
+                        $jefe = $user->empleado->supervisor;
+                        $supListLider = $listaPartLider->where('empleado_id', $jefe->id)->first();
+
+                        $nivel = $supListLider->nivel;
+
+                        $participantesNivelLider = $listaPartLider->where('nivel', $nivel)->sortBy('numero_orden');
+
+                        foreach ($participantesNivelLider as $key => $partNivLider) {
+                            if ($partNivLider->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableLider = $partNivLider->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && $responsableLider->id == $id_empleado && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
                     }
                 }
                 break;
@@ -189,6 +279,27 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
                             $coleccion->push($req);
                         }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        $listaReqFinanzas = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                        $listaPartFinanzas = $listaReqFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaReqFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && $responsableFinanzas->id == $id_empleado && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
                     }
                 }
                 break;
@@ -201,6 +312,13 @@ class Requsicion extends Model implements Auditable
                         $registro = $req->registroFirmas;
 
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    } else {
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
                             $coleccion->push($req);
                         }
                     }
@@ -225,6 +343,60 @@ class Requsicion extends Model implements Auditable
                         }
 
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($req->id_user == $user->id && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqLider = ListaDistribucion::where('modelo', 'Empleado')->first();
+                        $listaPartLider = $listaReqLider->participantes;
+
+                        $jefe = $user->empleado->supervisor;
+                        $supListLider = $listaPartLider->where('empleado_id', $jefe->id)->first();
+
+                        $nivel = $supListLider->nivel;
+
+                        $participantesNivelLider = $listaPartLider->where('nivel', $nivel)->sortBy('numero_orden');
+
+                        foreach ($participantesNivelLider as $key => $partNivLider) {
+                            if ($partNivLider->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableLider = $partNivLider->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && $responsableLider->id == $id_empleado && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqFinanzas = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                        $listaPartFinanzas = $listaReqFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaReqFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && $responsableFinanzas->id == $id_empleado && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
                             $coleccion->push($req);
                         }
                     }
@@ -280,7 +452,7 @@ class Requsicion extends Model implements Auditable
 
         $coleccion = collect();
 
-        $ordenes =  $requisiciones->where('firma_compras', '!=', null);
+        $ordenes = $requisiciones->where('firma_compras', '!=', null);
 
         switch ($filtro) {
             case 'general':
@@ -289,7 +461,7 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
 
@@ -297,7 +469,38 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($ord);
                         }
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($ord->id_user == $user->id && is_null($ord->firma_comprador_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        $listaOrdFinanzas = ListaDistribucion::where('modelo', 'OrdenCompra')->first();
+                        $listaPartFinanzas = $listaOrdFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaOrdFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($ord->firma_solicitante_orden) && $responsableFinanzas->id == $id_empleado && is_null($ord->firma_comprador_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $ord->comprador_id)->first();
+
+                        if (! is_null($ord->firma_solicitante) && is_null($ord->firma_finanzas_orden) && $comprador->user->id == $id_empleado) {
                             $coleccion->push($ord);
                         }
                     }
@@ -311,7 +514,13 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    } else {
+                        $comprador = Comprador::with('user')->where('id', $ord->comprador_id)->first();
+
+                        if (! is_null($ord->firma_solicitante) && is_null($ord->firma_finanzas_orden) && $comprador->user->id == $id_empleado) {
                             $coleccion->push($ord);
                         }
                     }
@@ -328,6 +537,13 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($ord->firma_comprador_orden) && $registro->solicitante_id == $id_empleado && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($ord->id_user == $user->id && is_null($ord->firma_comprador_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
                     }
                 }
                 break;
@@ -339,13 +555,30 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    } else {
+                        $listaOrdFinanzas = ListaDistribucion::where('modelo', 'OrdenCompra')->first();
+                        $listaPartFinanzas = $listaOrdFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaOrdFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($ord->firma_solicitante_orden) && $responsableFinanzas->id == $id_empleado && is_null($ord->firma_comprador_orden)) {
                             $coleccion->push($ord);
                         }
                     }
                 }
                 break;
-
 
             default:
                 foreach ($ordenes as $ord) {
@@ -353,7 +586,7 @@ class Requsicion extends Model implements Auditable
                     if ($ord->registroFirmas) {
                         $registro = $ord->registroFirmas;
 
-                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden)  && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
+                        if ($registro->comprador_id == $id_empleado && is_null($ord->firma_comprador_orden) && is_null($ord->firma_solicitante_orden) && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
 
@@ -361,7 +594,7 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($ord);
                         }
 
-                        if (! is_null($ord->firma_comprador_orden) && !is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                        if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
                             $coleccion->push($ord);
                         }
                     }
@@ -438,7 +671,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

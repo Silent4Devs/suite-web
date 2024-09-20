@@ -123,7 +123,7 @@
 
 <hr>
 
-<span style="color: #306BA9; font-size:18px;">Colaboradores a los que aplica : </span>
+<span style="color: var(--color-tbj); font-size:18px;">Colaboradores a los que aplica : </span>
 
 @if ($errors->has('custom_areas'))
     <div class="alert alert-danger">

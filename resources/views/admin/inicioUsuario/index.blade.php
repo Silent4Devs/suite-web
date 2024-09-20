@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/profile/inicio_usuario.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    @include('partials.menu-slider')
+
     <div class="d-flex" style="gap: 30px;">
         <div class="w-100">
             <div class="header-card-iu">
@@ -128,6 +128,11 @@
                                         <a href="mailto:{{ $empleado_cargo->email }}">
                                             <i class="bi bi-envelope"></i>
                                         </a>
+                                        <a href="{{ route('admin.editarCompetencias', $empleado_cargo) }}">
+                                            <i class="material-symbols-outlined">
+                                                contract_edit
+                                            </i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -235,6 +240,7 @@
                 </div>
             </a>
 
+            @if ($mostrarCargaObjetivos)
             <a
                 href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-empleado', ['empleado' => $empleado->id]) }}">
                 <div class="item-ob-ev" style="background-color: #2478B8;">
@@ -247,6 +253,22 @@
                     </div>
                 </div>
             </a>
+            @endif
+
+            @if ($mostrarCargaObjetivosArea)
+            <a
+                href="{{ route('admin.rh.evaluaciones-desempeno.carga-objetivos-area', ['area' => $empleado->area_id]) }}">
+                <div class="item-ob-ev" style="background-color: #117994;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/reunion.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Equipo: Mis Objetivos</h5>
+                        <p><small>Habilitado</small></p>
+                    </div>
+                </div>
+            </a>
+            @endif
 
             <a href="" class="d-none">
                 <div class="item-ob-ev" style="background-color: #249AB8;">

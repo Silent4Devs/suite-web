@@ -278,21 +278,21 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
-        // try {
-        //     $this->validate();
-        // } catch (\Illuminate\Validation\ValidationException $e) {
-        //     $this->alert('error', 'Error de validación', [
-        //         'position' => 'center',
-        //         'timer' => 6000,
-        //         'toast' => false,
-        //         'text' => 'Se deben llenar todos los campos obligatorios.',
-        //         'showConfirmButton' => true,
-        //         'confirmButtonText' => 'Entendido',
-        //         'timerProgressBar' => true,
-        //     ]);
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->alert('error', 'Error de validación', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Se deben llenar todos los campos obligatorios.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
 
-        //     return;
-        // }
+            return;
+        }
 
         $usuario = User::getCurrentUser();
 
@@ -302,17 +302,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $estatus = 0;
         }
 
-        DB::beginTransaction();
-
         try {
+            DB::beginTransaction();
             $objetivo = Objetivo::create([
                 'nombre' => $this->objetivo_estrategico,
-                'descripcion' => $this->descripcion,
-                'tipo_id' => $this->select_categoria,
+                'descripcion_meta' => $this->descripcion,
+                'tipo_id' => intval($this->select_categoria),
                 'KPI' => $this->KPI,
-                'metrica_id' => $this->select_unidad,
-                'empleado_id' => $this->id_emp,
-                'estatus' => $estatus,
+                'metrica_id' => intval($this->select_unidad),
+                'esta_aprobado' => $estatus,
             ]);
 
             ObjetivoEmpleado::create([
@@ -405,12 +403,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 ]);
             }
 
-            DB::commit();
-
-            $this->resetInputsObjetivo();
-            $this->resetInputsPeriodos();
-            $this->resetInputsEscalas();
-
             $this->alert('success', 'Objetivo Creado', [
                 'position' => 'center',
                 'timer' => 6000,
@@ -420,6 +412,8 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 'confirmButtonText' => 'Entendido',
                 'timerProgressBar' => true,
             ]);
+
+            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $this->forgetCache();
@@ -434,6 +428,10 @@ class FormularioObjetivosDesempenoEmpleados extends Component
                 'timerProgressBar' => true,
             ]);
         }
+
+        $this->resetInputsObjetivo();
+        $this->resetInputsPeriodos();
+        $this->resetInputsEscalas();
     }
 
     public function confirmarEnvioPapelera($objetivoId)

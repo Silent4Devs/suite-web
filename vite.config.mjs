@@ -12,7 +12,7 @@ export default defineConfig({
         "public/css/global/admin.css",
         "public/css/rds.css",
 
-        "resources/js/app.js",
+        "resources/sass/app.scss",
         "resources/js/app.js",
         "public/js/pages/index/template-analisis-riesgos.jsx",
         "public/js/pages/index/FormulasAnalisisRiesgos.jsx",

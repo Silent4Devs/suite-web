@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\SolicitudAprobacion;
@@ -22,6 +21,7 @@ use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;

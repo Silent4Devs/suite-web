@@ -7,11 +7,14 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
 class UserAuthController extends Controller
 {
+    protected $tokenCachePrefix = 'AuthMovil:user_token_';
+
     public function login(Request $request)
     {
         $request->validate([
@@ -31,6 +34,11 @@ class UserAuthController extends Controller
             ->where('email', request('email'))
             ->firstOrFail()
             ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
+
+        // $user = User::with(['empleado.puestoRelacionado', 'empleado.area'])
+        //     ->select(['id', 'name', 'email'])
+        //     ->where('email', $request->email)
+        //     ->firstOrFail();
 
         function encodeSpecialCharacters($url)
         {
@@ -71,9 +79,13 @@ class UserAuthController extends Controller
         //Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $expiration = config('sanctum.expiration');
+        $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
 
-        $expiration = Carbon::now()->addMinutes($expiration)->timestamp;
+        // Store token in Redis with expiration
+        Cache::put($this->tokenCachePrefix.$token, [
+            'user_id' => $user->id,
+            'expiration' => $expiration,
+        ], config('sanctum.expiration') * 60); // store in seconds
 
         //devuelve una respuesta JSON con el token generado y el tipo de token
         return response()->json([
@@ -96,6 +108,9 @@ class UserAuthController extends Controller
             ], 400);
         }
 
+        // Remove token from Redis
+        Cache::forget($this->tokenCachePrefix.$token);
+
         /** @var PersonalAccessToken $model */
         $model = Sanctum::$personalAccessTokenModel;
 
@@ -114,6 +129,25 @@ class UserAuthController extends Controller
         // Obtener el token de la solicitud
         $token = $request->bearerToken();
 
+        if (! $token) {
+            return response()->json(['status' => 'error', 'message' => 'No token provided'], 400);
+        }
+
+        // First check Redis for the token
+        $cachedToken = Cache::get($this->tokenCachePrefix.$token);
+
+        if ($cachedToken) {
+            if (Carbon::now()->timestamp < $cachedToken['expiration']) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Token is valid',
+                ], 200);
+            } else {
+                // Token expired, remove from Redis
+                Cache::forget($this->tokenCachePrefix.$token);
+            }
+        }
+
         // Verificar si el token existe y sigue siendo válido
         $tokenInstance = PersonalAccessToken::findToken($token);
 
@@ -126,7 +160,82 @@ class UserAuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Token is invalid or expired',
+            ], 500);
+        }
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $token = $request->bearerToken();
+
+        if (! $token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token not provided',
+            ], 400);
+        }
+
+        // Check Redis cache first
+        $cachedToken = Cache::get($this->tokenCachePrefix.$token);
+
+        if (! $cachedToken) {
+            // Fall back to database check if not in Redis
+            $tokenInstance = PersonalAccessToken::findToken($token);
+
+            if (! $tokenInstance) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid token',
+                ], 401);
+            }
+
+            $cachedToken = [
+                'user_id' => $tokenInstance->tokenable->id,
+                'expiration' => Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp,
+            ];
+
+            // Cache the token if valid
+            Cache::put($this->tokenCachePrefix.$token, $cachedToken, config('sanctum.expiration') * 60);
+        }
+
+        $expirationTime = Carbon::createFromTimestamp($cachedToken['expiration']);
+
+        // Check if the token has expired
+        if (Carbon::now()->greaterThanOrEqualTo($expirationTime)) {
+            // Token expired, generate a new token
+            $user = User::find($cachedToken['user_id']);
+
+            if (! $user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User not found',
+                ], 401);
+            }
+
+            // Revoke old token (if from database)
+            PersonalAccessToken::where('token', hash('sha256', $token))->delete();
+
+            // Create a new token and store it in Redis
+            $newToken = $user->createToken('auth_token')->plainTextToken;
+            $newExpiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
+
+            Cache::put($this->tokenCachePrefix.$newToken, [
+                'user_id' => $user->id,
+                'expiration' => $newExpiration,
+            ], config('sanctum.expiration') * 60);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Token refreshed',
+                'token' => $newToken,
+                'expiration' => $newExpiration,
             ], 200);
         }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Token is still valid',
+            'expiration' => $cachedToken['expiration'],
+        ], 200);
     }
 }

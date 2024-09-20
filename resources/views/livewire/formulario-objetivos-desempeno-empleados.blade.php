@@ -57,7 +57,7 @@
                                     class="form-control" placeholder="">
                                     <option value="">Seleccione Unidad</option>
                                     @foreach ($unidades as $unidad)
-                                        <option value="{{ $unidad->id }}">{{ $unidad->definicion }}</option>
+                                        <option value={{ $unidad->id }}>{{ $unidad->definicion }}</option>
                                     @endforeach
                                 </select>
                                 <label for="unidad-medida" class="required">Unidad de medida</label>
@@ -282,15 +282,16 @@
                 </div>
 
                 <div class="text-right">
-                    <a wire:click.prevent="crearObjetivo" class="btn btn-outline-primary"
+                    <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"
                         style="background-color: #ECFBFF; color: #006DDB; border-radius: 100px !important;">
                         Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+                    </button>
                 </div>
             @endif
 
         </div>
     @endif
+
     <div class="card card-body">
         <div class="info-first-config">
             <div class="col-6">
@@ -388,9 +389,6 @@
     <div>
         <a href="{{ route('admin.ev360-objetivos-periodo.config') }}" class="btn btn-outline-primary">Regresar</a>
     </div>
-
-    @livewireStyles
-    @livewireScripts
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

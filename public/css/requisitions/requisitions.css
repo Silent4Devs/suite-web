@@ -49,7 +49,7 @@ hr {
 }
 
 .btn-add-card {
-    color: #3086AF;
+    color: var(--color-tbj);
     background-color: rgba(0, 0, 0, 0) !important;
     box-shadow: none;
 }
@@ -110,7 +110,7 @@ hr {
 }
 
 .doc-requisicion strong {
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .header-doc .flex-item {

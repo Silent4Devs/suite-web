@@ -84,10 +84,10 @@
     </style>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.menu') !!}">Análisis de Impacto</a>
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.menu-AIA') !!}">AIA</a>
+            <a href="{!! route('admin.analisis-impacto.menu-AIA') !!}">AIA</a>
         </li>
         <li class="breadcrumb-item active">Matriz</li>
     </ol>
@@ -99,7 +99,7 @@
 
         <div class="row">
             <div class="col-sm-3 offset-9 mt-3">
-                <a class="btn btn-success" href="{{ route('admin.analysisAia.ajustes') }}"><i class="bi bi-gear"></i>
+                <a class="btn btn-success" href="{{ route('admin.analisis-aia.ajustes') }}"><i class="bi bi-gear"></i>
                     Ajustar parámetros </a>
             </div>
         </div>
@@ -1420,7 +1420,7 @@
 
 
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.analysisImpact.index') }}">
+                    <a class="btn btn-default" href="{{ route('admin.analisis-impacto.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>

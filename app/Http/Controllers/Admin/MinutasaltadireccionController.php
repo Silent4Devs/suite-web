@@ -32,7 +32,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PDF;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,7 +111,7 @@ class MinutasaltadireccionController extends Controller
         //Creación Minuta
 
         if ($request->input('archivo', false)) {
-            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -228,9 +227,9 @@ class MinutasaltadireccionController extends Controller
         if (isset($request->actividades)) {
             $tasks = [
                 [
-                    'id' => 'tmp_' . (strtotime(now()) * 1000) . '_1',
+                    'id' => 'tmp_'.(strtotime(now()) * 1000).'_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Minuta - ' . $request->tema_reunion,
+                    'name' => 'Minuta - '.$request->tema_reunion,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -254,66 +253,44 @@ class MinutasaltadireccionController extends Controller
 
             $actividades = json_decode($request->actividades);
 
-            if (! $edit) {
+            if ($actividades && ! $edit) {
                 foreach ($actividades as $actividad) {
-                    $asignados = [];
-                    $tmp_id = null;
-                    $dur = null;
-                    $desc = null;
+                    if (isset($actividad[4], $actividad[5]->id, $actividad[5]->duration, $actividad[5]->participantes_id)) {
+                        $asignados = $actividad[5]->participantes_id;
+                        $tmp_id = $actividad[5]->id;
+                        $dur = $actividad[5]->duration;
+                        $desc = $actividad[4];
 
-                    $desc = $actividad[4];
-                    $tmp_id = $actividad[5]->id;
-                    $dur = $actividad[5]->duration;
-                    $asignados = $actividad[5]->participantes_id;
+                        $assigs = [];
+                        foreach ($asignados as $asignado) {
+                            $id = intval($asignado);
+                            $assigs[] = [
+                                'id' => 'tmp_'.time().'_'.$id,
+                                'effort' => '0',
+                                'roleId' => '1',
+                                'resourceId' => $id,
+                            ];
+                        }
 
-                $assigs = [];
-                foreach ($asignados as $asignado) {
-                    $id = intval($asignado);
-                    $assigs[] = [
-                        'id' => 'tmp_' . time() . '_' . $id,
-                        'effort' => '0',
-                        'roleId' => '1',
-                        'resourceId' => $id,
-                    ];
+                        $planImplementacion = new PlanImplementacion;
+                        $planImplementacion->tasks = $tasks;
+                        $planImplementacion->canAdd = true;
+                        $planImplementacion->canWrite = true;
+                        $planImplementacion->canWriteOnParent = true;
+                        $planImplementacion->changesReasonWhy = false;
+                        $planImplementacion->selectedRow = 0;
+                        $planImplementacion->zoom = '3d';
+                        $planImplementacion->parent = $request->tema_reunion;
+                        $planImplementacion->norma = 'ISO 27001';
+                        $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
+                        $planImplementacion->objetivo = null;
+                        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
-                    $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
-                    $planImplementacion->tasks = $tasks;
-                    $planImplementacion->canAdd = true;
-                    $planImplementacion->canWrite = true;
-                    $planImplementacion->canWriteOnParent = true;
-                    $planImplementacion->changesReasonWhy = false;
-                    $planImplementacion->selectedRow = 0;
-                    $planImplementacion->zoom = '3d';
-                    $planImplementacion->parent = $request->tema_reunion;
-                    $planImplementacion->norma = 'ISO 27001';
-                    $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
-                    $planImplementacion->objetivo = null;
-                    $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
-
-                    $minuta->planes()->save($planImplementacion);
+                        $minuta->planes()->save($planImplementacion);
+                    }
                 }
             }
         }
-    }
-
-    public function createPDF($minutasaltadireccion, $actividades)
-    {
-        $participantesWithAsistencia = $minutasaltadireccion->participantes()
-            ->withPivot('asistencia')
-            ->get();
-        $actividades = $minutasaltadireccion->planes->first()->tasks;
-        $actividades = array_filter($actividades, function ($actividad) {
-            return intval($actividad->level) > 0;
-        });
-        $pdf = \PDF::loadView('admin.minutasaltadireccions.pdf.minuta-pdf', compact('minutasaltadireccion', 'actividades', 'participantesWithAsistencia'));
-        Storage::makeDirectory('public/minutas/en aprobacion');
-        Storage::makeDirectory('public/minutas/aprobadas');
-        $nombre_pdf = Str::limit($minutasaltadireccion->tema_reunion, 20, '') . '_' . $minutasaltadireccion->fechareunion . '.pdf';
-        $nombre = preg_replace('([^A-Za-z0-9-À-ÿ_.])', '', $nombre_pdf);
-        $pdf->save(public_path('storage/minutas/en aprobacion') . '/' . $nombre);
-
-        $minutasaltadireccion->documento = $nombre;
-        $minutasaltadireccion->save();
     }
 
     public function edit($id)
@@ -442,7 +419,7 @@ class MinutasaltadireccionController extends Controller
                     $minutasaltadireccion->archivo->delete();
                 }
 
-                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+                $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($minutasaltadireccion->archivo) {
             $minutasaltadireccion->archivo->delete();
@@ -455,7 +432,7 @@ class MinutasaltadireccionController extends Controller
     {
         $minutasaltadireccion = Minutasaltadireccion::find(intval($minutasaltadireccion));
         $this->processUpdate($request, $minutasaltadireccion, true);
-        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutasaltadireccion->documento;
+        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutasaltadireccion->documento;
 
         if (Storage::exists($ruta_publicacion)) {
             Storage::delete($ruta_publicacion);
@@ -633,13 +610,13 @@ class MinutasaltadireccionController extends Controller
                 'estatus' => Minutasaltadireccion::PUBLICADO,
             ]);
 
-            $fileToCopy = 'storage/minutas/en aprobacion' . '/' . $minuta->documento;
+            $fileToCopy = 'storage/minutas/en aprobacion'.'/'.$minuta->documento;
             $destinationFolder = 'storage/minutas/aprobadas'; // Replace this with the destination folder path
 
             // Check if the source file exists
             if (File::exists($fileToCopy)) {
                 $fileName = pathinfo($fileToCopy, PATHINFO_BASENAME); // Get the filename
-                $destinationPath = $destinationFolder . '/' . $fileName; // Create the destination path
+                $destinationPath = $destinationFolder.'/'.$fileName; // Create the destination path
 
                 File::copy($fileToCopy, $destinationPath);
             }
@@ -726,7 +703,7 @@ class MinutasaltadireccionController extends Controller
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Trabajo' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
     public function pdf($id)

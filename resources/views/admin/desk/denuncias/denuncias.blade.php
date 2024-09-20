@@ -80,11 +80,12 @@
             </thead>
         </table>
     </div>
+    
+
 
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -327,7 +328,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_denuncias_desk.ajax.reload();
+                                    tabla_denuncias_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Denuncia Archivada',
                                         '',

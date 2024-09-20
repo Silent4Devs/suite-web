@@ -8,6 +8,7 @@ use App\Models\ClasificacionesAuditorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClasificacionesAuditoriasController extends Controller
@@ -77,17 +78,34 @@ class ClasificacionesAuditoriasController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required',
-        ]);
-        // dd('validacion');
-        $nuevaClasificacion = ClasificacionesAuditorias::create([
-            'identificador' => $request->identificador,
-            'nombre_clasificaciones' => $request->nombre,
-            'descripcion' => $request->descripcion,
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'identificador' => 'unique:clasificaciones_auditorias,identificador', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
-        return redirect(route('admin.auditoria-clasificacion'));
+        try {
+            $nuevaClasificacion = ClasificacionesAuditorias::create([
+                'identificador' => $validatedData['identificador'],
+                'nombre_clasificaciones' => $validatedData['nombre'],
+                'descripcion' => $request->descripcion,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Clasificación creada. La clasificación fue creada exitosamente.',
+                'redirect_url' => route('admin.auditoria-clasificacion'), // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.',
+            ], 500);
+        }
     }
 
     /**
@@ -117,19 +135,39 @@ class ClasificacionesAuditoriasController extends Controller
     public function update($id, Request $request)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required',
-        ]);
-        // dd('validacion');
-        $editClasificacion = ClasificacionesAuditorias::find($id);
 
-        $editClasificacion->update([
-            'identificador' => $request->identificador,
-            'nombre_clasificaciones' => $request->nombre,
-            'descripcion' => $request->descripcion,
+        // Validación
+
+        $validatedData = $request->validate([
+            'identificador' => 'unique:clasificaciones_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
+            'nombre' => 'required|unique:clasificaciones_auditorias,nombre_clasificaciones,'.$id.'',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
-        return redirect(route('admin.auditoria-clasificacion'));
+        try {
+            $editClasificacion = ClasificacionesAuditorias::findOrFail($id); // Usa findOrFail para manejar el caso en que no se encuentre el registro
+
+            $editClasificacion->update([
+                'identificador' => $validatedData['identificador'],
+                'nombre_clasificaciones' => $validatedData['nombre'],
+                'descripcion' => $request->descripcion,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Clasificación modificada. La clasificación fue modificada exitosamente.',
+                'redirect_url' => route('admin.auditoria-clasificacion'), // Ruta de redirección
+            ]);
+        } catch (Throwable $th) {
+            // Manejo de errores inesperados
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un problema al modificar la clasificación. Inténtalo nuevamente.',
+            ], 500);
+        }
     }
 
     /**
@@ -138,10 +176,15 @@ class ClasificacionesAuditoriasController extends Controller
     public function destroy($id)
     {
         abort_if(Gate::denies('clasificaciones_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $deleteClasificacion = ClasificacionesAuditorias::find($id);
 
-        $deleteClasificacion->delete();
+        if ($deleteClasificacion && $deleteClasificacion->delete()) {
+            // Redirige con un parámetro de éxito
+            return redirect()->route('admin.auditoria-clasificacion', ['status' => 'success', 'message' => 'Registro eliminado correctamente.']);
+        }
 
-        return redirect(route('admin.auditoria-clasificacion'));
+        // Redirige con un parámetro de error
+        return redirect()->route('admin.auditoria-clasificacion', ['status' => 'error', 'message' => 'Error al eliminar el registro.']);
     }
 }
