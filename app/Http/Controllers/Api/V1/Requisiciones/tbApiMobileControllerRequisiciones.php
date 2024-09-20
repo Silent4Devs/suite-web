@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
-class tbRequisicionesApiMobileController extends Controller
+class tbApiMobileControllerRequisiciones extends Controller
 {
     use ObtenerOrganizacion;
 
@@ -191,7 +191,104 @@ class tbRequisicionesApiMobileController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
+        $imagen_logo = $this->encodeSpecialCharacters($requisicion->sucursal->mylogo);
+
+        $json_requisicion['general'] = [
+            'fecha' => date('d-m-Y', strtotime($requisicion->fecha)),
+            'referencia' => $requisicion->referencia,
+            'area' => $requisicion->area,
+            'nombre_comprador' => $comprador->user->name,
+            'nombre_solicitante' => $requisicion->user,
+        ];
+
+        $json_requisicion['contrato'] = [
+            'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
+            'no_contrato' => $requisicion->contrato->no_contrato ?? '',
+            'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
+        ];
+
+        $json_requisicion['comprador'] = [
+            'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
+            'no_contrato' => $requisicion->contrato->no_contrato ?? '',
+            'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
+        ];
+
+        $json_requisicion['info_sucursal'] = [
+            'empresa' => $requisicion->sucursal->empresa,
+            'rfc' => $requisicion->sucursal->rfc,
+            'direccion' => $requisicion->sucursal->direccion,
+            'url_foto_empresa' => 'razon_social/' . $imagen_logo,
+        ];
+
+        foreach ($requisicion->productos_requisiciones as $producto) {
+            $json_requisicion['productos'][] = [
+                'cantidad_producto' => $producto->cantidad ?? '',
+                'descripcion_producto' => $producto->producto->descripcion ?? '',
+                'espesificaciones_producto' => $producto->espesificaciones ?? '',
+            ];
+        }
+
+        foreach ($requisicion->provedores_requisiciones as $proveedor) {
+            $json_requisicion['proveedor_sugerido'][] = [
+                'nombre_proveedor' => $proveedor->proveedor,
+                'detalles_proveedor' => $proveedor->detalles,
+                'comentarios_proveedor' => $proveedor->comentarios,
+                'contacto_proveedor' => $proveedor->contacto,
+                'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_inicio)),
+                'telefono_proveedor' => $proveedor->cel,
+                'correo_proveedor' => $proveedor->contacto_correo,
+                'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_fin)),
+                'url_proveedor' => $proveedor->url,
+            ];
+        }
+
+
+        if ($requisicion->proveedor_catalogo != null) {
+            foreach ($proveedores_catalogo as $prov) {
+                $json_requisicion['proveedor'][] =             [
+                    'nombre_proveedor' => $prov->nombre ?? '',
+                    'empresa_proveedor' => $prov->razon_social ?? '',
+                    'rfc_proveedor' => $prov->rfc,
+                    'contacto_proveedor' => $prov->contacto,
+                    'fechaInicio_proveedor' => date('d-m-Y', strtotime($prov->fecha_inicio)) ?? 'La fecha de inicio no está disponible.',
+                    'fechaFin_proveedor' => date('d-m-Y', strtotime($prov->fecha_fin)) ?? 'La fecha fin no está disponible.',
+                    // 'detalles_proveedor' => $proveedor->detalles,
+                    // 'comentarios_proveedor' => $proveedor->comentarios,
+                    // 'contacto_proveedor' => $proveedor->contacto,
+                    // 'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_inicio)),
+                    // 'telefono_proveedor' => $proveedor->cel,
+                    // 'correo_proveedor' => $proveedor->contacto_correo,
+                    // 'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_fin)),
+                    // 'url_proveedor' => $proveedor->url,
+                ];
+            }
+        }
+
+        if ($proveedor_indistinto != null) {
+            foreach ($proveedores_catalogo as $prov) {
+                $json_requisicion['proveedor_indistinto'][] =             [
+                    // 'nombre_proveedor' => $prov->nombre ?? '',
+                    // 'empresa_proveedor' => $prov->razon_social ?? '',
+                    // 'rfc_proveedor' =>$prov->rfc,
+                    // 'contacto_proveedor'=> $prov->contacto,
+                    'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio)) ?? 'La fecha de inicio no está disponible.',
+                    'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) ?? 'La fecha fin no está disponible.',
+                    // 'detalles_proveedor' => $proveedor->detalles,
+                    // 'comentarios_proveedor' => $proveedor->comentarios,
+                    // 'contacto_proveedor' => $proveedor->contacto,
+                    // 'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_inicio)),
+                    // 'telefono_proveedor' => $proveedor->cel,
+                    // 'correo_proveedor' => $proveedor->contacto_correo,
+                    // 'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_fin)),
+                    // 'url_proveedor' => $proveedor->url,
+                ];
+            }
+        }
+
+        return response(json_encode([
+            'requisicion' => $json_requisicion,
+        ]), 200)->header('Content-Type', 'application/json');
+        // return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
     }
 
     public function validacionLista($tipo)
@@ -242,4 +339,3 @@ class tbRequisicionesApiMobileController extends Controller
         return $alerta;
     }
 }
-
