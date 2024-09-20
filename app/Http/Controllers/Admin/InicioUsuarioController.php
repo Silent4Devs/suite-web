@@ -1278,12 +1278,12 @@ class InicioUsuarioController extends Controller
         if ($ver) {
             // Actualiza el registro
             $ver->update(['version_historico' => $valor]);
+
             return response()->json(['success' => 'Version updated']); // Respuesta de éxito
         } else {
             return response()->json(['error' => 'No version found'], 404); // Respuesta de error
         }
     }
-
 
     public function solicitud()
     {
