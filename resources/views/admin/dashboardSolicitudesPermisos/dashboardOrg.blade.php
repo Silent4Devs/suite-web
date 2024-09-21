@@ -82,7 +82,7 @@
                                 $vacacionesMounth = $vacacionesMounth->filter(function ($vacation) use (
                                     $areaSeleccionada,
                                 ) {
-                                    return $vacation->empleado->area_id === $areaSeleccionada;
+                                    return $vacation->empleado->area_id === intval($areaSeleccionada);
                                 });
                             @endphp
                             {{ $vacacionesMounth->count() }}
@@ -106,7 +106,7 @@
                         @else
                             @php
                                 $dayOffMounth = $dayOffMounth->filter(function ($dayOff) use ($areaSeleccionada) {
-                                    return $dayOff->empleado->area_id === $areaSeleccionada;
+                                    return $dayOff->empleado->area_id === intval($areaSeleccionada);
                                 });
                             @endphp
                             {{ $dayOffMounth->count() }}
@@ -130,7 +130,7 @@
                         @else
                             @php
                                 $permisoMounth = $permisoMounth->filter(function ($permiso) use ($areaSeleccionada) {
-                                    return $permiso->empleado->area_id === $areaSeleccionada;
+                                    return $permiso->empleado->area_id === intval($areaSeleccionada);
                                 });
                             @endphp
                             {{ $permisoMounth->count() }}
