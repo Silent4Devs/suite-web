@@ -33,10 +33,8 @@ class GraphDona extends Component
             $mes_año = Carbon::now();
         }
 
-        $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
-        $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
-
-        dump($inicio_mes, $fin_mes);
+        $inicio_mes = $mes_año->copy()->startOfMonth();
+        $fin_mes = $mes_año->copy()->endOfMonth();
 
         $vacaciones = SolicitudVacaciones::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
         $dayOff = SolicitudDayOff::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();

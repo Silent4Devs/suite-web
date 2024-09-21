@@ -665,6 +665,14 @@
                     });
                 },
             });
+
+
+            setTimeout(() => {
+                var button = document.querySelector(".mbsc-calendar-button.mbsc-reset");
+
+                // Hacer clic automáticamente en el botón
+                button.click();
+            }, 500);
         });
     </script>
 
