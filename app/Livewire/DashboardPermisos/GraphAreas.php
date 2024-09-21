@@ -15,6 +15,8 @@ class GraphAreas extends Component
 
     public $mes_año;
 
+    public $areasCollect;
+
     public function mounth($areaSeleccionada)
     {
         $this->areaSeleccionada = $areaSeleccionada;
@@ -42,7 +44,7 @@ class GraphAreas extends Component
 
         $areas = Area::get();
 
-        $areasCollect = collect();
+        $this->areasCollect = collect();
 
         foreach ($areas as $area) {
 
@@ -62,7 +64,7 @@ class GraphAreas extends Component
             $area->dayOff = $dayOffArea->count();
             $area->permisos = $permisosArea->count();
 
-            $areasCollect->push([
+            $this->areasCollect->push([
                 'area' => $area->area,
                 'vacaciones' => $area->vacaciones,
                 'dayOff' => $area->dayOff,
@@ -70,8 +72,10 @@ class GraphAreas extends Component
             ]);
         }
 
+        // dump($this->areasCollect);
+
         $this->dispatch('renderScripts');
 
-        return view('livewire.dashboard-permisos.graph-areas', compact('areasCollect'));
+        return view('livewire.dashboard-permisos.graph-areas');
     }
 }
