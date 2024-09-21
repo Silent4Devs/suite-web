@@ -197,7 +197,9 @@
 @media print {
     header,
     .menu-global-tbj,
-    .btn-reporte-print
+    .btn-reporte-print,
+    .barra-herramientas-bottom-molbile,
+    .icon-fixed-chat
     {
         display: none !important;
     }
