@@ -36,6 +36,8 @@ class GraphDona extends Component
         $inicio_mes = $mes_año->copy()->startOfMonth();  // Primer día del mes
         $fin_mes = $mes_año->copy()->endOfMonth();       // Último día del mes
 
+        dump($inicio_mes, $fin_mes);
+
         $vacaciones = SolicitudVacaciones::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
         $dayOff = SolicitudDayOff::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
         $permisos = SolicitudPermisoGoceSueldo::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
