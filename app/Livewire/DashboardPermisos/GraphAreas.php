@@ -72,9 +72,7 @@ class GraphAreas extends Component
             ]);
         }
 
-        // dump($this->areasCollect);
-
-        $this->dispatch('renderScripts');
+        $this->dispatch('renderScripts', $this->areasCollect);
 
         return view('livewire.dashboard-permisos.graph-areas');
     }
