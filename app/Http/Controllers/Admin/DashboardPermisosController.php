@@ -34,16 +34,19 @@ class DashboardPermisosController extends Controller
         // Obtener datos y agregar tipo_solicitud
         $vacaciones = SolicitudVacaciones::all()->map(function ($item) {
             $item->tipo_solicitud = 'Vacaciones';
+
             return $item;
         });
 
         $dayOff = SolicitudDayOff::all()->map(function ($item) {
             $item->tipo_solicitud = 'DayOff';
+
             return $item;
         });
 
         $permisos = SolicitudPermisoGoceSueldo::all()->map(function ($item) {
             $item->tipo_solicitud = 'Permiso';
+
             return $item;
         });
 

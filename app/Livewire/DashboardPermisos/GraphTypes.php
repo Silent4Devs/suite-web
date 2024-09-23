@@ -64,7 +64,6 @@ class GraphTypes extends Component
         $this->dispatch('renderScriptsTypes');
         $this->dispatch('renderScriptsTypes', $permisosCollect);
 
-
         return view('livewire.dashboard-permisos.graph-types', compact('permisosCollect'));
     }
 }
