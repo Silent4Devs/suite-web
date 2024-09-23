@@ -58,7 +58,7 @@ class BajaEmpleadoComponent extends Component
     //mount
     public function mount($empleado)
     {
-        $this->empleado = Empleado::getSelectEmpleadosWithArea()->where('id', $empleado->id)->first();
+        $this->empleado = $empleado;
         // $this->empleados = $this->obtenerEmpleados();
         // $this->documentosQueDeboAprobar = $this->obtenerDocumentosQueDeboAprobar();
         // $this->documentosQueMeDebenAprobar = $this->obtenerDocumentosQueMeDebenAprobar();
@@ -68,6 +68,7 @@ class BajaEmpleadoComponent extends Component
 
     public function render()
     {
+        $this->empleado = Empleado::getSelectEmpleadosWithArea()->where('id', $this->empleado->id)->first();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo = $organizacion_actual->logo;
         $empresa = $organizacion_actual->empresa;
@@ -136,20 +137,19 @@ class BajaEmpleadoComponent extends Component
 
     public function darDeBaja()
     {
-        $this->validate($this->rules, $this->messages);
-        $empleadoBaja = Empleado::where('id', $this->empleado->id)->first();
 
-        $empleadoBaja->update([
+        $this->empleado->update([
             'estatus' => Empleado::BAJA,
             'fecha_baja' => $this->fechaBaja,
             'razon_baja' => $this->razonBaja,
         ]);
-        // dump(2);
-        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $empleadoBaja->email)))->first();
+        $user = User::where('email', trim(preg_replace('/\s/u', ' ', $this->empleado->email)))->first();
         if ($user) {
             $user->delete();
         }
-        $this->dispatch('select2');
-        $this->dispatch('baja', baja: $empleadoBaja);
+        // $this->dispatch('select2');
+        // $this->dispatch('baja', baja: $this->empleado);
+
+        return redirect()->route('admin.empleados.index');
     }
 }
