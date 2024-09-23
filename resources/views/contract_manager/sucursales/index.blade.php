@@ -14,8 +14,10 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('contract_manager.sucursales.create') }}" type="button" class="btn tb-btn-primary">Registrar Razon</a> &nbsp; &nbsp;
-            <a href="{{ route('contract_manager.sucursales.view_archivados') }}" type="button" class="btn tb-btn-primary">Archivados</a>
+            <a href="{{ route('contract_manager.sucursales.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Razon</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.sucursales.view_archivados') }}" type="button"
+                class="btn tb-btn-primary">Archivados</a>
         </div>
     </div>
 
@@ -23,8 +25,8 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Sucursal">
-                <thead class="thead-dark">
+            <table class="table  w-100 datatable-Sucursal">
+                <thead class="">
                     <tr>
                         <th style="vertical-align: top">
                             Clave

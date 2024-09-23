@@ -57,8 +57,8 @@
                     </div>
                 </div>
 
-                <table id="tblDocumentos" class="table table-bordered w-100 datatable-ControlDocumento">
-                    <thead class="thead-dark">
+                <table id="tblDocumentos" class="table w-100 datatable-ControlDocumento">
+                    <thead class="">
                         <tr>
                             <th style="vertical-align: top">
                                 Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

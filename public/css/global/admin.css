@@ -962,6 +962,7 @@ table.dataTable tr th {
 
 .nav.nav-tabs {
     position: relative;
+    border-bottom: none !important;
 }
 
 .nav.nav-tabs .nav-link {

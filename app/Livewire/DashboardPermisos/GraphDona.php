@@ -15,6 +15,12 @@ class GraphDona extends Component
 
     public $mes_año;
 
+    public $vacaciones;
+
+    public $dayOff;
+
+    public $permisos;
+
     public function mounth($areaSeleccionada)
     {
         $this->areaSeleccionada = $areaSeleccionada;
@@ -58,12 +64,12 @@ class GraphDona extends Component
             });
         }
 
-        $vacaciones = $vacaciones->count();
-        $dayOff = $dayOff->count();
-        $permisos = $permisos->count();
+        $this->vacaciones = $vacaciones->count();
+        $this->dayOff = $dayOff->count();
+        $this->permisos = $permisos->count();
 
-        $this->dispatch('renderScripts');
+        $this->dispatch('renderScriptsDona', $this->vacaciones, $this->dayOff, $this->permisos);
 
-        return view('livewire.dashboard-permisos.graph-dona', compact('vacaciones', 'dayOff', 'permisos'));
+        return view('livewire.dashboard-permisos.graph-dona');
     }
 }
