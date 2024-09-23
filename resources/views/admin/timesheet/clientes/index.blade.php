@@ -59,10 +59,9 @@
         <div class="row">
             <div class="col-12">
                 <h3 class="title-card-time">Clientes</h3>
-                <hr class="my-4">
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             @include('partials.flashMessages')
             <div class="datatable-fix w-100">
                 <table id="datatable_clientes" class="table w-100">
