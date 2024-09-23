@@ -68,7 +68,7 @@
         .card-status-title {
             text-align: left;
             font: normal normal medium 22px Roboto;
-            color: #3086AF;
+            color: var(--color-tbj);
             opacity: 1;
         }
 
@@ -76,7 +76,7 @@
             text-align: left;
             font: normal normal medium 28px Roboto;
             letter-spacing: 0px;
-            color: #3086AF;
+            color: var(--color-tbj);
             opacity: 1;
         }
 

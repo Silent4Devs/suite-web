@@ -141,7 +141,7 @@ class CreateEvaluacionDesempeno extends Component
                 'id' => $empleado['id'],
                 'name' => $empleado['name'],
             ];
-        })->toArray();
+        })->sortBy('name')->values()->toArray();
 
         $this->areas = Area::getIdNameAll()->sortBy('area');
         $this->grupos = GruposEvaluado::getAll();

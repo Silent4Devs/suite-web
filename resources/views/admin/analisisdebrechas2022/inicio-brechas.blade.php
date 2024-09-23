@@ -2,7 +2,7 @@
 @section('styles')
     {{-- <style>
         .card-blue-brechas {
-            background-color: #306BA9;
+            background-color: var(--color-tbj);
             color: #fff;
             display: flex;
             align-items: center;
@@ -43,24 +43,24 @@
         }
 
         /* .card {
-            margin-top: 0px !important;
-            margin-bottom: 20px !important;
-            border-radius: 14px;
-            box-shadow: 0px 1px 4px #0000000F;
-            opacity: 1;
-        } */
+                margin-top: 0px !important;
+                margin-bottom: 20px !important;
+                border-radius: 14px;
+                box-shadow: 0px 1px 4px #0000000F;
+                opacity: 1;
+            } */
         /* .card-img-brecha {
-            width: 400px;
-            gap: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+                width: 400px;
+                gap: 25px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .card-img-brecha {
-            width: 300px;
-        } */
+            .card-img-brecha {
+                width: 300px;
+            } */
 
         .form-control {
             background: #F8FAFC 0% 0% no-repeat padding-box;
@@ -107,11 +107,13 @@
             </div>
             <div class="col-md-10" style="margin-left: 10px;">
                 <h3>¿Qué es? Dashboard Análisis de Brechas</h3>
-                <p style="font-size:14px; font:normal;">Es una herramienta visual que ayuda a las organizaciones a visualizar las brechas entre el estado actual y
+                <p style="font-size:14px; font:normal;">Es una herramienta visual que ayuda a las organizaciones a visualizar
+                    las brechas entre el estado actual y
                     el estado deseado. Este dashboard suele incluir indicadores clave de rendimiento (KPI) que miden el
                     desempeño de la organización en las áreas que se están analizando.El dashboard puede ser una herramienta
                     valiosa para la gestión de las brechas. Al proporcionar una visión general de las brechas, el dashboard
-                    puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las brechas.</p>
+                    puede ayudar a las organizaciones a priorizar las áreas de mejora y a tomar medidas para cerrar las
+                    brechas.</p>
             </div>
         </div>
     </div>
@@ -133,7 +135,7 @@
                 <img src="{{ asset('img/brechas-inicio-a.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Templates</h4>
-                    <a href="{{route('admin.templates.create')}}" class="btn btn-info">Generar</a>
+                    <a href="{{ route('admin.templates.create') }}" class="btn btn-info">Generar</a>
                 </div>
             </div>
         </div>
@@ -142,7 +144,7 @@
                 <img src="{{ asset('img/brechas-inicio-b.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Análisis de brechas</h4>
-                    <a href="{{route('admin.analisisdebrechas-2022.create')}}" class="btn btn-info">Generar</a>
+                    <a href="{{ route('admin.analisisdebrechas-2022.create') }}" class="btn btn-info">Generar</a>
                 </div>
             </div>
         </div>

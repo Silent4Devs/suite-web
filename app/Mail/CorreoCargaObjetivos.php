@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -17,9 +18,9 @@ class CorreoCargaObjetivos extends Mailable
 
     public function __construct($fecha_in, $fecha_fin)
     {
-        //$this->empleado = $empleado;
-        $this->fecha_in = $fecha_in;
-        $this->fecha_fin = $fecha_fin;
+        // Formatear las fechas al formato d-m-Y
+        $this->fecha_in = Carbon::parse($fecha_in)->format('d-m-Y');
+        $this->fecha_fin = Carbon::parse($fecha_fin)->format('d-m-Y');
     }
 
     public function build()

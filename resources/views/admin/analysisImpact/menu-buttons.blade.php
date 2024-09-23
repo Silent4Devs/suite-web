@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
         div.nav .nav-link {
             color: #345183;
@@ -73,12 +72,11 @@
             height: calc(100% - 40px);
 
         }
+
         .not-active {
             pointer-events: none;
             cursor: default;
         }
-
-
     </style>
 
 
@@ -89,12 +87,11 @@
     <div class="mt-2 card">
         <div class="card-body">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
-                    aria-labelledby="nav-riesgo-tab">
+                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel" aria-labelledby="nav-riesgo-tab">
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.menu-BIA') }}">
+                                <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
                                     <div>
                                         <i class="bi bi-currency-exchange"></i><br>
                                         BIA
@@ -104,7 +101,7 @@
                         @endcan
                         @can('matriz_bia_matriz')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.menu-AIA') }}">
+                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
                                     <div>
                                         <i class="bi bi-bezier2" disabled></i><br>
                                         AIA

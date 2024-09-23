@@ -170,7 +170,7 @@
         width: 100%;
         font-size: 16px;
         font-weight: 400;
-        color: #3086AF;
+        color: var(--color-tbj);
         display: block;
         margin: 5px 0;
     }

@@ -1,5 +1,4 @@
 <div>
-<div>
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.comt/ui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 
@@ -837,6 +836,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -1149,5 +1149,4 @@
     </script>
 
 @endsection
-</div>
-</div>
+

@@ -52,7 +52,7 @@ class QuejasClienteController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
+        $quejasClientes = QuejasCliente::where('archivado', false)->get();
 
         return datatables()->of($quejasClientes)->toJson();
     }
@@ -492,6 +492,8 @@ class QuejasClienteController extends Controller
                 'archivado' => true,
             ]);
 
+            \Artisan::call('cache:clear');
+
             return response()->json(['success' => true]);
         }
     }
@@ -503,6 +505,8 @@ class QuejasClienteController extends Controller
         $queja->update([
             'archivado' => false,
         ]);
+
+        \Artisan::call('cache:clear');
 
         return redirect()->route('admin.desk.index');
     }
@@ -777,7 +781,7 @@ class QuejasClienteController extends Controller
                     'responsable_atencion_queja_id' => 'El campo responsable de la atención es obligatorio',
                 ]
             );
-            // dd($request->all());
+
             if ($levantamiento_ac) {
                 $request->validate(
                     [

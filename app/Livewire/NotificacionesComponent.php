@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -70,7 +69,7 @@ class NotificacionesComponent extends Component
 
     public function getUnreadNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
+        $this->lista_notificaciones = User::getCurrentUser()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
             ->cursorPaginate(12);
 
         return response()->noContent();
@@ -78,7 +77,7 @@ class NotificacionesComponent extends Component
 
     public function getReadedNotifications()
     {
-        $this->lista_notificaciones = Auth::user()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
+        $this->lista_notificaciones = User::getCurrentUser()->readNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->orderByDesc('id')
             ->cursorPaginate(12);
 
         return response()->noContent();
@@ -97,7 +96,7 @@ class NotificacionesComponent extends Component
 
     public function markAllAsRead()
     {
-        $notificaciones_campana = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->get();
+        $notificaciones_campana = User::getCurrentUser()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->get();
         foreach ($notificaciones_campana as $notificacion_campana) {
             $notificacion_campana->markAsRead();
         }

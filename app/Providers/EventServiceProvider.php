@@ -90,6 +90,7 @@ use App\Models\EntendimientoOrganizacion;
 use App\Models\EnvioDocumentosAjustes;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
+use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\Section;
@@ -179,6 +180,7 @@ use App\Observers\EntendimientoOrganizacionObserver;
 use App\Observers\EnvioDocumentosAjustesObserver;
 use App\Observers\EvaluacionesDesempenoObserver;
 use App\Observers\EvaluacionObserver;
+use App\Observers\EvaluationObserver;
 use App\Observers\EvidenciasDocumentosEmpleadosObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Observers\GruposEvaluadoObserver;
@@ -458,5 +460,6 @@ class EventServiceProvider extends ServiceProvider
         Level::observe(LevelObserver::class);
         EvaluacionDesempeno::observe(EvaluacionesDesempenoObserver::class);
         TBCatalogueTrainingModel::observe(CertificatesObserver::class);
+        Evaluation::observe(EvaluationObserver::class);
     }
 }

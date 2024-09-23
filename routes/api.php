@@ -16,8 +16,9 @@ use App\Http\Controllers\Api\tbApiPanelControlController;
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
-Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
+    Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
     Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);
@@ -76,11 +77,11 @@ Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'mi
     // Route::get('solicitud-permisos-vistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'vistaGlobal']);
 
     Route::prefix('timesheet')->group(function () {
-        Route::get('/show/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionShow']);
-        Route::get('/aprobaciones', [tbApiMobileControllerTimesheet::class, 'tbFunctionAprobaciones']);
-        Route::post('/aprobar/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionAprobar']);
-        Route::post('/rechazar/{id}', [tbApiMobileControllerTimesheet::class, 'tbFunctionRechazar']);
-        Route::get('/contadorRegistrosPendientes', [tbApiMobileControllerTimesheet::class, 'tbFunctionContadorPendientesTimesheetAprobador']);
+        Route::get('/tbshow/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionShow']);
+        Route::get('/tbaprobaciones', [TbTimesheetApiMobileController::class, 'tbFunctionAprobaciones']);
+        Route::post('/tbaprobar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionAprobar']);
+        Route::post('/tbrechazar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionRechazar']);
+        Route::get('/tbcontadorRegistrosPendientes', [TbTimesheetApiMobileController::class, 'tbFunctionContadorPendientesTimesheetAprobador']);
     });
 });
 

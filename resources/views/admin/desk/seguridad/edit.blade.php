@@ -317,10 +317,8 @@
 
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i
-                                        class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="estatus_campo form-control select2" id="opciones"
-                                    onchange='cambioOpciones();'>
+                                <label class="form-label"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                                <select name="estatus" class="estatus_campo form-control select2" id="opciones">
                                     <option
                                         {{ old('estatus', $incidentesSeguridad->estatus) == 'Sin atender' ? 'selected' : '' }}
                                         value="Sin atender">Sin atender</option>
@@ -355,13 +353,8 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
-                                    hora
-                                    de cierre del ticket</label>
-
-                                <input class="form-control" readonly name="fecha_cierre" type="datetime"
-                                    value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
-
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora de cierre del ticket</label>
+                                <input class="form-control" readonly name="fecha_cierre" type="text" value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
                             </div>
                             <div class="form-group col-12">
                                 <b>Asignado:</b>
@@ -1064,6 +1057,35 @@
 @section('scripts')
 @parent
 <script>
+    $(document).ready(function() {
+        // Inicializa select2
+        $('#opciones').select2();
+ 
+        // Detecta el cambio en el select con select2
+        $('#opciones').on('change', function() {
+            var selectedValue = $(this).val();
+            console.log("Estatus seleccionado:", selectedValue);  // Para verificar si el evento funciona
+            var solucionInput = $('#solucion');
+ 
+            if (selectedValue === 'Cerrado') {
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var year = now.getFullYear();
+                var hours = ("0" + now.getHours()).slice(-2);
+                var minutes = ("0" + now.getMinutes()).slice(-2);
+               
+                // Formato: YYYY-MM-DD HH:MM
+                var formattedDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+                solucionInput.val(formattedDateTime);
+            } else {
+                solucionInput.val('No cerrado'); // Limpia el campo si no está "Cerrado"
+            }
+        });
+    });
+</script>
+ 
+<script>
     function validar(params) {
         var x = $("#firma").val();
         if (x) {
@@ -1698,24 +1720,6 @@
                 '/',
             ]
         });
-    });
-</script>
-
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        let incidentesSeguridad = @json($incidentesSeguridad);
-        if (incidentesSeguridad.estatus == 'No procedente' || incidentesSeguridad.estatus == 'Cerrado') {
-            $('#campo_estatus').removeClass('d-none');
-        }
-    })
-    $(document).on('change', '.estatus_campo', function(event) {
-        if ($('.estatus_campo option:selected').attr('value') == 'No procedente' || $(
-                '.estatus_campo option:selected').attr('value') == 'Cerrado') {
-            console.log('ocultar');
-            $('#campo_estatus').removeClass('d-none');
-        } else {
-            $('#campo_estatus').addClass('d-none');
-        }
     });
 </script>
 

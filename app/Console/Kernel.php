@@ -105,12 +105,12 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
 
         //Schedule certificates the command to run mouthn
-        $schedule->command(SendCertificateReminder::class)
-            ->timezone('America/Mexico_City')
-            ->daily()
-            ->withoutOverlapping()
-            ->onOneServer()
-            ->sentryMonitor();
+        // $schedule->command(SendCertificateReminder::class)
+        //     ->timezone('America/Mexico_City')
+        //     ->daily()
+        //     ->withoutOverlapping()
+        //     ->onOneServer()
+        //     ->sentryMonitor();
     }
 
     /**

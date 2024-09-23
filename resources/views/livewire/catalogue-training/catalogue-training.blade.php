@@ -29,22 +29,22 @@
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.mark" required>
+                        wire:model.live="form.mark" >
                     <label for="name">Marca</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.manufacturer" required>
+                        wire:model.live="form.manufacturer" >
                     <label for="name">Fabricante</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.norma" required>
+                        wire:model.live="form.norma" >
                     <label for="name">Norma</label>
                 </div>
                 <button class="btn btn-primary"
                     style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;"
-                    type="submit">Agregar a capacitación</button>
+                    type="submit">{{$status === 'create' ? 'Agregar a capacitación':'Editar capacitación'}}</button>
             </form>
         </div>
     </div>

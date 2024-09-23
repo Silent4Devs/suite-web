@@ -3,4 +3,4 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.system-calendar') }}
-    @livewire('dashboard.auditorias-sgi')
+    <livewire:dashboard.auditorias-sgi />

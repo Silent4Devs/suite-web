@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Livewire\Component;
 
 class ListaCampanaNotificacionesComponent extends Component
@@ -47,7 +47,7 @@ class ListaCampanaNotificacionesComponent extends Component
 
     public function render()
     {
-        $last_unread_notifications = Auth::user()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->latest()->take(5)->get();
+        $last_unread_notifications = User::getCurrentUser()->unreadNotifications()->where('data', 'not like', '%"tipo_notificacion":"task"%')->latest()->take(5)->get();
 
         return view('livewire.lista-campana-notificaciones-component', ['last_unread_notifications' => $last_unread_notifications]);
     }

@@ -30,6 +30,8 @@ class EstudiantesCrear extends Component
 
     public $usuarios_manual;
 
+    public $areas;
+
     protected $rules = [
         'user_id' => 'required',
     ];

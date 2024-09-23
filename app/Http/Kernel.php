@@ -80,6 +80,7 @@ class Kernel extends HttpKernel
         'gestor_documental' => \App\Http\Middleware\GestorDocumentalMiddleware::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
+        'course' => \App\Http\Middleware\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 

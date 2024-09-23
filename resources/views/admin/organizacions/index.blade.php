@@ -2,7 +2,7 @@
 @section('content')
 
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{ config('app.cssVersion') }}">
 
     <style>
         .tarjeta {
@@ -85,7 +85,7 @@
             transition: 0.1s;
             cursor: pointer;
 
-            background-color: #345183;
+            background-color: var(--color-tbj);
             width: 50px;
             height: 50px;
             border-radius: 100px;
@@ -96,6 +96,7 @@
 
         .redes i {
             font-size: 20pt;
+            color: #fff;
 
         }
 
@@ -103,8 +104,6 @@
             color: #fff;
             transform: scale(1.1);
             text-decoration: none;
-        }
-
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Mi organización</h5>
@@ -118,17 +117,17 @@
                 @if (!empty($count == 1))
                 @else
                     @can('mi_organizacion_agregar')
-                        <a class="btn btn-danger" href="{{ route('admin.organizacions.create') }}">
+                        <a class="btn btn-primary" href="{{ route('admin.organizacions.create') }}">
                             Agregar Organización
                         </a>
                     @endcan
                 @endif
                 @can('mi_organizacion_panel_de_control')
-                    <a class="btn btn-success" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
+                    <a class="btn btn-primary" style="float: left;" href="{{ route('admin.panel-organizacion.index') }}">
                         Panel de Control
                     @endcan
                     @can('mi_organizacion_editar_organizacion')
-                        <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-danger'>
+                        <a href="{!! route('admin.organizacions.edit', [$organizacion->id]) !!}" class=' btn btn-primary'>
                             Editar Organización
                         </a>
                     @endcan
@@ -338,7 +337,7 @@
                                         <label class="col-md-4 col-sm-4" for="working_day" style="text-align: center;"><i
                                                 class="fas fa-clock iconos-crear"></i>Horario Laboral Fin</label>
                                         <!-- <label class="col-md-3 col-sm-3" for="working_day"
-                                            style="text-align: center;"></i>Opciones</label> -->
+                                                                style="text-align: center;"></i>Opciones</label> -->
                                     </div>
                                 </tbody>
                                 <tfoot></tfoot>

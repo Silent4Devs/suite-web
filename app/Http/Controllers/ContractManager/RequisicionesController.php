@@ -45,7 +45,7 @@ class RequisicionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoFalseAll();
 
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
@@ -340,11 +340,14 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
+            $solicitante = User::find($requisicion->id_user);
+
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
                     'requisicion_id' => $requisicion->id,
                 ],
                 [
+                    'solicitante_id' => $solicitante->empleado->id,
                     'responsable_finanzas_id' => $responsable->id,
                 ]
             );
@@ -365,6 +368,8 @@ class RequisicionesController extends Controller
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
 
+            $solicitante = User::find($requisicion->id_user);
+
             $organizacion = Organizacion::getFirst();
 
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
@@ -372,6 +377,7 @@ class RequisicionesController extends Controller
                     'requisicion_id' => $requisicion->id,
                 ],
                 [
+                    'solicitante_id' => $solicitante->empleado->id,
                     'comprador_id' => $comprador->user->id,
                 ]
             );
@@ -412,7 +418,7 @@ class RequisicionesController extends Controller
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoTrueAll();
         } else {
             $requisiciones = KatbolRequsicion::getArchivoTrueAll()->where('id_user', $user->id);
@@ -432,7 +438,7 @@ class RequisicionesController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::getArchivoFalseAll();
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
@@ -479,38 +485,113 @@ class RequisicionesController extends Controller
         $firma_siguiente = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 
         if ($requisicion->firma_solicitante === null) {
-            if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
-                $tipo_firma = 'firma_solicitante';
-                $alerta = $this->validacionLista($tipo_firma);
-            } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+            if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
+                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
+                    $tipo_firma = 'firma_solicitante';
+                    $alerta = $this->validacionLista($tipo_firma);
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
-                return view('contract_manager.requisiciones.error', compact('mensaje'));
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
+            } else {
+
+                $$responsable = User::find($requisicion->id_user)->empleado;
+
+                if ($user->empleado->id == $responsable->id) {
+                    $tipo_firma = 'firma_solicitante';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo';
+
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
             }
         } elseif ($requisicion->firma_jefe === null) {
-            if ($user->empleado->id == $firma_siguiente->jefe_id) { //jefe_id
-                $tipo_firma = 'firma_jefe';
-                $alerta = $this->validacionLista($tipo_firma);
-            } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+            if ($firma_siguiente && isset($firma_siguiente->jefe_id)) {
+                if ($user->empleado->id == $firma_siguiente->jefe_id) { //jefe_id
+                    $tipo_firma = 'firma_jefe';
+                    $alerta = $this->validacionLista($tipo_firma);
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
 
-                return view('contract_manager.requisiciones.error', compact('mensaje'));
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
+            } else {
+                $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+                $listaPart = $listaReq->participantes;
+
+                $jefe = $user->empleado->supervisor;
+                $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+
+                $nivel = $supList->nivel;
+
+                $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+                foreach ($participantesNivel as $key => $partNiv) {
+                    if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                        $responsable = $partNiv->empleado;
+
+                        break;
+                    }
+                }
+
+                if ($user->empleado->id == $responsable->id) {
+                    $tipo_firma = 'firma_jefe';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo';
+
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
             }
         } elseif ($requisicion->firma_finanzas === null) {
-            if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
-                $tipo_firma = 'firma_finanzas';
-            } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+            if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
+                if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
+                    $tipo_firma = 'firma_finanzas';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
-                return view('contract_manager.requisiciones.error', compact('mensaje'));
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
+            } else {
+                $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+                $listaPart = $listaReq->participantes;
+
+                for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                    $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                    if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                        $responsable = $responsableNivel->empleado;
+
+                        break;
+                    }
+                }
+                if ($user->empleado->id == $responsable->id) {
+                    $tipo_firma = 'firma_finanzas';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del responsable de finanzas';
+
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
             }
         } elseif ($requisicion->firma_compras === null) {
-            if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
-                $tipo_firma = 'firma_compras';
-            } else {
-                $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+            if ($firma_siguiente && isset($firma_siguiente->comprador_id)) {
+                if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
+                    $tipo_firma = 'firma_compras';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
 
-                return view('contract_manager.requisiciones.error', compact('mensaje'));
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
+            } else {
+                if (($user->empleado->id == $comprador->user->id)) { //comprador_id
+                    $tipo_firma = 'firma_compras';
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -665,7 +746,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::where('firma_solicitante', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -710,7 +791,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->where('firma_jefe', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -753,7 +834,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->where('firma_finanzas', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;
@@ -795,7 +876,7 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
         $empleadoActual = User::getCurrentUser()->empleado;
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->whereNotNull('firma_jefe')->whereNotNull('firma_finanzas')->where('firma_compras', null)->get();
             $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
             $participantes = $LD->participantes;

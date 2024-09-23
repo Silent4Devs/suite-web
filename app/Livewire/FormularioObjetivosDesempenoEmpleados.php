@@ -278,21 +278,21 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public function crearObjetivo()
     {
-        // try {
-        //     $this->validate();
-        // } catch (\Illuminate\Validation\ValidationException $e) {
-        //     $this->alert('error', 'Error de validación', [
-        //         'position' => 'center',
-        //         'timer' => 6000,
-        //         'toast' => false,
-        //         'text' => 'Se deben llenar todos los campos obligatorios.',
-        //         'showConfirmButton' => true,
-        //         'confirmButtonText' => 'Entendido',
-        //         'timerProgressBar' => true,
-        //     ]);
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->alert('error', 'Error de validación', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Se deben llenar todos los campos obligatorios.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
 
-        //     return;
-        // }
+            return;
+        }
 
         $usuario = User::getCurrentUser();
 
@@ -432,7 +432,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $this->resetInputsObjetivo();
         $this->resetInputsPeriodos();
         $this->resetInputsEscalas();
-
     }
 
     public function confirmarEnvioPapelera($objetivoId)

@@ -138,7 +138,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <script>
-    const recurso = @json($recurso);
+   
     const empleados = recurso.empleados;
 
     renderizarGraficasSuficienteInsuficiente('utilidadTemasVistos', 'Utilidad de Temas Vistos');

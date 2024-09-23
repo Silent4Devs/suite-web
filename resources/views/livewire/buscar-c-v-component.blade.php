@@ -100,12 +100,15 @@
             <div class="col-sm-3 col-3 col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Filtros</h4>
+                        <h4 style="color: #3086AF;">Filtros</h4>
                         <hr>
                         <div class="row">
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 col-sm-12 px-3">
+                                <button wire:click="resetFilter" type="button" class="btn btn-link p-0 mb-3">Limpiar Filtros</button>
+                            </div>
+                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="type" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName">
+                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -117,9 +120,9 @@
                                 </select>
                                 <label for="type">Tipo de capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="name" style="max-width:614px; width:100%;" class="form-control"
-                                    name="name" wire:model.live="name_id" wire:change="filterName">
+                                    name="name" wire:model.live="name_id" wire:change="filterName" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -137,9 +140,9 @@
                                 </select>
                                 <label for="name">Nombre de la capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="area" style="max-width:614px; width:100%;" class="form-control"
-                                    name="area" wire:model.live="area_id" wire:change="filterArea">
+                                    name="area" wire:model.live="area_id" wire:change="filterArea" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -149,11 +152,11 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <label for="area">Area</label>
+                                <label for="area">Área</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
                                 <select id="employees" style="max-width:614px; width:100%;" class="form-control"
-                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy">
+                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -165,9 +168,12 @@
                                 </select>
                                 <label for="employees">Empleado</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 px-3">
+                                <hr style="border: none; border-top: 1px dashed #8F8F8F;">
+                            </div>
+                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
                                 <select id="issuing_company" style="max-width:614px; width:100%;" class="form-control"
-                                    name="issuing_company" wire:model.live="issuingCompanyId" wire:change="filterIssuingCompany">
+                                    name="issuing_company" wire:model.live="issuingCompanyId" wire:change="filterIssuingCompany" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -179,9 +185,12 @@
                                 </select>
                                 <label for="issuing_company">Empresa emisora</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  pl-0 anima-focus">
+                            <div class="col-12 px-3">
+                                <hr style="border: none; border-top: 1px dashed #8F8F8F;">
+                            </div>
+                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
                                 <select id="norma" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="normaId" wire:change="filterNorma">
+                                    name="type" wire:model.live="normaId" wire:change="filterNorma" @if($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -194,9 +203,9 @@
                                 <label for="type">Norma</label>
                             </div>
                             <div class="col-12 col-sm-12">
-                                <button wire:click="resetFilter" class="btn btn-sm btn-success">
+                                {{-- <button wire:click="resetFilter" class="btn btn-sm btn-success">
                                     Limpiar filtros
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
 
@@ -209,6 +218,8 @@
             <div class="card" style="{{$isPersonal ? "border:none;" : null}}">
                 <div class="card-body {{ $isPersonal ? 'p-0 m-0' : null }}" style="{{$isPersonal ? 'border:none;': null}}">
                     @if (!$isPersonal)
+                        <h4 style="color: #3086AF;">Curriculum Vitae</h4>
+                        <hr>
                         <div class="text-center" wire:loading>
                             <i class="fas fa-circle-notch fa-spin mr-2"></i> Buscando Coincidencias
                         </div>
@@ -217,19 +228,19 @@
                                 <div class="col-md-4 col-sm-4 col-lg-4">
                                     <div style="cursor: pointer; border:1px solid #ccc!important;  border-radius: 5px; height: 80px;"
                                         class="p-2 shadow-sm mb-3" x-on:click="open = false"
-                                        wire:click="mostrarCurriculum({{ $item->empleado->id }})">
+                                        wire:click="mostrarCurriculum({{ $item->id }})">
                                         <div class="row">
                                             <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
-                                                <img src="{{ asset("storage/empleados/imagenes/{$item->empleado->avatar}") }}"
+                                                <img src="{{ asset("storage/empleados/imagenes/{$item->avatar}") }}"
                                                     style="max-width:40px;clip-path:circle(50% at 50% 50%)">
                                             </div>
                                             <div class="col-sm-8 col-md-8 col-lg-8 mt-2">
                                                 <p class="m-0" style="font-size:10px; font-weight:bold; ">
-                                                    <span>{{ $item->empleado->area->area }}</span>
+                                                    <span>{{ $item->area->area }}</span>
                                                 </p>
                                                 <p class="m-0 text-muted" style="font-size:10px"
-                                                    title="{{ $item->empleado->name }}">
-                                                    {{ Str::limit($item->empleado->name, 20, '...') }}
+                                                    title="{{ $item->name }}">
+                                                    {{ Str::limit($item->name, 20, '...') }}
                                                 </p>
                                             </div>
                                         </div>
@@ -269,7 +280,7 @@
                             <div x-show="!open">
                                 <div class="row justify-content-center">
                                     <div class="col-10">
-                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true"><i
+                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true" wire:click="enableFields"><i
                                                 class="fas fa-arrow-left"></i> Regresar</button>
 
                                         <button onclick="imprimirElemento('imp1');" class="btn btn-sm btn-success">

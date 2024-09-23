@@ -104,7 +104,7 @@
                     @endcan
                     @can('solicitud_mensajeria_acceder')
                         <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                          <i class="bi bi-send"></i></><br><span>Mensajería</span>
+                            <i class="bi bi-send"></i></><br><span>Mensajería</span>
                         </a>
                     @endcan
                     @php

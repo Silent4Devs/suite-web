@@ -78,6 +78,10 @@ class ClausulasAuditoriasController extends Controller
         $validatedData = $request->validate([
             'identificador' => 'unique:clausulas_auditorias,identificador', // Ignora el actual en la validación
             'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
         try {
@@ -131,6 +135,10 @@ class ClausulasAuditoriasController extends Controller
         $validatedData = $request->validate([
             'identificador' => 'unique:clausulas_auditorias,identificador,'.$id.'', // Ignora el actual en la validación
             'nombre' => 'required|unique:clausulas_auditorias,nombre_clausulas,'.$id.'',
+        ], [
+            'identificador.unique' => 'El identificador ya está registrado. Por favor, elige uno diferente.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
         try {
@@ -163,8 +171,12 @@ class ClausulasAuditoriasController extends Controller
         abort_if(Gate::denies('clausulas_auditorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $deleteClausula = ClausulasAuditorias::find($id);
         // dd($deleteClausula);
-        $deleteClausula->delete();
 
-        return redirect(route('admin.auditoria-clausula'));
+        if ($deleteClausula && $deleteClausula->delete()) {
+            // Redirige con un parámetro de éxito
+            return redirect()->route('admin.auditoria-clausula', ['status' => 'success', 'message' => 'Registro eliminado correctamente.']);
+        }
+
+        return redirect()->route('admin.auditoria-clausula', ['status' => 'error', 'message' => 'Error al eliminar el registro.']);
     }
 }
