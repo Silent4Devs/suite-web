@@ -1,5 +1,4 @@
-<table class="table table-bordered w-100 datatable datatable-solicitud-vacaciones tblCSV"
-    id="datatable-solicitud-vacaciones">
+<table class="table w-100 datatable datatable-solicitud-vacaciones tblCSV" id="datatable-solicitud-vacaciones">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 110px;">

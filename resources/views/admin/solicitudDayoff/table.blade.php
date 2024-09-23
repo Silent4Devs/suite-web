@@ -1,4 +1,4 @@
-<table class="table table-bordered datatable-solicitud-dayoff w-100 tblCSV" id="datatable-solicitud-dayoff">
+<table class="table datatable-solicitud-dayoff w-100 tblCSV" id="datatable-solicitud-dayoff">
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 110px;">

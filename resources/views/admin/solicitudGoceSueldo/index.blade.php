@@ -378,7 +378,7 @@
                     [0, 'desc']
                 ],
             };
-            let table = $('.datatable-solicitud-goce-sueldo').DataTable(dtOverrideGlobals);
+            let table = $('#datatable-solicitud-goce-sueldo').DataTable(dtOverrideGlobals);
             $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                 <h5>
@@ -413,7 +413,7 @@
                             dataType: "JSON",
                             success: function(response) {
                                 if (response.status = 200) {
-                                    table.ajax.reload();
+                                    window.location.reload();
                                 }
                             },
                             error: function(error) {
