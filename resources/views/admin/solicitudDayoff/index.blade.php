@@ -5,7 +5,6 @@
     </div>
 
     <style>
-
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
@@ -87,8 +86,7 @@
                 <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
                 <div class="col-sm-2 pr-5">
                     <input type="text" style="text-align:center;" class="form-control" id="inputEmail3"
-                        value="{{ $dias_disponibles }}" disabled
-                        >
+                        value="{{ $dias_disponibles }}" disabled>
                 </div>
             </div>
             <div style="margin-bottom: 5px; margin-left:10px;" class="row">
@@ -103,8 +101,10 @@
 
 
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            @include('admin.solicitudDayoff.table')
+        <div class="card-body">
+            <div class="datatable-rds w-100">
+                @include('admin.solicitudDayoff.table')
+            </div>
         </div>
     </div>
 @endsection
@@ -243,121 +243,121 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.solicitud-dayoff.index') }}",
-                columns: [{
-                        data: 'dias_solicitados',
-                        name: 'dias_solicitados',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
+                // ajax: "{{ route('admin.solicitud-dayoff.index') }}",
+                // columns: [{
+                //         data: 'dias_solicitados',
+                //         name: 'dias_solicitados',
+                //         render: function(data, type, row) {
+                //             return `<div style="text-align:center">${data}</div>`;
+                //         }
 
-                    },
-                    // {
-                    //     data: 'año',
-                    //     name: 'año',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:center">${data} año</div>`;
-                    //     }
+                //     },
+                //     // {
+                //     //     data: 'año',
+                //     //     name: 'año',
+                //     //     render: function(data, type, row) {
+                //     //         return `<div style="text-align:center">${data} año</div>`;
+                //     //     }
 
-                    // },
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'aprobacion',
-                        name: 'aprobacion',
-                        render: function(data, type, row) {
-                            const aprobacion = row.aprobacion;
+                //     // },
+                //     {
+                //         data: 'fecha_inicio',
+                //         name: 'fecha_inicio',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //             return `<div style="text-align:left">${data}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'fecha_fin',
+                //         name: 'fecha_fin',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //             return `<div style="text-align:left">${data}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'aprobacion',
+                //         name: 'aprobacion',
+                //         render: function(data, type, row) {
+                //             const aprobacion = row.aprobacion;
 
-                            switch (Number(aprobacion)) {
-                                case 1:
-                                    return `
-                                    <div  style="text-align:left">
-                                        <span class="badge badge-pill badge-warning">Pendiente</span>
-                                    </div>
-                                    `;
-                                    break;
-                                case 2:
-                                    return `
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-danger">Rechazado</span>
-                                    </div>
-                                    `;
-                                    break;
-                                case 3:
-                                    return `
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-success">Aprobado</span>
-                                    </div>
-                                    `;
-                                    break;
-                                default:
-                                    return `
-                                    <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                    `;
-                            }
-                        }
-                    },
+                //             switch (Number(aprobacion)) {
+                //                 case 1:
+                //                     return `
+            //                     <div  style="text-align:left">
+            //                         <span class="badge badge-pill badge-warning">Pendiente</span>
+            //                     </div>
+            //                     `;
+                //                     break;
+                //                 case 2:
+                //                     return `
+            //                     <div style="text-align:left">
+            //                         <span class="badge badge-pill badge-danger">Rechazado</span>
+            //                     </div>
+            //                     `;
+                //                     break;
+                //                 case 3:
+                //                     return `
+            //                     <div style="text-align:left">
+            //                         <span class="badge badge-pill badge-success">Aprobado</span>
+            //                     </div>
+            //                     `;
+                //                     break;
+                //                 default:
+                //                     return `
+            //                     <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+            //                     `;
+                //             }
+                //         }
+                //     },
 
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:left">${data}</div>`;
-                    //     }
-                    // },
-                    {
-                        data: 'actions',
-                        render: function(data, type, row, meta) {
-                            let aprobacion = row.aprobacion;
-                            let id = row.id;
-                            console.log(id);
-                            if (aprobacion == 3) {
-                                return `
-                                <div style="text-aling:center">
-                                <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                </div>
-                               `;
+                //     // {
+                //     //     data: 'descripcion',
+                //     //     name: 'descripcion',
+                //     //     render: function(data, type, row) {
+                //     //         return `<div style="text-align:left">${data}</div>`;
+                //     //     }
+                //     // },
+                //     {
+                //         data: 'actions',
+                //         render: function(data, type, row, meta) {
+                //             let aprobacion = row.aprobacion;
+                //             let id = row.id;
+                //             console.log(id);
+                //             if (aprobacion == 3) {
+                //                 return `
+            //                 <div style="text-aling:center">
+            //                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+            //                 </div>
+            //                `;
 
-                            } else {
-                                let urlEliminar = '{{ route('admin.solicitud-dayoff.destroy') }}'
-                                return `
-                                <div style="text-aling:center">
-                                <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
-                                </div>
-                               `;
-                            }
+                //             } else {
+                //                 let urlEliminar = '{{ route('admin.solicitud-dayoff.destroy') }}'
+                //                 return `
+            //                 <div style="text-aling:center">
+            //                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+            //                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+            //                 </div>
+            //                `;
+                //             }
 
-                        }
-                    }
-                ],
+                //         }
+                //     }
+                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
             };
-            let table = $('.datatable-solicitud-dayoff').DataTable(dtOverrideGlobals);
+            let table = $('#datatable-solicitud-dayoff').DataTable(dtOverrideGlobals);
             $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                 <h5>
@@ -392,7 +392,7 @@
                             dataType: "JSON",
                             success: function(response) {
                                 if (response.status = 200) {
-                                    table.ajax.reload();
+                                    window.location.reload();
                                 }
                             },
                             error: function(error) {
