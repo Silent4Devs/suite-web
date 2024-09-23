@@ -201,7 +201,6 @@ services:
     networks:
       - tabantajnetwork
 
-
   newrelic-rabbit-tabantaj:
     container_name: newrelic-rabbit-tabantaj
     image: newrelic/infrastructure:latest
@@ -220,7 +219,6 @@ services:
     networks:
       - tabantajnetwork
 
-
   newrelic-queue-worker-tabantaj:
     container_name: newrelic-queue-worker-tabantaj
     image: newrelic/infrastructure:latest
@@ -238,7 +236,6 @@ services:
     restart: unless-stopped
     networks:
       - tabantajnetwork
-
 
   newrelic-schedule-worker-tabantaj:
     container_name: newrelic-schedule-worker-tabantaj
@@ -354,4 +351,3 @@ volumes:
 networks:
   tabantajnetwork:
     driver: bridge
- 
