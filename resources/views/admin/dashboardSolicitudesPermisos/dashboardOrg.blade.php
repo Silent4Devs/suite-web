@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center justify-content-between gap-1 mr-5">
-                        <span style="font-size: 25px;" class="text-center">
+                        <span style="font-size: 25px;" class="text-center me-4">
                             @can('dashboard_solicitudes_directivo')
                                 Directivo
                             @else
@@ -303,78 +303,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($vacaciones as $vacTable)
+                    @foreach ($solicitudes as $solicitud)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-4">
                                     <div class="img-person">
-                                        <img src="{{ $vacTable->empleado->avatar_ruta }}"
-                                            alt="{{ $vacTable->empleado->name }}">
+                                        <img src="{{ $solicitud->empleado->avatar_ruta }}"
+                                            alt="{{ $solicitud->empleado->name }}">
                                     </div>
 
-                                    <span>{{ $vacTable->empleado->name }}</span>
+                                    <span>{{ $solicitud->empleado->name }}</span>
                                 </div>
                             </td>
                             <td>
-                                <span class="type-permiso-span" style="background-color: #5899ef">
-                                    Vacaciones
-                                </span>
+                                {{ $solicitud->tipo_solicitud }}
                             </td>
                             <td>
-                                {{ Carbon\Carbon::parse($vacTable->fecha_inicio)->format('d/m/Y') }}
+                                {{ Carbon\Carbon::parse($solicitud->fecha_inicio)->format('d/m/Y') }}
                             </td>
                             <td>
-                                {{ Carbon\Carbon::parse($vacTable->fecha_fin)->format('d/m/Y') }}
-                            </td>
-                        </tr>
-                    @endforeach
-                    @foreach ($dayOff as $dayTable)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-4">
-                                    <div class="img-person">
-                                        <img src="{{ $dayTable->empleado->avatar_ruta }}"
-                                            alt="{{ $dayTable->empleado->name }}">
-                                    </div>
-
-                                    <span>{{ $dayTable->empleado->name }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="type-permiso-span" style="background-color: #2962d4">
-                                    DayOff
-                                </span>
-                            </td>
-                            <td>
-                                {{ Carbon\Carbon::parse($dayTable->fecha_inicio)->format('d/m/Y') }}
-                            </td>
-                            <td>
-                                {{ Carbon\Carbon::parse($dayTable->fecha_fin)->format('d/m/Y') }}
-                            </td>
-                        </tr>
-                    @endforeach
-                    @foreach ($permisos as $permisoTable)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-4">
-                                    <div class="img-person">
-                                        <img src="{{ $permisoTable->empleado->avatar_ruta }}"
-                                            alt="{{ $permisoTable->empleado->name }}">
-                                    </div>
-
-                                    <span>{{ $permisoTable->empleado->name }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="type-permiso-span" style="background-color: #0808a9">
-                                    Permiso
-                                </span>
-                            </td>
-                            <td>
-                                {{ Carbon\Carbon::parse($permisoTable->fecha_inicio)->format('d/m/Y') }}
-                            </td>
-                            <td>
-                                {{ Carbon\Carbon::parse($permisoTable->fecha_fin)->format('d/m/Y') }}
+                                {{ Carbon\Carbon::parse($solicitud->fecha_fin)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @endforeach

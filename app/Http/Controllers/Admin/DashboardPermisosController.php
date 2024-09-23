@@ -27,9 +27,31 @@ class DashboardPermisosController extends Controller
         $dayOffMounth = SolicitudDayOff::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
         $permisoMounth = SolicitudPermisoGoceSueldo::where('fecha_fin', '>=', $inicio_mes)->where('fecha_inicio', '<=', $fin_mes)->get();
 
-        $vacaciones = SolicitudVacaciones::get();
-        $dayOff = SolicitudDayOff::get();
-        $permisos = SolicitudPermisoGoceSueldo::get();
+        $vacaciones = SolicitudVacaciones::orderByDesc('fecha_inicio')->get();
+        $dayOff = SolicitudDayOff::orderByDesc('fecha_inicio')->get();
+        $permisos = SolicitudPermisoGoceSueldo::orderByDesc('fecha_inicio')->get();
+
+        // Obtener datos y agregar tipo_solicitud
+        $vacaciones = SolicitudVacaciones::all()->map(function ($item) {
+            $item->tipo_solicitud = 'Vacaciones';
+            return $item;
+        });
+
+        $dayOff = SolicitudDayOff::all()->map(function ($item) {
+            $item->tipo_solicitud = 'DayOff';
+            return $item;
+        });
+
+        $permisos = SolicitudPermisoGoceSueldo::all()->map(function ($item) {
+            $item->tipo_solicitud = 'Permiso';
+            return $item;
+        });
+
+        // Combinar las colecciones
+        $solicitudesSinOrder = $vacaciones->merge($dayOff)->merge($permisos);
+
+        // Ordenar por fecha_inicio en orden descendente
+        $solicitudes = $solicitudesSinOrder->sortByDesc('fecha_inicio');
 
         $vacacionesEvents = collect();
         $dayOffEvents = collect();
@@ -115,6 +137,6 @@ class DashboardPermisosController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', 'permisos', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents'));
+        return view('admin.dashboardSolicitudesPermisos.dashboardOrg', compact('logo_actual', 'empresa_actual', 'currentUser', 'areasToSelect', 'areaSeleccionada', 'vacacionesMounth', 'dayOffMounth', 'permisoMounth', 'vacaciones', 'dayOff', 'permisos', 'vacacionesEvents', 'dayOffEvents', 'permisosEvents', 'solicitudes'));
     }
 }

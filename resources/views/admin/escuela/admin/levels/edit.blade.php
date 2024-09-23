@@ -12,25 +12,28 @@
     <h5 class="col-12 titulo_general_funcion">Editar Nivel</h5>
     <div class="card">
         <div class="card-body">
-            <h1 class="font-weight-bold mb-4"
-                style="padding-bottom: 10px; border-color: #3086AF !important; font-size: 20px; border-bottom-style:solid;border-width: 1px;">
-                Nivel</h1>
-            {!! Form::model($level, ['route' => ['admin.levels.update', $level], 'method' => 'put']) !!}
-            <span style="color: var(--color-tbj);">Nombre</span><span style="color: #AF3041;">*</span>
-            <div class="row align-items-start">
-                <div class="col-9">
-                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el nombre del nivel']) !!}
+            <h5>Nivel</h5>
+            <div>
+
+                {!! Form::model($level, ['route' => ['admin.levels.update', $level], 'method' => 'put']) !!}
+                <span style="color: var(--color-tbj);">Nombre</span><span style="color: #AF3041;">*</span>
+                <div class="row align-items-start">
+                    <div class="col-9">
+                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el nombre del nivel']) !!}
+                    </div>
+
+
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="col-3">
+            </div>
+            <div>
+                <div class="mt-4 text-right">
                     {!! Form::submit('ACTUALIZAR NIVEL', [
-                        'class' => 'btn btn-link',
-                        'style' => 'color: #006DDB; font-size: 15px; margin-left: 30px; font-weight: bold;',
+                        'class' => 'btn btn-primary',
                     ]) !!}
                 </div>
-
-                @error('name')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
             </div>
             {!! Form::close() !!}
         </div>
