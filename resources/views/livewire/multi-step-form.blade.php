@@ -12,8 +12,7 @@
             font-size: 13px;
             padding: 5px;
             background: #3451837a;
-            border: 2px solid #345183;
-            color: #353535;
+            border: 2px solid var(--color-tbj) color: #353535;
             border-radius: 5px;
         }
 
@@ -49,7 +48,7 @@
             height: 20px;
             width: 20px;
             background-color: #f9f9f9;
-            border: 1px solid #345183;
+            border: 1px solid var(--color-tbj);
         }
 
         /* On mouse-over, add a grey background color */
@@ -94,8 +93,7 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid #345183;
-            box-sizing: border-box;
+            border: 2px solid var(--color-tbj) box-sizing: border-box;
             border-radius: 10px;
         }
 
@@ -135,8 +133,7 @@
 
         input[type=checkbox]:checked~div {
             color: #ffffff;
-            background: #345183;
-            border-radius: 7px;
+            background: var(--color-tbj) border-radius: 7px;
             border: none;
             /* box-shadow: 5px 5px 5px 0px #004d4d; */
         }
@@ -144,8 +141,7 @@
         input[type=checkbox]:checked~input[type=number] {
             border-bottom: 2px solid rgb(78 230 236);
             color: #ffffff;
-            background: #345183;
-            text-align: center;
+            background: var(--color-tbj) text-align: center;
         }
 
         .silent-color {
@@ -181,7 +177,7 @@
 
         #progressbar .active {
             z-index: 1;
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         #progressbar li {
@@ -250,8 +246,7 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: #345183;
-            z-index: -1;
+            background: var(--color-tbj) z-index: -1;
         }
 
         .progress {
@@ -259,13 +254,12 @@
         }
 
         .progress-bar {
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         .head {
             text-transform: capitalize;
-            color: #345183;
-            font-weight: normal
+            color: var(--color-tbj) font-weight: normal
         }
 
         .iconos-evaluacion {
@@ -564,9 +558,8 @@
                                                 </div>
                                                 <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model="pesoGeneralObjetivos"
-                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
-                                                        pattern="[0-9]*"
+                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
+                                                        class="form-control" type="text" pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
@@ -864,9 +857,8 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_jefe)
-                                                <input class="ml-4" wire:model="pesoEvaluacionJefe"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionJefe" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionJefe'))
@@ -898,9 +890,8 @@
                                                 </div>
                                             </div>
                                             @if ($evaluado_por_misma_area)
-                                                <input class="ml-4" wire:model="pesoEvaluacionArea"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionArea" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionArea'))
@@ -961,9 +952,8 @@
                                                 </span>
                                             </div>
                                             @if ($autoevaluacion)
-                                                <input class="ml-4" wire:model="pesoAutoevaluacion"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoAutoevaluacion" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoAutoevaluacion'))

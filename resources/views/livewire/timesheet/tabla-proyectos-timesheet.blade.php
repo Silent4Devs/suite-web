@@ -99,7 +99,7 @@
             <a href="#" id="btn_todos" wire:click="actualizarEstatus('todos')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #bdefff;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;">Todos</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $terminado_count + $proceso_count + $cancelado_count }}
@@ -111,7 +111,7 @@
             <a href="#" wire:click="actualizarEstatus('procesos')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #a4ffa7;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> En proceso</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $proceso_count }} </strong>
@@ -122,7 +122,7 @@
             <a href="#" id="btn_papelera" wire:click="actualizarEstatus('cancelados')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #F2ADAD;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> Cancelados</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $cancelado_count }} </strong>
@@ -133,7 +133,7 @@
             <a href="#" id="btn_pendiente" wire:click="actualizarEstatus('terminados')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #d9d9d9;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> Terminados</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $terminado_count }} </strong>
@@ -224,7 +224,8 @@
                             <td>{{ $proyecto->proyecto }} </td>
                             <td>{{ $proyecto->fecha_inicio }} </td>
                             <td>{{ $proyecto->fecha_fin }} </td>
-                            <td>{{ $proyecto->cliente->nombre ?? ($proyecto->clienteConvergencia->nombre ?? '') }} </td>
+                            <td>{{ $proyecto->cliente->nombre ?? ($proyecto->clienteConvergencia->nombre ?? '') }}
+                            </td>
                             <td>
                                 <ul style="padding-left:10px; ">
                                     @foreach ($proyecto->areas as $area)

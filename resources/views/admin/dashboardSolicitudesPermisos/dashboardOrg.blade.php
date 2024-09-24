@@ -60,7 +60,7 @@
         <div class="card card-body text-center justify-content-center btn-reporte-print"
             style="max-width: 200px; cursor:pointer;" onclick="window.print();">
             <strong>Reporte</strong>
-            <i class="material-symbols-outlined" style="font-size: 60px; color:#006DDB;">print</i>
+            <i class="material-symbols-outlined" style="font-size: 60px; color:var(--color-tbj)">print</i>
         </div>
     </div>
 

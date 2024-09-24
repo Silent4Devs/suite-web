@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Identificación del Puesto</span>
                     </div>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Descripción del puesto</span>
                     </div>
@@ -172,7 +172,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Principales responsabilidades</span>
                     </div>
@@ -253,7 +253,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Herramientas para desempeñar el puesto</span>
                     </div>
@@ -310,7 +310,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Requisitos y habilidades para el puesto</span>
                     </div>
@@ -370,7 +370,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Idioma</span>
                     </div>
@@ -395,7 +395,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -450,7 +450,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Datos generales</span>
                     </div>
@@ -570,7 +570,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos Internos del puesto</span>
                     </div>
@@ -639,7 +639,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos Externos del puesto</span>
                     </div>
@@ -689,7 +689,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Responsiva</span>
                     </div>

@@ -7,9 +7,7 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
+            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -22,7 +20,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -51,8 +49,7 @@
             overflow: hidden;
             text-decoration: none;
             display: inline-block;
-            color: #345183;
-            padding: 5px;
+            color: var(--color-tbj) padding: 5px;
             border: 1px solid #D9D9D9 !important;
             background-color: #EEEEEE;
             margin: 5px;
@@ -64,8 +61,7 @@
 
         .btn_reporte:hover {
             border: 1px solid #345183 !important;
-            color: #345183;
-            background-color: rgba(0, 0, 0, 0);
+            color: var(--color-tbj) background-color: rgba(0, 0, 0, 0);
         }
 
         .btn_reporte i {

@@ -2,7 +2,7 @@
     <div class="mt-3 row">
         <div class="col-12">
             <div class="mt-2 text-center form-group"
-                style="background-color:#345183; border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
                 Comparar
             </div>
         </div>
@@ -26,7 +26,8 @@
             </select>
         </div>
         <div class="col-2">
-            <button class="h-100 btn btn-sm tb-btn-primary" wire:click="compararEvaluaciones('evaluado')">Comparar</button>
+            <button class="h-100 btn btn-sm tb-btn-primary"
+                wire:click="compararEvaluaciones('evaluado')">Comparar</button>
         </div>
 
         <div class="col-6">

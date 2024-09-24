@@ -97,12 +97,12 @@
             <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
         </div>
         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-            <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+            <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
             <br>
-            <span style="color:#345183; font-size:15px;"><strong>Bitácora de Accesos</strong></span>
+            <span style="color:var(--color-tbj) font-size:15px;"><strong>Bitácora de Accesos</strong></span>
         </div>
         <div class="col-3 p-2">
-            <span style="color:#345183;">Fecha:
+            <span style="color:var(--color-tbj)">Fecha:
                 {{ \Carbon\Carbon::now()->format('d-m-Y h:i A') }}
             </span>
         </div>
@@ -122,8 +122,8 @@
                                 <i class="fas fa-filter mr-2"></i> Filtros
                             </div>
                             <div class="col-6">
-                                <select wire:model="colaborador" class="custom-select" name=""
-                                    id="" style="position: relative">
+                                <select wire:model="colaborador" class="custom-select" name="" id=""
+                                    style="position: relative">
                                     <option value="" disabled selected>Filtrar por colaborador visitado</option>
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>

@@ -58,7 +58,7 @@ function hexToRGBA(hex) {
     calendar = new CalendarInfo();
     id += 1;
     calendar.id = String(id);
-    calendar.name = '<i class="fas fa-thumbtack i_calendar i_calendar" style="color:#345183;"></i> Actividades';
+    calendar.name = '<i class="fas fa-thumbtack i_calendar i_calendar" style="color:var(--color-tbj)"></i> Actividades';
     calendar.color = '#ffffff';
     calendar.bgColor = '#345183';
     calendar.dragBgColor = '#345183';

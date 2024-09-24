@@ -3,7 +3,7 @@
         <a href="#" id="btn_todos" wire:click="todos">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #83BCFE;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;">Todos</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
@@ -14,7 +14,7 @@
         <a href="#" id="btn_aprobado" wire:click="aprobados">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #B8EFA8;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;">Aprobados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $aprobados_contador }} </strong>
@@ -25,7 +25,7 @@
         <a href="#" id="btn_pendiente" wire:click="pendientes">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #FFDBA4;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;"> Pendientes</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $pendientes_contador }} </strong>
@@ -36,7 +36,7 @@
         <a href="#" id="btn_rechazado" wire:click="rechazos">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #FFA4A4;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;"> Rechazados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $rechazos_contador }} </strong>

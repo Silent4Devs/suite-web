@@ -132,7 +132,7 @@
                                             <br>
                                             <br>
                                             <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Datos generales</strong>
                                             <ul style="font-size:11pt; color:#153643;">
                                                 <li style="font-size:11pt;">Ticket ID: <strong style="font-size:10pt;">
@@ -160,7 +160,7 @@
 
                                             <p>
                                                 <strong
-                                                    style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                    style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                     Reportó</strong>
                                             <ul style="font-size:11pt; color:#153643;">
                                                 <li style="font-size:11pt;">Nombre del contacto:<strong
@@ -178,7 +178,7 @@
                                             </p>
 
                                             <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Queja del cliente dirigida a</strong>
                                             <p>
                                             <ul style="font-size:11pt; color:#153643;">
@@ -199,7 +199,7 @@
                                             </p>
 
                                             <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Descripción de la queja</strong>
                                             <p>
                                             <ul style="font-size:11pt; color:#153643;">
@@ -225,7 +225,7 @@
                                             </p>
 
                                             <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Registró</strong>
 
 

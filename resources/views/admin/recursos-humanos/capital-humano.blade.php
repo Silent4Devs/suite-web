@@ -3,7 +3,7 @@
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         div.tab-pane ul {

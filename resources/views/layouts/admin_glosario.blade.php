@@ -139,7 +139,7 @@
         }
 
         .verde_silent {
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         .azul_silent {
@@ -147,8 +147,7 @@
         }
 
         .iconos_cabecera {
-            color: #345183;
-            font-size: 1.2rem;
+            color: var(--color-tbj) font-size: 1.2rem;
         }
 
 
@@ -233,7 +232,7 @@
         .btn.btn-danger:hover {
             color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #345183;
+            box-shadow: 0 0 0 1px var(--color-tbj);
         }
 
         .btn.btn-success:hover font {
@@ -360,8 +359,7 @@
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: #345183;
-            padding: 5px 20px;
+            color: var(--color-tbj) padding: 5px 20px;
             font-weight: bold;
             margin: 0;
             text-align: center;
@@ -381,8 +379,7 @@
 
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
-            background-color: #345183;
-            box-shadow: 0px -2px 0px 0px;
+            background-color: var(--color-tbj) box-shadow: 0px -2px 0px 0px;
             color: #fff;
         }
 

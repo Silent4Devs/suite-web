@@ -295,7 +295,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class="" style="background-color:#006DDB; padding: 10px;">
+                                        <div class="" style="background-color:var(--color-tbj) padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
                                             permisos
                                         </div>
