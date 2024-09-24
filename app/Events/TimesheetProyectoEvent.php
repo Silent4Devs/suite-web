@@ -7,12 +7,13 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\TimesheetProyecto;
 
 class TimesheetProyectoEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $timeshet_proyecto;
+    public $timesheet_proyecto;
 
     public $tipo_consulta;
 
@@ -20,9 +21,9 @@ class TimesheetProyectoEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($timeshet_proyecto, $tipo_consulta, $tabla, $slug)
+    public function __construct(TimesheetProyecto $timesheet_proyecto, $tipo_consulta, $tabla, $slug)
     {
-        $this->timeshet_proyecto = $timeshet_proyecto;
+        $this->timesheet_proyecto = $timesheet_proyecto;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
