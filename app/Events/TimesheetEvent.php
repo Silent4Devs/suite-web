@@ -21,7 +21,7 @@ class TimesheetEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($timeshet, $tipo_consulta, $tabla, $slug)
+    public function __construct(Timesheet $timeshet, $tipo_consulta, $tabla, $slug)
     {
         $this->timeshet = $timeshet;
         $this->tipo_consulta = $tipo_consulta;
