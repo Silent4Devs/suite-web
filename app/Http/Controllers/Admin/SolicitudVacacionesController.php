@@ -504,45 +504,44 @@ class SolicitudVacacionesController extends Controller
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        if ($request->ajax()) {
+        $query = SolicitudVacaciones::getAllwithEmpleados()->where('autoriza', '=', $data)->where('aprobacion', '=', 1);
+        // if ($request->ajax()) {
 
-            $query = SolicitudVacaciones::with('empleado')->where('aprobacion', '=', 1)->orderByDesc('id')->get();
+        //     $table = datatables()::of($query);
 
-            $table = datatables()::of($query);
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->editColumn('empleado', function ($row) {
+        //         return $row->empleado ? $row->empleado : '';
+        //     });
 
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
+        //     $table->editColumn('dias_solicitados', function ($row) {
+        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
+        //     });
+        //     $table->editColumn('fecha_inicio', function ($row) {
+        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
+        //     });
+        //     $table->editColumn('fecha_fin', function ($row) {
+        //         return $row->fecha_fin ? $row->fecha_fin : '';
+        //     });
+        //     $table->editColumn('aprobacion', function ($row) {
+        //         return $row->aprobacion ? $row->aprobacion : '';
+        //     });
+        //     // $table->editColumn('descripcion', function ($row) {
+        //     //     return $row->descripcion ? $row->descripcion : '';
+        //     // });
 
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            // $table->editColumn('descripcion', function ($row) {
-            //     return $row->descripcion ? $row->descripcion : '';
-            // });
+        //     $table->rawColumns(['actions', 'placeholder']);
 
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.solicitudVacaciones.global-solicitudes', compact('logo_actual', 'empresa_actual'));
+        return view('admin.solicitudVacaciones.global-solicitudes', compact('logo_actual', 'empresa_actual', 'query'));
     }
 
     public function respuesta($id)

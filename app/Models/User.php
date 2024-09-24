@@ -97,11 +97,11 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }
 
-        $cacheKey = 'Auth_user:user' . Auth::user()->id;
+        $cacheKey = 'Auth_user:user'.Auth::user()->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return Auth::user();
