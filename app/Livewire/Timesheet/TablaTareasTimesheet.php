@@ -109,9 +109,13 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->dispatch('tarea-actualizada', nueva_tarea: $nueva_tarea);
+        // $this->dispatch('tarea-actualizada', nueva_tarea: $nueva_tarea);
 
-        $this->alert('success', 'Registro añadido!');
+        $this->alert(
+            'success',
+            'Registro añadido!',
+            ['timer' => 6000]
+        );
     }
 
     public function actualizarNameTarea($id, $value)
