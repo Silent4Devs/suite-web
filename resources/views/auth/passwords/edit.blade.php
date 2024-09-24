@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
         .preview {
             overflow: hidden;
             width: 160px;
@@ -27,14 +22,6 @@
         .cropper-view-box {
             box-shadow: 0 0 0 1px #39f;
             outline: 0;
-        }
-
-        .form-group label {
-            color: var(--color-tbj);
-        }
-
-        .card {
-            background-color: #FCFCFC;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -267,7 +254,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 col-12">
                         <div class="card">
-                            <div class="card-body" style="height:355px !important;">
+                            <div class="card-body" style="">
                                 <h6 style="font-size:18px;">Contactos de emergencia</h6>
                                 <hr style="opacity: 0;">
                                 <form action="{{ route('admin.empleado.update-related-info-profile') }}" method="POST">

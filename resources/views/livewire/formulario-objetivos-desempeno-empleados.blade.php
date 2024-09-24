@@ -386,7 +386,7 @@
             </table>
         </div>
     </div>
-    <div>
+    <div class="text-end">
         <a href="{{ route('admin.ev360-objetivos-periodo.config') }}" class="btn btn-outline-primary">Regresar</a>
     </div>
 
