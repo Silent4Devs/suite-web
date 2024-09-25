@@ -14,8 +14,7 @@
             margin-top: 20px;
             margin-bottom: 30px;
             height: 30px;
-            background: #345183;
-            border-bottom-right-radius: 100px;
+            background: var(--color-tbj) border-bottom-right-radius: 100px;
             border-top-right-radius: 100px;
             border-bottom-left-radius: 100px;
             border-top-left-radius: 100px;

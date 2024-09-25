@@ -10,7 +10,7 @@
     }
 </style>
 
-<div class="card card-content caja-blue" style="background-color:#49598A;">
+<div class="card card-content caja-blue" style="background-color:var(--color-tbj);">
 
     <div>
         <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
@@ -45,12 +45,12 @@
                 {{ $requisicion->sucursal->direccion }} <br>
             </div>
             <div class="flex-item item-header-doc-info" style="">
-                <h4 style="font-size: 18px; color:#49598A;">Orden de Compra</h4>
+                <h4 style="font-size: 18px; color:var(--color-tbj);">Orden de Compra</h4>
                 <p>Folio: 00-00{{ $requisicion->id }}</p>
                 <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
             </div>
         </div>
-        <div style="border-right: 30px solid #295082;">
+        <div style="border-right: 30px solid var(--color-tbj);">
             <div class="row" style="margin-top: 30px;">
                 <div class="col s12 l3">
                     <strong>Folio de Requisición:</strong> <br>

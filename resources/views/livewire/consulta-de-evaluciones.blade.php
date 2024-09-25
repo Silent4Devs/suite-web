@@ -1,5 +1,6 @@
 <div>
-    <div class="mt-2 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    <div class="mt-2 text-center form-group"
+        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
         Aplicar Búsqueda
     </div>
     <div class="row">
@@ -28,7 +29,8 @@
     </div>
 
     <div x-data="{ show: true }">
-        <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="mt-4 text-center form-group"
+            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
             Resultados
             <a style="cursor: pointer" @click="show=!show">
                 <i style="float: right;margin-right: 12px;margin-top: 4px;" class="fas"
@@ -80,7 +82,7 @@
     <div class="mt-3 row">
         <div class="col-12">
             <div class="mt-2 text-center form-group"
-                style="background-color:#345183; border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
                 Comparar
             </div>
         </div>

@@ -50,10 +50,11 @@
 
                     </div>
                     <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
-                        <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">Fecha de revisión:
+                        <span class="" style="font-size:14px;color:var(--color-tbj)background:#EEFCFF;">Fecha de
+                            revisión:
                             {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('d-m-Y') }}
                         </span>
-                        <div class="" style="font-size:14px;color:#345183;">
+                        <div class="" style="font-size:14px;color:var(--color-tbj)">
                             Fecha de publicación:
                             {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('d-m-Y') }}
                         </div>
@@ -72,7 +73,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 mb-1"
-                        style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;
+                        style="width:10px;padding-left:0px;padding-right:0px;background-color:var(--color-tbj);
                     width:10px;padding-left:0px;padding-right: 43px;">
                     </div>
                 </div>

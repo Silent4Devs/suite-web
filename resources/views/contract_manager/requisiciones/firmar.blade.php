@@ -62,7 +62,7 @@
                 {{ $requisicion->sucursal->direccion }} <br>
             </div>
             <div class="flex-item item-header-doc-info" style="">
-                <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
+                <h4 style="font-size: 18px; color:var(--color-tbj);">REQUISICIÓN DE ADQUISICIONES</h4>
                 <p>Folio: 00-00{{ $requisicion->id }}</p>
                 <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
             </div>
@@ -384,8 +384,8 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
-                        <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
-                            REQUISICIÓN</button>
+                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
+                        REQUISICIÓN</button>
                     <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
                 </div>
             </form>

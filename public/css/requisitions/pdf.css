@@ -61,7 +61,7 @@ hr{
 
 .table-tada-requi{
     background-color: #EEF5FF;
-    border-right: 20px solid #295082;
+    border-right: 20px solid var(--color-tbj);
 }
 
 .title-product{

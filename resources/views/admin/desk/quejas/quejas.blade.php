@@ -1,6 +1,5 @@
-
 <style>
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -46,40 +45,40 @@
 </div>
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
-<div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/quejas')}}">Crear reporte</a>
-</div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/quejas') }}">Crear reporte</a>
+    </div>
 @endcan
 
-    @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
-        <table class="datatable tabla_quejas">
-            <thead>
-             <tr style="border: none !important">
-                 <th colspan="6"></th>
-                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
-                 <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
-             </tr>
-             <tr>
-                    <th>Folio</th>
-                 <th style="min-width:200px;">Anónimo</th>
-                 <th style="min-width:200px;">Estatus</th>
-                 <th style="min-width:200px;">Fecha de identificación</th>
-                 <th style="min-width:200px;">Fecha de recepción</th>
-                 <th style="min-width:200px;">Fecha de cierre</th>
-                 <th style="min-width:200px;">Nombre</th>
-                 <th style="min-width:200px;">Puesto</th>
-                 <th style="min-width:200px;">Área</th>
-                 <th style="min-width:200px;">Nombre</th>
-                 <th style="min-width:200px;">Área</th>
-                 <th style="min-width:200px;">Proceso</th>
-                 <th style="min-width:200px;">Sede</th>
-                 <th style="min-width:200px;">Ubicación</th>
-                 <th style="min-width:200px;">Externos</th>
-                    <th style="min-width: 500px;">Descripción</th>
-                    <th>Opciones</th>
-             </tr>
-            </thead>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_quejas">
+        <thead>
+            <tr style="border: none !important">
+                <th colspan="6"></th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reporto</th>
+                <th colspan="3" style="border:1px solid #ccc; text-align: center;">Reportado</th>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <th style="min-width:200px;">Anónimo</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
+                <th style="min-width:200px;">Fecha de recepción</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Proceso</th>
+                <th style="min-width:200px;">Sede</th>
+                <th style="min-width:200px;">Ubicación</th>
+                <th style="min-width:200px;">Externos</th>
+                <th style="min-width: 500px;">Descripción</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
     </table>
 </div>
 
@@ -167,7 +166,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -186,39 +185,46 @@
                         {
                             data: 'folio',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'anonimo',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'estatus',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'fecha_creacion',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'fecha_reporte',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'fecha_de_cierre',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
                                 let html = "";
                                 if (row.anonimo == 'no') {
-                                    html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.quejo?.avatar}" title="${row.quejo?.name}"></img>`;
+                                    html =
+                                        `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.quejo?.avatar}" title="${row.quejo?.name}"></img>`;
                                 }
                                 return `${row.quejo ? html: 'sin asignar'}`;
                             }
@@ -229,7 +235,7 @@
                             render: function(data, type, row, meta) {
                                 let html = "";
                                 if (row.anonimo == 'no') {
-                                    html =`${row.quejo?.puesto}`;
+                                    html = `${row.quejo?.puesto}`;
                                 }
                                 return `${row.quejo ? html: 'sin asignar'}`;
                             }
@@ -247,37 +253,44 @@
                         {
                             data: 'colaborador_quejado',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'area_quejado',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'proceso_quejado',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'sede',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'ubicacion',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'externo_quejado',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'descripcion',
                             render: function(data, type, row, meta) {
-                            return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'id',
@@ -305,9 +318,9 @@
                             }
                         },
                     ],
-                        order:[
-                            [0,'desc']
-                        ]
+                    order: [
+                        [0, 'desc']
+                    ]
                 });
             }
 
@@ -338,7 +351,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_quejas_desk.ajax.reload(null,false);
+                                    tabla_quejas_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Queja Archivada',
                                         '',

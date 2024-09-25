@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
 
-<style>
+    <style>
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -26,9 +26,7 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
+            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -38,7 +36,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
-</style>
+    </style>
     <h5 class="col-12 titulo_general_funcion">Planificación y Control</h5>
 
     <div class="mt-5 card">
@@ -52,7 +50,7 @@
             @livewire('plan-implementacion-create', [
                 'referencia' => null,
                 'modulo_origen' => 'Planificacion
-                        Control',
+                                    Control',
             ])
             <table class="table table-bordered w-100 datatable-PlanificacionControl">
                 <thead class="thead-dark">

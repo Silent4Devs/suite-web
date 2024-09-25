@@ -38,7 +38,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                height: 100%; */
+                    height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -89,7 +89,7 @@
 {{ Breadcrumbs::render('sugerencias-edit', $sugerencias) }}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-lightbulb"></i>Sugerencias</strong>
     </div>
     <div class="caja_botones_menu">
@@ -526,7 +526,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-sugerencias-actividades.store') }}">
                                 <input type="hidden" name="sugerencia_id" value="{{ $sugerencias->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>

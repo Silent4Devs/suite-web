@@ -117,7 +117,7 @@
 
         .table-tada-requi {
             background-color: #EEF5FF;
-            border-right: 20px solid #295082;
+            border-right: 20px solid var(--color-tbj);
         }
 
         .title-product {
@@ -206,7 +206,7 @@
                 {{ $organizacion->direccion }} <br>
             </td>
             <td class="td-blue-header">
-                <h5 style="color:#49598A;">Elaboró:</h5>
+                <h5 style="color:var(--color-tbj);">Elaboró:</h5>
                 <strong>{{ $minutasaltadireccion->responsable->name }}</strong>
             </td>
         </tr>

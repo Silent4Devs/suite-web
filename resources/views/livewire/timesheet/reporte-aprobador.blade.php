@@ -130,13 +130,13 @@
         <x-loading-indicator />
         <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
             <button class="btn btn-sm mr-2"
-                style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                style="{{ !$habilitarTodos ? 'background-color: var(--color-tbj)color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                 id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo"
                 wire:click="$set('habilitarTodos',false)">
                 Directos
             </button>
             <button class="btn btn-sm"
-                style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                style="{{ $habilitarTodos ? 'background-color: var(--color-tbj)color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                 id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder"
                 wire:click="$set('habilitarTodos',true)">
                 Todos
@@ -665,7 +665,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">Fecha final</label>
-                    <input type="date" name="rango_final" class="form-control" wire:model.live="fecha_fin_general">
+                    <input type="date" name="rango_final" class="form-control"
+                        wire:model.live="fecha_fin_general">
                 </div>
             </div>
             <div class="row mt-5">
