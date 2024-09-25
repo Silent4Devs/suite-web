@@ -156,7 +156,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     ->where('id', $requisicion->comprador_id)
                     ->first();
 
-                    $comp = $comprador->user->empleado;
+                    $comp = $comprador->user;
 
                     if ($comp->foto == null || $comp->foto == '0') {
                         if ($comp->genero == 'H') {
