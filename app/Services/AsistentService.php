@@ -8,11 +8,12 @@ use GuzzleHttp\Exception\RequestException;
 class AsistentService
 {
     protected $client;
+
     protected $baseUrl;
 
     public function __construct()
     {
-        $this->client = new Client();
+        $this->client = new Client;
         $this->baseUrl = 'http://192.168.9.77:8080'; // Definir URL base
     }
 
@@ -21,8 +22,8 @@ class AsistentService
      */
     public function postQuestionToPythonAPI($question)
     {
-        $url = $this->baseUrl . '/ask-question/';
-        
+        $url = $this->baseUrl.'/ask-question/';
+
         try {
             $response = $this->client->post($url, [
                 'json' => ['user_question' => $question],
@@ -31,7 +32,7 @@ class AsistentService
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            return ['error' => 'Request failed: ' . $e->getMessage()];
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 
@@ -40,8 +41,8 @@ class AsistentService
      */
     public function postDataTextPythonAPI($filePath, $fileName)
     {
-        $url = $this->baseUrl . '/text_to_chromadb/';
-        
+        $url = $this->baseUrl.'/text_to_chromadb/';
+
         try {
             $response = $this->client->post($url, [
                 'multipart' => [
@@ -55,7 +56,7 @@ class AsistentService
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            return ['error' => 'Request failed: ' . $e->getMessage()];
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 
@@ -64,14 +65,14 @@ class AsistentService
      */
     public function postDataToPythonAPI($filename)
     {
-        $url = $this->baseUrl . "/save_name_files/archivos.txt/{$filename}";
-        
+        $url = $this->baseUrl."/save_name_files/archivos.txt/{$filename}";
+
         try {
             $response = $this->client->post($url);
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            return ['error' => 'Request failed: ' . $e->getMessage()];
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 }
