@@ -303,7 +303,7 @@
                                                             {{ $cumples_felicitados_like_contador_usuarios }}
                                                         </font>
                                                     @else
-                                                        <i class="fas fa-thumbs-up" style="color:#345183;"></i>
+                                                        <i class="fas fa-thumbs-up" style="color:var(--color-tbj)"></i>
                                                         <font style="color:#345183">
                                                             {{ $cumples_felicitados_like_contador_usuarios }}
                                                         </font>

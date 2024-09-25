@@ -14,11 +14,6 @@
             margin-top: 30px;
         }
 
-        .card {
-            box-shadow: none !important;
-            background-color: rgba(0, 0, 0, 0);
-        }
-
         table i {
             font-size: 15pt;
             margin-right: 7px;
@@ -105,7 +100,7 @@
 
     {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
-    <div id="desk" class="mt-5 card" style="border: none;">
+    <div id="desk" class="mt-5">
 
         @include('partials.flashMessages')
         <div class="caja_botones_secciones">

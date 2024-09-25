@@ -110,32 +110,35 @@
      }
 
 
-     .tui-full-calendar-weekday-schedule-title{
-        position: relative;
-   }
-    .tui-full-calendar-weekday-schedule-title strong{
-        font-size: 9pt !important;
-        position: absolute;
-        right: 10px;
-   }
-    .tui-full-calendar-weekday-schedule-title strong:before{
-        content: "Inicio:  ";
-   }
-   .dropdown-menu.show{
-        width: 250px !important;
-   }
+     .tui-full-calendar-weekday-schedule-title {
+         position: relative;
+     }
+
+     .tui-full-calendar-weekday-schedule-title strong {
+         font-size: 9pt !important;
+         position: absolute;
+         right: 10px;
+     }
+
+     .tui-full-calendar-weekday-schedule-title strong:before {
+         content: "Inicio:  ";
+     }
+
+     .dropdown-menu.show {
+         width: 250px !important;
+     }
 
 
 
-   .i_calendar{
-        font-size: 11pt;
-        width: 20px;
-        text-align: center;
-   }
-   .i_calendar_cuadro{
-        margin: 0px 8px;
-   }
+     .i_calendar {
+         font-size: 11pt;
+         width: 20px;
+         text-align: center;
+     }
 
+     .i_calendar_cuadro {
+         margin: 0px 8px;
+     }
  </style>
 
  <div class="card" style="box-shadow: none; !important">
@@ -147,7 +150,8 @@
                      <div>
                          <div class="lnb-calendars-item">
                              <label>
-                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+                                 <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all"
+                                     checked>
                                  <span style="">
                                      <span style="margin-left: 20px; width: 100px !important; position: absolute;">Ver
                                          Todos</span>
@@ -243,7 +247,6 @@
  </div>
 
  @section('scripts')
-
      @parent
 
      <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
@@ -252,8 +255,8 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-business-days/1.2.0/index.min.js"
-          integrity="sha512-O4XvevLAh+LDhB7I+GjsQeHft1q7oJWMyNbvYYMeNUYoW5VWmj3nmiMrPFGnde6qZ8UlPpz8ySWQMTUNDM0HUA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+         integrity="sha512-O4XvevLAh+LDhB7I+GjsQeHft1q7oJWMyNbvYYMeNUYoW5VWmj3nmiMrPFGnde6qZ8UlPpz8ySWQMTUNDM0HUA=="
+         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="{{ asset('../js/calendar_tui/tui-calendar.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/calendar_gantt.js') }}"></script>
      <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
@@ -346,7 +349,7 @@
                      id: `r_${task.id}`,
                      calendarId: `${task.level == 1 ? '1': '2'}`,
                      //  bgColor: bgColor,
-                     title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:#345183;"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
+                     title: `<i class="fas fa-thumbtack i_calendar_cuadro" style="color:var(--color-tbj)"></i> ${task.level == 1 ? 'Fase: ': 'Actividad: '}${task.name}`,
                      category: 'allday',
                      body: `${filteredAssigs.length > 0 ? "<h5>Responsables</h5>":""} ${images} <p>Estatus: <span class="badge ${task.status}">${estatus}</span></p>`,
                      dueDateClass: '',
@@ -362,5 +365,4 @@
          }
      </script>
      <script src="{{ asset('../js/calendar_tui/app.js') }}"></script>
-
  @endsection

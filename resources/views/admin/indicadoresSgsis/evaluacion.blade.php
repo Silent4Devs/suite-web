@@ -7,13 +7,14 @@
             <h3 class="mb-1  text-center text-white"><strong> Registrar: </strong>Evaluaciones Indicadores SGSI</h3>
         </div> --}}
         <div class="card-body">
-            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+            <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                 <span style="font-size: 17px; font-weight: bold;">
                     Información del indicador</span>
             </div>
             @livewire('indicadores-sgsi-component', [
                 'indicadoresSgsis' => $indicadoresSgsis,
-                'inpvar' => $variables])
+                'inpvar' => $variables,
+            ])
         </div>
     </div>
 @endsection

@@ -192,7 +192,7 @@
                                     @endif
                                     @if ($i > 1)
                                         <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
-                                            wire:click="removerFila" style="color:#006DDB; font-size:20px;"
+                                            wire:click="removerFila" style="color:var(--color-tbj) font-size:20px;"
                                             title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"

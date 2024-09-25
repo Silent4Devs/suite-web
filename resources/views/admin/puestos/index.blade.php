@@ -3,9 +3,7 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
+            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -18,7 +16,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -72,8 +70,8 @@
                     <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
                 </a> &nbsp;&nbsp;&nbsp;
                 <!-- <a class="boton-transparente boton-sin-borde" id="btnImport">
-                                <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                            </a> -->
+                                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                                    </a> -->
                 @include('csvImport.modalperfilpuesto', [
                     'model' => 'Vulnerabilidad',
                     'route' => 'admin.vulnerabilidads.parseCsvImport',

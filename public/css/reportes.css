@@ -25,8 +25,7 @@
 		margin-top: 50pt;
 		text-align: center;
 		font-size: 15pt;
-		background:#345183;
-		border-radius: 100pt;
+		background:var(--color-tbj);		border-radius: 100pt;
 		color: #fff;
 	}
 	.arriba_derecha{

@@ -57,19 +57,24 @@
                             <div style="color: #FFC400; font-size: 15px;">
                                 <ul class="d-flex px-2" style="list-style: none; padding-left: 0px !important;">
                                     <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{ $c->rating >= 1 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
+                                        <i class="fas fa-star"
+                                            style="color: {{ $c->rating >= 1 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{ $c->rating >= 2 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
+                                        <i class="fas fa-star"
+                                            style="color: {{ $c->rating >= 2 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{ $c->rating >= 3 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
+                                        <i class="fas fa-star"
+                                            style="color: {{ $c->rating >= 3 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{ $c->rating >= 4 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
+                                        <i class="fas fa-star"
+                                            style="color: {{ $c->rating >= 4 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{ $c->rating >= 5 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
+                                        <i class="fas fa-star"
+                                            style="color: {{ $c->rating >= 5 ? '#FFC400' : 'gray' }}; font-size: 15px;"></i>
                                     </li>
                                 </ul>
                             </div>
@@ -86,7 +91,8 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="course-{{ $c->id }}" tabindex="-1" aria-labelledby="{{ $c->id }}ModalLabel" aria-hidden="true">
+                <div class="modal fade" id="course-{{ $c->id }}" tabindex="-1"
+                    aria-labelledby="{{ $c->id }}ModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="border: none">
@@ -114,16 +120,20 @@
                                 @if ($c->goals->isNotEmpty())
                                     <ul style="list-style: none;">
                                         @foreach ($c->goals as $goal)
-                                            <li class="mr-2 subtitle-aprendizaje"><i class="mr-3 text-gray-600 fas fa-check"></i>{{ $goal->name }}</li>
+                                            <li class="mr-2 subtitle-aprendizaje"><i
+                                                    class="mr-3 text-gray-600 fas fa-check"></i>{{ $goal->name }}
+                                            </li>
                                         @endforeach
                                     </ul>
                                 @else
                                     <p class="subtitle-aprendizaje">Metas no asignadas</p>
                                 @endif
 
-                                <a href="{{ route('admin.courses.show', $c) }}" style="display: inline-block; vertical-align: middle; color:#006DDB; margin-bottom:81px; margin-top:21px;">
+                                <a href="{{ route('admin.courses.show', $c) }}"
+                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj) margin-bottom:81px; margin-top:21px;">
                                     Más información
-                                    <span class="material-symbols-outlined" style="vertical-align: middle;">more_horiz</span>
+                                    <span class="material-symbols-outlined"
+                                        style="vertical-align: middle;">more_horiz</span>
                                 </a>
                             </div>
                         </div>
@@ -144,23 +154,21 @@
 </div>
 
 @section('styles')
-<style>
-    /* Estilos personalizados para la paginación */
-    .pagination .page-item.active .page-link {
-        background-color: #006DDB;
-        border-color: #006DDB;
-        color: white;
-    }
+    <style>
+        /* Estilos personalizados para la paginación */
+        .pagination .page-item.active .page-link {
+            background-color: var(--color-tbj) border-color: var(--color-tbj) color: white;
+        }
 
-    .pagination .page-link {
-        color: #006DDB;
-    }
+        .pagination .page-link {
+            color: var(--color-tbj);
+        }
 
-    .pagination .page-link:hover {
-        background-color: #FFC400;
-        border-color: #FFC400;
-    }
-</style>
+        .pagination .page-link:hover {
+            background-color: #FFC400;
+            border-color: #FFC400;
+        }
+    </style>
 @endsection
 
 @section('scripts')

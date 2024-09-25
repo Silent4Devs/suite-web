@@ -4,10 +4,11 @@
     <a class="d-inline" data-toggle="modal" data-target="#modalFortalezas">
         <i class="material-icons" style="cursor: pointer;">edit</i>
     </a>
-    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"  wire:ignore.self>
-        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
-            <i class="fa-solid fa-x fa-2xl"
-            style="color: #ffffff;"></i>
+    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"
+        wire:ignore.self>
+        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"
+            class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
         </button>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -95,7 +96,7 @@
         @endforeach
     </p>
 
-    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Fortalezas</span>
     </div> --}}

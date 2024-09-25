@@ -122,8 +122,7 @@ button.switch-month:hover {
     width: 0%;
     height: 1px;
     bottom: 5px;
-    background-color: #345183;
-    transition: 0.3s;
+    background-color: var(--color-tbj);    transition: 0.3s;
     z-index: 1;
 }
 
@@ -360,8 +359,7 @@ button.switch-month:hover {
     width: 100%;
     margin-top: 10px;
     font-weight: medium;
-    color: #345183;
-}
+    color: var(--color-tbj);}
 
 .img_nuevo {
     width: 100%;
@@ -395,8 +393,7 @@ button.switch-month:hover {
 .btn_link_agenda {
     all: unset;
     font-size: 11pt;
-    color: #345183;
-    cursor: pointer;
+    color: var(--color-tbj);    cursor: pointer;
     transition: 0.09;
 }
 
@@ -406,8 +403,7 @@ button.switch-month:hover {
 }
 
 .opciones_felicitar i {
-    color: #345183;
-    font-size: 15pt;
+    color: var(--color-tbj);    font-size: 15pt;
     cursor: pointer;
 }
 

@@ -16,7 +16,7 @@
             ]) !!}
 
 
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
                 DETALLES DEL DESTINO
             </div>
             <div class="row">
@@ -105,12 +105,13 @@
             </div>
 
 
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
                 SEGUIMIENTO
             </div>
             <div class="row">
                 <label for="exampleFormControlTextarea1" class="col-sm-2"> <i
-                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('status', 'Estatus:') !!}</label>
+                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('status', 'Estatus:') !!}</label>
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="status">
                         <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>
@@ -123,7 +124,7 @@
                         @endforeach
                     </select>
                 </div>
-              
+
             </div>
 
             <!-- Submit Field -->

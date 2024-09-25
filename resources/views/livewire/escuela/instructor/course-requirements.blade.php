@@ -16,7 +16,7 @@
             <div class="registro py-2 pl-4 pr-4" style="border-radius:12px;">
                 <div class="row justify-content-start">
                     <div class="col-9">
-                        <p style="color:#3086AF; margin:0px;">{{ $item->name }}</p>
+                        <p style="color:var(--color-tbj); margin:0px;">{{ $item->name }}</p>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <i wire:click="edit({{ $item }})"

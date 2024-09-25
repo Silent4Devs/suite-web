@@ -5,9 +5,7 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
+            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -20,7 +18,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {

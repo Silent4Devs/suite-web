@@ -7,11 +7,11 @@
         <meta charset="utf-8">
         <style>
             /* body {
-                                                                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-                                                                        text-align: justify;
-                                                                        font-size: 12px;
-                                                                        color: #6c6c6c;
-                                                                    } */
+                                                                            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                                                                            text-align: justify;
+                                                                            font-size: 12px;
+                                                                            color: #6c6c6c;
+                                                                        } */
 
             table td {
                 border: none;
@@ -145,7 +145,7 @@
 
             .table-tada-requi {
                 background-color: #EEF5FF;
-                border-right: 20px solid #295082;
+                border-right: 20px solid var(--color-tbj);
             }
 
             .title-product {

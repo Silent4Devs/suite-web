@@ -78,9 +78,7 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
-            text-align: center;
+            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -103,10 +101,13 @@
                 <br>
                 <h4>¿Qué es Evidencia de Asignación de Recursos al SGSI?</h4>
                 <p>
-                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                    Registro de información y documentación que le permita a la organización mostrar que ha destinado los
+                    recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información
+                    (SGI).
                 </p>
                 <p>
-                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la seguridad de la información.
+                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la
+                    seguridad de la información.
                 </p>
             </div>
         </div>
@@ -295,52 +296,52 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.evidencias-sgsis.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nombredocumento',
-                        name: 'nombredocumento'
-                    },
-                    {
-                        data: 'objetivodocumento',
-                        name: 'objetivodocumento'
-                    },
-                    {
-                        data: 'responsable_name',
-                        name: 'responsable_name',
-                        render: function(data, type, row, meta) {
-                            if (type === "empleadoText") {
-                                return row.empleado.name;
-                            }
-                            let responsablereunion = "";
-                            if (row.empleado) {
-                                responsablereunion += `
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'nombredocumento',
+                            name: 'nombredocumento'
+                        },
+                        {
+                            data: 'objetivodocumento',
+                            name: 'objetivodocumento'
+                        },
+                        {
+                            data: 'responsable_name',
+                            name: 'responsable_name',
+                            render: function(data, type, row, meta) {
+                                if (type === "empleadoText") {
+                                    return row.empleado.name;
+                                }
+                                let responsablereunion = "";
+                                if (row.empleado) {
+                                    responsablereunion += `
                             <img src="{{ asset('storage/empleados/imagenes') }}/${row.empleado.avatar}" title="${row.empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
                             `;
+                                }
+                                return responsablereunion;
                             }
-                            return responsablereunion;
-                        }
-                    },
-                    {
-                        data: 'area',
-                        render: function(data, type, row, meta) {
-                            console.log(row)
-                            return JSON.parse(row.area).area;
-                        }
+                        },
+                        {
+                            data: 'area',
+                            render: function(data, type, row, meta) {
+                                console.log(row)
+                                return JSON.parse(row.area).area;
+                            }
 
-                    },
-                    {
-                        data: 'fecha_documento',
-                        name: 'fecha_documento'
-                    },
-                    {
-                        data: 'evidencia',
-                        name: 'evidencia',
-                        render: function(data, type, row, meta) {
-                            let archivo = "";
-                            let archivos = JSON.parse(data);
-                            archivo = `
+                        },
+                        {
+                            data: 'fecha_documento',
+                            name: 'fecha_documento'
+                        },
+                        {
+                            data: 'evidencia',
+                            name: 'evidencia',
+                            render: function(data, type, row, meta) {
+                                let archivo = "";
+                                let archivos = JSON.parse(data);
+                                archivo = `
 
                                <div class="container">
 
@@ -357,8 +358,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                            if (archivos.length > 0) {
-                                archivo += `
+                                if (archivos.length > 0) {
+                                    archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -368,10 +369,10 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                        <li
-                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                        data-slide-to='${idx}'
-                                                        ></li>`
+                                                            <li
+                                                            data-target='#carouselExampleIndicators${row.id}'
+                                                            data-slide-to='${idx}'
+                                                            ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
@@ -380,29 +381,38 @@
 
                                                         if(extension == 'pdf'){
                                                         return `
-                                                                <div class='carousel-item ${idx==0?"active":""}'>
-                                                                    <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
-                                                                </div>`
-                                                    }else{
-                                                        return `
-                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
-                                                                       <a href='{{ asset("storage/evidencias_sgsi") }}/${archivo.evidencia}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.evidencia}</a>
+                                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                                        <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
                                                                     </div>`
-                                                    }
-                                                    })}
+                                                    }else{
+                                                        return ` <
+                                        div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
+                                        <
+                                        a href =
+                                        '{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}' > <
+                                        i class = "fas fa-file-download mr-2"
+                                    style = "font-size:18px" > < /i> ${archivo.evidencia}</a >
+                                        <
+                                        /div>`
+                            }
+                        })
+                }
 
-                                            </div>
+                <
+                /div>
 
-                                            </div>`;
-                            } else {
-                                archivo += `
+                <
+                /div>`;
+            }
+            else {
+                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
                                                     <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
                                                     </div>
                                                 `
-                            }
-                            archivo += `</div>
+            }
+            archivo += `</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
@@ -433,32 +443,30 @@
                                     </div>
                                     </div>
                                     `
-                            return archivo;
-                        }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-EvidenciasSgsi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            return archivo;
+        }
+        }, {
+        data: 'actions',
+        name: '{{ trans('global.actions') }}'
+        }],
+        orderCellsTop: true,
+            order: [
+                [0, 'desc']
+            ]
+        };
+        let table = $('.datatable-EvidenciasSgsi').DataTable(dtOverrideGlobals);
+        // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+        //     $($.fn.dataTable.tables(true)).DataTable()
+        //         .columns.adjust();
+        // });
+        // $('.datatable thead').on('input', '.search', function() {
+        //     let strict = $(this).attr('strict') || false
+        //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+        //     table
+        //         .column($(this).parent().index())
+        //         .search(value, strict)
+        //         .draw()
+        // });
         });
     </script>
 @endsection
