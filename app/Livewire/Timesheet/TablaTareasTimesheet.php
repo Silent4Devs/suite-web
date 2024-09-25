@@ -140,7 +140,7 @@ class TablaTareasTimesheet extends Component
             'tarea' => $value,
         ]);
 
-        $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
+        // $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
     }
 
     public function actualizarAreaTarea($id, $value)
@@ -167,7 +167,7 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
+        // $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
     }
 
     public function llenarAreas($id)
