@@ -13,7 +13,7 @@ class TimesheetProyectoNotification extends Notification
 {
     use Queueable;
 
-    public $timeshet_proyecto;
+    public $timesheet_proyecto;
 
     public $tipo_consulta;
 
@@ -26,9 +26,9 @@ class TimesheetProyectoNotification extends Notification
      *
      * @return void
      */
-    public function __construct(TimesheetProyecto $timeshet_proyecto, $tipo_consulta, $tabla, $slug)
+    public function __construct(TimesheetProyecto $timesheet_proyecto, $tipo_consulta, $tabla, $slug)
     {
-        $this->timeshet_proyecto = $timeshet_proyecto;
+        $this->timesheet_proyecto = $timesheet_proyecto;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
@@ -68,9 +68,9 @@ class TimesheetProyectoNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->timeshet_proyecto->id,
-            'updated_at' => $this->timeshet_proyecto->updated_at,
-            'deleted_at' => $this->timeshet_proyecto->deleted_at,
+            'id' => $this->timesheet_proyecto->id,
+            'updated_at' => $this->timesheet_proyecto->updated_at,
+            'deleted_at' => $this->timesheet_proyecto->deleted_at,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,

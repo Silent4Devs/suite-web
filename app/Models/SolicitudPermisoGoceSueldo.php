@@ -48,7 +48,7 @@ class SolicitudPermisoGoceSueldo extends Model implements Auditable
     public static function getAllwithEmpleados()
     {
         return Cache::remember('SolicitudPermisoGoceSueldo:solicitud_permiso_goce_sueldo_all', 3600 * 12, function () {
-            return self::with('empleado')->orderBy('id', 'desc')->get();
+            return self::with('empleado')->orderByDesc('id')->get();
         });
     }
 }

@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group w-100 mr-4" style="position:relative;">
                     <label>Área</label>
-                    <select id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
+                    <select wire:model="input_area" id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
                         <option value="0">Todas</option>
                         @if ($area_seleccionar)
@@ -64,7 +64,7 @@
                     <label> Tarea Nueva</label>
                     <input class="form-control w-100 mr-4" maxlength="255"
                         title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea"
-                        id="tarea_name" required pattern="[^\.,]*">
+                        id="tarea_name" wire:model="input_tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
                     <button class="btn tb-btn-primary" style="position: absolute; bottom: 0;">

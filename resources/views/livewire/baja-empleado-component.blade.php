@@ -210,7 +210,7 @@
                     @endforeach
                 @endif
             </div>
-        </div>      
+        </div>
     </div> --}}
     <div class="row">
         <div class="col-12 mt-2 p-0 pr-2" style="text-align:end">

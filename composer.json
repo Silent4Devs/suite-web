@@ -24,6 +24,7 @@
     "maatwebsite/excel": "^3.1",
     "nuovo/spreadsheet-reader": "^0.5.11",
     "owen-it/laravel-auditing": "^13.5",
+    "php-amqplib/php-amqplib": "^3.7",
     "phpoffice/phpword": "^1.0",
     "predis/predis": "^2.2",
     "pusher/pusher-php-server": "^7.2",

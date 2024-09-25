@@ -13,7 +13,7 @@ class RequisicionesEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $requisicion;
+    public $requsicion;
 
     public $organizacion;
 
@@ -31,15 +31,15 @@ class RequisicionesEmail extends Mailable
      */
 
     //prueba
-    public function __construct($nueva_requisicion, $organizacion, $tipo_firma)
+    public function __construct($requsicion, $organizacion, $tipo_firma)
     {
-        $this->requisicion = $nueva_requisicion;
+        $this->requsicion = $requsicion;
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $firmas = FirmasRequisiciones::where('requisicion_id', $nueva_requisicion->id)->first();
+        $firmas = FirmasRequisiciones::where('requisicion_id', $requsicion->id)->first();
 
-        $user = User::where('id', $this->requisicion->id_user)->first();
+        $user = User::where('id', $this->requsicion->id_user)->first();
 
         $empleado = $user->empleado;
 
@@ -118,7 +118,7 @@ class RequisicionesEmail extends Mailable
         return $this->from(env('MAIL_QARECEPTOR'), 'Sender Name')
             ->view('emails.requisiciones', [
                 'supervisor' => $this->supervisor,
-                'requisicion' => $this->requisicion,
+                'requisicion' => $this->requsicion,
                 'organizacion' => $this->organizacion,
                 'tipo_firma' => $this->tipo_firma,
                 'tipo_firma_siguiente' => $this->tipo_firma_siguiente,

@@ -120,12 +120,12 @@
         <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
-                    alt="{{ $course->instructor->name }}">
-                {{ $course->instructor->name }}
+                    alt="{{  $course->instructor->name ?? 'Sin asignar' }}">
+                {{-- {{ $course->instructor->name ?? 'Sin asignar'  }} --}}
             </div>
             <div>
                 {{-- {{ $course->instructor->name }} --}}
-                <p class="ml-2">{{ $course->instructor->name }} </p>
+                <p class="ml-2">{{ $course->instructor->name ?? 'Sin asignar' }} </p>
                 <p class="ml-2" style="color: #E3A008;">{{ strtoupper($course->category->name) }}</p>
 
             </div>

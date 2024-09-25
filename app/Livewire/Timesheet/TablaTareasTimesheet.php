@@ -22,6 +22,8 @@ class TablaTareasTimesheet extends Component
     public $area_select;
 
     public $proyecto_id;
+    public $input_area;
+    public $input_tarea_name;
 
     public $origen;
 
@@ -109,9 +111,17 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->dispatch('tarea-actualizada', nueva_tarea: $nueva_tarea);
+        // $this->dispatch('tarea-actualizada', nueva_tarea: $nueva_tarea);
 
-        $this->alert('success', 'Registro añadido!');
+        $this->proyecto_id=null;
+        $this->input_area=null;
+        $this->input_tarea_name=null;
+
+        $this->alert(
+            'success',
+            'Registro añadido!',
+            ['timer' => 6000]
+        );
     }
 
     public function actualizarNameTarea($id, $value)
@@ -129,7 +139,7 @@ class TablaTareasTimesheet extends Component
             'tarea' => $value,
         ]);
 
-        $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
+        // $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
     }
 
     public function actualizarAreaTarea($id, $value)
@@ -156,7 +166,7 @@ class TablaTareasTimesheet extends Component
             'todos' => $todos,
         ]);
 
-        $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
+        // $this->dispatch('tarea-actualizada', tarea_actualizada: $tarea_actualizada);
     }
 
     public function llenarAreas($id)
