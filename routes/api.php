@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
 use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
+use App\Http\Controllers\Api\V1\Requisiciones\tbApiMobileControllerRequisiciones;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
@@ -25,6 +26,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
+
+    Route::get('requisiciones', [tbApiMobileControllerRequisiciones::class, 'index']);
+    Route::post('firmar-requisicion/{id}', [tbApiMobileControllerRequisiciones::class, 'firmarAprobadores']);
+    Route::post('requisicion-firmada/{id}', [tbApiMobileControllerRequisiciones::class, 'FirmarUpdate']);
+    Route::post('requisicion-rechazada/{id}', [tbApiMobileControllerRequisiciones::class, 'rechazada']);
 
     Route::prefix('solicitud-dayoff')->group(function () {
         Route::get('', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionIndex']);
