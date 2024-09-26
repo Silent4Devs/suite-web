@@ -1273,156 +1273,166 @@
                 ],
 
             })
-            //Eventos para editar registros
-            document.getElementById('tbl-cursos').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
-                    'SELECT') {
-                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number') {
-                        const cursoId = e.target.getAttribute('data-curso-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        console.log(cursoId);
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/empleados/update/${cursoId}/competencias-curso`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
-                            }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                            if (e.target.type == 'date') {
-                                let elemento_duracion = document.querySelector(
-                                    `div[data-name-input-id="duracion${cursoId}"]`)
-                                elemento_duracion.innerHTML =
-                                    `<small>${data.curso.duracion} Día(s)</small>`;
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    } else if (e.target.type == 'file') {
-                        const cursoId = e.target.getAttribute('data-curso-id');
-                        console.log(cursoId);
-                        const formData = new FormData();
-                        e.target.files.forEach(element => {
-                            formData.append('file', element);
-                        });
-                        const url =
-                            `/admin/empleados/update/${cursoId}/competencias-curso`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        tblCurso.ajax.reload();
-                    }
-                }
-            });
-            document.getElementById('tbl-cursos').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
-                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
-                        'number') {
-                        const cursoId = e.target.getAttribute('data-curso-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        console.log(value, typeInput, cursoId);
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/empleados/update/${cursoId}/competencias-curso`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
-                            }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-cursos').addEventListener('click', function(e) {
-                console.log('si');
-                if (e.target.tagName == 'I') {
-                    if (e.target.classList.contains('removeFileCurso')) {
-                        const cursoId = e.target.getAttribute('data-curso-id');
-                        Swal.fire({
-                            title: 'Estás seguro de eliminar el archivo?',
-                            text: "Esto no se puede revertir!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Si',
-                            cancelButtonText: "No",
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const url =
-                                    `/admin/empleados/${cursoId}/delete-file-curso`;
-                                try {
-                                    const response = await fetch(url, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            Accept: "application/json",
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                                .attr(
-                                                    'content'),
-                                        },
-                                    })
-                                    const data = await response.json();
-                                    if (data.status == 'success') {
-                                        mostrarEstadoExitoso(e.target);
-                                    }
-                                    if (data.errors) {
-                                        let errorN = e.target.getAttribute('data-name-input');
-                                        data.errors[errorN].forEach(element => {
-                                            toastr.error(element);
-                                        });
-                                    }
-                                    tblCurso.ajax.reload();
-                                } catch (error) {
-                                    console.log(error);
+            document.addEventListener('DOMContentLoaded', function() {
+                //Eventos para editar registros
+                document.getElementById('tbl-cursos').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e
+                        .target.tagName ==
+                        'SELECT') {
+                        if (e.target.type == 'date' || e.target.type == 'select-one' || e.target
+                            .type ==
+                            'number') {
+                            const cursoId = e.target.getAttribute('data-curso-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            console.log(cursoId);
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/empleados/update/${cursoId}/competencias-curso`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
                                 }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                                if (e.target.type == 'date') {
+                                    let elemento_duracion = document.querySelector(
+                                        `div[data-name-input-id="duracion${cursoId}"]`)
+                                    elemento_duracion.innerHTML =
+                                        `<small>${data.curso.duracion} Día(s)</small>`;
+                                }
+                            } catch (error) {
+                                console.log(error);
                             }
-                        })
-
+                        } else if (e.target.type == 'file') {
+                            const cursoId = e.target.getAttribute('data-curso-id');
+                            console.log(cursoId);
+                            const formData = new FormData();
+                            e.target.files.forEach(element => {
+                                formData.append('file', element);
+                            });
+                            const url =
+                                `/admin/empleados/update/${cursoId}/competencias-curso`;
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    Accept: "application/json",
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                            })
+                            tblCurso.ajax.reload();
+                        }
                     }
-                }
+                });
+                document.getElementById('tbl-cursos').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                        if (e.target.type == 'text' || e.target.type == 'textarea' || e.target
+                            .type ==
+                            'number') {
+                            const cursoId = e.target.getAttribute('data-curso-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            console.log(value, typeInput, cursoId);
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/empleados/update/${cursoId}/competencias-curso`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
+                                }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-cursos').addEventListener('click', function(e) {
+                    console.log('si');
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFileCurso')) {
+                            const cursoId = e.target.getAttribute('data-curso-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el archivo?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/empleados/${cursoId}/delete-file-curso`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]'
+                                                    )
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        if (data.status == 'success') {
+                                            mostrarEstadoExitoso(e.target);
+                                        }
+                                        if (data.errors) {
+                                            let errorN = e.target.getAttribute(
+                                                'data-name-input');
+                                            data.errors[errorN].forEach(element => {
+                                                toastr.error(element);
+                                            });
+                                        }
+                                        tblCurso.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
             });
             window.EliminarCurso = function(url, cursoId) {
                 Swal.fire({
@@ -1557,160 +1567,172 @@
                 orderCellsTop: true,
 
             })
-            //Eventos para editar registros
-            document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
-                    if (e.target.type == 'date') {
-                        const certificadoId = e.target.getAttribute('data-certificacion-id');
-                        const vigencia = e.target.value;
-                        console.log(e.target.value);
-                        let estatus = document.querySelector(`[data-vigencia-id="${certificadoId}"]`);
-                        let estatusName = "";
-                        if (Date.parse(vigencia) >= Date.now()) {
-                            estatus.innerHTML = "Vigente"
-                            estatusName = "Vigente"
-                            estatus.style.border = "2px solid #57e262";
-                        } else {
-                            estatus.innerHTML = 'Vencida'
-                            estatusName = 'Vencida'
-                            estatus.style.border = "2px solid #FF9C08";
-                        }
-                        const formData = new FormData();
-                        formData.append('vigencia', vigencia);
-                        formData.append('estatus', estatusName);
-                        const url =
-                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
+            document.addEventListener('DOMContentLoaded', function() {
+                //Eventos para editar registros
+                document.getElementById('tbl-certificados').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                        if (e.target.type == 'date') {
+                            const certificadoId = e.target.getAttribute(
+                                'data-certificacion-id');
+                            const vigencia = e.target.value;
+                            console.log(e.target.value);
+                            let estatus = document.querySelector(
+                                `[data-vigencia-id="${certificadoId}"]`);
+                            let estatusName = "";
+                            if (Date.parse(vigencia) >= Date.now()) {
+                                estatus.innerHTML = "Vigente"
+                                estatusName = "Vigente"
+                                estatus.style.border = "2px solid #57e262";
+                            } else {
+                                estatus.innerHTML = 'Vencida'
+                                estatusName = 'Vencida'
+                                estatus.style.border = "2px solid #FF9C08";
                             }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-
-                    } else if (e.target.type == 'file') {
-                        const certificadoId = e.target.getAttribute('data-certificacion-id');
-                        const formData = new FormData();
-                        e.target.files.forEach(element => {
-                            formData.append('documento', element);
-                        });
-                        const url =
-                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            tblCertificado.ajax.reload();
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-certificados').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
-                    if (e.target.type == 'text') {
-                        const certificadoId = e.target.getAttribute('data-certificacion-id');
-                        const certificadoName = e.target.value;
-                        const formData = new FormData();
-                        formData.append('nombre', certificadoName);
-                        const url =
-                            `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    Accept: "application/json",
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
-                            }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                }
-            });
-            document.getElementById('tbl-certificados').addEventListener('click', function(e) {
-                console.log('si');
-                if (e.target.tagName == 'I') {
-                    if (e.target.classList.contains('removeFile')) {
-                        const certificadoId = e.target.getAttribute('data-certificacion-id');
-                        Swal.fire({
-                            title: 'Estás seguro de eliminar el certificado?',
-                            text: "Esto no se puede revertir!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Si',
-                            cancelButtonText: "No",
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const url =
-                                    `/admin/empleados/${certificadoId}/delete-file-certificacion`;
-                                try {
-                                    const response = await fetch(url, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            Accept: "application/json",
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                                .attr(
-                                                    'content'),
-                                        },
-                                    })
-                                    const data = await response.json();
-                                    if (data.status == 'success') {
-                                        mostrarEstadoExitoso(e.target);
-                                    }
-                                    if (data.errors) {
-                                        let errorN = e.target.getAttribute('data-name-input');
-                                        data.errors[errorN].forEach(element => {
-                                            toastr.error(element);
-                                        });
-                                    }
-                                    tblCertificado.ajax.reload();
-                                } catch (error) {
-                                    console.log(error);
+                            const formData = new FormData();
+                            formData.append('vigencia', vigencia);
+                            formData.append('estatus', estatusName);
+                            const url =
+                                `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
                                 }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
                             }
-                        })
 
+                        } else if (e.target.type == 'file') {
+                            const certificadoId = e.target.getAttribute(
+                                'data-certificacion-id');
+                            const formData = new FormData();
+                            e.target.files.forEach(element => {
+                                formData.append('documento', element);
+                            });
+                            const url =
+                                `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                tblCertificado.ajax.reload();
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
                     }
-                }
+                });
+                document.getElementById('tbl-certificados').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                        if (e.target.type == 'text') {
+                            const certificadoId = e.target.getAttribute(
+                                'data-certificacion-id');
+                            const certificadoName = e.target.value;
+                            const formData = new FormData();
+                            formData.append('nombre', certificadoName);
+                            const url =
+                                `/admin/empleados/update/${certificadoId}/competencias-certificaciones`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
+                                }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    }
+                });
+                document.getElementById('tbl-certificados').addEventListener('click', function(e) {
+                    console.log('si');
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFile')) {
+                            const certificadoId = e.target.getAttribute('data-certificacion-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el certificado?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/empleados/${certificadoId}/delete-file-certificacion`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]'
+                                                    )
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        if (data.status == 'success') {
+                                            mostrarEstadoExitoso(e.target);
+                                        }
+                                        if (data.errors) {
+                                            let errorN = e.target.getAttribute(
+                                                'data-name-input');
+                                            data.errors[errorN].forEach(element => {
+                                                toastr.error(element);
+                                            });
+                                        }
+                                        tblCertificado.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
             });
             window.Eliminar = function(url, certificacionId) {
                 Swal.fire({
@@ -1754,22 +1776,23 @@
                     }
                 })
             }
-            let vigencia_certificado = document.getElementById('vigencia');
-            vigencia_certificado.addEventListener(
-                'change',
-                function() {
-                    // console.log(this);
-                    let vigencia = this.value;
-                    let estatus = document.getElementById('vencio_alta');
-                    if (Date.parse(vigencia) >= Date.now()) {
-                        estatus.value = "Vigente"
-                        estatus.style.border = "2px solid #57e262";
-                    } else {
-                        estatus.value = 'Vencida'
-                        estatus.style.border = "2px solid #FF9C08";
-                    }
-                });
-
+            document.addEventListener('DOMContentLoaded', function() {
+                let vigencia_certificado = document.getElementById('vigencia');
+                vigencia_certificado.addEventListener(
+                    'change',
+                    function() {
+                        // console.log(this);
+                        let vigencia = this.value;
+                        let estatus = document.getElementById('vencio_alta');
+                        if (Date.parse(vigencia) >= Date.now()) {
+                            estatus.value = "Vigente"
+                            estatus.style.border = "2px solid #57e262";
+                        } else {
+                            estatus.value = 'Vencida'
+                            estatus.style.border = "2px solid #FF9C08";
+                        }
+                    });
+            });
             // IDIOMAS
             window.tblIdiomas = $('#tbl-idiomas').DataTable({
                 buttons: [],
@@ -1884,21 +1907,56 @@
                 ],
 
             })
-            //Eventos para editar registros
-            document.getElementById('tbl-idiomas').addEventListener('change', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName ==
-                    'SELECT') {
-                    if (e.target.type == 'date' || e.target.type == 'select-one' || e.target.type ==
-                        'number') {
-                        const idiomaID = e.target.getAttribute('data-idioma-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        console.log(idiomaID);
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/competencia/${idiomaID}/idiomas`;
-                        try {
+            document.addEventListener('DOMContentLoaded', function() {
+                //Eventos para editar registros
+                document.getElementById('tbl-idiomas').addEventListener('change', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e
+                        .target.tagName ==
+                        'SELECT') {
+                        if (e.target.type == 'date' || e.target.type == 'select-one' || e.target
+                            .type ==
+                            'number') {
+                            const idiomaID = e.target.getAttribute('data-idioma-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            console.log(idiomaID);
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/competencia/${idiomaID}/idiomas`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        Accept: "application/json",
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
+                                }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else if (e.target.type == 'file') {
+                            const idiomaID = e.target.getAttribute('data-idioma-id');
+                            console.log(idiomaID);
+                            const formData = new FormData();
+                            e.target.files.forEach(element => {
+                                formData.append('certificado', element);
+                            });
+                            const url =
+                                `/admin/competencia/${idiomaID}/idiomas`;
                             const response = await fetch(url, {
                                 method: 'POST',
                                 body: formData,
@@ -1908,123 +1966,98 @@
                                         'content'),
                                 },
                             })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
-                            }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    } else if (e.target.type == 'file') {
-                        const idiomaID = e.target.getAttribute('data-idioma-id');
-                        console.log(idiomaID);
-                        const formData = new FormData();
-                        e.target.files.forEach(element => {
-                            formData.append('certificado', element);
-                        });
-                        const url =
-                            `/admin/competencia/${idiomaID}/idiomas`;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                Accept: "application/json",
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                            },
-                        })
-                        tblIdiomas.ajax.reload();
-                    }
-                }
-            });
-            document.getElementById('tbl-idiomas').addEventListener('keyup', async function(e) {
-                if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
-                    if (e.target.type == 'text' || e.target.type == 'textarea' || e.target.type ==
-                        'number') {
-                        const idiomaID = e.target.getAttribute('data-idioma-id');
-                        const typeInput = e.target.getAttribute('data-name-input');
-                        const value = e.target.value;
-                        const formData = new FormData();
-                        formData.append(typeInput, value);
-                        const url =
-                            `/admin/competencia/${idiomaID}/idiomas`;
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                },
-                            })
-                            const data = await response.json();
-                            if (data.status == 'success') {
-                                mostrarEstadoExitoso(e.target);
-                            }
-                            if (data.errors) {
-                                let errorN = e.target.getAttribute('data-name-input');
-                                data.errors[errorN].forEach(element => {
-                                    toastr.error(element);
-                                });
-                            }
-                        } catch (error) {
-                            console.log(error);
+                            tblIdiomas.ajax.reload();
                         }
                     }
-                }
-            });
-            document.getElementById('tbl-idiomas').addEventListener('click', function(e) {
-                if (e.target.tagName == 'I') {
-                    if (e.target.classList.contains('removeFileIdioma')) {
-                        const idiomaID = e.target.getAttribute('data-idioma-id');
-                        Swal.fire({
-                            title: 'Estás seguro de eliminar el archivo?',
-                            text: "Esto no se puede revertir!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Si',
-                            cancelButtonText: "No",
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const url =
-                                    `/admin/competencia/${idiomaID}/idiomas-delete-certificado`;
-                                try {
-                                    const response = await fetch(url, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            Accept: "application/json",
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                                .attr(
-                                                    'content'),
-                                        },
-                                    })
-                                    const data = await response.json();
-                                    if (data.status == 'success') {
-                                        mostrarEstadoExitoso(e.target);
-                                    }
-                                    if (data.errors) {
-                                        let errorN = e.target.getAttribute('data-name-input');
-                                        data.errors[errorN].forEach(element => {
-                                            toastr.error(element);
-                                        });
-                                    }
-                                    tblIdiomas.ajax.reload();
-                                } catch (error) {
-                                    console.log(error);
+                });
+                document.getElementById('tbl-idiomas').addEventListener('keyup', async function(e) {
+                    if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
+                        if (e.target.type == 'text' || e.target.type == 'textarea' || e.target
+                            .type ==
+                            'number') {
+                            const idiomaID = e.target.getAttribute('data-idioma-id');
+                            const typeInput = e.target.getAttribute('data-name-input');
+                            const value = e.target.value;
+                            const formData = new FormData();
+                            formData.append(typeInput, value);
+                            const url =
+                                `/admin/competencia/${idiomaID}/idiomas`;
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                            .attr(
+                                                'content'),
+                                    },
+                                })
+                                const data = await response.json();
+                                if (data.status == 'success') {
+                                    mostrarEstadoExitoso(e.target);
                                 }
+                                if (data.errors) {
+                                    let errorN = e.target.getAttribute('data-name-input');
+                                    data.errors[errorN].forEach(element => {
+                                        toastr.error(element);
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
                             }
-                        })
-
+                        }
                     }
-                }
+                });
+                document.getElementById('tbl-idiomas').addEventListener('click', function(e) {
+                    if (e.target.tagName == 'I') {
+                        if (e.target.classList.contains('removeFileIdioma')) {
+                            const idiomaID = e.target.getAttribute('data-idioma-id');
+                            Swal.fire({
+                                title: 'Estás seguro de eliminar el archivo?',
+                                text: "Esto no se puede revertir!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si',
+                                cancelButtonText: "No",
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const url =
+                                        `/admin/competencia/${idiomaID}/idiomas-delete-certificado`;
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                Accept: "application/json",
+                                                'X-CSRF-TOKEN': $(
+                                                        'meta[name="csrf-token"]'
+                                                    )
+                                                    .attr(
+                                                        'content'),
+                                            },
+                                        })
+                                        const data = await response.json();
+                                        if (data.status == 'success') {
+                                            mostrarEstadoExitoso(e.target);
+                                        }
+                                        if (data.errors) {
+                                            let errorN = e.target.getAttribute(
+                                                'data-name-input');
+                                            data.errors[errorN].forEach(element => {
+                                                toastr.error(element);
+                                            });
+                                        }
+                                        tblIdiomas.ajax.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                });
             });
             window.EliminarIdioma = function(url, cursoId) {
                 Swal.fire({
@@ -2352,38 +2385,38 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirExperiencia()
+                })
 
-            document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirExperiencia()
-            })
+                document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirEducacion()
+                })
 
-            document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirEducacion()
-            })
+                document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirCurso()
+                })
 
-            document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirCurso()
-            })
+                document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirCertificado()
+                })
 
-            document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirCertificado()
-            })
+                document.getElementById('btn-agregar-idioma').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limpiarErrores();
+                    suscribirIdioma()
+                })
 
-            document.getElementById('btn-agregar-idioma').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                suscribirIdioma()
-            })
-
-
+            });
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
                 // e.preventDefault();
                 // document.querySelector('#formEmpleados').submit();
@@ -2655,21 +2688,31 @@
 
 
         function suscribirCurso() {
+            const cursoDiploma = document.getElementById('curso_diplomado').value;
+            const tipo = document.getElementById('tipo').value;
+            const año = document.getElementById('año').value;
+            const archivos = document.getElementById('file_curso').files;
+            const fechaFin = document.getElementById('fecha_fin').value;
+            const empleadoId = document.getElementById('empleado_id_curso').value;
 
-            let url = $("#formCursos").attr("action");
+            const url = $("#formCursos").attr("action");
+
             let formData = new FormData();
-            formData.append('curso_diploma', document.getElementById('curso_diplomado').value)
-            formData.append('tipo', document.getElementById('tipo').value)
-            formData.append('año', document.getElementById('año').value)
-            // formData.append('duracion', document.getElementById('duracion').value)
-            let archivos = document.getElementById('file_curso').files;
-            archivos.forEach(element => {
-                formData.append('file', element);
-            });
-            formData.append('fecha_fin', document.getElementById('fecha_fin').value)
-            formData.append('empleado_id', document.getElementById('empleado_id_curso').value)
+            formData.append('curso_diploma', cursoDiploma);
+            formData.append('tipo', tipo);
+            formData.append('año', año);
+
+            if (archivos.length > 0) {
+                for (let file of archivos) {
+                    formData.append('file', file);
+                }
+            }
+
+            formData.append('fecha_fin', fechaFin);
+            formData.append('empleado_id', empleadoId);
+
             $.ajax({
-                type: "post",
+                type: "POST",
                 url: url,
                 data: formData,
                 processData: false,
@@ -2684,18 +2727,15 @@
                         tblCurso.ajax.reload();
                     }
                 },
-                error: function(request, status, error) {
-                    console.log(error)
-                    $.each(request.responseJSON.errors, function(indexInArray,
-
-                        valueOfElement) {
-                        console.log(valueOfElement, indexInArray);
-                        $(`span.${indexInArray}_error`).text(valueOfElement[0]);
-
-                    });
+                error: function(request) {
+                    const errors = request.responseJSON.errors;
+                    for (const [key, value] of Object.entries(errors)) {
+                        $(`span.${key}_error`).text(value[0]);
+                    }
                 }
             });
         }
+
 
         function limpiarCamposCursos() {
             $("#curso_diplomado").val('');

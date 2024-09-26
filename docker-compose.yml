@@ -164,6 +164,7 @@ services:
       - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+      - ./infra/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 
   newrelic-redis:
     container_name: newrelic-redis
