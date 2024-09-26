@@ -37,7 +37,7 @@ class TablaTareasTimesheet extends Component
 
     public function hydrate()
     {
-        $this->dispatch('select2');
+        // $this->dispatch('select2');
         $this->dispatch('scriptTabla');
     }
 
