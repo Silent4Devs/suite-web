@@ -179,7 +179,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                         "estatus_firma" => is_null($requisicion->firma_compras),
                     ];
 
-                    $json_requisicion[$keyReq][] = [
+                    $json_requisicion[$keyReq] = [
                         'folio' => "RQ-00-00-".$requisicion->id,
                         'fecha_solicitud' => $requisicion->fecha,
                         'referencia' => $requisicion->referencia,
@@ -324,7 +324,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                             "estatus_firma" => is_null($requisicion->firma_compras),
                         ];
 
-                        $json_requisicion[$keyReq][] = [
+                        $json_requisicion[$keyReq] = [
                             'folio' => "RQ-00-00-".$requisicion->id,
                             'fecha_solicitud' => $requisicion->fecha,
                             'referencia' => $requisicion->referencia,
@@ -530,15 +530,10 @@ class tbApiMobileControllerRequisiciones extends Controller
             'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
         ];
 
-        $json_requisicion['comprador'] = [
-            'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
-            'no_contrato' => $requisicion->contrato->no_contrato ?? '',
-            'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
-        ];
-
         $json_requisicion['info_sucursal'] = [
             'empresa' => $requisicion->sucursal->empresa,
             'rfc' => $requisicion->sucursal->rfc,
+            "razon_social" => $requisicion->sucursal->descripcion,
             'direccion' => $requisicion->sucursal->direccion,
             'url_foto_empresa' => 'razon_social/' . $imagen_logo,
         ];
@@ -575,14 +570,6 @@ class tbApiMobileControllerRequisiciones extends Controller
                     'contacto_proveedor' => $prov->contacto,
                     'fechaInicio_proveedor' => date('d-m-Y', strtotime($prov->fecha_inicio)) ?? 'La fecha de inicio no está disponible.',
                     'fechaFin_proveedor' => date('d-m-Y', strtotime($prov->fecha_fin)) ?? 'La fecha fin no está disponible.',
-                    // 'detalles_proveedor' => $proveedor->detalles,
-                    // 'comentarios_proveedor' => $proveedor->comentarios,
-                    // 'contacto_proveedor' => $proveedor->contacto,
-                    // 'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_inicio)),
-                    // 'telefono_proveedor' => $proveedor->cel,
-                    // 'correo_proveedor' => $proveedor->contacto_correo,
-                    // 'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_fin)),
-                    // 'url_proveedor' => $proveedor->url,
                 ];
             }
         }
@@ -590,20 +577,8 @@ class tbApiMobileControllerRequisiciones extends Controller
         if (!empty($proveedores_indistintos)) {
             foreach ($proveedores_indistintos as $prov) {
                 $json_requisicion['proveedor_indistinto'][] =             [
-                    // 'nombre_proveedor' => $prov->nombre ?? '',
-                    // 'empresa_proveedor' => $prov->razon_social ?? '',
-                    // 'rfc_proveedor' =>$prov->rfc,
-                    // 'contacto_proveedor'=> $prov->contacto,
                     'fechaInicio_proveedor' => date('d-m-Y', strtotime($prov->fecha_inicio)) ?? 'La fecha de inicio no está disponible.',
                     'fechaFin_proveedor' => date('d-m-Y', strtotime($prov->fecha_fin)) ?? 'La fecha fin no está disponible.',
-                    // 'detalles_proveedor' => $proveedor->detalles,
-                    // 'comentarios_proveedor' => $proveedor->comentarios,
-                    // 'contacto_proveedor' => $proveedor->contacto,
-                    // 'fechaInicio_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_inicio)),
-                    // 'telefono_proveedor' => $proveedor->cel,
-                    // 'correo_proveedor' => $proveedor->contacto_correo,
-                    // 'fechaFin_proveedor' => date('d-m-Y', strtotime($proveedor->fecha_fin)),
-                    // 'url_proveedor' => $proveedor->url,
                 ];
             }
         }
