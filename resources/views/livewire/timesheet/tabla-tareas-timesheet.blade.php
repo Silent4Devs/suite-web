@@ -187,38 +187,38 @@
     @endforeach
 
     <script type="text/javascript">
-        function initSelect2() {
-            $('#proyectos_select').select2({
-                theme: 'bootstrap4'
-            });
-            $('#proyecto_filtro').select2({
-                theme: 'bootstrap4'
-            });
-        }
+        // function initSelect2() {
+        //     $('#proyectos_select').select2({
+        //         theme: 'bootstrap4'
+        //     });
+        //     $('#proyecto_filtro').select2({
+        //         theme: 'bootstrap4'
+        //     });
+        // }
         document.addEventListener('DOMContentLoaded', () => {
-            initSelect2();
+            // initSelect2();
 
-            Livewire.on('select2', () => {
-                initSelect2();
-            });
+            // Livewire.on('select2', () => {
+            //     initSelect2();
+            // });
 
-            Livewire.on('scriptTabla', () => {
+            Livewire.on('scriptTabla', (event) => {
                 tablaLivewire('tabla_time_tareas');
             });
 
-            $('#proyectos_select').on('select2:select', function(e) {
-                var data = e.params.data;
-                let proyecto_id = data.id;
-                @this.set('proyecto_id', proyecto_id);
-                @this.llenarAreas(proyecto_id);
-            });
+            // $('#proyectos_select').on('select2:select', function(e) {
+            //     var data = e.params.data;
+            //     let proyecto_id = data.id;
+            //     @this.set('proyecto_id', proyecto_id);
+            //     @this.llenarAreas(proyecto_id);
+            // });
 
-            $('#proyecto_filtro').on('select2:select', function(e) {
-                var data = e.params.data;
-                let proyecto_id = data.id;
-                console.log(proyecto_id);
-                @this.updateProyecto(proyecto_id);
-            });
+            // $('#proyecto_filtro').on('select2:select', function(e) {
+            //     var data = e.params.data;
+            //     let proyecto_id = data.id;
+            //     console.log(proyecto_id);
+            //     @this.updateProyecto(proyecto_id);
+            // });
 
             document.getElementById('tarea_name')?.addEventListener('keyup', (e) => {
                 let value = e.target.value;
