@@ -27,17 +27,22 @@ class GeneralTabantajMiddleware
 
     public function consultaApi()
     {
-        $apiController = new tbApiPanelControlController();
-        $response = $apiController->getData();
+        try {
+            $apiController = new tbApiPanelControlController();
+            $response = $apiController->getData();
 
-        $client = $response->original[0];
+            $client = $response->original[0];
 
-        if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
-            // Filtrar el módulo que cumpla con las condiciones deseadas
-            return true;
+            if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
+                // Filtrar el módulo que cumpla con las condiciones deseadas
+                return true;
+            } else {
+                // Procesa la respuesta según sea necesario
+                return false;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            abort(403);
         }
-
-        // Procesa la respuesta según sea necesario
-        return false;
     }
 }
