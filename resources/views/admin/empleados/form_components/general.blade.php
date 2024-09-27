@@ -12,9 +12,9 @@
         </div>
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
-        <input class="form-control" type="text" name="name" id="name"
-            value="{{ old('name', $empleado->name) }}" required>
+        <label class="required" for="nameUsuario"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
+        <input class="form-control" type="text" name="nameUsuario" id="nameUsuario"
+            value="{{ old('nameUsuario', $empleado->name) }}" required>
     </div>
     <div class="form-group col-sm-6">
         <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°

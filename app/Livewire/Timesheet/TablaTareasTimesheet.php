@@ -114,7 +114,10 @@ class TablaTareasTimesheet extends Component
 
         // $this->dispatch('tarea-actualizada', nueva_tarea: $nueva_tarea);
 
-        $this->proyecto_id=null;
+        if ($this->origen == 'tareas') {
+            $this->proyecto_id = null;
+        }
+
         $this->input_area=null;
         $this->input_tarea_name=null;
 
