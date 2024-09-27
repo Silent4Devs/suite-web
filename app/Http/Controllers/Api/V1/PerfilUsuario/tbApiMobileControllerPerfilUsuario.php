@@ -20,20 +20,21 @@ class tbApiMobileControllerPerfilUsuario extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function encodeSpecialCharacters($url)
+    {
+        // Handle spaces
+        // $url = str_replace(' ', '%20', $url);
+        // Encode other special characters, excluding /, \, and :
+        $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
+            return rawurlencode($matches[0]);
+        }, $url);
+
+        return $url;
+    }
+
     public function tbFunctionPerfil()
     {
-
-        function encodeSpecialCharacters($url)
-        {
-            // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
-            // Encode other special characters, excluding /, \, and :
-            $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
-                return rawurlencode($matches[0]);
-            }, $url);
-
-            return $url;
-        }
 
         $empleado = Empleado::alta()->select(
             'id',
@@ -74,7 +75,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
         }
 
         // Encode spaces in the URL
-        $empleado->ruta_foto = encodeSpecialCharacters($ruta);
+        $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);
 
         $empleado->makeHidden([
             'avatar',
@@ -139,6 +140,21 @@ class tbApiMobileControllerPerfilUsuario extends Controller
         $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
 
         foreach ($equipo_trabajo as $keyEquipo => $equipo) {
+            if ($equipo->foto == null || $equipo->foto == '0') {
+                if ($equipo->genero == 'H') {
+                    $ruta = asset('storage/empleados/imagenes/man.png');
+                } elseif ($equipo->genero == 'M') {
+                    $ruta = asset('storage/empleados/imagenes/woman.png');
+                } else {
+                    $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                }
+            } else {
+                $ruta = asset('storage/empleados/imagenes/' . $equipo->foto);
+            }
+
+            // Encode spaces in the URL
+            $equipo->ruta_foto = $this->encodeSpecialCharacters($ruta);
+
             $equipo->makeHidden([
                 'avatar',
                 'avatar_ruta',
@@ -305,5 +321,4 @@ class tbApiMobileControllerPerfilUsuario extends Controller
     {
         //
     }
-
 }

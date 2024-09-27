@@ -29,9 +29,7 @@ class tbApiMobileControllerDocumentos extends Controller
     {
         function encodeSpecialCharacters($url)
         {
-            // Handle spaces
-            // $url = str_replace(' ', '%20', $url);
-            // Encode other special characters, excluding /, \, and :
+            // Encode special characters, excluding /, \, and :
             $url = preg_replace_callback('/[^A-Za-z0-9_\-\.~\/\\\:]/', function ($matches) {
                 return rawurlencode($matches[0]);
             }, $url);
@@ -41,74 +39,92 @@ class tbApiMobileControllerDocumentos extends Controller
 
         $empleado = User::getCurrentUser()->empleado;
 
-        $documentos = Documento::with('revisiones.empleadoMobile')->where('estatus', 2)->orderByDesc('id')->get();
-        // $documentos = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable', 'revisiones', 'proceso', 'macroproceso')->orderByDesc('id')->get();
+        // Obtener documentos con sus revisiones y empleados relacionados
+        $documentos = Documento::with('revisiones.empleadoMobile')
+            ->where('estatus', 2)
+            ->orWhere('estatus', 3)
+            ->orderByDesc('id')
+            ->get();
 
+        // Eliminar documentos que no tengan revisores (revisiones vacías)
+        $documentos = $documentos->reject(function ($documento) {
+            return $documento->revisiones->isEmpty(); // Elimina el documento si no tiene revisiones
+        });
+
+        // Iterar sobre los documentos filtrados
         foreach ($documentos as $keyDocumento => $documento) {
+            $numero_revision = RevisionDocumento::where('documento_id', $documento->id)
+                ->max('no_revision')
+                ? intval(RevisionDocumento::where('documento_id', $documento->id)->max('no_revision')) + 1
+                : 1;
+
+            // Ocultar campos innecesarios
             $documento->makeHidden(['created_at', 'updated_at', 'deleted_at']);
-            if (!$documento->revisiones->isEmpty()) {
-                foreach ($documento->revisiones as $keyrevision => $revision) {
-                    if ($revision->empleadoMobile) {
-                        if ($revision->empleadoMobile->foto == null || $revision->empleadoMobile->foto == '0') {
-                            $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                        } else {
-                            $ruta = asset('storage/empleados/imagenes/' . $revision->empleadoMobile->foto);
-                        }
 
-                        // Encode spaces in the URL
-                        $revision->id_empleado = $revision->empleadoMobile->id;
-                        $revision->nombre_empleado = $revision->empleadoMobile->name;
-                        $revision->ruta_foto = encodeSpecialCharacters($ruta);
-
-                        $revision->makeHidden(['empleadoMobile', 'created_at', 'updated_at', 'deleted_at']);
-                        $revision->empleadoMobile->makeHidden([
-                            'avatar',
-                            'avatar_ruta',
-                            'resourceId',
-                            'empleados_misma_area',
-                            'genero_formateado',
-                            'puesto',
-                            'declaraciones_responsable',
-                            'declaraciones_aprobador',
-                            'declaraciones_responsable2022',
-                            'declaraciones_aprobador2022',
-                            'fecha_ingreso',
-                            'saludo',
-                            'saludo_completo',
-                            'sede',
-                            'perfil',
-                            'actual_birdthday',
-                            'actual_aniversary',
-                            'obtener_antiguedad',
-                            'empleados_pares',
-                            'competencias_asignadas',
-                            'objetivos_asignados',
-                            'es_supervisor',
-                            'fecha_min_timesheet',
-                            'area',
-                            'supervisor',
-                            'area_id',
-                            'puesto_id',
-                            'foto',
-                            'puestoRelacionado',
-                        ]);
+            foreach ($documento->revisiones as $keyrevision => $revision) {
+                if ($revision->empleadoMobile) {
+                    // Ruta de imagen del empleado
+                    if ($revision->empleadoMobile->foto == null || $revision->empleadoMobile->foto == '0') {
+                        $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                    } else {
+                        $ruta = asset('storage/empleados/imagenes/' . $revision->empleadoMobile->foto);
                     }
+
+                    // Asignar detalles del empleado
+                    $revision->id_empleado = $revision->empleadoMobile->id;
+                    $revision->nombre_empleado = $revision->empleadoMobile->name;
+                    $revision->ruta_foto = encodeSpecialCharacters($ruta);
+
+                    // Ocultar campos innecesarios en la revisión
+                    $revision->makeHidden(['empleadoMobile', 'created_at', 'updated_at', 'deleted_at']);
+                    $revision->empleadoMobile->makeHidden([
+                        'avatar',
+                        'avatar_ruta',
+                        'resourceId',
+                        'empleados_misma_area',
+                        'genero_formateado',
+                        'puesto',
+                        'declaraciones_responsable',
+                        'declaraciones_aprobador',
+                        'declaraciones_responsable2022',
+                        'declaraciones_aprobador2022',
+                        'fecha_ingreso',
+                        'saludo',
+                        'saludo_completo',
+                        'sede',
+                        'perfil',
+                        'actual_birdthday',
+                        'actual_aniversary',
+                        'obtener_antiguedad',
+                        'empleados_pares',
+                        'competencias_asignadas',
+                        'objetivos_asignados',
+                        'es_supervisor',
+                        'fecha_min_timesheet',
+                        'area',
+                        'supervisor',
+                        'area_id',
+                        'puesto_id',
+                        'foto',
+                        'puestoRelacionado',
+                    ]);
                 }
             }
         }
 
-        // $macroprocesos = Macroproceso::getAll()->pluck('nombre')->toArray();
-        // $procesos = Proceso::pluck('nombre')->toArray();
-        // $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
-
-        return response(json_encode([
+        return response()->json([
             'documentos' => $documentos,
-        ]), 200)->header('Content-Type', 'application/json');
+        ], 200);
     }
 
-    public function aprobar($id)//Request $request
+
+
+    public function aprobar($id) //Request $request
     {
-            $documento = RevisionDocumento::where('id', '=', $id)->first();
+        $empleado = User::getCurrentUser()->empleado;
+        $numero_revision = RevisionDocumento::where('documento_id', $id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $id)->max('no_revision')) + 1 : 1;
+        $documento = RevisionDocumento::where('id', '=', $id)->where('empleado_id', $empleado->id)->where('no_revision', $numero_revision)->first();
+        if (!empty($documento)) {
             $documento->update([
                 // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::APROBADO),
@@ -207,23 +223,27 @@ class tbApiMobileControllerDocumentos extends Controller
             }
 
             return response()->json(['approve' => true]);
-        // }
+        } else {
+            return response()->json(['approve' => "No tiene permitido aprobar o rechazar el documento"]);
+        }
     }
 
     public function rechazar($id)
     {
-        // if ($request->ajax()) {
-            $documento = RevisionDocumento::where('id', '=', $id)->first();
+        $empleado = User::getCurrentUser()->empleado;
+        $numero_revision = RevisionDocumento::where('documento_id', $id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $id)->max('no_revision')) + 1 : 1;
+        $documento = RevisionDocumento::where('id', '=', $id)->where('empleado_id', $empleado->id)->where('no_revision', $numero_revision)->first();
 
+        if (!empty($documento)) {
             $documento->update([
                 // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::RECHAZADO),
             ]);
 
             RevisionDocumento::where('nivel', $documento->nivel)
-            ->where('no_revision', $documento->no_revision)
-            ->where('documento_id', $documento->documento_id)
-            ->update(['estatus' => Documento::RECHAZADO]);
+                ->where('no_revision', $documento->no_revision)
+                ->where('documento_id', $documento->documento_id)
+                ->update(['estatus' => Documento::RECHAZADO]);
 
             $documentoOriginal = Documento::with('elaborador')->find($documento->documento_id);
 
@@ -321,7 +341,10 @@ class tbApiMobileControllerDocumentos extends Controller
             }
 
             return response()->json(['reject' => true]);
+        } else {
+            return response()->json(['reject' => "No tiene permitido aprobar o rechazar el documento"]);
         }
+    }
     // }
 
     public function sendMailApprove($mail, $documento, $revision)
