@@ -3,39 +3,45 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class AsistentService
 {
     protected $client;
 
+    protected $baseUrl;
+
     public function __construct()
     {
         $this->client = new Client;
+        $this->baseUrl = 'http://192.168.9.77:8080'; // Definir URL base
     }
 
+    /**
+     * Enviar pregunta a la API de Python.
+     */
     public function postQuestionToPythonAPI($question)
     {
-        $url = 'http://localhost:8080/ask-question/';
+        $url = $this->baseUrl.'/ask-question/';
 
         try {
             $response = $this->client->post($url, [
-                'json' => [
-                    'user_question' => $question,
-                ],
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
+                'json' => ['user_question' => $question],
+                'headers' => ['Content-Type' => 'application/json'],
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+        } catch (RequestException $e) {
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 
+    /**
+     * Enviar archivo PDF a la API de Python.
+     */
     public function postDataTextPythonAPI($filePath, $fileName)
     {
-        $url = 'http://localhost:8080/text_to_chromadb/';
+        $url = $this->baseUrl.'/text_to_chromadb/';
 
         try {
             $response = $this->client->post($url, [
@@ -49,25 +55,24 @@ class AsistentService
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+        } catch (RequestException $e) {
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 
+    /**
+     * Enviar nombre de archivo a la API de Python.
+     */
     public function postDataToPythonAPI($filename)
     {
-        // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://localhost:8080/save_name_files/archivos.txt/{$filename}";
+        $url = $this->baseUrl."/save_name_files/archivos.txt/{$filename}";
 
         try {
-            // Realiza la solicitud POST sin enviar datos en el cuerpo
             $response = $this->client->post($url);
 
-            // Decodifica la respuesta JSON
             return json_decode($response->getBody()->getContents(), true);
-        } catch (\Exception $e) {
-            // Maneja las excepciones según sea necesario
-            return ['error' => $e->getMessage()];
+        } catch (RequestException $e) {
+            return ['error' => 'Request failed: '.$e->getMessage()];
         }
     }
 }

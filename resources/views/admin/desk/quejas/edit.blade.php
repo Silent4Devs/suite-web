@@ -2,9 +2,8 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
     <style type="text/css">
-
         .caja-firmas-doc .flex {
             justify-content: center;
             gap: 50px;
@@ -36,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-            height: 100%; */
+                height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -75,7 +74,7 @@
         }
 
         .select2-container--default .select2-selection--multiple {
-                border: 1px solid #ADD8E6 !important;
+            border: 1px solid #ADD8E6 !important;
         }
 
         #info-bar {
@@ -86,7 +85,7 @@
 {{ Breadcrumbs::render('quejas-edit', $quejas) }}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-frown"></i></i>Quejas</strong>
     </div>
     <div class="caja_botones_menu">
@@ -130,35 +129,42 @@
                             </div>
 
                             @if (is_null($firma_validacion))
-                            <div style="position: relative; left: 2rem;">
-                                <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de firma(s)
-                                </label>
-                                <br>
-                            </div>
-
-
-                            <div class="mt-2 form-group col-md-12">
-                                <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
-                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
-                                        @if($firmaModules && $firmaModules->empleados)
-                                            @if(count($firmaModules->empleados) > 0)
-                                                @foreach($firmaModules->empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}"  @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
-                                                        {{ $empleado->name }}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option value="" disabled>No hay participantes disponibles.</option>
-                                            @endif
-                                        @else
-                                            <option value="" disabled>No hay participantes disponibles.</option>
-                                        @endif
-                                    </select>
+                                <div style="position: relative; left: 2rem;">
+                                    <label>
+                                        <input type="checkbox" id="toggle-info"
+                                            {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
+                                        Activar flujo de firma(s)
+                                    </label>
+                                    <br>
                                 </div>
-                            </div>
+
+
+                                <div class="mt-2 form-group col-md-12">
+                                    <div class="info-bar" id="info-bar"
+                                        style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
+                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                        <select id="participantes" name="participantes[]" class="form-control"
+                                            multiple="multiple"
+                                            style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                            @if ($firmaModules && $firmaModules->empleados)
+                                                @if (count($firmaModules->empleados) > 0)
+                                                    @foreach ($firmaModules->empleados as $empleado)
+                                                        <option value="{{ $empleado->id }}"
+                                                            @if (is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                            {{ $empleado->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>No hay participantes disponibles.
+                                                    </option>
+                                                @endif
+                                            @else
+                                                <option value="" disabled>No hay participantes disponibles.
+                                                </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                             @endif
 
 
@@ -643,7 +649,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-quejas-actividades.store') }}">
                                 <input type="hidden" name="queja_id" value="{{ $quejas->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
@@ -727,7 +733,9 @@
 
 @php
     $userIsAuthorized = false;
-    $existingRecord = App\Models\FirmaCentroAtencion::where('id_quejas', $quejas->id)->where('user_id', Auth::id())->first();
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_quejas', $quejas->id)
+        ->where('user_id', Auth::id())
+        ->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -737,67 +745,69 @@
 @endphp
 
 
-@if($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado')
-@if ($userIsAuthorized)
-@if (!$existingRecord)
-<form method="POST" action="{{ route('admin.module_firmas.quejas', ['id' => $quejas->id]) }}" enctype="multipart/form-data">
-@csrf
-<div class="card card-body">
-    <div class="" style="position: relative; left: 2rem;">
-        <br>
-        <h5><strong>Firma*</strong></h5>
-        <p>
-            Indispensable firmar  antes de guardar y enviarla a aprobación.
-        </p>
-    </div>
-    <div class="flex caja-firmar">
-        <div class="flex-item"
-            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-            <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <canvas id="firma_requi" width="500px" height="300px">
-                    Navegador no compatible
-                </canvas>
-                <input type="hidden" name="firma" id="firma">
-            </div>
-            <div>
-                <div class="btn"
-                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                    id="clear">Limpiar</div>
-            </div>
-            <div class="flex my-4" style="justify-content: end;">
-                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
-            </div>
-        </div>
-    </div>
-    </div>
-</form>
-@endif
-@endif
+@if ($quejas->estatus === 'cerrado' || $quejas->estatus === 'cancelado')
+    @if ($userIsAuthorized)
+        @if (!$existingRecord)
+            <form method="POST" action="{{ route('admin.module_firmas.quejas', ['id' => $quejas->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
+                    <div class="" style="position: relative; left: 2rem;">
+                        <br>
+                        <h5><strong>Firma*</strong></h5>
+                        <p>
+                            Indispensable firmar antes de guardar y enviarla a aprobación.
+                        </p>
+                    </div>
+                    <div class="flex caja-firmar">
+                        <div class="flex-item"
+                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                            <div id="firma_content" class="caja-space-firma"
+                                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                <canvas id="firma_requi" width="500px" height="300px">
+                                    Navegador no compatible
+                                </canvas>
+                                <input type="hidden" name="firma" id="firma">
+                            </div>
+                            <div>
+                                <div class="btn"
+                                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                    id="clear">Limpiar</div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endif
+    @endif
 @endif
 
 @if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
-<div class="card card-content" style="margin-bottom: 30px">
-    <div class="caja-firmas-doc">
-        @foreach($firmas as $firma)
-        <div class="flex" style="margin-top: 70px;">
-            <div class="flex-item">
-                @if($firma->firma)
-                    <img src="{{ $firma->firma_ruta_quejas }}" class="img-firma" width="200" height="100">
-                    <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
-                    <p>Firmante: {{ $firma->empleado->name }}</p>
-                @else
-                    <div style="height: 137px;"></div>
-                @endif
-                <hr>
-                <p>
-                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-                </p>
-            </div>
+    <div class="card card-content" style="margin-bottom: 30px">
+        <div class="caja-firmas-doc">
+            @foreach ($firmas as $firma)
+                <div class="flex" style="margin-top: 70px;">
+                    <div class="flex-item">
+                        @if ($firma->firma)
+                            <img src="{{ $firma->firma_ruta_quejas }}" class="img-firma" width="200"
+                                height="100">
+                            <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
+                            <p>Firmante: {{ $firma->empleado->name }}</p>
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                        <hr>
+                        <p>
+                            <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
-</div>
 @endif
 
 
@@ -1017,7 +1027,7 @@
             tokenSeparators: [',', ' '],
             templateResult: formatEmpleado,
             templateSelection: formatEmpleadoSelection,
-            maximumSelectionLength: 5  // Limita a un máximo de 5 selecciones
+            maximumSelectionLength: 5 // Limita a un máximo de 5 selecciones
         });
 
         function formatEmpleado(empleado) {

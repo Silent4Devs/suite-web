@@ -18,7 +18,6 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\ProcesosListaDistribucion;
-use App\Models\Team;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -89,10 +88,11 @@ class PoliticaSgsiController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $direccion = $organizacion_actual->direccion;
         $rfc = $organizacion_actual->rfc;
+        $listavacia = 'baja';
 
         $modulo = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        if (!isset($modulo)  ||  $modulo->participantes->isEmpty()) {
+        if (! isset($modulo) || $modulo->participantes->isEmpty()) {
             $listavacia = 'vacia';
 
             return view('admin.politicaSgsis.index', compact(
@@ -108,7 +108,7 @@ class PoliticaSgsiController extends Controller
         } else {
 
             $listavacia = 'cumple';
-            
+
             return view('admin.politicaSgsis.index', compact(
                 'politicaSgsis',
                 'organizacion_actual',

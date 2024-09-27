@@ -6,16 +6,13 @@
 
     <style>
         div.recuadro-instruccion {
-            width: 488px;
-            height: 46px;
+            width: 100%;
             background: #FFFBEE;
             border: 1px solid #FFA200;
             border-radius: 9px;
             opacity: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: #FF8000;
+            padding: 10px 20px;
         }
     </style>
 
@@ -34,7 +31,6 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="title-card-time">Nuevo Proyecto</h4>
-                    <hr class="my-4">
                 </div>
             </div>
             <form id="timesheet-proyectos-form" method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
@@ -155,7 +151,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <button id="submit-btn" class="btn btn-success" type="button">Crear Proyecto</button>
+                        <button id="submit-btn" class="btn btn-primary" type="button">Crear Proyecto</button>
                     </div>
                 </div>
             </form>

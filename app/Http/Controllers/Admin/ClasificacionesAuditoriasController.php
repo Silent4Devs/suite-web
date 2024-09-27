@@ -88,7 +88,6 @@ class ClasificacionesAuditoriasController extends Controller
             'nombre.unique' => 'El nombre ya existe. Por favor, selecciona otro.',
         ]);
 
-
         try {
             $nuevaClasificacion = ClasificacionesAuditorias::create([
                 'identificador' => $validatedData['identificador'],

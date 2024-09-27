@@ -10,8 +10,7 @@
 
         .indicador-progreso-barra {
             position: absolute;
-            background-color: #006DDB;
-            border-radius: 100px;
+            background-color: var(--color-tbj) border-radius: 100px;
             height: 100%;
         }
 
@@ -60,7 +59,7 @@
                         @if ($current->completed)
                             <h4 class="mr-2 text-primary">Lección terminada</h4>
                             <i class="d-inline fas fa-toggle-on"
-                                style="font-size: 30px; color: #006DDB; cursor: pointer;"></i>
+                                style="font-size: 30px; color: var(--color-tbj) cursor: pointer;"></i>
                         @else
                             <h4 class="mr-2">Marcar esta lección como terminada</h4>
                             <i class="text-2xl text-gray-600 fas fa-toggle-off"
@@ -118,6 +117,7 @@
     <div class="card card-body" style="width: 320px;">
         <h4>{{ $course->title }}</h4>
         <div class="d-flex align-items-start" wire:ignore>
+            {{ $course->instructor->empleado }}
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name ?? 'Sin asignar' }}">

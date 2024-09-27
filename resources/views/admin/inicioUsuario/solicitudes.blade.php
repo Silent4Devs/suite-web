@@ -12,8 +12,7 @@
         overflow: hidden;
         text-decoration: none;
         display: inline-block;
-        color: #345183;
-        padding: 5px;
+        color: var(--color-tbj) padding: 5px;
         border: 1px solid #D9D9D9 !important;
         background-color: #EEEEEE;
         margin: 5px;
@@ -25,8 +24,7 @@
 
     .btn_reporte:hover {
         border: 1px solid #345183 !important;
-        color: #345183;
-        background-color: rgba(0, 0, 0, 0);
+        color: var(--color-tbj) background-color: rgba(0, 0, 0, 0);
     }
 
     .btn_reporte i {
@@ -104,7 +102,7 @@
                     @endcan
                     @can('solicitud_mensajeria_acceder')
                         <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                          <i class="bi bi-send"></i></><br><span>Mensajería</span>
+                            <i class="bi bi-send"></i></><br><span>Mensajería</span>
                         </a>
                     @endcan
                     @php

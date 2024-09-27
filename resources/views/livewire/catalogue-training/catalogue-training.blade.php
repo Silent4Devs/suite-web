@@ -1,9 +1,9 @@
 <div>
     <div class="card">
         <div class="card-body">
-            <h5 style="color:#3086AF;">Capacitaciones</h5>
+            <h5 class="color-tbj">Capacitaciones</h5>
             <hr>
-            <form wire:submit="{{$status === 'create' ? 'save':'edit'}}">
+            <form wire:submit="{{ $status === 'create' ? 'save' : 'edit' }}">
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
                         wire:model.live="form.name" required>
@@ -29,22 +29,23 @@
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.mark" >
+                        wire:model.live="form.mark">
                     <label for="name">Marca</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.manufacturer" >
+                        wire:model.live="form.manufacturer">
                     <label for="name">Fabricante</label>
                 </div>
                 <div class="form-group pl-0 anima-focus">
                     <input id="inputName" class="form-control" placeholder="" name="name" type="text"
-                        wire:model.live="form.norma" >
+                        wire:model.live="form.norma">
                     <label for="name">Norma</label>
                 </div>
-                <button class="btn btn-primary"
-                    style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;"
-                    type="submit">{{$status === 'create' ? 'Agregar a capacitación':'Editar capacitación'}}</button>
+                <div class="text-end">
+                    <button class="btn btn-primary"
+                        type="submit">{{ $status === 'create' ? 'Agregar a capacitación' : 'Editar capacitación' }}</button>
+                </div>
             </form>
         </div>
     </div>

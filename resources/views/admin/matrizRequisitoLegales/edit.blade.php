@@ -19,7 +19,7 @@
         .titulo-card {
             text-align: left;
             font: 20px Roboto;
-            color: #306BA9;
+            color: var(--color-tbj);
         }
 
         .boton-cancelar {
@@ -127,8 +127,8 @@
                     {!! Form::label(
                         'formacumple',
                         'Cláusula, sección o
-                                                                                    apartado
-                                                                                    aplicable*',
+                                                                                                        apartado
+                                                                                                        aplicable*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>

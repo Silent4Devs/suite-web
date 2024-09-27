@@ -48,7 +48,7 @@
                 class="container row mt-4 justify-content-center">
 
 
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte card card-body">
                         <i class="bi bi-lightbulb"></i>
                         <h4>Sugerencia</h4>
@@ -69,7 +69,7 @@
                         <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte card card-body">
                         <i class="bi bi-award"></i>
                         <h4>Mejora</h4>
@@ -97,7 +97,7 @@
                         <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte card card-body">
                         <i class="bi bi-emoji-frown"></i>
                         <h4>Queja</h4>
@@ -115,7 +115,7 @@
                         <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte card card-body">
                         <i class="bi bi-flag"></i>
                         <h4>Denuncia</h4>
@@ -140,7 +140,7 @@
                         <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte card card-body">
                         <i class="bi bi-exclamation-octagon"></i>
                         <h4>Incidente de Seguridad</h4>
@@ -167,7 +167,7 @@
                         <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte card card-body">
                         <i class="bi bi-shield-exclamation"></i>
                         <h4>Riesgo</h4>

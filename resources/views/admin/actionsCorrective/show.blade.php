@@ -90,14 +90,14 @@
                         </div>
                         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                             <span
-                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                                style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                             <br>
-                            <span style="color:#345183; font-size:15px;"><strong>Acción Correctiva:
+                            <span style="color:var(--color-tbj) font-size:15px;"><strong>Acción Correctiva:
                                     {{ $accionCorrectiva->tema ?? 'sin registro' }}</strong></span>
 
                         </div>
                         <div class="col-3 p-2">
-                            <span style="color:#345183;">Fecha:
+                            <span style="color:var(--color-tbj)">Fecha:
                                 {{ \Carbon\Carbon::parse($accionCorrectiva->created_at)->format('d-m-Y') }}
                             </span>
                         </div>
@@ -179,7 +179,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Descripción</span>
                     </div>
 
@@ -187,7 +187,7 @@
                         {!! $accionCorrectiva->descripcion ?? 'sin registro' !!}
                     </div>
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Análisis Causa Raíz</span>
                     </div>
                     @forelse ($accionCorrectiva->analisis as $analisis)
@@ -305,7 +305,7 @@
 
                     <br>
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Plan de Trabajo</span>
                     </div>
 
@@ -364,7 +364,9 @@
                                                             <ul>
                                                                 @forelse($actividad->assigs as $empleado_id)
                                                                     @php
-                                                                        $empleado = $Empleado::select('id', 'name')->find($empleado_id->resourceId);
+                                                                        $empleado = $Empleado
+                                                                            ::select('id', 'name')
+                                                                            ->find($empleado_id->resourceId);
                                                                     @endphp
                                                                     <li>
                                                                         <span

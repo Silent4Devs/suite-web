@@ -1269,18 +1269,20 @@ class InicioUsuarioController extends Controller
 
     public function updateVersionIso(Request $request)
     {
-        foreach ($request->toArray() as $var) {
-            if ($var === false) {
-                $valor = false;
-            } else {
-                $valor = true;
-            }
-        }
+        // Obtén el valor booleano de 'version' directamente
+        $valor = $request->input('version');
 
-        $ver = VersionesIso::getFirst();
-        $ver->update([
-            'version_historico' => $valor,
-        ]);
+        // Asegúrate de que haya un registro en la base de datos
+        $ver = VersionesIso::first();
+
+        if ($ver) {
+            // Actualiza el registro
+            $ver->update(['version_historico' => $valor]);
+
+            return response()->json(['success' => 'Version updated']); // Respuesta de éxito
+        } else {
+            return response()->json(['error' => 'No version found'], 404); // Respuesta de error
+        }
     }
 
     public function solicitud()

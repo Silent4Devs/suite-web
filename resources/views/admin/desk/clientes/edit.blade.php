@@ -2,7 +2,7 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
     <style type="text/css">
         sup {
             color: red;
@@ -208,13 +208,12 @@
             border-radius: 100px;
             margin-top: 6px;
         }
-
     </style>
 @endsection
 {{-- {{ Breadcrumbs::render('quejas-edit', $quejas) }} --}}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header mt-4" style="background-color: #345183;">
+    <div class="text-center card-header mt-4" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="fas fa-thumbs-down mr-2"></i> Quejas Clientes
         </strong>
     </div>
@@ -224,8 +223,8 @@
         @can('centro_atencion_quejas_cliente_editar')
             <div class="nav nav-tabs mt-3" id="tabsCapacitaciones" role="tablist">
                 @if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) <a class="nav-link active"
-                        data-type="registro_queja" id="nav-registro-tab" data-toggle="tab" href="#nav-registro" role="tab"
-                        aria-controls="nav-" aria-selected="true">
+                        data-type="registro_queja" id="nav-registro-tab" data-toggle="tab" href="#nav-registro"
+                        role="tab" aria-controls="nav-" aria-selected="true">
                         <i class="fas fa-thumbs-down mr-2"></i>
                         <span>Registro de Queja</span>
                     </a>

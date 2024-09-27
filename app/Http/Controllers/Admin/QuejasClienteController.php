@@ -781,7 +781,7 @@ class QuejasClienteController extends Controller
                     'responsable_atencion_queja_id' => 'El campo responsable de la atención es obligatorio',
                 ]
             );
-            // dd($request->all());
+
             if ($levantamiento_ac) {
                 $request->validate(
                     [

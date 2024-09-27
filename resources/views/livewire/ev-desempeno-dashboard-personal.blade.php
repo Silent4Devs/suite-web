@@ -130,7 +130,7 @@
 
     </div>
 
-    <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
+    <div class="row mt-4" style="font-size: 15px; color: var(--color-tbj)">
         @foreach ($array_periodos as $key => $periodo)
             <div class="col-md-3">
                 <div class="p-3 rounded-lg" style="background-color: #fff; box-shadow: 0px 1px 4px #0000000F; ">

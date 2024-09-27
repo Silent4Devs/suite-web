@@ -5,9 +5,8 @@
 
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
     <style type="text/css">
-
         .caja-firmas-doc .flex {
             justify-content: center;
             gap: 50px;
@@ -39,7 +38,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-            height: 100%; */
+                height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -68,6 +67,7 @@
             box-sizing: border-box;
             align-self: stretch;
         }
+
         sup {
             color: red;
         }
@@ -77,19 +77,18 @@
         }
 
         .select2-container--default .select2-selection--multiple {
-                border: 1px solid #ADD8E6 !important;
+            border: 1px solid #ADD8E6 !important;
         }
 
         #info-bar {
             display: none;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('mejoras-edit', $mejoras) }}
 
 <div class="card">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-rocket"></i>Mejoras</strong>
     </div>
     <div class="caja_botones_menu">
@@ -107,8 +106,7 @@
 
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
-                        <form class="row" method="POST"
-                            action="{{ route('admin.desk.mejoras-update', $mejoras) }}">
+                        <form class="row" method="POST" action="{{ route('admin.desk.mejoras-update', $mejoras) }}">
                             @csrf
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
                                 style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
@@ -119,8 +117,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12" style="width: 300rem;">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -134,42 +132,48 @@
                             </div>
 
                             @if (is_null($firma_validacion))
-                            <div style="position: relative; left: 2rem;">
-                                <label>
-                                    <input type="checkbox" id="toggle-info" {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
-                                    Activar flujo de firma(s)
-                                </label>
-                                <br>
-                            </div>
-
-
-                            <div class="mt-2 form-group col-md-12">
-                                <div class="info-bar" id="info-bar" style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
-                                    <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
-                                    <select id="participantes" name="participantes[]" class="form-control" multiple="multiple" style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
-                                        @if($firmaModules && $firmaModules->empleados)
-                                            @if(count($firmaModules->empleados) > 0)
-                                                @foreach($firmaModules->empleados as $empleado)
-                                                    <option value="{{ $empleado->id }}"  @if(is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
-                                                        {{ $empleado->name }}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option value="" disabled>No hay participantes disponibles.</option>
-                                            @endif
-                                        @else
-                                            <option value="" disabled>No hay participantes disponibles.</option>
-                                        @endif
-                                    </select>
+                                <div style="position: relative; left: 2rem;">
+                                    <label>
+                                        <input type="checkbox" id="toggle-info"
+                                            {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
+                                        Activar flujo de firma(s)
+                                    </label>
+                                    <br>
                                 </div>
-                            </div>
+
+
+                                <div class="mt-2 form-group col-md-12">
+                                    <div class="info-bar" id="info-bar"
+                                        style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
+                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                        <select id="participantes" name="participantes[]" class="form-control"
+                                            multiple="multiple"
+                                            style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                            @if ($firmaModules && $firmaModules->empleados)
+                                                @if (count($firmaModules->empleados) > 0)
+                                                    @foreach ($firmaModules->empleados as $empleado)
+                                                        <option value="{{ $empleado->id }}"
+                                                            @if (is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                            {{ $empleado->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>No hay participantes disponibles.
+                                                    </option>
+                                                @endif
+                                            @else
+                                                <option value="" disabled>No hay participantes disponibles.
+                                                </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                             @endif
 
 
 
                             <div class="mt-2 form-group col-12">
-                                <label class="form-label"><i
-                                        class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
+                                <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control" id="input_folio">{{ $mejoras->folio }}</div>
                             </div>
 
@@ -339,8 +343,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12" style="width: 300rem;">
-                                        <p class="m-0"
-                                            style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
+                                            Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
                                             cada formulario dé clic en el botón guardar antes de cambiar de pestaña,
                                             de lo contrario la información capturada no será guardada.
@@ -364,14 +368,14 @@
                                     <select id="select_metodos" class="form-control" name="metodo">
                                         <option selected disabled>- -</option>
                                         <option
-                                            {{ old('Lluvia de ideas (Brainstorming)', $analisis ? $analisis->metodo : '') =='Lluvia de ideas (Brainstorming)'? 'selected': '' }}
+                                            {{ old('Lluvia de ideas (Brainstorming)', $analisis ? $analisis->metodo : '') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }}
                                             class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                                         </option>
                                         <option
                                             {{ old('5 Porqués (5 Why)', $analisis ? $analisis->metodo : '') == '5 Porqués (5 Why)' ? 'selected' : '' }}
                                             class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
                                         <option
-                                            {{ old('Diagrama causa efecto (Ishikawa)', $analisis ? $analisis->metodo : '') =='Diagrama causa efecto (Ishikawa)'? 'selected': '' }}
+                                            {{ old('Diagrama causa efecto (Ishikawa)', $analisis ? $analisis->metodo : '') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }}
                                             class="op_digrama" data-metodo="digrama">Diagrama causa efecto
                                             (Ishikawa)
                                         </option>
@@ -481,17 +485,16 @@
                                                 {{-- <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; right:480px; position: absolute;">
-                                                    <textarea name="tecnologia_a"
-                                                        class="tecnologia_txtarea txt_obj_secundarios_b" id="analisisTecnologia">{{ $analisis->tecnologia_a }}</textarea>
+                                                    <textarea name="tecnologia_a" class="tecnologia_txtarea txt_obj_secundarios_b" id="analisisTecnologia">{{ $analisis->tecnologia_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
                                                 <div class="col-6"
                                                     style="bottom:5px; left:540px; position: absolute;">
-                                                    <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos" >{{ $analisis->metodos_a }}</textarea>
+                                                    <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="bottom:5px; left:1060px; position: absolute;" >
+                                                    style="bottom:5px; left:1060px; position: absolute;">
                                                     <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
@@ -554,7 +557,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-mejoras-actividades.store') }}">
                                 <input type="hidden" name="mejora_id" value="{{ $mejoras->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
@@ -563,7 +566,8 @@
                                         <div class="form-group col-md-12">
                                             <label class="form-label"><i
                                                     class="fas fa-wrench iconos-crear"></i>Actividad</label>
-                                            <input type="" name="actividad" class="form-control" id="actividad">
+                                            <input type="" name="actividad" class="form-control"
+                                                id="actividad">
                                             <span class="text-danger error_actividad errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -577,7 +581,8 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label"><i
                                                     class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin</label>
-                                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                                            <input type="date" name="fecha_fin" class="form-control"
+                                                id="fecha_fin">
                                             <span class="text-danger error_fecha_fin errors"></span>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -636,7 +641,9 @@
 
 @php
     $userIsAuthorized = false;
-    $existingRecord = App\Models\FirmaCentroAtencion::where('id_mejoras', $mejoras->id)->where('user_id', Auth::id())->first();
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_mejoras', $mejoras->id)
+        ->where('user_id', Auth::id())
+        ->first();
     if ($aprobadores) {
         $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
         if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
@@ -646,67 +653,69 @@
 @endphp
 
 
-@if($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado')
-@if ($userIsAuthorized)
-@if (!$existingRecord)
-<form method="POST" action="{{ route('admin.module_firmas.mejoras', ['id' => $mejoras->id]) }}" enctype="multipart/form-data">
-@csrf
-<div class="card card-body">
-    <div class="" style="position: relative; left: 2rem;">
-        <br>
-        <h5><strong>Firma*</strong></h5>
-        <p>
-            Indispensable firmar  antes de guardar y enviarla a aprobación.
-        </p>
-    </div>
-    <div class="flex caja-firmar">
-        <div class="flex-item"
-            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-            <div id="firma_content" class="caja-space-firma"
-                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                <canvas id="firma_requi" width="500px" height="300px">
-                    Navegador no compatible
-                </canvas>
-                <input type="hidden" name="firma" id="firma">
-            </div>
-            <div>
-                <div class="btn"
-                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
-                    id="clear">Limpiar</div>
-            </div>
-            <div class="flex my-4" style="justify-content: end;">
-                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
-            </div>
-        </div>
-    </div>
-    </div>
-</form>
-@endif
-@endif
+@if ($mejoras->estatus === 'cerrado' || $mejoras->estatus === 'cancelado')
+    @if ($userIsAuthorized)
+        @if (!$existingRecord)
+            <form method="POST" action="{{ route('admin.module_firmas.mejoras', ['id' => $mejoras->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
+                    <div class="" style="position: relative; left: 2rem;">
+                        <br>
+                        <h5><strong>Firma*</strong></h5>
+                        <p>
+                            Indispensable firmar antes de guardar y enviarla a aprobación.
+                        </p>
+                    </div>
+                    <div class="flex caja-firmar">
+                        <div class="flex-item"
+                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                            <div id="firma_content" class="caja-space-firma"
+                                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                <canvas id="firma_requi" width="500px" height="300px">
+                                    Navegador no compatible
+                                </canvas>
+                                <input type="hidden" name="firma" id="firma">
+                            </div>
+                            <div>
+                                <div class="btn"
+                                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                    id="clear">Limpiar</div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endif
+    @endif
 @endif
 
 @if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
-<div class="card card-content" style="margin-bottom: 30px">
-    <div class="caja-firmas-doc">
-        @foreach($firmas as $firma)
-        <div class="flex" style="margin-top: 70px;">
-            <div class="flex-item">
-                @if($firma->firma)
-                    <img src="{{ $firma->firma_ruta_mejoras }}" class="img-firma" width="200" height="100">
-                    <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
-                    <p>Firmante: {{ $firma->empleado->name }}</p>
-                @else
-                    <div style="height: 137px;"></div>
-                @endif
-                <hr>
-                <p>
-                    <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
-                </p>
-            </div>
+    <div class="card card-content" style="margin-bottom: 30px">
+        <div class="caja-firmas-doc">
+            @foreach ($firmas as $firma)
+                <div class="flex" style="margin-top: 70px;">
+                    <div class="flex-item">
+                        @if ($firma->firma)
+                            <img src="{{ $firma->firma_ruta_mejoras }}" class="img-firma" width="200"
+                                height="100">
+                            <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
+                            <p>Firmante: {{ $firma->empleado->name }}</p>
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                        <hr>
+                        <p>
+                            <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
-</div>
 @endif
 @endsection
 
@@ -922,7 +931,7 @@
             tokenSeparators: [',', ' '],
             templateResult: formatEmpleado,
             templateSelection: formatEmpleadoSelection,
-            maximumSelectionLength: 5  // Limita a un máximo de 5 selecciones
+            maximumSelectionLength: 5 // Limita a un máximo de 5 selecciones
         });
 
         function formatEmpleado(empleado) {

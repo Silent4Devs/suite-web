@@ -8,8 +8,7 @@
     position: absolute;
     width: 300px;
     font-weight: bold;
-    color: #345183;
-    bottom: 0;
+    color: var(--color-tbj);    bottom: 0;
 }
 
 .a_reporte {
@@ -20,7 +19,7 @@
     text-align: center;
     transition: 0.1s;
     position: relative;
-    padding-bottom: 60px;
+    padding-bottom: 100px !important;
     height: 450px;
 }
 
@@ -46,7 +45,7 @@
     height: 100px;
     margin: auto;
     margin-top: -70px;
-    background-color: #788BAC;
+    background-color: var(--color-tbj);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +62,7 @@
 .a_reporte h4 {
     margin-top: 16px;
     /*font-weight: bold;*/
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .a_reporte p {

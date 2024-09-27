@@ -55,9 +55,10 @@ class BuscarCVComponent extends Component
 
     public $normaId;
 
-    public $enableField=false;
+    public $enableField = false;
 
-    public function enableFields(){
+    public function enableFields()
+    {
         $this->enableField = false;
     }
 
@@ -121,55 +122,55 @@ class BuscarCVComponent extends Component
 
     public function filters()
     {
-        $filterS1=false;
+        $filterS1 = false;
         $filterS2 = false;
         $query = Empleado::query();
         $query2 = TBUserTrainingModel::query();
         if ($this->type_id) {
-            $filterS1=true;
+            $filterS1 = true;
             $query2->where('type_id', $this->type_id);
 
         }
 
         if ($this->name_id) {
-            $filterS1=true;
+            $filterS1 = true;
             $query2->where('name_id', $this->name_id);
         }
 
         if ($this->area_id) {
-            $filterS2=true;
+            $filterS2 = true;
             // $query->whereHas('empleado', function ($query) {
-                $query->where('area_id', $this->area_id);
+            $query->where('area_id', $this->area_id);
             // });
 
-            $usersArea = Area::with('empleados:id,name,area_id')->where('id',$this->area_id)->first();
+            $usersArea = Area::with('empleados:id,name,area_id')->where('id', $this->area_id)->first();
             $this->employess = $usersArea->empleados;
             // dd($usersArea->empleados);
         }
 
         if ($this->employ_id) {
-            $filterS2=true;
+            $filterS2 = true;
             // dd($this->employ_id);
             // $query->whereHas('empleado', function ($query) {
-                $query->where('id', $this->employ_id);
+            $query->where('id', $this->employ_id);
             // });
         }
 
         if ($this->issuingCompanyId) {
-            $filterS1=true;
+            $filterS1 = true;
             $query2->whereHas('getName', function ($query) {
                 $query->where('issuing_company', 'LIKE', '%'.$this->issuingCompanyId.'%');
             });
         }
 
         if ($this->normaId) {
-            $filterS1=true;
+            $filterS1 = true;
             $query2->whereHas('getName', function ($query) {
                 $query->where('norma', 'LIKE', '%'.$this->normaId.'%');
             });
         }
 
-        if($filterS1){
+        if ($filterS1) {
             $query2->distinct('empleado_id');
             $certificates = $query2->get();
             // dd($certificates);
@@ -181,7 +182,7 @@ class BuscarCVComponent extends Component
             // dd($query2->get());
             // $this->employedCv = $query2->get();
         }
-        if($filterS2){
+        if ($filterS2) {
             $this->employedCv = $query->alta()->get();
         }
         // dd($this->employedCv);
@@ -202,7 +203,7 @@ class BuscarCVComponent extends Component
         $this->isPersonal = $isPersonal;
         if (! $this->isPersonal) {
             // $this->employedCv = TBUserTrainingModel::distinct('empleado_id')->get();
-            $this->employedCv= collect();
+            $this->employedCv = collect();
             $this->catalog = $this->employedCv;
             $this->categories = TBTypeCatalogueTrainingModel::get();
             $this->areas = Area::get();

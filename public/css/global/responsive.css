@@ -170,7 +170,7 @@
         width: 100%;
         font-size: 16px;
         font-weight: 400;
-        color: #3086AF;
+        color: var(--color-tbj);
         display: block;
         margin: 5px 0;
     }
@@ -311,8 +311,7 @@
         padding: 0 !important;
         width: 20%;
         font-size: 20px;
-        color: #345183;
-    }
+        color: var(--color-tbj);    }
     .caja-cards-mobile-datos .card h6{
         margin: 0px !important;
         padding: 0 !important;
