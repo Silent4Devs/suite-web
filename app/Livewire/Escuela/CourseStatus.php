@@ -110,32 +110,31 @@ class CourseStatus extends Component
     //cambiamos la lección actual
     public function changeLesson(Lesson $lesson, $atras = null)
     {
-
-        // dd($lesson);
-        // dd($this->previous);
-
+        // Verificar si el usuario está yendo a una lección anterior o desea regresar
         if ($atras == 'previous') {
             $this->current = $lesson;
-
+            $this->dispatch('render'); // Renderizar la vista correctamente
             return;
         }
 
-        if ($this->current->completed) {
-
-            $this->dispatch('completado');
-
+        // Permitir acceder a la lección seleccionada si está completada
+        if ($lesson->completed) {
             $this->current = $lesson;
-
+            $this->dispatch('render');
             return;
         }
 
-        // if (! $this->current->completed) {
-        //     $this->alertaEmergente('Es necesario terminar esta lección para poder seguir avanzando en tu curso');
+        // Si la lección actual no está completada, bloquear el acceso a la nueva lección
+        if (!$this->current->completed) {
+            $this->alertaEmergente('Es necesario terminar esta lección antes de avanzar.');
+            $this->dispatch('render'); // Asegurarse de renderizar la lección actual
+            return;
+        }
 
-        //     return;
-        // }
-
-        //$this->current = $lesson;
+        // Si la lección actual está completada y la nueva lección no está bloqueada, permitir el acceso
+        $this->current = $lesson;
+        $this->dispatch('completado'); // Despachar evento para lecciones completadas
+        $this->dispatch('render'); // Renderizar la nueva vista
     }
 
     public function completed()
