@@ -29,12 +29,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);
 
     Route::get('requisiciones', [tbApiMobileControllerRequisiciones::class, 'index']);
-    Route::post('firmar-requisicion/{id}', [tbApiMobileControllerRequisiciones::class, 'firmarAprobadores']);
+    Route::get('firmar-requisicion/{id}', [tbApiMobileControllerRequisiciones::class, 'firmarAprobadores']);
     Route::post('requisicion-firmada/{id}', [tbApiMobileControllerRequisiciones::class, 'FirmarUpdate']);
     Route::post('requisicion-rechazada/{id}', [tbApiMobileControllerRequisiciones::class, 'rechazada']);
 
     Route::get('ordenes-compra', [tbApiMobileControllerOrdenesCompra::class, 'index']);
-    Route::post('firmar-orden/{id}', [tbApiMobileControllerOrdenesCompra::class, 'firmarAprobadores']);
+    Route::get('firmar-orden/{id}', [tbApiMobileControllerOrdenesCompra::class, 'firmarAprobadores']);
     Route::post('orden-firmada/{id}', [tbApiMobileControllerOrdenesCompra::class, 'FirmarUpdate']);
     Route::post('orden-rechazada/{id}', [tbApiMobileControllerOrdenesCompra::class, 'rechazada']);
 

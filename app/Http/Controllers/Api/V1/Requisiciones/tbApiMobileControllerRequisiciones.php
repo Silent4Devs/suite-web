@@ -180,6 +180,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     ];
 
                     $json_requisicion[$keyReq] = [
+                        'id' => $requisicion->id,
                         'folio' => "RQ-00-00-".$requisicion->id,
                         'fecha_solicitud' => $requisicion->fecha,
                         'referencia' => $requisicion->referencia,
@@ -192,9 +193,13 @@ class tbApiMobileControllerRequisiciones extends Controller
                     ];
                 }
             }
+            $new = [];
+            foreach($json_requisicion as $item){
+                $new[] = $item;
+            }
 
             return response(json_encode([
-                'requisicion' => $json_requisicion,
+                'requisicion' => $new,
             ]), 200)->header('Content-Type', 'application/json');
 
             // return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
@@ -325,6 +330,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                         ];
 
                         $json_requisicion[$keyReq] = [
+                            'id' => $requisicion->id,
                             'folio' => "RQ-00-00-".$requisicion->id,
                             'fecha_solicitud' => $requisicion->fecha,
                             'referencia' => $requisicion->referencia,
@@ -379,7 +385,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                 }
             } else {
 
-                $$responsable = User::find($requisicion->id_user)->empleado;
+                $responsable = User::find($requisicion->id_user)->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante';
