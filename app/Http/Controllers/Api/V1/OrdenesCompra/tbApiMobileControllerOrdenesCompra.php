@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\OrdenesCompra;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
@@ -15,6 +16,7 @@ use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Empleado;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
+use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
@@ -174,144 +176,38 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         $requisicion = KatbolRequsicion::getOCAll()->where('id', $id)->first();
 
         $user = User::getCurrentUser();
-        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
-        $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        $solicitante = User::find($requisicion->id_user);
-
-        if ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
-                $tipo_firma = 'firma_comprador_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
-            }
-        } elseif ($requisicion->firma_solicitante_orden === null) {
-            if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
-                $tipo_firma = 'firma_solicitante_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
-            }
-        } elseif ($requisicion->firma_finanzas_orden === null) {
-            if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
-                $tipo_firma = 'firma_finanzas_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del finanzas');
-            }
-        } elseif ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
-                $tipo_firma = 'firma_comprador_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
-            }
-        } else {
-            $tipo_firma = 'firma_final_aprobadores';
-            $bandera = $this->bandera = false;
-        }
-
-        $organizacion = Organizacion::getFirst();
-        $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-
-        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
-
-        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
-
-        $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
-
-        return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
-    }
-
-    public function firmarAprobadores($id)
-    {
-        $alerta = false;
-        $bandera = true;
-        $requisicion = KatbolRequsicion::where('id', $id)->first();
-        $user = User::find($requisicion->id_finanzas);
-        $mensaje = null;
-
-        if ($user) {
-            $firma_finanzas_name = $user->name;
-        } else {
-            $firma_finanzas_name = null;
-        }
-        $user = User::getCurrentUser();
-        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
-        $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
+        // $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
+        // $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
         $solicitante = User::find($requisicion->id_user);
 
         $firma_siguiente = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 
-        if ($requisicion->firma_solicitante === null && $requisicion->estado != 'rechazado') {
-            if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
-                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
-                    $tipo_firma = 'firma_solicitante';
-                    $alerta = $this->validacionLista($tipo_firma);
-                } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del solicitante directo:' . $firma_siguiente->solicitante->name . '';
-
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
+        if($solicitante && isset($solicitante->email)){
+            if ($requisicion->firma_comprador_orden === null && $requisicion->estado != 'rechazado') {
+            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
+                $tipo_firma = 'firma_comprador_orden';
             } else {
+                $mensaje = 'No tiene permisos para firmar. En espera del comprador directo: ' . $comprador->user->name;
 
-                $$responsable = User::find($requisicion->id_user)->empleado;
-
-                if ($user->empleado->id == $responsable->id) {
-                    $tipo_firma = 'firma_solicitante';
-                } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del solicitante directo';
-
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
+                return response(json_encode([
+                    'orden' => $mensaje,
+                ]), 200)->header('Content-Type', 'application/json');
             }
-        } elseif ($requisicion->firma_jefe === null && $requisicion->estado != 'rechazado') {
-            if ($firma_siguiente && isset($firma_siguiente->jefe_id)) {
-                if ($user->empleado->id == $firma_siguiente->jefe_id) { //jefe_id
-                    $tipo_firma = 'firma_jefe';
-                    $alerta = $this->validacionLista($tipo_firma);
-                } else {
-                    $mensaje = 'No tiene permisos para firmar. En espera del jefe directo:' . $firma_siguiente->jefe->name . '';
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
+        } elseif ($requisicion->firma_solicitante_orden === null && $requisicion->estado != 'rechazado') {
+            if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
+                $tipo_firma = 'firma_solicitante_orden';
             } else {
-                $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-                $listaPart = $listaReq->participantes;
+                $mensaje = 'No tiene permisos para firmar. En espera del solicitante directo: ' . $solicitante->name;
 
-                $jefe = $user->empleado->supervisor;
-                $supList = $listaPart->where('empleado_id', $jefe->id)->first();
-
-                $nivel = $supList->nivel;
-
-                $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
-
-                foreach ($participantesNivel as $key => $partNiv) {
-                    if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
-                        $responsable = $partNiv->empleado;
-
-                        break;
-                    }
-                }
-
-                if ($user->empleado->id == $responsable->id) {
-                    $tipo_firma = 'firma_jefe';
-                } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del jefe directo';
-
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
+                return response(json_encode([
+                    'orden' => $mensaje,
+                ]), 200)->header('Content-Type', 'application/json');
             }
-        } elseif ($requisicion->firma_finanzas === null && $requisicion->estado != 'rechazado') {
+        } elseif ($requisicion->firma_finanzas_orden === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
                 if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
-                    $tipo_firma = 'firma_finanzas';
+                    $tipo_firma = 'firma_finanzas_orden';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
@@ -334,31 +230,9 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                     }
                 }
                 if ($user->empleado->id == $responsable->id) {
-                    $tipo_firma = 'firma_finanzas';
+                    $tipo_firma = 'firma_finanzas_orden';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del responsable de finanzas';
-
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
-            }
-        } elseif ($requisicion->firma_compras === null && $requisicion->estado != 'rechazado') {
-            if ($firma_siguiente && isset($firma_siguiente->comprador_id)) {
-                if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
-                    $tipo_firma = 'firma_compras';
-                } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del comprador:' . $comprador->user->name . '';
-
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
-                }
-            } else {
-                if (($user->empleado->id == $comprador->user->id)) { //comprador_id
-                    $tipo_firma = 'firma_compras';
-                } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del comprador:' . $comprador->user->name . '';
 
                     return response(json_encode([
                         'requisicion' => $mensaje,
@@ -388,9 +262,9 @@ class tbApiMobileControllerOrdenesCompra extends Controller
             'tipo_firma' => $tipo_firma,
         ];
 
-        $json_requisicion['alerta'] = [
-            'alerta' => $alerta,
-        ];
+        // $json_requisicion['alerta'] = [
+        //     'alerta' => $alerta,
+        // ];
 
         $json_requisicion['general'] = [
             'fecha' => date('d-m-Y', strtotime($requisicion->fecha)),
@@ -400,23 +274,29 @@ class tbApiMobileControllerOrdenesCompra extends Controller
             'nombre_solicitante' => $requisicion->user,
         ];
 
-        $json_requisicion['contrato'] = [
-            'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
-            'no_contrato' => $requisicion->contrato->no_contrato ?? '',
-            'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
-        ];
-
-        $json_requisicion['comprador'] = [
-            'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
-            'no_contrato' => $requisicion->contrato->no_contrato ?? '',
-            'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
-        ];
+        if ($requisicion->contrato === null){
+            $json_requisicion['contrato'] = "Contrato Eliminado";
+        }else{
+            $json_requisicion['contrato'] = [
+                'no_proyecto' => $requisicion->contrato->no_proyecto ?? '',
+                'no_contrato' => $requisicion->contrato->no_contrato ?? '',
+                'nombre_servicio' => $requisicion->contrato->nombre_servicio ?? '',
+            ];
+        }
 
         $json_requisicion['info_sucursal'] = [
             'empresa' => $requisicion->sucursal->empresa,
             'rfc' => $requisicion->sucursal->rfc,
+            "razon_social" => $requisicion->sucursal->descripcion,
             'direccion' => $requisicion->sucursal->direccion,
             'url_foto_empresa' => 'razon_social/' . $imagen_logo,
+        ];
+
+        $json_requisicion["info_pago"] = [
+            "moneda" => $requisicion->moneda,
+            "tipo_pago"=> $requisicion->pago,
+            "dias_credito" => $requisicion->dias_credito,
+            "tipo_cambio" => $requisicion->cambio,
         ];
 
         foreach ($requisicion->productos_requisiciones as $producto) {
@@ -424,8 +304,19 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 'cantidad_producto' => $producto->cantidad ?? '',
                 'descripcion_producto' => $producto->producto->descripcion ?? '',
                 'espesificaciones_producto' => $producto->espesificaciones ?? '',
+                'subtotal_producto' => $producto->subtotal ?? "Sin registrar",
+                "descuento_producto" => $producto->descuento ?? "Sin registrar",
+                'otro_impuesto_producto' => $producto->otro_impuesto ?? "Sin registrar",
+                'iva_producto' => $producto->iva ?? 'Sin registrar',
+                'iva_retenido_producto' => $producto->iva_retenido ?? 'Sin registrar',
+                'isr_retenido_producto' => $producto->isr_retenido ?? 'Sin registrar',
+                'total_producto' => $producto->total ?? 'Sin registrar',
+                'descripcion_centro_costo' => $producto->centro_costo->descripcion ?? 'Sin registrar',
+                'no_personas' => $producto->no_personas ?? 'Sin registrar',
+                'porcentaje_involucramiento_producto' => $producto->porcentaje_involucramiento ?? 'Sin registrar',
             ];
         }
+
 
         foreach ($requisicion->provedores_requisiciones as $proveedor) {
             $json_requisicion['proveedor_sugerido'][] = [
@@ -464,62 +355,13 @@ class tbApiMobileControllerOrdenesCompra extends Controller
             }
         }
 
+
+
         return response(json_encode([
             'requisicion' => $json_requisicion,
         ]), 200)->header('Content-Type', 'application/json');
         // return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
-    }
-
-    public function firmarAprobadores($id)
-    {
-        $bandera = true;
-        $requisicion = KatbolRequsicion::getOCAll()->where('id', $id)->first();
-
-        $user = User::getCurrentUser();
-        $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
-        $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        $solicitante = User::find($requisicion->id_user);
-
-        if ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
-                $tipo_firma = 'firma_comprador_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
-            }
-        } elseif ($requisicion->firma_solicitante_orden === null) {
-            if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
-                $tipo_firma = 'firma_solicitante_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
-            }
-        } elseif ($requisicion->firma_finanzas_orden === null) {
-            if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
-                $tipo_firma = 'firma_finanzas_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del finanzas');
-            }
-        } elseif ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
-                $tipo_firma = 'firma_comprador_orden';
-            } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
-            }
-        } else {
-            $tipo_firma = 'firma_final_aprobadores';
-            $bandera = $this->bandera = false;
         }
-
-        $organizacion = Organizacion::getFirst();
-        $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-
-        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
-
-        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
-
-        $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
-
-        return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
     }
 
     public function validacionLista($tipo)
@@ -570,182 +412,6 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         return $alerta;
     }
 
-    public function FirmarUpdate(Request $request, $id)
-    {
-
-try {
-    $request->validate([
-        'firma' => 'required',
-        'tipo_firma'=> 'required',
-    ]);
-
-    $requisicion = KatbolRequsicion::find($id);
-    $requisicion->update([
-        $request->tipo_firma => $request->firma,
-    ]);
-
-    $copiasNivel = [];
-    $responsablesAusentes = [];
-    $correosCopia = [];
-
-    if ($request->tipo_firma == 'firma_solicitante') {
-        $fecha = date('d-m-Y');
-        $requisicion->fecha_firma_solicitante_requi = $fecha;
-        $requisicion->update([
-            'estado' => 'curso',
-        ]);
-        $requisicion->save();
-        //Buscamos supervisor
-        $user = User::find($requisicion->id_user);
-        $supervisor = $user->empleado->supervisor;
-
-        //Buscamos modelo correspondiente a lideres
-        $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-        //Traemos participantes
-        $listaPart = $listaReq->participantes;
-
-        //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $supervisor->id)->first();
-
-        //Buscamos en que nivel se encuentra el supervisor
-        $nivel = $supList->nivel;
-
-        //traemos a todos los participantes correspondientes a ese nivel
-        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
-
-        //Buscamos 1 por 1 los participantes del nivel (area)
-        foreach ($participantesNivel as $key => $partNiv) {
-            //Si su estado esta activo se le manda el correo
-            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
-                $responsable = $partNiv->empleado;
-                $userEmail = $responsable->email;
-                break;
-            }
-        }
-
-        $organizacion = Organizacion::getFirst();
-
-        $firmas_requi = FirmasRequisiciones::updateOrCreate(
-            [
-                'requisicion_id' => $requisicion->id,
-            ],
-            [
-                'solicitante_id' => $user->empleado->id,
-                'jefe_id' => $responsable->id,
-            ]
-            // 'responsable_finanzas_id' => $responsable->id,
-            // 'comprador_id' => $comprador->user->empleado->id,
-        );
-
-        if ($responsable->id == $user->empleado->id) {
-            Mail::to(trim($this->removeUnicodeCharacters($supervisor->email)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $request->tipo_firma));
-        } else {
-            Mail::to(trim($this->removeUnicodeCharacters($supervisor->email)))->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
-        }
-    }
-
-    if ($request->tipo_firma == 'firma_jefe') {
-        $fecha = date('d-m-Y');
-        $requisicion->fecha_firma_jefe_requi = $fecha;
-        $requisicion->save();
-
-        $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
-        $listaPart = $listaReq->participantes;
-
-        for ($i = 0; $i <= $listaReq->niveles; $i++) {
-            $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
-
-            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                $responsable = $responsableNivel->empleado;
-                $userEmail = $responsable->email;
-
-                $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
-
-                foreach ($cN as $key => $c) {
-                    $copiasNivel[] = $c->empleado->email;
-                }
-
-                break;
-            } else {
-                $responsablesAusentes[] = $responsableNivel->empleado->email;
-            }
-        }
-
-        $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
-
-        $organizacion = Organizacion::getFirst();
-
-        $solicitante = User::find($requisicion->id_user);
-
-        $firmas_requi = FirmasRequisiciones::updateOrCreate(
-            [
-                'requisicion_id' => $requisicion->id,
-            ],
-            [
-                'solicitante_id' => $solicitante->empleado->id,
-                'responsable_finanzas_id' => $responsable->id,
-            ]
-        );
-
-        if ($responsable->id == $firmas_requi->jefe_id || $responsable->id == $firmas_requi->solicitante_id) {
-            Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $request->tipo_firma));
-        } else {
-            Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
-        }
-    }
-    if ($request->tipo_firma == 'firma_finanzas') {
-
-        $fecha = date('d-m-Y');
-        $requisicion->fecha_firma_finanzas_requi = $fecha;
-        $user = User::getCurrentUser();
-        $requisicion->id_finanzas = $user->id;
-        $requisicion->save();
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
-
-        $solicitante = User::find($requisicion->id_user);
-
-        $organizacion = Organizacion::getFirst();
-
-        $firmas_requi = FirmasRequisiciones::updateOrCreate(
-            [
-                'requisicion_id' => $requisicion->id,
-            ],
-            [
-                'solicitante_id' => $solicitante->empleado->id,
-                'comprador_id' => $comprador->user->id,
-            ]
-        );
-
-        if ($comprador->user->id == $firmas_requi->responsable_finanzas_id || $comprador->user->id == $firmas_requi->jefe_id || $comprador->user->id == $firmas_requi->solicitante_id) {
-            Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $request->tipo_firma));
-        } else {
-            Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
-        }
-    }
-
-    if ($request->tipo_firma == 'firma_compras') {
-        $fecha = date('d-m-Y');
-        $requisicion->fecha_firma_comprador_requi = $fecha;
-        $requisicion->save();
-
-        // correo de compras
-        $userEmail = $requisicion->email;
-        $requisicion->update([
-            'estado' => 'firmada',
-        ]);
-        $organizacion = Organizacion::getFirst();
-        Mail::to(removeUnicodeCharacters($userEmail))->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
-    }
-
-    return response('Correcto', 200)->header('Content-Type', 'application/json');
-} catch (\Throwable $th) {
-    return response('Error', 500)->header('Content-Type', 'application/json');
-}
-    }
-
     public function removeUnicodeCharacters($string)
     {
         return trim(preg_replace('/[^\x00-\x7F]/u', '', $string));
@@ -756,19 +422,128 @@ try {
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('id', $id)->first();
 
         $requisicion->update([
-            'estado' => 'rechazado',
-            'firma_solicitante' => null,
-            'firma_jefe' => null,
-            'firma_finanzas' => null,
-            'firma_compras' => null,
+            'estado' => 'firma_requisicion',
+            'firma_solicitante_orden' => null,
+            'firma_finanzas_orden' => null,
+            'firma_comprador_orden' => null,
+            'estado_orden' => 'rechazado_oc',
         ]);
 
-        $userEmail = User::where('id', $requisicion->id_user)->first();
         $organizacion = Organizacion::getFirst();
-        $tipo_firma = 'rechazado_requisicion';
+        $tipo_firma = 'rechazado';
+        Mail::to($requisicion->email)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
-        Mail::to(removeUnicodeCharacters($userEmail->email))->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        return redirect('contract_manager/orden-compra');
+    }
 
-        return redirect(route('contract_manager.requisiciones'));
+    public function FirmarUpdate(Request $request, $tipo_firma, $id)
+    {
+        $request->validate([
+            'firma' => 'required',
+        ]);
+
+        $requisicion = KatbolRequsicion::find($id);
+
+        $requisicion->update([
+            $tipo_firma => $request->firma,
+            'estado_orden' => 'curso',
+        ]);
+
+        $copiasNivel = [];
+        $responsablesAusentes = [];
+        $correosCopia = [];
+
+        $organizacion = Organizacion::getFirst();
+        $userEmail = $requisicion->email;
+
+        if ($tipo_firma == 'firma_solicitante_orden') {
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_solicitante_orden = $fecha;
+            $requisicion->save();
+
+            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+            $listaPart = $listaReq->participantes;
+            // dump($listaPart);
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+                    $userEmail = $responsable->email;
+
+                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
+
+                    foreach ($cN as $key => $c) {
+                        $copiasNivel[] = $c->empleado->email;
+                    }
+
+                    break;
+                } else {
+                    $responsablesAusentes[] = $responsableNivel->empleado->email;
+                }
+            }
+
+            $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
+
+            // $user = 'lourdes.abadia@silent4business.com';
+            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        }
+        if ($tipo_firma == 'firma_comprador_orden') {
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_comprador_orden = $fecha;
+            $requisicion->save();
+
+            // correo de finanzas
+            $userEmail = $requisicion->email;
+            $organizacion = Organizacion::getFirst();
+            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        }
+
+        if ($tipo_firma == 'firma_finanzas_orden') {
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_finanzas_orden = $fecha;
+            $user = User::getCurrentUser();
+            $requisicion->id_finanzas_oc = $user->id;
+            $requisicion->save();
+
+            $requisicion->update([
+                'estado' => 'firmada_final',
+                'estado_orden' => 'fin',
+            ]);
+
+            if (isset($requisicion->contrato->proyectoConvergencia->tipo)) {
+                if ($requisicion->contrato->proyectoConvergencia->tipo == 'Interno') {
+                    $tipo_orden = '	Ordenes de Compra - Internas';
+                    $orden_correo = 'Interno';
+                } elseif ($requisicion->contrato->proyectoConvergencia->tipo == 'Externo') {
+                    $tipo_orden = 'Ordenes de Compra - Externas';
+                    $orden_correo = 'Externo';
+                } else {
+                    $tipo_orden = 'Ordenes de Compra - Externas';
+                    $orden_correo = 'Externo';
+                }
+            } else {
+                $tipo_orden = 'Ordenes de Compra - Externas';
+                $orden_correo = 'Externo';
+            }
+
+            $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
+            foreach ($listaInformativa->participantes as $key => $informado) {
+                $correos_informados[] = $informado->empleado->email;
+            }
+
+            foreach ($listaInformativa->usuarios as $key => $informado) {
+                $correos_informados[] = $informado->usuario->email;
+            }
+
+            $organizacionInformado = Organizacion::getFirst();
+            Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado, $orden_correo));
+        }
+
+        Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
+        return redirect(route('contract_manager.orden-compra'));
     }
 }

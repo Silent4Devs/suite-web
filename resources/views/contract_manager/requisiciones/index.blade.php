@@ -65,6 +65,9 @@
                                     @break
 
                                     @case('firmada')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
                                     @case('firmada_final')
                                         <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
                                     @break
