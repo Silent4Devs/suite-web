@@ -37,7 +37,6 @@ class UsersController extends Controller
 
     public function getUsersIndex(Request $request)
     {
-
             $key = 'Users:users_index_data';
 
             $query = Cache::remember($key, now()->addMinutes(120), function () {
@@ -47,11 +46,12 @@ class UsersController extends Controller
             });
 
             return datatables()->of($query)->toJson();
+
     }
 
     public function create()
     {
-
+       
             abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $roles = Role::getAll()->pluck('title', 'id');
@@ -65,7 +65,6 @@ class UsersController extends Controller
             $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
             return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
-
     }
 
     public function store(StoreUserRequest $request)
@@ -129,6 +128,7 @@ class UsersController extends Controller
             $registro->delete();
 
             return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
+
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

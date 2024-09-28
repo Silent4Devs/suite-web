@@ -241,6 +241,7 @@ class AreasController extends Controller
 
     public function obtenerJerarquia(Request $request)
     {
+
             abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading

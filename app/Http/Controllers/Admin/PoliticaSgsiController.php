@@ -129,10 +129,12 @@ class PoliticaSgsiController extends Controller
             $empleados = Empleado::getAltaEmpleadosWithArea();
 
             return view('admin.politicaSgsis.create', compact('empleados'));
+
     }
 
     public function store(StorePoliticaSgsiRequest $request)
     {
+       
             abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $request->validate([
@@ -157,10 +159,12 @@ class PoliticaSgsiController extends Controller
             $politicaSgsi->estatus = 'Pendiente';
 
             return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
+
     }
 
     public function edit($id)
     {
+        
             // Validar la existencia de la política de SGSI por su ID
             $politicaSgsi = PoliticaSgsi::findOrFail($id);
 
@@ -236,12 +240,13 @@ class PoliticaSgsiController extends Controller
 
             $politicaSgsi->delete();
 
-            return back()->with('deleted', 'Registro eliminado con éxito');
+            return redirect()->route('admin.politica-sgsis.index')->with('success', 'Eliminado con éxito');
 
     }
 
     public function massDestroy(MassDestroyPoliticaSgsiRequest $request)
     {
+      
         PoliticaSgsi::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
