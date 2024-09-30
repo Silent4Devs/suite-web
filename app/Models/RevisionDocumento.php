@@ -19,7 +19,6 @@ class RevisionDocumento extends Model implements Auditable
 
     const NO_ARCHIVADO = '0';
 
-
     protected $fillable = [
         'empleado_id',
         'documento_id',

@@ -31,8 +31,11 @@ class CourseStatus extends Component
     public $lecciones_orden;
 
     public $usuario;
+
     public $fecha;
+
     public $hora;
+
     public $render;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
@@ -113,6 +116,7 @@ class CourseStatus extends Component
         if ($atras == 'previous') {
             $this->current = $lesson;
             $this->dispatch('render'); // Renderizar la vista correctamente
+
             return;
         }
 
@@ -120,13 +124,15 @@ class CourseStatus extends Component
         if ($lesson->completed) {
             $this->current = $lesson;
             $this->dispatch('render');
+
             return;
         }
 
         // Si la lección actual no está completada, bloquear el acceso a la nueva lección
-        if (!$this->current->completed) {
+        if (! $this->current->completed) {
             $this->alertaEmergente('Es necesario terminar esta lección antes de avanzar.');
             $this->dispatch('render'); // Asegurarse de renderizar la lección actual
+
             return;
         }
 
@@ -135,8 +141,6 @@ class CourseStatus extends Component
         $this->dispatch('completado'); // Despachar evento para lecciones completadas
         $this->dispatch('render'); // Renderizar la nueva vista
     }
-
-
 
     public function completed()
     {

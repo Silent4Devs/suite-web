@@ -22,7 +22,6 @@ Broadcast::channel('user-notifications', function ($user) {
     return $user != null;
 });
 
-
 //validacion de canal privado para notificaciones de usuario autenticados
 Broadcast::channel('notificaciones-campana', function ($user) {
     return $user != null;

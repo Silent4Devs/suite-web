@@ -22,7 +22,9 @@ class TablaTareasTimesheet extends Component
     public $area_select;
 
     public $proyecto_id;
+
     public $input_area;
+
     public $input_tarea_name;
 
     public $origen;
@@ -118,8 +120,8 @@ class TablaTareasTimesheet extends Component
             $this->proyecto_id = null;
         }
 
-        $this->input_area=null;
-        $this->input_tarea_name=null;
+        $this->input_area = null;
+        $this->input_tarea_name = null;
 
         $this->alert(
             'success',
