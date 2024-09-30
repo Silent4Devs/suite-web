@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($quejas as $queja)
+                    @foreach ($quejas as $queja)
                         <tr>
                             <td>{{ $queja->folio }}</td>
                             <td>{{ $queja->anonimo }}</td>
@@ -39,9 +39,11 @@
                             <td>{{ $queja->fecha_creacion }}</td>
                             <td>{{ $queja->fecha_reporte }}</td>
                             <td>{{ $queja->fecha_de_cierre }}</td>
-                            @if($queja->anonimo == 'no')
+                            @if ($queja->anonimo == 'no')
                                 <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}" title="{{ $queja->quejo->name }}">
+                                    <img class="img_empleado"
+                                        src="{{ asset('storage/empleados/imagenes/') }}/{{ $queja->quejo->avatar }}"
+                                        title="{{ $queja->quejo->name }}">
                                 </td>
                                 <td>{{ $queja->quejo->puesto }}</td>
                                 <td>{{ $queja->quejo->area->area }}</td>
@@ -61,10 +63,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <a href="{{ route('admin.desk.quejas-edit', $queja->id) }}"><i
-                                            class="fas fa-edit"></i></a>
+                                                class="fas fa-edit"></i></a>
                                     </div>
                                     <div class="col-6">
-                                        <form action="{{route('admin.desk.queja-archivo.recuperar', $queja->id)}}" method="POST">
+                                        <form action="{{ route('admin.desk.queja-archivo.recuperar', $queja->id) }}"
+                                            method="POST">
                                             @csrf
                                             <button class="btn" title="Recuperar" style="all: unset !important;">
                                                 <i class="fas fa-sign-in-alt"></i>
@@ -80,12 +83,11 @@
                 </tbody>
             </table>
         </div><br>
-        <div class="form-group"  style="text-align: right;">
-            <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
+        <div class="form-group" style="text-align: right;">
+            <a class="btn btn-outline-primary" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
-
     @endsection
     @section('scripts')
         @parent

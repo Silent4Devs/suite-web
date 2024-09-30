@@ -145,7 +145,7 @@
                 {{-- editar --}}
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ route('admin.control-accesos.index') }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.control-accesos.index') }}" class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

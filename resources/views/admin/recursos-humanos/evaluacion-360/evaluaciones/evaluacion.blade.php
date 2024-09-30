@@ -187,7 +187,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        data-dismiss="modal">Descartar</button>
                                     <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-danger">Iniciar
                                         Evaluación</button>
                                 </div>
@@ -215,7 +216,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        data-dismiss="modal">Descartar</button>
                                     <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
                                         class="btn btn-danger">Iniciar evaluación</button>
                                 </div>
@@ -317,7 +319,7 @@
                 </div>
                 <div class="modal-body" id="evaluadoresBody"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

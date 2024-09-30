@@ -1011,7 +1011,7 @@
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
+                        class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

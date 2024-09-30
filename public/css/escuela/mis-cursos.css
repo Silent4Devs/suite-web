@@ -110,13 +110,8 @@
 }
 
 .btn-mi-course {
-    background: #E9F1FF 0% 0% no-repeat padding-box;
-    border: 1px solid #25A0E2;
-    border-radius: 4px;
-    opacity: 1;
-    width: 365px;
-    height: 44px;
-    margin-top: 39px;
+    margin-top: 50px;
+    width: 100%;
 }
 
 .curso-progreso-barra {

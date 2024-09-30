@@ -132,7 +132,8 @@
                     </div>
                     <!-- Submit Field -->
                     <div class="text-right form-group col-12">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
                         <button class="btn btn-danger" type="submit">
                             {{ trans('global.save') }}
                         </button>

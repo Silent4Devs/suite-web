@@ -634,7 +634,7 @@
                     <div id="competenciaInformacion"></div>
                 </div>
                 {{-- <div class="modal-footer">
-                    <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                 </div> --}}
             </div>
         </div>

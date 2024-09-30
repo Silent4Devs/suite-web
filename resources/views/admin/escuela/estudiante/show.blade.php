@@ -164,9 +164,8 @@
                     </div>
                     <div class="d-flex justify-content-center" style="margin-top: 40px;">
                         @if ($token)
-                            <a class="btn btn-mas-info-c"
-                                href="{{ route('admin.curso-estudiante', $course->id) }}">Continuar
-                                con el curso</a>
+                            <a class="btn btn-outline-primary btn-mas-info-c"
+                                href="{{ route('admin.curso-estudiante', $course->id) }}">Continuar con el curso</a>
                         @else
                             <form action="{{ route('admin.courses.enrolled', $course) }}" method="post">
                                 @csrf
@@ -243,7 +242,7 @@
                                                 @else
                                                 x-data="{open:false}" @endif>
                                     <!--Alphine: El valor de open va ser lo contrario del valor de open a traves del ! es decir si es false
-                                                                                            se cambia a true y viceversa -->
+                                                                                                se cambia a true y viceversa -->
                                     <div class=" px-4" x-on:click="open=!open"
                                         style="display: inline-block; vertical-align: middle;">
                                         <p><span class="material-symbols-outlined" style="vertical-align: middle;">

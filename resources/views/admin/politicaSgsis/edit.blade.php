@@ -76,7 +76,7 @@
                 <h4>¿Qué es? Política del Sistema de Gestión</h4>
                 <p>
                     Es una declaración oficial de la dirección de una organización que establece sus intenciones y
-                        compromisos con respecto al sistema de gestión implementado en la organización.
+                    compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
                     La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar"
+                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn btn-outline-primary"
                         style="text-decoration: none;">Cancelar</a>
                     <button class="btn tb-btn-primary" type="submit" style="color: white">
                         Guardar y enviar a aprobación
