@@ -1067,7 +1067,7 @@ class TimesheetController extends Controller
     public function aprobar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $aprobar = Timesheet::find($id);
+        $aprobar = Timesheet::where('id',$id)->first();
 
         // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
         $aprobar->update([
@@ -1075,15 +1075,15 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::getDataColumns()->find($aprobar->empleado_id);
+        $solicitante = Empleado::getDataColumns()->where('id',$aprobar->empleado_id)->first();
 
-        $aprobador = Empleado::getDataColumns()->find($aprobar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->where('id',$aprobar->aprobador_id)->first();
 
         try {
             // Enviar correo
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
-            report($e);
+            // report($e);
 
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
@@ -1094,24 +1094,22 @@ class TimesheetController extends Controller
     public function rechazar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rechazar = Timesheet::find($id);
+        $rechazar = Timesheet::where('id', $id)->first();
 
         // event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
         $rechazar->update([
             'estatus' => 'rechazado',
             'comentarios' => $request->comentarios,
         ]);
+        $solicitante = Empleado::getDataColumns()->where('id',$rechazar->empleado_id)->first();
 
-        $solicitante = Empleado::getDataColumns()->find($rechazar->empleado_id);
-
-        $aprobador = Empleado::getDataColumns()->find($rechazar->aprobador_id);
+        $aprobador = Empleado::getDataColumns()->where('id',$rechazar->aprobador_id)->first();
 
         try {
             // Enviar correo
             Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
-            report($e);
-
+            // report($e);
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
 
