@@ -398,7 +398,10 @@
                     <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                     <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                         <ul class="menu-list-admin-header ">
-                            @if ($usuario->can('clausulas_auditorias_acceder') || $usuario->can('clasificaciones_auditorias_acceder')|| $usuario->can('matriz_bia_menu_acceder'))
+                            @if (
+                                $usuario->can('clausulas_auditorias_acceder') ||
+                                    $usuario->can('clasificaciones_auditorias_acceder') ||
+                                    $usuario->can('matriz_bia_menu_acceder'))
                                 <li class="li-click-list-header">
                                     <a href="#">
                                         <i class="bi bi-file-earmark-arrow-up"></i>
@@ -706,7 +709,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script defer src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.25.0-lts/standard/ckeditor.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
