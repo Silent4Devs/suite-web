@@ -90,7 +90,7 @@
                     if (result.value) {
                         $.ajax({
                             url: url,
-                            type: 'POST',
+                            type: 'DELETE',
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
