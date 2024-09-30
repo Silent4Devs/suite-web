@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group w-100 mr-4" style="position:relative;">
                     <label>Área</label>
-                    <select id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
+                    <select wire:model="input_area" id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
                         <option value="0">Todas</option>
                         @if ($area_seleccionar)
@@ -64,7 +64,7 @@
                     <label> Tarea Nueva</label>
                     <input class="form-control w-100 mr-4" maxlength="255"
                         title="Por favor, no incluyas comas en el nombre de la tarea." placeholder="Nombre de la tarea"
-                        id="tarea_name" required pattern="[^\.,]*">
+                        id="tarea_name" wire:model="input_tarea_name" required pattern="[^\.,]*">
                 </div>
                 <div class="form-group" style="position:relative; min-width:150px;">
                     <button class="btn tb-btn-primary" style="position: absolute; bottom: 0;">
@@ -187,38 +187,38 @@
     @endforeach
 
     <script type="text/javascript">
-        function initSelect2() {
-            $('#proyectos_select').select2({
-                theme: 'bootstrap4'
-            });
-            $('#proyecto_filtro').select2({
-                theme: 'bootstrap4'
-            });
-        }
+        // function initSelect2() {
+        //     $('#proyectos_select').select2({
+        //         theme: 'bootstrap4'
+        //     });
+        //     $('#proyecto_filtro').select2({
+        //         theme: 'bootstrap4'
+        //     });
+        // }
         document.addEventListener('DOMContentLoaded', () => {
-            initSelect2();
+            // initSelect2();
 
-            Livewire.on('select2', () => {
-                initSelect2();
-            });
+            // Livewire.on('select2', () => {
+            //     initSelect2();
+            // });
 
-            Livewire.on('scriptTabla', () => {
+            Livewire.on('scriptTabla', (event) => {
                 tablaLivewire('tabla_time_tareas');
             });
 
-            $('#proyectos_select').on('select2:select', function(e) {
-                var data = e.params.data;
-                let proyecto_id = data.id;
-                @this.set('proyecto_id', proyecto_id);
-                @this.llenarAreas(proyecto_id);
-            });
+            // $('#proyectos_select').on('select2:select', function(e) {
+            //     var data = e.params.data;
+            //     let proyecto_id = data.id;
+            //     @this.set('proyecto_id', proyecto_id);
+            //     @this.llenarAreas(proyecto_id);
+            // });
 
-            $('#proyecto_filtro').on('select2:select', function(e) {
-                var data = e.params.data;
-                let proyecto_id = data.id;
-                console.log(proyecto_id);
-                @this.updateProyecto(proyecto_id);
-            });
+            // $('#proyecto_filtro').on('select2:select', function(e) {
+            //     var data = e.params.data;
+            //     let proyecto_id = data.id;
+            //     console.log(proyecto_id);
+            //     @this.updateProyecto(proyecto_id);
+            // });
 
             document.getElementById('tarea_name')?.addEventListener('keyup', (e) => {
                 let value = e.target.value;

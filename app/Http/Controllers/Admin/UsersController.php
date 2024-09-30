@@ -16,7 +16,6 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,237 +23,132 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        try {
-            abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $existsVinculoEmpleadoAdmin = User::getExists();
+        $existsVinculoEmpleadoAdmin = User::getExists();
 
-            $users = User::getUserWithRole();
+        $users = User::getUserWithRole();
 
-            $empleados = Empleado::getAltaDataColumns()->sortBy('name');
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
-            return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
-        } catch (\Exception $e) {
-            // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al cargar usuarios: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al cargar usuarios'], 500);
-        }
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
 
     public function getUsersIndex(Request $request)
     {
-        try {
+        $key = 'Users:users_index_data';
 
-            $key = 'Users:users_index_data';
+        $query = Cache::remember($key, now()->addMinutes(120), function () {
+            return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+                $q->with('area');
+            }])->get();
+        });
 
-            $query = Cache::remember($key, now()->addMinutes(120), function () {
-                return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-                    $q->with('area');
-                }])->get();
-            });
+        return datatables()->of($query)->toJson();
 
-            return datatables()->of($query)->toJson();
-
-        } catch (\Exception $e) {
-            // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al cargar usuarios: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al cargar usuarios'], 500);
-        }
     }
 
     public function create()
     {
-        try {
 
-            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $roles = Role::getAll()->pluck('title', 'id');
+        $roles = Role::getAll()->pluck('title', 'id');
 
-            $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::getAllPluck();
+        $areas = Area::getAllPluck();
 
-            $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
-
-        } catch (\Exception $e) {
-            // Registrar el error en los logs
-            Log::channel('logstash')->info('Error al crear usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al crear usuario'], 500);
-        }
+        return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
     {
-        try {
-            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $user = User::create($request->all());
-            $user->roles()->sync($request->input('roles', []));
-            Alert::success('éxito', 'Información añadida con éxito');
+        $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
+        Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al guardar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al guardar usuario'], 500);
-        }
+        return redirect()->route('admin.users.index');
     }
 
     public function edit(User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $roles = Role::getAll()->pluck('title', 'id');
+        $roles = Role::getAll()->pluck('title', 'id');
 
-            $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::getAllPluck();
+        $areas = Area::getAllPluck();
 
-            $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
+        $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
 
-            return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al editar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al editar usuario'], 500);
-        }
+        return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user->update($request->all());
-            $user->roles()->sync($request->roles);
-            Alert::success('éxito', 'Información añadida con éxito');
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $user->update($request->all());
+        $user->roles()->sync($request->roles);
+        Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al actualizar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al actualizar usuario'], 500);
-        }
+        return redirect()->route('admin.users.index');
     }
 
     public function show(User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
+        $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
-            return view('users.tbUserShow', compact('user'));
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al mostrar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al mostrar usuario'], 500);
-        }
+        return view('users.tbUserShow', compact('user'));
     }
 
     public function destroy($id)
     {
-        try {
-            abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $registro = User::find($id);
+        abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $registro = User::find($id);
 
-            if (! $registro) {
-                return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
-            }
-
-            $registro->delete();
-
-            return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al eliminar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al eliminar usuario'], 500);
+        if (! $registro) {
+            return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
         }
+
+        $registro->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
+
     }
 
     public function massDestroy(MassDestroyUserRequest $request)
     {
-        try {
-            User::whereIn('id', request('ids'))->delete();
+        User::whereIn('id', request('ids'))->delete();
 
-            return response(null, Response::HTTP_NO_CONTENT);
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al eliminar usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al eliminar usuario'], 500);
-        }
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function getUsers(Request $request)
     {
-        try {
-            if ($request->ajax()) {
-                $nombre = $request->nombre;
-                $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
-                $lista = "<ul class='list-group' id='empleados-lista'>";
-                foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
-                }
-                $lista .= '</ul>';
-
-                return $lista;
+        if ($request->ajax()) {
+            $nombre = $request->nombre;
+            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
+            $lista = "<ul class='list-group' id='empleados-lista'>";
+            foreach ($usuarios as $usuario) {
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
+            $lista .= '</ul>';
 
-        } catch (\Exception $e) {
-            Log::channel('logstash')->info('Error al obtener usuario: '.$e->getMessage(), [
-                'exception' => $e,
-                'input' => $request->all(),
-            ]);
-
-            // Retornar una respuesta de error al cliente
-            return response()->json(['message' => 'Error al obtener usuario'], 500);
+            return $lista;
         }
     }
 

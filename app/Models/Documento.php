@@ -36,7 +36,8 @@ class Documento extends Model implements Auditable
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [
-        'nombre', 'codigo',
+        'nombre',
+        'codigo',
     ];
 
     protected $dates = ['fecha'];
@@ -70,6 +71,7 @@ class Documento extends Model implements Auditable
     }
 
     //Redis methods
+
     public static function getAll()
     {
         return Cache::remember('Documentos:Documentos_all', 3600 * 4, function () {

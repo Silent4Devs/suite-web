@@ -45,7 +45,7 @@ class TimesheetListener implements ShouldQueue
                 $supervisor = User::where('email', $supervisorEmail)->first();
 
                 if ($supervisor) {
-                    Notification::send($supervisor, new TimesheetNotification($event->timeshet, $event->tipo_consulta, $event->tabla, $event->slug));
+                    Notification::send($supervisor, new TimesheetNotification($event->timesheet, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
             }
         }

@@ -6,7 +6,11 @@ use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
+use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
+use App\Http\Controllers\Api\V1\OrdenesCompra\tbApiMobileControllerOrdenesCompra;
+use App\Http\Controllers\Api\V1\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
 use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
+use App\Http\Controllers\Api\V1\Requisiciones\tbApiMobileControllerRequisiciones;
 use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
@@ -20,8 +24,25 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
     Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
 
+    Route::get('perfilUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionPerfil']);
+    Route::get('equipoUsuario', [tbApiMobileControllerPerfilUsuario::class, 'tbFunctionEquipo']);
+
     Route::get('portal-comunicacion', [tbApiMobileControllerPortalComunicacion::class, 'tbFunctionIndex']);
     Route::get('comunicados', [tbApiMobileControllerComunicados::class, 'tbFunctionIndex']);
+
+    Route::get('documentos', [tbApiMobileControllerDocumentos::class, 'tbFunctionIndexUsuario']);
+    Route::post('revision/{id}/aprobar', [tbApiMobileControllerDocumentos::class, 'aprobar']);
+    Route::post('revision/{id}/rechazar', [tbApiMobileControllerDocumentos::class, 'rechazar']);
+
+    Route::get('requisiciones', [tbApiMobileControllerRequisiciones::class, 'index']);
+    Route::get('firmar-requisicion/{id}', [tbApiMobileControllerRequisiciones::class, 'firmarAprobadores']);
+    Route::post('requisicion-firmada/{id}', [tbApiMobileControllerRequisiciones::class, 'FirmarUpdate']);
+    Route::post('requisicion-rechazada/{id}', [tbApiMobileControllerRequisiciones::class, 'rechazada']);
+
+    Route::get('ordenes-compra', [tbApiMobileControllerOrdenesCompra::class, 'index']);
+    Route::get('firmar-orden/{id}', [tbApiMobileControllerOrdenesCompra::class, 'firmarAprobadores']);
+    Route::post('orden-firmada/{id}', [tbApiMobileControllerOrdenesCompra::class, 'FirmarUpdate']);
+    Route::post('orden-rechazada/{id}', [tbApiMobileControllerOrdenesCompra::class, 'rechazada']);
 
     Route::get('counterSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorSolicitudes']);
     Route::get('counterGeneralSolicitud', [tbApiMobileControllerContadorSolicitudes::class, 'tbFunctionContadorGeneralSolicitudes']);

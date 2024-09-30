@@ -356,7 +356,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-3">
-                                        <div class="col s12 l12">
+                                        <div class="col s12 l12 mt-3 mb-3">
                                             <label for="proveedor_{{ $keyP }}">
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
@@ -374,7 +374,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-3">
-                                        <div class="col s12 l6 anima-focus">
+                                        <div class="col s12 l6 anima-focus mt-3 mb-3">
                                             <input type="date" id="fechaInicio"
                                                 wire:model= "array_proveedores.{{ $keyP }}.fechaInicio"
                                                 class="form-control modal-start"
@@ -400,7 +400,7 @@
                                     <br>
                                     @if ($array_proveedores[$keyP]['proveedor_id'] == 'otro')
                                         <div class="row mb-1">
-                                            <div class="col s12 l12 anima-focus">
+                                            <div class="col s12 l12 anima-focus mt-3 mb-3">
                                                 <select class="form-control"
                                                     wire:model.lazy='array_proveedores.{{ $keyP }}.select_otro'
                                                     name="proveedor_otro{{ $keyP }}" required>

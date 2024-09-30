@@ -40,7 +40,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -76,7 +75,6 @@ class EmpleadoController extends Controller
                 return $empleado;
             });
 
-        // Log::channel('logstash')->info('Index Empleados.');
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1155,6 +1153,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
         $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -1167,7 +1166,7 @@ class EmpleadoController extends Controller
             }
         }
         $request->validate([
-            'name' => 'required|string',
+            'nameUsuario' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados,n_empleado,'.$id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
@@ -1239,7 +1238,7 @@ class EmpleadoController extends Controller
         $oldValues = $empleado->getOriginal();
 
         $empleado->update([
-            'name' => $request->name,
+            'name' => $request->nameUsuario,
             'area_id' => $request->area_id,
             'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
