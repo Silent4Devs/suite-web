@@ -1003,7 +1003,7 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
+        // event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
 
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
