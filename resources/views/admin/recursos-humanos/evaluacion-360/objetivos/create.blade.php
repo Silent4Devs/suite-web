@@ -1,17 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Objetivos-Create') }}
 
     <div class="mt-4 card">
-    <h5 class="col-12 titulo_general_funcion">Registrar: Objetivo</h5>
+        <h5 class="col-12 titulo_general_funcion">Registrar: Objetivo</h5>
         <div class="card-body">
-            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}"
-                class="mt-3 row">
+            <form id="formObjetivoCreate" method="POST" action="{{ route('admin.ev360-objetivos.index') }}" class="mt-3 row">
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.objetivos._form')
                 <div class="d-flex justify-content-end w-100">
-                    <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                    <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn btn-outline-primary">Regresar</a>
                     {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
                 </div>
             </form>

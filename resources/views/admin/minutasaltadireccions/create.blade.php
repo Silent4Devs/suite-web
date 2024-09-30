@@ -350,7 +350,7 @@
 
 
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary"
                 style="text-decoration: none;">Cancelar</a>
             <button id="btnGuardar" class="btn tb-btn-primary" type="submit" style="width: 13%;">
                 {{ trans('global.save') }}

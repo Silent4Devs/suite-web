@@ -1,6 +1,6 @@
-<div class="content-custom-design d-none">
+<div class="content-custom-design invisible">
     <button class="btn btn-close-custom"
-        onclick="document.querySelector('.content-custom-design').classList.add('d-none')">
+        onclick="document.querySelector('.content-custom-design').classList.add('invisible')">
         <i class="material-symbols-outlined">close</i>
     </button>
     <p class="color-tbj " style="font-size: 20px; margin-top: 50px;">
@@ -9,34 +9,29 @@
         </strong>
     </p>
 
-    {{-- <p class="mt-5">
+    <p class="mt-5">
         Modo
     </p>
 
     <div class="d-flex gap-2">
-        <button class="btn border" onclick="document.querySelector('body').classList.remove('dark');">
-            <i class="material-symbols-outlined" style="color: #7a7a7a">wb_sunny</i>
+        <button class="btn border btn-dark-mode btn-option-light" onclick="darkMode('light');">
+            <i class="material-symbols-outlined">wb_sunny</i>
         </button>
-        <button class="btn border" onclick="document.querySelector('body').classList.add('dark');">
-            <i class="material-symbols-outlined" style="color: #7a7a7a">bedtime</i>
+        <button class="btn border btn-dark-mode btn-option-dark" onclick="darkMode('dark');">
+            <i class="material-symbols-outlined">bedtime</i>
         </button>
-    </div> --}}
+    </div>
 
     <p class="mt-5">
         Colores
     </p>
 
     <div class="d-flex justify-content-between">
-        <div class="item-color-tbj" style="background-color: #4870b2"
-            onclick="document.documentElement.style.setProperty('--color-tbj', '#4870b2');"></div>
-        <div class="item-color-tbj" style="background-color: #754b9a"
-            onclick="document.documentElement.style.setProperty('--color-tbj', '#754b9a');"></div>
-        <div class="item-color-tbj" style="background-color: #ac3b7b"
-            onclick="document.documentElement.style.setProperty('--color-tbj', '#ac3b7b');"></div>
-        <div class="item-color-tbj" style="background-color: #46a56b"
-            onclick="document.documentElement.style.setProperty('--color-tbj', '#46a56b');"></div>
-        <div class="item-color-tbj" style="background-color: #000327"
-            onclick="document.documentElement.style.setProperty('--color-tbj', '#000327');"></div>
+        <div class="item-color-tbj" style="background-color: #4870b2" onclick="themeColor('#4870b2');"></div>
+        <div class="item-color-tbj" style="background-color: #754b9a" onclick="themeColor('#754b9a');"></div>
+        <div class="item-color-tbj" style="background-color: #ac3b7b" onclick="themeColor('#ac3b7b');"></div>
+        <div class="item-color-tbj" style="background-color: #46a56b" onclick="themeColor('#46a56b');"></div>
+        <div class="item-color-tbj" style="background-color: #000327" onclick="themeColor('#000327');"></div>
     </div>
 
     <p class="mt-5">
@@ -44,21 +39,17 @@
     </p>
 
     <div class="d-flex justify-content-between">
-        <div class="example-menu-position" style="border-top: 10px solid #8ec6ff;"
-            onclick="document.querySelector('body').classList.add('menu-global-position-top');
-            document.querySelector('body').classList.remove('menu-global-position-left', 'menu-global-position-right', 'menu-global-position-bottom');">
+        <div class="example-menu-position btn-menu-position" style="border-top: 10px solid #8ec6ff;"
+            onclick="menuPosition('top');">
         </div>
-        <div class="example-menu-position" style="border-left: 10px solid #8ec6ff;"
-            onclick="document.querySelector('body').classList.add('menu-global-position-left');
-            document.querySelector('body').classList.remove('menu-global-position-top', 'menu-global-position-right', 'menu-global-position-bottom');">
+        <div class="example-menu-position btn-menu-position" style="border-left: 10px solid #8ec6ff;"
+            onclick="menuPosition('left');">
         </div>
-        <div class="example-menu-position" style="border-bottom: 10px solid #8ec6ff;"
-            onclick="document.querySelector('body').classList.add('menu-global-position-bottom');
-            document.querySelector('body').classList.remove('menu-global-position-top', 'menu-global-position-right', 'menu-global-position-left');">
+        <div class="example-menu-position btn-menu-position" style="border-bottom: 10px solid #8ec6ff;"
+            onclick="menuPosition('bottom');">
         </div>
-        <div class="example-menu-position" style="border-right: 10px solid #8ec6ff;"
-            onclick="document.querySelector('body').classList.add('menu-global-position-right');
-            document.querySelector('body').classList.remove('menu-global-position-top', 'menu-global-position-left', 'menu-global-position-bottom');">
+        <div class="example-menu-position btn-menu-position" style="border-right: 10px solid #8ec6ff;"
+            onclick="menuPosition('right');">
         </div>
     </div>
 
@@ -67,13 +58,11 @@
     </p>
 
     <div class="d-flex gap-4">
-        <div class="d-flex align-items-center flex-column"
-            onclick="document.querySelector('body').classList.remove('transparente');">
+        <div class="d-flex align-items-center flex-column" onclick="themeContrast(false);">
             <small style="font-size: 10px;">Clasico</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff;"></div>
         </div>
-        <div class="d-flex align-items-center flex-column"
-            onclick="document.querySelector('body').classList.add('transparente');">
+        <div class="d-flex align-items-center flex-column" onclick="themeContrast(true);">
             <small style="font-size: 10px;">Transparente</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff; background-color: #fff;"></div>
         </div>
@@ -81,53 +70,48 @@
 </div>
 
 <script>
-    // Función para guardar el estado de la configuración en el localStorage
-    function saveSettings() {
-        const color = getComputedStyle(document.documentElement).getPropertyValue('--color-tbj').trim();
-        const menuPosition = Array.from(document.querySelector('body').classList).find(cls => cls.startsWith(
-            'menu-global-position-'));
-        const style = Array.from(document.querySelector('body').classList).find(cls => cls === 'transparente') ?
-            'transparente' : 'clasico';
+    const bodyElement = document.body;
 
-        localStorage.setItem('customSettings', JSON.stringify({
-            color,
-            menuPosition,
-            style
-        }));
-    }
+    function darkMode(theme = 'light') {
+        localStorage.setItem('theme', theme);
 
-    // Función para aplicar la configuración guardada desde el localStorage
-    function applySettings() {
-        const settings = JSON.parse(localStorage.getItem('customSettings'));
-        if (settings) {
-            // Aplicar el color
-            document.documentElement.style.setProperty('--color-tbj', settings.color);
-
-            // Aplicar la posición del menú
-            if (settings.menuPosition) {
-                document.querySelector('body').classList.add(settings.menuPosition);
-            }
-
-            // Aplicar el estilo
-            if (settings.style === 'transparente') {
-                document.querySelector('body').classList.add('transparente');
-            }
+        if (theme === 'dark') {
+            bodyElement.classList.add('dark');
+        } else {
+            bodyElement.classList.remove('dark');
         }
+        document.querySelector('.btn-dark-mode:not(.btn-option-' + theme + ')').classList.remove('active');
+        document.querySelector('.btn-dark-mode.btn-option-' + theme).classList.add('active');
     }
+    darkMode(localStorage.getItem('theme'));
 
-    // Añadir event listeners a los elementos para guardar la configuración
-    document.querySelectorAll('.item-color-tbj').forEach(item => {
-        item.addEventListener('click', saveSettings);
-    });
+    function themeColor(color = '#4870b2') {
+        localStorage.setItem('themeColor', color);
+        document.documentElement.style.setProperty('--color-tbj', color);
+    }
+    themeColor(localStorage.getItem('themeColor'));
 
-    document.querySelectorAll('.example-menu-position').forEach(item => {
-        item.addEventListener('click', saveSettings);
-    });
+    function menuPosition(position = 'top', e) {
+        localStorage.setItem('menuPosition', position);
+        let positions = ['top', 'left', 'right', 'bottom'];
+        positions.forEach(pst => {
+            bodyElement.classList.remove('menu-global-position-' + pst);
+        });
+        bodyElement.classList.add('menu-global-position-' + position);
+        if (document.querySelector('.btn-menu-position.active')) {
+            document.querySelector('.btn-menu-position.active').classList.remove('active');
+        }
+        document.querySelector('.btn-menu-position:hover').classList.add('active');
+    }
+    menuPosition(localStorage.getItem('menuPosition'));
 
-    document.querySelectorAll('.d-flex > div').forEach(item => {
-        item.addEventListener('click', saveSettings);
-    });
-
-    // Aplicar la configuración guardada al cargar la página
-    window.addEventListener('load', applySettings);
+    function themeContrast(contrast = false) {
+        localStorage.setItem('themeContrast', contrast);
+        if (contrast) {
+            bodyElement.classList.add('transparente');
+        } else {
+            bodyElement.classList.remove('transparente');
+        }
+        document.querySelector('')
+    }
 </script>

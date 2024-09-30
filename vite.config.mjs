@@ -17,7 +17,10 @@ export default defineConfig({
         "public/js/pages/index/template-analisis-riesgos.jsx",
         "public/js/pages/index/FormulasAnalisisRiesgos.jsx",
         "public/js/pages/index/SettingsAnalisisRiesgos.jsx",
-        "public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx"
+        "public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx",
+
+        // modulos css
+        "resources/css/centroAtencion.css",
       ],
       refresh: true
     })

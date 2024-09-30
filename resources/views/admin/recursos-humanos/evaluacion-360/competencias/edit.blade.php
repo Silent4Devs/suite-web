@@ -96,11 +96,11 @@
                 @csrf
                 @method('PATCH')
                 @include('admin.recursos-humanos.evaluacion-360.competencias._formEdit')
-                <div class="container row">
+                <div class="container row mt-4">
                     <div class="col-12">
                         <div class="d-flex justify-content-end w-100">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn" id="btn_cancelar"
-                                style="color:#057BE2;">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary"
+                                id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                             <button type="submit" class="ml-2 btn tb-btn-primary">Guardar</button>
                         </div>
                     </div>
@@ -127,9 +127,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarConducta" class="btn_cancelar"
+                    <button type="button" id="btnCancelarConducta" class="btn btn-outline-primary"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnGuardarConducta" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnGuardarConducta" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>

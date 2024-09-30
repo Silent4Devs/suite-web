@@ -901,7 +901,7 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 ml-5 feature3">
+                                        <article class=" ml-5 feature3">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('equipo_a_cargo')"
                                                 wire:model.blur="evaluado_por_equipo_a_cargo" id="feature3"
@@ -933,7 +933,7 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 feature4">
+                                        <article class=" feature4">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('autoevaluacion')"
                                                 wire:model.blur="autoevaluacion" id="feature4"

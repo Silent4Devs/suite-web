@@ -27,10 +27,10 @@
         }
 
         /* #contenedores tr td:nth-child(8){
-                    background-color: green;
-                    position: relative;
-                    padding: 0;
-                } */
+                            background-color: green;
+                            position: relative;
+                            padding: 0;
+                        } */
     </style>
 
 
@@ -398,7 +398,7 @@
 
             </form>
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
                 <button class="btn btn-danger" id="btn_actualizar">
                     Actualizar
                 </button>

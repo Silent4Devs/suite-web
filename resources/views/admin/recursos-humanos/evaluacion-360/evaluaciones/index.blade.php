@@ -123,7 +123,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarEvaluacion" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEvaluacion" class="btn btn-outline-primary"
                         data-dismiss="modal">Descartar</button>
                     <button type="button" id="btnGuardarEvaluacion" class="btn btn-danger">Guardar</button>
                 </div>

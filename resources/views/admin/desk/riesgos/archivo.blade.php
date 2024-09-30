@@ -86,7 +86,7 @@
             </table>
         </div><br>
         <div class="form-group" style="text-align: right;">
-            <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
+            <a class="btn btn-outline-primary" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>

@@ -879,7 +879,8 @@
                                 {{ old('eliminacion_fisica', $activos->eliminacion_fisica) == '5' ? 'selected' : '' }}>No
                                 se detruye</option>
                             <option value="6"
-                                {{ old('eliminacion_fisica', $activos->eliminacion_fisica) == '6' ? 'selected' : '' }}>Otro
+                                {{ old('eliminacion_fisica', $activos->eliminacion_fisica) == '6' ? 'selected' : '' }}>
+                                Otro
                             </option>
                         </select>
                     </div>
@@ -907,9 +908,11 @@
                     <div class="form-group col-12">
                         <label for="question_1">1. ¿El activo de información contiene datos PÚBLICOS?</label>
                         <select class="custom-select my-1 mr-sm-2" id="question_1" name="question_1">
-                            <option value="1" {{ old('question_1', $activos->question_1) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_1', $activos->question_1) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_1', $activos->question_1) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_1', $activos->question_1) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -919,9 +922,11 @@
                         <label for="question_2">2. ¿El activo de información contiene INFORMACIÓN DE USO INTERNO?
                         </label>
                         <select class="custom-select my-1 mr-sm-2" id="question_2" name="question_2">
-                            <option value="1" {{ old('question_2', $activos->question_2) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_2', $activos->question_2) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_2', $activos->question_2) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_2', $activos->question_2) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -931,9 +936,11 @@
                         <label for="question_3">3. ¿El activo de información contiene DATOS PERSONALES DE IDENTIFICACIÓN,
                             FINANCIEROS y/o PATRIMONIALES?</label>
                         <select class="custom-select my-1 mr-sm-2" id="question_3" name="question_3">
-                            <option value="1" {{ old('question_3', $activos->question_3) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_3', $activos->question_3) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_3', $activos->question_3) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_3', $activos->question_3) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -943,9 +950,11 @@
                         <label for="question_4">4. ¿El activo de información contiene INFORMACIÓN FINANCIERA de la
                             organización o INFORMACIÓN CLAVE para la operación del negocio?</label>
                         <select class="custom-select my-1 mr-sm-2" id="question_4" name="question_4">
-                            <option value="1" {{ old('question_4', $activos->question_4) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_4', $activos->question_4) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_4', $activos->question_4) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_4', $activos->question_4) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -957,9 +966,11 @@
                         <small>(Ubicación en conjunto con patrimoniales, información adicional de la tarjeta bancaria,
                             titulares de alto riesgo, salud, origen, creencias, religión e ideologías)</small>
                         <select class="custom-select my-1 mr-sm-2" id="question_5" name="question_5">
-                            <option value="1" {{ old('question_5', $activos->question_5) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_5', $activos->question_5) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_5', $activos->question_5) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_5', $activos->question_5) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -970,9 +981,11 @@
                             BANCARIA?</label><br>
                         <small>(Datos del titular de la tarjeta y datos de autenticación sensibles)</small>
                         <select class="custom-select my-1 mr-sm-2" id="question_6" name="question_6">
-                            <option value="1" {{ old('question_6', $activos->question_6) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_6', $activos->question_6) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_6', $activos->question_6) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_6', $activos->question_6) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -982,9 +995,11 @@
                         <label for="question_7">7. ¿El activo de información contiene INFORMACIÓN ESTRATÉGICA que
                             representa un diferenciador y/o ventaja competitiva?</label>
                         <select class="custom-select my-1 mr-sm-2" id="question_7" name="question_7">
-                            <option value="1" {{ old('question_7', $activos->question_7) == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('question_7', $activos->question_7) == '1' ? 'selected' : '' }}>
                                 Si</option>
-                            <option value="2" {{ old('question_7', $activos->question_7) == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('question_7', $activos->question_7) == '2' ? 'selected' : '' }}>
                                 No</option>
                         </select>
                     </div>
@@ -1086,7 +1101,8 @@
             {{-- Envias/Guardas --}}
             <div class="col-12">
                 <div class="form-group col-12 text-right" style="margin-left:15px;">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                        class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

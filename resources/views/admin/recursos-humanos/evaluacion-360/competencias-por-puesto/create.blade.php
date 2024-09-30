@@ -49,7 +49,8 @@
             </div>
 
             <div class="d-flex justify-content-end w-100">
-                <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}" class="btn_cancelar">Regresar</a>
+                <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}"
+                    class="btn btn-outline-primary">Regresar</a>
                 {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
             </div>
         </div>

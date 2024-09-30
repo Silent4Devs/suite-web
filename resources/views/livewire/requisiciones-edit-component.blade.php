@@ -8,11 +8,10 @@
     <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                style="width:150px; position: relative; top: 60px; right: 410px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
         </div>
 
-        <div style="position: relative; top:-5rem; left: 80px;">
+        <div style="">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
             <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
             <p>

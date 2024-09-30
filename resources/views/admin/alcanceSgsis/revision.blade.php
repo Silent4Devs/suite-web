@@ -118,7 +118,7 @@
         </div>
         <div class="row">
             <div class="text-right form-group col-12">
-                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary">Cancelar</a>
                 <button class="btn btn-danger" id="btnGuardar" type="submit">
                     Rechazar
                 </button>
