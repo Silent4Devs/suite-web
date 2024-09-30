@@ -31,10 +31,9 @@ class CourseStatus extends Component
     public $lecciones_orden;
 
     public $usuario;
-
     public $fecha;
-
     public $hora;
+    public $render;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
@@ -136,6 +135,8 @@ class CourseStatus extends Component
         $this->dispatch('completado'); // Despachar evento para lecciones completadas
         $this->dispatch('render'); // Renderizar la nueva vista
     }
+
+
 
     public function completed()
     {

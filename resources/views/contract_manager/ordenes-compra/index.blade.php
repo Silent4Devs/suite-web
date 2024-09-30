@@ -209,7 +209,6 @@
                                 } else {
                                     return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
                                 }
-
                             }
                         }
                     },
