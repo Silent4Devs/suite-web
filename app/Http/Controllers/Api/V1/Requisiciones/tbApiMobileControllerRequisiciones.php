@@ -523,6 +523,7 @@ class tbApiMobileControllerRequisiciones extends Controller
         ];
 
         $json_requisicion['general'] = [
+            'id' => $requisicion->id,
             'fecha' => date('d-m-Y', strtotime($requisicion->fecha)),
             'referencia' => $requisicion->referencia,
             'area' => $requisicion->area,
