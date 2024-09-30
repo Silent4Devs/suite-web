@@ -1067,7 +1067,7 @@ class TimesheetController extends Controller
     public function aprobar(Request $request, $id)
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $aprobar = Timesheet::where('id',$id)->first();
+        $aprobar = Timesheet::where('id', $id)->first();
 
         // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
         $aprobar->update([
@@ -1075,9 +1075,9 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        $solicitante = Empleado::getDataColumns()->where('id',$aprobar->empleado_id)->first();
+        $solicitante = Empleado::getDataColumns()->where('id', $aprobar->empleado_id)->first();
 
-        $aprobador = Empleado::getDataColumns()->where('id',$aprobar->aprobador_id)->first();
+        $aprobador = Empleado::getDataColumns()->where('id', $aprobar->aprobador_id)->first();
 
         try {
             // Enviar correo
@@ -1101,9 +1101,9 @@ class TimesheetController extends Controller
             'estatus' => 'rechazado',
             'comentarios' => $request->comentarios,
         ]);
-        $solicitante = Empleado::getDataColumns()->where('id',$rechazar->empleado_id)->first();
+        $solicitante = Empleado::getDataColumns()->where('id', $rechazar->empleado_id)->first();
 
-        $aprobador = Empleado::getDataColumns()->where('id',$rechazar->aprobador_id)->first();
+        $aprobador = Empleado::getDataColumns()->where('id', $rechazar->aprobador_id)->first();
 
         try {
             // Enviar correo
