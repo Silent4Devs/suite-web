@@ -391,7 +391,9 @@ class TimesheetController extends Controller
                 }
                 // catch exception and rollback transaction
                 catch (Throwable $e) {
+                    //Regresa la Base de datos a la normalidad
                     DB::rollback();
+                    //Limpia la cache para que no muestre registros que no existen en la base
                     $this->forgetCache();
 
                     // throw $e;
