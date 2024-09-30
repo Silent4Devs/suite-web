@@ -148,6 +148,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                     }
 
                     $json_orden[$keyOrd] = [
+                        "id" => $orden_compra->id,
                         "folio" => $orden_compra->folio,
                         "fecha" => $orden_compra->fecha,
                         "referencia" => $orden_compra->referencia,
@@ -267,6 +268,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         // ];
 
         $json_requisicion['general'] = [
+            'id'=> $requisicion->id,
             'fecha' => date('d-m-Y', strtotime($requisicion->fecha)),
             'referencia' => $requisicion->referencia,
             'area' => $requisicion->area,
