@@ -19,7 +19,12 @@
     <div class="datatable-fix datatable-rds">
         <h3 class="title-table-rds"> Empleados</h3>
         <div class="d-flex justify-content-end">
-            <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-empleado') }}">
+            {{-- No funcional por ahora --}}
+            {{-- <a class="boton-transparente boton-sin-borde" href="{{ route('admin.descarga-empleados-general') route('descarga-empleado') }}">
+                <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp; --}}
+            <a class="boton-transparente boton-sin-borde" href="{{ route('admin.descarga-empleados-general') }}">
                 <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
                 <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
             </a> &nbsp;&nbsp;&nbsp;
