@@ -318,6 +318,11 @@
                     // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
                 }, 1000); // Actualiza cada segundo
             }
+            document.addEventListener('render', event => {
+                setTimeout(function() {
+                    initializeYouTubePlayer();
+                }, 500);
+            });
         </script>
     @endsection
 </div>
