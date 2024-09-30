@@ -29,180 +29,180 @@ class AreasController extends Controller
 
     public function index(Request $request)
     {
-            abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-            $areas = Area::getAll();
-            $teams = Team::get();
-            $grupoarea = Grupo::get();
-            $numero_areas = $areas->count();
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        $areas = Area::getAll();
+        $teams = Team::get();
+        $grupoarea = Grupo::get();
+        $numero_areas = $areas->count();
 
-            return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea', 'areas'));
+        return view('admin.areas.index', compact('teams', 'direccion_exists', 'numero_areas', 'grupoarea', 'areas'));
     }
 
     public function create()
     {
-            abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $grupoareas = Grupo::get();
-            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-            $areas = Area::with('areas')->get();
-            $empleados = Empleado::getaltaAll();
-            $area = new Area;
+        $grupoareas = Grupo::get();
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        $areas = Area::with('areas')->get();
+        $empleados = Empleado::getaltaAll();
+        $area = new Area;
 
-            return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
+        return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
     }
 
     public function store(Request $request)
     {
-            abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
 
-            $validateReporta = 'nullable|exists:areas,id';
-            if ($direccion_exists) {
-                $validateReporta = 'required|exists:areas,id';
-            }
-            $request->validate([
-                'area' => 'required|string|max:255',
-                'id_reporta' => $validateReporta,
-            ], [
-                'id_reporta.required' => 'El área a la que reporta es requerido',
+        $validateReporta = 'nullable|exists:areas,id';
+        if ($direccion_exists) {
+            $validateReporta = 'required|exists:areas,id';
+        }
+        $request->validate([
+            'area' => 'required|string|max:255',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido',
+        ]);
+
+        $area = Area::create($request->all());
+
+        $image = null;
+
+        if ($request->hasFile('foto_area')) {
+            $file = $request->file('foto_area');
+            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+            // Call the ImageService to consume the external API
+            // $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // // Compress and save the image
+            // if ($apiResponse['status'] == 200) {
+            //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
+            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+            //     $area->update([
+            //         'foto_area' => $new_name_image,
+            //     ]);
+            // } else {
+            //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
+
+            //     return Redirect::back()->with('error', $mensajeError);
+            // }
+        } else {
+            $area->update([
+                'foto_area' => null,
             ]);
+        }
 
-            $area = Area::create($request->all());
-
-            $image = null;
-
-            if ($request->hasFile('foto_area')) {
-                $file = $request->file('foto_area');
-                //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-                $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
-
-                // Call the ImageService to consume the external API
-                // $apiResponse = ImageService::consumeImageCompresorApi($file);
-
-                // // Compress and save the image
-                // if ($apiResponse['status'] == 200) {
-                //     $rutaGuardada = '/app/public/areas/'.$new_name_image;
-                //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
-
-                //     $area->update([
-                //         'foto_area' => $new_name_image,
-                //     ]);
-                // } else {
-                //     $mensajeError = 'Error al recibir la imagen de la API externa: '.$apiResponse['body'];
-
-                //     return Redirect::back()->with('error', $mensajeError);
-                // }
-            } else {
-                $area->update([
-                    'foto_area' => null,
-                ]);
-            }
-
-            return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
 
     public function edit(Area $area)
     {
-            abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $grupoareas = Grupo::get();
-            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-            $areas = Area::with('areas')->get();
-            $reportas = Empleado::getaltaAll();
+        $grupoareas = Grupo::get();
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        $areas = Area::with('areas')->get();
+        $reportas = Empleado::getaltaAll();
 
-            return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
+        return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
     }
 
     public function update(Request $request, $id)
     {
-            abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
-            $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
-            $validateReporta = 'nullable|exists:areas,id';
-            $area = Area::find($id);
+        abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $primer_nodo = Area::select('id', 'id_reporta')->whereNull('id_reporta')->first();
+        $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+        $validateReporta = 'nullable|exists:areas,id';
+        $area = Area::find($id);
 
-            if ($direccion_exists) {
-                if ($primer_nodo->id == intval($area->id)) {
-                    $validateReporta = 'nullable|exists:areas,id';
-                } else {
-                    $validateReporta = 'required|exists:areas,id';
-                }
-            }
-
-            $request->validate([
-                'area' => 'required|string|max:255',
-                'id_reporta' => $validateReporta,
-            ], [
-                'id_reporta.required' => 'El área a la que reporta es requerido',
-            ]);
-
-            $image = $area->foto_area;
-
-            if ($request->hasFile('foto_area')) {
-                //Si existe la imagen entonces se elimina al editarla
-                $file = $request->file('foto_area');
-
-                $filePath = '/app/public/areas/'.$area->foto_area;
-                $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-                $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
-
-                if (Storage::disk('public')->exists($filePath)) {
-                    Storage::disk('public')->delete($filePath);
-                }
-
-                // Call the ImageService to consume the external API
-                // $apiResponse = ImageService::consumeImageCompresorApi($file);
-
-                // // Compress and save the image
-                // if ($apiResponse['status'] == 200) {
-                //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
-                //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
-
-                //     $area->update([
-                //         'foto_area' => $new_name_image,
-                //     ]);
-                // } else {
-                //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
-                //     return Redirect::back()->with('error', $mensajeError);
-                // }
+        if ($direccion_exists) {
+            if ($primer_nodo->id == intval($area->id)) {
+                $validateReporta = 'nullable|exists:areas,id';
             } else {
-                $area->update([
-                    'foto_area' => null,
-                ]);
+                $validateReporta = 'required|exists:areas,id';
+            }
+        }
+
+        $request->validate([
+            'area' => 'required|string|max:255',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido',
+        ]);
+
+        $image = $area->foto_area;
+
+        if ($request->hasFile('foto_area')) {
+            //Si existe la imagen entonces se elimina al editarla
+            $file = $request->file('foto_area');
+
+            $filePath = '/app/public/areas/'.$area->foto_area;
+            $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
+            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
             }
 
+            // Call the ImageService to consume the external API
+            // $apiResponse = ImageService::consumeImageCompresorApi($file);
+
+            // // Compress and save the image
+            // if ($apiResponse['status'] == 200) {
+            //     $rutaGuardada = '/app/public/areas/' . $new_name_image;
+            //     file_put_contents(storage_path($rutaGuardada), $apiResponse['body']);
+
+            //     $area->update([
+            //         'foto_area' => $new_name_image,
+            //     ]);
+            // } else {
+            //     $mensajeError = 'Error al recibir la imagen de la API externa: ' . $apiResponse['body'];
+            //     return Redirect::back()->with('error', $mensajeError);
+            // }
+        } else {
             $area->update([
-                'area' => $request->area,
-                'id_grupo' => $request->id_grupo,
-                'id_reporta' => $request->id_reporta,
-                'descripcion' => $request->descripcion,
-                'empleados_id' => $request->empleados_id,
-                'foto_area' => $new_name_image ?? null,
-
+                'foto_area' => null,
             ]);
+        }
 
-            return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
+        $area->update([
+            'area' => $request->area,
+            'id_grupo' => $request->id_grupo,
+            'id_reporta' => $request->id_reporta,
+            'descripcion' => $request->descripcion,
+            'empleados_id' => $request->empleados_id,
+            'foto_area' => $new_name_image ?? null,
+
+        ]);
+
+        return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
     }
 
     public function show(Area $area)
     {
-            abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $area->load('team', 'grupo');
+        $area->load('team', 'grupo');
 
-            return view('admin.areas.show', compact('area'));
+        return view('admin.areas.show', compact('area'));
     }
 
     public function destroy(Area $area)
     {
-            abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $area->delete();
+        $area->delete();
 
-            return back()->with('deleted', 'Registro eliminado con éxito');
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function massDestroy(MassDestroyAreaRequest $request)
@@ -214,10 +214,10 @@ class AreasController extends Controller
 
     public function obtenerAreasPorGrupo()
     {
-            $grupos = Grupo::with('areas')->orderByDesc('id')->get();
-            $numero_grupos = Grupo::count();
+        $grupos = Grupo::with('areas')->orderByDesc('id')->get();
+        $numero_grupos = Grupo::count();
 
-            return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
+        return view('admin.areas.areas-grupo', compact('grupos', 'numero_grupos'));
     }
 
     public function renderJerarquia(Request $request)
@@ -242,11 +242,11 @@ class AreasController extends Controller
     public function obtenerJerarquia(Request $request)
     {
 
-            abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
 
-            return json_encode($areasTree);
+        return json_encode($areasTree);
     }
 
     public function exportTo()
@@ -258,10 +258,10 @@ class AreasController extends Controller
 
     public function pdf()
     {
-            $areas = Area::getAll();
-            $pdf = PDF::loadView('areas', compact('areas'));
-            $pdf->setPaper('A4', 'portrait');
+        $areas = Area::getAll();
+        $pdf = PDF::loadView('areas', compact('areas'));
+        $pdf->setPaper('A4', 'portrait');
 
-            return $pdf->download('areas.pdf');
+        return $pdf->download('areas.pdf');
     }
 }
