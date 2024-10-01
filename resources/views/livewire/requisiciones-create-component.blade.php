@@ -11,7 +11,8 @@
                 <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
                 <p>
                     Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
-                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las
+                    transacciones.&nbsp;
                 </p>
             </div>
         </div>
