@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Events\CoursesEvent;
 use App\Models\Escuela\Course;
 use Illuminate\Support\Facades\Cache;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CourseObserver
 {
@@ -13,7 +14,13 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
-        event(new CoursesEvent($course, 'create', 'courses', 'Curso'));
+        try {
+            //code...
+            event(new CoursesEvent($course, 'create', 'courses', 'Curso'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
         $this->forgetCache();
     }
 
