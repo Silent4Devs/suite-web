@@ -33,21 +33,24 @@ class ContratosListener implements ShouldQueue
      */
     public function handle($event)
     {
+        try {
+            $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
-        $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+            // Decodifica el campo participantes
+            $participantes = json_decode($firma->participantes);
 
-        // Decodifica el campo participantes
-        $participantes = json_decode($firma->participantes);
+            // Si es necesario, convierte a un array (por si acaso json_decode devuelve un objeto)
+            if (is_object($participantes)) {
+                $participantes = (array) $participantes;
+            }
 
-        // Si es necesario, convierte a un array (por si acaso json_decode devuelve un objeto)
-        if (is_object($participantes)) {
-            $participantes = (array) $participantes;
+            // Obtén los usuarios cuyos IDs están en el campo participantes
+            $usuarios = User::whereIn('id', $participantes)->get();
+
+            // Enviar la notificación a cada usuario
+            Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-
-        // Obtén los usuarios cuyos IDs están en el campo participantes
-        $usuarios = User::whereIn('id', $participantes)->get();
-
-        // Enviar la notificación a cada usuario
-        Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
     }
 }
