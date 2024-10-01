@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.analisisdebrechas.index') }}" class=ine-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

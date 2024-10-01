@@ -9,7 +9,8 @@
                 @include('admin.declaracionaplicabilidad._form-tabla')
 
                 <div class="text-right form-group col-12" style="margin-left:15px;">
-                    <a href="{{ route('admin.declaracion-aplicabilidad.tabla') }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.declaracion-aplicabilidad.tabla') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         Actualizar
                     </button>

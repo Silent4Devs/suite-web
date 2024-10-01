@@ -17,8 +17,7 @@
 
 
     <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj) font-size:20px;"
-            class="card-header">
+        <div class="card-header">
             <span><img class="img_empleado mr-4" src="{{ $competencia->imagen_ruta }}">
                 <strong>{{ $competencia->nombre }}</strong></span>
             <span class="mr-2">Tipo: {{ $competencia->tipo ? $competencia->tipo->nombre : '' }}</span>
@@ -62,8 +61,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <a class="btn btn-default" href="{{ route('admin.ev360-competencias.index') }}">
+                    <div class="form-group text-right">
+                        <a class="btn btn-outline-primary" href="{{ route('admin.ev360-competencias.index') }}">
                             {{ trans('global.back_to_list') }}
                         </a>
                     </div>

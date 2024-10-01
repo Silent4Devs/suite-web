@@ -127,8 +127,8 @@
                     {!! Form::label(
                         'formacumple',
                         'Cláusula, sección o
-                                                                                                        apartado
-                                                                                                        aplicable*',
+                                                                                                                                                apartado
+                                                                                                                                                aplicable*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -185,7 +185,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar"
+                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn btn-outline-primary"
                         style="text-decoration: none;">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}

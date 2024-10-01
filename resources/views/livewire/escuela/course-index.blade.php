@@ -83,7 +83,7 @@
                                 {{ $c->students_count }}
                             </div>
                         </div>
-                        <button type="button" class="btn btn-mi-course" data-toggle="modal"
+                        <button type="button" class="btn btn-outline-primary btn-mi-course" data-toggle="modal"
                             data-target="#course-{{ $c->id }}" style="margin-bottom: 20px;">
                             Más información
                         </button>

@@ -8,15 +8,16 @@
                         <select class="form-control" name="competencia_id" id="competencia_id">
                             <option value="" selected disabled>-- Selecciona un competencia --</option>
                             @foreach ($competencias as $competencia)
-                                <option value="{{ $competencia->id }}" data-description="{{$competencia->descripcion}}">{{ $competencia->nombre }}</option>
+                                <option value="{{ $competencia->id }}"
+                                    data-description="{{ $competencia->descripcion }}">{{ $competencia->nombre }}
+                                </option>
                             @endforeach
                         </select>
                         <small class="text-danger errores error_competencia_id"></small>
                     </div>
                     <div class="col-5">
                         <label>Nivel esperado <span class="text-danger">*</span>
-                            <span id="niveles_cargando" class="d-none"><i
-                                    class="fas fa-circle-notch fa-spin"></i>
+                            <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>
                                 Cargando niveles</span>
                             {{-- <span title="Diccionario de competencia" id="visualizarSignificado" class="text-muted d-none"><i
                                     class="fas fa-info-circle"></i></span> --}}
@@ -58,8 +59,7 @@
                     <p id="descripcion_competencia"></p>
                 </div>
                 <div class="pb-0 modal-body">
-                    <div class="row"
-                        style="font-size: 12px;font-weight: bold; border-bottom:2px solid #585858">
+                    <div class="row" style="font-size: 12px;font-weight: bold; border-bottom:2px solid #585858">
                         <div class="text-center col-sm-1 col-lg-1">
                             Nivel
                         </div>
@@ -70,7 +70,7 @@
                     <div id="competenciaInformacion"></div>
                 </div>
                 {{-- <div class="modal-footer">
-                   <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                   <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                </div> --}}
             </div>
         </div>

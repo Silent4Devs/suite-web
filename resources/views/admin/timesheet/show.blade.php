@@ -202,7 +202,7 @@
 
             @if (asset('admin/timesheet/aprobaciones') == redirect()->getUrlGenerator()->previous())
                 <div class="col-12 d-flex justify-content-between">
-                    <a href="{{ route('admin.timesheet-create') }}" class="btn_cancelar">Regresar</a>
+                    <a href="{{ route('admin.timesheet-create') }}" class="btn btn-outline-primary">Regresar</a>
                     <div class="">
                         <button title="Rechazar" class="btn btn-info" style="background-color:#F05353; border: none;"
                             data-toggle="modal" data-target="#modal_rechazar_{{ $timesheet->id }}">

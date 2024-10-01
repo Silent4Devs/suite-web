@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('EV360-Evaluaciones-Create') }}
 
     {{-- <div class="mt-4 card">
@@ -13,7 +12,7 @@
                 @csrf
                 @include('admin.recursos-humanos.evaluacion-360.evaluaciones._form')
                 <div class="d-flex justify-content-end w-100">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Guardar</button>
                 </div>
             </form>

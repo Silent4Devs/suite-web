@@ -15,8 +15,8 @@
                         <div class="form-group">
                             <label for="puesto">Puesto: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                id="puesto" aria-describedby="puesto" wire:model="puesto"
-                                value="{{ old('puesto') }}" autocomplete="off">
+                                id="puesto" aria-describedby="puesto" wire:model="puesto" value="{{ old('puesto') }}"
+                                autocomplete="off">
                             <small>Ingresa el puesto del puesto</small>
                             @if ($errors->has('puesto'))
                                 <span class="invalid-feedback">{{ $errors->first('puesto') }}</span>
@@ -42,7 +42,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
             </div>
         </div>

@@ -277,7 +277,6 @@
                                         Swal.fire(
                                             '¡Registro Eliminado!',
                                             // 'Las áreas relacionadas quedarán sin grupo asignado',
-                                            'success'
                                         )
                                         table.ajax.reload();
                                     } else {

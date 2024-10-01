@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.auditoria-clasificacion') }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.auditoria-clasificacion') }}" class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -84,7 +84,7 @@
                             confirmButtonText: 'OK'
                         }).then(() => {
                             window.location.href = response
-                            .redirect_url; // Redirigir después de cerrar SweetAlert
+                                .redirect_url; // Redirigir después de cerrar SweetAlert
                         });
                     } else {
                         Swal.fire({
@@ -100,7 +100,8 @@
                         let errors = xhr.responseJSON.errors;
                         for (let field in errors) {
                             console.log(errors[field][
-                            0]); // Aquí puedes mostrar los errores en el frontend
+                                0
+                            ]); // Aquí puedes mostrar los errores en el frontend
                         }
                     } else {
                         Swal.fire({

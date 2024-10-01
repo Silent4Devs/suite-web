@@ -25,8 +25,8 @@
                 <div class="form-group">
                     <label class="required" for="email"><i
                             class="fas fa-envelope iconos-crear"></i>{{ trans('cruds.user.fields.email') }}</label>
-                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email"
-                        id="email" value="{{ old('email', $user->email) }}" required>
+                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
+                        name="email" id="email" value="{{ old('email', $user->email) }}" required>
                     @if ($errors->has('email'))
                         <div class="invalid-feedback">
                             {{ $errors->first('email') }}
@@ -103,7 +103,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -111,13 +111,9 @@
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
-
     <script>
         $(document).ready(function() {
             $("#roles").select2({
@@ -125,6 +121,4 @@
             });
         });
     </script>
-
-
 @endsection

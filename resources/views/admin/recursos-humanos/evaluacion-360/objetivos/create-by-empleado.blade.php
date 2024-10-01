@@ -112,7 +112,7 @@
 
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
-                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn btn-outline-primary">Regresar</a>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarEditObjetivo" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEditObjetivo" class="btn btn-outline-primary"
                         data-dismiss="modal">Cancelar</button>
                     <button type="button" id="btnActualizarObjetivo" class="btn btn-danger">Guardar</button>
                 </div>

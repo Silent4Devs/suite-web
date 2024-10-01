@@ -138,8 +138,8 @@
                         <input required
                             class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
                             type="text" name="nombrerequisito" id="nombrerequisito"
-                            value="{{ old('nombrerequisito', '') }}" placeholder=""
-                            wire:model='alcance.nombrerequisito' maxlength="255">
+                            value="{{ old('nombrerequisito', '') }}" placeholder="" wire:model='alcance.nombrerequisito'
+                            maxlength="255">
                         {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', [
                             'class' => 'asterisco',
                         ]) !!}
@@ -151,14 +151,14 @@
                         <input type="text"
                             class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                             name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
-                            aria-describedby="textExample1" placeholder="" wire:model='alcance.formacumple'
-                            required maxlength="255" />
+                            aria-describedby="textExample1" placeholder="" wire:model='alcance.formacumple' required
+                            maxlength="255" />
                         {!! Form::label(
                             'formacumple',
                             'Cláusula,
-                                                                                                                                                                                                                                                        sección o
-                                                                                                                                                                                                                                                        apartado
-                                                                                                                                                                                                                                                        aplicable*',
+                                                                                                                                                                                                                                                                                                                                                        sección o
+                                                                                                                                                                                                                                                                                                                                                        apartado
+                                                                                                                                                                                                                                                                                                                                                        aplicable*',
                             ['class' => 'asterisco'],
                         ) !!}
                     </div>
@@ -171,8 +171,7 @@
                                 <input
                                     class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
                                     type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
-                                    value="{{ old('fechaexpedicion') }}" wire:model='alcance.fechaexpedicion'
-                                    required>
+                                    value="{{ old('fechaexpedicion') }}" wire:model='alcance.fechaexpedicion' required>
                                 {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
                             </div>
                             <br>
@@ -251,14 +250,13 @@
                                 class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                                 name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
                                 aria-describedby="textExample1" placeholder=" " style="height:55px;"
-                                wire:model='alcance_s1.{{ $key }}.formacumple' required
-                                maxlength="255" />
+                                wire:model='alcance_s1.{{ $key }}.formacumple' required maxlength="255" />
                             {!! Form::label(
                                 'formacumple',
                                 'Cláusula,
-                                                                                                                                                                                                                                                                                                sección o
-                                                                                                                                                                                                                                                                                                apartado
-                                                                                                                                                                                                                                                                                                aplicable*',
+                                                                                                                                                                                                                                                                                                                                                                                                                sección o
+                                                                                                                                                                                                                                                                                                                                                                                                                apartado
+                                                                                                                                                                                                                                                                                                                                                                                                                aplicable*',
                                 ['class' => 'asterisco'],
                             ) !!}
                         </div>
@@ -276,7 +274,7 @@
                                     {!! Form::label(
                                         'fechaexpedicion',
                                         'Fecha de
-                                                                                                                                                                                                                                                                                                                                                                                publicación*',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -292,7 +290,7 @@
                                     {!! Form::label(
                                         'fechavigor',
                                         'Fecha de
-                                                                                                                                                                                                                                                                                                                                                                                publicación*',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                publicación*',
                                         ['class' => 'asterisco'],
                                     ) !!}
                                 </div>
@@ -354,10 +352,10 @@
             </div>
         @endforeach
 
-        <div class="text-right form-group col-12">
+        <div class="text-right form-group col-12 mt-4">
             <span class="help-block">{{ trans('cruds.matrizRequisitoLegale.fields.requisitoacumplir_helper') }}
             </span>
-            <a href="#" class="btn" id="btn_cancelar" style="color:#057BE2; height:3rem;"
+            <a href="#" class="btn btn-outline-primary" id="btn_cancelar" style="color:#057BE2; height:3rem;"
                 onclick="confirmarCancelar()">
                 <div class="mt-2">Cancelar</div>
             </a>

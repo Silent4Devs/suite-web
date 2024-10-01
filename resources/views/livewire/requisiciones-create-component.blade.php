@@ -3,16 +3,16 @@
         <div class="card card-body caja-blue">
 
             <div>
-                <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                    style="width:150px; position: relative; top: 60px; right: 410px;">
+                <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
             </div>
 
-            <div style="position: relative; top:-5rem; left: 80px;">
+            <div>
                 <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
                 <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
                 <p>
                     Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
-                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las
+                    transacciones.&nbsp;
                 </p>
             </div>
         </div>

@@ -890,7 +890,17 @@ header.mostrar-menu {
     border-left: 1px solid #ccc;
     padding: 20px;
     color: #898989;
+    transition: 0.3s;
 }
+.content-custom-design.invisible{
+    transform: translate(100%);
+}
+
+.btn-dark-mode.active{
+    background-color: var(--color-tbj) !important;
+    color: #fff !important;
+}
+
 .btn-close-custom{
     position: absolute;
     top: 5px;
@@ -925,6 +935,10 @@ header.mostrar-menu {
     cursor: pointer;
 }
 
+.btn-menu-position.active{
+    border-color: var(--color-tbj) !important;
+}
+
 .btn-acces-custom.active{
     background-color: #b5f1d6 !important;
 }
@@ -938,6 +952,7 @@ header.mostrar-menu {
     background-color: #2E2E2E !important;
     color: #fff !important;
 }
+
 
 .transparente *{
     opacity: 0.97 !important;
