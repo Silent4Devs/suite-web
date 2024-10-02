@@ -72,7 +72,7 @@ return [
             'driver' => 'rabbitmq',
             'hosts' => [
                 [
-                    'host' => env('RABBITMQ_HOST', 'rabbit-tabantaj'),
+                    'host' => env('RABBITMQ_HOST', 'rabbitmq-tabantaj'),
                     'port' => env('RABBITMQ_PORT', 5672),
                     'user' => env('RABBITMQ_USER', 'desarrollo'),
                     'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
