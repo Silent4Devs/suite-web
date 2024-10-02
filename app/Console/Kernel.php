@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command('queue:retry all')
             ->timezone('America/Mexico_City')
-            ->everyFifteenMinutes();
+            ->everyFifteenMinutes() 
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
