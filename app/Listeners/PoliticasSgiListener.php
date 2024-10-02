@@ -41,7 +41,7 @@ class PoliticasSgiListener implements ShouldQueue
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
-            Notification::send($user, new PoliticasSgiNotification($event->politicas, $event->tipo_consulta, $event->tabla, $event->slug));
+            Notification::route('sync', $user->email)->notify((new PoliticasSgiNotification($event->politicas, $event->tipo_consulta, $event->tabla, $event->slug))->delay(now()->addMinutes(1))); // Opcional: agregar retraso
         }
     }
 }
