@@ -122,7 +122,7 @@ class RevisionDocumento extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class)->alta();
+        return $this->belongsTo(Empleado::class)->alta()->select('id', 'name', 'email', 'puesto_id', 'area_id', 'estatus');
     }
 
     public function empleadoMobile()
