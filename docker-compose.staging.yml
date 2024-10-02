@@ -151,7 +151,6 @@ services:
     #   - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-      - ./infra/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
