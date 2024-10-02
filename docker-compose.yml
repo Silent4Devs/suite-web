@@ -350,6 +350,8 @@ volumes:
     driver: local
   goservices_data:
     driver: local
+  reportservice_data:
+    driver: local
 
 networks:
   tabantajnetwork:
