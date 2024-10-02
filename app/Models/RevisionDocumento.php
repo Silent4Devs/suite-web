@@ -19,7 +19,6 @@ class RevisionDocumento extends Model implements Auditable
 
     const NO_ARCHIVADO = '0';
 
-
     protected $fillable = [
         'empleado_id',
         'documento_id',
@@ -32,12 +31,15 @@ class RevisionDocumento extends Model implements Auditable
     ];
 
     protected $appends = [
-        'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
+        'fecha_solicitud',
+        'before_level_all_answered',
+        'estatus_revisiones_formateado',
+        'color_revisiones_estatus',
     ];
 
     public static function getAllWithDocumento()
     {
-        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_'.User::getCurrentUser()->empleado->id, 3600 * 8, function () {
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id, 3600 * 8, function () {
             return self::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
         });
     }
@@ -121,5 +123,10 @@ class RevisionDocumento extends Model implements Auditable
     public function empleado()
     {
         return $this->belongsTo(Empleado::class)->alta();
+    }
+
+    public function empleadoMobile()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta()->select('id', 'name', 'foto', 'genero');
     }
 }
