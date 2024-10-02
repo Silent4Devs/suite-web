@@ -15,7 +15,11 @@ class RequisicionesObserver
     {
         //
         $this->forgetCache();
-        event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
+        try {
+            event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -34,7 +38,11 @@ class RequisicionesObserver
     {
         //
         $this->forgetCache();
-        event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
+        try {
+            event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
