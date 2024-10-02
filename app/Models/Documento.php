@@ -221,7 +221,7 @@ class Documento extends Model implements Auditable
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta()->select('id', 'name', 'email', 'puesto_id', 'area_id', 'estatus');
     }
 
     public function aprobador()
