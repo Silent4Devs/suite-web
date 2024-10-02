@@ -40,16 +40,16 @@
 
     <div class="d-flex justify-content-between">
         <div class="example-menu-position btn-menu-position" style="border-top: 10px solid #8ec6ff;"
-            onclick="menuPosition('top');">
+            onclick="menuPosition('top');" data-position="top">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-left: 10px solid #8ec6ff;"
-            onclick="menuPosition('left');">
+            onclick="menuPosition('left');" data-position="left">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-bottom: 10px solid #8ec6ff;"
-            onclick="menuPosition('bottom');">
+            onclick="menuPosition('bottom');" data-position="bottom">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-right: 10px solid #8ec6ff;"
-            onclick="menuPosition('right');">
+            onclick="menuPosition('right');" data-position="right">
         </div>
     </div>
 
@@ -58,11 +58,13 @@
     </p>
 
     <div class="d-flex gap-4">
-        <div class="d-flex align-items-center flex-column" onclick="themeContrast(false);">
+        <div class="d-flex align-items-center flex-column btn-theme-estilo" onclick="themeContrast(false);"
+            data-estilo="false">
             <small style="font-size: 10px;">Clasico</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff;"></div>
         </div>
-        <div class="d-flex align-items-center flex-column" onclick="themeContrast(true);">
+        <div class="d-flex align-items-center flex-column btn-theme-estilo" onclick="themeContrast(true);"
+            data-estilo="true">
             <small style="font-size: 10px;">Transparente</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff; background-color: #fff;"></div>
         </div>
@@ -101,17 +103,22 @@
         if (document.querySelector('.btn-menu-position.active')) {
             document.querySelector('.btn-menu-position.active').classList.remove('active');
         }
-        document.querySelector('.btn-menu-position:hover').classList.add('active');
+        document.querySelector('.btn-menu-position[data-position="' + position + '"]').classList.add('active');
     }
     menuPosition(localStorage.getItem('menuPosition'));
 
     function themeContrast(contrast = false) {
         localStorage.setItem('themeContrast', contrast);
+        console.log(localStorage.getItem('themeContrast'));
         if (contrast) {
             bodyElement.classList.add('transparente');
         } else {
             bodyElement.classList.remove('transparente');
         }
-        document.querySelector('')
+        if (document.querySelector('.btn-theme-estilo.active')) {
+            document.querySelector('.btn-theme-estilo.active').classList.remove('active');
+        }
+        document.querySelector('.btn-theme-estilo[data-estilo="' + contrast + '"]').classList.add('active');
     }
+    themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
 </script>

@@ -943,6 +943,9 @@ header.mostrar-menu {
     background-color: #b5f1d6 !important;
 }
 
+.btn-theme-estilo.active .example-menu-position{
+    border-color: var(--color-tbj) !important;
+}
 
 
 
