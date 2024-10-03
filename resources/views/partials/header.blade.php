@@ -685,4 +685,8 @@
         initializeButtons();
         setupButtonListeners();
     });
+
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip(); // Initialize all tooltips
+    });
 </script>
