@@ -323,10 +323,10 @@ class RequisicionesCreateComponent extends Component
             ];
 
         $this->habilitar_proveedores = true;
-        dd($this->nueva_requisicion, $this->array_productos, $this->habilitar_proveedores);
+
         $this->dispatch('cambiarTab', 'profile');
         $this->active = 'desActive';
-
+        dd($this->nueva_requisicion, $this->array_productos, $this->habilitar_proveedores);
         $this->paso = 2;
     }
 
