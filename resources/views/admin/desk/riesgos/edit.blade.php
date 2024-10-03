@@ -455,12 +455,12 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" name="ideas">{{ old('ideas', $analisis->ideas ?? '') }}</textarea>
                                         </div>
 
                                         <div class="form-group col-12">
                                             <label>Causa Raíz</label>
-                                            <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                                            <textarea class="form-control" name="causa_ideas">{{ old('causa_ideas', $analisis->causas_ideas ?? '') }}</textarea>
                                         </div>
                                     </div>
 
