@@ -26,6 +26,7 @@ class Puesto extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'puesto',
         'descripcion',
         'created_at',
