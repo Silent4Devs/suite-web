@@ -70,7 +70,7 @@
                 </div> --}}
             </div>
 
-            <div class="mt-2 card">
+            <div class="mt-2 card pb-5">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
