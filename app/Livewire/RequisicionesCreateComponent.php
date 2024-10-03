@@ -328,7 +328,6 @@ class RequisicionesCreateComponent extends Component
         $this->active = 'desActive';
 
         $this->paso = 2;
-        dd("dispatch");
     }
 
     public function proveedoresStore()
