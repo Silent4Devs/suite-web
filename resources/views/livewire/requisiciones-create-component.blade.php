@@ -384,7 +384,7 @@
                                                 Fecha inicio*
                                             </label>
                                         </div>
-                                        <div class="col s12 l6 anima-focus">
+                                        <div class="col s12 l6 anima-focus mt-3 mb-3">
                                             <input type="date" id="fechaFin"
                                                 wire:model= "array_proveedores.{{ $keyP }}.fechaFin"
                                                 class="form-control modal-end"
