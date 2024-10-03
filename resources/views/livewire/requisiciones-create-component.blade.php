@@ -916,7 +916,7 @@
         console.log('DOMContentLoaded profile');
 
         // Correctly set the Livewire property using Livewire.find()
-        Livewire.find('{{ $this->id }}').set('products_servs_count', 1);
+        @this.set('products_servs_count', 1);
 
         // Listen for the Livewire 'cambiarTab' event and activate the correct tab
         Livewire.on('cambiarTab', (id_tab) => {
