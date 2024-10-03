@@ -13,11 +13,10 @@
 <div class="card card-content caja-blue" style="background-color:var(--color-tbj);">
 
     <div>
-        <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-            style="width:150px; position: relative; top: 150px; right: 430px;">
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="">
     </div>
 
-    <div style="position: relative; top:-5rem; left: 50px;">
+    <div style="">
         <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3><br>
         <h5 style="font-size: 17px;">Firma tu Orden de Compra para que sea aprobado por las áreas correspondientes</h5>
         <br>
