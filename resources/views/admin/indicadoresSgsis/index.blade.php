@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.indicadores-sgsis.index') }}
 
     @can('indicadores_sgsi_create')
-
     @endcan
 
     <style>
@@ -31,8 +29,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -43,6 +41,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         .table tr th:nth-child(2) {
             width: 150px !important;
             max-width: 200px !important;
@@ -70,28 +69,31 @@
         }
     </style>
 
-<h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión  </h5>
-<div class="card card-body" style="background-color: #5397D5; color: #fff;">
-    <div class="d-flex" style="gap: 25px;">
-        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-        <div>
-            <br>
-            <h4>¿Qué es Indicadores del Sistema de Gestión?</h4>
-            <p>
-                Medidas cuantitativas o cualitativas que se utilizan para evaluar el rendimiento y la eficacia de un Sistema de Gestión específico en una organización.
-            </p>
-            <p>
-                Los marcadores proporcionan la información necesaria para tomar decisiones y ajustar estrategias según sea necesario.
-            </p>
-        </div>
-    </div>
-</div>
-        <div class="text-right">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar Indicador</a> &nbsp;
-                <a class="btn tb-btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+    <h5 class="col-12 titulo_general_funcion">Indicadores del Sistema de Gestión </h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Indicadores del Sistema de Gestión?</h4>
+                <p>
+                    Medidas cuantitativas o cualitativas que se utilizan para evaluar el rendimiento y la eficacia de un
+                    Sistema de Gestión específico en una organización.
+                </p>
+                <p>
+                    Los marcadores proporcionan la información necesaria para tomar decisiones y ajustar estrategias según
+                    sea necesario.
+                </p>
             </div>
         </div>
+    </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.indicadores-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Indicador</a> &nbsp;
+            <a class="btn tb-btn-primary" href="{{ asset('admin/indicadores/dashboard') }}">Dashboard</a>
+        </div>
+    </div>
     <div class="mt-5 card">
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -136,9 +138,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -232,29 +231,39 @@
             @can('indicadores_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.indicadores-sgsis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.indicadores-sgsis.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -281,7 +290,8 @@
                     {
                         data: 'responsable_name',
                         render: function(data, type, row, meta) {
-                            let empleado = JSON.parse(row.responsable_name ? row.responsable_name : '{}');
+                            let empleado = JSON.parse(row.responsable_name ? row.responsable_name :
+                                '{}');
                             if (type === "empleadoText") {
                                 return empleado.name;
                             }

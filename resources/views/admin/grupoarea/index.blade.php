@@ -4,8 +4,8 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -19,7 +19,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -37,25 +37,26 @@
 
         .table tr td:nth-child(2) {
 
-        min-width:150px;
+            min-width: 150px;
 
         }
 
         .table tr td:nth-child(5) {
 
-        min-width:80px;
+            min-width: 80px;
 
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Grupos de Áreas</h5>
     <div class="mt-5 card">
         @can('crear_grupo_agregar')
-
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
 
-                    @include('csvImport.modelgrupodearea', ['model' => 'Grupo', 'route' => 'admin.grupoarea.parseCsvImport'])
+                    @include('csvImport.modelgrupodearea', [
+                        'model' => 'Grupo',
+                        'route' => 'admin.grupoarea.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -175,34 +176,36 @@
 
             @can('crear_grupo_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Grupo Area',
-                url: "{{ route('admin.grupoarea.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar Grupo Area',
+                    url: "{{ route('admin.grupoarea.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-grupo_area') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-grupo_area') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
                 };
 
                 dtButtons.push(btnAgregar);
@@ -212,29 +215,39 @@
             @can('crear_grupo_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.grupoarea.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.grupoarea.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -319,11 +332,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                                                            <ul class="list-group list-group-horizontal justify-content-center">
-                                                                                                ${areasRelacionadas.map(area=>{
-                                                                                                    return `<li class="list-group-item">${area.area}</li>`;
-                                                                                                })}
-                                                                                            </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                                            <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                                                ${areasRelacionadas.map(area=>{
+                                                                                                                    return `<li class="list-group-item">${area.area}</li>`;
+                                                                                                                })}
+                                                                                                            </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

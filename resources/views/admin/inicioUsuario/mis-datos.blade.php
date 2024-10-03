@@ -49,7 +49,7 @@
         top: 3px;
         padding: 5px;
         border-radius: 100%;
-        background: #3086AF;
+        background: var(--color-tbj);
         width: 16px;
         height: 16px;
         font-size: 10px;
@@ -147,7 +147,7 @@
     }
 
     .title-info-personal {
-        color: #3086AF;
+        color: var(--color-tbj);
         text-transform: capitalize;
     }
 
@@ -311,7 +311,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div style="color: #345183; font-size:13pt;" class="text-right"
+                    <div style="color: var(--color-tbj); font-size:13pt;" class="text-right"
                         title="
                 @foreach ($cumpleaños_felicitados_like_usuarios as $usuarios_like) {{ $usuarios_like->felicitador->name }}&#013; @endforeach
             ">
@@ -675,7 +675,7 @@
                                         <div class="modal-content">
 
                                             <div class="modal-header"
-                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:#345183; font-size:20px;">
+                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj); font-size:20px;">
                                                 <span><img class="img_empleado mr-4"
                                                         src="{{ $competencia->competencia->imagen_ruta }}">
                                                     <strong>{{ $competencia->competencia->nombre }}</strong></span>
@@ -769,7 +769,7 @@
                                     @endif
                                 </div>
                                 <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                    style="margin-top: 40px; color: var(--color-tbj); font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->area)
                                             <div class="col-3 title-info-personal">Área</div>
@@ -810,7 +810,7 @@
                                     @endif
                                 </div>
                                 <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                    style="margin-top: 40px; color: var(--color-tbj); font-weight:bold; font-size:14px;">
                                     @if (!empty($panel_rules->n_empleado))
                                         @if ($panel_rules->cumpleaños)
                                             <div class="col-3 title-info-personal">Cumpleaños</div>
@@ -852,7 +852,7 @@
                                     @endif
                                 </div>
                                 <div class="row"
-                                    style="margin-top: 40px; color: #3086AF; font-weight:bold; font-size:14px;">
+                                    style="margin-top: 40px; color: var(--color-tbj); font-weight:bold; font-size:14px;">
                                     @if ($panel_rules->direccion)
                                         <div class="col-3 title-info-personal">Dirección</div>
                                     @endif

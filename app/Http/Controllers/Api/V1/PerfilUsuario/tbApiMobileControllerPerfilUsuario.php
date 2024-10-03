@@ -3,15 +3,9 @@
 namespace app\Http\Controllers\Api\V1\PerfilUsuario;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComunicacionSgi;
 use App\Models\Empleado;
-use App\Models\FelicitarCumpleaños;
-use App\Models\Organizacione;
 use App\Models\User;
-use Carbon\Carbon;
-use Gate;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class tbApiMobileControllerPerfilUsuario extends Controller
 {
@@ -20,7 +14,6 @@ class tbApiMobileControllerPerfilUsuario extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function encodeSpecialCharacters($url)
     {
         // Handle spaces
@@ -73,7 +66,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -151,7 +144,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $equipo->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$equipo->foto);
             }
 
             // Encode spaces in the URL
@@ -246,10 +239,10 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                 'razon_baja',
                 'semanas_min_timesheet',
                 'vacante_activa',
-                "created_at",
-                "updated_at",
-                "deleted_at",
-                "domicilio_personal",
+                'created_at',
+                'updated_at',
+                'deleted_at',
+                'domicilio_personal',
             ]);
         }
 

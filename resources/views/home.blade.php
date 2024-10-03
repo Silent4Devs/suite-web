@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         html {
             scroll-behavior: smooth;
@@ -129,7 +128,7 @@
 
         .menu_a {
             width: 100%;
-            background-color: #345183;
+            background-color: var(--color-tbj);
             height: 40px;
             position: sticky;
             top: 56px;
@@ -198,7 +197,6 @@
         .breadcrumb {
             margin-bottom: 0 !important;
         }
-
     </style>
 
     <div class="content">
@@ -207,7 +205,8 @@
             <a href="#iso27001">ISO 27001</a>
             <a href="#capacitaciones">Capacitaciones</a>
 
-            <button onclick="printJS({
+            <button
+                onclick="printJS({
                             printable: 'impreso_row',
                             type: 'html',
                             css: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',

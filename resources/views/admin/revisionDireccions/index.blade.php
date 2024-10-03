@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -19,7 +18,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -34,20 +33,20 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.revision-direccions.index') }}
 
     @can('revision_direccion_create')
-
     @endcan
     <h5 class="col-12 titulo_general_funcion">Revisión por Dirección</h5>
     <div class="mt-5 card">
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
-                @include('csvImport.modalrevisiondireccion', ['model' => 'Vulnerabilidad', 'route' =>
-                'admin.vulnerabilidads.parseCsvImport'])
+                @include('csvImport.modalrevisiondireccion', [
+                    'model' => 'Vulnerabilidad',
+                    'route' => 'admin.vulnerabilidads.parseCsvImport',
+                ])
             </div>
         </div>
         <div class="card-body datatable-fix">
@@ -195,34 +194,36 @@
             ];
             @can('revision_por_direccion_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar revisión por dirección',
-                url: "{{ route('admin.revision-direccions.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar revisión por dirección',
+                    url: "{{ route('admin.revision-direccions.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-revisiondireccion') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-revisiondireccion') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
                 };
 
                 dtButtons.push(btnAgregar);
@@ -232,29 +233,39 @@
             @can('revision_por_direccion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.revision-direccions.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.revision-direccions.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan

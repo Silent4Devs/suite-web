@@ -1,5 +1,5 @@
 <style>
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -46,36 +46,36 @@
 
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado')
-<div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{asset('admin/inicioUsuario/reportes/riesgos')}}">Crear reporte</a>
-</div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}">Crear reporte</a>
+    </div>
 @endcan
 
-    @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
-        <table class="datatable tabla_riesgos">
-            <thead>
-             <tr>
-                 <th>Folio</th>
-                 <th style="min-width:200px;">Título</th>
-                 <th style="min-width:200px;">Fecha de identificación</th>
-                 <th style="min-width:200px;">Fecha de recepción del reporte</th>
-                 <th style="min-width:200px;">Fecha de cierre</th>
-                 <th style="min-width: 500px;">Descripción</th>
-                 <th style="min-width: 500px;">Comentarios</th>
-                 <th style="min-width:200px;">Estatus</th>
-                 <th style="min-width:200px;">Sede</th>
-                 <th style="min-width:200px;">Ubicación</th>
-                 <th style="min-width:200px;">Procesos afectados</th>
-                 <th style="min-width:200px;">Áreas afectadas</th>
-                 <th style="min-width:200px;">Activos afectados</th>
-                 <th style="min-width: 500px;">Fecha</th>
-                 <th style="min-width:200px;">Quién reportó</th>
-                 <th style="min-width:200px;">Correo</th>
-                 <th style="min-width:200px;">Teléfono</th>
-                 <th>Opciones</th>
-             </tr>
-            </thead>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_riesgos">
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th style="min-width:200px;">Título</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
+                <th style="min-width:200px;">Fecha de recepción del reporte</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 500px;">Comentarios</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Sede</th>
+                <th style="min-width:200px;">Ubicación</th>
+                <th style="min-width:200px;">Procesos afectados</th>
+                <th style="min-width:200px;">Áreas afectadas</th>
+                <th style="min-width:200px;">Activos afectados</th>
+                <th style="min-width: 500px;">Fecha</th>
+                <th style="min-width:200px;">Quién reportó</th>
+                <th style="min-width:200px;">Correo</th>
+                <th style="min-width:200px;">Teléfono</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
     </table>
 </div>
 
@@ -164,7 +164,7 @@
             // let btnAgregar = {
             //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
             //     titleAttr: 'Agregar empleado',
-            //     url: "{{asset('admin/inicioUsuario/reportes/seguridad')}}",
+            //     url: "{{ asset('admin/inicioUsuario/reportes/seguridad') }}",
             //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
             //     action: function(e, dt, node, config) {
             //     let {
@@ -183,8 +183,8 @@
                         {
                             data: 'folio',
                             render: function(data, type, row, meta) {
-                            return data ? data : '';
-                        }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'titulo',
@@ -261,12 +261,14 @@
                         {
                             data: 'fecha',
                             render: function(data, type, row, meta) {
-                                return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.reporto?.avatar}" title="${row.reporto?.name}"></img>`;
 
                                 return html;
                             }
@@ -310,7 +312,7 @@
 
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarRiesgo("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
+                                    html += `<button class="" onclick='ArchivarRiesgo("/admin/desk/${data}/archivarRiesgos"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 
@@ -320,9 +322,9 @@
                             }
                         },
                     ],
-                        order:[
-                            [0,'desc']
-                        ]
+                    order: [
+                        [0, 'desc']
+                    ]
                 });
             }
 
@@ -339,34 +341,26 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-
                             type: "post",
-
                             url: url,
-
                             data: {
                                 _token: '{{ csrf_token() }}'
                             },
-
                             dataType: "json",
-
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_riesgos_desk.ajax.reload();
+                                    tabla_riesgos_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Riesgo Archivado',
                                         '',
                                         'success'
-                                    )
+                                    );
                                 }
-
                             }
-
                         });
-
                     }
-                })
+                });
             }
 
             let botones_archivar = document.querySelectorAll('.archivar');

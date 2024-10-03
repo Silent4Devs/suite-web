@@ -1,18 +1,17 @@
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                style="width:150px; position: relative; top: 60px; right: 410px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
         </div>
 
-        <div style="position: relative; top:-5rem; left: 80px;">
+        <div style="">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
             <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
             <p>
@@ -94,8 +93,8 @@
                                 <label for="" class="txt-tamaño">
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" name="descripcion" maxlength="255" required
-                                    value="{{ old('descripcion', $editrequisicion->referencia) }}">
+                                <input class="browser-default" type="text" name="descripcion" maxlength="255"
+                                    required value="{{ old('descripcion', $editrequisicion->referencia) }}">
                             </div>
 
                             <div class="col s12 l3 ">
@@ -179,7 +178,8 @@
                                         <label for="" class="txt-tamaño">
                                             Especificaciones del producto o servicio <font class="asterisco">*</font>
                                         </label>
-                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
+                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}"
+                                            required>{{ $edtprod->espesificaciones }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1271,7 +1271,7 @@
                                 {{ $requi_firmar->sucursal->direccion }} <br>
                             </div>
                             <div class="flex-item item-header-doc-info" style="">
-                                <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
+                                <h4 style="font-size: 18px; color:var(--color-tbj);">REQUISICIÓN DE ADQUISICIONES</h4>
                                 <p>Folio: 00-00000{{ $requi_firmar->id }}</p>
                                 <p>Fecha de solicitud:{{ date('d-m-Y', strtotime($requi_firmar->fecha)) }} </p>
                             </div>
@@ -1567,7 +1567,8 @@
                                 </div>
                             </div>
                             <div class="flex my-4" style="justify-content: end; gap:10px;">
-                                <button onclick="validar()" class="btn tb-btn-primary" type="submit">Firmar</button>
+                                <button onclick="validar()" class="btn tb-btn-primary"
+                                    type="submit">Firmar</button>
                             </div>
                         </div>
                     </form>

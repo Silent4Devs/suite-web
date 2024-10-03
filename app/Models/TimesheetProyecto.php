@@ -151,6 +151,7 @@ class TimesheetProyecto extends Model implements Auditable
         }
 
         return $emps;
+
     }
 
     public function getHorasTotalesLlenasAttribute()

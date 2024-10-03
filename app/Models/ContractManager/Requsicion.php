@@ -5,7 +5,6 @@ namespace App\Models\ContractManager;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\User;
-use App\Models\ContractManager\Comprador;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -672,7 +671,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

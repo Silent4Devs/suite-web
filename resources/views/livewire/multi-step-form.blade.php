@@ -12,7 +12,7 @@
             font-size: 13px;
             padding: 5px;
             background: #3451837a;
-            border: 2px solid #345183;
+            border: 2px solid var(--color-tbj);
             color: #353535;
             border-radius: 5px;
         }
@@ -49,7 +49,7 @@
             height: 20px;
             width: 20px;
             background-color: #f9f9f9;
-            border: 1px solid #345183;
+            border: 1px solid var(--color-tbj);
         }
 
         /* On mouse-over, add a grey background color */
@@ -94,7 +94,7 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid #345183;
+            border: 2px solid var(--color-tbj);
             box-sizing: border-box;
             border-radius: 10px;
         }
@@ -135,7 +135,7 @@
 
         input[type=checkbox]:checked~div {
             color: #ffffff;
-            background: #345183;
+            background: var(--color-tbj);
             border-radius: 7px;
             border: none;
             /* box-shadow: 5px 5px 5px 0px #004d4d; */
@@ -144,7 +144,7 @@
         input[type=checkbox]:checked~input[type=number] {
             border-bottom: 2px solid rgb(78 230 236);
             color: #ffffff;
-            background: #345183;
+            background: var(--color-tbj);
             text-align: center;
         }
 
@@ -179,9 +179,10 @@
             padding: 0;
         }
 
+        #progressbar .active:before,
         #progressbar .active {
             z-index: 1;
-            color: #345183;
+            color: var(--color-tbj) !important;
         }
 
         #progressbar li {
@@ -232,9 +233,12 @@
             font-size: 20px;
             color: #ffffff;
             background: lightgray;
+            backdrop-filter: blur(1000px);
             border-radius: 50%;
             margin: 0 auto 10px auto;
-            padding: 2px
+            padding: 2px;
+            position: relative;
+            z-index: 5;
         }
 
         #progressbar li:after {
@@ -250,8 +254,8 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: #345183;
-            z-index: -1;
+            background: var(--color-tbj);
+            color: #fff !important;
         }
 
         .progress {
@@ -259,12 +263,12 @@
         }
 
         .progress-bar {
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         .head {
             text-transform: capitalize;
-            color: #345183;
+            color: var(--color-tbj);
             font-weight: normal
         }
 
@@ -564,9 +568,8 @@
                                                 </div>
                                                 <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model="pesoGeneralObjetivos"
-                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
-                                                        pattern="[0-9]*"
+                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
+                                                        class="form-control" type="text" pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
@@ -864,9 +867,8 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_jefe)
-                                                <input class="ml-4" wire:model="pesoEvaluacionJefe"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionJefe" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionJefe'))
@@ -898,9 +900,8 @@
                                                 </div>
                                             </div>
                                             @if ($evaluado_por_misma_area)
-                                                <input class="ml-4" wire:model="pesoEvaluacionArea"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionArea" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionArea'))
@@ -910,7 +911,7 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 ml-5 feature3">
+                                        <article class=" ml-5 feature3">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('equipo_a_cargo')"
                                                 wire:model.blur="evaluado_por_equipo_a_cargo" id="feature3"
@@ -942,7 +943,7 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 feature4">
+                                        <article class=" feature4">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('autoevaluacion')"
                                                 wire:model.blur="autoevaluacion" id="feature4"
@@ -961,9 +962,8 @@
                                                 </span>
                                             </div>
                                             @if ($autoevaluacion)
-                                                <input class="ml-4" wire:model="pesoAutoevaluacion"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoAutoevaluacion" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoAutoevaluacion'))

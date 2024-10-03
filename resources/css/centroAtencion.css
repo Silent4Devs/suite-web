@@ -1,0 +1,54 @@
+
+.nav.nav-tabs{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.nav-tabs .nav-item .nav-link,
+.nav-tabs .nav-item .nav-link.active{
+    background-color: unset !important;
+    color: #fff !important;
+    background-color: rgb(100, 100, 100) !important;
+    border-radius: 10px !important;
+    padding: 20px !important;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 7px;
+}
+
+.nav-tabs .nav-item .nav-link span{
+    text-align: right;
+    font-size: 16px;
+}
+.nav-tabs .nav-item .nav-link i{
+    font-size: 30px !important;
+}
+
+.tarjetas_seguridad_indicadores{
+    display: none;
+}
+
+.box-sentimientos{
+    flex-direction: row !important;
+    gap: 20px;
+    justify-content: space-between;
+    flex-basis: 1;
+}
+.card-sentimiento{
+    border: 1px solid #DBDBDB;
+    flex-basis: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 8px;
+}
+.card-sentimiento span{
+    color: #3086AF;
+    font-weight: bolder;
+    font-size: 13px;
+}

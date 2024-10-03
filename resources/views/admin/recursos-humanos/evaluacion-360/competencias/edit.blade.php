@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/menu/menuSections.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/menu/menuSections.css') }}{{ config('app.cssVersion') }}">
     {{ Breadcrumbs::render('EV360-Competencias-Edit') }}
     <style>
         .alerta-error {
@@ -9,7 +9,6 @@
             border: 1px solid red;
             border-radius: 10px;
         }
-
     </style>
     <style>
         /* The container */
@@ -80,15 +79,14 @@
             transform: rotate(45deg);
         }
 
-        #btn_cancelar{
-        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-        border: 1px solid var(--unnamed-color-057be2);
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 1px solid #057BE2;
-        border-radius: 4px;
-        opacity: 1;
+        #btn_cancelar {
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            border-radius: 4px;
+            opacity: 1;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Editar: Competencia: ({{ $competencia->nombre }})</h5>
     <div class="mt-4 card">
@@ -98,10 +96,11 @@
                 @csrf
                 @method('PATCH')
                 @include('admin.recursos-humanos.evaluacion-360.competencias._formEdit')
-                <div class="container row">
+                <div class="container row mt-4">
                     <div class="col-12">
                         <div class="d-flex justify-content-end w-100">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary"
+                                id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                             <button type="submit" class="ml-2 btn tb-btn-primary">Guardar</button>
                         </div>
                     </div>
@@ -114,7 +113,7 @@
         aria-labelledby="conductasModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background: #345183;color: white;">
+                <div class="modal-header" style="background: var(--color-tbj)color: white;">
 
                     <h4 class="modal-title" id="nivelEditCreate2"></h4>
 
@@ -128,9 +127,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarConducta" class="btn_cancelar"
+                    <button type="button" id="btnCancelarConducta" class="btn btn-outline-primary"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnGuardarConducta" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnGuardarConducta" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>

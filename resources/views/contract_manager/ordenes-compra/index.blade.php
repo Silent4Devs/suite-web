@@ -12,13 +12,14 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-    <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4"
-        style="position: relative; left: 68rem;">Aprobadores</button>
+    <div class="text-right">
+        <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4">Aprobadores</button>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Requisiciones">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Requisiciones">
+                <thead class="">
                     <tr>
 
                         <th style="vertical-align: top">Folio</th>

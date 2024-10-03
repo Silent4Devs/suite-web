@@ -507,7 +507,6 @@ class SolicitudVacacionesController extends Controller
         $query = SolicitudVacaciones::getAllwithEmpleados()->where('autoriza', '=', $data)->where('aprobacion', '=', 1);
         // if ($request->ajax()) {
 
-
         //     $table = datatables()::of($query);
 
         //     $table->addColumn('placeholder', '&nbsp;');

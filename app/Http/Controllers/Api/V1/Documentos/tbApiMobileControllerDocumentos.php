@@ -12,7 +12,6 @@ use App\Models\Documento;
 use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
-use App\Models\Macroproceso;
 use App\Models\Proceso;
 use App\Models\RevisionDocumento;
 use App\Models\User;
@@ -23,7 +22,6 @@ use Illuminate\Support\Facades\Storage;
 
 class tbApiMobileControllerDocumentos extends Controller
 {
-
     use ObtenerOrganizacion;
 
     public function tbFunctionIndexUsuario()
@@ -68,7 +66,7 @@ class tbApiMobileControllerDocumentos extends Controller
                     if ($revision->empleadoMobile->foto == null || $revision->empleadoMobile->foto == '0') {
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                     } else {
-                        $ruta = asset('storage/empleados/imagenes/' . $revision->empleadoMobile->foto);
+                        $ruta = asset('storage/empleados/imagenes/'.$revision->empleadoMobile->foto);
                     }
 
                     // Asignar detalles del empleado
@@ -118,14 +116,12 @@ class tbApiMobileControllerDocumentos extends Controller
         ], 200);
     }
 
-
-
     public function aprobar($id) //Request $request
     {
         $empleado = User::getCurrentUser()->empleado;
         $numero_revision = RevisionDocumento::where('documento_id', $id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $id)->max('no_revision')) + 1 : 1;
         $documento = RevisionDocumento::where('id', '=', $id)->where('empleado_id', $empleado->id)->where('no_revision', $numero_revision)->first();
-        if (!empty($documento)) {
+        if (! empty($documento)) {
             $documento->update([
                 // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::APROBADO),
@@ -193,7 +189,7 @@ class tbApiMobileControllerDocumentos extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -225,7 +221,7 @@ class tbApiMobileControllerDocumentos extends Controller
 
             return response()->json(['approve' => true]);
         } else {
-            return response()->json(['approve' => "No tiene permitido aprobar o rechazar el documento"]);
+            return response()->json(['approve' => 'No tiene permitido aprobar o rechazar el documento']);
         }
     }
 
@@ -235,7 +231,7 @@ class tbApiMobileControllerDocumentos extends Controller
         $numero_revision = RevisionDocumento::where('documento_id', $id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $id)->max('no_revision')) + 1 : 1;
         $documento = RevisionDocumento::where('id', '=', $id)->where('empleado_id', $empleado->id)->where('no_revision', $numero_revision)->first();
 
-        if (!empty($documento)) {
+        if (! empty($documento)) {
             $documento->update([
                 // 'comentarios' => $request->comentarios,
                 'estatus' => strval(Documento::RECHAZADO),
@@ -311,7 +307,7 @@ class tbApiMobileControllerDocumentos extends Controller
                             'estatus' => strval(Documento::PUBLICADO),
                         ]);
 
-                        $this->publishDocumentInFolder($path_documentos_aprobacion . '/' . $documentoOriginal->archivo, $documentoOriginal);
+                        $this->publishDocumentInFolder($path_documentos_aprobacion.'/'.$documentoOriginal->archivo, $documentoOriginal);
 
                         HistorialVersionesDocumento::create([
                             'documento_id' => $documentoOriginal->id,
@@ -343,7 +339,7 @@ class tbApiMobileControllerDocumentos extends Controller
 
             return response()->json(['reject' => true]);
         } else {
-            return response()->json(['reject' => "No tiene permitido aprobar o rechazar el documento"]);
+            return response()->json(['reject' => 'No tiene permitido aprobar o rechazar el documento']);
         }
     }
     // }
@@ -505,9 +501,9 @@ class tbApiMobileControllerDocumentos extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_publicados . '/' . $documento->archivo, PATHINFO_EXTENSION);
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . $documento->version . '-publicado.' . $extension;
-        $ruta_publicacion = $path_documentos_publicados . '/' . $nombre_documento;
+        $extension = pathinfo($path_documentos_publicados.'/'.$documento->archivo, PATHINFO_EXTENSION);
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.$documento->version.'-publicado.'.$extension;
+        $ruta_publicacion = $path_documentos_publicados.'/'.$nombre_documento;
         $documento->update([
             'archivo' => $nombre_documento,
         ]);
@@ -515,7 +511,7 @@ class tbApiMobileControllerDocumentos extends Controller
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
         }
 
-        $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
+        $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
         //dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
@@ -562,10 +558,10 @@ class tbApiMobileControllerDocumentos extends Controller
                 break;
         }
 
-        $extension = pathinfo($path_documentos_versiones_anteriores . '/' . $documento->archivo, PATHINFO_EXTENSION);
+        $extension = pathinfo($path_documentos_versiones_anteriores.'/'.$documento->archivo, PATHINFO_EXTENSION);
 
-        $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '.' . $extension;
-        $ruta_publicacion = $path_documentos_versiones_anteriores . '/' . $nombre_documento;
+        $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'.'.$extension;
+        $ruta_publicacion = $path_documentos_versiones_anteriores.'/'.$nombre_documento;
         if (Storage::exists($path_documento_version_anterior)) {
             Storage::move($path_documento_version_anterior, $ruta_publicacion);
         }

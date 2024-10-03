@@ -2,23 +2,23 @@
     .select2-container {
         margin-top: 0px !important;
     }
-
 </style>
 
 <div>
-    <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    <div class="mt-4 text-center form-group"
+        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
         INFORMACIÓN GENERAL
     </div>
     <div class="informacion-general">
         @include('admin.empleados.form_components.general')
     </div>
-    <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    <div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
         INFORMACIÓN PERSONAL
     </div>
     <div class="informacion-personal">
         @include('admin.empleados.form_components.personal')
     </div>
-    <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+    <div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
         INFORMACIÓN FINANCIERA
     </div>
     <div class="informacion-financiera row">

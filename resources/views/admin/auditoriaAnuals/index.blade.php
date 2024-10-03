@@ -24,8 +24,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -36,6 +36,7 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         .table tr th:nth-child(6) {
             min-width: 80px !important;
             text-align: center !important;
@@ -60,36 +61,38 @@
 
 
     <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría </h5>
-            <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-                <div class="d-flex" style="gap: 25px;">
-                    <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-                    <div>
-                        <br>
-                        <h4>¿Qué es Programa Anual de Auditoria?</h4>
-                        <p>
-                            Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
-                            límites del proyecto.
-                        </p>
-                        <p>
-                            Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
-                            que ayuda a evitar
-                            la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
-                            comprensión clara de lo que se espera.
-                        </p>
-                    </div>
-                </div>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Programa Anual de Auditoria?</h4>
+                <p>
+                    Define y documenta de manera detallada qué trabajo se llevará a cabo y qué no se incluirá dentro de los
+                    límites del proyecto.
+                </p>
+                <p>
+                    Es un paso crucial que establece las bases para la planificación y ejecución exitosa de un proyecto, ya
+                    que ayuda a evitar
+                    la expansión no controlada del proyecto y asegura que todas las partes involucradas tengan una
+                    comprensión clara de lo que se espera.
+                </p>
             </div>
+        </div>
+    </div>
 
 
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn tb-btn-primary">Registrar Programa</a> &nbsp;
+            <a href="{{ route('admin.auditoria-anuals.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Programa</a> &nbsp;
         </div>
     </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
-            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-body" id="modalContent" style="height:90%">

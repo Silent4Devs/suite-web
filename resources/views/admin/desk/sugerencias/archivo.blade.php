@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- {{ Breadcrumbs::render('sugerencia-archivo') }} --}}
+<h3 class="col-12 titulo_general_funcion">Archivo sugerencias</h3>
     <div class="pl-4 pr-4 mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo sugerencias</strong></h3>
-        </div>
+
 
         <div class="datatable-fix" style="width: 100%;">
 
@@ -27,60 +25,62 @@
                 </thead>
                 <tbody>
                     @foreach ($sugerencias as $sugerencia)
-                        {{-- @if($incidentes->archivar == 'false') --}}
-                            <tr>
-                                <td>{{ $sugerencia->folio }}</td>
-                                <td>{{ $sugerencia->estatus }}</td>
-                                <td>{{ $sugerencia->fecha_reporte }}</td>
-                                <td>{{ $sugerencia->fecha_cierre }}</td>
-                                <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}" title="{{ $sugerencia->sugirio->name }}">
-                                </td>
-                                <td>{{ $sugerencia->sugirio->email }}</td>
-                                <td>{{ $sugerencia->sugirio->telefono }}</td>
-                                <td>{{ $sugerencia->titulo }}</td>
-                                <td>{{ $sugerencia->area_sugerencias }}</td>
-                                <td>{{ $sugerencia->proceso_sugerencias }}</td>
-                                <td>{{ $sugerencia->descripcion }}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i
+                        {{-- @if ($incidentes->archivar == 'false') --}}
+                        <tr>
+                            <td>{{ $sugerencia->folio }}</td>
+                            <td>{{ $sugerencia->estatus }}</td>
+                            <td>{{ $sugerencia->fecha_reporte }}</td>
+                            <td>{{ $sugerencia->fecha_cierre }}</td>
+                            <td>
+                                <img class="img_empleado"
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $sugerencia->sugirio->avatar }}"
+                                    title="{{ $sugerencia->sugirio->name }}">
+                            </td>
+                            <td>{{ $sugerencia->sugirio->email }}</td>
+                            <td>{{ $sugerencia->sugirio->telefono }}</td>
+                            <td>{{ $sugerencia->titulo }}</td>
+                            <td>{{ $sugerencia->area_sugerencias }}</td>
+                            <td>{{ $sugerencia->proceso_sugerencias }}</td>
+                            <td>{{ $sugerencia->descripcion }}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{{ route('admin.desk.sugerencias-edit', $sugerencia->id) }}"><i
                                                 class="fas fa-edit"></i></a>
-                                        </div>
-                                        <div class="col-6">
-                                            <form action="{{route('admin.desk.sugerencia-archivo.recuperar', $sugerencia->id)}}" method="POST">
-                                                @csrf
-                                                <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                    <i class="fas fa-sign-in-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-
+                                    </div>
+                                    <div class="col-6">
+                                        <form
+                                            action="{{ route('admin.desk.sugerencia-archivo.recuperar', $sugerencia->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
 
-                                </td>
-                                {{-- <td class="opciones_iconos">
+                                </div>
+
+                            </td>
+                            {{-- <td class="opciones_iconos">
                                     <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $incidentes->id)}}" method="POST">
                                         @csrf
                                         <button class="btn" title="Recuperar" style="all: unset !important;">
-                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:var(--color-tbj)"></i>
                                         </button>
                                     </form>
                                 </td> --}}
-                            </tr>
-			   			{{-- @endif --}}
-
+                        </tr>
+                        {{-- @endif --}}
                     @endforeach
                 </tbody>
             </table>
         </div><br>
-        <div class="form-group"  style="text-align: right;">
-            <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
+        <div class="form-group" style="text-align: right;">
+            <a class="btn btn-outline-primary" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
-
     @endsection
     @section('scripts')
         @parent

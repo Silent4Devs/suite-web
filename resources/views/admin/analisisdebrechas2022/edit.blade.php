@@ -20,7 +20,7 @@
                 @csrf
 
                 <div class="py-1 text-center form-group col-12"
-                    style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                    style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
 
                 <div class="form-group">
@@ -120,7 +120,8 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analisisdebrechas-2022.index') }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.analisisdebrechas-2022.index') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -181,4 +182,3 @@
             }
         });
     </script>
-@endsection

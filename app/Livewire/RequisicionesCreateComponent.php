@@ -481,12 +481,12 @@ class RequisicionesCreateComponent extends Component
                 ]);
             }
 
-            foreach($this->provedores_colllection as $keyProvCol => $provCol)
-            {
+            foreach ($this->provedores_colllection as $keyProvCol => $provCol) {
                 $this->requisicionCreada->update([
-                'proveedor_catalogo' => $provCol->nombre,
-                // 'proveedoroc_id' => $this->provCol->id,
-            ]);}
+                    'proveedor_catalogo' => $provCol->nombre,
+                    // 'proveedoroc_id' => $this->provCol->id,
+                ]);
+            }
 
             $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicionCreada->id)->pluck('proveedor_id')->toArray();
 

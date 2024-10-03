@@ -253,8 +253,8 @@
                     </div>
                 </form>
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn" id="btn_cancelar"
-                        style="color:#057BE2;">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary"
+                        id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                     <button class="btn tb-btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
@@ -263,14 +263,14 @@
         @else
             <div class="p-4">
                 <div class="mt-4 text-center form-group"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     CURRICULUM
                 </div>
                 <label id="urlFormEmpleados"
                     data-url="{{ route('admin.empleados.updateFromCurriculum', $empleado) }}"></label>
                 @include('admin.empleados.components._competencias_form', ['id' => $empleado->id])
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn" id="btn_cancelar"
+                    <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn btn-outline-primary" id="btn_cancelar"
                         style="color:#057BE2;">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
                         Guardar

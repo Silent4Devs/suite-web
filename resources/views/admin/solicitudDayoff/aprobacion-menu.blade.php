@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('Menu-Vacaciones') }}
+    {{ Breadcrumbs::render('Menu-Vacaciones') }}
 
 
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
+            border-top: 2px solid var(--color-tbj);
         }
 
         div.tab-pane ul {
@@ -45,7 +45,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #345183;
+            color: var(--color-tbj);
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -54,8 +54,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -63,7 +63,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -77,13 +76,12 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Control de Ausencias</h5>
-        
+
     </div>
     <div class="card">
         <div class="card-body">
@@ -92,29 +90,27 @@
                     aria-labelledby="nav-empleados-tab">
                     <ul class="mt-4">
                         <li>
-                          <a href="aprobacion">
-                              <div>
-                                <i class="fa-solid fa-book"></i>
-                                  <br>
-                                Vacaciones
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="incidentes-vacaciones">
-                              <div>
-                                <i class="fa-solid fa-scale-unbalanced"></i><br>
-                                Days Off´s
-                              </div>
-                          </a>
-                      </li>
-                      
-                  </ul>
-                  
+                            <a href="aprobacion">
+                                <div>
+                                    <i class="fa-solid fa-book"></i>
+                                    <br>
+                                    Vacaciones
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="incidentes-vacaciones">
+                                <div>
+                                    <i class="fa-solid fa-scale-unbalanced"></i><br>
+                                    Days Off´s
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-

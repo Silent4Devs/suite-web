@@ -24,8 +24,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -54,7 +54,8 @@
                     Plan que establece los detalles de cómo se llevará a cabo una auditoría.
                 </p>
                 <p>
-                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es
+                    necesario.
                 </p>
             </div>
         </div>
@@ -62,7 +63,8 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.plan-auditoria.create') }}" type="button" class="btn tb-btn-primary">Registrar Plan</a> &nbsp;
+            <a href="{{ route('admin.plan-auditoria.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Plan</a> &nbsp;
         </div>
     </div>
     <div class="mt-5 card">

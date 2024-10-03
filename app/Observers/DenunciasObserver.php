@@ -16,7 +16,11 @@ class DenunciasObserver
     public function created(Denuncias $denuncias)
     {
 
-        event(new DenunciasEvent($denuncias, 'create', 'denuncias', 'Denuncia'));
+        try {
+            event(new DenunciasEvent($denuncias, 'create', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -28,7 +32,11 @@ class DenunciasObserver
     public function updated(Denuncias $denuncias)
     {
 
-        event(new DenunciasEvent($denuncias, 'update', 'denuncias', 'Denuncia'));
+        try {
+            event(new DenunciasEvent($denuncias, 'update', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -40,7 +48,11 @@ class DenunciasObserver
     public function deleted(Denuncias $denuncias)
     {
 
-        event(new DenunciasEvent($denuncias, 'delete', 'denuncias', 'Denuncia'));
+        try {
+            event(new DenunciasEvent($denuncias, 'delete', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 

@@ -16,8 +16,8 @@
                     <div class="row m-0 p-0">
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
-                                <input type="number"
-                                    class="form-control" placeholder="" name="min" wire:model="min" >
+                                <input type="number" class="form-control" placeholder="" name="min"
+                                    wire:model="min">
                                 <label for="min">Minimo*</label>
                                 @error('min')
                                     <div style="color: red;">{{ $message }}</div>
@@ -26,8 +26,8 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
-                                <input type="number"
-                                    class="form-control" placeholder="" name="Maximo" wire:model="max">
+                                <input type="number" class="form-control" placeholder="" name="Maximo"
+                                    wire:model="max">
                                 <label for="Maximo">Máximo*</label>
                                 @error('max')
                                     <div style="color: red;">{{ $message }}</div>
@@ -40,13 +40,14 @@
                     </div>
 
                     <h6 class="title-rango">Escalas</h6>
-                    <p class="subtitle-rango">Define las escalas de medición, asigna su color, valor y nombre para indetificarlos</p>
+                    <p class="subtitle-rango">Define las escalas de medición, asigna su color, valor y nombre para
+                        indetificarlos</p>
 
                     <div class="row m-0 p-0">
                         <div class="col-1"></div>
                         <div class="col-3"></div>
                         <div class="col-6"></div>
-                        <div class="col-1 p-0" >
+                        <div class="col-1 p-0">
                             <p class="column-asignar">Asignar Nivel de Riesgo aceptable</p>
                         </div>
 
@@ -74,7 +75,7 @@
                                             placeholder="">
                                         <label for="name">Nombre de la escala</label>
                                         @error('escalas.{{ $key }}.nombre')
-                                            <div style="color: red;"> {{$mesagge}}</div>
+                                            <div style="color: red;"> {{ $mesagge }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -83,8 +84,9 @@
                                         aria-label="Checkbox for following text input">
                                 </div>
                                 <div class="col-1" style="padding-top: 10px;">
-                                    @if ($key>1)
-                                    <i wire:click="removeInput({{ $key }})" class="text-sm text-red-500 fas fa-trash-alt"></i>
+                                    @if ($key > 1)
+                                        <i wire:click="removeInput({{ $key }})"
+                                            class="text-sm text-red-500 fas fa-trash-alt"></i>
                                     @endif
                                 </div>
                             </div>
@@ -112,7 +114,7 @@
                                             class="form-control" placeholder="" value="test">
                                         <label for="name">Nombre de la escala</label>
                                         @error('escalas.{{ $key }}.nombre')
-                                            <div style="color: red;"> {{$message}}</div>
+                                            <div style="color: red;"> {{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -133,7 +135,8 @@
                         @endforeach
                     @endif
 
-                    <a class="btn btn-link" wire:click.prevent="addInput" style="cursor: pointer; color: #006DDB;">
+                    <a class="btn btn-link" wire:click.prevent="addInput"
+                        style="cursor: pointer; color: var(--color-tbj)">
                         Agregar valor <i class="fas fa-plus"></i>
                     </a>
 

@@ -13,17 +13,15 @@
         }
 
         #form_id {
-        display: none;
-    }
-
+            display: none;
+        }
     </style>
     <h5 class="col-12 titulo_general_funcion">Competencias</h5>
-    <form method="POST" id="form_id" style="position: relative; left: 10rem;"
-     action="{{ route('admin.competencias.pdf') }}">
-     @csrf
-     <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-         IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-     </button>
+    <form method="POST" id="form_id" style="position: relative; left: 10rem;" action="{{ route('admin.competencias.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
     </form>
     <div class="mt-5 card">
         @include('partials.flashMessages')
@@ -44,9 +42,10 @@
                 </div>
             </div>
             <div class="text-right">
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.ev360-competencias.create') }}" type="button" class="btn tb-btn-primary">Registrar Competencia</a>
-                    </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.ev360-competencias.create') }}" type="button"
+                        class="btn tb-btn-primary">Registrar Competencia</a>
+                </div>
             </div>
             @include('partials.flashMessages')
             <div class="datatable-fix datatable-rds">
@@ -107,7 +106,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     },
-                    action: function (e, dt, button, config) {
+                    action: function(e, dt, button, config) {
                         // Aquí ejecutas la acción del formulario al presionar el botón
                         var form = document.getElementById('form_id');
                         form.submit();
@@ -278,7 +277,6 @@
                                         Swal.fire(
                                             '¡Registro Eliminado!',
                                             // 'Las áreas relacionadas quedarán sin grupo asignado',
-                                            'success'
                                         )
                                         table.ajax.reload();
                                     } else {

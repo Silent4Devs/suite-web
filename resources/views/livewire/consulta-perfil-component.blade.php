@@ -67,7 +67,7 @@
             width: 98%;
             left: 0;
             line-height: 134px;
-            background: #345183;
+            background: var(--color-tbj);
             color: white;
             font-weight: 500;
         }
@@ -97,7 +97,8 @@
     @endphp
 
     @if (!$isPersonal)
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             PERFILES DE PUESTO
         </div>
     @else

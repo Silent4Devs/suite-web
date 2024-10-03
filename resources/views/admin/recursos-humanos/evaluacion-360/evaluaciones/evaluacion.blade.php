@@ -5,11 +5,11 @@
         .nav-pills .nav-link.active,
         .nav-pills .show>.nav-link {
             color: #fff;
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         a.nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         table.no-footer,
@@ -30,7 +30,7 @@
 
         .add_evaluador:hover {
             transition: .3s;
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .restantes {
@@ -50,8 +50,8 @@
 
         .restantes:hover {
             transition: .3s;
-            border: 2px solid #345183;
-            color: #345183;
+            border: 2px solid var(--color-tbj);
+            color: var(--color-tbj);
         }
 
         .alerta-no-preguntas {
@@ -81,7 +81,7 @@
                     <div class="w-100" style="color:rgb(51, 51, 51);">
                         <div>
                             <div class="text-center form-group"
-                                style="background-color:#345183; border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
@@ -188,7 +188,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        data-dismiss="modal">Descartar</button>
                                     <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-danger">Iniciar
                                         Evaluación</button>
                                 </div>
@@ -216,7 +217,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn_cancelar" data-dismiss="modal">Descartar</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        data-dismiss="modal">Descartar</button>
                                     <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
                                         class="btn btn-danger">Iniciar evaluación</button>
                                 </div>
@@ -227,7 +229,7 @@
                 </div>
                 <div class="datatable-fix w-100">
                     <div class="text-center form-group"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         PROGRESO DE EVALUACIÓNES POR EMPLEADO
                     </div>
                     <table class="datatable tblParticipantes" id="tblParticipantes" class="table">
@@ -318,7 +320,7 @@
                 </div>
                 <div class="modal-body" id="evaluadoresBody"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

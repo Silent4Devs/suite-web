@@ -21,6 +21,7 @@ class CoursesCurriculum extends Component
 
     protected $rules = [
         'section.name' => 'required',
+        'name'=> 'required',
     ];
 
     public function mount(Course $course)
@@ -42,6 +43,7 @@ class CoursesCurriculum extends Component
 
     public function store()
     {
+        // dump($this->course->sections);
         // dd($this->course);
         $count = Section::where('course_id', '=', $this->course->id)->count();
         // dd($count);
@@ -67,30 +69,38 @@ class CoursesCurriculum extends Component
         // ]);
 
         // $this->reset('name');
-        $this->course = Course::getAll()->find($this->course->id);
+        // dd(Course::getAll()->find($this->course->id));
+        $this->course = Course::find($this->course->id);
         $this->render_alerta('success', 'Registro añadido exitosamente');
+        // dd($this->course->sections);
     }
 
     public function edit(Section $section)
     {
         $this->section = $section;
+        $this->name = $section->name;
     }
 
     public function update()
     {
-        $this->validate();
+        // $this->validate();
+        $this->validateOnly('name');
 
+        // dd($this->name);
+        $this->section->name = $this->name;
+        // dd($this->section);
         $this->section->save();
         $this->section = new Section;
 
-        $this->course = Course::getAll()->find($this->course->id);
+        // $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');
     }
 
     public function destroy(Section $section)
     {
+        // dump($section);
         $section->delete();
-        $this->course = Course::getAll()->find($this->course->id);
+        $this->course = Course::find($this->course->id);
         $this->render_alerta('success', 'Registro eliminado exitosamente');
     }
 

@@ -29,18 +29,18 @@
                         <div class="col-md-12 form-group">
                             <label for="">Asignar Aprobadores</label>
                             <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
-                            @if ($firma)
-                            @foreach ($firma->aprobadores as $aprobador)
-                                    <option value="{{ $aprobador->id }}">
-                                        {{ $aprobador->name }}
-                                    </option>
-                            @endforeach
-                            @endif
+                                @if ($firma)
+                                    @foreach ($firma->aprobadores as $aprobador)
+                                        <option value="{{ $aprobador->id }}">
+                                            {{ $aprobador->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Identificación del Puesto</span>
                     </div>
@@ -139,7 +139,7 @@
 
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Descripción del puesto</span>
                     </div>
@@ -159,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Principales responsabilidades</span>
                     </div>
@@ -235,7 +235,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Herramientas para desempeñar el puesto</span>
                     </div>
@@ -291,7 +291,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Requisitos y habilidades para el puesto</span>
                     </div>
@@ -352,7 +352,7 @@
 
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Idiomas</span>
                     </div>
@@ -378,7 +378,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -432,7 +432,7 @@
 
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Datos generales</span>
                     </div>
@@ -551,7 +551,7 @@
 
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos del puesto</span>
                     </div>
@@ -619,7 +619,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos Externos del puesto</span>
                     </div>
@@ -669,7 +669,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Responsiva</span>
                     </div>
@@ -790,7 +790,8 @@
 
 
                     <div class="form-group col-12 text-right mt-4" style="margin-left:15px;">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
                         <button class="btn btn-danger" type="submit">
                             {{ trans('global.save') }}
                         </button>

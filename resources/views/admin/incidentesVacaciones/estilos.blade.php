@@ -75,10 +75,10 @@
         width: 157px;
         height: 40px;
         background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 2px solid #306BA9;
+        border: 2px solid var(--color-tbj);
         border-radius: 4px;
         opacity: 1;
-        color: #306BA9;
+        color: var(--color-tbj);
         font: normal normal normal 14px/20px Roboto;
         padding-top: 7px;
         padding-left: 8px;
@@ -105,8 +105,8 @@
 
     .btn_cargar {
         border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
+        border: 1px solid var(--color-tbj);
+        color: var(--color-tbj);
         text-align: center;
         padding: 0;
         width: 45px;
@@ -120,7 +120,7 @@
 
     .btn_cargar:hover {
         color: #fff;
-        background: #345183;
+        background: var(--color-tbj);
     }
 
     .btn_cargar i {
@@ -139,6 +139,6 @@
     h4,
     h5,
     h6 {
-        color: #306BA9;
+        color: var(--color-tbj);
     }
 </style>

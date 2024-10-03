@@ -3,16 +3,16 @@
         <div class="card card-body caja-blue">
 
             <div>
-                <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                    style="width:150px; position: relative; top: 60px; right: 410px;">
+                <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
             </div>
 
-            <div style="position: relative; top:-5rem; left: 80px;">
+            <div>
                 <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
                 <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
                 <p>
                     Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
-                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las
+                    transacciones.&nbsp;
                 </p>
             </div>
         </div>
@@ -357,7 +357,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-3">
-                                        <div class="col s12 l12">
+                                        <div class="col s12 l12 mt-3 mb-3">
                                             <label for="proveedor_{{ $keyP }}">
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
@@ -375,7 +375,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-3">
-                                        <div class="col s12 l6 anima-focus">
+                                        <div class="col s12 l6 anima-focus mt-3 mb-3">
                                             <input type="date" id="fechaInicio"
                                                 wire:model= "array_proveedores.{{ $keyP }}.fechaInicio"
                                                 class="form-control modal-start"
@@ -384,7 +384,7 @@
                                                 Fecha inicio*
                                             </label>
                                         </div>
-                                        <div class="col s12 l6 anima-focus">
+                                        <div class="col s12 l6 anima-focus mt-3 mb-3">
                                             <input type="date" id="fechaFin"
                                                 wire:model= "array_proveedores.{{ $keyP }}.fechaFin"
                                                 class="form-control modal-end"
@@ -401,7 +401,7 @@
                                     <br>
                                     @if ($array_proveedores[$keyP]['proveedor_id'] == 'otro')
                                         <div class="row mb-1">
-                                            <div class="col s12 l12 anima-focus">
+                                            <div class="col s12 l12 anima-focus mt-3 mb-3">
                                                 <select class="form-control"
                                                     wire:model.lazy='array_proveedores.{{ $keyP }}.select_otro'
                                                     name="proveedor_otro{{ $keyP }}" required>
@@ -600,7 +600,8 @@
                                     {{ $requisicion->sucursal->direccion }} <br>
                                 </div>
                                 <div class="flex-item item-header-doc-info" style="">
-                                    <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
+                                    <h4 style="font-size: 18px; color:var(--color-tbj);">REQUISICIÓN DE ADQUISICIONES
+                                    </h4>
                                     <p>Folio: RQ-00-00{{ $requisicion->id }}</p>
                                     <p>Fecha de solicitud:{{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
                                 </div>

@@ -10,7 +10,7 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: #345183;
+            color: var(--color-tbj);
             padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
@@ -79,11 +79,11 @@
     </style>
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
+            border-top: 2px solid var(--color-tbj);
         }
 
         div.tab-pane ul {
@@ -118,7 +118,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #345183;
+            color: var(--color-tbj);
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -127,8 +127,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -167,7 +167,6 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}

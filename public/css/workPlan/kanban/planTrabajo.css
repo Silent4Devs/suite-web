@@ -284,8 +284,7 @@ select::-ms-expand {
 #add-task-btn {
     padding: 10px 20px;
     background-color: transparent;
-    color: #006DDB;
-    border: none;
+    color: var(--color-tbj);    border: none;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -577,7 +576,7 @@ input::file-selector-button {
 }
 
 .kanban-title-board {
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .gdfColHeader {

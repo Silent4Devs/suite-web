@@ -52,7 +52,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use VXM\Async\AsyncFacade as Async;
 
@@ -60,469 +59,469 @@ class InicioUsuarioController extends Controller
 {
     public function index()
     {
-            abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $hoy = Carbon::now();
+        $hoy = Carbon::now();
 
-            $hoy->toDateString();
+        $hoy->toDateString();
 
-            Async::batchRun(
-                function () use (&$implementaciones) {
-                    // Check if the result is already cached
-                    $implementaciones = PlanImplementacion::getAll();
-                },
-                function () use (&$existsEmpleado) {
-                    $existsEmpleado = Empleado::exists();
-                },
-                function () use (&$existsOrganizacion) {
-                    $existsOrganizacion = Organizacion::exists();
-                },
-                function () use (&$existsAreas) {
-                    $existsAreas = Area::exists();
-                },
-                function () use (&$existsPuesto) {
-                    $existsPuesto = Puesto::exists();
-                },
-                function () use (&$existsVinculoEmpleadoAdmin) {
-                    $existsVinculoEmpleadoAdmin = User::exists();
-                },
-                function () use (&$organizacion) {
-                    $organizacion = Organizacion::getFirst();
-                },
-                function () use (&$panel_rules) {
-                    $panel_rules = PanelInicioRule::getAll();
-                },
-                function () use (&$documentos_publicados) {
-                    $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-                },
-                function () use (&$auditorias_anual) {
-                    $auditorias_anual = AuditoriaAnual::getAll();
-                },
-                function () use (&$eventos) {
-                    $eventos = Calendario::getAll();
-                },
-                function () use (&$oficiales) {
-                    $oficiales = CalendarioOficial::getAll();
-                },
-                function () use (&$cumples_aniversarios) {
-                    $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
-                },
-            );
+        Async::batchRun(
+            function () use (&$implementaciones) {
+                // Check if the result is already cached
+                $implementaciones = PlanImplementacion::getAll();
+            },
+            function () use (&$existsEmpleado) {
+                $existsEmpleado = Empleado::exists();
+            },
+            function () use (&$existsOrganizacion) {
+                $existsOrganizacion = Organizacion::exists();
+            },
+            function () use (&$existsAreas) {
+                $existsAreas = Area::exists();
+            },
+            function () use (&$existsPuesto) {
+                $existsPuesto = Puesto::exists();
+            },
+            function () use (&$existsVinculoEmpleadoAdmin) {
+                $existsVinculoEmpleadoAdmin = User::exists();
+            },
+            function () use (&$organizacion) {
+                $organizacion = Organizacion::getFirst();
+            },
+            function () use (&$panel_rules) {
+                $panel_rules = PanelInicioRule::getAll();
+            },
+            function () use (&$documentos_publicados) {
+                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+            },
+            function () use (&$auditorias_anual) {
+                $auditorias_anual = AuditoriaAnual::getAll();
+            },
+            function () use (&$eventos) {
+                $eventos = Calendario::getAll();
+            },
+            function () use (&$oficiales) {
+                $oficiales = CalendarioOficial::getAll();
+            },
+            function () use (&$cumples_aniversarios) {
+                $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
+            },
+        );
 
-            $usuario = User::getCurrentUser();
-            $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
-            // dd($empleado->estado_disponibilidad);
+        // dd($empleado->estado_disponibilidad);
 
-            $usuarioVinculadoConEmpleado = false;
-            if ($empleado) {
-                $usuarioVinculadoConEmpleado = true;
-            }
+        $usuarioVinculadoConEmpleado = false;
+        if ($empleado) {
+            $usuarioVinculadoConEmpleado = true;
+        }
 
-            $empleado_id = $empleado ? $empleado->id : 0;
-            $actividades = [];
+        $empleado_id = $empleado ? $empleado->id : 0;
+        $actividades = [];
 
-            $actividades = collect();
-            if ($implementaciones) {
-                foreach ($implementaciones as $implementacion) {
-                    $tasks = $implementacion->tasks;
-                    foreach ($tasks as $task) {
-                        $task->parent_id = $implementacion->id;
-                        $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
-                        $task->end = intval($task->end);
-                        $task->start = intval($task->start);
-                        $task->canAdd = $task->canAdd == 'true' ? true : false;
-                        $task->canWrite = $task->canWrite == 'true' ? true : false;
-                        $task->duration = intval($task->duration);
-                        if (! isset($task->progress) || empty($task->progress)) {
-                            $task->progress = 0;
-                        } else {
-                            $task->progress = intval($task->progress);
-                        }
-                        $task->canDelete = $task->canDelete == 'true' ? true : false;
-                        isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
-                        isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
-                        $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
-                        $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
-                        $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
-                        $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
-                        $task->archivo = $implementacion->archivo;
-                        $task->id_implementacion = $implementacion->id;
+        $actividades = collect();
+        if ($implementaciones) {
+            foreach ($implementaciones as $implementacion) {
+                $tasks = $implementacion->tasks;
+                foreach ($tasks as $task) {
+                    $task->parent_id = $implementacion->id;
+                    $task->status = isset($task->status) ? $task->status : 'STATUS_UNDEFINED';
+                    $task->end = intval($task->end);
+                    $task->start = intval($task->start);
+                    $task->canAdd = $task->canAdd == 'true' ? true : false;
+                    $task->canWrite = $task->canWrite == 'true' ? true : false;
+                    $task->duration = intval($task->duration);
+                    if (! isset($task->progress) || empty($task->progress)) {
+                        $task->progress = 0;
+                    } else {
+                        $task->progress = intval($task->progress);
                     }
+                    $task->canDelete = $task->canDelete == 'true' ? true : false;
+                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
+                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
+                    $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
+                    $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
+                    $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
+                    $task->progressByWorklog = $task->progressByWorklog == 'true' ? true : false;
+                    $task->archivo = $implementacion->archivo;
+                    $task->id_implementacion = $implementacion->id;
+                }
 
-                    $implementacion->tasks = $tasks;
-                    // if (!isset($implementacion->assigs)) {
-                    //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
-                    // }
-                    $actividades_collet = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
-                        if ($task->level > 1) {
-                            if (isset($task->assigs)) {
-                                $assigs = $task->assigs;
-                                $task->parent = $implementacion->parent;
-                                $task->slug = $implementacion->slug;
-                                foreach ($assigs as $assig) {
-                                    if ($assig->resourceId == $empleado_id) {
-                                        return $task;
-                                    }
+                $implementacion->tasks = $tasks;
+                // if (!isset($implementacion->assigs)) {
+                //     $implementacion = (object)array_merge((array)$implementacion, array('assigs' => []));
+                // }
+                $actividades_collet = collect($implementacion->tasks)->filter(function ($task) use ($empleado_id, $implementacion) {
+                    if ($task->level > 1) {
+                        if (isset($task->assigs)) {
+                            $assigs = $task->assigs;
+                            $task->parent = $implementacion->parent;
+                            $task->slug = $implementacion->slug;
+                            foreach ($assigs as $assig) {
+                                if ($assig->resourceId == $empleado_id) {
+                                    return $task;
                                 }
                             }
                         }
-                    });
+                    }
+                });
 
-                    $actividades->push($actividades_collet);
-                }
+                $actividades->push($actividades_collet);
             }
-            $actividades = $actividades->flatten(1);
+        }
+        $actividades = $actividades->flatten(1);
 
-            $contador_actividades = 0;
+        $contador_actividades = 0;
 
-            foreach ($actividades as $actividad) {
-                $progreso = $actividad->progress;
+        foreach ($actividades as $actividad) {
+            $progreso = $actividad->progress;
 
-                if (intval($progreso) < 100) {
-                    $contador_actividades++;
-                }
+            if (intval($progreso) < 100) {
+                $contador_actividades++;
             }
+        }
 
-            $auditoria_internas = new AuditoriaInterna;
-            $recursos = collect();
-            $mis_quejas = collect();
-            $mis_quejas_count = 0;
-            $mis_denuncias = collect();
-            $mis_denuncias_count = 0;
-            $mis_propuestas = collect();
-            $mis_propuestas_count = 0;
-            $mis_sugerencias = collect();
-            $mis_sugerencias_count = 0;
-            $solicitud_vacacion = 0;
-            $solicitud_dayoff = 0;
-            $solicitud_permiso = 0;
-            $solicitudes_pendientes = 0;
-            $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
-            $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
-                return AuditoriaInterna::where(function ($query) use ($empleado) {
-                    $query
-                        ->whereHas('equipo', function ($subquery) use ($empleado) {
-                            $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-                        })
-                        ->orWhere('lider_id', $empleado->id);
+        $auditoria_internas = new AuditoriaInterna;
+        $recursos = collect();
+        $mis_quejas = collect();
+        $mis_quejas_count = 0;
+        $mis_denuncias = collect();
+        $mis_denuncias_count = 0;
+        $mis_propuestas = collect();
+        $mis_propuestas_count = 0;
+        $mis_sugerencias = collect();
+        $mis_sugerencias_count = 0;
+        $solicitud_vacacion = 0;
+        $solicitud_dayoff = 0;
+        $solicitud_permiso = 0;
+        $solicitudes_pendientes = 0;
+        $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
+        $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
+            return AuditoriaInterna::where(function ($query) use ($empleado) {
+                $query
+                    ->whereHas('equipo', function ($subquery) use ($empleado) {
+                        $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
+                    })
+                    ->orWhere('lider_id', $empleado->id);
+            })
+                ->distinct()
+                ->get();
+        });
+
+        $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
+        $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
+            return Recurso::whereHas('empleados', function ($query) use ($empleado) {
+                $query->where('empleados.id', $empleado->id);
+            })->get();
+        });
+
+        $contador_recursos = $recursos->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
+
+        $revisiones = [];
+        $mis_documentos = [];
+        $contador_revisiones = 0;
+        $evaluaciones = collect();
+        $mis_evaluaciones = collect();
+        $como_evaluador = collect();
+        $lista_evaluaciones = collect();
+        $last_evaluacion = collect();
+        $esLider = false;
+        $equipo_a_cargo = collect();
+        $equipo_trabajo = collect();
+        $supervisor = null;
+        $mis_objetivos = collect();
+
+        if ($empleado) {
+            $revisiones = RevisionDocumento::with('documento')
+                ->where('empleado_id', $empleado->id)
+                ->where('archivado', 0)
+                ->get();
+
+            $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
+            $mis_documentos = Documento::getWithMacroproceso($empleado->id);
+            //Evaluaciones
+            $last_evaluacion = Evaluacion::getAllLatestFirst();
+            if ($last_evaluacion) {
+                $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
+                    })
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
                 })
-                    ->distinct()
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
+                    ->where('evaluado', false)
                     ->get();
-            });
-
-            $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
-            $recursos = Cache::remember($cacheKeyRecursos, 3600 * 8, function () use ($empleado) {
-                return Recurso::whereHas('empleados', function ($query) use ($empleado) {
-                    $query->where('empleados.id', $empleado->id);
-                })->get();
-            });
-
-            $contador_recursos = $recursos->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
-
-            $revisiones = [];
-            $mis_documentos = [];
-            $contador_revisiones = 0;
-            $evaluaciones = collect();
-            $mis_evaluaciones = collect();
-            $como_evaluador = collect();
-            $lista_evaluaciones = collect();
-            $last_evaluacion = collect();
-            $esLider = false;
-            $equipo_a_cargo = collect();
-            $equipo_trabajo = collect();
-            $supervisor = null;
-            $mis_objetivos = collect();
-
-            if ($empleado) {
-                $revisiones = RevisionDocumento::with('documento')
-                    ->where('empleado_id', $empleado->id)
-                    ->where('archivado', 0)
-                    ->get();
-
-                $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
-                $mis_documentos = Documento::getWithMacroproceso($empleado->id);
-                //Evaluaciones
-                $last_evaluacion = Evaluacion::getAllLatestFirst();
-                if ($last_evaluacion) {
-                    $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                        $q->where(function ($query) {
-                            $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
-                        })
-                            ->where('fecha_inicio', '<=', Carbon::now())
-                            // ->where('fecha_fin', '>', Carbon::now())
-                            ->where('id', $last_evaluacion->id);
+                $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where(function ($query) {
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
                     })
-                        ->with('empleado_evaluado', 'evaluador')
-                        ->where('evaluador_id', $empleado->id)
-                        ->where('evaluado_id', '!=', $empleado->id)
-                        ->where('evaluado', false)
-                        ->get();
-                    $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                        $q->where(function ($query) {
-                            $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
-                        })
-                            ->where('fecha_inicio', '<=', Carbon::now())
-                            // ->where('fecha_fin', '>', Carbon::now())
-                            ->where('id', $last_evaluacion->id);
-                    })
-                        ->with('empleado_evaluado', 'evaluador')
-                        ->where('evaluador_id', $empleado->id)
-                        ->where('evaluado_id', $empleado->id)
-                        ->first();
-                }
-
-                if ($last_evaluacion) {
-                    $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                        $q->where('estatus', Evaluacion::CLOSED)
-                            ->where('fecha_inicio', '<=', Carbon::now())
-                            ->where('fecha_fin', '>', Carbon::now())
-                            ->where('id', $last_evaluacion->id);
-                    })
-                        ->with('empleado_evaluado', 'evaluador')
-                        ->where('evaluador_id', $empleado->id)
-                        ->where('evaluado_id', '!=', $empleado->id)
-                        ->where('evaluado', false)
-                        ->get();
-                    $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
-                        $q->where('estatus', Evaluacion::CLOSED)
-                            ->where('fecha_inicio', '<=', Carbon::now())
-                            ->where('fecha_fin', '>', Carbon::now())
-                            ->where('id', $last_evaluacion->id);
-                    })
-                        ->with('empleado_evaluado', 'evaluador')
-                        ->where('evaluador_id', $empleado->id)
-                        ->where('evaluado_id', '!=', $empleado->id)
-                        ->first();
-                }
-                // dd($como_evaluador->evaluacion, $mis_evaluaciones);
-                $mis_objetivos = $empleado->objetivos;
-
-                // SECCION MIS DATOS
-                if ($empleado->children->count()) {
-                    $esLider = true;
-                    $equipo_a_cargo = $this->obtenerEquipo($empleado->children);
-                    $equipo_a_cargo = Empleado::getaltaAll()->find($equipo_a_cargo);
-                } else {
-                    $equipo_trabajo = $empleado->empleados_misma_area;
-                    $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
-                }
-                $supervisor = $empleado->supervisor;
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        // ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', $empleado->id)
+                    ->first();
             }
 
-            $panel_rules = PanelInicioRule::getAll();
-
-            if (! is_null($empleado)) {
-                $activos = Activo::select('*')
-                    ->where('id_responsable', '=', $empleado->id)
+            if ($last_evaluacion) {
+                $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::CLOSED)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
+                    ->where('evaluado', false)
                     ->get();
-                if ($empleado->cumpleaños) {
-                    $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
-                } else {
-                    $cumpleaños_usuario = null;
-                }
+                $como_evaluador = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
+                    $q->where('estatus', Evaluacion::CLOSED)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
+                        ->where('id', $last_evaluacion->id);
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
+                    ->where('evaluado_id', '!=', $empleado->id)
+                    ->first();
+            }
+            // dd($como_evaluador->evaluacion, $mis_evaluaciones);
+            $mis_objetivos = $empleado->objetivos;
 
-                $felicitar = FelicitarCumpleaños::getAllWhereYear($empleado->id, $hoy->format('Y'));
-
-                $cumpleaños_felicitados_like_contador = $felicitar->where('like', true)->count();
-
-                $cumpleaños_felicitados_like_usuarios = $felicitar->where('like', true);
-
-                $cumpleaños_felicitados_comentarios = $felicitar->where('like', false)->where('comentarios', '!=', null);
+            // SECCION MIS DATOS
+            if ($empleado->children->count()) {
+                $esLider = true;
+                $equipo_a_cargo = $this->obtenerEquipo($empleado->children);
+                $equipo_a_cargo = Empleado::getaltaAll()->find($equipo_a_cargo);
             } else {
-                $activos = false;
+                $equipo_trabajo = $empleado->empleados_misma_area;
+                $equipo_trabajo = Empleado::getaltaAll()->find($equipo_trabajo);
+            }
+            $supervisor = $empleado->supervisor;
+        }
+
+        $panel_rules = PanelInicioRule::getAll();
+
+        if (! is_null($empleado)) {
+            $activos = Activo::select('*')
+                ->where('id_responsable', '=', $empleado->id)
+                ->get();
+            if ($empleado->cumpleaños) {
+                $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
+            } else {
                 $cumpleaños_usuario = null;
-                $cumpleaños_felicitados_like_contador = collect();
-                $cumpleaños_felicitados_like_usuarios = collect();
-                $cumpleaños_felicitados_comentarios = collect();
             }
 
-            $competencias = collect();
+            $felicitar = FelicitarCumpleaños::getAllWhereYear($empleado->id, $hoy->format('Y'));
 
-            if ($empleado) {
-                $competencias = Empleado::with([
-                    'puestoRelacionado' => function ($q) {
-                        $q->with([
-                            'competencias' => function ($q) {
-                                $q->with('competencia');
-                            },
-                        ]);
-                    },
-                ])->find($empleado->id)->puestoRelacionado;
-                $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
+            $cumpleaños_felicitados_like_contador = $felicitar->where('like', true)->count();
 
-                $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
-                $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
-                $mejoras = Mejoras::getAll()->where('empleado_mejoro_id', $empleado->id);
-                $sugerencias = Sugerencias::getAll()->where('empleado_sugirio_id', $empleado->id);
+            $cumpleaños_felicitados_like_usuarios = $felicitar->where('like', true);
 
-                $mis_quejas = $quejas->where('empleado_quejo_id', $empleado->id);
-                $mis_quejas_count = $quejas->count();
-                $mis_denuncias = $denuncias;
-                $mis_denuncias_count = $denuncias->count();
-                $mis_propuestas = $mejoras;
-                $mis_propuestas_count = $mejoras->count();
-                $mis_sugerencias = $sugerencias;
-                $mis_sugerencias_count = $sugerencias->count();
+            $cumpleaños_felicitados_comentarios = $felicitar->where('like', false)->where('comentarios', '!=', null);
+        } else {
+            $activos = false;
+            $cumpleaños_usuario = null;
+            $cumpleaños_felicitados_like_contador = collect();
+            $cumpleaños_felicitados_like_usuarios = collect();
+            $cumpleaños_felicitados_comentarios = collect();
+        }
 
-                $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)
-                    ->where('aprobacion', 1)
-                    ->count();
-                $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)
-                    ->where('aprobacion', 1)
-                    ->count();
-                $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)
-                    ->where('aprobacion', 1)
-                    ->count();
-                $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
-                // $solicitudes_pendientes = 1;
-            }
+        $competencias = collect();
 
-            $redirigirEvaluacion = false;
+        if ($empleado) {
+            $competencias = Empleado::with([
+                'puestoRelacionado' => function ($q) {
+                    $q->with([
+                        'competencias' => function ($q) {
+                            $q->with('competencia');
+                        },
+                    ]);
+                },
+            ])->find($empleado->id)->puestoRelacionado;
+            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
 
-            try {
-                //Evaluaciones desempeno
-                $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
+            $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
+            $denuncias = Denuncias::getAll()->where('empleado_denuncio_id', $empleado->id);
+            $mejoras = Mejoras::getAll()->where('empleado_mejoro_id', $empleado->id);
+            $sugerencias = Sugerencias::getAll()->where('empleado_sugirio_id', $empleado->id);
 
-                $id_evaluado = null;
-                $id_periodo = null;
-                $id_evaluacion = null;
+            $mis_quejas = $quejas->where('empleado_quejo_id', $empleado->id);
+            $mis_quejas_count = $quejas->count();
+            $mis_denuncias = $denuncias;
+            $mis_denuncias_count = $denuncias->count();
+            $mis_propuestas = $mejoras;
+            $mis_propuestas_count = $mejoras->count();
+            $mis_sugerencias = $sugerencias;
+            $mis_sugerencias_count = $sugerencias->count();
 
-                foreach ($evDes as $keyEv => $evD) {
-                    $periodosEv = $evD->periodos->where('habilitado', true)->where('finalizado', false);
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
+            // $solicitudes_pendientes = 1;
+        }
 
-                    $areasEv = $evD->areas_evaluacion;
+        $redirigirEvaluacion = false;
 
-                    foreach ($periodosEv as $keyP => $p) {
-                        $hoyContestarEvaluacion = $hoy->between($p->fecha_inicio, $p->fecha_fin);
-                        if ($hoyContestarEvaluacion) {
-                            foreach ($evD->evaluados as $keyEval => $evaluado) {
-                                // $evaluado->nombres_evaluadores;
-                                $evaluador = in_array($empleado->id, $evaluado->nombres_evaluadores);
-                                if ($evaluador) {
-                                    $redirigirEvaluacion = true;
-                                    $id_evaluado = $evaluado->id;
-                                    $id_periodo = $p->id;
-                                    $id_evaluacion = $evD->id;
-                                }
+        try {
+            //Evaluaciones desempeno
+            $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
+
+            $id_evaluado = null;
+            $id_periodo = null;
+            $id_evaluacion = null;
+
+            foreach ($evDes as $keyEv => $evD) {
+                $periodosEv = $evD->periodos->where('habilitado', true)->where('finalizado', false);
+
+                $areasEv = $evD->areas_evaluacion;
+
+                foreach ($periodosEv as $keyP => $p) {
+                    $hoyContestarEvaluacion = $hoy->between($p->fecha_inicio, $p->fecha_fin);
+                    if ($hoyContestarEvaluacion) {
+                        foreach ($evD->evaluados as $keyEval => $evaluado) {
+                            // $evaluado->nombres_evaluadores;
+                            $evaluador = in_array($empleado->id, $evaluado->nombres_evaluadores);
+                            if ($evaluador) {
+                                $redirigirEvaluacion = true;
+                                $id_evaluado = $evaluado->id;
+                                $id_periodo = $p->id;
+                                $id_evaluacion = $evD->id;
                             }
                         }
                     }
                 }
-            } catch (\Throwable $th) {
-                //throw $th;
             }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
-            $mostrarCargaObjetivos = false;
+        $mostrarCargaObjetivos = false;
 
-            try {
-                //code...
-                //Carga de objetivos propios
-                $carga_objetivos_activo = PeriodoCargaObjetivos::first();
+        try {
+            //code...
+            //Carga de objetivos propios
+            $carga_objetivos_activo = PeriodoCargaObjetivos::first();
 
-                $permisos = PermisosCargaObjetivos::get();
+            $permisos = PermisosCargaObjetivos::get();
 
-                $fechaInicio = $carga_objetivos_activo->fecha_inicio;
-                $fechaFin = $carga_objetivos_activo->fecha_fin;
+            $fechaInicio = $carga_objetivos_activo->fecha_inicio;
+            $fechaFin = $carga_objetivos_activo->fecha_fin;
 
-                $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
+            $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
 
-                $perfilAdministrador = $permisos->where('perfil', 'Administrador')->first();
-                $perfilJefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
-                $perfilColaborador = $permisos->where('perfil', 'Colaborador')->first();
+            $perfilAdministrador = $permisos->where('perfil', 'Administrador')->first();
+            $perfilJefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
+            $perfilColaborador = $permisos->where('perfil', 'Colaborador')->first();
 
-                if ($hoyCargaObjetivos && $perfilAdministrador->permisos_asignacion == true && $usuario->roles->contains('title', 'Admin')) {
-                    $mostrarCargaObjetivos = true;
-                } elseif ($hoyCargaObjetivos && $perfilJefeInmediato->permisos_asignacion == true && $empleado->es_supervisor) {
-                    $mostrarCargaObjetivos = true;
-                } elseif ($hoyCargaObjetivos && ($perfilColaborador->permisos_asignacion || $perfilColaborador->permiso_objetivos || $perfilColaborador->permiso_escalas)) {
-                    $mostrarCargaObjetivos = true;
-                }
-            } catch (\Throwable $th) {
-                //throw $th;
+            if ($hoyCargaObjetivos && $perfilAdministrador->permisos_asignacion == true && $usuario->roles->contains('title', 'Admin')) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && $perfilJefeInmediato->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && ($perfilColaborador->permisos_asignacion || $perfilColaborador->permiso_objetivos || $perfilColaborador->permiso_escalas)) {
+                $mostrarCargaObjetivos = true;
             }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
-            $mostrarCargaObjetivosArea = false;
+        $mostrarCargaObjetivosArea = false;
 
-            try {
-                //code...
-                //Carga de objetivos area
-                $carga_objetivos_activo_area = PeriodoCargaObjetivos::first();
+        try {
+            //code...
+            //Carga de objetivos area
+            $carga_objetivos_activo_area = PeriodoCargaObjetivos::first();
 
-                $permisosArea = PermisosCargaObjetivos::get();
+            $permisosArea = PermisosCargaObjetivos::get();
 
-                $fechaInicioArea = $carga_objetivos_activo_area->fecha_inicio;
-                $fechaFinArea = $carga_objetivos_activo_area->fecha_fin;
+            $fechaInicioArea = $carga_objetivos_activo_area->fecha_inicio;
+            $fechaFinArea = $carga_objetivos_activo_area->fecha_fin;
 
-                $hoyCargaObjetivosArea = $hoy->between($fechaInicioArea, $fechaFinArea);
+            $hoyCargaObjetivosArea = $hoy->between($fechaInicioArea, $fechaFinArea);
 
-                $perfilJefeInmediatoArea = $permisosArea->where('perfil', 'Jefe Inmediato')->first();
+            $perfilJefeInmediatoArea = $permisosArea->where('perfil', 'Jefe Inmediato')->first();
 
-                if ($hoyCargaObjetivosArea && $perfilJefeInmediatoArea->permisos_asignacion == true && $empleado->es_supervisor) {
-                    $mostrarCargaObjetivosArea = true;
-                }
-            } catch (\Throwable $th) {
-                //throw $th;
+            if ($hoyCargaObjetivosArea && $perfilJefeInmediatoArea->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivosArea = true;
             }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
-            return view(
-                'admin.inicioUsuario.index',
-                compact(
-                    'empleado',
-                    'solicitudes_pendientes',
-                    'usuario',
-                    'competencias',
-                    'recursos',
-                    'actividades',
-                    'documentos_publicados',
-                    'auditorias_anual',
-                    'revisiones',
-                    'mis_documentos',
-                    'contador_actividades',
-                    'contador_revisiones',
-                    'contador_recursos',
-                    'auditoria_internas',
-                    'evaluaciones',
-                    'oficiales',
-                    'mis_evaluaciones',
-                    'como_evaluador',
-                    'equipo_a_cargo',
-                    'equipo_trabajo',
-                    'supervisor',
-                    'mis_objetivos',
-                    'last_evaluacion',
-                    'panel_rules',
-                    'activos',
-                    'eventos',
-                    'cumpleaños_usuario',
-                    'cumpleaños_felicitados_like_contador',
-                    'cumpleaños_felicitados_comentarios',
-                    'cumples_aniversarios',
-                    'cumpleaños_felicitados_like_usuarios',
-                    'esLider',
-                    'organizacion',
-                    'usuarioVinculadoConEmpleado',
-                    'mis_quejas',
-                    'mis_quejas_count',
-                    'mis_denuncias',
-                    'mis_denuncias_count',
-                    'mis_propuestas',
-                    'mis_propuestas_count',
-                    'mis_sugerencias',
-                    'mis_sugerencias_count',
-                    'existsEmpleado',
-                    'existsOrganizacion',
-                    'existsVinculoEmpleadoAdmin',
-                    'existsAreas',
-                    'existsPuesto',
-                    'redirigirEvaluacion',
-                    'id_periodo',
-                    'id_evaluacion',
-                    'id_evaluado',
-                    'mostrarCargaObjetivos',
-                    'mostrarCargaObjetivosArea',
-                ),
-            );
+        return view(
+            'admin.inicioUsuario.index',
+            compact(
+                'empleado',
+                'solicitudes_pendientes',
+                'usuario',
+                'competencias',
+                'recursos',
+                'actividades',
+                'documentos_publicados',
+                'auditorias_anual',
+                'revisiones',
+                'mis_documentos',
+                'contador_actividades',
+                'contador_revisiones',
+                'contador_recursos',
+                'auditoria_internas',
+                'evaluaciones',
+                'oficiales',
+                'mis_evaluaciones',
+                'como_evaluador',
+                'equipo_a_cargo',
+                'equipo_trabajo',
+                'supervisor',
+                'mis_objetivos',
+                'last_evaluacion',
+                'panel_rules',
+                'activos',
+                'eventos',
+                'cumpleaños_usuario',
+                'cumpleaños_felicitados_like_contador',
+                'cumpleaños_felicitados_comentarios',
+                'cumples_aniversarios',
+                'cumpleaños_felicitados_like_usuarios',
+                'esLider',
+                'organizacion',
+                'usuarioVinculadoConEmpleado',
+                'mis_quejas',
+                'mis_quejas_count',
+                'mis_denuncias',
+                'mis_denuncias_count',
+                'mis_propuestas',
+                'mis_propuestas_count',
+                'mis_sugerencias',
+                'mis_sugerencias_count',
+                'existsEmpleado',
+                'existsOrganizacion',
+                'existsVinculoEmpleadoAdmin',
+                'existsAreas',
+                'existsPuesto',
+                'redirigirEvaluacion',
+                'id_periodo',
+                'id_evaluacion',
+                'id_evaluado',
+                'mostrarCargaObjetivos',
+                'mostrarCargaObjetivosArea',
+            ),
+        );
     }
 
     public function obtenerEquipo($childrens)
@@ -1258,18 +1257,20 @@ class InicioUsuarioController extends Controller
 
     public function updateVersionIso(Request $request)
     {
-        foreach ($request->toArray() as $var) {
-            if ($var === false) {
-                $valor = false;
-            } else {
-                $valor = true;
-            }
-        }
+        // Obtén el valor booleano de 'version' directamente
+        $valor = $request->input('version');
 
-        $ver = VersionesIso::getFirst();
-        $ver->update([
-            'version_historico' => $valor,
-        ]);
+        // Asegúrate de que haya un registro en la base de datos
+        $ver = VersionesIso::first();
+
+        if ($ver) {
+            // Actualiza el registro
+            $ver->update(['version_historico' => $valor]);
+
+            return response()->json(['success' => 'Version updated']); // Respuesta de éxito
+        } else {
+            return response()->json(['error' => 'No version found'], 404); // Respuesta de error
+        }
     }
 
     public function solicitud()

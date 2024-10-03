@@ -35,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                                    height: 100%; */
+                                        height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -226,7 +226,7 @@
 @include('partials.flashMessages')
 {{-- <h5 class="col-12 titulo_general_funcion">Incidentes de seguridad</h5> --}}
 <div class="card" id="desk">
-    <div class="text-center card-header" style="margin-bottom: 20px; background-color: #345183;">
+    <div class="text-center card-header" style="margin-bottom: 20px; background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-exclamation-triangle"></i>Incidentes de
             seguridad</strong>
     </div>
@@ -319,8 +319,7 @@
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="estatus_campo form-control select2" id="opciones"
-                                    onchange='cambioOpciones();'>
+                                <select name="estatus" class="estatus_campo form-control select2" id="opciones">
                                     <option
                                         {{ old('estatus', $incidentesSeguridad->estatus) == 'Sin atender' ? 'selected' : '' }}
                                         value="Sin atender">Sin atender</option>
@@ -355,13 +354,10 @@
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
-                                    hora
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y hora
                                     de cierre del ticket</label>
-
-                                <input class="form-control" readonly name="fecha_cierre" type="datetime"
+                                <input class="form-control" readonly name="fecha_cierre" type="text"
                                     value="{{ $incidentesSeguridad->fecha_cierre }}" id="solucion">
-
                             </div>
                             <div class="form-group col-12">
                                 <b>Asignado:</b>
@@ -891,7 +887,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-seguridad-actividades.store') }}">
                                 <input type="hidden" name="seguridad_id" value="{{ $incidentesSeguridad->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
@@ -1063,6 +1059,35 @@
 
 @section('scripts')
 @parent
+<script>
+    $(document).ready(function() {
+        // Inicializa select2
+        $('#opciones').select2();
+
+        // Detecta el cambio en el select con select2
+        $('#opciones').on('change', function() {
+            var selectedValue = $(this).val();
+            console.log("Estatus seleccionado:", selectedValue); // Para verificar si el evento funciona
+            var solucionInput = $('#solucion');
+
+            if (selectedValue === 'Cerrado') {
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var year = now.getFullYear();
+                var hours = ("0" + now.getHours()).slice(-2);
+                var minutes = ("0" + now.getMinutes()).slice(-2);
+
+                // Formato: YYYY-MM-DD HH:MM
+                var formattedDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+                solucionInput.val(formattedDateTime);
+            } else {
+                solucionInput.val('No cerrado'); // Limpia el campo si no está "Cerrado"
+            }
+        });
+    });
+</script>
+
 <script>
     function validar(params) {
         var x = $("#firma").val();

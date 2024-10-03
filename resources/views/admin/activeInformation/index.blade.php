@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -19,7 +18,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -34,7 +33,6 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
     {{-- <h5 class="col-12 titulo_general_funcion">Inventario de Activos de Información</h5> --}}
     <div class="mt-5 card">
@@ -44,8 +42,10 @@
             </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modalactivoinventario', ['model' => 'Vulnerabilidad', 'route' =>
-                    'admin.vulnerabilidads.parseCsvImport'])
+                    @include('csvImport.modalactivoinventario', [
+                        'model' => 'Vulnerabilidad',
+                        'route' => 'admin.vulnerabilidads.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -57,7 +57,7 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-              @include('admin.OCTAVE.menu')
+            @include('admin.OCTAVE.menu')
             <table class="table table-bordered w-100 datatable-Activo" id="columnaft">
                 <thead class="thead-dark">
                     <tr>
@@ -69,89 +69,111 @@
                         <th style="min-width:100px;">Nombre VP</th>
                         <th style="min-width:200px;">Dueño AI Nombre del VP</th>
                         <th style="min-width:150px;">Nombre Dirección</th>
-                        <th style="min-width:200px;">Custodio AI Nombre Director</th >
+                        <th style="min-width:200px;">Custodio AI Nombre Director</th>
                         <th style="min-width:50px;">Formato</th>
                         <th style="min-width:100px;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $activos as $activo )
-                    @php
-                        $color="green";
-                        $colorRiesgo="green";
-                        $texto="white";
-                        $textoColor="white";
-                        $valor="";
-                        $resultado="";
-                        if($activo->valor_criticidad <=3){
-                            $color="green";
-                            $valor="Bajo";
-                        }
-                        if($activo->valor_criticidad >=5){
-                            $color="yellow";
-                            $texto="black";
-                            $valor="Media";
-                        }
-                        if($activo->valor_criticidad >=7){
-                            $color="orange";
-                            $valor="Alta";
-                        }
-                        if($activo->valor_criticidad >=10){
-                            $color="red";
-                            $valor="Crítica";
-                        }
+                    @foreach ($activos as $activo)
+                        @php
+                            $color = 'green';
+                            $colorRiesgo = 'green';
+                            $texto = 'white';
+                            $textoColor = 'white';
+                            $valor = '';
+                            $resultado = '';
+                            if ($activo->valor_criticidad <= 3) {
+                                $color = 'green';
+                                $valor = 'Bajo';
+                            }
+                            if ($activo->valor_criticidad >= 5) {
+                                $color = 'yellow';
+                                $texto = 'black';
+                                $valor = 'Media';
+                            }
+                            if ($activo->valor_criticidad >= 7) {
+                                $color = 'orange';
+                                $valor = 'Alta';
+                            }
+                            if ($activo->valor_criticidad >= 10) {
+                                $color = 'red';
+                                $valor = 'Crítica';
+                            }
 
-                        if($activo->riesgo_activo <=5){
-                            $colorRiesgo="green";
-                            $resultado="Bajo";
-                        }
-                        if($activo->riesgo_activo >=6){
-                            $colorRiesgo="yellow";
-                            $textoColor="black";
-                            $resultado="Media";
-                        }
-                        if($activo->riesgo_activo >=11){
-                            $colorRiesgo="orange";
-                            $resultado="Alta";
-                        }
-                        if($activo->riesgo_activo >=16){
-                            $colorRiesgo="red";
-                            $resultado="Crítica";
-                        }
-                    @endphp
+                            if ($activo->riesgo_activo <= 5) {
+                                $colorRiesgo = 'green';
+                                $resultado = 'Bajo';
+                            }
+                            if ($activo->riesgo_activo >= 6) {
+                                $colorRiesgo = 'yellow';
+                                $textoColor = 'black';
+                                $resultado = 'Media';
+                            }
+                            if ($activo->riesgo_activo >= 11) {
+                                $colorRiesgo = 'orange';
+                                $resultado = 'Alta';
+                            }
+                            if ($activo->riesgo_activo >= 16) {
+                                $colorRiesgo = 'red';
+                                $resultado = 'Crítica';
+                            }
+                        @endphp
 
-                    <tr>
-                        <td><div>{{$activo->identificador}}</div></td>
-                        <td><div>{{$activo->activo_informacion}}</div></td>
-                        <td style="background-color:{{$color}};color:{{$texto}}">
-                            <div>
-                                {{$activo->valor_criticidad}} - {{$valor}}
+                        <tr>
+                            <td>
+                                <div>{{ $activo->identificador }}</div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->activo_informacion }}</div>
+                            </td>
+                            <td style="background-color:{{ $color }};color:{{ $texto }}">
+                                <div>
+                                    {{ $activo->valor_criticidad }} - {{ $valor }}
 
-                            </div>
-                        </td>
-                        <td style="background-color:{{$colorRiesgo}};color:{{$textoColor}}">
-                            <div>
-                                {{$activo->riesgo_activo}} - {{$valor}}
-                            </div>
-                        </td>
-                        <td><div>{{$activo->nivel_riesgo_ai['riesgo']}} {{$activo->nivel_riesgo_ai['coordenada']}}</div></td>
-                        <td><div>{{$activo->vp ? $activo->vp->nombre : 'Sin definir'}}</div></td>
-                        <td><div>{{$activo->dueno->name}}</div></td>
-                        <td><div>{{$activo->direccion->area}}</div></td>
-                        <td><div>{{$activo->custodio->name}}</div></td>
-                        <td><div>{{$activo->formato}}</td>
-                        <td><div>
-                            <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}" method="POST">
-                                <a href="{{ route('admin.activosInformacion.edit',[$activo->id, $matriz] )}}"><i class="fas fa-edit"></i></a>
-                                {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                                    <i class="fas fa-trash text-danger"></i>
-                                    </button>
-                            </form>
-                        </div></td>
-                    </tr>
+                                </div>
+                            </td>
+                            <td style="background-color:{{ $colorRiesgo }};color:{{ $textoColor }}">
+                                <div>
+                                    {{ $activo->riesgo_activo }} - {{ $valor }}
+                                </div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->nivel_riesgo_ai['riesgo'] }} {{ $activo->nivel_riesgo_ai['coordenada'] }}
+                                </div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->vp ? $activo->vp->nombre : 'Sin definir' }}</div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->dueno->name }}</div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->direccion->area }}</div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->custodio->name }}</div>
+                            </td>
+                            <td>
+                                <div>{{ $activo->formato }}
+                            </td>
+                            <td>
+                                <div>
+                                    <form action="{{ route('admin.activosInformacion.destroy', $activo->id) }}"
+                                        method="POST">
+                                        <a href="{{ route('admin.activosInformacion.edit', [$activo->id, $matriz]) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        {{-- <a href="{{ route('admin.activosInformacion.show',$activo->id )}}"><i class="fas fa-eye"></i></a> --}}
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" title="delete"
+                                            style="border: none; background-color:transparent;">
+                                            <i class="fas fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -231,14 +253,16 @@
             ];
             @can('configuracion_activo_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar inventario de activos',
-                url: "{{ route('admin.activosInformacion.create',$matriz) }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar inventario de activos',
+                    url: "{{ route('admin.activosInformacion.create', $matriz) }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 // let btnExport = {
                 // text: '<i class="fas fa-download"></i>',
@@ -303,7 +327,4 @@
             let table = $('.datatable-Activo').DataTable(dtOverrideGlobals);
         });
     </script>
-
-
-
 @endsection

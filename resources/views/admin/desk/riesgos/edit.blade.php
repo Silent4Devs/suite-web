@@ -35,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                    height: 100%; */
+                        height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -86,7 +86,7 @@
 {{ Breadcrumbs::render('riesgos-edit', $riesgos) }}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-virus"></i>Riesgos</strong>
     </div>
     <div class="caja_botones_menu">
@@ -369,7 +369,8 @@
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ Str::limit(isset($riesgos->reporto->name), 30, '...') }}</div>
+                                <div class="form-control">{{ Str::limit(isset($riesgos->reporto->name), 30, '...') }}
+                                </div>
                             </div>
 
 
@@ -454,12 +455,12 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" name="ideas">{{ old('ideas', $analisis->ideas ?? '') }}</textarea>
                                         </div>
 
                                         <div class="form-group col-12">
                                             <label>Causa Raíz</label>
-                                            <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                                            <textarea class="form-control" name="causa_ideas">{{ old('causa_ideas', $analisis->causas_ideas ?? '') }}</textarea>
                                         </div>
                                     </div>
 
@@ -636,7 +637,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-riesgos-actividades.store') }}">
                                 <input type="hidden" name="riesgo_id" value="{{ $riesgos->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>

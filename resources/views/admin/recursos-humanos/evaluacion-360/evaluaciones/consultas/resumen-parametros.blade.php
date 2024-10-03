@@ -62,7 +62,8 @@
         </div>
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESUMEN GENERAL <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'" @click="open = !open"></i>
                 </div>
             </div>
@@ -93,7 +94,8 @@
                                             value="{{ $valor }}">
                                     </div>
                                 @endforeach
-                                <button id="resetValues" type="button" class="btn tb-btn-primary">Restablecer Valores</button>
+                                <button id="resetValues" type="button" class="btn tb-btn-primary">Restablecer
+                                    Valores</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-success" style="float: right;">Normalizar</button>
                             </form>
@@ -129,7 +131,8 @@
         </div>
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESULTADO DE LA EVALUACIÓN <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'"
                         @click="open = !open"></i>
                 </div>

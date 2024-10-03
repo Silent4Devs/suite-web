@@ -20,7 +20,7 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:#345183; border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             DATOS GENERALES
                                         </div>
                                     </th>
@@ -94,7 +94,7 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:#345183; border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             EVALUACIÓN DE RIESGO INICIAL
                                         </div>
                                     </th>
@@ -172,23 +172,23 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:#345183; border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             EVALUACIÓN DE RIESGO RESIDUAL
                                         </div>
                                     </th>
                                     <td>
                                     </td>
                                 </tr>
-                                    <th>
-                                        Confidencialidad
-                                    </th>
-                                    <td>
-                                        @if ($matrizRiesgo->confidencialidad_cid)
-                                            Sí
-                                        @else
-                                            No
-                                        @endif
-                                    </td>
+                                <th>
+                                    Confidencialidad
+                                </th>
+                                <td>
+                                    @if ($matrizRiesgo->confidencialidad_cid)
+                                        Sí
+                                    @else
+                                        No
+                                    @endif
+                                </td>
                                 </tr>
                                 <tr>
                                     <th>
@@ -220,9 +220,9 @@
                                     </th>
                                     <td>
                                         @if ($matrizRiesgo->probabilidad_residual)
-                                          {{$matrizRiesgo->probabilidad_residual}}
+                                            {{ $matrizRiesgo->probabilidad_residual }}
                                         @else
-                                        No evaluado
+                                            No evaluado
                                         @endif
                                     </td>
                                 </tr>
@@ -232,9 +232,9 @@
                                     </th>
                                     <td>
                                         @if ($matrizRiesgo->impacto_residual)
-                                            {{$matrizRiesgo->impacto_residual}}
+                                            {{ $matrizRiesgo->impacto_residual }}
                                         @else
-                                        No evaluado
+                                            No evaluado
                                         @endif
                                     </td>
                                 </tr>
@@ -249,7 +249,7 @@
                                 {{-- <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:#345183; border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             Tratamiento
                                         </div>
                                     </th>
@@ -276,7 +276,7 @@
                         </table>
                     </div>
                 </div>
-    
+
                 <div class="form-group">
                     <a class="btn btn-default"
                         href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}">

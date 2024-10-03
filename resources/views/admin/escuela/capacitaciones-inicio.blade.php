@@ -2,7 +2,7 @@
 @section('content')
     {{-- menus horizontales --}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 
     <style type="text/css">
         .caja_botones_menu {
@@ -13,7 +13,7 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: #345183;
+            color: var(--color-tbj);
             padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
@@ -87,7 +87,7 @@
         }
 
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active,
@@ -132,7 +132,7 @@
             align-items: center;
             justify-content: center;
             background-color: #fff;
-            color: #345183;
+            color: var(--color-tbj);
             box-shadow: 0px 1px 4px #00000024;
             border-radius: 14px;
             transition: 0.1s;
@@ -141,8 +141,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             transform: scale(1.05);
         }
@@ -197,48 +197,41 @@
     <div class="mt-5">
         <div class="card-body">
             @include('partials.flashMessages')
-            @if (
-                Auth::user()->can('mis_cursos_acceder'))
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-                    aria-labelledby="nav-contexto-tab">
-                    <ul class="mt-4">
+            @if (Auth::user()->can('mis_cursos_acceder'))
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
+                        aria-labelledby="nav-contexto-tab">
+                        <ul class="mt-4">
 
-                        @can('escuela_estudiante')
-                            <li>
-                                <a href="{{ route('admin.mis-cursos') }}">
-                                    <div>
-                                    <i class="material-symbols-outlined">
-                                        book_3
-                                    </i><br>
-                                        Mis Cursos
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mis_cursos_instructor')
-                            <li>
-                                <a href="{{ route('admin.courses.index') }}">
-                                    <div>
-                                    <i class="material-symbols-outlined">
-                                            badge
-                                    </i><br>
-                                        Instructor
-                                    </div>
-                                </a>
-                            </li>
-                        @endcan
+                            @can('escuela_estudiante')
+                                <li>
+                                    <a href="{{ route('admin.mis-cursos') }}">
+                                        <div>
+                                            <i class="material-symbols-outlined">
+                                                book_3
+                                            </i><br>
+                                            Mis Cursos
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('mis_cursos_instructor')
+                                <li>
+                                    <a href="{{ route('admin.courses.index') }}">
+                                        <div>
+                                            <i class="material-symbols-outlined">
+                                                badge
+                                            </i><br>
+                                            Instructor
+                                        </div>
+                                    </a>
+                                </li>
+                            @endcan
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>
-
-
-
-
 @endsection
-
-

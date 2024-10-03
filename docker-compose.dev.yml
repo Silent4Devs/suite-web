@@ -22,14 +22,14 @@ services:
     #uncomment this if you will use only docker compose
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
     # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
-    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=250
+    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
@@ -44,10 +44,30 @@ services:
     networks:
       - tabantajnetwork
 
+  postgres-tabantaj:
+    image: postgres:16-alpine
+    container_name: postgres-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+      - tabantaj-database:/var/lib/postgresql/data
+      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    environment:
+      - POSTGRES_USER=homestead
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=homestead
+    ports:
+      - "5432:5432"
+    networks:
+      - tabantajnetwork
+    mem_limit: 6g
+
+
   queue-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - .:/app
     command: php artisan queue:work --tries=3
@@ -64,7 +84,7 @@ services:
   schedule-worker:
     build:
       context: "."
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
@@ -121,17 +141,17 @@ services:
     # networks:
     #   - tabantajnetwork
 
-  reportservice:
-    image: ghcr.io/silent4devs/reportservice:latest
-    container_name: reportservice
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3301:3301"
-    volumes:
-      - reportservice_data:/reportservice
-    networks:
-      - tabantajnetwork
+  # reportservice:
+  #   image: ghcr.io/silent4devs/reportservice:latest
+  #   container_name: reportservice
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3301:3301"
+  #   volumes:
+  #     - reportservice_data:/reportservice
+  #   networks:
+  #     - tabantajnetwork
     # networks:
     #   - tabantajnetwork
 

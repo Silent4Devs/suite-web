@@ -7,7 +7,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ asset('css/global/app.css') }}{{config('app.cssVersion')}}" rel="stylesheet">
+    <link href="{{ asset('css/global/app.css') }}{{ config('app.cssVersion') }}" rel="stylesheet">
     <title>{{ trans('panel.site_title') }}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -134,12 +134,12 @@
 
         .iconos-crear {
             font-size: 15pt;
-            color: #3086AF;
+            color: var(--color-tbj);
             margin-right: 10px;
         }
 
         .verde_silent {
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         .azul_silent {
@@ -147,7 +147,7 @@
         }
 
         .iconos_cabecera {
-            color: #345183;
+            color: var(--color-tbj);
             font-size: 1.2rem;
         }
 
@@ -233,7 +233,7 @@
         .btn.btn-danger:hover {
             color: #345183 !important;
             background-color: rgba(0, 0, 0, 0) !important;
-            box-shadow: 0 0 0 1px #345183;
+            box-shadow: 0 0 0 1px var(--color-tbj);
         }
 
         .btn.btn-success:hover font {
@@ -360,7 +360,7 @@
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: #345183;
+            color: var(--color-tbj);
             padding: 5px 20px;
             font-weight: bold;
             margin: 0;
@@ -381,7 +381,7 @@
 
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
-            background-color: #345183;
+            background-color: var(--color-tbj);
             box-shadow: 0px -2px 0px 0px;
             color: #fff;
         }
@@ -925,7 +925,7 @@
         }
 
         .form-group label {
-            color: #3086AF;
+            color: var(--color-tbj);
         }
 
         .titulo-formulario {

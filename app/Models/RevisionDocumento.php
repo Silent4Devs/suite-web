@@ -39,7 +39,7 @@ class RevisionDocumento extends Model implements Auditable
 
     public static function getAllWithDocumento()
     {
-        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_' . User::getCurrentUser()->empleado->id, 3600 * 8, function () {
+        return Cache::remember('RevisionDocumento:revision_documentos_all_documentos_'.User::getCurrentUser()->empleado->id, 3600 * 8, function () {
             return self::with('documento')->where('empleado_id', User::getCurrentUser()->empleado->id)->where('archivado', RevisionDocumento::NO_ARCHIVADO)->get();
         });
     }
@@ -122,7 +122,7 @@ class RevisionDocumento extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class)->alta();
+        return $this->belongsTo(Empleado::class)->alta()->select('id', 'name', 'email', 'puesto_id', 'area_id', 'estatus');
     }
 
     public function empleadoMobile()

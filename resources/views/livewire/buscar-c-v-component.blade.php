@@ -67,7 +67,7 @@
             width: 98%;
             left: 0;
             line-height: 134px;
-            background: #345183;
+            background: var(--color-tbj);
             color: white;
             font-weight: 500;
         }
@@ -100,15 +100,18 @@
             <div class="col-sm-3 col-3 col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4 style="color: #3086AF;">Filtros</h4>
+                        <h4 style="color: var(--color-tbj);">Filtros</h4>
                         <hr>
-                        <div class="row">
-                            <div class="col-12 col-sm-12 px-3">
-                                <button wire:click="resetFilter" type="button" class="btn btn-link p-0 mb-3">Limpiar Filtros</button>
+                        <div class="">
+                            <div class="px-3">
+                                <button wire:click="resetFilter" type="button"
+                                    class="btn btn-outline-secondary w-100">Limpiar
+                                    Filtros</button>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group px-3 anima-focus mt-4">
                                 <select id="type" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName" @if($enableField) disabled @endif>
+                                    name="type" wire:model.live="type_id" wire:change="getCatalogueName"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -120,9 +123,10 @@
                                 </select>
                                 <label for="type">Tipo de capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="name" style="max-width:614px; width:100%;" class="form-control"
-                                    name="name" wire:model.live="name_id" wire:change="filterName" @if($enableField) disabled @endif>
+                                    name="name" wire:model.live="name_id" wire:change="filterName"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -140,9 +144,10 @@
                                 </select>
                                 <label for="name">Nombre de la capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="area" style="max-width:614px; width:100%;" class="form-control"
-                                    name="area" wire:model.live="area_id" wire:change="filterArea" @if($enableField) disabled @endif>
+                                    name="area" wire:model.live="area_id" wire:change="filterArea"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -154,9 +159,10 @@
                                 </select>
                                 <label for="area">Área</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
+                            <div class="form-group  px-3 mb-0 anima-focus">
                                 <select id="employees" style="max-width:614px; width:100%;" class="form-control"
-                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy" @if($enableField) disabled @endif>
+                                    name="employees" wire:model.live="employ_id" wire:change="filterEmploy"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -171,9 +177,11 @@
                             <div class="col-12 px-3">
                                 <hr style="border: none; border-top: 1px dashed #8F8F8F;">
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
+                            <div class="form-group  px-3 mb-0 anima-focus">
                                 <select id="issuing_company" style="max-width:614px; width:100%;" class="form-control"
-                                    name="issuing_company" wire:model.live="issuingCompanyId" wire:change="filterIssuingCompany" @if($enableField) disabled @endif>
+                                    name="issuing_company" wire:model.live="issuingCompanyId"
+                                    wire:change="filterIssuingCompany"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -188,9 +196,10 @@
                             <div class="col-12 px-3">
                                 <hr style="border: none; border-top: 1px dashed #8F8F8F;">
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="norma" style="max-width:614px; width:100%;" class="form-control"
-                                    name="type" wire:model.live="normaId" wire:change="filterNorma" @if($enableField) disabled @endif>
+                                    name="type" wire:model.live="normaId" wire:change="filterNorma"
+                                    @if ($enableField) disabled @endif>
                                     <option value="" selected>
                                         -- Selecciona una opción --
                                     </option>
@@ -215,10 +224,11 @@
         @endif
         <div class="{{ $isPersonal ? 'col-sm-12 col-md-12 col-12' : 'col-sm-9 col-md-9 col-9' }}"
             x-data="{ open: true }">
-            <div class="card" style="{{$isPersonal ? "border:none;" : null}}">
-                <div class="card-body {{ $isPersonal ? 'p-0 m-0' : null }}" style="{{$isPersonal ? 'border:none;': null}}">
+            <div class="card" style="{{ $isPersonal ? 'border:none;' : null }}">
+                <div class="card-body {{ $isPersonal ? 'p-0 m-0' : null }}"
+                    style="{{ $isPersonal ? 'border:none;' : null }}">
                     @if (!$isPersonal)
-                        <h4 style="color: #3086AF;">Curriculum Vitae</h4>
+                        <h4 style="color: var(--color-tbj);">Curriculum Vitae</h4>
                         <hr>
                         <div class="text-center" wire:loading>
                             <i class="fas fa-circle-notch fa-spin mr-2"></i> Buscando Coincidencias
@@ -250,16 +260,19 @@
                                 <div class="col-12 px-1 py-2 mx-3 rounded shadow"
                                     style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                     <div class="row w-100">
-                                        <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                                        <div
+                                            class="text-center col-1 align-items-center d-flex justify-content-center">
                                             <div class="w-100">
-                                                <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                                                <i class="bi bi-info mr-3"
+                                                    style="color: #3B82F6; font-size: 30px"></i>
                                             </div>
                                         </div>
                                         <div class="col-11">
                                             <p class="m-0"
                                                 style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                                 Atención</p>
-                                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">No se encontraron
+                                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">No se
+                                                encontraron
                                                 coincidencias.
                                             </p>
                                         </div>
@@ -280,8 +293,9 @@
                             <div x-show="!open">
                                 <div class="row justify-content-center">
                                     <div class="col-10">
-                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true" wire:click="enableFields"><i
-                                                class="fas fa-arrow-left"></i> Regresar</button>
+                                        <button class="btn btn-sm btn_cancelar" x-on:click="open = true"
+                                            wire:click="enableFields"><i class="fas fa-arrow-left"></i>
+                                            Regresar</button>
 
                                         <button onclick="imprimirElemento('imp1');" class="btn btn-sm btn-success">
                                             <i class="mr-2 fas fa-print"></i>
@@ -289,9 +303,11 @@
                                         </button>
                                     </div>
                                     @can('profile_professional_edit')
-                                    <div class="col-2 justify-content-end">
-                                            <a class="btn btn-sm btn-success" href="{{ route('admin.editarCompetencias',$empleadoModel) }}"  role="button">Editar</a>
-                                    </div>
+                                        <div class="col-2 justify-content-end">
+                                            <a class="btn btn-sm btn-success"
+                                                href="{{ route('admin.editarCompetencias', $empleadoModel) }}"
+                                                role="button">Editar</a>
+                                        </div>
                                     @endcan
                                     <div class="mt-4 col-sm-12 col-md-12">
                                         <div id="imp1" class="card" style="background-color:#EDEEF0"
@@ -342,7 +358,7 @@
                                                         style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                                         {{ $empleadoModel->name }}</h5>
                                                     <div class="mt-4 mb-3 w-100 dato_mairg"
-                                                        style="border-bottom: solid 2px #345183;">
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <span style="font-size: 17px; font-weight: bold;">
                                                             Resumen</span>
                                                     </div>
@@ -350,7 +366,7 @@
                                                         {{ $empleadoModel->resumen ? $empleadoModel->resumen : 'No hay resumen' }}
                                                     </p>
                                                     <div class="mt-4 mb-3 w-100 dato_mairg"
-                                                        style="border-bottom: solid 2px #345183;">
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <span style="font-size: 17px; font-weight: bold;">
                                                             Experiencia Profesional</span>
                                                     </div>
@@ -389,7 +405,7 @@
                                                     @endforelse
 
                                                     <div class="mt-4 mb-3 w-100 dato_mairg "
-                                                        style="border-bottom: solid 2px #345183;">
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <span style="font-size: 17px; font-weight: bold;">
                                                             Certificaciones</span>
                                                     </div>
@@ -408,23 +424,27 @@
                                                                 </div>
                                                             </li>
                                                         @empty
-                                                            <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                            <p><i class="fas fa-info-circle text-primary mr-2"></i>No
+                                                                hay
                                                                 información
                                                                 registrada
                                                             </p>
                                                         @endforelse
                                                     </ul>
 
-                                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <span style="font-size: 17px; font-weight: bold;">
                                                             Educación Académica</span>
                                                     </div>
                                                     @forelse ($empleadoModel->empleado_educacion as $educacion)
                                                         <div>
-                                                            <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                            <strong class="font-weight-bold"
+                                                                style="color:#00A57E;text-transform: uppercase">
                                                                 {{ $educacion->institucion }}</strong>
                                                             <br>
-                                                            <span style="text-transform:capitalize">{{ $educacion->nivel }}</span>
+                                                            <span
+                                                                style="text-transform:capitalize">{{ $educacion->nivel }}</span>
                                                             <br>
                                                             <span>
                                                                 De
@@ -440,17 +460,20 @@
                                                             </span>
                                                         </div>
                                                     @empty
-                                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                            información
                                                             registrada
                                                         </p>
                                                     @endforelse
-                                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <span style="font-size: 17px; font-weight: bold;">
                                                             Idiomas</span>
                                                     </div>
                                                     @forelse ($empleadoModel->idiomas as $idioma)
                                                         <div>
-                                                            <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                            <strong class="font-weight-bold"
+                                                                style="color:#00A57E;text-transform: uppercase">
                                                                 {{ $idioma->language ? $idioma->language->idioma : 'Sin definir' }}</strong>
                                                             <br>
                                                             <span style="text-transform:capitalize">
@@ -458,11 +481,13 @@
                                                             </span>
                                                             <br>
                                                             <span style="text-transform:capitalize" class="mb-">
-                                                                <strong>Porcentaje:</strong> {{ $idioma->porcentaje }} %
+                                                                <strong>Porcentaje:</strong> {{ $idioma->porcentaje }}
+                                                                %
                                                             </span>
                                                         </div>
                                                     @empty
-                                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                                        <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                            información
                                                             registrada
                                                         </p>
                                                     @endforelse
@@ -474,8 +499,10 @@
                                                                 style="height: 100px; clip-path: circle(50px at 50% 50%); margin:auto"
                                                                 src="{{ asset('storage/empleados/imagenes/') . '/' . $empleadoModel->Avatar }}"
                                                                 alt=""></div>
-                                                        <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
-                                                            <span class="text-white " style="font-size: 14px; font-weight: bold;">
+                                                        <div class="mt-3 mb-4 w-100"
+                                                            style="border-bottom: solid 2px #fff;">
+                                                            <span class="text-white "
+                                                                style="font-size: 14px; font-weight: bold;">
                                                                 Datos Generales</span>
                                                         </div>
                                                         <strong class="text-white"><i
@@ -485,14 +512,17 @@
                                                             <span>{{ $empleadoModel->sede ? $empleadoModel->sede->direccion : 'Dato no definido' }}</span>
                                                         </div>
                                                         <br>
-                                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
+                                                        <strong class="text-white"><i
+                                                                class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número
+                                                            de
                                                             Teléfono</strong>
                                                         <br>
                                                         <div class="text-white" style="margin-left:28px;">
                                                             <span>{{ $empleadoModel->telefono }}</span>
                                                         </div>
                                                         <br>
-                                                        <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
+                                                        <strong class="text-white"><i
+                                                                class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
                                                             Electrónico</strong>
                                                         <br>
                                                         <div class="text-white" style="margin-left:28px;">
@@ -507,15 +537,18 @@
                                         <div class="col-sm-12 col-md-6 col-sm-6 pt-3 pl-0" x-data="{ open: false }">
                                             <div class="row justify-content-center">
                                                 <div class="col-11 shadow-sm rounded border p-4">
-                                                    <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
+                                                    <div class="mb-3 w-100 "
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
                                                         <div class="row align-items-center justify-content-center">
                                                             <div class="col-10" style="white-space: nowrap;">
-                                                                <span style="font-size: 17px; font-weight: bold;"><i class="fas iconos-crear"
+                                                                <span style="font-size: 17px; font-weight: bold;"><i
+                                                                        class="fas iconos-crear"
                                                                         x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Certificaciones
                                                                 </span>
                                                             </div>
                                                             <div class="col text-center">
-                                                                <i class="fas text-muted" x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                                <i class="fas text-muted"
+                                                                    x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
                                                                     x-on:click="open = ! open"></i>
                                                             </div>
                                                         </div>
@@ -524,7 +557,8 @@
                                                         @foreach ($documents as $document)
                                                             @if (!is_null($document->evidence_id))
                                                                 <div class="d-flex align-items-center">
-                                                                    <h6 class="p-0 m-0">{{ $document->category->name }} con nombre
+                                                                    <h6 class="p-0 m-0">
+                                                                        {{ $document->category->name }} con nombre
                                                                         {{ $document->getName->name }} </h6>
                                                                     <i class="material-symbols-outlined ml-3"
                                                                         wire:click='downloadEvidencie({{ $document->evidence_id }})'>
@@ -592,7 +626,7 @@
                                                     style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
                                                     {{ $empleadoModel->name }}</h5>
                                                 <div class="mt-4 mb-3 w-100 dato_mairg"
-                                                    style="border-bottom: solid 2px #345183;">
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <span style="font-size: 17px; font-weight: bold;">
                                                         Resumen</span>
                                                 </div>
@@ -600,7 +634,7 @@
                                                     {{ $empleadoModel->resumen ? $empleadoModel->resumen : 'No hay resumen' }}
                                                 </p>
                                                 <div class="mt-4 mb-3 w-100 dato_mairg"
-                                                    style="border-bottom: solid 2px #345183;">
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <span style="font-size: 17px; font-weight: bold;">
                                                         Experiencia Profesional</span>
                                                 </div>
@@ -624,8 +658,7 @@
                                                             @endif
 
                                                         </span>
-                                                        <span
-                                                            style="text-transform:capitalize; text-align:justify">
+                                                        <span style="text-transform:capitalize; text-align:justify">
                                                             <br>
                                                             <p style="text-align:justify">
                                                                 {{ $experiencia->descripcion }}
@@ -639,7 +672,7 @@
                                                 @endforelse
 
                                                 <div class="mt-4 mb-3 w-100 dato_mairg "
-                                                    style="border-bottom: solid 2px #345183;">
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <span style="font-size: 17px; font-weight: bold;">
                                                         Certificaciones</span>
                                                 </div>
@@ -665,16 +698,19 @@
                                                     @endforelse
                                                 </ul>
 
-                                                <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                                <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <span style="font-size: 17px; font-weight: bold;">
                                                         Educación Académica</span>
                                                 </div>
                                                 @forelse ($empleadoModel->empleado_educacion as $educacion)
                                                     <div>
-                                                        <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                        <strong class="font-weight-bold"
+                                                            style="color:#00A57E;text-transform: uppercase">
                                                             {{ $educacion->institucion }}</strong>
                                                         <br>
-                                                        <span style="text-transform:capitalize">{{ $educacion->nivel }}</span>
+                                                        <span
+                                                            style="text-transform:capitalize">{{ $educacion->nivel }}</span>
                                                         <br>
                                                         <span>
                                                             De
@@ -690,17 +726,20 @@
                                                         </span>
                                                     </div>
                                                 @empty
-                                                    <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                                    <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                        información
                                                         registrada
                                                     </p>
                                                 @endforelse
-                                                <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                                <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <span style="font-size: 17px; font-weight: bold;">
                                                         Idiomas</span>
                                                 </div>
                                                 @forelse ($empleadoModel->idiomas as $idioma)
                                                     <div>
-                                                        <strong class="font-weight-bold" style="color:#00A57E;text-transform: uppercase">
+                                                        <strong class="font-weight-bold"
+                                                            style="color:#00A57E;text-transform: uppercase">
                                                             {{ $idioma->language ? $idioma->language->idioma : 'Sin definir' }}</strong>
                                                         <br>
                                                         <span style="text-transform:capitalize">
@@ -712,7 +751,8 @@
                                                         </span>
                                                     </div>
                                                 @empty
-                                                    <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay información
+                                                    <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                        información
                                                         registrada
                                                     </p>
                                                 @endforelse
@@ -724,8 +764,10 @@
                                                             style="height: 100px; clip-path: circle(50px at 50% 50%); margin:auto"
                                                             src="{{ asset('storage/empleados/imagenes/') . '/' . $empleadoModel->Avatar }}"
                                                             alt=""></div>
-                                                    <div class="mt-3 mb-4 w-100" style="border-bottom: solid 2px #fff;">
-                                                        <span class="text-white " style="font-size: 14px; font-weight: bold;">
+                                                    <div class="mt-3 mb-4 w-100"
+                                                        style="border-bottom: solid 2px #fff;">
+                                                        <span class="text-white "
+                                                            style="font-size: 14px; font-weight: bold;">
                                                             Datos Generales</span>
                                                     </div>
                                                     <strong class="text-white"><i
@@ -735,14 +777,16 @@
                                                         <span>{{ $empleadoModel->sede ? $empleadoModel->sede->direccion : 'Dato no definido' }}</span>
                                                     </div>
                                                     <br>
-                                                    <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
+                                                    <strong class="text-white"><i
+                                                            class="ml-2 mr-2 text-white fas fa-phone-alt"></i>Número de
                                                         Teléfono</strong>
                                                     <br>
                                                     <div class="text-white" style="margin-left:28px;">
                                                         <span>{{ $empleadoModel->telefono }}</span>
                                                     </div>
                                                     <br>
-                                                    <strong class="text-white"><i class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
+                                                    <strong class="text-white"><i
+                                                            class="ml-2 mr-2 text-white fas fa-envelope"></i>Correo
                                                         Electrónico</strong>
                                                     <br>
                                                     <div class="text-white" style="margin-left:28px;">
@@ -757,15 +801,18 @@
                                     <div class="col-sm-12 col-md-6 col-sm-6 pt-3 pl-0" x-data="{ open: false }">
                                         <div class="row justify-content-center">
                                             <div class="col-11 shadow-sm rounded border p-4">
-                                                <div class="mb-3 w-100 " style="border-bottom: solid 2px #345183;">
+                                                <div class="mb-3 w-100 "
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
                                                     <div class="row align-items-center justify-content-center">
                                                         <div class="col-10" style="white-space: nowrap;">
-                                                            <span style="font-size: 17px; font-weight: bold;"><i class="fas iconos-crear"
+                                                            <span style="font-size: 17px; font-weight: bold;"><i
+                                                                    class="fas iconos-crear"
                                                                     x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Certificaciones
                                                             </span>
                                                         </div>
                                                         <div class="col text-center">
-                                                            <i class="fas text-muted" x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                            <i class="fas text-muted"
+                                                                x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
                                                                 x-on:click="open = ! open"></i>
                                                         </div>
                                                     </div>
@@ -774,7 +821,8 @@
                                                     @foreach ($documents as $document)
                                                         @if (!is_null($document->evidence_id))
                                                             <div class="d-flex align-items-center">
-                                                                <h6 class="p-0 m-0">{{ $document->category->name }} con nombre
+                                                                <h6 class="p-0 m-0">{{ $document->category->name }}
+                                                                    con nombre
                                                                     {{ $document->getName->name }} </h6>
                                                                 <i class="material-symbols-outlined ml-3"
                                                                     wire:click='downloadEvidencie({{ $document->evidence_id }})'>

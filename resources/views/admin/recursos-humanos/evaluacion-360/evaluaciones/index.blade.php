@@ -17,7 +17,6 @@
         #form_id {
             display: none;
         }
-
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
@@ -34,11 +33,11 @@
         </div>
 
         <form method="POST" id="form_id" style="position: relative; left: 75rem; top: 1.5rem; "
-        action="{{ route('admin.ev360-evaluaciones.pdf') }}">
-        @csrf
-        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-        </button>
+            action="{{ route('admin.ev360-evaluaciones.pdf') }}">
+            @csrf
+            <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
         </form>
 
         @include('partials.flashMessages')
@@ -124,7 +123,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarEvaluacion" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEvaluacion" class="btn btn-outline-primary"
                         data-dismiss="modal">Descartar</button>
                     <button type="button" id="btnGuardarEvaluacion" class="btn btn-danger">Guardar</button>
                 </div>

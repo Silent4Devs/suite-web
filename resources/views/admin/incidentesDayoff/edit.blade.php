@@ -27,7 +27,7 @@
     <div class="mt-4 card card-body">
         <h5>Creación de excepciones</h5>
         <hr>
-        @include('admin.incidentesDayOff.fields')
+        @include('admin.incidentesDayoff.fields')
 
     </div>
     <!-- Submit Field -->

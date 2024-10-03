@@ -40,7 +40,6 @@ class RecursosController extends Controller
         if ($request->ajax()) {
             $query = Recurso::with([
                 'empleados:id,name,foto,puesto',
-                'team',
                 'categoria_capacitacion',
             ])->select(sprintf('%s.*', (new Recurso)->table))
                 ->orderByDesc('id');

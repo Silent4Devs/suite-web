@@ -3,19 +3,19 @@
         .select2-container {
             margin-top: 0px !important;
         }
-
     </style>
 
     <div>
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
         <div class="informacion-general">
             <div class="row">
                 <div class="form-group col-sm-6">
                     <label class="required" for="name"><i class="fas fa-street-view iconos-crear"></i>Nombre</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" id="name"
-                        wire:model="name" required>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
+                        id="name" wire:model="name" required>
                     @if ($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
@@ -48,8 +48,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="required" for="puesto_id"><i
-                            class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                    <label class="required" for="puesto_id"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                     <select class="form-control {{ $errors->has('puesto_id') ? 'is-invalid' : '' }}"
                         wire:model="puesto_id" id="puesto_id" required>
                         <option value="" selected disabled>
@@ -75,8 +74,7 @@
                             Inmediato</label>
                         <div class="mb-3 input-group">
 
-                            <select class="custom-select supervisor" id="inputGroupSelect01"
-                                wire:model="supervisor_id">
+                            <select class="custom-select supervisor" id="inputGroupSelect01" wire:model="supervisor_id">
                                 <option value="" disabled>-- Selecciona supervisor --</option>
                                 @forelse ($empleados as $empleado_s)
                                     <option value="{{ $empleado_s->id }}">
@@ -170,8 +168,8 @@
                 <div class="form-group col-sm-6">
                     <label for="telefono_movil"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
                         móvil</label>
-                    <input class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}" type="text"
-                        wire:model="telefono_movil" id="telefono_movil">
+                    <input class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}"
+                        type="text" wire:model="telefono_movil" id="telefono_movil">
                     @if ($errors->has('telefono_movil'))
                         <div class="invalid-feedback">
                             {{ $errors->first('telefono_movil') }}
@@ -302,7 +300,8 @@
                 </div>
             </div>
         </div>
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN PERSONAL
         </div>
         <div class="informacion-financiera">
@@ -321,8 +320,8 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="telefono_casa"><i
                             class="fas fa-street-view iconos-crear"></i>Teléfono de casa</label>
-                    <input class="form-control {{ $errors->has('telefono_casa') ? 'is-invalid' : '' }}" type="text"
-                        wire:model="telefono_casa" id="telefono_casa">
+                    <input class="form-control {{ $errors->has('telefono_casa') ? 'is-invalid' : '' }}"
+                        type="text" wire:model="telefono_casa" id="telefono_casa">
                     @if ($errors->has('telefono_casa'))
                         <div class="invalid-feedback">
                             {{ $errors->first('telefono_casa') }}
@@ -341,12 +340,10 @@
                     @endif
                 </div>
                 <div class="form-group col-sm-6">
-                    <label class="required" for="estado_civil"><i
-                            class="fas fa-briefcase iconos-crear"></i>Estado
+                    <label class="required" for="estado_civil"><i class="fas fa-briefcase iconos-crear"></i>Estado
                         civil</label>
                     <select class="form-control {{ $errors->has('estado_civil') ? 'is-invalid' : '' }}"
-                        wire:model="estado_civil" id="estado_civil" value="{{ old('estado_civil', '') }}"
-                        required>
+                        wire:model="estado_civil" id="estado_civil" value="{{ old('estado_civil', '') }}" required>
                         <option value="" selected disabled>
                             -- Selecciona el estado civil --
                         </option>
@@ -450,8 +447,8 @@
                 <div class="form-group col-sm-6">
                     <label class="required" for="numero_credito"><i
                             class="fas fa-street-view iconos-crear"></i>Número de crédito</label>
-                    <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
-                        wire:model="numero_credito" id="numero_credito">
+                    <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}"
+                        type="text" wire:model="numero_credito" id="numero_credito">
                     @if ($errors->has('numero_credito'))
                         <div class="invalid-feedback">
                             {{ $errors->first('numero_credito') }}
@@ -510,8 +507,8 @@
                                 </label>
                             </div>
                         </div>
-                        <input wire:model.live="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
-                            id="foto" hidden="">
+                        <input wire:model.live="foto" type="file" accept="image/png, image/jpeg"
+                            class="form-control-file" id="foto" hidden="">
                     </div>
                 </div>
             </div>
@@ -541,7 +538,8 @@
             </div>
             <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.live="snap_foto">
         </div>
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA
         </div>
         <div class="informacion-financiera row">
@@ -556,8 +554,7 @@
                 @endif
             </div>
             <div class="form-group col-sm-6">
-                <label class="required" for="cuenta_bancaria"><i
-                        class="fas fa-street-view iconos-crear"></i>Cuenta
+                <label class="required" for="cuenta_bancaria"><i class="fas fa-street-view iconos-crear"></i>Cuenta
                     Bancaria</label>
                 <input class="form-control {{ $errors->has('cuenta_bancaria') ? 'is-invalid' : '' }}" type="text"
                     wire:model="cuenta_bancaria" id="cuenta_bancaria">
@@ -579,8 +576,7 @@
                 @endif
             </div>
             <div class="form-group col-sm-6">
-                <label class="required" for="centro_costos"><i
-                        class="fas fa-street-view iconos-crear"></i>Centro de
+                <label class="required" for="centro_costos"><i class="fas fa-street-view iconos-crear"></i>Centro de
                     costos</label>
                 <input class="form-control {{ $errors->has('centro_costos') ? 'is-invalid' : '' }}" type="text"
                     wire:model="centro_costos" id="centro_costos">
@@ -591,8 +587,7 @@
                 @endif
             </div>
             <div class="form-group col-sm-6">
-                <label class="required" for="salario_bruto"><i
-                        class="fas fa-street-view iconos-crear"></i>Salario
+                <label class="required" for="salario_bruto"><i class="fas fa-street-view iconos-crear"></i>Salario
                     Bruto</label>
                 <input class="form-control {{ $errors->has('salario_bruto') ? 'is-invalid' : '' }}" type="text"
                     wire:model="salario_bruto" id="salario_bruto">
@@ -603,8 +598,7 @@
                 @endif
             </div>
             <div class="form-group col-sm-6">
-                <label class="required" for="salario_diario"><i
-                        class="fas fa-street-view iconos-crear"></i>Salario
+                <label class="required" for="salario_diario"><i class="fas fa-street-view iconos-crear"></i>Salario
                     Diario</label>
                 <input class="form-control {{ $errors->has('salario_diario') ? 'is-invalid' : '' }}" type="text"
                     wire:model="salario_diario" id="salario_diario">
@@ -637,8 +631,8 @@
                 @endif
             </div>
             <div class="form-group col-sm-6">
-                <label class="required" for="pagadora_actual"><i
-                        class="fas fa-street-view iconos-crear"></i>Pagadora Actual</label>
+                <label class="required" for="pagadora_actual"><i class="fas fa-street-view iconos-crear"></i>Pagadora
+                    Actual</label>
                 <input class="form-control {{ $errors->has('pagadora_actual') ? 'is-invalid' : '' }}" type="text"
                     wire:model="pagadora_actual" id="pagadora_actual">
                 @if ($errors->has('pagadora_actual'))

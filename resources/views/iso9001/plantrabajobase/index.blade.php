@@ -69,9 +69,9 @@
 
 
         /*.taskBox.taskBoxSVG.taskStatusSVG.deSVGdrag.deSVG rect:nth-child(even){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          fill: #fff !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 15px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              fill: #fff !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 15px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }*/
 
 
         #workSpace {
@@ -108,18 +108,18 @@
             display: inline-block;
             padding: 5px 10px;
             background-color: #fff;
-            color: #345183;
+            color: var(--color-tbj);
             font-size: 9pt;
             cursor: pointer;
-            border: 1px solid #345183;
+            border: 1px solid var(--color-tbj);
             border-radius: 5px;
             text-align: center;
             vertical-align: middle;
         }
 
         .botones_vistas_gantt a:hover {
-            border: 1px solid #345183;
-            background-color: #345183;
+            border: 1px solid var(--color-tbj);
+            background-color: var(--color-tbj);
             color: #fff;
         }
 

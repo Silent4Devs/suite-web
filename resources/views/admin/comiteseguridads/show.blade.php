@@ -10,10 +10,13 @@
                 <br>
                 <h4>¿Qué es Conformación del Comité?</h4>
                 <p>
-                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para
+                    abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
                 </p>
                 <p>
-                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de
+                    problemas la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre
+                    otros.
                 </p>
             </div>
         </div>
@@ -31,7 +34,7 @@
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>
-                <table class="table table-bordered table-striped">
+                <table class=" ">
                     <tbody>
                         <tr>
                             <th style="min-width: 250px;">
@@ -68,19 +71,17 @@
                         </p>
                     </div><br>
                 @else
-
                     @include('partials.flashMessages')
-                    <div class="datatable-fix datatable-rds">
-                        <h3 class="title-table-rds">Miembros  del  Comites</h3>
+                    <div class="datatable-fix datatable-rds mt-4">
+                        <h3 class="title-table-rds">Miembros del Comites</h3>
                         @include('admin.comiteseguridads.table_miembros_view')
                     </div>
-
                 @endif
 
 
 
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.comiteseguridads.index') }}">
+                <div class="form-group text-right">
+                    <a class="btn btn-outline-primary" href="{{ route('admin.comiteseguridads.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>

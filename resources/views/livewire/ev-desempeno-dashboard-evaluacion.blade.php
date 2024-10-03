@@ -3,7 +3,7 @@
         .btn.btn-evaluacion {
             border: 1px solid var(--unnamed-color-006ddb);
             background: #D6EBFF 0% 0% no-repeat padding-box;
-            border: 1px solid #006DDB;
+            border: 1px solid var(--color-tbj);
             border-radius: 8px;
             opacity: 1;
         }
@@ -278,7 +278,7 @@
 
     </div>
 
-    <div class="row mt-4" style="font-size: 15px; color: #006DDB;">
+    <div class="row mt-4" style="font-size: 15px; color: var(--color-tbj)">
         @foreach ($array_periodos as $key => $periodo)
             <div class="col-md-3">
                 <a wire:click="cambiarSeccion({{ $key }})">

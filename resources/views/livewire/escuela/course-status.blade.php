@@ -70,7 +70,7 @@
                 </div> --}}
             </div>
 
-            <div class="mt-2 card">
+            <div class="mt-2 card pb-5">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
@@ -120,7 +120,7 @@
         <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
                 <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
-                    alt="{{  $course->instructor->name ?? 'Sin asignar' }}">
+                    alt="{{ $course->instructor->name ?? 'Sin asignar' }}">
                 {{-- {{ $course->instructor->name ?? 'Sin asignar'  }} --}}
             </div>
             <div>
@@ -160,12 +160,14 @@
                                         @if ($current->id == $lesson->id)
                                             <span style="color:green;">
                                                 <a class="cursor:pointer;"
-                                                    wire:click="changeLesson({{ $lesson }})" onclick="refreshPage()">{{ $lesson->name }}</a>
+                                                    wire:click="changeLesson({{ $lesson }})"
+                                                    onclick="refreshPage()">{{ $lesson->name }}</a>
                                             </span>
                                         @else
                                             <span style="color:rgb(0, 179, 0);">
                                                 <a class="cursor:pointer;"
-                                                    wire:click="changeLesson({{ $lesson }})" onclick="refreshPage()">{{ $lesson->name }}</a>
+                                                    wire:click="changeLesson({{ $lesson }})"
+                                                    onclick="refreshPage()">{{ $lesson->name }}</a>
                                             </span>
                                         @endif
                                     @else
@@ -186,39 +188,41 @@
                         @endforeach
 
                         @foreach ($section->evaluations as $evaluation)
-                        @php
-                            $totalLectionSection = $section->lessons->count();
-                            $completedLectionSection = $section->lessons;
-                            $completedLessonsCount = $section->lessons->filter(function($lesson) {
-                                return $lesson->completed;
-                            })->count();
-                        @endphp
-                        @if ($totalLectionSection != $completedLessonsCount)
-                            <li style="list-style-type: disc;">
-                                <div>
-                                    <span class="inline-block rounded-full border-2 border-gray-500"></span>
-                                    <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
-                                    </a>
-                                </div>
-                            </li>
-                        @else
-                            @if ($evaluation->questions->count() > 0)
-                                @php
-                                    $completed = in_array($evaluation->id, $evaluationsUser);
-                                @endphp
+                            @php
+                                $totalLectionSection = $section->lessons->count();
+                                $completedLectionSection = $section->lessons;
+                                $completedLessonsCount = $section->lessons
+                                    ->filter(function ($lesson) {
+                                        return $lesson->completed;
+                                    })
+                                    ->count();
+                            @endphp
+                            @if ($totalLectionSection != $completedLessonsCount)
                                 <li style="list-style-type: disc;">
                                     <div>
-                                        <span
-                                            class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
-                                        <a class="cursor:pointer;"
-                                            href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
-                                            wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                        <span class="inline-block rounded-full border-2 border-gray-500"></span>
+                                        <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
                                         </a>
                                     </div>
                                 </li>
+                            @else
+                                @if ($evaluation->questions->count() > 0)
+                                    @php
+                                        $completed = in_array($evaluation->id, $evaluationsUser);
+                                    @endphp
+                                    <li style="list-style-type: disc;">
+                                        <div>
+                                            <span
+                                                class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                            <a class="cursor:pointer;"
+                                                href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                                wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endif
                             @endif
-                        @endif
-                    @endforeach
+                        @endforeach
                     </ul>
                 </li>
             @endforeach
@@ -231,11 +235,11 @@
             var complet;
 
             function refreshPage($type) {
-                if($type==="boton"){
+                if ($type === "boton") {
                     setTimeout(function() {
                         initializeYouTubePlayer();
                     }, 1000); // Puedes ajustar el tiempo de espera si es necesario
-                }else {
+                } else {
                     setTimeout(function() {
                         initializeYouTubePlayer();
                     }, 1500);
@@ -314,6 +318,11 @@
                     // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
                 }, 1000); // Actualiza cada segundo
             }
+            document.addEventListener('render', event => {
+                setTimeout(function() {
+                    initializeYouTubePlayer();
+                }, 500);
+            });
         </script>
     @endsection
 </div>

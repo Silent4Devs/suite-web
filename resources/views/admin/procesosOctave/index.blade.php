@@ -1,51 +1,51 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-<style>
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .table tr td:nth-child(4) {
+        .agregar {
+            margin-right: 15px;
+        }
 
-    text-align: left !important;
+        .table tr td:nth-child(4) {
 
-    }
+            text-align: left !important;
 
-    #tabla-procesos tr td:nth-child(3){
-        background-color: green;
-        position: relative;
-        padding: 0;
-    }
+        }
 
-</style>
+        #tabla-procesos tr td:nth-child(3) {
+            background-color: green;
+            position: relative;
+            padding: 0;
+        }
+    </style>
 
     {{-- {{ Breadcrumbs::render('perfil-puesto') }} --}}
     @can('puesto_create')
@@ -55,7 +55,6 @@
                     @include('csvImport.modalperfilpuesto', ['model' => 'Vulnerabilidad', 'route' => 'admin.vulnerabilidads.parseCsvImport'])
                 </div> --}}
             </div>
-
         @endcan
 
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -168,21 +167,23 @@
 
             ];
 
-                let btnAgregar = {
+            let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
-                url: "{{ route('admin.procesos-octave.create',$matriz) }}",
+                url: "{{ route('admin.procesos-octave.create', $matriz) }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
-                };
-                let btnExport = {
+            };
+            let btnExport = {
                 text: '<i  class="fas fa-download"></i>',
                 titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-puesto') }}",
+                className: "btn btn_cargar",
+                url: "{{ route('descarga-puesto') }}",
                 action: function(e, dt, node, config) {
                     let {
                         url
@@ -202,7 +203,7 @@
             dtButtons.push(btnAgregar);
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
-            
+
 
 
             let dtOverrideGlobals = {
@@ -211,7 +212,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.procesos-octave.index',$matriz) }}",
+                ajax: "{{ route('admin.procesos-octave.index', $matriz) }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -223,38 +224,38 @@
                     {
                         data: 'nivel_riesgo',
                         name: 'nivel_riesgo',
-                        render: function(data,type,row,meta){
-                            data=data==""?0:data
+                        render: function(data, type, row, meta) {
+                            data = data == "" ? 0 : data
                             let color = "green";
-                            let valor="";
-                            let texto="white";
-                            if(data <=5){
-                                color="green";
-                                valor="Muy Bajo";
+                            let valor = "";
+                            let texto = "white";
+                            if (data <= 5) {
+                                color = "green";
+                                valor = "Muy Bajo";
                             }
-                            if(data >=6){
-                                color="rgb(50, 205, 63";
-                                valor="Bajo";
+                            if (data >= 6) {
+                                color = "rgb(50, 205, 63";
+                                valor = "Bajo";
                             }
-                            if(data >=21){
-                                color="yellow";
-                                texto="black";
-                                valor="Media";
+                            if (data >= 21) {
+                                color = "yellow";
+                                texto = "black";
+                                valor = "Media";
                             }
-                            if(data >=51){
-                                color="orange";
-                                valor="Alta";
+                            if (data >= 51) {
+                                color = "orange";
+                                valor = "Alta";
                             }
-                            if(data >=81){
-                                color="red";
-                                valor="Crítica";
+                            if (data >= 81) {
+                                color = "red";
+                                valor = "Crítica";
                             }
 
                             return `
                             <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center; background-color:${color}; color:${texto}">${data} - ${valor}</div>
                             `
                         }
-                    },{
+                    }, {
                         data: 'direccion',
                         name: 'direccion'
                     },
