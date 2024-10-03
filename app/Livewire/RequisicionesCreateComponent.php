@@ -302,7 +302,6 @@ class RequisicionesCreateComponent extends Component
     public function servicioStore()
     {
         $this->validate();
-        // dd($data);
 
         $this->nueva_requisicion = [
             'fecha' => $this->fecha_solicitud,
@@ -324,6 +323,7 @@ class RequisicionesCreateComponent extends Component
             ];
 
         $this->habilitar_proveedores = true;
+
         $this->dispatch('cambiarTab', 'profile');
         $this->active = 'desActive';
 

@@ -912,6 +912,21 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log('DOMContentLoaded profile');
+
+        // Correctly set the Livewire property using Livewire.find()
+        @this.set('products_servs_count', 1);
+
+        // Listen for the Livewire 'cambiarTab' event and activate the correct tab
+        Livewire.on('cambiarTab', (id_tab) => {
+            console.log('cambiarTab');
+            document.querySelector(`#myTab a[href="#${id_tab}"]`).click(); // Activates the tab
+            console.log('cambiarTab paso id');
+        });
+    });
+
+
     document.addEventListener('livewire:initialized', () => {
         @this.on('probando', (event) => {
             document.getElementById('formulario-firma').style.display = 'block';
