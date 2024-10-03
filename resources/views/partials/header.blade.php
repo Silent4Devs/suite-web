@@ -22,7 +22,8 @@
         @if ($empleado)
             <ul class="ml-auto c-header-nav gap-3">
                 <li class="time-custom d-none">
-                    <a href="{{ route('admin.timesheet-create') }}">
+                    <a href="{{ route('admin.timesheet-create') }}" title="Timesheet" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-calendar-plus"></i>
                     </a>
                 </li>
