@@ -704,7 +704,14 @@
             });
         }
     </script>
-
+    <script>
+        addEventListener("DOMContentLoaded", () => {
+            themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
+            menuPosition(localStorage.getItem('menuPosition'));
+            themeColor(localStorage.getItem('themeColor'));
+            darkMode(localStorage.getItem('theme'));
+        });
+    </script>
 </body>
 
 </html>
