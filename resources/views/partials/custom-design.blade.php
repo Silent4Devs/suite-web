@@ -119,6 +119,12 @@
         }
         document.querySelector('.btn-theme-estilo[data-estilo="' + contrast + '"]').classList.add('active');
     }
+</script>
+<script>
+    themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
+    menuPosition(localStorage.getItem('menuPosition'));
+    themeColor(localStorage.getItem('themeColor'));
+    darkMode(localStorage.getItem('theme'));
 
     addEventListener("DOMContentLoaded", () => {
         themeContrast(JSON.parse(localStorage.getItem('themeContrast')));

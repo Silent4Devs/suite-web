@@ -34,14 +34,18 @@ class TimesheetProyectoListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaInformativa::with('participantes')->where('modelo', 'TimesheetProyecto')->first();
+        try {
+            $lista = ListaInformativa::with('participantes')->where('modelo', 'TimesheetProyecto')->first();
 
-        foreach ($lista->participantes as $participantes) {
-            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+            foreach ($lista->participantes as $participantes) {
+                $empleados = Empleado::where('id', $participantes->empleado_id)->first();
 
-            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+                $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
-            Notification::send($user, new TimesheetProyectoNotification($event->timeshet_proyecto, $event->tipo_consulta, $event->tabla, $event->slug));
+                Notification::send($user, new TimesheetProyectoNotification($event->timeshet_proyecto, $event->tipo_consulta, $event->tabla, $event->slug));
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
