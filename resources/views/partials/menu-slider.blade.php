@@ -116,7 +116,8 @@
 
                 @can('control_documentar_acceder')
                     <div class="item-ms">
-                        <a href="{{ route('admin.documentos.index') }}">
+                        <a href="{{ route('admin.documentos.index') }}" title="Ver Documentos" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">description</i>
                             <span>Documentos</span>
                         </a>
@@ -124,7 +125,8 @@
                 @endcan
                 @can('escuela_estudiante')
                     <div class="item-ms">
-                        <a href="{{ asset('/admin/mis-cursos') }}">
+                        <a href="{{ asset('/admin/mis-cursos') }}" title="Capacitaciones" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">school</i>
                             <span>Capacitaciones</span>
                         </a>
@@ -132,7 +134,8 @@
                 @endcan
                 @can('mi_perfil_acceder')
                     <div class="item-ms">
-                        <a href="{{ route('admin.solicitud') }}">
+                        <a href="{{ route('admin.solicitud') }}" title="Solicitudes" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">assignment_turned_in</i>
                             <span>Solicitudes</span>
                         </a>
@@ -140,7 +143,8 @@
                 @endcan
                 @can('mi_perfil_acceder')
                     <div class="item-ms">
-                        <a href="{{ route('admin.inicio-Usuario.index') }}">
+                        <a href="{{ route('admin.inicio-Usuario.index') }}" title="Ver Perfil" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">account_circle</i>
                             <span>Perfil</span>
                         </a>
@@ -148,7 +152,8 @@
                 @endcan
                 @can('timesheet_acceder')
                     <div class="item-ms">
-                        <a href="{{ route('admin.timesheet-create') }}">
+                        <a href="{{ route('admin.timesheet-create') }}" title="Timesheet" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">date_range</i>
                             <span>Timesheet</span>
                         </a>
@@ -156,7 +161,8 @@
                 @endcan
                 @can('calendario_organizacional_acceder')
                     <div class="item-ms">
-                        <a href="{{ route('admin.systemCalendar') }}">
+                        <a href="{{ route('admin.systemCalendar') }}" title="Ver Calendario" data-toggle="tooltip"
+                            data-placement="bottom">
                             <i class="material-symbols-outlined">calendar_today</i>
                             <span>Calendario</span>
                         </a>
@@ -164,9 +170,10 @@
                 @endcan
                 @can('katbol_requisiciones_acceso')
                     <div class="item-ms">
-                        <a href="{{ asset('contract_manager/requisiciones') }}">
+                        <a href="{{ asset('contract_manager/requisiciones') }}" title="Ver Requisiciones"
+                            data-toggle="tooltip" data-placement="bottom">
                             <i class="material-symbols-outlined">contract</i>
-                            <span>Requisiciones </span>
+                            <span>Requisiciones</span>
                         </a>
                     </div>
                 @endcan
