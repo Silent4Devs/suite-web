@@ -836,10 +836,15 @@ header.mostrar-menu {
 .menu-global-position-right .menu-global-tbj {
     width: 100px;
     flex-direction: column;
-    height: calc(100% - 60px);
+    height: calc(80% - 60px);
+    top: calc(10% + 60px);
     align-items: center;
     justify-content: center;
+    left: unset;
     right: 0;
+    border-radius: 0px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
 }
 .menu-global-position-right .title-page-global {
     display: none;
@@ -852,6 +857,7 @@ header.mostrar-menu {
 }
 .menu-global-position-right .caja-items-menu-slider {
     flex-direction: column;
+    max-width: 100%;
 }
 .menu-global-position-right .menu-slider {
     width: 100%;
@@ -892,6 +898,9 @@ header.mostrar-menu {
 .menu-global-position-bottom .menu-global-tbj{
     top: auto;
     bottom: 0;
+    border-radius: 0px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 }
 .menu-global-hidden.menu-global-position-bottom .menu-global-tbj{
     transform: translateY(60px);
