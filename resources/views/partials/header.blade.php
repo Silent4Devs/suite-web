@@ -132,7 +132,7 @@
                                     </a>
                                 </div>
                                 <div class="mt-3">
-                                    <button style="all: unset; color: #747474; cursor: pointer;"
+                                    <button style="all: unset;  cursor: pointer;"
                                         onclick="document.querySelector('.content-custom-design').classList.remove('invisible')">
                                         <i class="bi bi-pencil-square"></i>
                                         Personalización visual

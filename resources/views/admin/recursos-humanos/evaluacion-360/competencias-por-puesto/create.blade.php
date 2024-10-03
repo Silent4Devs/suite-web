@@ -9,7 +9,8 @@
     <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 Asignar Competencias
             </div>
             <form id="formCompetenciaCreate" method="POST"
@@ -24,7 +25,7 @@
             <span id="asignando_competencia" class="d-none"><i class=" fas fa-circle-notch fa-spin"></i>
                 Asignando competencia</span>
             <div class="text-center form-group"
-                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 Competencias Asignadas
             </div>
 

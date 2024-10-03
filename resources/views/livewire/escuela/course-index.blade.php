@@ -130,7 +130,7 @@
                                 @endif
 
                                 <a href="{{ route('admin.courses.show', $c) }}"
-                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj) margin-bottom:81px; margin-top:21px;">
+                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj); margin-bottom:81px; margin-top:21px;">
                                     Más información
                                     <span class="material-symbols-outlined"
                                         style="vertical-align: middle;">more_horiz</span>
@@ -157,7 +157,9 @@
     <style>
         /* Estilos personalizados para la paginación */
         .pagination .page-item.active .page-link {
-            background-color: var(--color-tbj) border-color: var(--color-tbj) color: white;
+            background-color: var(--color-tbj);
+            border-color: var(--color-tbj);
+            color: white;
         }
 
         .pagination .page-link {

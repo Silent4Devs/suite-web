@@ -9,7 +9,7 @@
         </strong>
     </p>
 
-    <p class="mt-5">
+    {{-- <p class="mt-5">
         Modo
     </p>
 
@@ -20,7 +20,7 @@
         <button class="btn border btn-dark-mode btn-option-dark" onclick="darkMode('dark');">
             <i class="material-symbols-outlined">bedtime</i>
         </button>
-    </div>
+    </div> --}}
 
     <p class="mt-5">
         Colores
@@ -85,15 +85,13 @@
         document.querySelector('.btn-dark-mode:not(.btn-option-' + theme + ')').classList.remove('active');
         document.querySelector('.btn-dark-mode.btn-option-' + theme).classList.add('active');
     }
-    darkMode(localStorage.getItem('theme'));
 
     function themeColor(color = '#4870b2') {
         localStorage.setItem('themeColor', color);
         document.documentElement.style.setProperty('--color-tbj', color);
     }
-    themeColor(localStorage.getItem('themeColor'));
 
-    function menuPosition(position = 'top', e) {
+    function menuPosition(position = 'top') {
         localStorage.setItem('menuPosition', position);
         let positions = ['top', 'left', 'right', 'bottom'];
         positions.forEach(pst => {
@@ -104,8 +102,9 @@
             document.querySelector('.btn-menu-position.active').classList.remove('active');
         }
         document.querySelector('.btn-menu-position[data-position="' + position + '"]').classList.add('active');
+
+        console.log(localStorage.getItem('menuPosition'));
     }
-    menuPosition(localStorage.getItem('menuPosition'));
 
     function themeContrast(contrast = false) {
         localStorage.setItem('themeContrast', contrast);
@@ -120,5 +119,11 @@
         }
         document.querySelector('.btn-theme-estilo[data-estilo="' + contrast + '"]').classList.add('active');
     }
-    themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
+
+    addEventListener("DOMContentLoaded", () => {
+        themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
+        menuPosition(localStorage.getItem('menuPosition'));
+        themeColor(localStorage.getItem('themeColor'));
+        darkMode(localStorage.getItem('theme'));
+    });
 </script>

@@ -6,7 +6,8 @@
     </style>
 
     <div>
-        <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
         <div class="informacion-general">
@@ -300,7 +301,7 @@
             </div>
         </div>
         <div class="text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN PERSONAL
         </div>
         <div class="informacion-financiera">
@@ -538,7 +539,7 @@
             <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.live="snap_foto">
         </div>
         <div class="text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA
         </div>
         <div class="informacion-financiera row">

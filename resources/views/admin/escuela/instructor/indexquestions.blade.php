@@ -4,7 +4,8 @@
         <style>
             .cancel {
                 background: #FFFFFF;
-                color: var(--color-tbj) border: 1px solid var(--color-tbj);
+                color: var(--color-tbj);
+                border: 1px solid var(--color-tbj);
             }
 
             .cancel:hover {

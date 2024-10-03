@@ -194,7 +194,7 @@
                 @include('admin.OCTAVE.menu')
 
                 <div class="text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS DEL PROCESO
                 </div>
                 {{-- <input type="text" value="{{$id_matriz}}"> --}}
@@ -286,7 +286,7 @@
 
 
                 <div class="text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS
                 </div>
 
@@ -295,7 +295,7 @@
 
 
                 <div class="text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DEL PROCESO
                 </div>
 

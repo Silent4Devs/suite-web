@@ -199,7 +199,7 @@
                                 <i>
                                     *Esta sección estará activa hasta que establezcas los periodos de la evaluación en
                                     la
-                                    <a href="" style="color: var(--color-tbj) text-decoration: underline;">
+                                    <a href="" style="color: var(--color-tbj); text-decoration: underline;">
                                         Configuración de la Evaluación.
                                     </a>
                                     (Asigna un periodo para hacer estos ajustes en la calibración de objetivos)
@@ -283,7 +283,7 @@
 
                 <div class="text-right">
                     <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"
-                        style="background-color: #ECFBFF; color: var(--color-tbj) border-radius: 100px !important;">
+                        style="background-color: #ECFBFF; color: var(--color-tbj); border-radius: 100px !important;">
                         Agregar objetivo a la tabla <i class="fa-solid fa-arrow-down"></i>
                     </button>
                 </div>

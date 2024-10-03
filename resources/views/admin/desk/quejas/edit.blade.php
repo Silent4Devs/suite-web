@@ -35,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                height: 100%; */
+                                        height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -613,15 +613,15 @@
                             </div>
                         </div>
                         <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Queja</b></h5>
-                            <button style="position:absolute; right: 2px; top:2px;"
-                                class="btn btn-success btn_modal_form">Agregar actividad</button>
-                            @if (count($quejas->planes))
-                                <a style="position:absolute; right: 170px; top:2px;"
-                                    href="{{ route('admin.planes-de-accion.show', $quejas->planes->first()->id) }}"
-                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
-                                    Acción</a>
-                            @endif
+                            <h5><b>Acciones para la Atención de la Queja</b></h5>
+                            <div class="text-end">
+                                <button class="btn btn-success btn_modal_form">Agregar actividad</button>
+                                @if (count($quejas->planes))
+                                    <a href="{{ route('admin.planes-de-accion.show', $quejas->planes->first()->id) }}"
+                                        class="btn btn-success ms-3"><i class="mr-2 fas fa-stream"></i> Plan De
+                                        Acción</a>
+                                @endif
+                            </div>
                         </div>
                         <div class="mt-4 datatable-fix" style="width: 100%;">
                             <table id="tabla_plan_accion_quejas" class="table">

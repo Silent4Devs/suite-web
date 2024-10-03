@@ -147,7 +147,7 @@
                             <span
                                 style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                             <br>
-                            <span style="color:var(--color-tbj) font-size:15px;"><strong>Plan de Auditoría</strong></span>
+                            <span style="color:var(--color-tbj); font-size:15px;"><strong>Plan de Auditoría</strong></span>
 
                         </div>
                         <div class="col-3 p-2">

@@ -138,7 +138,8 @@
         }
 
         .iconos_cabecera {
-            color: var(--color-tbj) font-size: 1.2rem;
+            color: var(--color-tbj);
+            font-size: 1.2rem;
         }
 
 
@@ -312,7 +313,8 @@
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: var(--color-tbj) padding: 5px 20px;
+            color: var(--color-tbj);
+            padding: 5px 20px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
             background-color: #f9f9f9;

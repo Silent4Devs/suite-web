@@ -111,13 +111,15 @@
     .align {
         text-align: left !important;
         font-size: 18px;
-        color: var(--color-tbj) opacity: 100% !important;
+        color: var(--color-tbj);
+        opacity: 100% !important;
     }
 
     .titulo-form,
     .sub-titulo-form {
         font-size: 18px;
-        color: var(--color-tbj) font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--color-tbj);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 </style>
 <div class="page-reportes">

@@ -57,7 +57,8 @@
             transition: 0.1s;
             cursor: pointer;
 
-            background-color: var(--color-tbj) width: 50px;
+            background-color: var(--color-tbj);
+            width: 50px;
             height: 50px;
             border-radius: 100px;
             display: flex;

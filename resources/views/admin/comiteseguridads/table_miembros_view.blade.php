@@ -10,11 +10,11 @@
         @foreach ($datas as $data)
             <tr>
                 @if (!empty($data->asignacion->name))
-                <td> {{ $data->asignacion->name}}</td>
+                    <td> {{ $data->asignacion->name }}</td>
                 @else
                     <td style="text-align: left;"> No definido </td>
                 @endif
-                <th scope="row" style="text-align: left;"> {{ $data->nombrerol ?: 'No definido' }}</th>
+                <td scope="row" style="text-align: left;"> {{ $data->nombrerol ?: 'No definido' }}</td>
                 @if ($data->responsabilidades)
                     <td style="text-align: left;">{!! $data->responsabilidades !!}</td>
                 @else

@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         {{ $area->area }}</div>
                     <div class="row col-12 mt-3">
                         <div class="col-6">
