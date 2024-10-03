@@ -15,7 +15,7 @@
 
 
                 <div class="form-group col-12">
-                    <p class="text-center text-light p-1" style="background-color:var(--color-tbj) border-radius: 100px;">
+                    <p class="text-center text-light p-1" style="background-color:var(--color-tbj); border-radius: 100px;">
                         Verificación del Requisito</p>
                 </div>
                 <input type="hidden" name="id_matriz" value="{{ $requisito->id }}" />
@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <p class="text-center text-light p-1"
-                                style="background-color:var(--color-tbj) border-radius: 100px;">
+                                style="background-color:var(--color-tbj); border-radius: 100px;">
                                 Vincular revisión a plan de trabajo</p>
                         </div>
                         {{-- MODULO AGREGAR PLAN DE Trabajo --}}
@@ -116,14 +116,14 @@
                             @livewire('plan-implementacion-create', [
                                 'referencia' => null,
                                 'modulo_origen' => 'Matríz de
-                                                                                                                Requisitos
-                                                                                                                Legales',
+                                                                                                                                            Requisitos
+                                                                                                                                            Legales',
                             ])
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
                         <div class="form-group col-12">
                             <p class="text-center text-light p-1"
-                                style="background-color:var(--color-tbj) border-radius: 100px;">
+                                style="background-color:var(--color-tbj); border-radius: 100px;">
                                 Colaborar que verifico</p>
                         </div>
                     </div>

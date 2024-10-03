@@ -13,7 +13,8 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: var(--color-tbj) padding: 5px 0px;
+            color: var(--color-tbj);
+            padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
             background-color: #f9f9f9;
@@ -131,7 +132,8 @@
             align-items: center;
             justify-content: center;
             background-color: #fff;
-            color: var(--color-tbj) box-shadow: 0px 1px 4px #00000024;
+            color: var(--color-tbj);
+            box-shadow: 0px 1px 4px #00000024;
             border-radius: 14px;
             transition: 0.1s;
             padding: 7px;
@@ -139,7 +141,9 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: var(--color-tbj) border: 1px solid var(--color-tbj) box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
+            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             transform: scale(1.05);
         }
 

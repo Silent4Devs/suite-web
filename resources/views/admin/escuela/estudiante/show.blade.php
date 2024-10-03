@@ -23,7 +23,8 @@
         }
 
         .btn-mas-info-c {
-            background-color: var(--color-tbj) color: #fff;
+            background-color: var(--color-tbj);
+            color: #fff;
             padding: 10px 25px;
             width: 296px;
             text-align: center;
@@ -242,7 +243,7 @@
                                                 @else
                                                 x-data="{open:false}" @endif>
                                     <!--Alphine: El valor de open va ser lo contrario del valor de open a traves del ! es decir si es false
-                                                                                                se cambia a true y viceversa -->
+                                                                                                    se cambia a true y viceversa -->
                                     <div class=" px-4" x-on:click="open=!open"
                                         style="display: inline-block; vertical-align: middle;">
                                         <p><span class="material-symbols-outlined" style="vertical-align: middle;">

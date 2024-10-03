@@ -20,7 +20,7 @@
         @csrf
 
         <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
-        <h3 class="mt-2" style="color: var(--color-tbj) font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>
+        <h3 class="mt-2" style="color: var(--color-tbj); font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>
         <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña, una vez realizada esta
             acción oprime el botón
             "Reestablecer contraseña" y automáticamente quedarás logeado dentro de TABANTAJ</p>

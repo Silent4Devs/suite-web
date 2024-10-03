@@ -131,7 +131,7 @@
                     src="{{ asset('storage/empleados/imagenes') }}/{{ $documento->elaborador ? $documento->elaborador->avatar : 'user.png' }}">
             </div>
             <h6><strong
-                    style="color:var(--color-tbj) font-size:12pt;">{{ $documento->elaborador ? $documento->elaborador->name : 'Sin registro' }}</strong>
+                    style="color:var(--color-tbj); font-size:12pt;">{{ $documento->elaborador ? $documento->elaborador->name : 'Sin registro' }}</strong>
             </h6>
             <p>{{ $documento->elaborador ? $documento->elaborador->puesto : 'Sin registro' }}</p>
 
@@ -148,7 +148,7 @@
                     src="{{ asset('storage/empleados/imagenes') }}/{{ $documento->revisor ? $documento->revisor->avatar : 'user.png' }}">
             </div>
             <h6><strong
-                    style="color:var(--color-tbj) font-size:12pt;">{{ $documento->revisor ? $documento->revisor->name : 'Sin registro' }}</strong>
+                    style="color:var(--color-tbj); font-size:12pt;">{{ $documento->revisor ? $documento->revisor->name : 'Sin registro' }}</strong>
             </h6>
             <p>{{ $documento->revisor ? $documento->revisor->puesto : 'Sin registro' }}</p>
 
@@ -182,7 +182,7 @@
                     src="{{ asset('storage/empleados/imagenes') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}">
             </div>
             <h6><strong
-                    style="color:var(--color-tbj) font-size:12pt;">{{ $documento->responsable ? $documento->responsable->name : 'Sin registro' }}</strong>
+                    style="color:var(--color-tbj); font-size:12pt;">{{ $documento->responsable ? $documento->responsable->name : 'Sin registro' }}</strong>
             </h6>
             <p>{{ $documento->responsable ? $documento->responsable->puesto : 'Sin registro' }}</p>
 

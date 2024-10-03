@@ -16,7 +16,8 @@
         }
 
         .caja_titulo h3 {
-            color: var(--color-tbj) bottom: 0;
+            color: var(--color-tbj);
+            bottom: 0;
         }
 
         .form-group {

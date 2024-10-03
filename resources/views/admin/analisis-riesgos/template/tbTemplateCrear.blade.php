@@ -52,7 +52,8 @@
             text-align: left;
             font: normal normal normal 12px Roboto;
             letter-spacing: 0px;
-            color: var(--color-tbj) opacity: 1;
+            color: var(--color-tbj);
+            opacity: 1;
         }
 
         .title-rango {
@@ -76,7 +77,8 @@
             height: 48.5px;
             text-align: "center";
             background: #FFFFFF 0% 0% no-repeat padding-box;
-            border: 1px solid var(--color-tbj) border-radius: 6px;
+            border: 1px solid var(--color-tbj);
+            border-radius: 6px;
             opacity: 1;
             margin-right: 12px;
             color: var(--color-tbj);
@@ -84,7 +86,8 @@
 
         .btnDraft {
             background: 'none';
-            color: var(--color-tbj) height: 45px;
+            color: var(--color-tbj);
+            height: 45px;
             border: "none";
         }
     </style>

@@ -26,7 +26,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -50,7 +52,7 @@
             @livewire('plan-implementacion-create', [
                 'referencia' => null,
                 'modulo_origen' => 'Planificacion
-                                    Control',
+                                                            Control',
             ])
             <table class="table table-bordered w-100 datatable-PlanificacionControl">
                 <thead class="thead-dark">

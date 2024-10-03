@@ -78,7 +78,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -369,10 +371,10 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                            <li
-                                                            data-target='#carouselExampleIndicators${row.id}'
-                                                            data-slide-to='${idx}'
-                                                            ></li>`
+                                                                    <li
+                                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                                    data-slide-to='${idx}'
+                                                                    ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
@@ -381,9 +383,9 @@
 
                                                         if(extension == 'pdf'){
                                                         return `
-                                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                                        <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
-                                                                    </div>`
+                                                                            <div class='carousel-item ${idx==0?"active":""}'>
+                                                                                <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
+                                                                            </div>`
                                                     }else{
                                                         return ` <
                                         div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >

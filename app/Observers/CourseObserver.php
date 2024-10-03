@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\CoursesEvent;
 use App\Models\Escuela\Course;
 use Illuminate\Support\Facades\Cache;
-use PhpParser\Node\Stmt\TryCatch;
 
 class CourseObserver
 {

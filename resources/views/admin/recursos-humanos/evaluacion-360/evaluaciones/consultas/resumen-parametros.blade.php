@@ -63,7 +63,7 @@
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESUMEN GENERAL <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'" @click="open = !open"></i>
                 </div>
             </div>
@@ -132,7 +132,7 @@
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESULTADO DE LA EVALUACIÓN <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'"
                         @click="open = !open"></i>
                 </div>

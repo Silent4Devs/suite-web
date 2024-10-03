@@ -37,7 +37,7 @@
             @endphp
 
             <img src="{{ asset($logotipo) }}" class="logo_silent">
-            <h3 class="mt-5" style="color: var(--color-tbj) font-weight: normal; font-size:24px;">Registrarse</h3>
+            <h3 class="mt-5" style="color: var(--color-tbj); font-weight: normal; font-size:24px;">Registrarse</h3>
 
             {{ csrf_field() }}
             @if (request()->has('team'))

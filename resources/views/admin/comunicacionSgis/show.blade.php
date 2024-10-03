@@ -123,7 +123,7 @@
                     <span
                         style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                     <br>
-                    <span style="color:var(--color-tbj) font-size:15px;"><strong>Comunicados:
+                    <span style="color:var(--color-tbj); font-size:15px;"><strong>Comunicados:
                             {{ $comunicacionSgi->titulo }}</strong></span>
 
                 </div>

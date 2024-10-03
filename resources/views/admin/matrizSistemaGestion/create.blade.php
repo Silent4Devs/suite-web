@@ -488,7 +488,7 @@
                 @csrf
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -644,7 +644,7 @@
                 </div>
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -998,7 +998,7 @@
 
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 

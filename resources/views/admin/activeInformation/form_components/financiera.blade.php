@@ -1,4 +1,4 @@
-<div class="mt-4 text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+<div class="mt-4 text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     Datos Financieros
 </div>
 <div class="row mt-4">

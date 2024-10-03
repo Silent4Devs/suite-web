@@ -19,7 +19,7 @@
                 <!-- Categoria Enabled-->
                 <div class="col-12 col-sm-12">
                     <div class="text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         DETALLES DE LA SOLICITUD
                     </div>
                     <!-- Categoria Field -->
@@ -128,7 +128,7 @@
 
 
                     <div class="text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         RESPUESTA DEL APROBADOR
                     </div>
 

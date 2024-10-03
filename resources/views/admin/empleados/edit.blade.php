@@ -263,7 +263,7 @@
         @else
             <div class="p-4">
                 <div class="mt-4 text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     CURRICULUM
                 </div>
                 <label id="urlFormEmpleados"

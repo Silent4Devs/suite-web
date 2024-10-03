@@ -629,7 +629,7 @@
                 </div>
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
                 <div class="row">
@@ -691,7 +691,7 @@
 
                 <hr>
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO SOPORTE PROVEEDOR
                 </div>
                 @livewire('i-s-o31000.impactos-asociados', [
@@ -704,7 +704,7 @@
                 ])
                 <hr>
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
                 </div>
 
