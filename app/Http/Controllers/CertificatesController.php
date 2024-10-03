@@ -114,7 +114,6 @@ class CertificatesController extends Controller
             //throw $th;
         }
 
-
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
             ->where('proceso_id', '=', $id)
@@ -201,7 +200,6 @@ class CertificatesController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
-
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,

@@ -30,8 +30,8 @@ return [
 
     'connections' => [
 
-         // RabbitMQ Connection
-         'rabbitmq' => [
+        // RabbitMQ Connection
+        'rabbitmq' => [
             'driver' => 'rabbitmq',
             'queue' => env('RABBITMQ_QUEUE', 'default'),
             'connection' => [
@@ -93,7 +93,7 @@ return [
         'sync' => [
             'driver' => 'sync',
         ],
-        
+
     ],
 
     /*
