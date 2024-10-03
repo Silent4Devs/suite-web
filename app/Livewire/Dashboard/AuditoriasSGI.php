@@ -27,6 +27,7 @@ class AuditoriasSGI extends Component
 
     public function render()
     {
+
         switch ($this->tabOption) {
             case 1:
                 // Tu lógica para la opción 1

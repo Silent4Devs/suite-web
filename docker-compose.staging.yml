@@ -137,7 +137,7 @@ services:
 
   rabbitmq-tabantaj:
     image: rabbitmq:3-management-alpine
-    container_name: rabbit-tabantaj
+    container_name: rabbitmq-tabantaj
     env_file:
       - .env
     ports:
@@ -151,7 +151,6 @@ services:
     #   - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-      - ./infra/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
