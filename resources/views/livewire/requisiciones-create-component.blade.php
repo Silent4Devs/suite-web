@@ -60,7 +60,7 @@
                                     </div>
                                     <div>
                                         @error('fecha_solicitud')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>

@@ -31,11 +31,10 @@
 <div class="card card-content caja-blue">
 
     <div>
-        <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-            style="width:150px; position: relative; top: 100px; right: 430px;">
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
     </div>
 
-    <div style="position: relative; top:-5rem; left: 80px;">
+    <div>
         <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
         <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes generar tu firma electrónica</h5>
         <p style="margin-top:10px;">
