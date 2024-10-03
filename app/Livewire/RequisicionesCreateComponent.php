@@ -326,8 +326,9 @@ class RequisicionesCreateComponent extends Component
 
         $this->dispatch('cambiarTab', 'profile');
         $this->active = 'desActive';
-        dd($this->nueva_requisicion, $this->array_productos, $this->habilitar_proveedores);
+
         $this->paso = 2;
+        dd("dispatch");
     }
 
     public function proveedoresStore()
