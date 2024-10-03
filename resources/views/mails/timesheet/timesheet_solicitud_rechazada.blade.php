@@ -201,7 +201,7 @@
                                         @endif
                                         <div style="text-align:center; margin-top:20px">
                                             <a href="{{ asset('admin/timesheet/edit') }}/{{ $rechazar->id }}"
-                                                style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:200px; height:35px ;color:#fff; font-size:11pt; background-color:var(--color-tbj) margin-left:13px;">
+                                                style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:200px; height:35px ;color:#fff; font-size:11pt; background-color:var(--color-tbj); margin-left:13px;">
                                                 Modificar registro rechazado
                                             </a>
                                         </div>

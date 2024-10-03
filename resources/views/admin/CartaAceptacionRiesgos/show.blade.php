@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:var(--color-tbj) background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">3.Politicas/Control asociados al Riesgo</strong>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12">
@@ -112,7 +112,7 @@
                                     <hr>
                                 </div>
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:var(--color-tbj) background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">4. Hallazgos asociados al Riesgo</strong>
                                 </div>
                                 <div class="row col-12">
@@ -134,7 +134,7 @@
                                             <thead>
                                                 <tr class="negras">
                                                     <th class="text-center"
-                                                        style="font-size:12px; color:var(--color-tbj) background-color:#cccccc;"
+                                                        style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                                                         colspan="5">
                                                         <div>
                                                             5. Autorización de Aceptación de Riesgo
@@ -216,7 +216,7 @@
 
 
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:var(--color-tbj) background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">6. Recomendaciones mandatorias de seguridad</strong>
                                 </div>
                                 <div style="font-size:12px;" class="col-md-12 col-lg-12 col-sm-12">
@@ -238,7 +238,7 @@
                         <thead>
                             <tr>
 
-                                <th class="text-center" style="color:var(--color-tbj) background-color:#cccccc;" colspan="2">Tipo de impacto del riesgo</th>
+                                <th class="text-center" style="color:var(--color-tbj); background-color:#cccccc;" colspan="2">Tipo de impacto del riesgo</th>
                             </tr>
 
                         </thead>

@@ -16,7 +16,8 @@
             ]) !!}
 
 
-            <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 DETALLES DEL DESTINO
             </div>
             <div class="row">
@@ -106,7 +107,7 @@
 
 
             <div class="text-center form-group"
-                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 SEGUIMIENTO
             </div>
             <div class="row">

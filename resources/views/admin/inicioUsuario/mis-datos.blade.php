@@ -311,7 +311,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div style="color: var(--color-tbj) font-size:13pt;" class="text-right"
+                    <div style="color: var(--color-tbj); font-size:13pt;" class="text-right"
                         title="
                 @foreach ($cumpleaños_felicitados_like_usuarios as $usuarios_like) {{ $usuarios_like->felicitador->name }}&#013; @endforeach
             ">
@@ -675,7 +675,7 @@
                                         <div class="modal-content">
 
                                             <div class="modal-header"
-                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj) font-size:20px;">
+                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj); font-size:20px;">
                                                 <span><img class="img_empleado mr-4"
                                                         src="{{ $competencia->competencia->imagen_ruta }}">
                                                     <strong>{{ $competencia->competencia->nombre }}</strong></span>

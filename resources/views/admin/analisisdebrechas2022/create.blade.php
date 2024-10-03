@@ -6,7 +6,7 @@
             <form method="POST" action="{{ route('admin.analisisdebrechas-2022.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="py-1 text-center form-group col-12" style="background-color:var(--color-tbj) border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12" style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>

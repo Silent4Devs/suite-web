@@ -1,6 +1,7 @@
 <div>
     <div class="container">
-        <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             COMPETENCIA
         </div>
         @include('admin.recursos-humanos.evaluacion-360.competencias._form')
@@ -14,7 +15,7 @@
                 {!! Form::label(
                     'nombre_comite',
                     'Asignar esta competencia a todos los
-                                empleados de la organización*',
+                                                empleados de la organización*',
                     ['class' => 'asterisco'],
                 ) !!}
                 {{-- <label class="form-check-label" for="toda_la_empresa"></label> --}}
@@ -28,7 +29,7 @@
     </div>
     <div class="container mt-4">
         <div class="text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             CONDUCTAS ESPERADAS
         </div>
         <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">

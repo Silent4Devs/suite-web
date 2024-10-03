@@ -30,7 +30,7 @@
             <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                 <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                 <br>
-                <span style="color:var(--color-tbj) font-size:15px;"><strong>Dashboard: Quejas Clientes.
+                <span style="color:var(--color-tbj); font-size:15px;"><strong>Dashboard: Quejas Clientes.
                     </strong></span>
 
             </div>

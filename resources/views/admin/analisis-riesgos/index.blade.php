@@ -27,7 +27,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -39,9 +41,9 @@
         }
 
         /* th {
-                            background-color: var(--color-tbj);                        color: #ffff;
+                                    background-color: var(--color-tbj);                        color: #ffff;
 
-                        } */
+                                } */
 
         .iconos-tabla {
             color: #fff;

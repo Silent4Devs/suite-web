@@ -1,13 +1,14 @@
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-12">
-        <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             FOTO DEL EMPLEADO
         </div>
         @include('admin.empleados._imagen_empleado')
     </div>
     <div class="col-12">
         <div class="mt-4 text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
     </div>
