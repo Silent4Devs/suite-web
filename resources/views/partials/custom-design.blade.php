@@ -121,15 +121,10 @@
     }
 </script>
 <script>
-    themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
-    menuPosition(localStorage.getItem('menuPosition'));
-    themeColor(localStorage.getItem('themeColor'));
-    darkMode(localStorage.getItem('theme'));
-
     addEventListener("DOMContentLoaded", () => {
-        themeContrast(JSON.parse(localStorage.getItem('themeContrast')));
-        menuPosition(localStorage.getItem('menuPosition'));
-        themeColor(localStorage.getItem('themeColor'));
-        darkMode(localStorage.getItem('theme'));
+        themeContrast(JSON.parse(localStorage.getItem('themeContrast')) || false);
+        menuPosition(localStorage.getItem('menuPosition') || 'top');
+        themeColor(localStorage.getItem('themeColor') || '#4870b2');
+        darkMode(localStorage.getItem('theme') || 'light');
     });
 </script>
