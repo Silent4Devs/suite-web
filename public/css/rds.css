@@ -623,6 +623,7 @@ header.mostrar-menu {
     box-shadow: 0px 0px 8px 0px #00000026;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
+    transition: 0.3s;
 }
 
 .item-menu-slider{
@@ -974,8 +975,17 @@ header.mostrar-menu {
     border-color: var(--color-tbj) !important;
 }
 
+.box-acces-custom-items {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+.btn-acces-custom i{
+    margin-top: -0px;
+}
 .btn-acces-custom.active{
-    background-color: #b5f1d6 !important;
+    background-color: var(--color-tbj) !important;
+    color: #fff !important;
 }
 
 .btn-theme-estilo.active .example-menu-position{
