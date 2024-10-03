@@ -917,7 +917,9 @@
         @this.set('products_servs_count', 1);
         Livewire.on('cambiarTab', (id_tab) => {
             // Activa la pestaña con ID 'profile'
+            console.log('cambiarTab');
             $('#myTab a[href="#' + id_tab + '"]').tab('show');
+            console.log('cambiarTab paso id');
         });
     });
 
