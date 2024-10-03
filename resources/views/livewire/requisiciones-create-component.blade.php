@@ -912,15 +912,15 @@
 </div>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", () => {
+        console.log('DOMContentLoaded profile');
         @this.set('products_servs_count', 1);
         Livewire.on('cambiarTab', (id_tab) => {
             // Activa la pestaña con ID 'profile'
             $('#myTab a[href="#' + id_tab + '"]').tab('show');
         });
     });
-    
+
     document.addEventListener('livewire:initialized', () => {
         @this.on('probando', (event) => {
             document.getElementById('formulario-firma').style.display = 'block';
