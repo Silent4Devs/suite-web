@@ -21,7 +21,7 @@ class CoursesCurriculum extends Component
 
     protected $rules = [
         'section.name' => 'required',
-        'name'=> 'required',
+        'name' => 'required',
     ];
 
     public function mount(Course $course)
