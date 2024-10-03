@@ -578,42 +578,42 @@
 <!-- Modal -->
 <div class="modal fade" id="modalCustomLinks" tabindex="-1" aria-labelledby="modalCustomLinksLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 600px;">
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
-                <h5 class="mt-3">Accesos directos</h5>
+                <h5 class="mt-3 text-center">Accesos directos</h5>
 
                 <div class="mt-5">
-                    <div class="d-flex jsutify-content-center flex-wrap gap-3">
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                    <div class="box-acces-custom-items">
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="time-custom">
                             <i class="bi bi-calendar-plus" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Timesheet</small>
                         </button>
 
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="calendar-custom">
                             <i class="bi bi-calendar3" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Calendario</small>
                         </button>
 
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="document-custom">
                             <i class="bi bi-folder" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Documentos</small>
                         </button>
 
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="planes-custom">
                             <i class="bi bi-file-earmark-check" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Planes de Trabajo</small>
                         </button>
 
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="centro-custom">
                             <i class="bi bi-person-workspace" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Centro de atención</small>
@@ -664,7 +664,11 @@
                 localStorage.setItem(`btn-${customClass}-active`, isActive);
 
                 // Cambiar el estado de "d-none" en el contenido y guardarlo en localStorage
-                contentElement.classList.toggle('d-none');
+                if (isActive) {
+                    contentElement.classList.remove('d-none');
+                } else {
+                    contentElement.classList.add('d-none');
+                }
                 const isHidden = contentElement.classList.contains('d-none');
                 localStorage.setItem(`content-${customClass}-hidden`, isHidden);
             });
