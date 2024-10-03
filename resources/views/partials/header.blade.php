@@ -28,22 +28,26 @@
                     </a>
                 </li>
                 <li class="calendar-custom d-none">
-                    <a href="{{ route('admin.systemCalendar') }}">
+                    <a href="{{ route('admin.systemCalendar') }}" title="Calendario" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-calendar3"></i>
                     </a>
                 </li>
                 <li class="document-custom d-none">
-                    <a href="{{ route('admin.documentos.publicados') }}">
+                    <a href="{{ route('admin.documentos.publicados') }}" title="Ver Documentos" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-folder"></i>
                     </a>
                 </li>
                 <li class="planes-custom d-none">
-                    <a href="{{ route('admin.planes-de-accion.index') }}">
+                    <a href="{{ route('admin.planes-de-accion.index') }}" title="Planes de Acción" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-file-earmark-check"></i>
                     </a>
                 </li>
                 <li class="centro-custom d-none">
-                    <a href="{{ route('admin.desk.index') }}">
+                    <a href="{{ route('admin.desk.index') }}" title="Centro de Trabajo" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-person-workspace"></i>
                     </a>
                 </li>
