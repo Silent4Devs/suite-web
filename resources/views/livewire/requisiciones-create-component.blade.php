@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <br>
                             <div class="row">
                                 <div class="col s12 l6">
                                     <div class="anima-focus">
@@ -581,8 +581,16 @@
                                 <i class="fa-regular fa-square-plus icon-prior"></i>
                                 AGREGAR PROVEEDOR
                             </button>
-                            <button class="btn btn-primary" type="submit">
-                                Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                <!-- Button content when not loading -->
+                                <span wire:loading.remove>
+                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                </span>
+
+                                <!-- Loading spinner when loading -->
+                                <span wire:loading>
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                </span>
                             </button>
                         </div>
                     </form>
