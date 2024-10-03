@@ -302,7 +302,7 @@ class RequisicionesCreateComponent extends Component
     public function servicioStore()
     {
         $this->validate();
-        // dd($data);
+        dd($data);
 
         $this->nueva_requisicion = [
             'fecha' => $this->fecha_solicitud,
