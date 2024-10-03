@@ -55,7 +55,7 @@ class CoursesStudents extends Component
 
     public function multiDestroy($studentsDelete)
     {
-        foreach ($studentsDelete[0] as $studentDelete) {
+        foreach ($studentsDelete as $studentDelete) {
             $this->destroy($studentDelete);
         }
     }

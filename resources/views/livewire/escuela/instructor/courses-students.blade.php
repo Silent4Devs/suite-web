@@ -90,7 +90,7 @@
                     studentsIds.push(item.value);
                 });
 
-                Livewire.emit('clickDeleteAll', [studentsIds]);
+                Livewire.dispatch('clickDeleteAll', [studentsIds]);
             });
         });
 
@@ -112,7 +112,7 @@
                     studentsIds.push(item.value);
                 });
 
-                Livewire.emit('clickDeleteAll', [studentsIds]);
+                Livewire.dispatch('clickDeleteAll', [studentsIds]);
             });
         });
     </script>

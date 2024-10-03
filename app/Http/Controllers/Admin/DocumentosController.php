@@ -246,17 +246,17 @@ class DocumentosController extends Controller
         $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
         if ($request->tipo == 'formato') {
             $request->validate([
-                'codigo' => $codigoDoc.'|string|unique:documentos,codigo,'.$documento->id.',id,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => $validateDocumento.'|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
-                'elaboro_id' => $elaboroId.'|exists:empleados,id',
-                'aprobo_id' => $revisoId.'|exists:empleados,id',
-                'reviso_id' => $aproboId.'|exists:empleados,id',
-                'responsable_id' => $responsableId.'|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
@@ -264,17 +264,17 @@ class DocumentosController extends Controller
             ]);
         } else {
             $request->validate([
-                'codigo' => $codigoDoc.'|string|unique:documentos,codigo,'.$documento->id.',id,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => $validateDocumento.'|mimetypes:application/pdf|max:10000',
-                'elaboro_id' => $elaboroId.'|exists:empleados,id',
-                'aprobo_id' => $revisoId.'|exists:empleados,id',
-                'reviso_id' => $aproboId.'|exists:empleados,id',
-                'responsable_id' => $responsableId.'|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
@@ -299,8 +299,8 @@ class DocumentosController extends Controller
             // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
             $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
             //Se elimina el archivo anterior
-            if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo)) {
-                Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo]);
+            if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo)) {
+                Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo]);
             }
             //Se guarda el nuevo documento
             $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
@@ -421,11 +421,11 @@ class DocumentosController extends Controller
                 $revision->delete();
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
-            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
-            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto'.'.'.$extension;
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+            $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-obsoleto' . '.' . $extension;
 
-            $ruta_documento = $path_documento.'/'.$documento->archivo;
-            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento).'/'.$nombre_documento;
+            $ruta_documento = $path_documento . '/' . $documento->archivo;
+            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
                 if (Storage::exists($ruta_obsoleto)) {
@@ -467,9 +467,15 @@ class DocumentosController extends Controller
             parse_str($request->datosRevisores, $datos);
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
-            $documento = Documento::find($documento_id);
-            event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
-            $documento->load('elaborador', 'macroproceso');
+            $documento = Documento::where('id', $documento_id)->first();
+
+            try {
+                event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+
+            // $documento->load('elaborador', 'macroproceso');
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
@@ -597,10 +603,10 @@ class DocumentosController extends Controller
 
     public function getPathDocumento(Documento $documento, $ruta)
     {
-        $path_documento = $ruta.'/Documentos en aprobacion';
+        $path_documento = $ruta . '/Documentos en aprobacion';
 
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
-            $path_documento = $ruta.'/Documentos publicados';
+            $path_documento = $ruta . '/Documentos publicados';
         }
 
         switch ($documento->tipo) {
@@ -728,7 +734,7 @@ class DocumentosController extends Controller
             $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
             // dd($versiones);
             $path_documento = $this->getPathDocumento($documento, 'storage');
-            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
 
             return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
         }
