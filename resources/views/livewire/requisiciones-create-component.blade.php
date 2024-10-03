@@ -914,14 +914,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         console.log('DOMContentLoaded profile');
-        @this.set('products_servs_count', 1);
+
+        // Correctly set the Livewire property using Livewire.find()
+        Livewire.find('{{ $this->id }}').set('products_servs_count', 1);
+
+        // Listen for the Livewire 'cambiarTab' event and activate the correct tab
         Livewire.on('cambiarTab', (id_tab) => {
-            // Activa la pestaña con ID 'profile'
             console.log('cambiarTab');
-            $('#myTab a[href="#' + id_tab + '"]').tab('show');
+            document.querySelector(`#myTab a[href="#${id_tab}"]`).click(); // Activates the tab
             console.log('cambiarTab paso id');
         });
     });
+
 
     document.addEventListener('livewire:initialized', () => {
         @this.on('probando', (event) => {
