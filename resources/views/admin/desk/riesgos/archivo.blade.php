@@ -47,7 +47,7 @@
                             <td>{{ $riesgo->fecha }}</td>
                             <td>
                                 <img class="img_empleado"
-                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar }}"
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar ?? '' }}"
                                     title="{{ $riesgo->reporto->name }}">
                             </td>
                             <td>{{ $riesgo->reporto->email }}</td>
