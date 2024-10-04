@@ -168,9 +168,9 @@ class RequisicionesEditComponent extends Component
 
     public function mount($id_requisiciondata)
     {
-        $this->user = User::getCurrentUser();
-
         $editRequisicion = KatbolRequsicion::where('id', $id_requisiciondata)->first();
+
+        $this->user = User::where('id', $editRequisicion->id_user)->first();
 
         $this->sucursales = KatbolSucursal::getArchivoFalse();
         $this->proveedores = KatbolProveedorOC::getEstadoFalse();
@@ -179,9 +179,9 @@ class RequisicionesEditComponent extends Component
         $this->productos = KatbolProducto::getArchivoFalse();
         $this->organizacion = Organizacion::getFirst();
 
-        $this->user_name = $this->user->name;
-        $this->user_area = $this->user->empleado->area->area;
-        $this->user_email = $this->user->empleado->email;
+        $this->user_name = $editRequisicion->user;
+        $this->user_area = $editRequisicion->area;
+        $this->user_email = $editRequisicion->id_user;
 
         $collections = [
             'sucursales' => 'Sucursales',
@@ -200,28 +200,90 @@ class RequisicionesEditComponent extends Component
 
         $this->fecha_solicitud = $editRequisicion->fecha;
         $this->sucursal_id = $editRequisicion->sucursal_id;
-        $this->user_name = $editRequisicion->user;
-        $this->user_area = $editRequisicion->email;
-        $this->descripcion = $editRequisicion->area;
-        $this->comprador_id = $editRequisicion->referencia;
-        $this->contrato_id = $editRequisicion->comprador_id;
-        $this->user->id = $editRequisicion->contrato_id;
-        $this->user_email = $editRequisicion->id_user;
+        $this->descripcion = $editRequisicion->referencia;
+        $this->comprador_id =  $editRequisicion->comprador_id;
+        $this->contrato_id = $editRequisicion->contrato_id;
 
-        $this->array_proveedores[] = [
-            'proveedor_id' => '',
-            'fechaInicio' => null,
-            'fechaFin' => null,
-            'select_otro' => '',
-            'detalles' => null,
-            'tipo' => null,
-            'comentarios' => null,
-            'nombre_contacto' => null,
-            'telefono_contacto' => null,
-            'correo_contacto' => null,
-            'url_contacto' => null,
-            'archivo' => null,
-        ];
+        foreach ($editRequisicion->productos_requisiciones as $keyProducto => $producto) {
+            if ($keyProducto == 0) {
+                $this->producto_oblig = $producto->producto_id;
+                $this->cantidad_oblig = $producto->cantidad;
+                $this->especificaciones_oblig = $producto->espesificaciones;
+            } else {
+                $this->array_productos[] = [
+                    'cantidad' => $producto->producto_id,
+                    'producto' => $producto->cantidad,
+                    'especificaciones' => $producto->espesificaciones,
+                ];
+            }
+        }
+
+
+        foreach ($editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones) {
+            # code...
+            $this->array_proveedores[] = [
+
+                'proveedor',
+                'fecha_inicio',
+                'fecha_fin',
+                'detalles',
+                'tipo',
+                'comentarios',
+                'contacto',
+                'contacto_correo',
+                'url',
+                'cel',
+                'cotizacion',
+                'requisiciones_id',
+
+                'proveedor_id' => '',
+                'fechaInicio' => null,
+                'fechaFin' => null,
+                'select_otro' => '',
+                'detalles' => null,
+                'tipo' => null,
+                'comentarios' => null,
+                'nombre_contacto' => null,
+                'telefono_contacto' => null,
+                'correo_contacto' => null,
+                'url_contacto' => null,
+                'archivo' => null,
+            ];
+        }
+        foreach ($editRequisicion->provedores_indistintos_requisiciones as $keyindistintos_requisiciones => $prov_indistintos_requisiciones) {
+            # code...
+            $this->array_proveedores[] = [
+                'proveedor_id' => '',
+                'fechaInicio' => null,
+                'fechaFin' => null,
+                'select_otro' => '',
+                'detalles' => null,
+                'tipo' => null,
+                'comentarios' => null,
+                'nombre_contacto' => null,
+                'telefono_contacto' => null,
+                'correo_contacto' => null,
+                'url_contacto' => null,
+                'archivo' => null,
+            ];
+        }
+        foreach ($editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones_catalogo) {
+            # code...
+            $this->array_proveedores[] = [
+                'proveedor_id' => '',
+                'fechaInicio' => null,
+                'fechaFin' => null,
+                'select_otro' => '',
+                'detalles' => null,
+                'tipo' => null,
+                'comentarios' => null,
+                'nombre_contacto' => null,
+                'telefono_contacto' => null,
+                'correo_contacto' => null,
+                'url_contacto' => null,
+                'archivo' => null,
+            ];
+        }
     }
 
     public function render()
