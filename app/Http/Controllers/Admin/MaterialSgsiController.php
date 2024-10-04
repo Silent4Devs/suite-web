@@ -27,7 +27,7 @@ class MaterialSgsiController extends Controller
         abort_if(Gate::denies('material_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
-            $query = MaterialSgsi::with(['arearesponsable', 'team', 'documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
+            $query = MaterialSgsi::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
