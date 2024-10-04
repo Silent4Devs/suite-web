@@ -177,7 +177,7 @@
         </div>
 
         <div class="mt-3 form-group col-12">
-            <buttom type="submit" class="btn btn-success" id="cierra_queja_btn_correo">Enviar Solicitud</buttom>
+            <buttom type="submit" class="btn btn-primary" id="cierra_queja_btn_correo">Enviar Solicitud</buttom>
         </div>
 
 
@@ -188,11 +188,11 @@
         </div>
 
         <div class="mt-4 text-right form-group col-12">
-            <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-            {{-- <input type="submit" class="btn btn-success" value="Guardar" id="siguiente_atencionQueja"> --}}
-            <button type="submit" class="btn btn-success" id="btn-guardar-atencion">Guardar</button>
+            <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cerrar</a>
+            {{-- <input type="submit" class="btn btn-primary" value="Guardar" id="siguiente_atencionQueja"> --}}
+            <button type="submit" class="btn btn-primary" id="btn-guardar-atencion">Guardar</button>
             @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <button id="siguiente_atencion" type="submit" class="btn btn-success">Siguiente</button>
+                <button id="siguiente_atencion" type="submit" class="btn btn-primary">Siguiente</button>
             @endif
 
         </div>

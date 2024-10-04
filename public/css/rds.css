@@ -220,10 +220,6 @@ header.mostrar-menu {
     transition: 0.1s;
 }
 
-.menu-blocks-mod-header a:hover i {
-    transform: scale(1.2);
-}
-
 .caja-icon-mod-header {
     width: 60px;
     height: 60px;
@@ -623,7 +619,6 @@ header.mostrar-menu {
     box-shadow: 0px 0px 8px 0px #00000026;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    transition: 0.3s;
 }
 
 .item-menu-slider{
@@ -1007,4 +1002,26 @@ header.mostrar-menu {
 }
 .transparente{
     background-color: #4ab5db !important;
+}
+
+
+.btn-primary {
+    background-color: var(--color-tbj) !important;
+    border-color: var(--color-tbj) !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    background-color: var(--color-tbj) !important;
+    border-color: var(--color-tbj) !important; 
+}
+.btn-outline-primary {
+    background-color: transparent !important; 
+    border-color: var(--color-tbj) !important; 
+    color: var(--color-tbj) !important; 
+}
+
+.btn-outline-primary:hover {
+    background-color: transparent !important; 
+    border-color: var(--color-tbj) !important; 
+    color: var(--color-tbj) !important; 
 }

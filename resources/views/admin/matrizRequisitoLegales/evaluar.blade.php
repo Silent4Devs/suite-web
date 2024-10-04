@@ -116,8 +116,8 @@
                             @livewire('plan-implementacion-create', [
                                 'referencia' => null,
                                 'modulo_origen' => 'Matríz de
-                                                                                                                                            Requisitos
-                                                                                                                                            Legales',
+                                                                                                                                                                        Requisitos
+                                                                                                                                                                        Legales',
                             ])
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
@@ -180,7 +180,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-requisito-legales.index') }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -190,7 +190,7 @@
                 </div>
             </div>
             <div style="text-align: right">
-                <button class="btn btn-success" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
+                <button class="btn btn-primary" id="copiarObjetivos"><i class="fas fa-copy mr-2"></i>Importar
                     Objetivos</button>
             </div>
             <table class="table table-bordered w-100 tblObjetivos">
@@ -239,8 +239,9 @@
                             <div id="contenidoModal"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                            <button type="button" id="btnGuardarCopiaObjs" class="btn btn-success">Guardar</button>
+                            <button type="button" class="btn btn-outline-primary"
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" id="btnGuardarCopiaObjs" class="btn btn-primary">Guardar</button>
                         </div>
                         @include('layouts.loader')
                     </div>

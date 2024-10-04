@@ -13,7 +13,8 @@
     }
 </style>
 <div class="row" style="display:flex; justify-content: end; padding-right: 20px;">
-    <button class="btn btn-danger" onclick="printJS({
+    <button class="btn btn-primary"
+        onclick="printJS({
         printable: 'impreso_row',
         type: 'html',
         css: 'ht tps://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',})">
@@ -25,20 +26,19 @@
 
 
     <div class="row">
-                <div class="col-12">
+        <div class="col-12">
             <!--<div class="col">-->
             <div class="card">
                 <div class="card-body">
                     <h6 align="center">PORCENTAJE DE IMPLEMENTACIÓN GENERAL ISO 27001
-                        ({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
+                        ({{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}
                         %)
                     </h6>
                     <div class="progress">
-                        <div
-                            class="progress-bar progress-bar-striped progress-bar-animated"
-                            role="progressbar" aria-valuenow="40"
-                            aria-valuemin="0" aria-valuemax="100"
-                            style="width: {{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}%">{{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}%">
+                            {{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}
                             %
                         </div>
                     </div>
@@ -47,46 +47,47 @@
                         <div class="col-sm">
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Fase</th>
-                                    <th scope="col">Meta</th>
-                                    <th scope="col">Alcanzado</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Fase</th>
+                                        <th scope="col">Meta</th>
+                                        <th scope="col">Alcanzado</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">GAP01</th>
-                                    <td>Planear</td>
-                                    <td>30%</td>
-                                    <td>{{number_format($porcentajeGap1, 2, '.', '')}}%</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">GAP02</th>
-                                    <td>Hacer</td>
-                                    <td>40%</td>
-                                    <td>{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%</td>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2">
-                                        GAP03
-                                    </th>
-                                    <td>Verificar</td>
-                                    <td>15%</td>
-                                    <td>{{number_format($porcentajeGap3['verificar'], 2, '.', '')}}%</td>
-                                </tr>
-                                <tr>
-                                    <td>Actuar</td>
-                                    <td>15%</td>
-                                    <td>{{number_format($porcentajeGap3['actuar'], 2, '.', '')}}%</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td>Total</td>
-                                    <td>100%</td>
-                                    <td class="fondo-azul">{{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <th scope="row">GAP01</th>
+                                        <td>Planear</td>
+                                        <td>30%</td>
+                                        <td>{{ number_format($porcentajeGap1, 2, '.', '') }}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">GAP02</th>
+                                        <td>Hacer</td>
+                                        <td>40%</td>
+                                        <td>{{ number_format($porcentajeGap2['Avance'], 2, '.', '') }}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">
+                                            GAP03
+                                        </th>
+                                        <td>Verificar</td>
+                                        <td>15%</td>
+                                        <td>{{ number_format($porcentajeGap3['verificar'], 2, '.', '') }}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Actuar</td>
+                                        <td>15%</td>
+                                        <td>{{ number_format($porcentajeGap3['actuar'], 2, '.', '') }}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td>Total</td>
+                                        <td>100%</td>
+                                        <td class="fondo-azul">
+                                            {{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}%
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -276,12 +277,13 @@
                     <div id="barraGap1_tablero" class="barraGap1_table">
                         <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
                             SEGURIDAD
-                            Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
+                            Y PRIVACIDAD DE LA ORGANIZACIÓN ({{ number_format($porcentajeGap1, 2, '.', '') }}%)</h6>
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0"
-                                aria-valuemax="100"
-                                style="width: {{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}%">{{number_format($porcentajeGap1, 2, '.', '')}}
+                                aria-valuenow="{{ (number_format($porcentajeGap1, 2, '.', '') * 100) / 30 }}"
+                                aria-valuemin="0" aria-valuemax="100"
+                                style="width: {{ (number_format($porcentajeGap1, 2, '.', '') * 100) / 30 }}%">
+                                {{ number_format($porcentajeGap1, 2, '.', '') }}
                                 %
                             </div>
                         </div>
@@ -292,39 +294,42 @@
                             <span>PLANEAR</span>
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ESTATUS</th>
-                                    <th scope="col">REQUISITOS</th>
-                                    <th scope="col">PESO</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ESTATUS</th>
+                                        <th scope="col">REQUISITOS</th>
+                                        <th scope="col">PESO</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap1']['satisfactorio']}}
-                                    </td>
-                                    <td>{{number_format(($conteos['Gap1']['satisfactorio'] * 100) / 15), 2, '.', ''}}%</td>
-                                    {{-- <td>{{$conteos['Gap1']['satisfactorio']}}</td> --}}
-                                    {{-- <td>{{number_format($porcentajeGap1, 2, '.', '')}}%</td> --}}
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap1']['parcialmente']}}
-                                    </td>
-                                    {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
-                                    <td>{{number_format(($conteos['Gap1']['parcialmente'] * 100) / 15), 2, '.', ''}}%</td>
+                                    <tr>
+                                        <td>Cumple satisfactoriamente</td>
+                                        <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
+                                            {{ $conteos['Gap1']['satisfactorio'] }}
+                                        </td>
+                                        <td>{{ number_format(($conteos['Gap1']['satisfactorio'] * 100) / 15), 2, '.', '' }}%
+                                        </td>
+                                        {{-- <td>{{$conteos['Gap1']['satisfactorio']}}</td> --}}
+                                        {{-- <td>{{number_format($porcentajeGap1, 2, '.', '')}}%</td> --}}
+                                    </tr>
+                                    <tr>
+                                        <td>Cumple parcialmente</td>
+                                        <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
+                                            {{ $conteos['Gap1']['parcialmente'] }}
+                                        </td>
+                                        {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
+                                        <td>{{ number_format(($conteos['Gap1']['parcialmente'] * 100) / 15), 2, '.', '' }}%
+                                        </td>
 
-                                </tr>
-                                <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap1']['nocumple']}}
-                                    </td>
-                                    <td>{{number_format(($conteos['Gap1']['nocumple'] * 100) / 15), 2, '.', ''}}%</td>
-                                </tr>
-                                <!--<tr>
+                                    </tr>
+                                    <tr>
+                                        <td>No cumple</td>
+                                        <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
+                                            {{ $conteos['Gap1']['nocumple'] }}
+                                        </td>
+                                        <td>{{ number_format(($conteos['Gap1']['nocumple'] * 100) / 15), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <!--<tr>
                                     <td>Autodiagnóstico</td>
                                     <td class="bg-dark text-white">1</td>
                                     <td>5%</td>
@@ -334,15 +339,15 @@
                                     <td class="bg-info text-white">1</td>
                                     <td>5%</td>
                                 </tr>-->
-                                <tr>
-                                    <td align="right">Total</td>
-                                    <td>
-                                        {{$conteos['Gap1']['satisfactorio'] + $conteos['Gap1']['parcialmente'] + $conteos['Gap1']['nocumple']}}
-                                    </td>
-                                    <td>
-                                        {{number_format($porcentajeGap1, 2, '.', '')}}%
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td align="right">Total</td>
+                                        <td>
+                                            {{ $conteos['Gap1']['satisfactorio'] + $conteos['Gap1']['parcialmente'] + $conteos['Gap1']['nocumple'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format($porcentajeGap1, 2, '.', '') }}%
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -354,7 +359,7 @@
                         <div class="col-sm" align="center">
                             <h6>% Cumplimiento GAP 01 - Planear</h6>
                             <canvas id="popChart2" width="800" height="800"></canvas>
-                            <h6>{{number_format($porcentajeGap1, 2, '.', '')}}% Cumplimiento</h6>
+                            <h6>{{ number_format($porcentajeGap1, 2, '.', '') }}% Cumplimiento</h6>
                         </div>
                     </div>
                 </div>
@@ -369,14 +374,13 @@
                 <div class="card-body">
                     <div id="barraGap2_tablero" class="barraGap2_table">
                         <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN
-                            ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
+                            ({{ number_format($porcentajeGap2['Avance'], 2, '.', '') }}%)
                         </h6>
                         <div class="progress">
-                            <div
-                                class="progress-bar progress-bar-striped progress-bar-animated"
-                                role="progressbar" aria-valuenow="40"
-                                aria-valuemin="0" aria-valuemax="100"
-                                style="width: {{number_format($porcentajeGap2['Porcentaje'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                style="width: {{ number_format($porcentajeGap2['Porcentaje'], 2, '.', '') }}%">
+                                {{ number_format($porcentajeGap2['Avance'], 2, '.', '') }}
                                 %
                             </div>
                         </div>
@@ -386,77 +390,77 @@
                         <div class="col-sm" align="center">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" style="background-color: black; color: white;">No. Controles que aplican</span>
+                                    <span class="input-group-text" style="background-color: black; color: white;">No.
+                                        Controles que aplican</span>
                                 </div>
-                                <input type="text" value="{{$total = 114 - $conteos['Gap2']['noaplica']}}"
-                                       class="form-control"
-                                       disabled style="color: black;">
+                                <input type="text" value="{{ $total = 114 - $conteos['Gap2']['noaplica'] }}"
+                                    class="form-control" disabled style="color: black;">
                             </div>
                             <span>HACER</span>
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ESTATUS</th>
-                                    <th scope="col">REQUISITOS</th>
-                                    <th scope="col">PESO</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ESTATUS</th>
+                                        <th scope="col">REQUISITOS</th>
+                                        <th scope="col">PESO</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap2']['satisfactorio']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['satisfactorio'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap2']['parcialmente']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['parcialmente'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap2']['nocumple']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['nocumple'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No aplica</td>
-                                    <td class="text-black" style="background-color: rgba(133, 193, 233 , 0.6);">
-                                        {{$conteos['Gap2']['noaplica']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['noaplica'] * 100) / $total), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">Total</td>
-                                    <td>{{114 - $conteos['Gap2']['noaplica']}}</td>
-                                    <td>
-                                        {{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>Cumple satisfactoriamente</td>
+                                        <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
+                                            {{ $conteos['Gap2']['satisfactorio'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap2']['satisfactorio'] * 40) / $total), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumple parcialmente</td>
+                                        <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
+                                            {{ $conteos['Gap2']['parcialmente'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap2']['parcialmente'] * 40) / $total), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>No cumple</td>
+                                        <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
+                                            {{ $conteos['Gap2']['nocumple'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap2']['nocumple'] * 40) / $total), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>No aplica</td>
+                                        <td class="text-black" style="background-color: rgba(133, 193, 233 , 0.6);">
+                                            {{ $conteos['Gap2']['noaplica'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap2']['noaplica'] * 100) / $total), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">Total</td>
+                                        <td>{{ 114 - $conteos['Gap2']['noaplica'] }}</td>
+                                        <td>
+                                            {{ number_format($porcentajeGap2['Avance'], 2, '.', '') }}%
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-sm" align="center">
                             <h6>Controles GAP 02 - Hacer</h6>
                             <canvas id="popChart3" width="800" height="750"></canvas>
-                            <p>{{114 - $conteos['Gap2']['noaplica']}} controles</p>
+                            <p>{{ 114 - $conteos['Gap2']['noaplica'] }} controles</p>
                         </div>
                         <div class="col-sm" align="center">
                             <h6>% Cumplimiento GAP 02 - Hacer</h6>
                             <canvas id="popChart4" width="800" height="750"></canvas>
-                            <h6>{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}% Cumplimiento</h6>
+                            <h6>{{ number_format($porcentajeGap2['Avance'], 2, '.', '') }}% Cumplimiento</h6>
                         </div>
                     </div>
                 </div>
@@ -470,15 +474,14 @@
             <div class="card">
                 <div class="card-body">
                     <div id="barraGap3_tablero" class="barraGap3_table">
-                        <h6 align="center">GAP 03: MONITOREO Y MEJORA CONTINUA ({{$porcentajeGap3['porcentaje']}}%)
+                        <h6 align="center">GAP 03: MONITOREO Y MEJORA CONTINUA ({{ $porcentajeGap3['porcentaje'] }}%)
                         </h6>
                         <div class="progress">
-                            <div
-                                class="progress-bar progress-bar-striped progress-bar-animated"
-                                role="progressbar"
-                                aria-valuenow="{{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}"
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="{{ (number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30 }}"
                                 aria-valuemin="0" aria-valuemax="100"
-                                style="width: {{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}%">{{$porcentajeGap3['porcentaje']}}%
+                                style="width: {{ (number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30 }}%">
+                                {{ $porcentajeGap3['porcentaje'] }}%
                             </div>
                         </div>
                     </div>
@@ -488,45 +491,45 @@
                             <span>VERIFICAR</span>
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ESTATUS</th>
-                                    <th scope="col">REQUISITOS</th>
-                                    <th scope="col">PESO</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ESTATUS</th>
+                                        <th scope="col">REQUISITOS</th>
+                                        <th scope="col">PESO</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap3verif']['satisfactorio']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['satisfactorio'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap3verif']['parcialmente']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['parcialmente'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap3verif']['nocumple']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['nocumple'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">Total</td>
-                                    <td>6</td>
-                                    <td>{{number_format($porcentajeGap3['verificar'], 2, '.', '')}}%</td>
-                                </tr>
+                                    <tr>
+                                        <td>Cumple satisfactoriamente</td>
+                                        <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
+                                            {{ $conteos['Gap3verif']['satisfactorio'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3verif']['satisfactorio'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumple parcialmente</td>
+                                        <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
+                                            {{ $conteos['Gap3verif']['parcialmente'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3verif']['parcialmente'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>No cumple</td>
+                                        <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
+                                            {{ $conteos['Gap3verif']['nocumple'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3verif']['nocumple'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">Total</td>
+                                        <td>6</td>
+                                        <td>{{ number_format($porcentajeGap3['verificar'], 2, '.', '') }}%</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -538,7 +541,7 @@
                         <div class="col-sm" align="center">
                             <h6> % Cumplimiento GAP 03 - Verificar</h6>
                             <canvas id="popChart6" width="800" height="750"></canvas>
-                            <h6>{{number_format($porcentajeGap3['verificar'], 2, '.', '')}}% Cumplimiento</h6>
+                            <h6>{{ number_format($porcentajeGap3['verificar'], 2, '.', '') }}% Cumplimiento</h6>
                         </div>
                     </div>
                     <hr>
@@ -548,53 +551,54 @@
                             <span>ACTUAR</span>
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
-                                <tr>
-                                    <th scope="col">ESTATUS</th>
-                                    <th scope="col">REQUISITOS</th>
-                                    <th scope="col">PESO</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">ESTATUS</th>
+                                        <th scope="col">REQUISITOS</th>
+                                        <th scope="col">PESO</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap3actuar']['satisfactorio']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3actuar']['satisfactorio'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap3actuar']['parcialmente']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3actuar']['parcialmente'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap3actuar']['nocumple']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3actuar']['nocumple'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">Total</td>
-                                    <td>6</td>
-                                    <td>{{number_format($porcentajeGap3['actuar'], 2, '.', '')}}%</td>
-                                </tr>
+                                    <tr>
+                                        <td>Cumple satisfactoriamente</td>
+                                        <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
+                                            {{ $conteos['Gap3actuar']['satisfactorio'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3actuar']['satisfactorio'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumple parcialmente</td>
+                                        <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
+                                            {{ $conteos['Gap3actuar']['parcialmente'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3actuar']['parcialmente'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>No cumple</td>
+                                        <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
+                                            {{ $conteos['Gap3actuar']['nocumple'] }}
+                                        </td>
+                                        <td>
+                                            {{ number_format(($conteos['Gap3actuar']['nocumple'] * 100) / 6), 2, '.', '' }}%
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">Total</td>
+                                        <td>6</td>
+                                        <td>{{ number_format($porcentajeGap3['actuar'], 2, '.', '') }}%</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" style="background-color: black; color: white;">TOTAL GAP 03</span>
+                                    <span class="input-group-text"
+                                        style="background-color: black; color: white;">TOTAL GAP 03</span>
                                 </div>
-                                <input type="text" value="{{$porcentajeGap3['porcentaje']}}%" class="form-control" disabled
-                                       style="color: black;">
+                                <input type="text" value="{{ $porcentajeGap3['porcentaje'] }}%"
+                                    class="form-control" disabled style="color: black;">
                             </div>
                         </div>
                         <div class="col-sm" align="center">
@@ -605,7 +609,7 @@
                         <div class="col-sm" align="center">
                             <h6>% Cumplimiento GAP 03 - Actuar</h6>
                             <canvas id="popChart8" width="800" height="750"></canvas>
-                            <h6>{{number_format($porcentajeGap3['actuar'], 2, '.', '')}}% Cumplimiento</h6>
+                            <h6>{{ number_format($porcentajeGap3['actuar'], 2, '.', '') }}% Cumplimiento</h6>
                         </div>
                     </div>
                 </div>
@@ -628,7 +632,8 @@
                     {!! number_format($porcentajeGap1) !!},
                     {!! number_format($porcentajeGap2['Avance']) !!},
                     {!! number_format($porcentajeGap3['verificar']) !!},
-                    {{number_format($porcentajeGap3['actuar'], 2, '.', '')}}],
+                    {{ number_format($porcentajeGap3['actuar'], 2, '.', '') }}
+                ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
@@ -660,9 +665,9 @@
             datasets: [{
                 label: '',
                 data: [
-                    {{$conteos['Gap1']['satisfactorio']}},
-                    {{$conteos['Gap1']['parcialmente']}},
-                    {{$conteos['Gap1']['nocumple']}}
+                    {{ $conteos['Gap1']['satisfactorio'] }},
+                    {{ $conteos['Gap1']['parcialmente'] }},
+                    {{ $conteos['Gap1']['nocumple'] }}
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -671,7 +676,7 @@
                 ]
             }]
         },
-        options:  {
+        options: {
             legend: {
                 display: false
             },
@@ -683,7 +688,8 @@
                 "onComplete": function() {
                     var chartInstance = this.chart
                     ctx = chartInstance.ctx;
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart
+                        .defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.fillStyle = this.chart.config.options.defaultFontColor;
                     ctx.textAlign = 'left';
                     ctx.textBaseline = 'top';
@@ -713,9 +719,9 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap1']['satisfactorio']}},
-                    {{$conteos['Gap1']['parcialmente']}},
-                    {{$conteos['Gap1']['nocumple']}}
+                    {{ $conteos['Gap1']['satisfactorio'] }},
+                    {{ $conteos['Gap1']['parcialmente'] }},
+                    {{ $conteos['Gap1']['nocumple'] }}
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -739,10 +745,10 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap2']['satisfactorio']}},
-                    {{$conteos['Gap2']['parcialmente']}},
-                    {{$conteos['Gap2']['nocumple']}},
-                    {{$conteos['Gap2']['noaplica']}}
+                    {{ $conteos['Gap2']['satisfactorio'] }},
+                    {{ $conteos['Gap2']['parcialmente'] }},
+                    {{ $conteos['Gap2']['nocumple'] }},
+                    {{ $conteos['Gap2']['noaplica'] }}
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -752,7 +758,7 @@
                 ]
             }]
         },
-        options:  {
+        options: {
             legend: {
                 display: false
             },
@@ -764,7 +770,8 @@
                 "onComplete": function() {
                     var chartInstance = this.chart
                     ctx = chartInstance.ctx;
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart
+                        .defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.fillStyle = this.chart.config.options.defaultFontColor;
                     ctx.textAlign = 'left';
                     ctx.textBaseline = 'top';
@@ -795,10 +802,10 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap2']['satisfactorio']}},
-                    {{$conteos['Gap2']['parcialmente']}},
-                    {{$conteos['Gap2']['nocumple']}},
-                    {{$conteos['Gap2']['noaplica']}}
+                    {{ $conteos['Gap2']['satisfactorio'] }},
+                    {{ $conteos['Gap2']['parcialmente'] }},
+                    {{ $conteos['Gap2']['nocumple'] }},
+                    {{ $conteos['Gap2']['noaplica'] }}
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -822,9 +829,9 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3verif']['satisfactorio']}},
-                    {{$conteos['Gap3verif']['parcialmente']}},
-                    {{$conteos['Gap3verif']['nocumple']}},
+                    {{ $conteos['Gap3verif']['satisfactorio'] }},
+                    {{ $conteos['Gap3verif']['parcialmente'] }},
+                    {{ $conteos['Gap3verif']['nocumple'] }},
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -833,7 +840,7 @@
                 ]
             }]
         },
-        options:  {
+        options: {
             legend: {
                 display: false
             },
@@ -845,7 +852,8 @@
                 "onComplete": function() {
                     var chartInstance = this.chart
                     ctx = chartInstance.ctx;
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart
+                        .defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.fillStyle = this.chart.config.options.defaultFontColor;
                     ctx.textAlign = 'left';
                     ctx.textBaseline = 'top';
@@ -875,9 +883,9 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3verif']['satisfactorio']}},
-                    {{$conteos['Gap3verif']['parcialmente']}},
-                    {{$conteos['Gap3verif']['nocumple']}},
+                    {{ $conteos['Gap3verif']['satisfactorio'] }},
+                    {{ $conteos['Gap3verif']['parcialmente'] }},
+                    {{ $conteos['Gap3verif']['nocumple'] }},
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -900,9 +908,9 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3actuar']['satisfactorio']}},
-                    {{$conteos['Gap3actuar']['parcialmente']}},
-                    {{$conteos['Gap3actuar']['nocumple']}},
+                    {{ $conteos['Gap3actuar']['satisfactorio'] }},
+                    {{ $conteos['Gap3actuar']['parcialmente'] }},
+                    {{ $conteos['Gap3actuar']['nocumple'] }},
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -911,7 +919,7 @@
                 ]
             }]
         },
-        options:  {
+        options: {
             legend: {
                 display: false
             },
@@ -923,7 +931,8 @@
                 "onComplete": function() {
                     var chartInstance = this.chart
                     ctx = chartInstance.ctx;
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart
+                        .defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.fillStyle = this.chart.config.options.defaultFontColor;
                     ctx.textAlign = 'left';
                     ctx.textBaseline = 'top';
@@ -953,9 +962,9 @@
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3actuar']['satisfactorio']}},
-                    {{$conteos['Gap3actuar']['parcialmente']}},
-                    {{$conteos['Gap3actuar']['nocumple']}},
+                    {{ $conteos['Gap3actuar']['satisfactorio'] }},
+                    {{ $conteos['Gap3actuar']['parcialmente'] }},
+                    {{ $conteos['Gap3actuar']['nocumple'] }},
                 ],
                 backgroundColor: [
                     'rgba(22, 160, 133, 0.6)',
@@ -972,18 +981,20 @@
 
     // Properties of the gauge
     let gaugeOptions = {
-        hasNeedle: {{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}},
+        hasNeedle: {{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }},
         needleColor: 'black',
         needleStartValue: 0,
         needleUpdateSpeed: 1000,
         arcColors: ["rgb(255,84,84)", "rgb(239,214,19)", "rgb(61,204,91)"],
         arcDelimiters: [33.33, 66.66],
         rangeLabel: ['0', '100'],
-        centralLabel: '{{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}}%',
+        centralLabel: '{{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}%',
     }
 
     // Drawing and updating the chart
-    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle({{number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '')}})
+    GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(
+        {{ number_format($porcentajeGap1, 2, '.', '') + number_format($porcentajeGap3['porcentaje'], 2, '.', '') + number_format($porcentajeGap2['Avance'], 2, '.', '') }}
+        )
 
     //radarchart
     //Empieza radar chart
@@ -1004,8 +1015,7 @@
             "Dominio 17",
             "Dominio 18",
         ],
-        datasets: [
-            {
+        datasets: [{
                 label: "Meta",
                 backgroundColor: "rgba(179,181,198,0.2)",
                 borderColor: "rgba(179,181,198,1)",
@@ -1046,37 +1056,43 @@
         data: data,
         options: options
     });
-    Chart.helpers.bindEvents(myRadarChart, ['mousedown'], function (evt) {
+    Chart.helpers.bindEvents(myRadarChart, ['mousedown'], function(evt) {
         var lastMousePosition = [evt.x, evt.y];
         //console.log('mousedown');
         var lastActive = myRadarChart.lastActive;
         if (Array.isArray(lastActive) && lastActive.length) {
             lastActive = lastActive[0];
             //console.log(lastActive);
-            var moveHandler = function (evt) {
+            var moveHandler = function(evt) {
                 var index = lastActive._index;
                 var dataset = lastActive._datasetIndex;
                 //console.log('mouse move');
                 if (evt.y < lastMousePosition[1]) {
-                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset].data[index] + 1;
+                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset]
+                        .data[index] + 1;
                     myRadarChart.update(1, false);
                 } else if (evt.y > lastMousePosition[1]) {
-                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset].data[index] - 1;
+                    myRadarChart.data.datasets[dataset].data[index] = myRadarChart.data.datasets[dataset]
+                        .data[index] - 1;
                     myRadarChart.update(1, false);
                 }
                 lastMousePosition = [evt.x, evt.y];
             };
-            var outHandler = function () {
+            var outHandler = function() {
                 //console.log('unbinding');
-                Chart.helpers.unbindEvents(myRadarChart, {'mousemove': moveHandler});
-                Chart.helpers.unbindEvents(myRadarChart, {'mouseup': outHandler});
-                Chart.helpers.unbindEvents(myRadarChart, {'mouseout': outHandler});
+                Chart.helpers.unbindEvents(myRadarChart, {
+                    'mousemove': moveHandler
+                });
+                Chart.helpers.unbindEvents(myRadarChart, {
+                    'mouseup': outHandler
+                });
+                Chart.helpers.unbindEvents(myRadarChart, {
+                    'mouseout': outHandler
+                });
             }
             Chart.helpers.bindEvents(myRadarChart, ['mousemove'], moveHandler);
             Chart.helpers.bindEvents(myRadarChart, ['mouseup'], outHandler);
             Chart.helpers.bindEvents(myRadarChart, ['mouseout'], outHandler);
         }
     });
-
 </script>
-

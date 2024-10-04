@@ -712,7 +712,7 @@
 
         </div>
         <a href="{{ route('admin.matriz-seguridad.sistema-gestion', ['id' => $id_analisis]) }}"
-            class="btn btn-danger">Cerrar</a>
+            class="btn btn-primary">Cerrar</a>
     </div>
 
 </div>

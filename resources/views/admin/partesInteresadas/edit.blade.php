@@ -44,7 +44,7 @@
 
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.partes-interesadas.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" id="btnActualizarParteInteresada" type="submit">
+                    <button class="btn btn-primary" id="btnActualizarParteInteresada" type="submit">
                         Guardar
                     </button>
                 </div>

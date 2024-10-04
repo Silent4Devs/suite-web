@@ -143,7 +143,7 @@
                 <div class="modal-footer">
                     <button type="button" id="btnCancelarEditObjetivo" class="btn btn-outline-primary"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnActualizarObjetivo" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnActualizarObjetivo" class="btn btn-primary">Guardar</button>
                 </div>
                 <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
                     <div class="col-12">

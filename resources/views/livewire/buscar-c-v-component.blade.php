@@ -86,11 +86,11 @@
 
     @if ($isPersonal)
         <div class="d-flex justify-content-end">
-            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
+            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-primary btn-md"><i
                     class="fas fa-plus mr-1"></i>Certificación</button>
             <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
-                class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
-            <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
+                class="btn btn-primary btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
+            <a class="btn btn-primary btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
         </div>
     @endif
 

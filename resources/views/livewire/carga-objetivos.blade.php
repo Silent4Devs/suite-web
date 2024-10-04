@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <br>
-                <a class="btn btn-success" wire:click.prevent="notificarCarga">
+                <a class="btn btn-primary" wire:click.prevent="notificarCarga">
                     Notificar carga de objetivos
                 </a>
             </div>

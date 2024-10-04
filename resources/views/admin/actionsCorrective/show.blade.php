@@ -71,7 +71,7 @@
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
                     <a href="{{ route('admin.accion-correctivas.index') }}" class="btn btn-outline-primary">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
