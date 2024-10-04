@@ -156,7 +156,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <form action="{{ route('admin.timesheet-cliente-delete', $cliente->id) }}" method="POST">

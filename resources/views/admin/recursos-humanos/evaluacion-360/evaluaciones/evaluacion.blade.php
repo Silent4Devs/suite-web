@@ -190,7 +190,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-primary"
                                         data-dismiss="modal">Descartar</button>
-                                    <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-danger">Iniciar
+                                    <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-primary">Iniciar
                                         Evaluación</button>
                                 </div>
                             </div>
@@ -220,7 +220,7 @@
                                     <button type="button" class="btn btn-outline-primary"
                                         data-dismiss="modal">Descartar</button>
                                     <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
-                                        class="btn btn-danger">Iniciar evaluación</button>
+                                        class="btn btn-primary">Iniciar evaluación</button>
                                 </div>
                             </div>
                         </div>
@@ -302,7 +302,7 @@
                 </div>
             </div>
             <a style="float: right" href="{{ route('admin.ev360-evaluaciones.index') }}"
-                class="mt-2 btn btn_cancelar">Regresar</a>
+                class="mt-2 btn btn-outline-primary">Regresar</a>
         </div>
     </div>
 

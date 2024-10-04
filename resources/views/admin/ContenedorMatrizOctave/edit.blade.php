@@ -27,10 +27,10 @@
         }
 
         /* #contenedores tr td:nth-child(8){
-                                background-color: green;
-                                position: relative;
-                                padding: 0;
-                            } */
+                                    background-color: green;
+                                    position: relative;
+                                    padding: 0;
+                                } */
     </style>
 
 
@@ -239,7 +239,7 @@
                         @endif
                     </div>
                     <div class="mb-3 mr-4 col-12 mt-4 text-right">
-                        <button class="btn btn-danger" id="agregarEscenario">
+                        <button class="btn btn-primary" id="agregarEscenario">
                             Agregar
                         </button>
                     </div>
@@ -399,7 +399,7 @@
             </form>
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-                <button class="btn btn-danger" id="btn_actualizar">
+                <button class="btn btn-primary" id="btn_actualizar">
                     Actualizar
                 </button>
             </div>

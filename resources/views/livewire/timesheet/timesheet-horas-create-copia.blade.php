@@ -299,7 +299,7 @@
             <button class="btn btn-secundario" wire:click.prevent="$set('contador', {{ $contador + 1 }})">Agregar
                 fila</button>
             <div>
-                <button class="btn btn_cancelar btn_enviar_formulario" style="position:relative;">
+                <button class="btn btn-outline-primary btn_enviar_formulario" style="position:relative;">
                     <input id="estatus_papelera" type="radio" name="estatus" value="papelera"
                         style="opacity:0; position: absolute;">
                     <label data-type="borrador" for="estatus_papelera"
@@ -308,7 +308,7 @@
                     </label>
                 </button>
 
-                <div class="btn btn-success" style="position: relative;" data-toggle="modal"
+                <div class="btn btn-primary" style="position: relative;" data-toggle="modal"
                     data-target="#modal_aprobar_">
                     <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente"
                         style="opacity:0; position: absolute;">
@@ -334,7 +334,7 @@
 
                             <div class="mt-4">
                                 <div class="col-12 text-center">
-                                    <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                    <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                         Cancelar
                                     </div>
                                     <button data-dismiss="modal" id="enviar_aprobacion_time" title="Rechazar"

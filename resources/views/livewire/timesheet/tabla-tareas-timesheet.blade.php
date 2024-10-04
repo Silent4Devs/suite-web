@@ -50,7 +50,8 @@
                 </div>
                 <div class="form-group w-100 mr-4" style="position:relative;">
                     <label>Área</label>
-                    <select wire:model="input_area" id="areas_select" class="form-control" {{ $area_seleccionar ? '' : 'disabled' }} required>
+                    <select wire:model="input_area" id="areas_select" class="form-control"
+                        {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
                         <option value="0">Todas</option>
                         @if ($area_seleccionar)
@@ -171,7 +172,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"

@@ -68,11 +68,11 @@
                         {{-- <div class="text-right form-group col-12">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
                             @if ($recurso->estatus == 'Borrador' || $recurso->estatus == null)
-                                <button class="btn btn-danger" type="submit" id="btnGuardarDraftRecurso">
+                                <button class="btn btn-primary" type="submit" id="btnGuardarDraftRecurso">
                                     Borrador
                                 </button>
                             @endif
-                            <button class="btn btn-danger" type="submit" id="btnGuardarRecurso">
+                            <button class="btn btn-primary" type="submit" id="btnGuardarRecurso">
                                 Enviar
                             </button>
                         </div> --}}

@@ -160,12 +160,12 @@
                                 <i class="fas fa-filter mr-2"></i> Opciones
                             </div>
                             <div class="col-12 mb-2">
-                                <button class="btn btn-success" wire:click.prevent="search">
+                                <button class="btn btn-primary" wire:click.prevent="search">
                                     <i class="fas fa-search"></i> Realizar Búsqueda
                                 </button>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-success" wire:click.prevent="default"
+                                <button class="btn btn-primary" wire:click.prevent="default"
                                     style="background: #a7a7a7 !important">
                                     <i class="fas fa-times"></i> Resetear Valores&nbsp;&nbsp;&nbsp;
                                 </button>

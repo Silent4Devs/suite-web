@@ -133,7 +133,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn_cancelar">Cancelar</a>
+                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-outline-primary">Cancelar</a>
                         <button class="btn btn-primary" type="submit"> Guardar</button>
                     </div>
                 </div>

@@ -5,12 +5,11 @@
             height: 500px;
             width: 100%;
         }
-
     </style>
-    <h5 class="col-12 titulo_general_funcion">Cómo llegar a&nbsp;{{$sede->sede}}</h5>
+    <h5 class="col-12 titulo_general_funcion">Cómo llegar a&nbsp;{{ $sede->sede }}</h5>
     <div class="py-2 mt-4 card">
         <div class="card-body">
-                {{-- <h4 class="mb-1 text-center "><strong> Cómo llegar: </strong>{{ $sede->sede }}</h4> --}}
+            {{-- <h4 class="mb-1 text-center "><strong> Cómo llegar: </strong>{{ $sede->sede }}</h4> --}}
 
 
             <form class="py-3 form-inline" id="tracer-form">
@@ -27,9 +26,8 @@
                         </div> --}}
                         <div style="margin-left:-10px;"class="form-group col-3">
                             <label>&nbsp;</label>
-                            <a type="button" class="shadow btn btn-success" data-toggle="tooltip"
-                                data-placement="top" title="Pulse este botón para obtener su dirección actual"
-                                onclick="getCurrentPosition()">
+                            <a type="button" class="shadow btn btn-primary" data-toggle="tooltip" data-placement="top"
+                                title="Pulse este botón para obtener su dirección actual" onclick="getCurrentPosition()">
                                 <i class="fas fa-map-marker-alt"></i>
                             </a>
                         </div>
@@ -38,7 +36,7 @@
 
                     <div class="form-group col-3">
                         <label>Destino</label>
-                         <div style="width:100%;" class="form-control">{{$sede->sede}}</div>
+                        <div style="width:100%;" class="form-control">{{ $sede->sede }}</div>
                     </div>
 
                     <div class="form-group col-3">
@@ -53,7 +51,7 @@
                     </div>
 
                     <div class="form-group col-2">
-                         <button id="submit" class="mt-4 shadow btn btn-success" value="Calcular">Ver ruta</button>
+                        <button id="submit" class="mt-4 shadow btn btn-primary" value="Calcular">Ver ruta</button>
                     </div>
                 </div>
             </form>
@@ -75,7 +73,7 @@
     </div>
 
     <div class="flex-row-reverse d-flex">
-        <a href="javascript:window.open('','_self').close();" class="shadow btn btn-success align">Salir</a>
+        <a href="javascript:window.open('','_self').close();" class="shadow btn btn-primary align">Salir</a>
     </div>
     <br><br>
 
@@ -228,7 +226,5 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMtPStAiDXhsaYws3HhCAqwHa2UbsPIPE&callback=initMap"
-        async>
-    </script>
-
+        async></script>
 @endsection
