@@ -149,7 +149,8 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
-                    } else {
+                    }
+                    else {
 
                         $user = User::getCurrentUser();
 
@@ -403,6 +404,214 @@ class Requsicion extends Model implements Auditable
                 }
                 break;
         }
+
+        // Retornamos la colección al final
+        return $coleccion;
+    }
+
+    public static function requisicionesAprobadorMobile($id_empleado, $filtro)
+    {
+        $requisiciones = self::with('registroFirmas')
+            ->where('archivo', false)
+            ->orderByDesc('id')
+            ->get();
+
+            // dump($requisiciones);
+
+        $coleccion = collect();
+
+        switch ($filtro) {
+            case 'general':
+                foreach ($requisiciones as $req) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($req->registroFirmas) {
+                        $registro = $req->registroFirmas;
+                        // dump($registro);
+
+                        if ($registro->solicitante_id == $id_empleado) {
+                            // dd("1");
+                            $coleccion->push($req);
+                        }
+
+                        if ($registro->jefe_id == $id_empleado ) {
+                            $coleccion->push($req);
+                            // dump("2");
+
+                        }
+
+                        if ($registro->responsable_finanzas_id == $id_empleado ) {
+                            // dump("3");
+                            $coleccion->push($req);
+                        }
+
+                        if ($registro->comprador_id == $id_empleado) {
+                            // dd("4");
+
+                            $coleccion->push($req);
+                        }
+                    }
+                    else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($req->id_user == $user->id && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqLider = ListaDistribucion::where('modelo', 'Empleado')->first();
+                        $listaPartLider = $listaReqLider->participantes;
+
+                        $jefe = $user->empleado->supervisor;
+                        $supListLider = $listaPartLider->where('empleado_id', $jefe->id)->first();
+
+                        $nivel = $supListLider->nivel;
+
+                        $participantesNivelLider = $listaPartLider->where('nivel', $nivel)->sortBy('numero_orden');
+
+                        foreach ($participantesNivelLider as $key => $partNivLider) {
+                            if ($partNivLider->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableLider = $partNivLider->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && $responsableLider->id == $id_empleado && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqFinanzas = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                        $listaPartFinanzas = $listaReqFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaReqFinanzas->niveles; $i++) {
+
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && $responsableFinanzas->id == $id_empleado && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    }
+
+                }
+                // dd($coleccion);
+                break;
+
+
+                // code...
+                foreach ($requisiciones as $req) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($req->registroFirmas) {
+                        $registro = $req->registroFirmas;
+
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    } else {
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    }
+                }
+                break;
+            default:
+                foreach ($requisiciones as $req) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($req->registroFirmas) {
+                        $registro = $req->registroFirmas;
+
+                        if ($registro->solicitante_id == $id_empleado && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                            $coleccion->push($req);
+                        }
+
+                        if (! is_null($registro->solicitante_id) && $registro->jefe_id == $id_empleado && is_null($registro->responsable_finanzas_id) && is_null($registro->comprador_id)) {
+                            $coleccion->push($req);
+                        }
+
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && $registro->responsable_finanzas_id == $id_empleado && is_null($registro->comprador_id)) {
+                            $coleccion->push($req);
+                        }
+
+                        if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($req->id_user == $user->id && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqLider = ListaDistribucion::where('modelo', 'Empleado')->first();
+                        $listaPartLider = $listaReqLider->participantes;
+
+                        $jefe = $user->empleado->supervisor;
+                        $supListLider = $listaPartLider->where('empleado_id', $jefe->id)->first();
+
+                        $nivel = $supListLider->nivel;
+
+                        $participantesNivelLider = $listaPartLider->where('nivel', $nivel)->sortBy('numero_orden');
+
+                        foreach ($participantesNivelLider as $key => $partNivLider) {
+                            if ($partNivLider->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableLider = $partNivLider->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && $responsableLider->id == $id_empleado && is_null($req->firma_finanzas) && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $listaReqFinanzas = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                        $listaPartFinanzas = $listaReqFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaReqFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && $responsableFinanzas->id == $id_empleado && is_null($req->firma_compras)) {
+                            $coleccion->push($req);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $req->comprador_id)->first();
+
+                        if (! is_null($req->firma_solicitante) && is_null($req->firma_jefe) && is_null($req->firma_finanzas) && $comprador->user->id == $id_empleado) {
+                            $coleccion->push($req);
+                        }
+                    }
+                }
+                break;
+        }
+
+        // dd($coleccion);
 
         // Retornamos la colección al final
         return $coleccion;
