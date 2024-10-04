@@ -3,7 +3,6 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
-use Chelout\RelationshipEvents\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -132,12 +131,6 @@ class Course extends Model implements Auditable
     public function instructor()
     {
         return $this->belongsTo('App\Models\User', 'empleado_id')->select('id', 'name', 'email', 'empleado_id', 'n_empleado')->with('empleado:id,name,email,area_id,puesto_id,foto,n_empleado');
-    }
-
-    public function user()
-    {
-
-        return $this->belongsTo('App\Models\User', 'empleado_id')->select('id', 'name', 'email', 'empleado_id', 'n_empleado');
     }
 
     public function level()
