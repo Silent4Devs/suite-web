@@ -918,7 +918,7 @@
                 {{-- FIN COMPONENTE PARA EVALUACION DE RIESGOS --}}
                 <div class="mb-3 ml-3 col-12 mt-4 text-right">
                     <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
-                        class="btn btn-success">Agregar</button>
+                        class="btn btn-primary">Agregar</button>
                 </div>
                 <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
                     <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
@@ -958,7 +958,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.octaveIndex', ['id' => $id_analisis]) }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -19,7 +19,8 @@
 </div>
 
 <div class="mt-4 form-group col-md-12">
-    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Se cumplieron las acciones comprometidas por el responsable
+    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Se cumplieron las acciones
+        comprometidas por el responsable
         de la atención de la queja?
     </label>
 </div>
@@ -48,13 +49,13 @@
 
 <div class="form-group col-md-12 col-sm-12 col-lg-12" style="margin-top:-30px">
     <label class="form-label">¿Por qué?</label><sup>*</sup>
-    <textarea name="porque_no_cumplio_responsable"
-        class="form-control">{{ $quejasClientes->porque_no_cumplio_responsable }}</textarea>
+    <textarea name="porque_no_cumplio_responsable" class="form-control">{{ $quejasClientes->porque_no_cumplio_responsable }}</textarea>
     <span class="porque_no_cumplio_responsable_error text-danger errores"></span>
 </div>
 
 <div class="mt-4 form-group col-md-12">
-    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Se cumplieron las acciones comprometidas en el tiempo establecido?
+    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Se cumplieron las acciones
+        comprometidas en el tiempo establecido?
     </label>
 </div>
 
@@ -78,14 +79,16 @@
 </div><br>
 
 <div class=" form-group col-md-12">
-    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿El cliente ha quedado conforme con la solución otorgada?
+    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿El cliente ha quedado conforme con la
+        solución otorgada?
     </label>
 </div>
 
 <div class="row col-12">
     <div class="card-body" style="margin-top:-30px;">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="conforme_solucion" id="conforme_solucion" value="1"
+            <input class="form-check-input" type="radio" name="conforme_solucion" id="conforme_solucion"
+                value="1"
                 {{ old('conforme_solucion', $quejasClientes->conforme_solucion) == true ? 'checked' : '' }}>
             <label class="form-check-label" for="conforme_solucion">
                 Sí
@@ -129,27 +132,29 @@
 
 <div class="form-group col-md-12 col-sm-12 col-lg-12" style="margin-top:-30px">
     <label class="form-label">¿Por qué?</label><sup>*</sup>
-    <textarea name="porque_no_cierre_ticket"
-        class="form-control">{{ $quejasClientes->porque_no_cierre_ticket }}</textarea>
-        <span class="porque_no_cierre_ticket_error text-danger errores"></span>
+    <textarea name="porque_no_cierre_ticket" class="form-control">{{ $quejasClientes->porque_no_cierre_ticket }}</textarea>
+    <span class="porque_no_cierre_ticket_error text-danger errores"></span>
 </div>
 
 <div class="form-group col-md-12">
-    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Notificar al responsable de la atención?
+    <label class="form-label"><i class="fas fa-question-circle iconos-crear"></i>¿Notificar al responsable de la
+        atención?
     </label>
 </div>
 
 <div class="row col-12">
     <div class="card-body" style="margin-top:-35px;">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="notificar_atencion_queja_no_aprobada" id="cerrarTicket" value="1"
+            <input class="form-check-input" type="radio" name="notificar_atencion_queja_no_aprobada"
+                id="cerrarTicket" value="1"
                 {{ old('notificar_atencion_queja_no_aprobada', $quejasClientes->notificar_atencion_queja_no_aprobada) == true ? 'checked' : '' }}>
             <label class="form-check-label" for="notificar_atencion_queja_no_aprobada">
                 Sí
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="notificar_atencion_queja_no_aprobada" value="2"
+            <input class="form-check-input" type="radio" name="notificar_atencion_queja_no_aprobada"
+                value="2"
                 {{ old('notificar_atencion_queja_no_aprobada', $quejasClientes->notificar_atencion_queja_no_aprobada) == false ? 'checked' : '' }}>
             <label class="form-check-label" for="notificar_atencion_queja_no_aprobada">
                 No
@@ -159,6 +164,6 @@
 </div><br>
 
 <div class="mt-4 text-right form-group col-12">
-    <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-    <button type="submit" class="btn btn-success" id="btn-guardar-cierre">Guardar</button>
+    <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cerrar</a>
+    <button type="submit" class="btn btn-primary" id="btn-guardar-cierre">Guardar</button>
 </div>

@@ -1,24 +1,22 @@
 @extends('layouts.admin')
 @section('content')
+    <style type="text/css">
+        sup {
+            color: red;
+        }
 
-        <style type="text/css">
-            sup {
-                color: red;
-            }
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+    </style>
 
-            ol.breadcrumb {
-                margin-bottom: 0px;
-            }
-
-        </style>
-
-    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('denuncias-create-perfil') }}
     @endif
-    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('denuncias-create-portal') }}
     @endif
-    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('denuncias-create') }}
     @endif
 
@@ -34,7 +32,8 @@
                 <hr style="">
 
                 <div class="mt-4">
-                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
+                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
+                    "Enviar"
                 </div>
 
 
@@ -54,7 +53,6 @@
                         </div>
 
                         @if (auth()->user()->empleado)
-
                             <div class="mt-0 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
                                 <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
@@ -71,7 +69,8 @@
                             </div>
 
                             <div class="mt-4 form-group col-6">
-                                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
+                                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
+                                    electrónico</label>
                                 <div class="form-control">{{ auth()->user()->empleado->email }}</div>
                             </div>
 
@@ -162,7 +161,8 @@
                         <small style="color: #555;">
                             Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos
                             evitando juicios de percepción o
-                            desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas:
+                            desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes
+                            preguntas:
                             ¿Qué?. ¿Quién?, ¿Cómo?,
                             ¿Cuándo?, ¿Dónde?, considerando lugares y fechas, horas, palabras utilizadas, acciones que dan
                             origen al hecho
@@ -170,13 +170,15 @@
                     </div>
 
                     <div class="mt-4 form-group col-12">
-                        <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar evidencia</label>
+                        <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar
+                            evidencia</label>
                         <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <button class="btn btn-success">Enviar</button>
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary">Enviar</button>
                     </div>
 
                 </form>

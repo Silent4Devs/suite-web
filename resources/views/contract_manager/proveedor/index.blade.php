@@ -5,11 +5,12 @@
 
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{config('app.cssVersion')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}{{config('app.cssVersion')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}{{config('app.cssVersion')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}{{config('app.cssVersion')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/formularios/organizacion.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}{{ config('app.cssVersion') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}{{ config('app.cssVersion') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}{{ config('app.cssVersion') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}{{ config('app.cssVersion') }}">
+<link rel="stylesheet" type="text/css"
+    href="{{ asset('css/formularios/organizacion.css') }}{{ config('app.cssVersion') }}">
 <style>
     div.dt-button-collection {
         max-height: 60vh;
@@ -53,7 +54,7 @@
                     </div>
                     <div class="btn-group">
                         @can('katbol_proveedores_agregar')
-                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
+                            <a class="btn btn-primary" style=" margin: 13px 12px 12px 10px; "
                                 href="{{ route('contract_manager.proveedor.create') }}" type="submit"
                                 name="action">Agregar
                                 Cliente <sup>+</sup>

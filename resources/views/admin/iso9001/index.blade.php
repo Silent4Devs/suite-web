@@ -203,7 +203,7 @@
                 GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <a href="{{ route('admin.home') }}" class="btn btn-primary">
                 <i class="fas fa-chart-pie mr-2"></i>
                 DASHBOARD
             </a>
@@ -215,7 +215,7 @@
             <div class="row">
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end">
                     <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Dashboard
                         </a>

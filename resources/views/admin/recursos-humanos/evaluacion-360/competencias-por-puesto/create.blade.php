@@ -52,7 +52,7 @@
             <div class="d-flex justify-content-end w-100">
                 <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}"
                     class="btn btn-outline-primary">Regresar</a>
-                {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
+                {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
             </div>
         </div>
     </div>
@@ -72,8 +72,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="cambiarNivelEsperado">Cambiar Nivel</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
         </div>

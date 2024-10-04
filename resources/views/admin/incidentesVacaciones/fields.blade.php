@@ -124,7 +124,7 @@
     <div class="d-grid gap-2 d-md-block">
         <a type="button" href="{{ redirect()->route('admin.incidentes-vacaciones.index') }}"
             class="btn btn-outline-primary btn-md">Cancelar</a>
-        <button class="btn btn-danger" type="submit">
+        <button class="btn btn-primary" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

@@ -1,144 +1,139 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.declaracion-aplicabilidad-2022.index') }}
 
-
-
-{{ Breadcrumbs::render('admin.declaracion-aplicabilidad-2022.index') }}
-
-<h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad Dashboard</h5>
-<div class="form-group col-12 text-right">
-    <a href="{{ route('admin.declaracion-aplicabilidad-2022.index') }}" class="btn btn-danger">Declaracion Aplicabilidad</a>
+    <h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad Dashboard</h5>
+    <div class="form-group col-12 text-right">
+        <a href="{{ route('admin.declaracion-aplicabilidad-2022.index') }}" class="btn btn-primary">Declaracion
+            Aplicabilidad</a>
     </div>
-<div class="card">
-    <div class="card-body">
+    <div class="card">
+        <div class="card-body">
 
-        <div class="px-1 py-2 mx-3 mb-4 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
-                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+            <div class="px-1 py-2 mx-3 mb-4 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+                <div class="row w-100">
+                    <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                        <div class="w-100">
+                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
+                        </p>
+                        <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para visualizar registros actuales
+                            mantener actualizada la página
+                        </p>
                     </div>
                 </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
-                    </p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Para visualizar registros actuales mantener actualizada la página
-                    </p>
+            </div>
+            <h5 class="ml-3" style="font-size: 16px">Controles</h5>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40"
+                    aria-valuemin="0" aria-valuemax="100" style="width: {{ number_format($porcentaje, 2, '.', '') }}%">
+                    {{ number_format($porcentaje, 2, '.', '') }}%
                 </div>
             </div>
-        </div>
-        <h5 class="ml-3" style="font-size: 16px">Controles</h5>
-        <div class="progress">
-            <div
-                class="progress-bar progress-bar-striped progress-bar-animated"
-                role="progressbar" aria-valuenow="40"
-                aria-valuemin="0" aria-valuemax="100"
-                style="width: {{number_format($porcentaje, 2, '.', '')}}%">{{number_format($porcentaje, 2, '.', '')}}%
-            </div>
-        </div>
-        <div class="row">
+            <div class="row">
 
 
-            <div class="col-sm-6">
-                <table class="table table-responsive-sm letras-dashboard">
+                <div class="col-sm-6">
+                    <table class="table table-responsive-sm letras-dashboard">
 
-                    <tbody>
-                        <tr>
+                        <tbody>
+                            <tr>
 
-                            <td>Total de controles</td>
-                            <td>{{ $total }}</td>
+                                <td>Total de controles</td>
+                                <td>{{ $total }}</td>
 
 
-                        </tr>
-                    </tbody>
+                            </tr>
+                        </tbody>
 
-                    <tbody>
-                        <tr>
+                        <tbody>
+                            <tr>
 
-                            <td>Aplica</td>
-                            <td>{{ $conteoAplica }}</td>
+                                <td>Aplica</td>
+                                <td>{{ $conteoAplica }}</td>
 
-                        </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
 
-                        <td>No aplica</td>
-                        <td>{{ $conteoNoaplica }}</td>
+                                <td>No aplica</td>
+                                <td>{{ $conteoNoaplica }}</td>
 
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class=col-sm-6>
-                <canvas id="chartIndicadoresSGSI"></canvas>
+                <div class=col-sm-6>
+                    <canvas id="chartIndicadoresSGSI"></canvas>
+                </div>
+
+                <canvas id="myChart" width="1000" height="500"></canvas>
+
+
+
+
             </div>
 
-            <canvas id="myChart" width="1000" height="500"></canvas>
 
+            <div class="row">
 
+                <div class="col-sm-12">
+                    <table class="table table-responsive-sm letras-dashboard">
+                        <thead>
+                            <tr>
+                                <th scope="col">Controles por dominio</th>
+                                <th scope="col">Aplican</th>
+                                <th scope="col">No aplican</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
+                                <td>A.5 Políticas de Seguridad de Información</td>
+                                <td>{{ $A5 }}</td>
+                                <td>{{ $A5No }}</td>
 
-        </div>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
 
+                                <td>A.6 Organización de la seguridad de la información</td>
+                                <td>{{ $A6 }}</td>
+                                <td>{{ $A6No }}</td>
 
-        <div class="row">
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
 
-            <div class="col-sm-12">
-                <table class="table table-responsive-sm letras-dashboard">
-                    <thead>
-                        <tr>
-                            <th scope="col">Controles por dominio</th>
-                            <th scope="col">Aplican</th>
-                            <th scope="col">No aplican</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                                <td>A.7 seguridad de los recursos humanos</td>
+                                <td>{{ $A7 }}</td>
+                                <td>{{ $A7No }}</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
 
-                            <td>A.5 Políticas de Seguridad de Información</td>
-                            <td>{{ $A5 }}</td>
-                            <td>{{ $A5No }}</td>
-
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-
-                            <td>A.6 Organización de la seguridad de la información</td>
-                            <td>{{ $A6 }}</td>
-                            <td>{{ $A6No }}</td>
-
-                        </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-
-                        <td>A.7 seguridad de los recursos humanos</td>
-                        <td>{{ $A7 }}</td>
-                        <td>{{ $A7No }}</td>
-                    </tr>
-                    </tbody>
-                    <tbody>
-                    <tr>
-
-                        <td>A.8 Administración de activos</td>
-                        <td>{{ $A8 }}</td>
-                        <td>{{ $A8No }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                                <td>A.8 Administración de activos</td>
+                                <td>{{ $A8 }}</td>
+                                <td>{{ $A8No }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
-
 @endsection
 
 @section('scripts')
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
 
@@ -252,5 +247,4 @@
             }
         });
     </script>
-
 @endsection

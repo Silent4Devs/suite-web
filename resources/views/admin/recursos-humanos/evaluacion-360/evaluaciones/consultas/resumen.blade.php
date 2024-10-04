@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="my-2 col-12" style="text-align: end;">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#normalizarResultados">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#normalizarResultados">
                     <i class="fas fa-chart-line mr-2"></i>Normalizar Resultados
                 </button>
             </div>
@@ -110,7 +110,7 @@
                                 <button id="resetValues" type="button" class="btn tb-btn-primary">Restablecer
                                     Valores</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success" style="float: right;">Normalizar</button>
+                                <button type="submit" class="btn btn-primary" style="float: right;">Normalizar</button>
                             </form>
                         </div>
                         {{-- <div class="modal-footer">

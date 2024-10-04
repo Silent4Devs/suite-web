@@ -35,7 +35,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                                        height: 100%; */
+                                                    height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -501,7 +501,7 @@
 
                                     <div class="mb-4 row">
                                         <div class="col text-start">
-                                            <a href="#" class="btn btn-danger" data-toggle="modal"
+                                            <a href="#" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#largeModal">Evidencia</a>
                                         </div>
                                     </div>
@@ -660,8 +660,8 @@
                             </div>
 
                             <div class="mt-2 text-right form-group col-md-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
-                                <input type="submit" class="btn btn-success" value="Enviar">
+                                <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cancelar</a>
+                                <input type="submit" class="btn btn-primary" value="Enviar">
                             </div>
                         </form>
                     </div>
@@ -840,7 +840,7 @@
                                     </div>
                                 </div>
                                 <div class="py-3 text-right col-md-12">
-                                    <input type="submit" class="btn btn-success" value="Guardar">
+                                    <input type="submit" class="btn btn-primary" value="Guardar">
                                 </div>
                             </form>
                         </div>
@@ -855,11 +855,11 @@
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <h5 style="margin: 0;"><b>Acciones para la Atención del Incidente de Seguridad</b></h5>
-                            <button class="btn btn-success btn_modal_form">Agregar actividad</button>
+                            <button class="btn btn-primary btn_modal_form">Agregar actividad</button>
                             @if (count($incidentesSeguridad->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
                                     href="{{ route('admin.planes-de-accion.show', $incidentesSeguridad->planes->first()->id) }}"
-                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
+                                    class="btn btn-primary"><i class="mr-2 fas fa-stream"></i> Plan De
                                     Acción</a>
                             @endif
                         </div>
@@ -954,9 +954,9 @@
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
                                         <div class="text-right form-group col-md-12">
-                                            <a href="#" class="btn btn_cancelar">Cancelar</a>
+                                            <a href="#" class="btn btn-outline-primary">Cancelar</a>
                                             <input type="submit" value="Guardar"
-                                                class="btn btn-success btn_enviar_form_modal">
+                                                class="btn btn-primary btn_enviar_form_modal">
                                         </div>
                                     </div>
                                 </div>
