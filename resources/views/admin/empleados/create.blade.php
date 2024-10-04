@@ -366,16 +366,16 @@
                             })
                         })
                         .then(data => {
-                            if (data.errors) {
-                                document.getElementById('loaderComponent').style.display = 'none';
-                                $.each(data.errors, function(indexInArray, valueOfElement) {
-                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
-                                        valueOfElement[0]);
-                                });
-                                toastr.error(
-                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                                );
-                            }
+                            // if (data.errors) {
+                            //     document.getElementById('loaderComponent').style.display = 'none';
+                            //     $.each(data.errors, function(indexInArray, valueOfElement) {
+                            //         $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                            //             valueOfElement[0]);
+                            //     });
+                            //     toastr.error(
+                            //         'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                            //     );
+                            // }
 
                             if (data.status) {
                                 document.getElementById('loaderComponent').style.display = 'none';
@@ -411,16 +411,16 @@
                                 })
                             }
 
-                            if (error.message == 'The given data was invalid.') {
-                                document.getElementById('loaderComponent').style.display = 'none';
-                                $.each(error.errors, function(indexInArray, valueOfElement) {
-                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
-                                        valueOfElement[0]);
-                                });
-                                toastr.error(
-                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                                );
-                            }
+                            // if (error.message == 'The given data was invalid.') {
+                            //     document.getElementById('loaderComponent').style.display = 'none';
+                            //     $.each(error.errors, function(indexInArray, valueOfElement) {
+                            //         $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                            //             valueOfElement[0]);
+                            //     });
+                            //     toastr.error(
+                            //         'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                            //     );
+                            // }
                         })
                 })
             })
