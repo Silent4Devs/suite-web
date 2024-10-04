@@ -90,14 +90,14 @@
 
                     <div class="row">
                         <div class="col-6 text-left my-4">
-                            <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                            <a wire:click.prevent="guardarBorrador" class="btn btn-primary" style="width: 170px;">Guardar
                                 Borrador</a>
                         </div>
 
                         <div class=" col-6 text-right my-4">
                             <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-general') }}"
                                 class="btn btn-outline-primary" style="width: 170px;">Cancelar</a>
-                            <a wire:click.prevent="primerPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                            <a wire:click.prevent="primerPaso" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
                         </div>
                     </div>
                 </div>
@@ -244,13 +244,13 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-primary" style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <a wire:click.prevent="segundoPaso" class="btn btn-success" style="width: 170px;">SIGUIENTE</a>
+                        <a wire:click.prevent="segundoPaso" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
                     </div>
                 </div>
                 {{-- </form> --}}
@@ -373,14 +373,14 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" class="btn btn-success"
+                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" class="btn btn-primary"
                             style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <button id="btn-paso3" class="btn btn-success" style="width: 170px;">SIGUIENTE</button>
+                        <button id="btn-paso3" class="btn btn-primary" style="width: 170px;">SIGUIENTE</button>
                     </div>
                 </div>
             </div>
@@ -672,18 +672,18 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-success" style="width: 170px;">Guardar
+                        <a wire:click.prevent="guardarBorrador" class="btn btn-primary" style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
                         <a
-                            @if ($bloquear_evaluacion) class="btn btn-success disabled"
+                            @if ($bloquear_evaluacion) class="btn btn-primary disabled"
         style="width: 170px; pointer-events: none; opacity: 0.5;"
     @else
         wire:click.prevent="cuartoPaso"
-        class="btn btn-success"
+        class="btn btn-primary"
         style="width: 170px;" @endif>
                             FINALIZAR
                         </a>

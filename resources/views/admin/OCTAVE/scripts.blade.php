@@ -43,7 +43,6 @@
         background-color:red !important;
 
         } */
-
 </style>
 
 @section('scripts')
@@ -509,7 +508,7 @@
                             </select>
                             </td>
                             <td><input class="form-control evaluacion_riesgo" type="text" name="activosoctave[${contador}][evaluacion_riesgo]" value="${formulario.evaluacionRiesgo}" readonly data-contador="${contador}"></td>
-                            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
+                            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-primary remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
                         </tr>
                     `
                 $("#contenedor_informacion").append(html);
@@ -735,7 +734,7 @@
 
 
     <script type=text/javascript>
-        document.getElementById('nombre_ai_informacion').addEventListener('change',(e)=>{
+        document.getElementById('nombre_ai_informacion').addEventListener('change', (e) => {
             let dueno_nombre = e.target.options[e.target.selectedIndex].getAttribute('data-dueno');
             let dueno_puesto = e.target.options[e.target.selectedIndex].getAttribute('data-dueno-puesto');
             let dueno_area = e.target.options[e.target.selectedIndex].getAttribute('data-dueno-area');
@@ -758,8 +757,5 @@
 
 
         });
-
     </script>
-
-
 @endsection

@@ -11,7 +11,7 @@
         }
     </style>
 
-    <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+    <button class="btn btn-primary print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
         <i class="fas fa-print"></i>
         Imprimir
     </button>

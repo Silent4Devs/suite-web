@@ -1,24 +1,23 @@
 @extends('layouts.admin')
 @section('content')
-        <style type="text/css">
-            sup {
-                color: red;
-            }
+    <style type="text/css">
+        sup {
+            color: red;
+        }
 
-            ol.breadcrumb {
-                margin-bottom: 0px;
-            }
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+    </style>
 
-        </style>
 
-
-    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('mejoras-create-perfil') }}
     @endif
-    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('mejoras-create-portal') }}
     @endif
-    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('mejoras-create') }}
     @endif
     <h5 class="col-12 titulo_general_funcion">Mejoras</h5>
@@ -32,7 +31,8 @@
                 <hr style="">
 
                 <div class="mt-4">
-                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
+                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
+                    "Enviar"
                 </div>
 
                 <form class="row" method="POST" action="{{ route('admin.reportes-mejoras-store') }}">
@@ -43,7 +43,6 @@
                     </div>
 
                     @if (auth()->user()->empleado)
-
                         <div class="mt-0 form-group col-4">
                             <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
                             <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
@@ -142,8 +141,8 @@
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" name="" class="btn btn-success" value="Enviar">
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn-outline-primary">Cancelar</a>
+                        <input type="submit" name="" class="btn btn-primary" value="Enviar">
                     </div>
 
                 </form>
@@ -176,155 +175,154 @@
 
 
     <script type="text/javascript">
-       document.addEventListener('DOMContentLoaded', function() {
-        let select = document.querySelector('.multiselect_areas select');
-        let textarea = document.querySelector('.multiselect_areas textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_areas select');
+            let textarea = document.querySelector('.multiselect_areas textarea');
 
-        select.addEventListener('change', function(e) {
-            e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!textarea.value.includes(this.value)) {
-                textarea.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este elemento ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-    });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-    let select = document.querySelector('.multiselect_procesos select');
-    let textarea = document.querySelector('.multiselect_procesos textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_procesos select');
+            let textarea = document.querySelector('.multiselect_procesos textarea');
 
-    select.addEventListener('change', function(e) {
-        e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        // Verificar si el valor ya está presente en el área de texto
-        if (!textarea.value.includes(this.value)) {
-            textarea.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este proceso ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
-
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este proceso ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
     </script>
 
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('descripcion', {
-            toolbar: [{
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'editing',
-                    groups: ['find', 'selection', 'spellchecker'],
-                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                }, {
-                    name: 'clipboard',
-                    groups: ['undo'],
-                    items: ['Undo', 'Redo']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
-                },
-                {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup'],
-                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                        '-',
-                        'CopyFormatting', 'RemoveFormat'
-                    ]
-                },
-                {
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                        'Blockquote',
-                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                    ]
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink']
-                },
-                {
-                    name: 'insert',
-                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                },
-                '/',
-            ]
-        });
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('descripcion', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
 
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        CKEDITOR.replace('beneficios', {
-            toolbar: [{
-                    name: 'styles',
-                    items: ['Styles', 'Format', 'Font', 'FontSize']
-                },
-                {
-                    name: 'colors',
-                    items: ['TextColor', 'BGColor']
-                },
-                {
-                    name: 'editing',
-                    groups: ['find', 'selection', 'spellchecker'],
-                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                }, {
-                    name: 'clipboard',
-                    groups: ['undo'],
-                    items: ['Undo', 'Redo']
-                },
-                {
-                    name: 'tools',
-                    items: ['Maximize']
-                },
-                {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup'],
-                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                        '-',
-                        'CopyFormatting', 'RemoveFormat'
-                    ]
-                },
-                {
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                        'Blockquote',
-                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                    ]
-                },
-                {
-                    name: 'links',
-                    items: ['Link', 'Unlink']
-                },
-                {
-                    name: 'insert',
-                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                },
-                '/',
-            ]
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('beneficios', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
 
-    });
-</script>
+        });
+    </script>
 @endsection

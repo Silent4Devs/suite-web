@@ -104,12 +104,12 @@
     @else
         <div class="d-flex justify-content-end">
             <button data-toggle="modal" data-target="#modalDocumentos" data-backdrop="static" data-keyboard="false"
-                class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
-            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
+                class="btn btn-primary btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
+            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-primary btn-md"><i
                     class="fas fa-plus mr-1"></i>Certificación</button>
-            <button onclick="$('#modalCursoIt').modal('show');" class="btn btn-danger btn-md"><i
+            <button onclick="$('#modalCursoIt').modal('show');" class="btn btn-primary btn-md"><i
                     class="fas fa-plus mr-1"></i>Documento</button>
-            <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
+            <a class="btn btn-primary btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
 
         </div>
     @endif

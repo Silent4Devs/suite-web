@@ -47,11 +47,11 @@
                             <td>{{ $riesgo->fecha }}</td>
                             <td>
                                 <img class="img_empleado"
-                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar }}"
-                                    title="{{ $riesgo->reporto->name }}">
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar ?? '' }}"
+                                    title="{{ $riesgo->reporto->name ?? ''  }}">
                             </td>
-                            <td>{{ $riesgo->reporto->email }}</td>
-                            <td>{{ $riesgo->reporto->telefono }}</td>
+                            <td>{{ $riesgo->reporto->email  ?? ''  }}</td>
+                            <td>{{ $riesgo->reporto->telefono  ?? '' }}</td>
                             <td>
                                 <div class="row">
                                     <div class="col-6">

@@ -112,9 +112,7 @@
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
                                             $employee = App\Models\User::find($requisicion->id_user);
-                                            if ($requisicion->registroFirmas) {
-                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
-                                            } elseif ($employee !== null) {
+                                            if ($employee !== null) {
                                                 if (
                                                     $employee->empleado !== null &&
                                                     $employee->empleado->supervisor !== null

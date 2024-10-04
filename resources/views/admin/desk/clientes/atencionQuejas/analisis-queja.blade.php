@@ -29,14 +29,16 @@
         <div class="card-body" style="margin-top:-30px;">
             <div class="pregunta_queja_procedente">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="queja_procedente" id="queja_procedente" value="1"
+                    <input class="form-check-input" type="radio" name="queja_procedente" id="queja_procedente"
+                        value="1"
                         {{ old('queja_procedente', $quejasClientes->queja_procedente) == true ? 'checked' : '' }}>
                     <label class="form-check-label" for="queja_procedente">
                         Sí
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="queja_procedente" id="queja_procedente" value="2"
+                    <input class="form-check-input" type="radio" name="queja_procedente" id="queja_procedente"
+                        value="2"
                         {{ old('queja_procedente', $quejasClientes->queja_procedente) == false ? 'checked' : '' }}>
                     <label class="form-check-label" for="queja_procedente">
                         No
@@ -69,14 +71,11 @@
             <select class="form-control select2" name="urgencia" id="select_urgencia">
                 <option value="" selected disabled>
                     Selecciona una opción</option>
-                <option data-urgencia="3"
-                    {{ old('urgencia', $quejasClientes->urgencia) == 'Alta' ? 'selected' : '' }}>
+                <option data-urgencia="3" {{ old('urgencia', $quejasClientes->urgencia) == 'Alta' ? 'selected' : '' }}>
                     Alta</option>
-                <option data-urgencia="2"
-                    {{ old('urgencia', $quejasClientes->urgencia) == 'Media' ? 'selected' : '' }}>
+                <option data-urgencia="2" {{ old('urgencia', $quejasClientes->urgencia) == 'Media' ? 'selected' : '' }}>
                     Media</option>
-                <option data-urgencia="1"
-                    {{ old('urgencia', $quejasClientes->urgencia) == 'Baja' ? 'selected' : '' }}>
+                <option data-urgencia="1" {{ old('urgencia', $quejasClientes->urgencia) == 'Baja' ? 'selected' : '' }}>
                     Baja</option>
             </select>
             <span class="urgencia_error text-danger errores"></span>
@@ -174,11 +173,11 @@
 
     <div class="row">
         <div class="form-group col-sm-12 col-md-4 col-lg-4">
-            <label for="responsable_atencion_queja_id"><i class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
+            <label for="responsable_atencion_queja_id"><i
+                    class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
             <select class="form-control {{ $errors->has('responsable_atencion_queja_id') ? 'is-invalid' : '' }}"
                 name="responsable_atencion_queja_id" id="responsable_atencion_queja_id">
-                <option
-                    value="" selected disabled>Selecciona una opción</option>
+                <option value="" selected disabled>Selecciona una opción</option>
                 @foreach ($empleados as $id => $empleado)
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                         data-area="{{ $empleado->area->area }}"
@@ -209,12 +208,13 @@
 
     <div class="row">
         <div class="mt-4 form-group col-md-12">
-            <label><i class="fas fa-question-circle iconos-crear"></i>¿Notificar al responsable para la atención de la queja?</label>
+            <label><i class="fas fa-question-circle iconos-crear"></i>¿Notificar al responsable para la atención de la
+                queja?</label>
         </div>
     </div>
 
     <div class="mt-2 form-group col-12">
-        <buttom type="submit" class="btn btn-success" id="atencion_queja_btn_correo" >Enviar Notificación
+        <buttom type="submit" class="btn btn-primary" id="atencion_queja_btn_correo">Enviar Notificación
         </buttom>
     </div>
 
@@ -222,7 +222,8 @@
 
     <div class=" mt-4 row">
         <div class="mt-3 form-group col-md-12">
-            <label><i class="fas fa-question-circle iconos-crear"></i>¿Se requiere levantar una acción correctiva?</label>
+            <label><i class="fas fa-question-circle iconos-crear"></i>¿Se requiere levantar una acción
+                correctiva?</label>
         </div>
     </div>
     <div class="row">
@@ -267,7 +268,8 @@
 
             <div class="row">
                 <div class="mt-3 form-group col-sm-12 col-md-4 col-lg-4">
-                    <label for="responsable_sgi_id"><i class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
+                    <label for="responsable_sgi_id"><i
+                            class="fas fa-user-tie iconos-crear"></i>Nombre<sup>*</sup></label>
                     <select class="form-control {{ $errors->has('responsable_sgi_id') ? 'is-invalid' : '' }}"
                         name="responsable_sgi_id" id="responsable_sgi_id">
                         <option value="" selected disabled>Selecciona una opción</option>
@@ -301,9 +303,9 @@
 
 <div class="row">
     <div class="float-left mt-4 text-right form-group col-12">
-        <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-        <button type="submit" class="btn btn-success" id="btn-guardar-analisis">Guardar</button>
-        <button id="siguiente_analisis" type="submit" class="btn btn-success" >Siguiente</button>
+        <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cerrar</a>
+        <button type="submit" class="btn btn-primary" id="btn-guardar-analisis">Guardar</button>
+        <button id="siguiente_analisis" type="submit" class="btn btn-primary">Siguiente</button>
     </div>
 </div>
 
@@ -314,9 +316,10 @@
     document.getElementById("atencion_queja_btn_correo").addEventListener("click", (event) => {
         event.preventDefault();
         let responsable_atencion_queja_id = document.getElementById("responsable_atencion_queja_id").value;
-        sendEmail(responsable_atencion_queja_id,id_quejas);
+        sendEmail(responsable_atencion_queja_id, id_quejas);
     });
-    function sendEmail(responsable_atencion_queja_id,id_quejas) {
+
+    function sendEmail(responsable_atencion_queja_id, id_quejas) {
         let url = "{{ route('admin.desk.quejas-clientes.correoResponsable') }}";
         Swal.fire({
             title: `¿Está seguro(a) de enviar el correo al responsable?`,

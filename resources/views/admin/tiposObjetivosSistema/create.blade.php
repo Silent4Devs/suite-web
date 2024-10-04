@@ -10,10 +10,10 @@
                 @csrf
                 @include('admin.tiposObjetivosSistema._form')
                 <div class="form-group text-right">
-                    <a href="{{ route('admin.tipos-objetivos.index') }}" class="btn btn_cancelar">
+                    <a href="{{ route('admin.tipos-objetivos.index') }}" class="btn btn-outline-primary">
                         {{ __('Cancelar') }}
                     </a>
-                    <button class="btn btn-success" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ __('Crear') }}
                     </button>
                 </div>

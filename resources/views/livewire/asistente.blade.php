@@ -27,8 +27,8 @@
             <!-- <button wire:click="askAsistenText" class="btn">guardas</button> -->
             <form wire:submit="askAsisten">
                 <div class="box-input-user-chatbot">
-                    <input wire:model.blur="search" class="scroll_estilo" style="border: 2px solid #add8e6; position: relative;  left:1rem;  padding: 5px; border-radius: 4px; outline: none;">
-                    <button type="submit" class="btn" style="position: relative; top:2.5px; left:1rem; border: 2px solid #add8e6; outline: none;"
+                    <input wire:model.blur="search" class="scroll_estilo" style="border: 2px solid #add8e6; position: relative;  left:-.7rem;  padding: 5px; border-radius: 4px; outline: none;">
+                    <button type="submit" class="btn" style="position: relative; top:2.5px; left:-.8rem; border: 2px solid #add8e6; outline: none;"
                         onmousedown="this.style.border='none';" 
                         onmouseup="this.style.border='2px solid #add8e6';" 
                         onmouseleave="this.style.border='2px solid #add8e6';" 

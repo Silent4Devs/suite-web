@@ -28,7 +28,7 @@
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-primary">Salir
                 sin llenar</a>
         </div>
     </div>

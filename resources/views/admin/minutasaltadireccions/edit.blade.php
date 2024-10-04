@@ -37,7 +37,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                                                                                                                height: 100%; */
+                                                                                                                    height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -436,10 +436,10 @@
         <div class="text-right form-group col-12">
             <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary"
                 style="text-decoration: none;">Cancelar</a>
-            <button class="btn btn-danger" id="btnGuardar" type="submit" style="width: 13%;">
+            <button class="btn btn-primary" id="btnGuardar" type="submit" style="width: 13%;">
                 Actualizar
             </button>
-            <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 25%;">
+            <button class="btn btn-primary" id="btnUpdateAndReview" type="submit" style="width: 25%;">
                 Actualizar y enviar a revisión
             </button>
         </div>

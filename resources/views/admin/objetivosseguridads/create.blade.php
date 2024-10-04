@@ -394,7 +394,7 @@
                                         <input id="variable" class="form-control" type="text"
                                             placeholder="Variable"><br>
                                     </div>
-                                    <button id="añadir" class="btn btn-success" type="button">Añadir</button>
+                                    <button id="añadir" class="btn btn-primary" type="button">Añadir</button>
                                 </div>
 
                                 <table id="mytable" class="table table-bordered table-hover ">
@@ -414,7 +414,7 @@
                         <div class="text-right form-group col-12" style="margin-left:15px;">
                             <a href="{{ route('admin.objetivosseguridads.index') }}"
                                 class="btn btn-outline-primary">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>

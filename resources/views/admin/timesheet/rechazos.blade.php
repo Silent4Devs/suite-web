@@ -106,7 +106,7 @@
                                         <small>Escriba sus comentarios para el solicitante (Opcional).</small>
                                     </div>
                                     <div class="col-12 text-right">
-                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        <button title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Canecelar
                                         </button>
                                         <button title="Rechazar" class="btn btn-info"
