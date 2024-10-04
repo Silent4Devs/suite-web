@@ -219,26 +219,13 @@ class RequisicionesEditComponent extends Component
         }
 
 
-        foreach ($editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones) {
+        foreach ($editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones) {
             # code...
+            dd($prov_requisiciones);
             $this->array_proveedores[] = [
-
-                'proveedor',
-                'fecha_inicio',
-                'fecha_fin',
-                'detalles',
-                'tipo',
-                'comentarios',
-                'contacto',
-                'contacto_correo',
-                'url',
-                'cel',
-                'cotizacion',
-                'requisiciones_id',
-
-                'proveedor_id' => '',
-                'fechaInicio' => null,
-                'fechaFin' => null,
+                'proveedor_id' => $prov_requisiciones->proveedor_id,
+                'fechaInicio' => $prov_requisiciones->fecha_inicio,
+                'fechaFin' => $prov_requisiciones->fecha_fin,
                 'select_otro' => '',
                 'detalles' => null,
                 'tipo' => null,
@@ -253,10 +240,10 @@ class RequisicionesEditComponent extends Component
         foreach ($editRequisicion->provedores_indistintos_requisiciones as $keyindistintos_requisiciones => $prov_indistintos_requisiciones) {
             # code...
             $this->array_proveedores[] = [
-                'proveedor_id' => '',
-                'fechaInicio' => null,
-                'fechaFin' => null,
-                'select_otro' => '',
+                'proveedor_id' => 'otro',
+                'fechaInicio' => $prov_indistintos_requisiciones->fecha_inicio,
+                'fechaFin' => $prov_indistintos_requisiciones->fecha_fin,
+                'select_otro' => 'indistinto',
                 'detalles' => null,
                 'tipo' => null,
                 'comentarios' => null,
@@ -267,21 +254,21 @@ class RequisicionesEditComponent extends Component
                 'archivo' => null,
             ];
         }
-        foreach ($editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones_catalogo) {
+        foreach ($editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones_catalogo) {
             # code...
             $this->array_proveedores[] = [
-                'proveedor_id' => '',
-                'fechaInicio' => null,
-                'fechaFin' => null,
-                'select_otro' => '',
-                'detalles' => null,
-                'tipo' => null,
-                'comentarios' => null,
-                'nombre_contacto' => null,
-                'telefono_contacto' => null,
-                'correo_contacto' => null,
-                'url_contacto' => null,
-                'archivo' => null,
+                'proveedor_id' => $prov_requisiciones_catalogo->proveedor,
+                'fechaInicio' => $prov_requisiciones_catalogo->fecha_inicio,
+                'fechaFin' => $prov_requisiciones_catalogo->fecha_fin,
+                'select_otro' => 'sugerido',
+                'detalles' => $prov_requisiciones_catalogo->detalles,
+                'tipo' => $prov_requisiciones_catalogo->tipo,
+                'comentarios' => $prov_requisiciones_catalogo->comentarios,
+                'nombre_contacto' => $prov_requisiciones_catalogo->contacto,
+                'telefono_contacto' => $prov_requisiciones_catalogo->cel,
+                'correo_contacto' => $prov_requisiciones_catalogo->contacto_correo,
+                'url_contacto' => $prov_requisiciones_catalogo->url,
+                'archivo' => $prov_requisiciones_catalogo->cotizacion,
             ];
         }
     }
