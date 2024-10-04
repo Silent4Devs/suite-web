@@ -30,7 +30,7 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_y_control_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PlanificacionControl::with(['team'])->select(sprintf('%s.*', (new PlanificacionControl)->table))->orderByDesc('id');
+            $query = PlanificacionControl::select('id', 'folio_cambio', 'fecha_registro', 'fecha_inicio', 'fecha_termino', 'objetivo', 'descripcion', 'origen_id', 'criterios_aceptacion')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

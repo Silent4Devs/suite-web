@@ -26,7 +26,7 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_de_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PlanAuditorium::with(['auditados', 'team', 'equipo'])->select(sprintf('%s.*', (new PlanAuditorium)->table))->orderByDesc('id');
+            $query = PlanAuditorium::select('id','nombre_auditoria','fecha_inicio_auditoria','objetivo','alcance')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
