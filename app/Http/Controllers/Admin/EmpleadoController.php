@@ -204,7 +204,7 @@ class EmpleadoController extends Controller
         }
 
         $request->validate([
-        //     'name' => 'required|string',
+            'name' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
         //     'area_id' => 'required|exists:areas,id',
         //     'supervisor_id' => $validateSupervisor,
