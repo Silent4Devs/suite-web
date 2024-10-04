@@ -400,7 +400,7 @@
                             <div class="mb-2 form-group mx-sm-3">
                                 <input id="variable" class="form-control" type="text" placeholder="Variable"><br>
                             </div>
-                            <button id="añadir" class="btn btn-success" type="button">Añadir</button>
+                            <button id="añadir" class="btn btn-primary" type="button">Añadir</button>
                         </div>
 
                         <table id="mytable" class="table table-bordered table-hover ">
@@ -418,7 +418,7 @@
 
             <div class="text-right form-group col-md-12">
                 <a href="{{ route('admin.indicadores-sgsis.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                <input type="submit" value="Guardar" class="btn btn-success btn_enviar_form_modal">
+                <input type="submit" value="Guardar" class="btn btn-primary btn_enviar_form_modal">
             </div>
 
         </div>
@@ -474,7 +474,7 @@
                     '<td><button type="button" name="usar" id="' + i +
                     '" class="btn btn-info btnAñadir" value="' + variable + '">Usar</button></td>' +
                     '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">Quitar</button></td>' +
+                    '" class="btn btn-primary btn_remove">Quitar</button></td>' +
                     '</tr>'; //esto seria lo que contendria la fila
 
                 $('#mytable tr:first').after(fila);

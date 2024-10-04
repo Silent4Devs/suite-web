@@ -33,7 +33,7 @@
                             <small class="text-muted">Importante: Una vez que establezca nuevos objetivos tendrá que
                                 realizar la carga de objetivos nuevamente</small>
                         </p>
-                        <button class="btn btn-success" id="btnNuevosObjetivos">Definir nuevos objetivos</button> --}}
+                        <button class="btn btn-primary" id="btnNuevosObjetivos">Definir nuevos objetivos</button> --}}
                     </div>
                 </div>
             </div>
@@ -162,8 +162,8 @@
                     <div id="contenidoModal"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnGuardarCopia" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnGuardarCopia" class="btn btn-primary">Guardar</button>
                 </div>
                 @include('layouts.loader')
             </div>

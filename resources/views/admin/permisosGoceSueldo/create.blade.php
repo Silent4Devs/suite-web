@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Registrar: Lineamientos para Permisos</h5>
@@ -16,7 +16,7 @@
     <div class="row">
         <div class="text-right form-group col-12">
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-            <button class="btn btn-danger" type="submit">
+            <button class="btn btn-primary" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>

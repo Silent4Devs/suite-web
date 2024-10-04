@@ -161,7 +161,7 @@
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
         <div class="col-12 form-group text-right">
-            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
+            <button class="btn btn-primary" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
                 correo a colaboradores con horas faltantes de registrar</button>
         </div>
 
@@ -360,8 +360,9 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-outline-primary"
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary"
                                 wire:click="correoRetraso({{ $empleado_md['id'] }})" data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>
                         </div>

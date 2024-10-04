@@ -366,7 +366,7 @@
                         <img class="img-responsive pastel" src="{{ asset('img/pastel.gif') }}" style="width: 100%;">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
 
@@ -1162,8 +1162,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" id="btnEnviarInvitacion">Enviar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarInvitacion">Enviar</button>
             </div>
             <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
                 <div class="col-12">

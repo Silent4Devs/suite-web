@@ -15,7 +15,7 @@
                 <div class="row">
 
                     <div class="mt-5 col-md-12">
-                        <a class="btn btn-danger" data-toggle="collapse" onclick="closetabcollap1()" id="acollapseExample"
+                        <a class="btn btn-primary" data-toggle="collapse" onclick="closetabcollap1()" id="acollapseExample"
                             href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Acción Correctiva
                         </a>
@@ -88,20 +88,20 @@
     <script>
         $("#acollapseExample").click(function() {
 
-            $("#acollapseExample").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
+            $("#acollapseExample").removeClass('btn tb-btn-primary').addClass("btn btn-primary");
+            $("#acollapseplan").removeClass('btn btn-primary').addClass("btn tb-btn-primary");
             $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
         });
 
         $("#acollapseplan").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
-            $(this).toggleClass("btn btn-danger");
-            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
+            $("#acollapseExample").removeClass('btn btn-primary').addClass("btn tb-btn-primary");
+            $(this).toggleClass("btn btn-primary");
+            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-primary");
             $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
         });
         $("#nextcollapseForm1").click(function() {
-            $("#acollapseExample").removeClass('btn btn-danger').addClass("btn tb-btn-primary");
-            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-danger");
+            $("#acollapseExample").removeClass('btn btn-primary').addClass("btn tb-btn-primary");
+            $("#acollapseplan").removeClass('btn tb-btn-primary').addClass("btn btn-primary");
             $("#acollapseactividad").removeClass('btn-danger').addClass("tb-btn-primary");
 
         });

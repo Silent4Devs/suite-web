@@ -154,11 +154,11 @@
                 <label for="">Asignar Aprobadores</label>
                 <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
                     @if ($firma)
-                    @foreach ($firma->aprobadores as $aprobador)
-                        <option value="{{ $aprobador->id }}">
-                            {{ $aprobador->name }}
-                        </option>
-                    @endforeach
+                        @foreach ($firma->aprobadores as $aprobador)
+                            <option value="{{ $aprobador->id }}">
+                                {{ $aprobador->name }}
+                            </option>
+                        @endforeach
                     @else
                         <option value="">No aprobadores available</option>
                     @endif
@@ -768,7 +768,7 @@
                     <div id="signaturePad" >
                         <textarea id="signature64" name="signed" style="display:none; text-align:center;"></textarea>
                     </div>
-                    <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
+                    <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
                 <br/>
                     @if ($errors->has('signed'))
                     <div class="invalid-feedback red-text">
@@ -780,8 +780,8 @@
             <div class="form-group col-12 text-right mt-4">
                 <div class="col s12 m12 right-align btn-grd distancia">
                     <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
-                        class="btn btn_cancelar">Cancelar</a>
-                    {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'id' => 'btnGuardar']) !!}
+                        class="btn btn-outline-primary">Cancelar</a>
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-primary', 'id' => 'btnGuardar']) !!}
                 </div>
             </div>
         </div>

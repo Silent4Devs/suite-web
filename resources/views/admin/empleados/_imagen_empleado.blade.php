@@ -2,7 +2,6 @@
     .img-clip {
         clip-path: circle(50% at 50% 50%);
     }
-
 </style>
 <div class="row align-items-center">
     <div class="text-center col-sm-12 col-md-6 col-6">
@@ -49,7 +48,7 @@
                     </div>
                 </div>
                 <input name="foto" type="file" accept="image/png, image/jpeg" class="imageCrop form-control-file"
-                    id="foto" hidden=""   enctype="multipart/form-data">
+                    id="foto" hidden="" enctype="multipart/form-data">
             </div>
         </div>
     </div>
@@ -69,14 +68,15 @@
         <img class="screenshot-image d-none" alt="">
 
         <div class="controls">
-            <button class="btn btn-danger play" title="Iniciar"><i class="fas fa-play-circle"></i></button>
+            <button class="btn btn-primary play" title="Iniciar"><i class="fas fa-play-circle"></i></button>
             <button class="btn btn-info pause d-none" title="Pausar"><i class="fas fa-pause-circle"></i></button>
-            <button class="btn btn-danger stop d-none" title="Detener"><i class="fas fa-stop"></i></button>
+            <button class="btn btn-primary stop d-none" title="Detener"><i class="fas fa-stop"></i></button>
             <button class="btn btn-outline-success screenshot d-none" title="Capturar"><i
                     class="fas fa-image"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop"   enctype="multipart/form-data">
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" name="snap_foto" class="imageCrop"
+        enctype="multipart/form-data">
 </div>
 
 <script>

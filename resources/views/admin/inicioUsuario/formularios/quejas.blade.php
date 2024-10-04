@@ -1,23 +1,22 @@
 @extends('layouts.admin')
 @section('content')
-        <style type="text/css">
-            sup {
-                color: red;
-            }
+    <style type="text/css">
+        sup {
+            color: red;
+        }
 
-            ol.breadcrumb {
-                margin-bottom: 0px;
-            }
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+    </style>
 
-        </style>
-
-    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('quejas-create-perfil') }}
     @endif
-    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('quejas-create-portal') }}
     @endif
-    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('quejas-create') }}
     @endif
 
@@ -34,7 +33,8 @@
                 <hr style="">
 
                 <div class="mt-4">
-                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
+                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
+                    "Enviar"
                 </div>
 
                 <form class="row" method="POST" action="{{ route('admin.reportes-quejas-store') }}"
@@ -54,7 +54,6 @@
                             <p>Al enviar este formulario, el receptor podrá ver sus datos de contacto</p>
                         </div>
                         @if (auth()->user()->empleado)
-
                             <div class="mt-0 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
                                 <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
@@ -71,7 +70,8 @@
                             </div>
 
                             <div class="mt-4 form-group col-6">
-                                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo electrónico</label>
+                                <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
+                                    electrónico</label>
                                 <div class="form-control">{{ auth()->user()->empleado->email }}</div>
                             </div>
 
@@ -171,13 +171,15 @@
                     </div>
 
                     <div class="mt-4 form-group col-12">
-                        <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar evidencia</label>
+                        <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar
+                            evidencia</label>
                         <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
                     </div>
 
                     <div class="mt-4 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <input type="submit" class="btn btn-primary" value="Enviar">
                     </div>
 
                 </form>
@@ -190,67 +192,65 @@
 
 
 @section('scripts')
-
     <script type="text/javascript">
-       document.addEventListener('DOMContentLoaded', function() {
-        let select = document.querySelector('.multiselect_areas select');
-        let textarea = document.querySelector('.multiselect_areas textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_areas select');
+            let textarea = document.querySelector('.multiselect_areas textarea');
 
-        select.addEventListener('change', function(e) {
-            e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!textarea.value.includes(this.value)) {
-                textarea.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este elemento ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-    });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-    let select = document.querySelector('.multiselect_empleados select');
-    let textarea = document.querySelector('.multiselect_empleados textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_empleados select');
+            let textarea = document.querySelector('.multiselect_empleados textarea');
 
-    select.addEventListener('change', function(e) {
-        e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        // Verificar si el valor ya está presente en el área de texto
-        if (!textarea.value.includes(this.value)) {
-            textarea.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este empleado ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este empleado ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    let select = document.querySelector('.multiselect_procesos select');
-    let textarea = document.querySelector('.multiselect_procesos textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_procesos select');
+            let textarea = document.querySelector('.multiselect_procesos textarea');
 
-    select.addEventListener('change', function(e) {
-        e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        // Verificar si el valor ya está presente en el área de texto
-        if (!textarea.value.includes(this.value)) {
-            textarea.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este proceso ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
-
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este proceso ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
     </script>
 
     <script type="text/javascript">
@@ -262,5 +262,4 @@ document.addEventListener('DOMContentLoaded', function() {
             $("#datos_personales").fadeOut(100);
         });
     </script>
-
 @endsection
