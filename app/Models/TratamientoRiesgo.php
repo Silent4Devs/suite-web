@@ -42,6 +42,7 @@ class TratamientoRiesgo extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'identificador',
         'descripcionriesgo',
         'tipo_riesgo',

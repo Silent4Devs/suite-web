@@ -28,7 +28,7 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table))->orderByDesc('id');
+            $query = ConcientizacionSgi::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
