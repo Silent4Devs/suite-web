@@ -159,7 +159,7 @@
                             <img class="img-fluid" src="{{ asset('img/mensaje2.png') }}">
                         </div>
                         <div class="col-12 text-center">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-success">Regresar</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-primary">Regresar</a>
                         </div>
                     </div>
                 @else
@@ -600,10 +600,10 @@
                         </div>
 
                         <div class="mt-3 d-flex justify-content-end">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-outline-primary">Salir</a>
                             <button
                                 onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
-                                class="btn btn-danger">Finalizar</button>
+                                class="btn btn-primary">Finalizar</button>
                         </div>
                     @endif
 

@@ -8,12 +8,12 @@
 </div>
 <div class="" style=" position: relative; ">
     <h5 style=" position: ;"><b>Acciones para la Atención de la Queja Cliente</b></h5>
-    <button style="position:absolute; right: 2px; top:2px;" class="btn btn-success btn_modal_form"
+    <button style="position:absolute; right: 2px; top:2px;" class="btn btn-primary btn_modal_form"
         id="vincularPlan">Vincular Plan</button>
     @if (count($accionCorrectiva->planes))
         @foreach ($accionCorrectiva->planes as $plan)
             <a style="position:absolute; right: 170px; top:2px;"
-                href="{{ route('admin.planes-de-accion.show', $plan->id) }}" class="btn btn-success"><i
+                href="{{ route('admin.planes-de-accion.show', $plan->id) }}" class="btn btn-primary"><i
                     class="mr-2 fas fa-stream"></i> Plan De
                 Acción {{ $plan->parent }}</a>
         @endforeach
@@ -40,7 +40,7 @@
     @livewire('plan-implementacion-create', [
         'referencia' => null,
         'modulo_origen' => 'Acciones
-                                Correctivas',
+                                        Correctivas',
     ])
 
 </div>
@@ -50,11 +50,11 @@
                             <div class="mt-2" style=" position: relative; ">
                                 <h5 style=" position: ;"><b>Acciones para la Atención de Acciones Correctivas</b></h5>
                                 <button style="position:absolute; right: 2px; top:2px;"
-                                    class="btn btn-success btn_modal_form">Agregar actividad</button>
+                                    class="btn btn-primary btn_modal_form">Agregar actividad</button>
                                 @if (count($accionCorrectiva->planes))
                                     <a style="position:absolute; right: 170px; top:2px;"
                                         href="{{ route('admin.planes-de-accion.show', $accionCorrectiva->planes->first()->id) }}"
-                                        class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
+                                        class="btn btn-primary"><i class="mr-2 fas fa-stream"></i> Plan De
                                         Acción</a>
                                 @endif
                             </div>
@@ -149,9 +149,9 @@
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
                                         <div class="text-right form-group col-md-12">
-                                            <a href="#" class="btn btn_cancelar">Cancelar</a>
+                                            <a href="#" class="btn btn-outline-primary">Cancelar</a>
                                             <input type="submit" value="Guardar"
-                                                class="btn btn-success btn_enviar_form_modal">
+                                                class="btn btn-primary btn_enviar_form_modal">
                                         </div>
                                     </div>
                                 </div>

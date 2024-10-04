@@ -1,18 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.competencia.index') }}
 
     @can('competencium_create')
-
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Competencias</strong></h3>
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.competencia.create') }}">
+            <a class="btn btn-primary" href="{{ route('admin.competencia.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
@@ -67,9 +64,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -143,45 +137,57 @@
 
             ];
 
-                let btnAgregar = {
+            let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar competencia',
                 url: "{{ route('admin.competencia.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
-                };
+            };
             @can('competencias_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
             @can('competencias_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.competencia.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.competencia.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -202,7 +208,8 @@
                         render: function(data, type, row, meta) {
 
 
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombrecolaborador.avatar}" title="${row.nombrecolaborador.name}"></img>`;
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.nombrecolaborador.avatar}" title="${row.nombrecolaborador.name}"></img>`;
 
                             return `${row.nombrecolaborador ? html: ''}`;
                         }
@@ -241,6 +248,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

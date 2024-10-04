@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="col-12 pr-0 mr-0 mb-4">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger print-none" onclick="javascript:window.print()">
+                    <button class="btn btn-primary print-none" onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
                     </button>

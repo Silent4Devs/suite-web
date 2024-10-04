@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menuHorizontal.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menuHorizontal.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
@@ -104,8 +104,8 @@
                 </select>
             </div>
             <div class="col-12 text-right">
-                <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
-                <button class="btn btn-success">Guardar</button>
+                <div type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</div>
+                <button class="btn btn-primary">Guardar</button>
             </div>
         </form>
     </div>
@@ -458,8 +458,8 @@
                             </select>
                         </div>
                         <div class="col-12 text-right">
-                            <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
-                            <button class="btn btn-success">Guardar</button>
+                            <div type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</div>
+                            <button class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
                 </div>

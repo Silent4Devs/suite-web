@@ -1,6 +1,6 @@
 // Laravel Echo
 
-import "bootstrap/dist/css/bootstrap.min.css"; // Importar CSS
+// import "bootstrap/dist/css/bootstrap.min.css"; // Importar CSS
 import "bootstrap"; // Importar JavaScript de Bootstrap
 
 Echo.private("user-notifications").listen("UserSessionChanged", (e) => {

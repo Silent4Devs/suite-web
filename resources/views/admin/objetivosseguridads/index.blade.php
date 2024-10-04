@@ -48,7 +48,7 @@
                 <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar
                     Objetivo</a>
                 &nbsp; &nbsp;
-                <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+                <a class="btn btn-primary" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
             </div>
         </div>
         <div class="mt-5 card">

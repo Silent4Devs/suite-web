@@ -99,7 +99,7 @@
 
         <div class="row">
             <div class="col-sm-3 offset-9 mt-3">
-                <a class="btn btn-success" href="{{ route('admin.analisis-impacto.ajustes') }}"><i class="bi bi-gear"></i>
+                <a class="btn btn-primary" href="{{ route('admin.analisis-impacto.ajustes') }}"><i class="bi bi-gear"></i>
                     Ajustar parámetros </a>
             </div>
         </div>

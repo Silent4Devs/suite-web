@@ -80,7 +80,7 @@
 
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Análisis de Impacto</h5>
-        {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
+        {{-- <a href="{{ route('admin.home') }}" class="btn btn-primary">
             <i class="fas fa-chart-pie mr-2"></i>
             Dashboard
         </a> --}}

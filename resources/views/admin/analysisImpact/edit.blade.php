@@ -2649,7 +2649,7 @@
             <div class="row">
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.analisis-impacto.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-primary">
                         {{ trans('global.save') }}
                     </button>
                 </div>

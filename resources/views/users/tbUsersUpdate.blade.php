@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" href="{{asset('css/global/TbColorsGlobal.css')}}">
-    <link rel="stylesheet" href="{{asset('css/global/tbButtons.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/global/TbColorsGlobal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global/tbButtons.css') }}">
     <h5 class="col-12 titulo_general_funcion">Editar: Usuario</h5>
     <div class="mt-4 card">
         {{-- <div class="py-3 col-md-10 col-sm-9 card-body azul_silent align-self-center" style="margin-top: -40px;">
@@ -27,8 +27,8 @@
                 <div class="form-group">
                     <label class="required" for="email"><i
                             class="fas fa-envelope iconos-crear"></i>{{ trans('cruds.user.fields.email') }}</label>
-                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email"
-                        id="email" value="{{ old('email', $user->email) }}" required>
+                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
+                        name="email" id="email" value="{{ old('email', $user->email) }}" required>
                     @if ($errors->has('email'))
                         <div class="invalid-feedback">
                             {{ $errors->first('email') }}
@@ -60,7 +60,7 @@
                                 <form method="POST" action="{{ route('profile.password.toggleTwoFactor') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-primary" type="submit">
                                             {{ $user->two_factor ? trans('global.two_factor.disable') : trans('global.two_factor.enable') }}
                                         </button>
                                     </div>
@@ -113,13 +113,9 @@
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
-
     <script>
         $(document).ready(function() {
             $("#roles").select2({
@@ -127,6 +123,4 @@
             });
         });
     </script>
-
-
 @endsection
