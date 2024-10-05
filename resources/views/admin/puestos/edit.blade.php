@@ -34,12 +34,16 @@
                                         <label for="">Asignar Aprobadores</label>
                                         <select name="aprobadores_firma[]" id="aprobadores" multiple
                                             class="form-control select2">
+                                            @if($firma)
                                             @foreach ($firma->aprobadores as $aprobador)
                                                 <option value="{{ $aprobador->id }}"
                                                     {{ $aprobacionFirmaPuesto->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
                                                     {{ $aprobador->name }}
                                                 </option>
                                             @endforeach
+                                            @else
+                                                <option value="">No hay aprobadores disponibles</option>
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
