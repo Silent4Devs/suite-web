@@ -421,7 +421,8 @@
                 $usuario->can('roles_acceder') ||
                 $usuario->can('usuarios_acceder') ||
                 $usuario->can('configurar_soporte_acceder'))
-            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden">
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
+                style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
@@ -433,6 +434,18 @@
                                     <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                 </a>
                                 <ul>
+                                    @can('matriz_bia_menu_acceder')
+                                        <li>
+                                            <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
+                                                Análisis de Impacto
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('lista_distribucion_acceder')
+                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                distribución</a>
+                                        </li>
+                                    @endcan
                                     @can('clausulas_auditorias_acceder')
                                         <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                         </li>
@@ -463,11 +476,6 @@
                                     @can('crear_area_acceder')
                                         <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                     @endcan
-                                    @can('lista_distribucion_acceder')
-                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                distribución</a>
-                                        </li>
-                                    @endcan
                                     @can('lista_informativa_acceder')
                                         <li>
                                             <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -494,8 +502,6 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
-
-                                    <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan
