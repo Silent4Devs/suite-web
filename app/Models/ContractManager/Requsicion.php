@@ -411,10 +411,7 @@ class Requsicion extends Model implements Auditable
 
     public static function requisicionesAprobadorMobile($id_empleado, $filtro)
     {
-        $requisiciones = self::with('registroFirmas')
-            ->where('archivo', false)
-            ->orderByDesc('id')
-            ->get();
+        $requisiciones = self::getArchivoFalseAll();
 
             // dump($requisiciones);
 
@@ -804,6 +801,74 @@ class Requsicion extends Model implements Auditable
                         }
 
                         if (! is_null($ord->firma_comprador_orden) && ! is_null($ord->firma_solicitante_orden) && $registro->responsable_finanzas_id == $id_empleado && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+                    }
+                }
+                break;
+        }
+
+        // Retornamos la colección al final
+        return $coleccion;
+    }
+
+    public static function ordenesCompraAprobadorMobile($id_empleado, $filtro)
+    {
+        $requisiciones = self::where('archivo', false)
+            ->orderByDesc('id')
+            ->get();
+
+        $coleccion = collect();
+
+        $ordenes = $requisiciones->where('firma_compras', '!=', null);
+
+        switch ($filtro) {
+            case 'general':
+                foreach ($ordenes as $ord) {
+                    // Verificamos si la relación `registroFirmas` existe y no es null
+                    if ($ord->registroFirmas) {
+                        $registro = $ord->registroFirmas;
+
+                        if ($registro->comprador_id == $id_empleado) {
+                            $coleccion->push($ord);
+                        }
+
+                        if ($registro->solicitante_id == $id_empleado ) {
+                            $coleccion->push($ord);
+                        }
+
+                        if ($registro->responsable_finanzas_id == $id_empleado ) {
+                            $coleccion->push($ord);
+                        }
+                    } else {
+
+                        $user = User::getCurrentUser();
+
+                        if ($ord->id_user == $user->id && is_null($ord->firma_comprador_orden) && is_null($ord->firma_finanzas_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        $listaOrdFinanzas = ListaDistribucion::where('modelo', 'OrdenCompra')->first();
+                        $listaPartFinanzas = $listaOrdFinanzas->participantes;
+
+                        for ($i = 0; $i <= $listaOrdFinanzas->niveles; $i++) {
+                            $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+
+                                $responsableFinanzas = $responsableNivelFinanzas->empleado;
+
+                                break;
+                            }
+                        }
+
+                        if (! is_null($ord->firma_solicitante_orden) && $responsableFinanzas->id == $id_empleado && is_null($ord->firma_comprador_orden)) {
+                            $coleccion->push($ord);
+                        }
+
+                        $comprador = Comprador::with('user')->where('id', $ord->comprador_id)->first();
+
+                        if (! is_null($ord->firma_solicitante) && is_null($ord->firma_finanzas_orden) && $comprador->user->id == $id_empleado) {
                             $coleccion->push($ord);
                         }
                     }

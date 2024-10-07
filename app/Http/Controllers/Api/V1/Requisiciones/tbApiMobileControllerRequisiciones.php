@@ -50,7 +50,13 @@ class tbApiMobileControllerRequisiciones extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        $requisiciones = KatbolRequsicion::requisicionesAprobadorMobile(223, 'general');
+        $requisiciones = KatbolRequsicion::requisicionesAprobadorMobile($user->empleado->id, 'general');
+
+        if($requisiciones->isEmpty()){
+            return response(json_encode([
+                'requisicion' => [],
+            ]), 200)->header('Content-Type', 'application/json');
+        }
 
         // dd($requisiciones);
 
