@@ -374,7 +374,7 @@ class TimesheetController extends Controller
 
                         try {
                             // Enviar correo
-                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
                         } catch (Throwable $e) {
                             report($e);
 
