@@ -692,7 +692,7 @@ class Requsicion extends Model implements Auditable
                         for ($i = 0; $i <= $listaOrdFinanzas->niveles; $i++) {
                             $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
 
-                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+                            if ($responsableNivelFinanzas && $responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
 
                                 $responsableFinanzas = $responsableNivelFinanzas->empleado;
 
@@ -700,9 +700,14 @@ class Requsicion extends Model implements Auditable
                             }
                         }
 
-                        if (! is_null($ord->firma_solicitante_orden) && $responsableFinanzas->id == $id_empleado && is_null($ord->firma_comprador_orden)) {
+                        if (!is_null($ord->firma_solicitante_orden) 
+                            && isset($responsableFinanzas) 
+                            && $responsableFinanzas->id == $id_empleado 
+                            && is_null($ord->firma_comprador_orden)) {
+                            
                             $coleccion->push($ord);
                         }
+
 
                         $comprador = Comprador::with('user')->where('id', $ord->comprador_id)->first();
 
