@@ -604,7 +604,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         //Archivo QuejaCliente
         Route::post('desk/{incidente}/archivarQuejasClientes', 'QuejasClienteController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
-        Route::get('desk/quejas-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
+        Route::get('desk/quejas-cliente-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
         Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'QuejasClienteController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
 
         // TODO SOBRE Denuncias
