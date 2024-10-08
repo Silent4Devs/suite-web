@@ -137,7 +137,7 @@ class PartesInteresadasController extends Controller
             $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')
                 ->where('id_interesada', '=', $partesInteresada->id)
                 ->get();
-            
+
             // Verificar si existen registros
             $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
 
@@ -149,7 +149,6 @@ class PartesInteresadasController extends Controller
             abort(404);
         }
     }
-
 
     public function destroy(PartesInteresada $partesInteresada)
     {
