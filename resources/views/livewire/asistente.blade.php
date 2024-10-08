@@ -18,18 +18,19 @@
                 </div>
             @endif
 
-            <!-- Mostrar todas las preguntas en diferentes bloques -->
-            @foreach ($this->preguntas as $pregunta)
+            <!-- Mostrar preguntas y respuestas intercaladas -->
+            @foreach ($preguntas as $index => $pregunta)
+                <!-- Mostrar la pregunta -->
                 <div class="ms-user" style="width: 15rem;">
                     <p style="text-align: justify; font-size: 10px;">{!! nl2br(e($pregunta)) !!}</p>
                 </div>
-            @endforeach
 
-            <!-- Mostrar todas las respuestas en diferentes bloques -->
-            @foreach ($this->respuestas as $respuesta)
-                <div class="ms-chat" style="width: 15rem;">
-                    <p style="text-align: justify; font-size: 10px;">{!! nl2br(e($respuesta)) !!}</p>
-                </div>
+                <!-- Mostrar la respuesta correspondiente si existe -->
+                @if (isset($respuestas[$index]))
+                    <div class="ms-chat" style="width: 15rem;">
+                        <p style="text-align: justify; font-size: 10px;">{!! nl2br(e($respuestas[$index])) !!}</p>
+                    </div>
+                @endif
             @endforeach
         </div>
 
