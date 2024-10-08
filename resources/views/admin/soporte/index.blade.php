@@ -39,7 +39,7 @@
 
         .info {
             /* width: 475px;
-                   */
+                       */
             margin: 0;
 
             font-size: 12px;
@@ -67,27 +67,27 @@
         }
 
         /* .btn_consultores {
-                   width: 140px;
-                   height: 37px;
-                   border: 1px solid #fff;
+                       width: 140px;
+                       height: 37px;
+                       border: 1px solid #fff;
 
-                   color: #fff;
-                   font-size: 12pt;
-                   border-radius: 8px;
-                   box-shadow: 0px 0px 5px -1px;
-                   cursor: pointer;
-                   margin:auto;
+                       color: #fff;
+                       font-size: 12pt;
+                       border-radius: 8px;
+                       box-shadow: 0px 0px 5px -1px;
+                       cursor: pointer;
+                       margin:auto;
 
-                   display: flex;
-                   align-items: center;
-                   justify-content: center;
-                  }
-                  .btn_consultores:hover{
-                   background-color: #fff;
-                   color: #888888;
-                   box-shadow: none;
-                   transition: 0.1s;
-                  } */
+                       display: flex;
+                       align-items: center;
+                       justify-content: center;
+                      }
+                      .btn_consultores:hover{
+                       background-color: #fff;
+                       color: #888888;
+                       box-shadow: none;
+                       transition: 0.1s;
+                      } */
 
         .tabla_consultores,
         .tabla_soporte {

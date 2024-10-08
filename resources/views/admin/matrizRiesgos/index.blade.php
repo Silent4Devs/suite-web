@@ -120,8 +120,8 @@
                                 Versión ISO
                             </th>
                             <!--<th>
-                                    Riesgo total
-                                </th>-->
+                                        Riesgo total
+                                    </th>-->
                             <th>
                                 Control
                             </th>

@@ -76,7 +76,7 @@
             @endcan
         </ul>
 
-        {{-- <div class="card card-body box-sentimientos">
+        <div class="card card-body box-sentimientos">
             <div class="card-sentimiento">
                 <div>
                     <span>No prioritario</span><br>
@@ -112,7 +112,7 @@
                 </div>
                 <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
             </div>
-        </div> --}}
+        </div>
 
         <!-- Tabs Content -->
         <div class="tab-content" id="myTabContent">

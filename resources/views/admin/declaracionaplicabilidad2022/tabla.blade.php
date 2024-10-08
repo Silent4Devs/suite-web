@@ -41,7 +41,7 @@
                 <tbody></tbody>
             </table>
             <div>
-                <a href="{{ route('admin.iso27001.guia') }}" class="">Regresar</a>
+                <a href="{{ route('admin.iso27001.guia') }}" class="btn btn-primary">Regresar</a>
             </div>
         </div>
     </div>
@@ -196,3 +196,4 @@
             let table = $('.datatable-Area').DataTable(dtOverrideGlobals);
         });
     </script>
+@endsection

@@ -231,7 +231,8 @@
 
             ];
 
-            /*@can('configuracion_sede_create')
+            /*if ( /*___directives_script_0___*/
+        ) {
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
