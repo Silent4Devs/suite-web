@@ -21,6 +21,7 @@ class Quejas extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'titulo',
         'fecha',
         'estatus',
