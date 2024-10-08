@@ -974,7 +974,6 @@ class RequisicionesController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
-            dd($th);
             return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
         }
     }

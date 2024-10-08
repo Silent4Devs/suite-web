@@ -44,6 +44,57 @@
 @endsection
 @section('scripts')
     @parent
+
+    <script>
+        function mostrarAlerta3(url, id) {
+            let titleText =
+                '¿Está seguro de cancelar la orden de compra OC-' + id +
+                '?';
+
+            Swal.fire({
+                title: titleText,
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la solicitud AJAX usando fetch
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Cancelado!', 'La Orden de Compra ha sido cancelada.', 'success')
+                                    .then(
+                                        () => {
+                                            window.location.reload(); // Refresca la página
+                                        });
+                            } else {
+                                Swal.fire('Error',
+                                    'No se pudo cancelar la orden de compra. Inténtelo de nuevo.',
+                                    'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'Hubo un problema al procesar la solicitud.', 'error');
+                            console.error('Error:', error);
+                        });
+                }
+            });
+        }
+    </script>
+
     <script>
         $(function() {
             let dtButtons = [{
@@ -199,7 +250,9 @@
                             var firma_finanzas = row.firma_finanzas_orden;
                             var estatus = row.estado_orden;
 
-                            if (estatus == "rechazado_oc") {
+                            if (row.estado_orden == 'cancelada') {
+                                return '<h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>';
+                            } else if (estatus == "rechazado_oc") {
                                 return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
                             } else {
                                 if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
@@ -264,15 +317,29 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
-                            let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
+                            let urlButtonRellenar = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
+                            let urlButtonEditar =
+                                `/contract_manager/orden-compra/${data}/editar-orden-compra`;
+                            let urlButtonCancelar =
+                                `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
                             let htmlBotones = '<div class="btn-group">';
 
                             if (row.firma_comprador_orden === null) {
                                 // Si el campo es null, se muestra el botón de edición
                                 htmlBotones += `@can('katbol_ordenes_compra_modificar')
-                                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                                <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
                                                 @endcan`;
+                            }
+
+                            if (row.estado_orden == 'cancelada') {
+                                htmlBotones += `<a href="${urlButtonEditar}" >
+                                <i class = "fas fa-pen" ></i></a >`;
+                            }
+
+                            if (row.estado_orden == 'curso') {
+                                htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
+                                <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
                             }
 
                             // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'

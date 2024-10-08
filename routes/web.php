@@ -1935,4 +1935,6 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
     Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
     Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
+    Route::get('orden-compra/{id}/editar-orden-compra', 'OrdenCompraController@editarOrdenCompra')->name('orden-compra.editarOrdenCompra');
+    Route::post('orden-compra/{id}/cancelarOrdenCompra', 'OrdenCompraController@cancelarOrdenCompra')->name('requisiciones.cancelarOrdenCompra');
 });
