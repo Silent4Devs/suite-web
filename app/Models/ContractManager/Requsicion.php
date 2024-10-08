@@ -627,25 +627,25 @@ class Requsicion extends Model implements Auditable
     //relacion-productos_requisiciones
     public function productos_requisiciones()
     {
-        return $this->hasMany(ProductoRequisicion::class, 'requisiciones_id', 'id');
+        return $this->hasMany(ProductoRequisicion::class, 'requisiciones_id', 'id')->orderBy('id');
     }
 
     //relacion-provedores_requisiciones
     public function provedores_requisiciones()
     {
-        return $this->hasMany(ProveedorRequisicion::class, 'requisiciones_id', 'id');
+        return $this->hasMany(ProveedorRequisicion::class, 'requisiciones_id', 'id')->orderBy('id');
     }
 
     //relacion-provedores_requisiciones
     public function provedores_indistintos_requisiciones()
     {
-        return $this->hasMany(ProveedorIndistinto::class, 'requisicion_id', 'id');
+        return $this->hasMany(ProveedorIndistinto::class, 'requisicion_id', 'id')->orderBy('id');
     }
 
     //relacion-provedores_requisiciones
     public function provedores_requisiciones_catalogo()
     {
-        return $this->hasMany(ProvedorRequisicionCatalogo::class, 'requisicion_id', 'id');
+        return $this->hasMany(ProvedorRequisicionCatalogo::class, 'requisicion_id', 'id')->orderBy('id');
     }
 
     public function proveedor()
@@ -671,7 +671,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

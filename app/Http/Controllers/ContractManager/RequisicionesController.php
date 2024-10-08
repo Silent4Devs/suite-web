@@ -130,10 +130,10 @@ class RequisicionesController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('katbol_requisiciones_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->where('id', $id)->first();
+        // $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->where('id', $id)->first();
         $organizacion = $this->obtenerOrganizacion();
 
-        return view('contract_manager.requisiciones.edit', compact('requisiciondata', 'organizacion'));
+        return view('contract_manager.requisiciones.edit', compact('id', 'organizacion'));
     }
 
     /**
@@ -490,7 +490,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -512,7 +512,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -549,7 +549,7 @@ class RequisicionesController extends Controller
                 if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                     $tipo_firma = 'firma_finanzas';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -580,7 +580,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -588,7 +588,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $comprador->user->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -959,6 +959,23 @@ class RequisicionesController extends Controller
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             toast('Error al modificar al colaborador responsable.', 'error');
+        }
+    }
+
+    public function cancelarRequisicion(Request $request)
+    {
+        try {
+            $requisicion = KatbolRequsicion::findOrFail($request->id);
+
+            $requisicion->update([
+                'estado' => 'cancelada',
+                'estado_orden' => 'cancelada',
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
         }
     }
 }
