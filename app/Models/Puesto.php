@@ -191,5 +191,4 @@ class Puesto extends Model implements Auditable
     {
         return $this->empleados ? $this->empleados->count() > 0 : false;
     }
-
 }

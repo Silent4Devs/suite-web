@@ -8,20 +8,24 @@ use Livewire\Component;
 class Asistente extends Component
 {
     public $search = '';
+
     public $respuesta;
+
     public $lineas;
+
     public $filename;
+
     public $filePath;
+
     public $chatboxOpen = false;
-    
+
     // Nuevo array para almacenar las preguntas
     public $preguntas = [];
-    
+
     public $respuestas = []; // Asegúrate de tener esta propiedad para las respuestas
 
     // Nueva propiedad para controlar la visibilidad del mensaje de bienvenida
     public $firstMessageVisible = true;
-
 
     public function toggleChatbox()
     {
@@ -34,12 +38,12 @@ class Asistente extends Component
     public function askAsisten()
     {
         $asistenService = app(AsistentService::class);
-        
+
         // Guardar la pregunta en el array
         $this->preguntas[] = $this->search;
 
         $response = $asistenService->postQuestionToPythonAPI($this->search);
-        
+
         // Verificar si la respuesta es un array y acceder a la cadena
         if (is_array($response) && isset($response['response'])) {
             $this->respuestas[] = $response['response']; // Añadir la respuesta al array
@@ -58,4 +62,3 @@ class Asistente extends Component
         return view('livewire.asistente');
     }
 }
-

@@ -115,7 +115,7 @@ class QuejasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejas = Quejas::with('quejo:id,name,foto')->where('archivado', false)->get();
+        $quejas = Quejas::select('empleado_quejo_id', 'id', 'titulo', 'fecha', 'fecha_cierre', 'estatus', 'sede', 'ubicacion', 'descripcion', 'area_quejado', 'colaborador_quejado', 'proceso_quejado', 'externo_quejado')->with('quejo:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($quejas)->toJson();
     }
@@ -215,7 +215,7 @@ class QuejasController extends Controller
 
         $organizacion = Organizacion::first();
 
-        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->estatus === 'cerrado' ? Carbon::now()->format('Y-m-d H:i:s') : null);
 
         $quejas->update([
             'titulo' => $request->titulo,
@@ -321,7 +321,7 @@ class QuejasController extends Controller
 
     public function recuperarArchivadoQueja($id)
     {
-        Mejoras::where('id', $id)->update(['archivado' => false]);
+        Quejas::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }

@@ -149,8 +149,7 @@ class Requsicion extends Model implements Auditable
                         if (! is_null($registro->solicitante_id) && is_null($registro->jefe_id) && is_null($registro->responsable_finanzas_id) && $registro->comprador_id == $id_empleado) {
                             $coleccion->push($req);
                         }
-                    }
-                    else {
+                    } else {
 
                         $user = User::getCurrentUser();
 
@@ -413,7 +412,7 @@ class Requsicion extends Model implements Auditable
     {
         $requisiciones = self::getArchivoFalseAll();
 
-            // dump($requisiciones);
+        // dump($requisiciones);
 
         $coleccion = collect();
 
@@ -430,13 +429,13 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($req);
                         }
 
-                        if ($registro->jefe_id == $id_empleado ) {
+                        if ($registro->jefe_id == $id_empleado) {
                             $coleccion->push($req);
                             // dump("2");
 
                         }
 
-                        if ($registro->responsable_finanzas_id == $id_empleado ) {
+                        if ($registro->responsable_finanzas_id == $id_empleado) {
                             // dump("3");
                             $coleccion->push($req);
                         }
@@ -446,8 +445,7 @@ class Requsicion extends Model implements Auditable
 
                             $coleccion->push($req);
                         }
-                    }
-                    else {
+                    } else {
 
                         $user = User::getCurrentUser();
 
@@ -507,7 +505,6 @@ class Requsicion extends Model implements Auditable
                 }
                 // dd($coleccion);
                 break;
-
 
                 // code...
                 foreach ($requisiciones as $req) {
@@ -692,7 +689,7 @@ class Requsicion extends Model implements Auditable
                         for ($i = 0; $i <= $listaOrdFinanzas->niveles; $i++) {
                             $responsableNivelFinanzas = $listaPartFinanzas->where('nivel', $i)->where('numero_orden', 1)->first();
 
-                            if ($responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
+                            if ($responsableNivelFinanzas && $responsableNivelFinanzas->empleado->disponibilidad->disponibilidad == 1) {
 
                                 $responsableFinanzas = $responsableNivelFinanzas->empleado;
 
@@ -700,7 +697,11 @@ class Requsicion extends Model implements Auditable
                             }
                         }
 
-                        if (! is_null($ord->firma_solicitante_orden) && $responsableFinanzas->id == $id_empleado && is_null($ord->firma_comprador_orden)) {
+                        if (! is_null($ord->firma_solicitante_orden)
+                            && isset($responsableFinanzas)
+                            && $responsableFinanzas->id == $id_empleado
+                            && is_null($ord->firma_comprador_orden)) {
+
                             $coleccion->push($ord);
                         }
 
@@ -833,11 +834,11 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($ord);
                         }
 
-                        if ($registro->solicitante_id == $id_empleado ) {
+                        if ($registro->solicitante_id == $id_empleado) {
                             $coleccion->push($ord);
                         }
 
-                        if ($registro->responsable_finanzas_id == $id_empleado ) {
+                        if ($registro->responsable_finanzas_id == $id_empleado) {
                             $coleccion->push($ord);
                         }
                     } else {

@@ -206,12 +206,12 @@ class EmpleadoController extends Controller
         $request->validate([
             'name' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
-        //     'area_id' => 'required|exists:areas,id',
-        //     'supervisor_id' => $validateSupervisor,
-        //     'puesto_id' => 'required|exists:puestos,id',
-        //     'antiguedad' => 'required',
+            //     'area_id' => 'required|exists:areas,id',
+            //     'supervisor_id' => $validateSupervisor,
+            //     'puesto_id' => 'required|exists:puestos,id',
+            //     'antiguedad' => 'required',
             'email' => 'required|email|unique:empleados',
-        //     'sede_id' => 'required',
+            //     'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
             'email.unique' => 'El email de empleado ya ha sido tomado',
@@ -222,7 +222,6 @@ class EmpleadoController extends Controller
         if ($sede) {
             $request->query->set('direccion', $sede->direccion);
         }
-
 
         $this->validateDynamicForms($request);
         $empleado = $this->createEmpleado($request);
@@ -521,7 +520,7 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
