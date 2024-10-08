@@ -50,25 +50,16 @@ class tbApiMobileControllerRequisiciones extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        $requisiciones = KatbolRequsicion::requisicionesAprobadorMobile($user->empleado->id, 'general');
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
+            $requisiciones = KatbolRequsicion::getArchivoFalseAll();
 
-        if ($requisiciones->isEmpty()) {
-            return response(json_encode([
-                'requisicion' => [],
-            ]), 200)->header('Content-Type', 'application/json');
-        }
-
-        // dd($requisiciones);
-
-        // if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
-        // $requisiciones = KatbolRequsicion::getArchivoFalseAll();
-        foreach ($requisiciones as $keyReq => $requisicion) {
-            if ($requisicion->id_user != null) {
-                $estado = null;
-                switch ($requisicion->estado) {
-                    case 'curso':
-                        $estado = 'En curso';
-                        break;
+            foreach ($requisiciones as $keyReq => $requisicion) {
+                if ($requisicion->id_user != null) {
+                    $estado = null;
+                    switch ($requisicion->estado) {
+                        case 'curso':
+                            $estado = 'En curso';
+                            break;
 
                     case 'aprobado':
                         $estado = 'Aprobado';
@@ -197,15 +188,172 @@ class tbApiMobileControllerRequisiciones extends Controller
                     'solicitante' => $requisicion->user,
                 ];
             }
-        }
-        // $new = [];
-        // foreach($json_requisicion as $item){
-        //     $new[] = $item;
-        // }
 
         return response(json_encode([
             'requisicion' => $json_requisicion,
         ]), 200)->header('Content-Type', 'application/json');
+
+        }else {
+
+            $requisiciones = KatbolRequsicion::requisicionesAprobadorMobile($user->empleado->id, 'general');
+
+            if($requisiciones->isEmpty()){
+                return response(json_encode([
+                    'requisicion' => [],
+                ]), 200)->header('Content-Type', 'application/json');
+            }
+
+            // dd($requisiciones);
+
+            // if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
+                // $requisiciones = KatbolRequsicion::getArchivoFalseAll();
+                foreach ($requisiciones as $keyReq => $requisicion) {
+                    if ($requisicion->id_user != null) {
+                        $estado = null;
+                        switch ($requisicion->estado) {
+                            case 'curso':
+                                $estado = 'En curso';
+                                break;
+
+                            case 'aprobado':
+                                $estado = 'Aprobado';
+                                break;
+
+                            case 'rechazado':
+                                $estado = 'Rechazado';
+                                break;
+
+                            case 'firmada':
+                                $estado = 'Firmada';
+                                break;
+
+                            case 'firmada_final':
+                                $estado = 'Firmada';
+                                break;
+
+                            default:
+                                $estado = 'Por iniciar';
+                                break;
+                        }
+
+                        $user = User::find($requisicion->id_user);
+
+                        // Validar si el usuario tiene relación empleado
+                        if ($user && $user->empleado) {
+                            $empleado = $user->empleado;
+                        } else {
+                            $empleado = null; // O asignar valores predeterminados aquí
+                        }
+
+                        // Foto del solicitante
+                        if ($empleado && ($empleado->foto == null || $empleado->foto == '0')) {
+                            if ($empleado->genero == 'H') {
+                                $ruta = asset('storage/empleados/imagenes/man.png');
+                            } elseif ($empleado->genero == 'M') {
+                                $ruta = asset('storage/empleados/imagenes/woman.png');
+                            } else {
+                                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                            }
+                        } elseif ($empleado) {
+                            $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
+                        } else {
+                            $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png'); // Valor predeterminado si no hay empleado
+                        }
+
+                        $ruta_foto_user = $this->encodeSpecialCharacters($ruta);
+
+                        $participantes['solicitante'] = [
+                            'nombre_participante' => $empleado->name ?? '', // Si no hay empleado, asignar ''
+                            'foto_participante' => $ruta_foto_user,
+                            'estatus_firma' => is_null($requisicion->firma_solicitante),
+                        ];
+
+                        // Foto y nombre del supervisor
+                        if ($empleado && $empleado->supervisor) {
+                            $supervisorName = $empleado->supervisor->name ?? 'N/A';
+                            $supervisorFoto = $empleado->supervisor->foto ?? 'usuario_no_cargado.png';
+                            if ($supervisorFoto == null || $supervisorFoto == '0') {
+                                if ($empleado->supervisor->genero == 'H') {
+                                    $ruta_supervisor = asset('storage/empleados/imagenes/man.png');
+                                } elseif ($empleado->supervisor->genero == 'M') {
+                                    $ruta_supervisor = asset('storage/empleados/imagenes/woman.png');
+                                } else {
+                                    $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                                }
+                            } else {
+                                $ruta_supervisor = asset('storage/empleados/imagenes/'.$supervisorFoto);
+                            }
+                        } else {
+                            $supervisorName = 'N/A';
+                            $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                        }
+
+                        $ruta_foto_supervisor = $this->encodeSpecialCharacters($ruta_supervisor);
+
+                        $participantes['supervisor'] = [
+                            'nombre_participante' => $supervisorName,
+                            'foto_participante' => $ruta_foto_supervisor,
+                            'estatus_firma' => is_null($requisicion->firma_jefe),
+                        ];
+
+                        $participantes['finanzas'] = [
+                            'nombre_participante' => 'Finanzas',
+                            'foto_participante' => asset('storage/empleados/imagenes/usuario_no_cargado.png'),
+                            'estatus_firma' => is_null($requisicion->firma_finanzas),
+                        ];
+
+                        $comprador = KatbolComprador::with('user')
+                            ->where('id', $requisicion->comprador_id)
+                            ->first();
+
+                        $comp = $comprador->user;
+
+                        if ($comp->foto == null || $comp->foto == '0') {
+                            if ($comp->genero == 'H') {
+                                $ruta_comprador = asset('storage/empleados/imagenes/man.png');
+                            } elseif ($comp->genero == 'M') {
+                                $ruta_comprador = asset('storage/empleados/imagenes/woman.png');
+                            } else {
+                                $ruta_comprador = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                            }
+                        } else {
+                            $ruta_comprador = asset('storage/empleados/imagenes/'.$comp->foto);
+                        }
+
+                        // Encode spaces in the URL
+                        $ruta_foto_comprador = $this->encodeSpecialCharacters($ruta_comprador);
+
+                        $participantes['comprador'] = [
+                            'nombre_participante' => $comprador->name ?? '',
+                            'foto_participante' => $ruta_foto_comprador,
+                            'estatus_firma' => is_null($requisicion->firma_compras),
+                        ];
+
+                        $json_requisicion[$keyReq] = [
+                            'id' => $requisicion->id,
+                            'folio' => 'RQ-00-00-'.$requisicion->id,
+                            'fecha_solicitud' => $requisicion->fecha,
+                            'referencia' => $requisicion->referencia,
+                            'proveedor' => $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto'),
+                            'estatus' => $estado,
+                            'participantes' => $participantes,
+                            'proyecto' => $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible',
+                            'area_solicita' => $requisicion->area,
+                            'solicitante' => $requisicion->user,
+                        ];
+                    }
+                }
+                // $new = [];
+                // foreach($json_requisicion as $item){
+                //     $new[] = $item;
+                // }
+
+                return response(json_encode([
+                    'requisicion' => $json_requisicion,
+                ]), 200)->header('Content-Type', 'application/json');
+        }
+
+
 
         //     // return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         // } else {
