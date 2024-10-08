@@ -1901,6 +1901,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
+    Route::post('requisiciones/{id}/cancelarRequisicion', 'RequisicionesController@cancelarRequisicion')->name('requisiciones.cancelarRequisicion');
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
     Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
     Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');

@@ -32,6 +32,9 @@ class RequisicionesEditComponent extends Component
     use LivewireAlert;
     use WithFileUploads;
 
+    public $editRequisicion = null;
+
+    public $currentUser;
     public $user;
 
     public $paso = 1;
@@ -81,6 +84,8 @@ class RequisicionesEditComponent extends Component
 
     #[Validate('required|int')]
     public $producto_oblig = '';
+
+    public $id_registro_oblig = null;
 
     #[Validate('required|max:500')]
     public $especificaciones_oblig = '';
@@ -137,9 +142,14 @@ class RequisicionesEditComponent extends Component
 
     public $provedores_colllection;
 
-    public $requisicionCreada = null;
+    // public $requisicionCreada = null;
 
-    protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores', 'redirigirFaltantes' => 'redirigirFaltantes'];
+    protected $listeners = [
+        'actualizarCountProveedores' => 'actualizarCountProveedores',
+        'redirigirFaltantes' => 'redirigirFaltantes',
+        'removeProductoConfirmed' => 'removeProductoConfirmed',
+        'removeProveedorConfirmed' => 'removeProveedorConfirmed'
+    ];
 
     public $filename;
 
@@ -168,9 +178,11 @@ class RequisicionesEditComponent extends Component
 
     public function mount($id_requisiciondata)
     {
-        $editRequisicion = KatbolRequsicion::where('id', $id_requisiciondata)->first();
+        $this->editRequisicion = KatbolRequsicion::where('id', $id_requisiciondata)->first();
 
-        $this->user = User::where('id', $editRequisicion->id_user)->first();
+        $this->currentUser =  User::getCurrentUser();
+
+        $this->user = User::where('id', $this->editRequisicion->id_user)->first();
 
         $this->sucursales = KatbolSucursal::getArchivoFalse();
         $this->proveedores = KatbolProveedorOC::getEstadoFalse();
@@ -179,9 +191,9 @@ class RequisicionesEditComponent extends Component
         $this->productos = KatbolProducto::getArchivoFalse();
         $this->organizacion = Organizacion::getFirst();
 
-        $this->user_name = $editRequisicion->user;
-        $this->user_area = $editRequisicion->area;
-        $this->user_email = $editRequisicion->id_user;
+        $this->user_name = $this->editRequisicion->user;
+        $this->user_area = $this->editRequisicion->area;
+        $this->user_email = $this->editRequisicion->id_user;
 
         $collections = [
             'sucursales' => 'Sucursales',
@@ -198,19 +210,21 @@ class RequisicionesEditComponent extends Component
             }
         }
 
-        $this->fecha_solicitud = $editRequisicion->fecha;
-        $this->sucursal_id = $editRequisicion->sucursal_id;
-        $this->descripcion = $editRequisicion->referencia;
-        $this->comprador_id =  $editRequisicion->comprador_id;
-        $this->contrato_id = $editRequisicion->contrato_id;
+        $this->fecha_solicitud = $this->editRequisicion->fecha;
+        $this->sucursal_id = $this->editRequisicion->sucursal_id;
+        $this->descripcion = $this->editRequisicion->referencia;
+        $this->comprador_id =  $this->editRequisicion->comprador_id;
+        $this->contrato_id = $this->editRequisicion->contrato_id;
 
-        foreach ($editRequisicion->productos_requisiciones as $keyProducto => $producto) {
+        foreach ($this->editRequisicion->productos_requisiciones as $keyProducto => $producto) {
             if ($keyProducto == 0) {
                 $this->producto_oblig = $producto->producto_id;
                 $this->cantidad_oblig = $producto->cantidad;
                 $this->especificaciones_oblig = $producto->espesificaciones;
+                $this->id_registro_oblig = $producto->id;
             } else {
                 $this->array_productos[] = [
+                    'id_registro' => $producto->id,
                     'cantidad' => $producto->producto_id,
                     'producto' => $producto->cantidad,
                     'especificaciones' => $producto->espesificaciones,
@@ -219,9 +233,8 @@ class RequisicionesEditComponent extends Component
         }
 
 
-        foreach ($editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones) {
+        foreach ($this->editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones) {
             # code...
-            dd($prov_requisiciones);
             $this->array_proveedores[] = [
                 'proveedor_id' => $prov_requisiciones->proveedor_id,
                 'fechaInicio' => $prov_requisiciones->fecha_inicio,
@@ -235,9 +248,11 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => null,
                 'url_contacto' => null,
                 'archivo' => null,
+                'id_registro' => $prov_requisiciones->id ?? null,
+                'tabla_origen' => 'ProvedorRequisicionCatalogo',
             ];
         }
-        foreach ($editRequisicion->provedores_indistintos_requisiciones as $keyindistintos_requisiciones => $prov_indistintos_requisiciones) {
+        foreach ($this->editRequisicion->provedores_indistintos_requisiciones as $keyindistintos_requisiciones => $prov_indistintos_requisiciones) {
             # code...
             $this->array_proveedores[] = [
                 'proveedor_id' => 'otro',
@@ -252,9 +267,12 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => null,
                 'url_contacto' => null,
                 'archivo' => null,
+                'id_registro' => $prov_indistintos_requisiciones->id ?? null,
+                'tabla_origen' => 'ProveedorIndistinto',
             ];
         }
-        foreach ($editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones_catalogo) {
+
+        foreach ($this->editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones_catalogo) {
             # code...
             $this->array_proveedores[] = [
                 'proveedor_id' => $prov_requisiciones_catalogo->proveedor,
@@ -269,13 +287,15 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => $prov_requisiciones_catalogo->contacto_correo,
                 'url_contacto' => $prov_requisiciones_catalogo->url,
                 'archivo' => $prov_requisiciones_catalogo->cotizacion,
+                'id_registro' => $prov_requisiciones_catalogo->id ?? null,
+                'tabla_origen' => 'ProveedorRequisicion',
             ];
         }
     }
 
     public function render()
     {
-        return view('livewire.requisiciones-create-component');
+        return view('livewire.requisiciones-edit-component');
     }
 
     public function hydrate()
@@ -326,15 +346,25 @@ class RequisicionesEditComponent extends Component
     public function addProductos()
     {
         $this->array_productos[] = [
+            'id_registro' => null,
             'cantidad' => 0,
             'producto' => '',
             'especificaciones' => '',
         ];
     }
 
-    public function removeProductos($key)
+    public function removeProductoConfirmed($key)
     {
-        unset($this->array_productos[$key]);
+        if ($this->array_productos[$key]['id_registro'] == null) {
+            unset($this->array_productos[$key]);
+        } elseif ($this->array_productos[$key]['id_registro'] != null) {
+
+            $deleteProducto = KatbolProductoRequisicion::where('id', $this->array_productos[$key]['id_registro'])->delete();
+
+            unset($this->array_productos[$key]);
+
+            $this->alert('success', 'Registro Eliminado');
+        }
     }
 
     public function agregarProveedor()
@@ -352,12 +382,46 @@ class RequisicionesEditComponent extends Component
             'correo_contacto' => null,
             'url_contacto' => null,
             'archivo' => null,
+            'id_registro' => null,
+            'tabla_origen' => null,
         ];
     }
 
-    public function removeProveedor($key)
+    public function removeProveedorConfirmed($keyP)
     {
-        unset($this->array_proveedores[$key]);
+        if ($this->array_proveedores[$keyP]['id_registro'] == null) {
+
+            unset($this->array_proveedores[$keyP]);
+        } elseif ($this->array_proveedores[$keyP]['id_registro'] != null) {
+
+            switch ($this->array_proveedores[$keyP]['tabla_origen']) {
+                case 'ProvedorRequisicionCatalogo':
+                    KatbolProvedorRequisicionCatalogo::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
+                    # code...
+                    $this->alert('success', 'Registro Eliminado');
+
+                    break;
+                case 'ProveedorIndistinto':
+                    KatbolProveedorIndistinto::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
+                    # code...
+                    $this->alert('success', 'Registro Eliminado');
+
+                    break;
+
+                case 'ProveedorRequisicion':
+                    KatbolProveedorRequisicion::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
+                    # code...
+                    $this->alert('success', 'Registro Eliminado');
+
+                    break;
+                default:
+                    $this->alert('error', 'Error al buscar el registro.');
+                    # code...
+                    break;
+            }
+
+            unset($this->array_proveedores[$keyP]);
+        }
     }
 
     public function servicioStore()
@@ -378,6 +442,7 @@ class RequisicionesEditComponent extends Component
 
         $this->array_productos[] =
             [
+                'id_registro' => $this->id_registro_oblig,
                 'cantidad' => $this->cantidad_oblig,
                 'producto' => $this->producto_oblig,
                 'especificaciones' => $this->especificaciones_oblig,
@@ -404,8 +469,32 @@ class RequisicionesEditComponent extends Component
 
             if ($proveedor['proveedor_id'] == 'otro') {
                 if ($proveedor['select_otro'] == 'indistinto') {
+
+                    if ($proveedor['tabla_origen'] != 'ProveedorIndistinto') {
+                        switch ($proveedor['tabla_origen']) {
+                            case 'ProvedorRequisicionCatalogo':
+                                KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
+                                # code...
+                                $this->alert('success', 'Registro Eliminado');
+
+                                break;
+
+                            case 'ProveedorRequisicion':
+                                KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
+                                # code...
+                                $this->alert('success', 'Registro Eliminado');
+
+                                break;
+                            default:
+                                $this->alert('error', 'Error al buscar el registro.');
+                                # code...
+                                break;
+                        }
+                    }
+
                     $dataProvedoresIndistintoCatalogo[] = [
                         // 'requisicion_id' => $this->nueva_requisicion->id,
+                        'id_registro' => $proveedor['id_registro'],
                         'fecha_inicio' => $proveedor['fechaInicio'],
                         'fecha_fin' => $proveedor['fechaFin'],
                     ];
@@ -419,7 +508,27 @@ class RequisicionesEditComponent extends Component
                     // KatbolProveedorRequisicion
                     // $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $proveedor['archivo']->getClientOriginalExtension();
                     // dd($proveedor);
+
+                    if ($proveedor['tabla_origen'] != 'ProveedorRequisicion') {
+                        switch ($proveedor['tabla_origen']) {
+                            case 'ProvedorRequisicionCatalogo':
+                                KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
+                                # code...
+                                break;
+
+                            case 'ProveedorIndistinto':
+                                KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
+                                # code...
+                                break;
+
+                            default:
+                                # code...
+                                break;
+                        }
+                    }
+
                     $dataProveedoresSugeridos[] = [
+                        'id_registro' => $proveedor['id_registro'],
                         'proveedor' => $proveedor['proveedor_id'],
                         'detalles' => $proveedor['detalles'],
                         'tipo' => $proveedor['tipo'],
@@ -437,8 +546,27 @@ class RequisicionesEditComponent extends Component
                 }
             } else {
                 $proveedor_catalogo = KatbolProveedorOC::where('id', $proveedor['proveedor_id'])->first();
+
+                if ($proveedor['tabla_origen'] != 'ProvedorRequisicionCatalogo') {
+                    switch ($proveedor['tabla_origen']) {
+                        case 'ProveedorIndistinto':
+                            KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
+                            # code...
+                            break;
+
+                        case 'ProveedorRequisicion':
+                            KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
+                            # code...
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                }
+
                 $dataProvedoresCatalogo[] = [
                     // 'requisicion_id' => $this->nueva_requisicion->id,
+                    'id_registro' => $proveedor['id_registro'],
                     'proveedor_id' => $proveedor['proveedor_id'],
                     'fecha_inicio' => $proveedor['fechaInicio'],
                     'fecha_fin' => $proveedor['fechaFin'],
@@ -481,7 +609,7 @@ class RequisicionesEditComponent extends Component
         DB::beginTransaction();
         try {
 
-            $this->requisicionCreada = KatbolRequsicion::create(
+            $this->editRequisicion->update(
                 [
                     'fecha' => $this->nueva_requisicion['fecha'],
                     'sucursal_id' => $this->nueva_requisicion['sucursal_id'],
@@ -495,70 +623,97 @@ class RequisicionesEditComponent extends Component
                 ]
             );
 
-            $this->requisicion_id = $this->requisicionCreada->id;
+            $this->requisicion_id = $this->editRequisicion->id;
 
             foreach ($this->array_productos as $keyProductos => $producto) {
-                KatbolProductoRequisicion::create([
-                    'requisiciones_id' => $this->requisicionCreada->id,
-                    'espesificaciones' => $producto['especificaciones'],
-                    'cantidad' => $producto['cantidad'],
-                    'producto_id' => $producto['producto'],
-                ]);
+                KatbolProductoRequisicion::updateOrCreate(
+                    [
+                        'id' => $producto['id_registro'],
+                        'requisiciones_id' => $this->editRequisicion->id,
+                    ],
+                    [
+                        'espesificaciones' => $producto['especificaciones'],
+                        'cantidad' => $producto['cantidad'],
+                        'producto_id' => $producto['producto'],
+                    ]
+                );
             }
 
             foreach ($dataProvedoresIndistintoCatalogo as $key => $provInd) {
-                KatbolProveedorIndistinto::create([
-                    'requisicion_id' => $this->requisicionCreada->id,
-                    'fecha_inicio' => $provInd['fecha_inicio'],
-                    'fecha_fin' => $provInd['fecha_fin'],
-                ]);
+                KatbolProveedorIndistinto::updateOrCreate(
+                    [
+                        'id' => $provInd['id_registro'],
+                        'requisicion_id' => $this->editRequisicion->id,
+                    ],
+                    [
+                        'fecha_inicio' => $provInd['fecha_inicio'],
+                        'fecha_fin' => $provInd['fecha_fin'],
+                    ]
+                );
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
                 $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
-                KatbolProveedorRequisicion::create([
-                    'requisiciones_id' => $this->requisicionCreada->id,
-                    'proveedor' => $provSug['proveedor'],
-                    'detalles' => $provSug['detalles'],
-                    'tipo' => $provSug['tipo'],
-                    'comentarios' => $provSug['comentarios'],
-                    'contacto' => $provSug['contacto'],
-                    'cel' => $provSug['cel'],
-                    'contacto_correo' => $provSug['contacto_correo'],
-                    'url' => $provSug['url'],
-                    'fecha_inicio' => $provSug['fecha_inicio'],
-                    'fecha_fin' => $provSug['fecha_fin'],
-                    'cotizacion' => $name,
-                ]);
+                KatbolProveedorRequisicion::updateOrCreate(
+                    [
+                        'id' => $provSug['id_registro'],
+                        'requisiciones_id' => $this->editRequisicion->id,
+                    ],
+                    [
+                        'requisiciones_id' => $this->editRequisicion->id,
+                        'proveedor' => $provSug['proveedor'],
+                        'detalles' => $provSug['detalles'],
+                        'tipo' => $provSug['tipo'],
+                        'comentarios' => $provSug['comentarios'],
+                        'contacto' => $provSug['contacto'],
+                        'cel' => $provSug['cel'],
+                        'contacto_correo' => $provSug['contacto_correo'],
+                        'url' => $provSug['url'],
+                        'fecha_inicio' => $provSug['fecha_inicio'],
+                        'fecha_fin' => $provSug['fecha_fin'],
+                        'cotizacion' => $name,
+                    ]
+                );
             }
 
             foreach ($dataProvedoresCatalogo as $key => $provCat) {
-                KatbolProvedorRequisicionCatalogo::create([
-                    'requisicion_id' => $this->requisicionCreada->id,
-                    'proveedor_id' => $provCat['proveedor_id'],
-                    'fecha_inicio' => $provCat['fecha_inicio'],
-                    'fecha_fin' => $provCat['fecha_fin'],
-                ]);
+                KatbolProvedorRequisicionCatalogo::updateOrCreate(
+                    [
+                        'id' => $provCat['id_registro'],
+                        'requisicion_id' => $this->editRequisicion->id,
+                    ],
+                    [
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'proveedor_id' => $provCat['proveedor_id'],
+                        'fecha_inicio' => $provCat['fecha_inicio'],
+                        'fecha_fin' => $provCat['fecha_fin'],
+                    ]
+                );
             }
 
             foreach ($this->provedores_colllection as $keyProvCol => $provCol) {
-                $this->requisicionCreada->update([
+                $this->editRequisicion->update([
                     'proveedor_catalogo' => $provCol->nombre,
                     // 'proveedoroc_id' => $this->provCol->id,
                 ]);
             }
 
-            $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicionCreada->id)->pluck('proveedor_id')->toArray();
+            $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->editRequisicion->id)->pluck('proveedor_id')->toArray();
 
             $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
-            $firmas_requi = FirmasRequisiciones::create([
-                'requisicion_id' => $this->requisicionCreada->id,
-                'solicitante_id' => $this->user->empleado->id,
-                // 'jefe_id' => $responsable->id,
-                // 'responsable_finanzas_id' => $responsable->id,
-                // 'comprador_id' => $comprador->user->empleado->id,
-            ]);
+            $firmas_requi = FirmasRequisiciones::updateOrCreate(
+                [
+                    'id' => $this->editRequisicion->registroFirmas->id,
+                    'requisicion_id' => $this->editRequisicion->id,
+                ],
+                [
+                    'solicitante_id' => $this->user->empleado->id,
+                    // 'jefe_id' => $responsable->id,
+                    // 'responsable_finanzas_id' => $responsable->id,
+                    // 'comprador_id' => $comprador->user->empleado->id,
+                ]
+            );
 
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
@@ -567,9 +722,15 @@ class RequisicionesEditComponent extends Component
             DB::rollback();
             dd($e);
         }
-        $this->dataFirma();
-        $this->dispatch('cambiarTab', 'contact');
-        $this->disabled = 'disabled';
+
+
+        if ($this->currentUser->id == $this->user->id) {
+            $this->dataFirma();
+            $this->dispatch('cambiarTab', 'contact');
+            $this->disabled = 'disabled';
+        } else {
+            return redirect(route('contract_manager.requisiciones'));
+        }
     }
 
     public function dataFirma()
@@ -633,15 +794,15 @@ class RequisicionesEditComponent extends Component
         $this->habilitar_proveedores = false;
 
         if ($data['firma']) {
-            $this->requisicionCreada->update([
+            $this->editRequisicion->update([
                 'firma_solicitante' => $data['firma'],
                 'estado' => 'curso',
                 'email' => $this->user->email,
             ]);
 
             $fecha = date('d-m-Y');
-            $this->requisicionCreada->fecha_firma_solicitante_requi = $fecha;
-            $this->requisicionCreada->save();
+            $this->editRequisicion->fecha_firma_solicitante_requi = $fecha;
+            $this->editRequisicion->save();
 
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
@@ -672,7 +833,7 @@ class RequisicionesEditComponent extends Component
                 }
             }
 
-            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->requisicionCreada->id)->first();
+            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->editRequisicion->id)->first();
 
             $firmas_requi->update([
                 'jefe_id' => $responsable->id,
@@ -681,9 +842,9 @@ class RequisicionesEditComponent extends Component
             ]);
 
             if ($responsable->id == $this->user->empleado->id) {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->requisicionCreada, $organizacion, $tipo_firma));
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->editRequisicion, $organizacion, $tipo_firma));
             } else {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->requisicionCreada, $organizacion, $tipo_firma));
+                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->editRequisicion, $organizacion, $tipo_firma));
             }
 
             return redirect(route('contract_manager.requisiciones'));

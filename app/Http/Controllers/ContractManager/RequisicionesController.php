@@ -961,4 +961,21 @@ class RequisicionesController extends Controller
             toast('Error al modificar al colaborador responsable.', 'error');
         }
     }
+
+    public function cancelarRequisicion(Request $request)
+    {
+        try {
+            $requisicion = KatbolRequsicion::findOrFail($request->id);
+
+            $requisicion->update([
+                'estado' => 'cancelada',
+                'estado_orden' => 'cancelada',
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
+        }
+    }
 }

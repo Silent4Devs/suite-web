@@ -246,7 +246,7 @@
                                         <h3 class="sub-titulo-form">Captura del producto o servicio</h3>
                                         <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-product"
                                             title="Eliminar producto"
-                                            wire:click="removeProductos({{ $key }})"></i>
+                                            onclick="confirmDeleteProducto({{ $key }})"></i>
                                     </div>
                                 </div>
                                 <div class="row mt-4 mb-3">
@@ -359,8 +359,9 @@
                                                 @if ($keyP > 0)
                                                     <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor"
                                                         title="Eliminar proveedor"
-                                                        wire:click.prevent="removeProveedor({{ $keyP }})"
-                                                        wire:confirm="¿Desea eliminar este registro proveedor?"></i>
+                                                        onclick="confirmDeleteProveedor({{ $keyP }})"
+                                                        {{-- wire:click.prevent="removeProveedor({{ $keyP }})"
+                                                        wire:confirm="¿Desea eliminar este registro proveedor?" --}}></i>
                                                 @endif
                                             </div>
                                         </div>
@@ -943,6 +944,43 @@
         });
     });
 
+    function confirmDeleteProducto(key) {
+        Swal.fire({
+            title: '¿Desea Eliminar el Producto?',
+            text: "El registro del producto se eliminara de la requisición. No podrás revertir esta acción.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.dispatch('removeProductoConfirmed', {
+                    key
+                });
+            }
+        });
+    }
+
+    function confirmDeleteProveedor(keyP) {
+        Swal.fire({
+            title: '¿Desea Eliminar el Proveedor?',
+            text: "El registro del proveedor se eliminara de la requisición. No podrás revertir esta acción.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.dispatch('removeProveedorConfirmed', {
+                    keyP
+                });
+            }
+        });
+    }
 
     document.addEventListener('livewire:initialized', () => {
         @this.on('probando', (event) => {
