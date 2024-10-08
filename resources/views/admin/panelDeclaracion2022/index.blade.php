@@ -70,32 +70,48 @@
                     Exportar Excel
                 </button>
             </div>
-            <table class="table table-bordered w-100 datatable datatable-PanelDeclaracion">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            No
-                        </th>
-                        <th>
-                            Control
-                        </th>
-                        <th>
-                            Clasificación
-                        </th>
-                        <th>
-                            Responsable
-                        </th>
-                        <th>
-                            Aprobador
-                        </th>
-                        <th>
-
-                        </th>
-                    </tr>
-
-                </thead>
-            </table>
-
+            <table id="asignados">
+        <thead>
+            <tr>
+                <th>
+                    No
+                </th>
+                <th scope="col" colspan="2">
+                    Control
+                </th>
+                <th>
+                    Clasificación
+                </th>
+                <th>
+                    Responsable
+                </th>
+                <th>
+                    Aprobador
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($asignados as $as)
+            <tr>
+                <td>
+                    {{strval($as->gapdos->control_iso)}}
+                </td>
+                <td>
+                    {{$as->gapdos->anexo_politica}}
+                </td>
+                <td>
+                    {{$as->gapdos->clasificacion->nombre}}
+                </td>
+                <td>
+                    {{$as->responsables2022->empleado->name ?? ''}}
+                </td>
+                <td>
+                    {{$as->aprobadores2022->empleado->name ?? ''}}
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
             <div class="container">
                 {{-- <div class="mb-4 row">
                     <div class="text-center col">
@@ -149,49 +165,6 @@
 
         </div>
     </div>
-
-    <table id="asignados" hidden>
-        <thead>
-            <tr>
-                <th>
-                    No
-                </th>
-                <th scope="col" colspan="2">
-                    Control
-                </th>
-                <th>
-                    Clasificación
-                </th>
-                <th>
-                    Responsable
-                </th>
-                <th>
-                    Aprobador
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($asignados as $as)
-            <tr>
-                <td>
-                    {{strval($as->gapdos->control_iso)}}
-                </td>
-                <td>
-                    {{$as->gapdos->anexo_politica}}
-                </td>
-                <td>
-                    {{$as->gapdos->clasificacion->nombre}}
-                </td>
-                <td>
-                    {{$as->responsables2022->empleado->name ?? ''}}
-                </td>
-                <td>
-                    {{$as->aprobadores2022->empleado->name ?? ''}}
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
 @endsection
 
 
@@ -250,400 +223,8 @@
         });
     </script>
 
-    <script>
-        $(function() {
-            //let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            let dtButtons = [
-                // {
-                //     extend: 'csvHtml5',
-                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar CSV',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible'],
-                //         orthogonal: "responsableText"
-                //     }
-                // },
-                // {
-                    // extend: 'excelHtml5',
-                    // title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                    // text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    // className: "btn-sm rounded pr-2",
-                    // titleAttr: 'Exportar Excel',
-                    // exportOptions: {
-                    //     columns: ['th:not(:last-child):visible'],
-                    //     orthogonal: "responsableText"
-                    // }
-                // },
-                // {
-                //     extend: 'pdfHtml5',
-                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Exportar PDF',
-                //     orientation: 'landscape',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible'],
-                //         orthogonal: "responsableText"
-                //     },
-                //     customize: function(doc) {
-                //         doc.pageMargins = [20, 60, 20, 30];
-                //         // doc.styles.tableHeader.fontSize = 7.5;
-                //         // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
-                //     }
-                // },
-                // {
-                //     extend: 'print',
-                //     title: `Panel de Declaracion ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Imprimir',
-                //     customize: function(doc) {
-                //         let logo_actual = @json($logo_actual);
-                //         let empresa_actual = @json($empresa_actual);
-
-                //         var now = new Date();
-                //         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
-                //         $(doc.document.body).prepend(`
-                //         <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
-                //             <div class="col-2 p-2" style="border-right: 2px solid #ccc">
-                //                     <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
-                //                 </div>
-                //                 <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                //                     <p>${empresa_actual}</p>
-                //                     <strong style="color:#345183">ASIGNACIÓN CONTROLES</strong>
-                //                 </div>
-                //                 <div class="col-3 p-2">
-                //                     Fecha: ${jsDate}
-                //                 </div>
-                //             </div>
-                //         `);
-
-                //         $(doc.document.body).find('table')
-                //             .css('font-size', '12px')
-                //             .css('margin-top', '15px')
-                //         // .css('margin-bottom', '60px')
-                //         $(doc.document.body).find('th').each(function(index) {
-                //             $(this).css('font-size', '18px');
-                //             $(this).css('color', '#fff');
-                //             $(this).css('background-color', 'blue');
-                //         });
-                //     },
-                //     title: '',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     }
-                // },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                },
-                {
-                    text: '<a href="#" class="btn btn-sm tb-btn-primary tamaño" style="with:400px !important;" data-toggle="modal" data-target="#ResponsablesModal"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Notificar&nbsp;usuario</a>',
-                    action: function(e, dt, node, config) {
-
-                    }
-                }
-
-            ];
-
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: {
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('admin.paneldeclaracion-2022.controles') }}",
-                    type: 'POST',
-                },
-                columns: [{
-                        data: 'gapdos.control_iso',
-                        name: 'gapdos.control_iso',
-                    },
-                    {
-                        data: 'gapdos.anexo_politica',
-                        name: 'gapdos.anexo_politica',
-                    },
-                    {
-                        data: 'gapdos.clasificacion.nombre',
-                        name: 'gapdos.clasificacion.nombre',
-                    },
-                    {
-
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row, meta) {
-                            if (type === "responsableText") {
-                                return data.name;
-                            }
-                            let responsableselect = "";
-                            let responsableselects = @json($empleados);
-                            responsableselect =
-                                `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
-                            ${responsableselects?.map ((responsable,idx)=>{
-                                return`<option ${responsable.declaraciones_responsable2022?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}
-                                </select>`;
-                            return responsableselect;
-                        }
-                    },
-                    {
-
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row, meta) {
-                            if (type === "responsableText") {
-                                return data.name;
-                            }
-                            let aprobadorselect = "";
-                            let aprobadoreselects = @json($empleados);
-                            aprobadorselect = `
-                    <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
-                        ${aprobadoreselects?.map ((aprobador,idx)=>{
-                            return`<option ${aprobador.declaraciones_aprobador2022?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
-                        </select>`;
-                            return aprobadorselect;
-                        }
-                    },
-                    {
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row, meta) {
-                            return '';
-                        }
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ],
-                "drawCallback": function(settings) {
-                    $('select.empleado').select2({
-                        theme: 'bootstrap4',
-                        templateResult: formatState,
-                        templateSelection: formatState
-                    });
-
-                    $('.revisoresSelect').select2({
-                        theme: 'bootstrap4',
-                        templateResult: formatState,
-                        templateSelection: formatState
-                    });
-
-                    $(`select#responsables`).select2({
-                        theme: 'bootstrap4',
-                        templateResult: formatState,
-                        templateSelection: formatState
-                    });
-
-                    $(`select.aprobadores`).on('select2:select', function(e) {
-                        document.getElementById('loaderComponent').style.display =
-                            'block';
-                        const declaracion = this.getAttribute('data-id');
-                        const {
-                            element
-                        } = e.params.data;
-                        const aprobador = element.getAttribute('data-id-empleado')
-                        const url =
-                            "{{ route('admin.paneldeclaracion-2022.aprobadores') }}";
-                        const token = "{{ csrf_token() }}";
-                        const request = fetch(url, {
-                            mode: 'cors', // this cannot be 'no-cors'
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST',
-                            body: JSON.stringify({
-                                declaracion,
-                                aprobador
-                            })
-                        });
-                        request.then(response => response.json()).
-                        then(data => {
-                            if (data.estatus == 'limite_alcanzado') {
-                                const usuarioSeleccionado = $(
-                                    `option[data-id-empleado="${aprobador}"]`
-                                );
-                                usuarioSeleccionado.prop('selected', false);
-                                $(`select.aprobadores`).trigger(
-                                    'change.select2');
-                            }
-                            if (data.estatus == 'ya_es_responsable') {
-                                const usuarioSeleccionadoAprob = $(
-                                    `option[data-id-empleado="${aprobador}"]`
-                                );
-                                usuarioSeleccionadoAprob.prop('selected',
-                                    false);
-                                $(`select.aprobadores`).trigger(
-                                    'change.select2');
-                            }
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                            toastr.success(data.message);
-                        }).
-                        catch(error => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                        })
-                    });
-                    $(`select.aprobadores`).on('select2:unselect', function(e) {
-                        document.getElementById('loaderComponent').style.display =
-                            'block';
-                        const declaracion = this.getAttribute('data-id');
-                        const {
-                            element
-                        } = e.params.data;
-                        const aprobador = element.getAttribute('data-id-empleado')
-                        const url =
-                            "{{ route('admin.paneldeclaracion-2022.aprobadores.quitar') }}";
-                        const token = "{{ csrf_token() }}";
-                        const request = fetch(url, {
-                            mode: 'cors', // this cannot be 'no-cors'
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST',
-                            body: JSON.stringify({
-                                declaracion,
-                                aprobador
-                            })
-                        });
-                        request.then(response => response.json()).
-                        then(data => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                            toastr.success(data.message);
-                        }).
-                        catch(error => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                        })
-                        console.log(declaracion, aprobador);
-                    });
-
-                    $(`select.responsables`).on('select2:select', function(e) {
-                        document.getElementById('loaderComponent').style.display =
-                            'block';
-                        const declaracion = this.getAttribute('data-id');
-                        const {
-                            element
-                        } = e.params.data;
-                        const responsable = element.getAttribute('data-id-empleado')
-                        const url =
-                            "{{ route('admin.paneldeclaracion-2022.responsables') }}";
-                        const token = "{{ csrf_token() }}";
-                        const request = fetch(url, {
-                            mode: 'cors', // this cannot be 'no-cors'
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST',
-                            body: JSON.stringify({
-                                declaracion,
-                                responsable
-                            })
-                        });
-                        request.then(response => response.json()).
-                        then(data => {
-                            if (data.estatus == 'limite_alcanzado') {
-                                const usuarioSeleccionado = $(
-                                    `option[data-id-empleado="${responsable}"]`
-                                );
-                                usuarioSeleccionado.prop('selected', false);
-                                $(`.responsables`).trigger(
-                                    'change.select2');
-                            }
-                            console.log(data.estatus)
-                            if (data.estatus == 'ya_es_aprobador') {
-                                const usuarioSeleccionadoResp = $(
-                                    `option[data-id-empleado="${responsable}"]`
-                                );
-                                usuarioSeleccionadoResp.prop('selected', false);
-                                $(`.responsables`).trigger(
-                                    'change.select2');
-                            }
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                            toastr.success(data.message);
-                        }).
-                        catch(error => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                        })
-                    });
-                    $(`select.responsables`).on('select2:unselect', function(e) {
-                        document.getElementById('loaderComponent').style.display =
-                            'block';
-                        const declaracion = this.getAttribute('data-id');
-                        const {
-                            element
-                        } = e.params.data;
-                        const responsable = element.getAttribute('data-id-empleado')
-                        const url =
-                            "{{ route('admin.paneldeclaracion-2022.responsables.quitar') }}";
-                        const token = "{{ csrf_token() }}";
-                        const request = fetch(url, {
-                            mode: 'cors', // this cannot be 'no-cors'
-                            headers: {
-                                'X-CSRF-TOKEN': token,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST',
-                            body: JSON.stringify({
-                                declaracion,
-                                responsable
-                            })
-                        });
-                        request.then(response => response.json()).
-                        then(data => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                            toastr.success(data.message);
-                        }).
-                        catch(error => {
-                            document.getElementById('loaderComponent').style.display =
-                                'none';
-                        })
-
-                    });
-                }
-                // paging: false
-            };
-            let table = $('.datatable-PanelDeclaracion').DataTable(dtOverrideGlobals);
-        });
-
-
-
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>    
+     document.addEventListener('DOMContentLoaded', function() {
 
             window.enviarCorreo = (e, tipo) => {
                 let enviarRadio = document.getElementsByName('contact');
