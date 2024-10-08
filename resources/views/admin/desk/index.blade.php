@@ -11,7 +11,7 @@
 
         <!-- Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            {{-- @can('centro_atencion_incidentes_de_seguridad_acceder')
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes" role="tab"
                         aria-controls="incidentes" aria-selected="true" style="background-color: #4A98FF !important;">
@@ -19,7 +19,7 @@
                         <span>Incidentes de seguridad</span>
                     </a>
                 </li>
-            @endcan --}}
+            @endcan
             @can('centro_atencion_riesgos_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab"
@@ -116,11 +116,11 @@
 
         <!-- Tabs Content -->
         <div class="tab-content" id="myTabContent">
-            {{-- @can('centro_atencion_incidentes_de_seguridad_acceder')
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <div class="tab-pane fade" id="incidentes" role="tabpanel" aria-labelledby="incidentes-tab">
                     @include('admin.desk.seguridad.seguridad')
                 </div>
-            @endcan --}}
+            @endcan
             @can('centro_atencion_riesgos_acceder')
                 <div class="tab-pane fade show active" id="riesgos" role="tabpanel" aria-labelledby="riesgos-tab">
                     @include('admin.desk.riesgos.riesgos')
