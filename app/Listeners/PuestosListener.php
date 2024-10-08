@@ -43,10 +43,10 @@ class PuestosListener implements ShouldQueue
         // if ($puestos) {
         //     // Decodificar el JSON para obtener los participantes
         //     $participantes = json_decode($puestos->participantes, true);
-        
+
         //     // Obtener los usuarios correspondientes a esos correos electrónicos o IDs
         //     $users = User::whereIn('id', $participantes)->get();
-        
+
         //     // Enviar la notificación a cada usuario
         //     Notification::send($users, new PuestosNotification($event->puestos, $event->tipo_consulta, $event->tabla, $event->slug));
         // } else {
@@ -54,6 +54,6 @@ class PuestosListener implements ShouldQueue
         //     return view('admin.empleados.index');
         //     // Puedes lanzar una excepción o hacer otra cosa en caso de que sea necesario.
         // }
-        
+
     }
 }

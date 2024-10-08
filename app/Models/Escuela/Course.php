@@ -3,7 +3,6 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
-use Chelout\RelationshipEvents\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

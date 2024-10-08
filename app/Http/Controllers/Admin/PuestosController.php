@@ -44,7 +44,7 @@ class PuestosController extends Controller
 
         if ($request->ajax()) {
             $query = Puesto::orderByDesc('id')->get();
-        
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
