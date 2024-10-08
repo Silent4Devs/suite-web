@@ -121,16 +121,33 @@ class PartesInteresadasController extends Controller
         return redirect()->route('admin.partes-interesadas.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(PartesInteresada $partesInteresada)
+    public function show($id)
     {
-        abort_if(Gate::denies('partes_interesadas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            // Verificación de permisos
+            abort_if(Gate::denies('partes_interesadas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $partesInteresada->load('clausulas');
+            // Recuperar el modelo a partir del ID
+            $partesInteresada = PartesInteresada::findOrFail($id);
 
-        $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')->where('id_interesada', '=', $partesInteresada->id)->get();
-        $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
+            // Cargar relaciones
+            $partesInteresada->load('clausulas');
 
-        return view('admin.partesInteresadas.show', compact('partesInteresada', 'requisitos', 'result'));
+            // Obtener los requisitos relacionados
+            $requisitos = ParteInteresadaExpectativaNecesidad::with('normas')
+                ->where('id_interesada', '=', $partesInteresada->id)
+                ->get();
+
+            // Verificar si existen registros
+            $result = ParteInteresadaExpectativaNecesidad::where('id_interesada', '=', $partesInteresada->id)->exists();
+
+            // Retornar la vista
+            return view('admin.partesInteresadas.show', compact('partesInteresada', 'requisitos', 'result'));
+
+        } catch (\Throwable $th) {
+            // Manejo de errores
+            abort(404);
+        }
     }
 
     public function destroy(PartesInteresada $partesInteresada)
