@@ -1,23 +1,28 @@
 <?php
 
+use App\Http\Controllers\Admin\AreasController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
+use App\Http\Controllers\Admin\FirmasModuleController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Admin\MejorasController;
+use App\Http\Controllers\Admin\OrganizacionController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\SeguridadController;
 use App\Http\Controllers\Admin\SugerenciasController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
+use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -56,101 +61,131 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
-    Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
-    Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
-    Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
-    Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
-    Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
-    Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
-    Route::resource('users', 'UsersController');
+    // Agrupamos las rutas relacionadas con el controlador UsersController
+    Route::controller(UsersController::class)->group(function () {
+        Route::get('users/{id}/restablecer', 'restablecerUsuario')->name('users.restablecer');
+        Route::get('users/eliminados', 'vistaEliminados')->name('users.eliminados');
+        Route::get('users/two-factor/{user}/change', 'cambiarVerificacion')->name('users.two-factor-change');
+        Route::get('users/bloqueo/{user}/change', 'toogleBloqueo')->name('users.toogle-bloqueo');
+        Route::post('users/vincular', 'vincularEmpleado')->name('users.vincular');
+        Route::post('users/list/get', 'getUsersIndex')->name('users.getUsersIndex');
+    });
+
+    // Uso de resource para las operaciones CRUD
+    Route::resource('users', UsersController::class);
 
     // Firmas
-    Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
-    Route::get('firmas_module/create', 'FirmasModuleController@create')->name('module_firmas.create');
-    Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
-    Route::get('firmas_module/edit/{id}', 'FirmasModuleController@edit')->name('module_firmas.edit');
-    Route::post('firmas_module/update/{id}', 'FirmasModuleController@update')->name('module_firmas.update');
-    Route::post('firmas_module/seguridad/{id}', 'FirmasModuleController@seguridad')->name('module_firmas.seguridad');
-    Route::post('firmas_module/riesgos/{id}', 'FirmasModuleController@riesgos')->name('module_firmas.riesgos');
-    Route::post('firmas_module/quejas/{id}', 'FirmasModuleController@quejas')->name('module_firmas.quejas');
-    Route::post('firmas_module/mejoras/{id}', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
-    Route::post('firmas_module/denuncias/{id}', 'FirmasModuleController@denuncias')->name('module_firmas.denuncias');
-    Route::post('firmas_module/sugerencia/{id}', 'FirmasModuleController@sugerencias')->name('module_firmas.sugerencias');
-    Route::post('firmas_module/minutas/{id}', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
+    Route::controller(FirmasModuleController::class)->group(function () {
+        Route::get('firmas_module', 'index')->name('module_firmas');
+        Route::get('firmas_module/create', 'create')->name('module_firmas.create');
+        Route::post('firmas_module/store', 'store')->name('module_firmas.store');
+        Route::get('firmas_module/edit/{id}', 'edit')->name('module_firmas.edit');
+        Route::post('firmas_module/update/{id}', 'update')->name('module_firmas.update');
+
+        // Agrupamos las rutas relacionadas a acciones específicas en la firma
+        Route::post('firmas_module/seguridad/{id}', 'seguridad')->name('module_firmas.seguridad');
+        Route::post('firmas_module/riesgos/{id}', 'riesgos')->name('module_firmas.riesgos');
+        Route::post('firmas_module/quejas/{id}', 'quejas')->name('module_firmas.quejas');
+        Route::post('firmas_module/mejoras/{id}', 'mejoras')->name('module_firmas.mejoras');
+        Route::post('firmas_module/denuncias/{id}', 'denuncias')->name('module_firmas.denuncias');
+        Route::post('firmas_module/sugerencia/{id}', 'sugerencias')->name('module_firmas.sugerencias');
+        Route::post('firmas_module/minutas/{id}', 'minutas')->name('module_firmas.minutas');
+    });
 
     // Empleados
-    Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');
-    Route::post('empleados/list/get', 'EmpleadoController@getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
-    Route::post('empleado/buscar-empleado-por-correo', 'EmpleadoController@buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
-    Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
-    Route::post('empleado/{empleado}/documentos', 'EmpleadoController@storeDocumentos')->name('empleado.storeDocumentos');
-    Route::delete('empleado/{documento}/documentos', 'EmpleadoController@deleteDocumento')->name('empleado.deleteDocumento');
-    Route::post('empleados/update/{documento}/documentos', 'EmpleadoController@updateDocumento')->name('empleados.updateDocumento');
-    Route::delete('empleados/{documento}/delete-file-documento', 'EmpleadoController@deleteFileDocumento')->name('empleados.deleteFileDocumento');
-    Route::post('empleado/update-image-profile', 'EmpleadoController@updateImageProfile')->name('empleado.update-image-profile');
-    Route::post('empleado/update-profile', 'EmpleadoController@updateInformationProfile')->name('empleado.update-profile');
-    Route::post('empleado/update-related-info-profile', 'EmpleadoController@updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
-    Route::post('empleados/store/{empleado}/competencias-resumen', 'EmpleadoController@storeResumen')->name('empleados.storeResumen');
+    Route::controller(EmpleadoController::class)->group(function () {
+        Route::get('empleados/importar', 'importar')->name('empleado.importar');
+        Route::post('empleados/list/get', 'getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
+        Route::post('empleado/buscar-empleado-por-correo', 'buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
 
-    Route::post('empleado-deletemultiple', 'EmpleadoController@borradoMultiple')->name('empleado.deleteMultiple');
-    Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'EmpleadoController@updateCertificaciones')->name('empleados.updateCertificaciones');
-    Route::delete('empleados/{certificacion}/delete-file-certificacion', 'EmpleadoController@deleteFileCertificacion')->name('empleados.deleteFileCertificacion');
-    Route::delete('empleados/{documento}/delete', 'EmpleadoController@deleteDocumento')->name('empleados.deleteDocumento');
-    Route::post('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@storeCertificaciones')->name('empleados.storeCertificaciones');
-    Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'EmpleadoController@deleteCertificaciones')->name('empleados.deleteCertificaciones');
-    Route::post('empleados/update/{curso}/competencias-curso', 'EmpleadoController@updateCurso')->name('empleados.updateCurso');
-    Route::delete('empleados/{curso}/delete-file-curso', 'EmpleadoController@deleteFileCurso')->name('empleados.deleteFileCurso');
-    Route::post('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@storeCursos')->name('empleados.storeCursos');
-    Route::delete('empleados/delete/{curso}/competencias-cursos', 'EmpleadoController@deleteCursos')->name('empleados.deleteCursos');
-    Route::post('empleados/update/{experiencia}/competencias-experiencia', 'EmpleadoController@updateExperiencia')->name('empleados.updateExperiencia');
-    Route::post('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@storeExperiencia')->name('empleados.storeExperiencia');
-    Route::delete('empleados/delete/{educacion}/competencias-educacion', 'EmpleadoController@deleteEducacion')->name('empleados.deleteEducacion');
-    Route::post('empleados/update/{educacion}/competencias-educacion', 'EmpleadoController@updateEducacion')->name('empleados.updateEducacion');
-    Route::post('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@storeEducacion')->name('empleados.storeEducacion');
-    Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'EmpleadoController@deleteExperiencia')->name('empleados.deleteExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-certificaciones', 'EmpleadoController@getCertificaciones')->name('empleados.getCertificaciones');
-    Route::get('empleados/store/{empleado}/competencias-educacion', 'EmpleadoController@getEducacion')->name('empleados.getEducacion');
-    Route::get('empleados/store/{empleado}/competencias-experiencia', 'EmpleadoController@getExperiencia')->name('empleados.getExperiencia');
-    Route::get('empleados/store/{empleado}/competencias-cursos', 'EmpleadoController@getCursos')->name('empleados.getCursos');
-    Route::post('empleados/store/competencias', 'EmpleadoController@storeWithCompetencia')->name('empleados.storeWithCompetencia');
-    Route::post('empleados/get', 'EmpleadoController@getEmpleados')->name('empleados.get');
-    Route::post('empleados/get-lista', 'EmpleadoController@getListaEmpleados')->name('empleados.lista');
-    Route::get('empleados/get-all', 'EmpleadoController@getAllEmpleados')->name('empleados.getAll');
+        Route::get('empleado/{empleado}/documentos', 'getDocumentos')->name('empleado.documentos');
+        Route::post('empleado/{empleado}/documentos', 'storeDocumentos')->name('empleado.storeDocumentos');
+        Route::delete('empleado/{documento}/documentos', 'deleteDocumento')->name('empleado.deleteDocumento');
 
-    Route::get('empleados/datosEmpleado/{id}', 'EmpleadoController@show');
-    // Route::get('empleados/imprimir/{id}', 'EmpleadoController@imprimir')->name('imprimir');
+        Route::post('empleados/update/{documento}/documentos', 'updateDocumento')->name('empleados.updateDocumento');
+        Route::delete('empleados/{documento}/delete-file-documento', 'deleteFileDocumento')->name('empleados.deleteFileDocumento');
 
-    Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
-    Route::post('empleados/baja/remover-vacante', 'EmpleadoController@removerVacante')->name('empleados.removerVacante');
-    Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
-    Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
-    Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
-    Route::get('empleados/baja', 'EmpleadoController@baja')->name('empleados.baja');
-    Route::get('empleados/historial', 'EmpleadoController@historial')->name('empleados.historial');
-    Route::post('empleados/seleccionar', 'EmpleadoController@seleccionar')->name('empleados.seleccionar');
-    Route::get('exportar-historial/{id}', 'EmpleadoController@exportarHistorial')->name('empleados.historial_export');
-    Route::resource('empleados', 'EmpleadoController');
+        Route::post('empleado/update-image-profile', 'updateImageProfile')->name('empleado.update-image-profile');
+        Route::post('empleado/update-profile', 'updateInformationProfile')->name('empleado.update-profile');
+        Route::post('empleado/update-related-info-profile', 'updateInformacionRelacionadaProfile')->name('empleado.update-related-info-profile');
+
+        Route::post('empleados/store/{empleado}/competencias-resumen', 'storeResumen')->name('empleados.storeResumen');
+
+        Route::post('empleado-deletemultiple', 'borradoMultiple')->name('empleado.deleteMultiple');
+        Route::post('empleados/update/{certificacion}/competencias-certificaciones', 'updateCertificaciones')->name('empleados.updateCertificaciones');
+        Route::delete('empleados/{certificacion}/delete-file-certificacion', 'deleteFileCertificacion')->name('empleados.deleteFileCertificacion');
+
+        Route::delete('empleados/{documento}/delete', 'deleteDocumento')->name('empleados.deleteDocumento');
+        Route::post('empleados/store/{empleado}/competencias-certificaciones', 'storeCertificaciones')->name('empleados.storeCertificaciones');
+        Route::delete('empleados/delete/{certificacion}/competencias-certificaciones', 'deleteCertificaciones')->name('empleados.deleteCertificaciones');
+
+        Route::post('empleados/update/{curso}/competencias-curso', 'updateCurso')->name('empleados.updateCurso');
+        Route::delete('empleados/{curso}/delete-file-curso', 'deleteFileCurso')->name('empleados.deleteFileCurso');
+
+        Route::post('empleados/store/{empleado}/competencias-cursos', 'storeCursos')->name('empleados.storeCursos');
+        Route::delete('empleados/delete/{curso}/competencias-cursos', 'deleteCursos')->name('empleados.deleteCursos');
+
+        Route::post('empleados/update/{experiencia}/competencias-experiencia', 'updateExperiencia')->name('empleados.updateExperiencia');
+        Route::post('empleados/store/{empleado}/competencias-experiencia', 'storeExperiencia')->name('empleados.storeExperiencia');
+        Route::delete('empleados/delete/{experiencia}/competencias-experiencia', 'deleteExperiencia')->name('empleados.deleteExperiencia');
+
+        Route::post('empleados/update/{educacion}/competencias-educacion', 'updateEducacion')->name('empleados.updateEducacion');
+        Route::post('empleados/store/{empleado}/competencias-educacion', 'storeEducacion')->name('empleados.storeEducacion');
+        Route::delete('empleados/delete/{educacion}/competencias-educacion', 'deleteEducacion')->name('empleados.deleteEducacion');
+
+        Route::get('empleados/store/{empleado}/competencias-certificaciones', 'getCertificaciones')->name('empleados.getCertificaciones');
+        Route::get('empleados/store/{empleado}/competencias-educacion', 'getEducacion')->name('empleados.getEducacion');
+        Route::get('empleados/store/{empleado}/competencias-experiencia', 'getExperiencia')->name('empleados.getExperiencia');
+        Route::get('empleados/store/{empleado}/competencias-cursos', 'getCursos')->name('empleados.getCursos');
+
+        Route::post('empleados/store/competencias', 'storeWithCompetencia')->name('empleados.storeWithCompetencia');
+        Route::post('empleados/get', 'getEmpleados')->name('empleados.get');
+        Route::post('empleados/get-lista', 'getListaEmpleados')->name('empleados.lista');
+        Route::get('empleados/get-all', 'getAllEmpleados')->name('empleados.getAll');
+
+        Route::get('empleados/datosEmpleado/{id}', 'show');
+
+        Route::post('empleados/{empleado}/update-from-curriculum', 'updateFromCurriculum')->name('empleados.updateFromCurriculum');
+        Route::post('empleados/baja/remover-vacante', 'removerVacante')->name('empleados.removerVacante');
+        Route::post('empleado/expediente/update', 'expedienteUpdate')->name('empleado.edit.expediente-update');
+        Route::post('empleado/expediente/Restaurar', 'expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
+
+        Route::get('empleado/{empleado}/solicitud-baja', 'solicitudBaja')->name('empleado.solicitud-baja');
+        Route::get('empleados/baja', 'baja')->name('empleados.baja');
+        Route::get('empleados/historial', 'historial')->name('empleados.historial');
+        Route::post('empleados/seleccionar', 'seleccionar')->name('empleados.seleccionar');
+        Route::get('exportar-historial/{id}', 'exportarHistorial')->name('empleados.historial_export');
+    });
+
+    Route::resource('empleados', EmpleadoController::class);
 
     // Organizacions
-    Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
-    Route::post('organizacions/media', 'OrganizacionController@storeMedia')->name('organizacions.storeMedia');
-    Route::post('organizacions/ckmedia', 'OrganizacionController@storeCKEditorImages')->name('organizacions.storeCKEditorImages');
-    Route::get('organizacions/visualizarorganizacion', 'OrganizacionController@visualizarOrganizacion')->name('organizacions.visualizarorganizacion');
-    Route::post('organizacions/{schedule}/update-schedule', 'OrganizacionController@updateSchedule')->name('organizacions.update-schedule');
-    Route::post('organizacions/{schedule}/delete-schedule', 'OrganizacionController@deleteSchedule')->name('organizacions.delete-schedule');
-    Route::resource('organizacions', 'OrganizacionController');
+    Route::controller(OrganizacionController::class)->group(function () {
+        Route::delete('organizacions/destroy', 'massDestroy')->name('organizacions.massDestroy');
+        Route::post('organizacions/media', 'storeMedia')->name('organizacions.storeMedia');
+        Route::post('organizacions/ckmedia', 'storeCKEditorImages')->name('organizacions.storeCKEditorImages');
+        Route::get('organizacions/visualizarorganizacion', 'visualizarOrganizacion')->name('organizacions.visualizarorganizacion');
+        Route::post('organizacions/{schedule}/update-schedule', 'updateSchedule')->name('organizacions.update-schedule');
+        Route::post('organizacions/{schedule}/delete-schedule', 'deleteSchedule')->name('organizacions.delete-schedule');
+    });
+
+    Route::resource('organizacions', OrganizacionController::class);
+
     // Inicio usuario
 
     // Areas
-    Route::get('areas/exportar', 'AreasController@exportTo')->name('areas.exportar');
-    Route::delete('areas/destroy', 'AreasController@massDestroy')->name('areas.massDestroy');
-    Route::get('areas/grupo', 'AreasController@obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
-    Route::post('areas/parse-csv-import', 'AreasController@parseCsvImport')->name('areas.parseCsvImport');
-    Route::get('areas/jerarquia', 'AreasController@renderJerarquia')->name('areas.renderJerarquia');
-    Route::post('areas/pdf', 'AreasController@pdf')->name('areas.pdf');
-    Route::get('areas/jerarquia/lista', 'AreasController@obtenerJerarquia')->name('areas.obtenerJerarquia');
-    Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
-    Route::resource('areas', 'AreasController');
+    Route::controller(AreasController::class)->group(function () {
+        Route::get('areas/exportar', 'exportTo')->name('areas.exportar');
+        Route::delete('areas/destroy', 'massDestroy')->name('areas.massDestroy');
+        Route::get('areas/grupo', 'obtenerAreasPorGrupo')->name('areas.obtenerAreasPorGrupo');
+        Route::post('areas/parse-csv-import', 'parseCsvImport')->name('areas.parseCsvImport');
+        Route::get('areas/jerarquia', 'renderJerarquia')->name('areas.renderJerarquia');
+        Route::post('areas/pdf', 'pdf')->name('areas.pdf');
+        Route::get('areas/jerarquia/lista', 'obtenerJerarquia')->name('areas.obtenerJerarquia');
+        Route::post('areas/process-csv-import', 'processCsvImport')->name('areas.processCsvImport');
+    });
+
+    Route::resource('areas', AreasController::class);
 
     // Puestos
     Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
@@ -1731,36 +1766,41 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 Route::group(['middleware' => ['auth', '2fa']], function () {
     //Ruta ImportExcel
+    // Ruta independiente para CargaDocs
     Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
-    Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
-    Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
-    Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
-    Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
-    Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
-    Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
-    Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
-    Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
-    Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
-    Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
-    Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
-    Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
-    Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
-    Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
-    Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
-    Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
-    Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
-    Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
-    Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
-    Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
-    Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
-    Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
-    Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
-    Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
-    Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
-    Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
-    // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+
+    // Agrupación de rutas que utilizan el controlador SubidaExcel
+    Route::controller(SubidaExcel::class)->group(function () {
+        Route::post('CargaAmenaza', 'Amenaza')->name('carga-amenaza');
+        Route::post('CargaVulnerabilidad', 'Vulnerabilidad')->name('carga-vulnerabilidad');
+        Route::post('CargaUsuario', 'Usuario')->name('carga-usuario');
+        Route::post('CargaPuesto', 'Puesto')->name('carga-puesto');
+        Route::post('CargaControl', 'Control')->name('carga-control');
+        Route::post('CargaEjecutarenlace', 'Ejecutarenlace')->name('carga-ejecutarenlace');
+        Route::post('CargaTeam', 'Team')->name('carga-team');
+        Route::post('CargaEstadoIncidente', 'EstadoIncidente')->name('carga-estadoincidente');
+        Route::post('CargaRole', 'Roles')->name('carga-roles');
+        Route::post('CargaCompetencia', 'Competencia')->name('carga-competencia');
+        Route::post('CargaEvaluacion', 'Evaluacion')->name('carga-evaluacion');
+        Route::post('CargaCategoriaCapacitacion', 'CategoriaCapacitacion')->name('carga-categoriacapacitacion');
+        Route::post('CargaRevisionDireccion', 'RevisionDireccion')->name('carga-revisiondireccion');
+        Route::post('CargaAnalisisRiesgo', 'AnalisisRiesgo')->name('carga-analisis_riego');
+        Route::post('CargaPartesInteresadas', 'PartesInteresadas')->name('carga-partes_interesadas');
+        Route::post('CargaMatrizRequisitosLegales', 'MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+        Route::post('CargaFoda', 'Foda')->name('carga-foda');
+        Route::post('CargaDeterminacionAlcance', 'DeterminacionAlcance')->name('carga-determinacion_alcance');
+        Route::post('CargaComiteSeguridad', 'ComiteSeguridad')->name('carga-comite_seguridad');
+        Route::post('CargaAltaDireccion', 'AltaDireccion')->name('carga-alta_direccion');
+        Route::post('CargaEvidenciaRecursos', 'EvidenciaRecursos')->name('carga-evidencia_recursos');
+        Route::post('CargaPoliticaSgsi', 'PoliticaSgsi')->name('carga-politica_sgi');
+        Route::post('CargaGrupoArea', 'GrupoArea')->name('carga-grupo_area');
+        Route::post('CargaDatosArea', 'DatosArea')->name('carga-datos_area');
+        Route::post('CargaActivos', 'Activos')->name('carga-activo-inventario');
+        Route::post('CargaEmpleado', 'Empleado')->name('carga-empleado');
+    });
 
     //Ruta ExportExcel
+    // Agrupación de todas las rutas que pertenecen a ExportExcelReport
     Route::controller(ExportExcelReport::class)->group(function () {
         Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
         Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
@@ -1780,27 +1820,30 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportSolicitudesDayOff', 'solicitudesDayOff')->name('descarga-solicitudes-day-off');
         Route::get('ExportSolicitudesVacaciones', 'solicitudesVacaciones')->name('descarga-solicitudes-vacaciones');
         Route::get('ExportEvaluaciones360', 'evaluaciones360')->name('descarga-evaluaciones-360');
+
         Route::post('ExportRegistrosTimesheet', 'registrosTimesheet')->name('descarga-registro-timesheet');
         Route::post('ExportTimesheetAreas', 'timesheetAreas')->name('descarga-timesheet-areas');
         Route::post('ExportTimesheetProyectos', 'timesheetProyectos')->name('descarga-timesheet-proyectos');
+
+        // Agrupación de rutas relacionadas con riesgos y seguridad
+        Route::get('ExportAmenaza', 'Amenaza')->name('descarga-amenaza');
+        Route::get('ExportVulnerabilidad', 'Vulnerabilidad')->name('descarga-vulnerabilidad');
+        Route::get('ExportAnalisisRiesgo', 'AnalisisRiesgo')->name('descarga-analisis_riego');
+        Route::get('ExportPartesInteresadas', 'PartesInteresadas')->name('descarga-partes_interesadas');
+        Route::get('ExportMatrizRequisitosLegales', 'MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
+        Route::get('ExportFoda', 'Foda')->name('descarga-foda');
+        Route::get('ExportDeterminacionAlcance', 'DeterminacionAlcance')->name('descarga-determinacion_alcance');
+        Route::get('ExportComiteSeguridad', 'ComiteSeguridad')->name('descarga-comite_seguridad');
+        Route::get('ExportAltaDireccion', 'AltaDireccion')->name('descarga-alta_direccion');
+
+        Route::get('ExportCategoriaCapacitacion', 'CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
+        Route::get('ExportRevisionDireccion', 'RevisionDireccion')->name('descarga-revisiondireccion');
+
+        // Otras rutas
+        Route::get('ExportPoliticaSgsi', 'PoliticaSgsi')->name('descarga-politica_sgi');
+        Route::get('ExportGrupoArea', 'GrupoArea')->name('descarga-grupo_area');
     });
 
-    Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
-    Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
-    Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
-    Route::get('ExportPartesInteresadas', 'ExportExcelReport@PartesInteresadas')->name('descarga-partes_interesadas');
-    Route::get('ExportMatrizRequisitosLegales', 'ExportExcelReport@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
-    Route::get('ExportFoda', 'ExportExcelReport@Foda')->name('descarga-foda');
-    Route::get('ExportDeterminacionAlcance', 'ExportExcelReport@DeterminacionAlcance')->name('descarga-determinacion_alcance');
-    Route::get('ExportComiteSeguridad', 'ExportExcelReport@ComiteSeguridad')->name('descarga-comite_seguridad');
-    Route::get('ExportAltaDireccion', 'ExportExcelReport@AltaDireccion')->name('descarga-alta_direccion');
-    Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
-    Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
-    // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
-
-    // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
-    Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
