@@ -53,7 +53,7 @@ class QuejasClienteController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejasClientes = QuejasCliente::select('id','cliente_id', 'nombre', 'puesto','telefono', 'fecha_cierre', 'estatus', 'fecha', 'titulo', 'accion_correctiva_id')->where('archivado', false)->get();
+        $quejasClientes = QuejasCliente::select('id', 'cliente_id', 'nombre', 'puesto', 'telefono', 'fecha_cierre', 'estatus', 'fecha', 'titulo', 'accion_correctiva_id')->where('archivado', false)->get();
 
         return datatables()->of($quejasClientes)->toJson();
     }

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\OrganizacionController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
+use App\Http\Controllers\Admin\PuestosController;
 use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
@@ -20,6 +21,10 @@ use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
+use App\Http\Controllers\ContractManager\ContratosController;
+use App\Http\Controllers\ContractManager\DashboardController;
+use App\Http\Controllers\ContractManager\OrdenCompraController;
+use App\Http\Controllers\ContractManager\RequisicionesController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
@@ -188,15 +193,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('areas', AreasController::class);
 
     // Puestos
-    Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
-    Route::post('puestos/delete-language', 'PuestosController@deleteLanguage')->name('puestos.deleteLanguage');
-    Route::post('puestos/parse-csv-import', 'PuestosController@parseCsvImport')->name('puestos.parseCsvImport');
-    Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
-    Route::resource('puestos', 'PuestosController');
-    Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
+    Route::controller(PuestosController::class)->group(function () {
+        Route::delete('puestos/destroy', 'massDestroy')->name('puestos.massDestroy');
+        Route::post('puestos/delete-language', 'deleteLanguage')->name('puestos.deleteLanguage');
+        Route::post('puestos/parse-csv-import', 'parseCsvImport')->name('puestos.parseCsvImport');
+        Route::post('puestos/process-csv-import', 'processCsvImport')->name('puestos.processCsvImport');
+        Route::get('consulta-puestos', 'consultaPuestos')->name('consulta-puestos');
 
-    Route::post('puestos-aprobacion/aprobacion-firma-puesto', 'PuestosController@aprobacionFirma')->name('puestos-aprobacion.aprobacion-firma-puesto');
-    Route::get('puestos-aprobacion/aprobacion-firma-puesto/historico', 'PuestosController@historicoAprobacion')->name('puestos-aprobacion.aprobacion-firma-puesto.historico');
+        Route::post('puestos-aprobacion/aprobacion-firma-puesto', 'aprobacionFirma')->name('puestos-aprobacion.aprobacion-firma-puesto');
+        Route::get('puestos-aprobacion/aprobacion-firma-puesto/historico', 'historicoAprobacion')->name('puestos-aprobacion.aprobacion-firma-puesto.historico');
+    });
+
+    Route::resource('puestos', PuestosController::class);
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         //Se puso aqui debido a problema de cross-origin
@@ -1663,17 +1671,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
 
         //Documentos
-        Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
-        Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
-        Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
-        Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
-        Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
-        Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
-        Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
-        Route::get('documentos/{documento}/document-versions', 'DocumentosController@renderHistoryVersions')->name('documentos.renderHistoryVersions');
-        Route::post('documentos/dependencies', 'DocumentosController@getDocumentDependencies')->name('documentos.getDocumentDependencies');
-        Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
-        Route::resource('documentos', 'DocumentosController');
+        Route::prefix('documentos')->controller(DocumentosController::class)->group(function () {
+            Route::get('publicados', 'publicados')->name('documentos.publicados');
+            Route::patch('{documento}/update-when-publish', 'updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
+            Route::post('store-when-publish', 'storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
+            Route::post('publish', 'publish')->name('documentos.publish');
+            Route::post('check-code', 'checkCode')->name('documentos.checkCode');
+            Route::get('{documento}/view-document', 'renderViewDocument')->name('documentos.renderViewDocument');
+            Route::get('{documento}/history-reviews', 'renderHistoryReview')->name('documentos.renderHistoryReview');
+            Route::get('{documento}/document-versions', 'renderHistoryVersions')->name('documentos.renderHistoryVersions');
+            Route::post('dependencies', 'getDocumentDependencies')->name('documentos.getDocumentDependencies');
+            Route::delete('{documento}', 'destroy')->name('documentos.destroy');
+        });
 
         // Control Documentos
         Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
@@ -1713,6 +1722,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
     Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     Route::get('courses-inscribed', 'CursoEstudiante@coursesInscribed')->name('courses-inscribed');
+    Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
 
     Route::get('panel-cursos', 'PanelCursosController@index')->name('panel-cursos');
 
@@ -1722,8 +1732,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('levels', 'Escuela\Admin\LevelController');
     Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
-
-    Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
 
     // pasarela de pago
     Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
@@ -1863,36 +1871,43 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     //Proveedores
     Route::resource('proveedor', 'ProveedoresController');
 
-    //Contratos
-    //## API - Revisar en tiempo real si contrato ya existe ###
-    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
-    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
-    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
-    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
-    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
-    // Route::get('download/{file}', 'ContratosController@getDownload');
-    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
-    Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
-    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
-    Route::post('selectProveedor', 'DashboardController@AjaxRequestClientes')->name('selectCliente');
-    Route::post('selectContrato', 'DashboardController@AjaxRequestContratos')->name('selectContrato');
-    Route::post('selectEvaluacionesServicio', 'DashboardController@AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
-    Route::get('dashboard-contratos-katbol', 'DashboardController@index')->name('dashboard.katbol');
-    // Dashboards
-    Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
+    // Rutas para Contratos
+    Route::controller(ContratosController::class)->prefix('contratos-katbol')->group(function () {
+        //## API - Revisar en tiempo real si contrato ya existe ###
+        Route::post('numero/existe', 'revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
+        Route::post('{id}/ampliacion', 'updateAmpliacion')->name('contratos-katbol.ampliacion');
+        Route::post('{id}/convenios', 'updateConvenios')->name('contratos-katbol.convenios');
+        // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
+        Route::post('contrato-file-upload-tmp', 'uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
+        // Route::get('download/{file}', 'ContratosController@getDownload');
+        // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
+        Route::post('archivos', 'obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
+        Route::get('file/download', 'downloadFile')->name('downloadFile');
+        Route::post('check-code', 'checkCode')->name('contratos-katbol.checkCode');
+        Route::resource('/', 'ContratosController')->parameters(['' => 'contrato']); // Asumiendo que la clave primaria es 'contrato'
+        Route::get('destroy/{id}', 'destroy')->name('contratos-katbol.delete');
+        Route::get('exportar/contratos', 'exportTo')->name('reportecliente.exportar');
+        Route::put('contratopago/{id}', 'Campos')->name('contratos-katbol.contratopago');
+        Route::get('contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
+        Route::get('eval-nivel/{id}', 'evaluacion')->name('contratos-katbol.evaluacion');
+        Route::get('revision-factura/{id}', 'revision')->name('contratos-katbol.revision');
+        Route::post('validateDocument', 'validateDocument')->name('contratos-katbol.validar-documento');
+        Route::post('aprobacion-firma-contrato', 'aprobacionFirma')->name('contratos-katbol.aprobacion-firma-contrato');
+        Route::get('aprobacion-firma-contrato/historico', 'historicoAprobacion')->name('contratos-katbol.aprobacion-firma-contrato.historico');
+    });
+
     Route::resource('contratos-katbol', 'ContratosController');
-    Route::get('contratos-katbol/destroy/{id}', 'ContratosController@destroy')->name('contratos-katbol.delete');
-    Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
-    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
-    Route::get('contratos-katbol/contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
-    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
-    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
 
-    Route::post('contratos-katbol/validateDocument', 'ContratosController@validateDocument')->name('contratos-katbol.validar-documento');
+    // Rutas para el Dashboard
+    Route::controller(DashboardController::class)->group(function () {
+        Route::post('selectProveedor', 'AjaxRequestClientes')->name('selectCliente');
+        Route::post('selectContrato', 'AjaxRequestContratos')->name('selectContrato');
+        Route::post('selectEvaluacionesServicio', 'AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
+        Route::get('dashboard-contratos-katbol', 'index')->name('dashboard.katbol');
+    });
 
-    Route::post('contratos-katbol/aprobacion-firma-contrato', 'ContratosController@aprobacionFirma')->name('contratos-katbol.aprobacion-firma-contrato');
-    Route::get('contratos-katbol/aprobacion-firma-contrato/historico', 'ContratosController@historicoAprobacion')->name('contratos-katbol.aprobacion-firma-contrato.historico');
+    // Rutas para Dashboards (sin acciones específicas)
+    Route::resource('dashboards', DashboardController::class, ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Route::resource('bitacoras', 'BitacoraController');
 
@@ -1936,45 +1951,50 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
 
     //requisiciones
-    Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-    Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
-    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
-    Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-    // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
-    // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
-    Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
-    Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
-    Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
-    Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
-    Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
-    Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
-    Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
-    Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
-    Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
-    Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
-    Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
-    Route::get('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
-    Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
-    Route::get('requisiciones/filtrar', 'RequisicionesController@filtrarPorEstado')->name('requisiciones.filtrarPorEstado');
-    Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
-    Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
-    Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
-    Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
+    Route::controller(RequisicionesController::class)->group(function () {
+        // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
+        // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
+        Route::get('requisiciones', 'index')->name('requisiciones');
+        Route::delete('requisiciones/eliminar-registro', 'eliminarProveedores')->name('eliminarProveedores');
+        Route::get('requisiciones/aprobadores', 'indexAprobadores')->name('requisiciones.indexAprobadores');
+        Route::post('requisiciones/list/get', 'getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
+        Route::get('requisiciones/show/{id}', 'show')->name('requisiciones.show');
+        Route::get('requisiciones/edit/{id}', 'edit')->name('requisiciones.edit');
+        Route::get('requisiciones/create', 'create')->name('requisiciones.create');
+        Route::post('requisiciones/pdf/{id}', 'pdf')->name('requisiciones.pdf');
+        Route::get('requisiciones/destroy/{id}', 'destroy')->name('requisiciones.destroy');
+        Route::get('requisiciones/aprobados/{id}', 'firmarAprobadores')->name('requisiciones.firmarAprobadores');
+        Route::post('requisiciones/firma', 'guardarFirmaAprobacion')->name('requisiciones.firma');
+        Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'Firmar')->name('requisiciones.firmar');
+        Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'FirmarUpdate')->name('requisiciones.firmar-update');
+        Route::get('requisiciones/archivo', 'archivo')->name('requisiciones.archivo');
+        Route::post('requisiciones-archivo/list/get', 'getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
+        Route::get('requisiciones/archivo-estado/{id}', 'estado')->name('requisiciones.estado');
+        Route::post('requisiciones/rechazada/{id}', 'rechazada')->name('requisiciones.rechazada');
+        Route::get('requisiciones/filtrar', 'filtrarPorEstado')->name('requisiciones.filtrarPorEstado');
+        Route::get('requisiciones/filtrar_jefe', 'filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
+        Route::get('requisiciones/filtrar_solicitante', 'filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
+        Route::get('requisiciones/filtrar_compras', 'filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
+        Route::post('requisiciones/cambiarResponsable', 'cambiarResponsable')->name('requisiciones.cambiarResponsable');
+    });
 
     // ordenes de compra
-    Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
-    Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
-    Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
-    Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
-    Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
-    Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
-    Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
-    Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
-    Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
-    Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
-    Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
-    Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
-    Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
-    Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
-    Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
+    Route::controller(OrdenCompraController::class)->group(function () {
+        Route::get('orden-compra', 'index')->name('orden-compra');
+        Route::post('orden-compra/list/get', 'getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
+        Route::get('orden-compra/{id}/edit', 'edit')->name('orden-compra.edit');
+        Route::post('orden-compra/update/{id}', 'update')->name('orden-compra.update');
+        Route::post('orden-compra/destroy/{id}', 'destroy')->name('orden-compra.destroy');
+        Route::get('orden-compra/show/{id}', 'show')->name('orden-compra.show');
+        Route::post('orden-compra/pdf/{id}', 'pdf')->name('orden-compra.pdf');
+        Route::post('orden-compra/rechazada/{id}', 'rechazada')->name('orden-compra.rechazada');
+        Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'firmar')->name('orden-compra.firmar');
+        Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'FirmarUpdate')->name('orden-compra.firmar-update');
+        Route::get('orden-compra/filtrar', 'filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
+        Route::get('orden-compra/filtrar_solicitante', 'filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
+        Route::get('orden-compra/filtrar_compras', 'filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
+        Route::get('orden-compra/aprobadores', 'indexAprobadores')->name('orden-compra.indexAprobadores');
+        Route::get('orden-compra/aprobados/{id}', 'firmarAprobadores')->name('orden-compra.firmarAprobadores');
+    });
+
 });
