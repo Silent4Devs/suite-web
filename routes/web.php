@@ -1671,17 +1671,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
 
         //Documentos
-        Route::prefix('documentos')->controller(DocumentosController::class)->group(function () {
-            Route::get('publicados', 'publicados')->name('documentos.publicados');
-            Route::patch('{documento}/update-when-publish', 'updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
-            Route::post('store-when-publish', 'storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
-            Route::post('publish', 'publish')->name('documentos.publish');
-            Route::post('check-code', 'checkCode')->name('documentos.checkCode');
-            Route::get('{documento}/view-document', 'renderViewDocument')->name('documentos.renderViewDocument');
-            Route::get('{documento}/history-reviews', 'renderHistoryReview')->name('documentos.renderHistoryReview');
-            Route::get('{documento}/document-versions', 'renderHistoryVersions')->name('documentos.renderHistoryVersions');
-            Route::post('dependencies', 'getDocumentDependencies')->name('documentos.getDocumentDependencies');
-            Route::delete('{documento}', 'destroy')->name('documentos.destroy');
+        Route::controller(DocumentosController::class)->group(function () {
+            Route::get('documentos/publicados', 'publicados')->name('documentos.publicados');
+            Route::patch('documentos/{documento}/update-when-publish', 'updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
+            Route::post('documentos/store-when-publish', 'storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
+            Route::post('documentos/publish', 'publish')->name('documentos.publish');
+            Route::post('documentos/check-code', 'checkCode')->name('documentos.checkCode');
+            Route::get('documentos/{documento}/view-document', 'renderViewDocument')->name('documentos.renderViewDocument');
+            Route::get('documentos/{documento}/history-reviews', 'renderHistoryReview')->name('documentos.renderHistoryReview');
+            Route::get('documentos/{documento}/document-versions', 'renderHistoryVersions')->name('documentos.renderHistoryVersions');
+            Route::post('documentos/dependencies', 'getDocumentDependencies')->name('documentos.getDocumentDependencies');
+            Route::delete('documentos/{documento}', 'destroy')->name('documentos.destroy');
         });
 
         Route::resource('documentos', DocumentosController::class);
