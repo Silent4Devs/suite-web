@@ -8878,6 +8878,12 @@ namespace Illuminate\Support\Facades {
             /**
      * 
      *
+     * @method static mixed getJobTries(mixed $job)
+     * @method static mixed getJobBackoff(mixed $job)
+     * @method static mixed getJobExpiration(mixed $job)
+     * @method static void createPayloadUsing(callable|null $callback)
+     * @method static \Illuminate\Container\Container getContainer()
+     * @method static void setContainer(\Illuminate\Container\Container $container)
      * @see \Illuminate\Queue\QueueManager
      * @see \Illuminate\Queue\Queue
      * @see \Illuminate\Support\Testing\Fakes\QueueFake
@@ -9340,70 +9346,6 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
                         return $instance->setConnectionName($name);
-        }
-                    /**
-         * Get the maximum number of attempts for an object-based queue handler.
-         *
-         * @param mixed $job
-         * @return mixed 
-         * @static 
-         */        public static function getJobTries($job)
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getJobTries($job);
-        }
-                    /**
-         * Get the backoff for an object-based queue handler.
-         *
-         * @param mixed $job
-         * @return mixed 
-         * @static 
-         */        public static function getJobBackoff($job)
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getJobBackoff($job);
-        }
-                    /**
-         * Get the expiration timestamp for an object-based queue handler.
-         *
-         * @param mixed $job
-         * @return mixed 
-         * @static 
-         */        public static function getJobExpiration($job)
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getJobExpiration($job);
-        }
-                    /**
-         * Register a callback to be executed when creating job payloads.
-         *
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */        public static function createPayloadUsing($callback)
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
-        }
-                    /**
-         * Get the container instance being used by the connection.
-         *
-         * @return \Illuminate\Container\Container 
-         * @static 
-         */        public static function getContainer()
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the IoC container instance.
-         *
-         * @param \Illuminate\Container\Container $container
-         * @return void 
-         * @static 
-         */        public static function setContainer($container)
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        $instance->setContainer($container);
         }
             }
             /**
@@ -20966,6 +20908,281 @@ namespace Spatie\SignalAwareCommand\Facades {
             }
     }
 
+namespace Stancl\Tenancy\Facades {
+            /**
+     * 
+     *
+     */        class Tenancy {
+                    /**
+         * Initializes the tenant.
+         *
+         * @param \Stancl\Tenancy\Contracts\Tenant|int|string $tenant
+         * @return void 
+         * @static 
+         */        public static function initialize($tenant)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        $instance->initialize($tenant);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function end()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->end();
+        }
+                    /**
+         * 
+         *
+         * @return \Stancl\Tenancy\Contracts\TenancyBootstrapper[] 
+         * @static 
+         */        public static function getBootstrappers()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->getBootstrappers();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function query()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->query();
+        }
+                    /**
+         * 
+         *
+         * @return \Stancl\Tenancy\Contracts\Tenant|\Illuminate\Database\Eloquent\Model 
+         * @static 
+         */        public static function model()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->model();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function find($id)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->find($id);
+        }
+                    /**
+         * Run a callback in the central context.
+         * 
+         * Atomic, safely reverts to previous context.
+         *
+         * @param callable $callback
+         * @return mixed 
+         * @static 
+         */        public static function central($callback)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->central($callback);
+        }
+                    /**
+         * Run a callback for multiple tenants.
+         * 
+         * More performant than running $tenant->run() one by one.
+         *
+         * @param \Stancl\Tenancy\Contracts\Tenant[]|\Traversable|string[]|null $tenants
+         * @param callable $callback
+         * @return void 
+         * @static 
+         */        public static function runForMultiple($tenants, $callback)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        $instance->runForMultiple($tenants, $callback);
+        }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */        public static function macro($name, $macro)
+        {
+                        \Stancl\Tenancy\Tenancy::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */        public static function mixin($mixin, $replace = true)
+        {
+                        \Stancl\Tenancy\Tenancy::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */        public static function hasMacro($name)
+        {
+                        return \Stancl\Tenancy\Tenancy::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */        public static function flushMacros()
+        {
+                        \Stancl\Tenancy\Tenancy::flushMacros();
+        }
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
+         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
+         * @param string $userId
+         * @param string $redirectUrl
+         * @param string|null $authGuard
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
+         * @static 
+         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
+        {
+                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
+        }
+            }
+            /**
+     * 
+     *
+     */        class GlobalCache {
+                    /**
+         * Get a cache store instance by name, wrapped in a repository.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @static 
+         */        public static function store($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->store($name);
+        }
+                    /**
+         * Get a cache driver instance.
+         *
+         * @param string|null $driver
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @static 
+         */        public static function driver($driver = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->driver($driver);
+        }
+                    /**
+         * Resolve the given store.
+         *
+         * @param string $name
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @throws \InvalidArgumentException
+         * @static 
+         */        public static function resolve($name)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->resolve($name);
+        }
+                    /**
+         * Create a new cache repository with the given implementation.
+         *
+         * @param \Illuminate\Contracts\Cache\Store $store
+         * @return \Illuminate\Cache\Repository 
+         * @static 
+         */        public static function repository($store)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->repository($store);
+        }
+                    /**
+         * Re-set the event dispatcher on all resolved cache repositories.
+         *
+         * @return void 
+         * @static 
+         */        public static function refreshEventDispatcher()
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->refreshEventDispatcher();
+        }
+                    /**
+         * Get the default cache driver name.
+         *
+         * @return string 
+         * @static 
+         */        public static function getDefaultDriver()
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->getDefaultDriver();
+        }
+                    /**
+         * Set the default cache driver name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */        public static function setDefaultDriver($name)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->setDefaultDriver($name);
+        }
+                    /**
+         * Unset the given driver instances.
+         *
+         * @param array|string|null $name
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function forgetDriver($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->forgetDriver($name);
+        }
+                    /**
+         * Disconnect the given driver and remove from local cache.
+         *
+         * @param string|null $name
+         * @return void 
+         * @static 
+         */        public static function purge($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->purge($name);
+        }
+                    /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function extend($driver, $callback)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->extend($driver, $callback);
+        }
+                    /**
+         * Set the application instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $app
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function setApplication($app)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->setApplication($app);
+        }
+            }
+    }
+
 namespace VXM\Async {
             /**
      * 
@@ -21294,6 +21511,21 @@ namespace Illuminate\Http {
          */        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+            }
+            /**
+     * 
+     *
+     */        class RedirectResponse {
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\CrossDomainRedirect::bootstrap()
+         * @param string $domain
+         * @static 
+         */        public static function domain($domain)
+        {
+                        return \Illuminate\Http\RedirectResponse::domain($domain);
         }
             }
     }
@@ -21653,6 +21885,28 @@ namespace Illuminate\Database\Eloquent {
      * @template TModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Support\Collection<TKey, TModel>
      */        class Collection {
+            }
+    }
+
+namespace Stancl\Tenancy {
+            /**
+     * 
+     *
+     */        class Tenancy {
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
+         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
+         * @param string $userId
+         * @param string $redirectUrl
+         * @param string|null $authGuard
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
+         * @static 
+         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
+        {
+                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
+        }
             }
     }
 
@@ -25242,6 +25496,8 @@ namespace  {
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class ResponseCache extends \Spatie\ResponseCache\Facades\ResponseCache {}
             class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
+            class Tenancy extends \Stancl\Tenancy\Facades\Tenancy {}
+            class GlobalCache extends \Stancl\Tenancy\Facades\GlobalCache {}
             class Async extends \VXM\Async\AsyncFacade {}
             class DataTables extends \Yajra\DataTables\Facades\DataTables {}
     }
