@@ -1,24 +1,41 @@
 <?php
 
+use App\Http\Controllers\Admin\ArbolRiesgosOctaveController;
 use App\Http\Controllers\Admin\AreasController;
+use App\Http\Controllers\admin\AusenciasController;
+use App\Http\Controllers\Admin\ContenedorMatrizOctaveController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
+use App\Http\Controllers\Admin\DashboardPermisosController;
+use App\Http\Controllers\admin\DayOffController;
 use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
+use App\Http\Controllers\admin\EnvioDocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\FirmasModuleController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Admin\ListaDistribucionController;
+use App\Http\Controllers\Admin\ListaInformativaController;
+use App\Http\Controllers\Admin\MatrizRiesgosController;
 use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\OrganizacionController;
+use App\Http\Controllers\admin\PermisosGoceSueldoController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
+use App\Http\Controllers\admin\ProcesosOctaveController;
 use App\Http\Controllers\Admin\PuestosController;
 use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\SeguridadController;
+use App\Http\Controllers\admin\SolicitudDayOffController;
+use App\Http\Controllers\admin\SolicitudVacacionesController;
 use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\admin\VacacionesController;
+use App\Http\Controllers\Admin\VisitanteQuoteController;
+use App\Http\Controllers\Admin\VisitantesAvisoPrivacidadController;
+use App\Http\Controllers\Admin\VisitantesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContractManager\ContratosController;
@@ -27,6 +44,7 @@ use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ContractManager\RequisicionesController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
+use App\Http\Controllers\RevisionDocumentoController;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
@@ -210,60 +228,93 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         //Se puso aqui debido a problema de cross-origin
         Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
 
-        // Visitantes
+        // Rutas para Visitantes
+        Route::prefix('visitantes')->group(function () {
+            Route::get('autorizar', [VisitantesController::class, 'autorizar'])->name('visitantes.autorizar'); // Autorizar visitantes
+            Route::get('configuracion', [VisitantesController::class, 'configuracion'])->name('visitantes.configuracion'); // Configuración
+            Route::get('dashboard', [VisitantesController::class, 'dashboard'])->name('visitantes.dashboard'); // Dashboard
+            Route::middleware('cacheResponse')->get('menu', [VisitantesController::class, 'menu'])->name('visitantes.menu'); // Menú con cache
 
-        Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
-        Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
-        Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
-        Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
-        Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
-        Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
-        Route::resource('visitantes', 'VisitantesController');
-        // Fin visitantes
-        Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
-        Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
-        Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
-        Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
+            // Recursos anidados
+            Route::resource('aviso-privacidad', VisitantesAvisoPrivacidadController::class)->names('visitantes.aviso-privacidad');
+            Route::resource('cita-textual', VisitanteQuoteController::class)->names('visitantes.cita-textual');
+        });
 
-        Route::get('octave/arbol-riesgos/{matriz}', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
-        Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
-        Route::get('contenedores/{matriz}', 'ContenedorMatrizOctaveController@index')->name('contenedores.index');
-        Route::get('contenedores/create/{matriz}', 'ContenedorMatrizOctaveController@create')->name('contenedores.create');
-        Route::get('contenedores/{contenedor}/edit/{matriz}', 'ContenedorMatrizOctaveController@edit')->name('contenedores.edit');
-        Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
-        Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
+        // Recurso general para Visitantes
+        Route::resource('visitantes', VisitantesController::class);
+
+        // Rutas para Contenedores
+        Route::prefix('contenedores')->controller(ContenedorMatrizOctaveController::class)->group(function () {
+            Route::post('escenarios/{contenedor}/agregar', 'agregarEscenarios')->name('contenedores.escenarios.store'); // Agregar escenarios a un contenedor
+            Route::get('escenarios/{contenedor}/listar', 'escenarios')->name('contenedores.escenarios.get'); // Listar escenarios
+            Route::post('escenarios/eliminar', 'eliminarEscenario')->name('contenedores.escenarios.destroy'); // Eliminar escenario
+            Route::delete('destroy', 'massDestroy')->name('contenedores.massDestroy'); // Eliminar contenedores en masa
+
+            Route::get('{matriz}', 'index')->name('contenedores.index'); // Índice de contenedores
+            Route::get('create/{matriz}', 'create')->name('contenedores.create'); // Crear nuevo contenedor
+            Route::get('{contenedor}/edit/{matriz}', 'edit')->name('contenedores.edit'); // Editar contenedor
+            Route::delete('{contenedor}', 'destroy')->name('contenedores.destroy'); // Eliminar contenedor
+        });
+
+        // Excluir rutas ya definidas
+        Route::resource('contenedores', ContenedorMatrizOctaveController::class)->except(['index', 'create', 'edit', 'destroy']);
+
+        // Rutas para Árbol de Riesgos Octave
+        Route::prefix('octave/arbol-riesgos')->controller(ArbolRiesgosOctaveController::class)->group(function () {
+            Route::get('{matriz}', 'index')->name('octave.arbol-riesgos.index'); // Índice del árbol de riesgos
+            Route::post('/', 'obtenerArbol')->name('octave.arbol-riesgos.obtener'); // Obtener datos del árbol de riesgos
+        });
 
         Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
 
         //Modulo Capital Humano
         // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
         Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-        // capacitaciones
-        Route::get('TypeCatalogueTraining', [CertificatesController::class, 'TypeCatalogueTraining'])->name('type-catalogue-training.index');
-        Route::get('catalogueTraining', [CertificatesController::class, 'CatalogueTraining'])->name('catalogue-training.index');
-        Route::get('userTraining', [CertificatesController::class, 'UserTraining'])->name('user-training.index');
-        Route::get('userCatalogueTraining/{id}', [CertificatesController::class, 'revision'])->name('user-catalogue-training');
-        Route::post('userCatalogueTraining/{id}/aprobado', [CertificatesController::class, 'aprobado'])->name('user-catalogue-training.aprobado');
-        Route::post('userCatalogueTraining/{id}/rechazado', [CertificatesController::class, 'rechazado'])->name('user-catalogue-training.rechazado');
-        //Control de Ausencias
-        Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
-        Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
-        Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
-        Route::resource('Ausencias', 'AusenciasController');
 
-        // Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
-        Route::get('envio-documentos/atencion', 'EnvioDocumentosController@atencion')->name('envio-documentos.atencion');
-        Route::get('envio-documentos/atencion/{id}/seguimiento', 'EnvioDocumentosController@seguimiento')->name('envio-documentos.seguimiento');
-        Route::put('envio-documentos/{id}/seguimientoUpdate', 'EnvioDocumentosController@seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
-        Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
-        Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
-        Route::resource('envio-documentos', 'EnvioDocumentosController');
+        // Rutas de CertificatesController
+        Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
+            Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
+            Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
+            Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
 
-        //Control de Ausencias- Vacaciones
-        Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
-        Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
-        Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
-        Route::resource('vacaciones', 'VacacionesController')->names([
+            // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
+            Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
+            Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
+            Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
+        });
+
+        // Rutas de AusenciasController
+        Route::controller(AusenciasController::class)->group(function () {
+            Route::get('ajustes-dayoff', 'ajustesDayoff')->name('ajustes-dayoff'); // Ajustes para días libres
+            Route::get('ajustes-vacaciones', 'ajustesVacaciones')->name('ajustes-vacaciones'); // Ajustes para vacaciones
+            Route::get('ajustes-permisos-goce-sueldo', 'ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo'); // Ajustes para permisos con goce de sueldo
+        });
+
+        // Recurso completo para Ausencias
+        Route::resource('ausencias', AusenciasController::class);
+
+        // Rutas de EnvioDocumentosController
+        Route::controller(EnvioDocumentosController::class)->group(function () {
+            Route::get('envio-documentos/atencion', 'atencion')->name('envio-documentos.atencion');
+            Route::get('envio-documentos/atencion/{id}/seguimiento', 'seguimiento')->name('envio-documentos.seguimiento');
+            Route::put('envio-documentos/{id}/seguimientoUpdate', 'seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
+            Route::get('ajustes-envio-documentos', 'ajustes')->name('ajustes-envio-documentos');
+            Route::put('ajustes-envio-documentos/{id}/update', 'ajustesUpdate')->name('ajustes-envio-documentos-update');
+            // Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
+        });
+
+        // Recurso completo para EnvioDocumentosController
+        Route::resource('envio-documentos', EnvioDocumentosController::class);
+
+        // Control de Ausencias - Vacaciones
+        Route::controller(VacacionesController::class)->group(function () {
+            Route::get('vista-global-vacaciones', 'vistaGlobal')->name('vista-global-vacaciones');
+            Route::get('ExportVacaciones', 'exportExcel')->name('descarga-vacaciones');
+            Route::delete('vacaciones/destroy', 'massDestroy')->name('vacaciones.massDestroy');
+        });
+
+        // Recurso completo para VacacionesController
+        Route::resource('vacaciones', VacacionesController::class)->names([
             'create' => 'vacaciones.create',
             'store' => 'vacaciones.store',
             'show' => 'vacaciones.show',
@@ -272,24 +323,39 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'destroy' => 'vacaciones.destroy',
         ]);
 
-        // dashboard permisos
-        Route::get('dashboardPermisos/dashboardOrg/{id}', 'DashboardPermisosController@dashboardOrg')->name('dashboardPermisos.dashboardOrg');
+        // Dashboard permisos
+        Route::get('dashboard-permisos/dashboard-org/{id}', [DashboardPermisosController::class, 'dashboardOrg'])->name('dashboard-permisos.dashboard-org');
 
-        Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
-        Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
-        Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
-        Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.show');
+        // Lista Distribucion
+        Route::resource('lista-distribucion', ListaDistribucionController::class)->names([
+            'index' => 'lista-distribucion.index',
+            'create' => null, // No hay ruta create
+            'store' => null,  // No hay ruta store
+            'show' => 'lista-distribucion.show',
+            'edit' => 'lista-distribucion.edit',
+            'update' => 'lista-distribucion.update',
+            'destroy' => null, // No hay ruta destroy
+        ]);
 
-        Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
-        Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
-        Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
-        Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
+        // Lista Informativa
+        Route::resource('lista-informativa', ListaInformativaController::class)->names([
+            'index' => 'lista-informativa.index',
+            'create' => null, // No hay ruta create
+            'store' => null,  // No hay ruta store
+            'show' => 'lista-informativa.show',
+            'edit' => 'lista-informativa.edit',
+            'update' => 'lista-informativa.update',
+            'destroy' => null, // No hay ruta destroy
+        ]);
 
         //Control de Ausencias- Day-Off
-        Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
-        Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
-        Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
-        Route::resource('dayOff', 'DayOffController')->names([
+        Route::controller(DayOffController::class)->group(function () {
+            Route::get('vista-global-dayoff', 'vistaGlobal')->name('vista-global-dayoff');
+            Route::get('ExportDayOff', 'exportExcel')->name('descarga-dayOff');
+            Route::delete('dayOff/destroy', 'massDestroy')->name('dayOff.massDestroy');
+        });
+
+        Route::resource('dayOff', DayOffController::class)->names([
             'create' => 'dayOff.create',
             'store' => 'dayOff.store',
             'show' => 'dayOff.show',
@@ -298,10 +364,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'destroy' => 'dayOff.destroy',
         ]);
 
-        Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
-        Route::get('ExportPermisoGoceSueldo', 'PermisosGoceSueldoController@exportExcel')->name('descarga-permiso-goce-sueldo');
-        Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
-        Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
+        Route::controller(PermisosGoceSueldoController::class)->group(function () {
+            Route::get('vista-global-permisos-goce-sueldo', 'vistaGlobal')->name('vista-global-permisos-goce-sueldo');
+            Route::get('ExportPermisoGoceSueldo', 'exportExcel')->name('descarga-permiso-goce-sueldo');
+            Route::delete('permisos-goce-sueldo/destroy', 'massDestroy')->name('permisos-goce-sueldo.massDestroy');
+        });
+
+        Route::resource('permisos-goce-sueldo', PermisosGoceSueldoController::class)->names([
             'index' => 'permisos-goce-sueldo.index',
             'create' => 'permisos-goce-sueldo.create',
             'store' => 'permisos-goce-sueldo.store',
@@ -312,40 +381,46 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ]);
 
         //Control de Solicitud- Vacaciones
-        Route::get('solicitud-vacaciones/perido-adicional/create', 'SolicitudVacacionesController@periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
-        Route::get('solicitud-vacaciones/{id}/archivoShow', 'SolicitudVacacionesController@archivoShow')->name('solicitud-vacaciones.archivoShow');
-        Route::get('solicitud-vacaciones/{id}/vistaGlobal', 'SolicitudVacacionesController@showVistaGlobal')->name('solicitud-vacaciones.vistaGlobal');
-        Route::get('solicitud-vacaciones/menu', 'SolicitudVacacionesController@aprobacionMenu')->name('solicitud-vacaciones.menu');
-        Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
-        Route::get('solicitud-vacaciones/aprobacion', 'SolicitudVacacionesController@aprobacion')->name('solicitud-vacaciones.aprobacion');
-        Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
-        Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
-        Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
-        Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
-            'create' => 'solicitud-vacaciones.create',
-            'store' => 'solicitud-vacaciones.store',
-            'show' => 'solicitud-vacaciones.show',
-            'edit' => 'solicitud-vacaciones.edit',
-            'update' => 'solicitud-vacaciones.update',
-            'destroy' => 'solicitud-vacaciones.destroy',
-        ])->except(['show', 'destroy']);
+        Route::prefix('solicitud-vacaciones')->group(function () {
+            Route::controller(SolicitudVacacionesController::class)->group(function () {
+                Route::get('perido-adicional/create', 'periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
+                Route::get('{id}/archivoShow', 'archivoShow')->name('solicitud-vacaciones.archivoShow');
+                Route::get('{id}/vistaGlobal', 'showVistaGlobal')->name('solicitud-vacaciones.vistaGlobal');
+                Route::get('menu', 'aprobacionMenu')->name('solicitud-vacaciones.menu');
+                Route::get('archivo', 'archivo')->name('solicitud-vacaciones.archivo');
+                Route::get('aprobacion', 'aprobacion')->name('solicitud-vacaciones.aprobacion');
+                Route::get('{id}/respuesta', 'respuesta')->name('solicitud-vacaciones.respuesta');
+                Route::get('{id}/show', 'show')->name('solicitud-vacaciones.show');
+                Route::post('destroy', 'destroy')->name('solicitud-vacaciones.destroy');
+            });
 
-        Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
-        Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
-        Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
-        Route::get('solicitud-dayoff/archivo', 'SolicitudDayOffController@archivo')->name('solicitud-dayoff.archivo');
-        Route::get('solicitud-dayoff/aprobacion', 'SolicitudDayOffController@aprobacion')->name('solicitud-dayoff.aprobacion');
-        Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
-        Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
-        Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
-        Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
-            'create' => 'solicitud-dayoff.create',
-            'store' => 'solicitud-dayoff.store',
-            'show' => 'solicitud-dayoff.show',
-            'edit' => 'solicitud-dayoff.edit',
-            'update' => 'solicitud-dayoff.update',
-            'destroy' => 'solicitud-dayoff.destroy',
-        ])->except(['show', 'destroy']);
+            Route::resource('/', SolicitudVacacionesController::class)->names([
+                'create' => 'solicitud-vacaciones.create',
+                'store' => 'solicitud-vacaciones.store',
+                'edit' => 'solicitud-vacaciones.edit',
+                'update' => 'solicitud-vacaciones.update',
+            ])->except(['show', 'destroy']);
+        });
+
+        Route::prefix('solicitud-dayoff')->group(function () {
+            Route::controller(SolicitudDayOffController::class)->group(function () {
+                Route::get('{id}/showArchivo', 'showArchivo')->name('solicitud-dayoff.showArchivo');
+                Route::get('{id}/vistaGlobal', 'showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
+                Route::get('menu', 'aprobacionMenu')->name('solicitud-dayoff.menu');
+                Route::get('archivo', 'archivo')->name('solicitud-dayoff.archivo');
+                Route::get('aprobacion', 'aprobacion')->name('solicitud-dayoff.aprobacion');
+                Route::get('{id}/respuesta', 'respuesta')->name('solicitud-dayoff.respuesta');
+                Route::get('{id}/show', 'show')->name('solicitud-dayoff.show');
+                Route::post('destroy', 'destroy')->name('solicitud-dayoff.destroy');
+            });
+
+            Route::resource('/', SolicitudDayOffController::class)->names([
+                'create' => 'solicitud-dayoff.create',
+                'store' => 'solicitud-dayoff.store',
+                'edit' => 'solicitud-dayoff.edit',
+                'update' => 'solicitud-dayoff.update',
+            ])->except(['show', 'destroy']);
+        });
 
         Route::get('solicitud-permiso-goce-sueldo/{id}/showArchivo', 'SolicitudPermisoGoceSueldoController@showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
         Route::get('solicitud-permiso-goce-sueldo/{id}/vistaGlobal', 'SolicitudPermisoGoceSueldoController@showVistaGlobal')->name('solicitud-permiso-goce-sueldo.vistaGlobal');
@@ -1601,74 +1676,110 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('niveles-impacto', 'NivelesImpactoController');
 
         // Matriz Riesgos
-        Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
-        Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
-        Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-        Route::resource('matriz-riesgos', 'MatrizRiesgosController');
-        Route::post('matriz-riesgo/octave', 'MatrizRiesgosController@storeOctave')->name('matriz-riesgos.octave.store');
-        Route::post('matriz-riesgo/octave/delete-activo', 'MatrizRiesgosController@deleteActivoOctave')->name('matriz-riesgo.octave.activo.delete');
-        Route::put('matriz-riesgo/{id}/octave', 'MatrizRiesgosController@updateOctave')->name('matriz-riesgos.octave.update');
-        Route::get('matriz-riesgo/{id}/octave/edit', 'MatrizRiesgosController@octaveEdit')->name('matriz-riesgos.octave.edit');
-        Route::get('matriz-riesgo/octave', 'MatrizRiesgosController@octave')->name('matriz-riesgos.octave');
-        Route::get('getEmployeeDataOctaveNomActivoInfo', 'MatrizRiesgosController@getEmployeeDataOctaveNomActivoInfo')->name('getEmployeeDataOctaveNomActivoInfo');
+        // Rutas de Matriz de Riesgos
+        Route::prefix('matriz-riesgos')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('planes-de-accion/create/{id}', 'createPlanAccion')->name('matriz-riesgos.createPlanAccion');
+            Route::post('planes-de-accion/store/{id}', 'storePlanAccion')->name('matriz-riesgos.storePlanAccion');
+            Route::delete('destroy', 'massDestroy')->name('matriz-riesgos.massDestroy');
+            Route::post('parse-csv-import', 'parseCsvImport')->name('matriz-riesgos.parseCsvImport');
+            Route::resource('/', MatrizRiesgosController::class);
+        });
 
-        Route::get('matriz-seguridad/octave/index', 'MatrizRiesgosController@octaveIndex')->name('matriz-seguridad.octaveIndex');
-        Route::get('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000')->name('matriz-seguridad.ISO31000');
-        Route::post('matriz-riesgo/ISO31000/delete-activo', 'MatrizRiesgosController@deleteActivoISO31000')->name('matriz-seguridad.ISO31000.activo.delete');
-        Route::get('matriz-seguridad/ISO31000/create', 'MatrizRiesgosController@ISO31000Create')->name('matriz-seguridad.ISO31000Create');
-        Route::get('matriz-seguridad/ISO31000/{id}/edit', 'MatrizRiesgosController@ISO31000Edit')->name('matriz-seguridad.ISO31000.edit');
-        Route::post('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000Store')->name('matriz-seguridad.ISO31000.store');
-        Route::put('matriz-seguridad/{id}/ISO31000', 'MatrizRiesgosController@ISO31000Update')->name('matriz-seguridad.ISO31000.update');
-        Route::get('matriz-seguridad/NIST', 'MatrizRiesgosController@NIST')->name('matriz-seguridad.NIST');
-        Route::get('matriz-seguridad/NIST/create', 'MatrizRiesgosController@NISTCreate')->name('matriz-seguridad.NISTCreate');
-        Route::get('matriz-seguridad/NIST/{id}/edit', 'MatrizRiesgosController@NISTEdit')->name('matriz-seguridad.NIST.edit');
-        Route::post('matriz-seguridad/NIST', 'MatrizRiesgosController@NISTStore')->name('matriz-seguridad.NIST.store');
-        Route::put('matriz-seguridad/{id}/NIST', 'MatrizRiesgosController@NISTUpdate')->name('matriz-seguridad.NIST.update');
-        Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
-        Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
+        // Rutas de Octave
+        // Rutas relacionadas con Octave
+        Route::prefix('matriz-riesgo/octave')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::post('/', 'storeOctave')->name('matriz-riesgos.octave.store');
+            Route::post('delete-activo', 'deleteActivoOctave')->name('matriz-riesgo.octave.activo.delete');
+            Route::put('{id}', 'updateOctave')->name('matriz-riesgos.octave.update');
+            Route::get('{id}/edit', 'octaveEdit')->name('matriz-riesgos.octave.edit');
+            Route::get('/', 'octave')->name('matriz-riesgos.octave');
+            Route::get('mapa', 'MapaCalorOctave')->name('matriz-octavemapa');
+            Route::get('graficas/{matriz}', 'graficas')->name('octave-graficas');
+            Route::get('getEmployeeDataOctaveNomActivoInfo', 'getEmployeeDataOctaveNomActivoInfo')->name('getEmployeeDataOctaveNomActivoInfo');
+        });
 
-        Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
+        // Rutas de ISO31000
+        Route::prefix('matriz-seguridad/ISO31000')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('/', 'ISO31000')->name('matriz-seguridad.ISO31000');
+            Route::post('/', 'ISO31000Store')->name('matriz-seguridad.ISO31000.store');
+            Route::post('delete-activo', 'deleteActivoISO31000')->name('matriz-seguridad.ISO31000.activo.delete');
+            Route::get('create', 'ISO31000Create')->name('matriz-seguridad.ISO31000Create');
+            Route::get('{id}/edit', 'ISO31000Edit')->name('matriz-seguridad.ISO31000.edit');
+            Route::put('{id}', 'ISO31000Update')->name('matriz-seguridad.ISO31000.update');
+        });
+
+        // Rutas de NIST
+        Route::prefix('matriz-seguridad/NIST')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('/', 'NIST')->name('matriz-seguridad.NIST');
+            Route::post('/', 'NISTStore')->name('matriz-seguridad.NIST.store');
+            Route::get('create', 'NISTCreate')->name('matriz-seguridad.NISTCreate');
+            Route::get('{id}/edit', 'NISTEdit')->name('matriz-seguridad.NIST.edit');
+            Route::put('{id}', 'NISTUpdate')->name('matriz-seguridad.NIST.update');
+        });
+
+        // Rutas del Sistema de Gestión
+        Route::prefix('matriz-seguridad/sistema-gestion')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('/', 'SistemaGestion')->name('matriz-seguridad.sistema-gestion');
+            Route::post('identificadorExist', 'identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
+            Route::post('data', 'SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
+            Route::get('create', 'createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
+            Route::post('store', 'storeSistemaGestion')->name('matriz-riesgos.sistema-gestion.store');
+            Route::get('edit/{id}', 'editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
+            Route::put('update/{id}', 'updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
+            Route::get('show/{id}', 'showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
+            Route::delete('{riesgo}', 'destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
+            Route::get('seguridadMapa', 'MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
+        });
+
+        // Otras rutas
+        Route::get('matriz-seguridadMapa', [MatrizRiesgosController::class, 'MapaCalor'])->name('matriz-mapa');
+        Route::get('controles-get', [MatrizRiesgosController::class, 'ControlesGet'])->name('controles-get');
+
+        // Rutas relacionadas con Matriz de Seguridad y Octave
+        Route::prefix('matriz-seguridad')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('/', 'SeguridadInfo')->name('matriz-seguridad'); // Seguridad general
+            Route::get('octave/index', 'octaveIndex')->name('matriz-seguridad.octaveIndex'); // Octave Index
+        });
+
+        // Rutas relacionadas con Octave
+        Route::prefix('octave')->controller(MatrizRiesgosController::class)->group(function () {
+            Route::get('graficas/{matriz}', 'graficas')->name('octave-graficas'); // Gráficas Octave
+        });
+
+        // Otras rutas
+        Route::post('matriz-riesgos/parse-csv-import', [MatrizRiesgosController::class, 'parseCsvImport'])->name('matriz-riesgos.parseCsvImport');
         Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
-        Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
-        Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
-        // Matriz de riesgos -- Sistema de Gestion
-        Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
-        Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
-        Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
-        Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
-        Route::post('matriz-riesgos/sistema-gestion/store', 'MatrizRiesgosController@storeSistemaGestion')->name('matriz-riesgos.sistema-gestion.store');
-        Route::get('matriz-riesgos/sistema-gestion/edit/{id}', 'MatrizRiesgosController@editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
-        Route::put('matriz-seguridad/sistema-gestion/update/{id}', 'MatrizRiesgosController@updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
-        Route::get('matriz-seguridad/sistema-gestion/show/{id}', 'MatrizRiesgosController@showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
-        Route::delete('matriz-seguridad/sistema-gestion/{riesgo}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
-        Route::get('matriz-seguridad/sistema-gestion/seguridadMapa', 'MatrizRiesgosController@MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
+        // Rutas para Procesos Octave
+        Route::prefix('procesos-octave')->controller(ProcesosOctaveController::class)->group(function () {
+            Route::post('activos', 'activos')->name('procesos.octave.activos'); // Activos de procesos Octave
+            Route::get('{matriz}', 'index')->name('procesos-octave.index'); // Índice de procesos Octave
+            Route::get('{matriz}/create', 'create')->name('procesos-octave.create'); // Crear proceso Octave
+            Route::delete('{proceso}', 'destroy')->name('procesos-octave.destroy'); // Eliminar proceso Octave
+            Route::get('{matriz}/edit/{proceso}', 'edit')->name('procesos-octave.edit'); // Editar proceso Octave
+            // Route::delete('destroy', 'destroy')->name('procesos-octave.destroy'); // Comentario conservado
+        });
 
-        //ProcesosOctave
-        Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
-        // Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-        Route::get('procesos-octave/{matriz}', 'ProcesosOctaveController@index')->name('procesos-octave.index');
-        Route::get('procesos-octave/{matriz}/create', 'ProcesosOctaveController@create')->name('procesos-octave.create');
-        Route::delete('procesos-octave/{proceso}', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-        Route::get('procesos-octave/{matriz}/edit/{proceso}', 'ProcesosOctaveController@edit')->name('procesos-octave.edit');
-        Route::resource('procesos-octave', 'ProcesosOctaveController')->except(['index', 'create', 'edit', 'destroy']);
+        Route::resource('procesos-octave', ProcesosOctaveController::class)->except(['index', 'create', 'edit', 'destroy']);
 
         //Servicios
         Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
         Route::resource('servicios', 'ServiciosController')->except('destroy');
 
         //Revisiones Documentos
-        Route::post('/revisiones/approve', 'RevisionDocumentoController@approve')->name('revisiones.approve');
-        Route::post('/revisiones/reject', 'RevisionDocumentoController@reject')->name('revisiones.reject');
-        Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit')->name('revisiones.revisar');
+        Route::prefix('revisiones')->controller(RevisionDocumentoController::class)->group(function () {
+            Route::post('approve', 'approve')->name('revisiones.approve');
+            Route::post('reject', 'reject')->name('revisiones.reject');
+            Route::get('{revisionDocumento}', 'edit')->name('revisiones.revisar');
 
-        Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
-        Route::post('/revisiones/archivar', 'RevisionDocumentoController@archivar')->name('revisiones.archivar');
-        Route::post('/revisiones/desarchivar', 'RevisionDocumentoController@desarchivar')->name('revisiones.desarchivar');
-        Route::post('/revisiones/documentos-debo-aprobar', 'RevisionDocumentoController@obtenerDocumentosDeboAprobar')->name('revisiones.obtenerDocumentosDeboAprobar');
-        Route::post('/revisiones/documentos-debo-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosDeboAprobarArchivo')->name('revisiones.obtenerDocumentosDeboAprobarArchivo');
-        Route::post('/revisiones/documentos-me-deben-aprobar', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobar')->name('revisiones.obtenerDocumentosMeDebenAprobar');
-        Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
+            Route::get('archivo', 'archivo')->name('revisiones.archivo');
+            Route::post('archivar', 'archivar')->name('revisiones.archivar');
+            Route::post('desarchivar', 'desarchivar')->name('revisiones.desarchivar');
+            Route::post('documentos-debo-aprobar', 'obtenerDocumentosDeboAprobar')->name('revisiones.obtenerDocumentosDeboAprobar');
+            Route::post('documentos-debo-aprobar-archivo', 'obtenerDocumentosDeboAprobarArchivo')->name('revisiones.obtenerDocumentosDeboAprobarArchivo');
+            Route::post('documentos-me-deben-aprobar', 'obtenerDocumentosMeDebenAprobar')->name('revisiones.obtenerDocumentosMeDebenAprobar');
+            Route::post('documentos-me-deben-aprobar-archivo', 'obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
+        });
 
         //Documentos
         Route::controller(DocumentosController::class)->group(function () {
