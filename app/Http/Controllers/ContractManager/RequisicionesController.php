@@ -496,7 +496,7 @@ class RequisicionesController extends Controller
                 }
             } else {
 
-                $$responsable = User::find($requisicion->id_user)->empleado;
+                $responsable = User::find($requisicion->id_user)->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante';
