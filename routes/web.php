@@ -1684,6 +1684,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('{documento}', 'destroy')->name('documentos.destroy');
         });
 
+        Route::resource('documentos', DocumentosController::class);
+
         // Control Documentos
         Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
         Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['create']]);
