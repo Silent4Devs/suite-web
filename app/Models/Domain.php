@@ -24,6 +24,9 @@ class Domain extends BaseDomain
         'is_fallback' => 'bool',
     ];
 
+    protected $fillable = ['domain', 'tenant_id'];
+
+
     public static function booted()
     {
         static::updating(function (self $model) {
@@ -50,6 +53,12 @@ class Domain extends BaseDomain
     {
         return $subdomain . '.' . config('tenancy.central_domains')[0];
     }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+    
 
     public function makePrimary(): self
     {

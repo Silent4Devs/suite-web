@@ -26,6 +26,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'trial_ends_at' => 'datetime',
     ];
 
+
+    protected $primaryKey = 'id'; // Si tu ID es diferente, asegúrate de configurarlo
+    
+    protected $fillable = ['data']; // Agrega tus campos personalizables aquí
+
+
     public static function getCustomColumns(): array
     {
         return [
@@ -36,6 +42,11 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'pm_last_four',
             'trial_ends_at',
         ];
+    }
+
+    public function domains()
+    {
+        return $this->hasMany(Domain::class);
     }
 
     public function primary_domain()
