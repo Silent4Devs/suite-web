@@ -372,17 +372,42 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
+            //Buscamos modelo correspondiente a lideres
+            $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+            //Traemos participantes
+            $listaPart = $listaReq->participantes;
+
+            //Buscamos al supervisor por su id
+            $supList = $listaPart->where('empleado_id', $comprador->user->id)->first();
+
+            //Buscamos en que nivel se encuentra el supervisor
+            $nivel = $supList->nivel;
+
+            //traemos a todos los participantes correspondientes a ese nivel
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            //Buscamos 1 por 1 los participantes del nivel (area)
+            foreach ($participantesNivel as $key => $partNiv) {
+                //Si su estado esta activo se le manda el correo
+                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $partNiv->empleado;
+                    $userEmail = $responsable->email;
+                    break;
+                }
+            }
+
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
                     'requisicion_id' => $requisicion->id,
                 ],
                 [
                     'solicitante_id' => $solicitante->empleado->id,
-                    'comprador_id' => $comprador->user->id,
+                    'comprador_id' => $responsable->id,
                 ]
             );
 
-            if ($comprador->user->id == $firmas_requi->responsable_finanzas_id || $comprador->user->id == $firmas_requi->jefe_id || $comprador->user->id == $firmas_requi->solicitante_id) {
+            if ($responsable->id == $firmas_requi->responsable_finanzas_id || $responsable->id == $firmas_requi->jefe_id || $responsable->id == $firmas_requi->solicitante_id) {
                 Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $tipo_firma));
             } else {
                 Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
@@ -496,7 +521,7 @@ class RequisicionesController extends Controller
                 }
             } else {
 
-                $$responsable = User::find($requisicion->id_user)->empleado;
+                $responsable = User::find($requisicion->id_user)->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante';
@@ -548,6 +573,7 @@ class RequisicionesController extends Controller
             if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
                 if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                     $tipo_firma = 'firma_finanzas';
+                    $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
@@ -577,7 +603,7 @@ class RequisicionesController extends Controller
             }
         } elseif ($requisicion->firma_compras === null) {
             if ($firma_siguiente && isset($firma_siguiente->comprador_id)) {
-                if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
+                if ($user->empleado->id == $firma_siguiente->comprador_id) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
@@ -585,10 +611,29 @@ class RequisicionesController extends Controller
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             } else {
-                if (($user->empleado->id == $comprador->user->id)) { //comprador_id
+
+                $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+                $listaPart = $listaReq->participantes;
+
+                $supList = $listaPart->where('empleado_id', $comprador->id)->first();
+
+                $nivel = $supList->nivel;
+
+                $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+                foreach ($participantesNivel as $key => $partNiv) {
+                    if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                        $responsable = $partNiv->empleado;
+
+                        break;
+                    }
+                }
+
+                if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -610,7 +655,7 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
     }
 
-    public function validacionLista($tipo)
+    public function validacionLista($tipo, $comprador_id = null)
     {
         $user = User::getCurrentUser();
         $alerta = false;
@@ -652,6 +697,27 @@ class RequisicionesController extends Controller
                     break;
                 }
             }
+            $alerta = empty($responsable);
+        } elseif ($tipo == 'firma_finanzas') {
+            $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+            $listaPart = $listaReq->participantes;
+
+            $supList = $listaPart->where('empleado_id', $comprador_id)->first();
+
+            $nivel = $supList->nivel;
+
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            foreach ($participantesNivel as $key => $partNiv) {
+                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $partNiv->empleado;
+                    $comprador = $responsable->email;
+
+                    break;
+                }
+            }
+
             $alerta = empty($responsable);
         }
 
