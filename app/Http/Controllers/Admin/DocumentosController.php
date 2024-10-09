@@ -467,15 +467,9 @@ class DocumentosController extends Controller
             parse_str($request->datosRevisores, $datos);
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
-            $documento = Documento::where('id', $documento_id)->first();
-
-            try {
-                event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
-
-            // $documento->load('elaborador', 'macroproceso');
+            $documento = Documento::find($documento_id);
+            // event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento')); //No funciona correctamente
+            // $documento->load('elaborador', 'macroproceso'); //Tarda demasiado, error de memoria e ¿inncesario?
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
