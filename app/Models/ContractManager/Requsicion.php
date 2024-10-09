@@ -3,6 +3,8 @@
 namespace App\Models\ContractManager;
 
 use App\Models\FirmasRequisiciones;
+use App\Models\HistorialEdicionesOC;
+use App\Models\HistorialEdicionesReq;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Traits\ClearsResponseCache;
@@ -82,6 +84,119 @@ class Requsicion extends Model implements Auditable
     public $table = 'requisiciones';
 
     protected $with = ['productos_requisiciones', 'provedores_requisiciones'];
+
+ public function camposRequisiciones()
+ {
+     return [
+        'fecha',
+        'estatus',
+        'referencia',
+        'descripcion',
+        // 'estado',
+        'cantidad',
+        'contrato_id',
+        'comprador_id',
+        'sucursal_id',
+        'producto_id',
+        // 'firma_solicitante',
+        // 'firma_finanzas',
+        // 'firma_jefe',
+        // 'firma_compras',
+        'user',
+        'area',
+        'archivo',
+        'proveedor_id',
+        'id_user',
+        'proveedor_catalogo',
+        'proveedor_catalogo_oc',
+        'proveedor_catalogo_id',
+        'ids_proveedores',
+        'proveedoroc_id',
+        'email',
+     ];
+ }
+
+  // Campos específicos para el Módulo 1
+  public function camposOrdenesCompra()
+  {
+      return [
+         'fecha_entrega',
+         'pago',
+         'dias_credito',
+         'moneda',
+         'cambio',
+         'proveedor_id',
+         'direccion_envio_proveedor',
+         'credito_proveedor',
+         'sub_sub_total',
+         'sub_iva',
+         'sub_iva_retenido',
+         'sub_descuento',
+         'sub_otro',
+         'sub_isr',
+         'sub_total_total',
+         'sub_total',
+         'iva',
+         'iva_retenido',
+         'isr_retenido',
+         'total',
+         'id_user',
+        //  'firma_solicitante_orden',
+        //  'firma_finanzas_orden',
+        //  'firma_comprador_orden',
+         'facturacion',
+         'direccion',
+        //  'estado_orden',
+        //  'estado_orden_dos',
+         'proveedor_catalogo',
+         'proveedor_catalogo_oc',
+         'proveedor_catalogo_id',
+         'ids_proveedores',
+         'proveedoroc_id',
+      ];
+  }
+
+  protected static function booted()
+  {
+      static::updating(function ($registro) {
+          // Obtén el ID del empleado que está realizando el cambio
+          $idEmpleado = User::getCurrentUser()->empleado->id;
+
+          // Define los campos de requisiciones y órdenes de compra
+          $camposRequisiciones = $registro->camposRequisiciones();
+          $camposOrdenesCompra = $registro->camposOrdenesCompra();
+
+          // Recorre los atributos modificados
+          foreach ($registro->getDirty() as $campo => $nuevoValor) {
+              $valorAnterior = $registro->getOriginal($campo);
+
+              // Determina a qué módulo pertenece el campo modificado
+              if (in_array($campo, $camposRequisiciones)) {
+                  // Registro en la tabla de historial de requisiciones
+                  HistorialEdicionesReq::create([
+                      'requisicion_id' => $registro->id,
+                      'numero_edicion' => 1, // Ajusta este valor según tu lógica
+                      'registro_tipo' => self::class,
+                      'id_empleado' => $idEmpleado,
+                      'campo' => $campo,
+                      'valor_anterior' => $valorAnterior,
+                      'valor_nuevo' => $nuevoValor,
+                  ]);
+              } elseif (in_array($campo, $camposOrdenesCompra)) {
+                  // Registro en la tabla de historial de órdenes de compra
+                  HistorialEdicionesOC::create([
+                      'requisicion_id' => $registro->id,
+                    //   'numero_edicion' => 1, // Ajusta este valor según tu lógica
+                      'registro_tipo' => self::class,
+                      'id_empleado' => $idEmpleado,
+                      'campo' => $campo,
+                      'valor_anterior' => $valorAnterior,
+                      'valor_nuevo' => $nuevoValor,
+                  ]);
+              }
+          }
+      });
+  }
 
     //Redis methods
     public static function getAll()

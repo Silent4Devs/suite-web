@@ -2,6 +2,8 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\HistorialEdicionesReq;
+use App\Models\User;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,26 @@ class ProveedorIndistinto extends Model implements Auditable
         'fecha_inicio',
         'fecha_fin',
     ];
+
+    protected static function booted()
+    {
+        static::updating(function ($detalle) {
+            $idEmpleado = User::getCurrentUser()->empleado->id;
+            foreach ($detalle->getDirty() as $campo => $nuevoValor) {
+                $valorAnterior = $detalle->getOriginal($campo);
+
+                HistorialEdicionesReq::create([
+                    'requisicion_id' => $detalle->requisicion_id, // asumiendo que la relación es con 'registro_id'
+                    'numero_edicion' => 1,
+                    'registro_tipo' => self::class,
+                    'id_empleado' => $idEmpleado,
+                    'campo' => $campo,
+                    'valor_anterior' => $valorAnterior,
+                    'valor_nuevo' => $nuevoValor,
+                ]);
+            }
+        });
+    }
 
     //Redis methods
     public static function getFirst()

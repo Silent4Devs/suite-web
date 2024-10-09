@@ -2,6 +2,8 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\HistorialEdicionesReq;
+use App\Models\User;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +35,26 @@ class ProductoRequisicion extends Model implements Auditable
     public $table = 'productos_requisicion';
 
     protected $with = ['producto', 'contrato', 'centro_costo'];
+
+
+    protected static function booted()
+    {
+        static::updating(function ($detalle) {
+            $idEmpleado = User::getCurrentUser()->empleado->id;
+            foreach ($detalle->getDirty() as $campo => $nuevoValor) {
+                $valorAnterior = $detalle->getOriginal($campo);
+                HistorialEdicionesReq::create([
+                    'requisicion_id' => $detalle->requisiciones_id, // asumiendo que la relación es con 'registro_id'
+                    'numero_edicion' => 1,
+                    'registro_tipo' => self::class,
+                    'id_empleado' => $idEmpleado,
+                    'campo' => $campo,
+                    'valor_anterior' => $valorAnterior,
+                    'valor_nuevo' => $nuevoValor,
+                ]);
+            }
+        });
+    }
 
     public function producto()
     {
