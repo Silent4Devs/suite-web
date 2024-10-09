@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('historial_ediciones_req', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('requisicion_id'); // ID del registro modificado
-            $table->integer('numero_edicion');
             $table->string('registro_tipo'); // Tipo de modelo (por ejemplo, App\Models\Registro)
             $table->unsignedBigInteger('id_empleado'); // ID del empleado que hizo el cambio
             $table->string('campo'); // Campo modificado
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historial_ediciones_req_o_c_s');
+        Schema::dropIfExists('historial_ediciones_req');
     }
 };
