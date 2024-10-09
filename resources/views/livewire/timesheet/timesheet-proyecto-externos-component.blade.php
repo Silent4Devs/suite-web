@@ -2,9 +2,9 @@
     <h5 class="d-flex justify-content-between">Asignar Proveedor/Consultor Externo a Proyecto</h5>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar
+            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn-outline-primary">Editar
                 Proyecto</a>
-            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
+            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-primary">Asignar
                 Empleados</a>
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
@@ -15,8 +15,8 @@
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model="externo_añadido" name="" maxlength="255" id=""type="text" class="form-control"
-                    required>
+                <input wire:model="externo_añadido" name="" maxlength="255" id=""type="text"
+                    class="form-control" required>
             </div>
         </div>
         <div class="row">
@@ -31,7 +31,7 @@
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                <button class="btn btn-success">Agregar</button>
+                <button class="btn btn-primary">Agregar</button>
             </div>
         </div>
     </form>
@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
@@ -148,13 +148,13 @@
                                         <div class="mt-4 d-flex justify-content-between">
                                             <div class="form-group col-md-4"
                                                 style="display: flex; align-items: flex-end;">
-                                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                                     Cancelar
                                                 </button>
                                             </div>
                                             <div class="form-group col-md-4"
                                                 style="display: flex; align-items: flex-end;">
-                                                <button class="btn btn-success">Editar</button>
+                                                <button class="btn btn-primary">Editar</button>
                                             </div>
                                         </div>
                                     </div>

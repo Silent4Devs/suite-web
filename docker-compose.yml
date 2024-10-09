@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -8,7 +7,7 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
+      # - 8080:8080
     volumes:
       - .:/var/www/html
       - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -39,29 +38,28 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
+      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-database:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
+      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    env_file:
+      - .env
     ports:
       - "5432:5432"
+    # networks:
+    #   - tabantajnetwork
     networks:
       - tabantajnetwork
     mem_limit: 6g
-    labels:
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
-      com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
 
   php:
     #uncomment this if you will use only docker compose
     build:
       context: "./infra/php/"
       dockerfile: Dockerfile
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
     #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
@@ -71,13 +69,6 @@ services:
       - .:/var/www/html
     ports:
       - 9000:80
-    labels:
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
-      com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
 
@@ -97,6 +88,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
+    mem_limit: 2g
 
   schedule-worker:
     build:
@@ -114,6 +106,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
+    mem_limit: 2g
 
   redis-tabantaj:
     image: redis:alpine
@@ -122,18 +115,11 @@ services:
     tty: true
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
-      - ./infra/redis/sysctl.conf:/etc/sysctl.conf # Mount the sysctl configuration file
     networks:
       - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
     mem_limit: 3g
-    labels:
-      com.datadoghq.ad.check_names: "[redisdb]"
-      com.datadoghq.ad.init_configs: "[{}]"
-      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
-      com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: "prod"
-      com.datadoghq.tags.service: "tabantaj"
-      com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
@@ -142,19 +128,18 @@ services:
     tty: true
     ports:
       - 6360:80
-    environment:
-      - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
-      - REDIS_1_PORT=6379 # Replace with your Redis container port
+    env_file:
+      - .env
     networks:
       - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
 
   rabbitmq-tabantaj:
     image: rabbitmq:3-management-alpine
-    container_name: rabbit-tabantaj
-    environment:
-      - RABBITMQ_DEFAULT_USER=desarrollo
-      - RABBITMQ_DEFAULT_PASS=Password123.
-      - RABBITMQ_DEFAULT_VHOST=desarrollo # Add this line
+    container_name: rabbitmq-tabantaj
+    env_file:
+      - .env
     ports:
       - 5672:5672
       - 15672:15672
@@ -162,9 +147,38 @@ services:
     tty: true
     networks:
       - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-      - ./infra/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  goservices:
+    image: ghcr.io/silent4devs/goservices:latest
+    container_name: goservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3300:3300"
+    volumes:
+      - goservices_data:/goservices
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
+
+  reportservice:
+    image: ghcr.io/silent4devs/reportservice:latest
+    container_name: reportservice
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3301:3301"
+    volumes:
+      - reportservice_data:/reportservice
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
 
   newrelic-redis:
     container_name: newrelic-redis
@@ -310,34 +324,22 @@ services:
     networks:
       - tabantajnetwork
 
-  logstash-tabantaj:
-    image: docker.elastic.co/logstash/logstash:8.8.1
-    container_name: logstash-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - ./infra/logstash:/usr/share/logstash/pipeline
-    environment:
-      ELASTICSEARCH_HOST: "https://log-api.newrelic.com/log/v1"
-      ELASTICSEARCH_PORT: 9200
-    ports:
-      - 5044:5044
-    depends_on:
-      - newrelic-php-tabantaj
-    networks:
-      - tabantajnetwork
-
-  goservices:
-    image: ghcr.io/silent4devs/goservices:latest
-    container_name: goservices
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3300:3300"
-    volumes:
-      - goservices_data:/goservices
-    networks:
-      - tabantajnetwork
+  # logstash-tabantaj:
+  #   image: docker.elastic.co/logstash/logstash:8.8.1
+  #   container_name: logstash-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - ./infra/logstash:/usr/share/logstash/pipeline
+  #   environment:
+  #     ELASTICSEARCH_HOST: "https://log-api.newrelic.com/log/v1"
+  #     ELASTICSEARCH_PORT: 9200
+  #   ports:
+  #     - 5044:5044
+  #   depends_on:
+  #     - newrelic-php-tabantaj
+  #   networks:
+  #     - tabantajnetwork
 
 volumes:
   tabantaj-database:
@@ -347,6 +349,8 @@ volumes:
   pgadmin-data:
     driver: local
   goservices_data:
+    driver: local
+  reportservice_data:
     driver: local
 
 networks:

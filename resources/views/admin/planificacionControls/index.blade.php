@@ -26,7 +26,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -44,13 +46,13 @@
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
             <div class="text-right mb-4 mr-4">
-                <a class="btn btn-danger" class="btn btn-sm btn-success" data-toggle="modal"
+                <a class="btn btn-primary" class="btn btn-sm btn-success" data-toggle="modal"
                     data-target="#planAccionModal">Crear Plan de Trabajo</a>
             </div>
             @livewire('plan-implementacion-create', [
                 'referencia' => null,
                 'modulo_origen' => 'Planificacion
-                                    Control',
+                                                                        Control',
             ])
             <table class="table table-bordered w-100 datatable-PlanificacionControl">
                 <thead class="thead-dark">

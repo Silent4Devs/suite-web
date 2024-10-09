@@ -156,16 +156,16 @@
                     <div class="form-group">
                         <label for="">Asignar Aprobadores</label>
                         <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
-                        @if ($firma && $firma->aprobadores)
-                        @foreach ($firma->aprobadores as $aprobador)
-                            <option value="{{ $aprobador->id }}"
-                                {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
-                                {{ $aprobador->name }}
-                            </option>
-                        @endforeach
-                        @else
-                            <option disabled>No hay aprobadores disponibles</option>
-                        @endif
+                            @if ($firma && $firma->aprobadores)
+                                @foreach ($firma->aprobadores as $aprobador)
+                                    <option value="{{ $aprobador->id }}"
+                                        {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                        {{ $aprobador->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option disabled>No hay aprobadores disponibles</option>
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -929,7 +929,7 @@
         <div id="signaturePad" >
             <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
         </div>
-        <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
+        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
         <br/>
     </div> --}}
 
@@ -937,8 +937,9 @@
 <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}"
+                class="btn btn-outline-primary">Cancelar</a>
+            {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
         @endif
     </div>
 </div>

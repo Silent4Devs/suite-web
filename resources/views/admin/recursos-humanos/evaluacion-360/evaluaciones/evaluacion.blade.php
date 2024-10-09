@@ -50,7 +50,8 @@
 
         .restantes:hover {
             transition: .3s;
-            border: 2px solid var(--color-tbj) color: var(--color-tbj);
+            border: 2px solid var(--color-tbj);
+            color: var(--color-tbj);
         }
 
         .alerta-no-preguntas {
@@ -80,7 +81,7 @@
                     <div class="w-100" style="color:rgb(51, 51, 51);">
                         <div>
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 INFORMACIÓN GENERAL
                             </div>
                             <div style="float: right">
@@ -189,7 +190,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-primary"
                                         data-dismiss="modal">Descartar</button>
-                                    <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-danger">Iniciar
+                                    <button id="btnModalIniciarEvaluacion" type="button" class="btn btn-primary">Iniciar
                                         Evaluación</button>
                                 </div>
                             </div>
@@ -219,7 +220,7 @@
                                     <button type="button" class="btn btn-outline-primary"
                                         data-dismiss="modal">Descartar</button>
                                     <button id="btnmodalPostergarFechaFinEvaluacion" type="button"
-                                        class="btn btn-danger">Iniciar evaluación</button>
+                                        class="btn btn-primary">Iniciar evaluación</button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +229,7 @@
                 </div>
                 <div class="datatable-fix w-100">
                     <div class="text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         PROGRESO DE EVALUACIÓNES POR EMPLEADO
                     </div>
                     <table class="datatable tblParticipantes" id="tblParticipantes" class="table">
@@ -301,7 +302,7 @@
                 </div>
             </div>
             <a style="float: right" href="{{ route('admin.ev360-evaluaciones.index') }}"
-                class="mt-2 btn btn_cancelar">Regresar</a>
+                class="mt-2 btn btn-outline-primary">Regresar</a>
         </div>
     </div>
 

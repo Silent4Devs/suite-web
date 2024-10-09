@@ -90,7 +90,7 @@
                     </select>
                 </div>
                 <div class="form-group col-12 text-right">
-                    <button class="btn btn-success"><i class="fas fa-plus"></i> Agregar</button>
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Agregar</button>
                 </div>
             </div>
         </form>  --}}
@@ -349,7 +349,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
@@ -473,8 +473,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12 text-right">
-                                    <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
-                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                    <div type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</div>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -482,7 +482,7 @@
                 </div>
             </div>
         </div> --}}
-        {{-- <div class="btn btn-danger" wire:click="click_e()">wire:click="click_e()"</div> --}}
+        {{-- <div class="btn btn-primary" wire:click="click_e()">wire:click="click_e()"</div> --}}
     @endforeach
     @section('scripts')
         @parent

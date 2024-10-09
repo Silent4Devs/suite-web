@@ -128,7 +128,8 @@
 
         .menu_a {
             width: 100%;
-            background-color: var(--color-tbj) height: 40px;
+            background-color: var(--color-tbj);
+            height: 40px;
             position: sticky;
             top: 56px;
             z-index: 2;

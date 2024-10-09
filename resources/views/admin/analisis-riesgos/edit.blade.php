@@ -16,7 +16,7 @@
                 @csrf
 
                 <div class="py-1 text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius:100px; color: white;">DATOS GENERALES</div>
+                    style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
 
                 <div class="form-group">
@@ -141,7 +141,7 @@
                 </div>
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

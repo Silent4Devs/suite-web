@@ -214,7 +214,7 @@
     </div> --}}
     <div class="row">
         <div class="col-12 mt-2 p-0 pr-2" style="text-align:end">
-            <button class="btn btn-success" id="darDeBaja">Dar de Baja</button>
+            <button class="btn btn-primary" id="darDeBaja">Dar de Baja</button>
         </div>
     </div>
     <script>

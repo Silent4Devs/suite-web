@@ -21,6 +21,7 @@ class CoursesCurriculum extends Component
 
     protected $rules = [
         'section.name' => 'required',
+        'name' => 'required',
     ];
 
     public function mount(Course $course)
@@ -77,16 +78,21 @@ class CoursesCurriculum extends Component
     public function edit(Section $section)
     {
         $this->section = $section;
+        $this->name = $section->name;
     }
 
     public function update()
     {
-        $this->validate();
+        // $this->validate();
+        $this->validateOnly('name');
 
+        // dd($this->name);
+        $this->section->name = $this->name;
+        // dd($this->section);
         $this->section->save();
         $this->section = new Section;
 
-        $this->course = Course::getAll()->find($this->course->id);
+        // $this->course = Course::getAll()->find($this->course->id);
         $this->render_alerta('success', 'Registro actualizado exitosamente');
     }
 

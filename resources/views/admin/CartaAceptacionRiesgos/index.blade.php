@@ -3,7 +3,9 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -50,7 +52,7 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12"> --}}
-            {{-- <a class="btn btn-success" href="{{ route('admin.puestos.create') }}">
+            {{-- <a class="btn btn-primary" href="{{ route('admin.puestos.create') }}">
                   Agregar <strong>+</strong>
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">

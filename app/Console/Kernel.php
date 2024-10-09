@@ -40,6 +40,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('capacitacion:usuario')
         //     ->everyFiveMinutes();
         //$schedule->command('cache:clearall')->everyTwoHours();
+        $schedule->command('queue:retry all')
+            ->timezone('America/Mexico_City')
+            ->everyFifteenMinutes()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor();
+
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')

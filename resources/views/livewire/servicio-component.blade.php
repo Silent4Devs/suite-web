@@ -42,7 +42,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
+                <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
             </div>
         </div>
     </div>

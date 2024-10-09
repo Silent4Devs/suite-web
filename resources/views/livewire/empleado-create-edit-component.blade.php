@@ -6,7 +6,8 @@
     </style>
 
     <div>
-        <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
         <div class="informacion-general">
@@ -300,7 +301,7 @@
             </div>
         </div>
         <div class="text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN PERSONAL
         </div>
         <div class="informacion-financiera">
@@ -527,10 +528,10 @@
                 <img class="screenshot-image d-none" alt="">
 
                 <div class="controls">
-                    <button class="btn btn-danger play" title="Iniciar"><i class="fas fa-play-circle"></i></button>
+                    <button class="btn btn-primary play" title="Iniciar"><i class="fas fa-play-circle"></i></button>
                     <button class="btn btn-info pause d-none" title="Pausar"><i
                             class="fas fa-pause-circle"></i></button>
-                    <button class="btn btn-danger stop d-none" title="Detener"><i class="fas fa-stop"></i></button>
+                    <button class="btn btn-primary stop d-none" title="Detener"><i class="fas fa-stop"></i></button>
                     <button class="btn btn-outline-success screenshot d-none" title="Capturar"><i
                             class="fas fa-image"></i></button>
                 </div>
@@ -538,7 +539,7 @@
             <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.live="snap_foto">
         </div>
         <div class="text-center form-group"
-            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN FINANCIERA
         </div>
         <div class="informacion-financiera row">

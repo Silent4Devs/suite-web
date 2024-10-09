@@ -4,7 +4,9 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -330,11 +332,11 @@
                     title: '¿Desea eliminar este grupo?',
                     html: `<div>
                             ${areasRelacionadas.length > 0 ? `<p>El grupo que desea eliminar está vinculado con las siguientes áreas</p>
-                                                                                                    <ul class="list-group list-group-horizontal justify-content-center">
-                                                                                                        ${areasRelacionadas.map(area=>{
-                                                                                                            return `<li class="list-group-item">${area.area}</li>`;
-                                                                                                        })}
-                                                                                                    </ul>`:`<p>No hay relación con ningún área</p>`}
+                                                                                                            <ul class="list-group list-group-horizontal justify-content-center">
+                                                                                                                ${areasRelacionadas.map(area=>{
+                                                                                                                    return `<li class="list-group-item">${area.area}</li>`;
+                                                                                                                })}
+                                                                                                            </ul>`:`<p>No hay relación con ningún área</p>`}
                         </div>`,
                     icon: 'warning',
                     showCancelButton: true,

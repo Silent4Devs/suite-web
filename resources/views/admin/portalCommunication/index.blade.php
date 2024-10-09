@@ -34,8 +34,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="card card-gadgets">
+                        <div class="col-md-6 d-flex">
+                            <div class="card card-gadgets w-100">
                                 <div class="d-flex justify-content-center align-items-center" style="gap: 13px;">
                                     <i class="material-symbols-outlined" style="font-size: 70px;">schedule</i>
                                     <span style="font-size: 26px;" id="hora-portal"> </span>

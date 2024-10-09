@@ -1,7 +1,7 @@
 <!-- DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO  -->
 <div class="row">
     <div class="text-center form-group col-12"
-        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
         DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO
     </div>
 </div>
@@ -110,7 +110,7 @@
 <!-- DATOS DE IDENTIFICACIÓN DEL PROCESO  -->
 <div class="row">
     <div class="text-center form-group col-12"
-        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
         DATOS DE IDENTIFICACIÓN DE LA APLICACIÓN
     </div>
 </div>

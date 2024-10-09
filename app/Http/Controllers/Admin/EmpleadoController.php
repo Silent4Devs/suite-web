@@ -194,10 +194,11 @@ class EmpleadoController extends Controller
         $educacions = json_decode($request->educacion);
         $cursos = json_decode($request->curso);
         $certificados = json_decode($request->certificado);
-        // dd($cursos);
 
         $ceo_exists = Empleado::getCeoExists();
+
         $validateSupervisor = 'nullable|exists:empleados,id';
+
         if ($ceo_exists) {
             $validateSupervisor = 'required|exists:empleados,id';
         }
@@ -205,16 +206,19 @@ class EmpleadoController extends Controller
         $request->validate([
             'name' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
-            'area_id' => 'required|exists:areas,id',
-            'supervisor_id' => $validateSupervisor,
-            'puesto_id' => 'required|exists:puestos,id',
-            'antiguedad' => 'required',
-            'email' => 'required|email',
-            'sede_id' => 'required',
+            //     'area_id' => 'required|exists:areas,id',
+            //     'supervisor_id' => $validateSupervisor,
+            //     'puesto_id' => 'required|exists:puestos,id',
+            //     'antiguedad' => 'required',
+            'email' => 'required|email|unique:empleados',
+            //     'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
+            'email.unique' => 'El email de empleado ya ha sido tomado',
         ]);
+
         $sede = Sede::select('id', 'direccion')->find($request->sede_id);
+
         if ($sede) {
             $request->query->set('direccion', $sede->direccion);
         }
@@ -516,11 +520,11 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
+
         $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
 
-        // return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)

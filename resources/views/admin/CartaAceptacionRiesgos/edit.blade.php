@@ -199,7 +199,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Datos Generales
                             </div>
                         </div>
@@ -281,7 +281,7 @@
 
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Clasificación del Activo
                             </div>
                         </div>
@@ -342,7 +342,7 @@
 
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Evaluación del riesgo a Aceptar
                             </div>
                         </div>
@@ -392,7 +392,7 @@
 
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Impacto del Riesgo
                             </div>
                         </div>
@@ -678,7 +678,7 @@
 
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Escenarios de Riesgo
                             </div>
                         </div>
@@ -737,7 +737,7 @@
 
                         <div class="col-12">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 Autorización de Aceptación de Riesgos
                             </div>
                         </div>
@@ -907,7 +907,7 @@
                         <div class="text-right form-group col-12">
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                                 class="btn btn-outline-primary">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>

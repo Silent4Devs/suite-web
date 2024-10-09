@@ -384,10 +384,10 @@
 
     <div class="text-right form-group col-12">
         <a href="{{ route('admin.accion-correctivas.index') }}" class="btn btn-outline-primary">Cancelar</a>
-        <button class="btn btn-danger" type="submit" id="btnGuardar" style="margin-top: 4px;">
+        <button class="btn btn-primary" type="submit" id="btnGuardar" style="margin-top: 4px;">
             {{ trans('global.save') }}
         </button>
-        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}
+        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-primary">Siguiente</button> --}}
     </div>
 
 </form>

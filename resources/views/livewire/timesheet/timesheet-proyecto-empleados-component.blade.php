@@ -3,11 +3,11 @@
     <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto</h5>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar
+            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn-outline-primary">Editar
                 Proyecto</a>
             @can('asignar_externos')
                 @if ($proyecto->tipo === 'Externo')
-                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar
+                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-primary">Asignar
                         Proveedores/Consultores</a>
                 @endif
             @endcan
@@ -63,9 +63,8 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model="horas_asignadas" name="horas_asignadas"
-                                        id="horas_asignadas" type="number" step="0.01" min="0.01"
-                                        class="form-control">
+                                    <input wire:model="horas_asignadas" name="horas_asignadas" id="horas_asignadas"
+                                        type="number" step="0.01" min="0.01" class="form-control">
                                     @error('horas_asignadas')
                                         <small class="text-danger"><i
                                                 class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -75,8 +74,8 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                    <input wire:model="costo_hora" name="costo_hora" id="costo_hora"
-                                        type="number" min="0.01" step="0.01" class="form-control">
+                                    <input wire:model="costo_hora" name="costo_hora" id="costo_hora" type="number"
+                                        min="0.01" step="0.01" class="form-control">
                                     @error('costo_hora')
                                         <small class="text-danger"><i
                                                 class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -86,7 +85,7 @@
                         </div>
                         <div class="modal-footer">
                             <div class="row">
-                                <button class="btn btn-success">
+                                <button class="btn btn-primary">
                                     Agregar
                                 </button>
                             </div>
@@ -99,7 +98,7 @@
         @if ($proyecto->tipo == 'Externo')
             <div class="row">
                 <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                    <button class="btn btn-success" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos
+                    <button class="btn btn-primary" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos
                         los
                         usuarios</button>
                 </div>
@@ -107,7 +106,7 @@
         @else
             <div class="row">
                 <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                    <button class="btn btn-success" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos los
+                    <button class="btn btn-primary" onclick="confirmSeleccionarTodos(event)">Seleccionar Todos los
                         usuarios</button>
                 </div>
             </div>
@@ -264,13 +263,13 @@
                                     <div class="mt-4 d-flex justify-content-between">
                                         <div class="form-group col-md-4"
                                             style="display: flex; align-items: flex-end;">
-                                            <button class="btn btn_cancelar" data-dismiss="modal">
+                                            <button class="btn btn-outline-primary" data-dismiss="modal">
                                                 Cancelar
                                             </button>
                                         </div>
                                         <div class="form-group col-md-4"
                                             style="display: flex; align-items: flex-end;">
-                                            <button class="btn btn-success">Editar</button>
+                                            <button class="btn btn-primary">Editar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +298,7 @@
                                     proyecto {{ $proyecto->proyecto }}?</p>
                             </div>
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"

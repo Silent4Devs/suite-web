@@ -5,7 +5,8 @@
         }
 
         .advance {
-            background-color: var(--color-tbj) color: #FFFFFF;
+            background-color: var(--color-tbj);
+            color: #FFFFFF;
         }
 
         .advance:hover {

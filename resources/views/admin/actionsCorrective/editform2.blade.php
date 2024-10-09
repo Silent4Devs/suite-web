@@ -191,7 +191,7 @@
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                     class="btn btn-outline-primary">Cancelar</a>
-                <input type="submit" class="btn btn-success" value="Guardar">
+                <input type="submit" class="btn btn-primary" value="Guardar">
             </div>
             {{-- <div class="py-3 text-right col-12">
             </div> --}}

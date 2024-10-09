@@ -29,12 +29,12 @@
         @forelse($course->sections as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
             <div class="card shadow-none" id="seccion-{{ $item['id'] }}" data-id="seccion-{{ $item['id'] }}">
-                @if ($section->id == $item['id'])
+                @if ($section->id === $item['id'])
                     <div class="card-header" style="background: var(--color-tbj); color: #FFFFFF;">
                         <div class="row ">
                             <div class="col-10">
                                 <form class="flex-1" wire:submit="update">
-                                    <input wire:model.live="section.name" type="text"
+                                    <input wire:model="name" type="text"
                                         class="form-control w-full @if ($errors->has('section.name')) invalid @endif"
                                         placeholder="Escribir...">
                                     @error('section.name')

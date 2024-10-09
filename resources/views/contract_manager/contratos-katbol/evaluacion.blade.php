@@ -18,7 +18,7 @@
                 <div class="card-row">
                     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
                         <div class="col s12 m12 right-align btn-grd distancia">
-                            <a onclick="window.close();" class="btn btn_cancelar">
+                            <a onclick="window.close();" class="btn btn-outline-primary">
                                 Cerrar
                             </a>
                         </div>

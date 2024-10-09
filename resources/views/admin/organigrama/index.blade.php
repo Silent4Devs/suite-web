@@ -165,7 +165,8 @@
         }
 
         .side.title-nav {
-            background-color: var(--color-tbj) color: white;
+            background-color: var(--color-tbj);
+            color: white;
             font-size: 13px;
             border-radius: 5px;
             padding: 5px;

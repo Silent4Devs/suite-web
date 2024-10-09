@@ -118,7 +118,7 @@
 
     {{-- <div class="mb-3 col-12 mt-4 " style="text-align: end">
         <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-            class="btn btn-success">{{ $view == 'create' ? 'Agregar' : 'Actualizar' }}</button>
+            class="btn btn-primary">{{ $view == 'create' ? 'Agregar' : 'Actualizar' }}</button>
     </div>
 
 

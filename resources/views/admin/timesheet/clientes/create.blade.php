@@ -83,7 +83,7 @@
                     {!! Form::label(
                         'ciudad',
                         ' Ciudad o Municipio/
-                                                                                                                                                                                                                                                                                                                                                    País*',
+                                                                                                                                                                                                                                                                                                                                                                                            País*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -119,7 +119,7 @@
                     {!! Form::label(
                         'nombre_contacto',
                         'Nombre Completo del
-                                                                                                                                                                                                                                                                                                                                                        contacto*',
+                                                                                                                                                                                                                                                                                                                                                                                                contacto*',
                         ['class' => 'asterisco'],
                     ) !!}
 
@@ -160,7 +160,7 @@
                     {!! Form::label(
                         'objeto_descripcion',
                         'Objeto social / Descripción
-                                                                                                                                                                                                                                                                                                                                                        del servicio o producto*',
+                                                                                                                                                                                                                                                                                                                                                                                                del servicio o producto*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
@@ -170,15 +170,15 @@
                     {!! Form::label(
                         'cobertura',
                         'Cobertura, Rango geográfico
-                                                                                                                                                                                                                                                                                                                                                    en el cual presta los servicios*',
+                                                                                                                                                                                                                                                                                                                                                                                            en el cual presta los servicios*',
                         ['class' => 'asterisco'],
                     ) !!}
                 </div>
             </div>
 
             <div class="form-group col-12 text-right mt-4">
-                <a href="{{ route('admin.timesheet-clientes') }}" class="btn btn_cancelar">Cancelar</a>
-                <button class="btn btn-success">Guardar</button>
+                <a href="{{ route('admin.timesheet-clientes') }}" class="btn btn-outline-primary">Cancelar</a>
+                <button class="btn btn-primary">Guardar</button>
             </div>
         </form>
     </div>

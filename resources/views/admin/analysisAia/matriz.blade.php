@@ -50,7 +50,8 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: var(--color-tbj) border-radius: 6px;
+            color: var(--color-tbj);
+            border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
             padding: 7px;
@@ -58,7 +59,9 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: var(--color-tbj) border: 1px solid var(--color-tbj) box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
+            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
             +
         }
@@ -96,7 +99,7 @@
 
         <div class="row">
             <div class="col-sm-3 offset-9 mt-3">
-                <a class="btn btn-success" href="{{ route('admin.analisis-aia.ajustes') }}"><i class="bi bi-gear"></i>
+                <a class="btn btn-primary" href="{{ route('admin.analisis-aia.ajustes') }}"><i class="bi bi-gear"></i>
                     Ajustar parámetros </a>
             </div>
         </div>

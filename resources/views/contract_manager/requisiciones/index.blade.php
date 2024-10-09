@@ -77,8 +77,9 @@
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
                                             $employee = App\Models\User::find($requisicion->id_user)->empleado;
-
-                                            if ($employee !== null && $employee->supervisor !== null) {
+                                            if ($requisicion->registroFirmas) {
+                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
+                                            } elseif ($employee !== null && $employee->supervisor !== null) {
                                                 $supervisorName = $employee->supervisor->name;
                                             } else {
                                                 $supervisorName = 'N/A'; // Or any default value you prefer

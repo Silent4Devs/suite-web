@@ -78,14 +78,14 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:var(--color-tbj) background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="6">
                     <div>
                         Tablero de Riesgos Impacto
                     </div>
                 </th>
             </tr>
-            <tr style="color:var(--color-tbj) background-color:#fff;" colspan="6">
+            <tr style="color:var(--color-tbj); background-color:#fff;" colspan="6">
                 <th style="font-size:12px;">PROBABILIDAD</th>
                 <th style="font-size:12px;">1.Muy Bajo</th>
                 <th style="font-size:12px;">2.Bajo</th>
@@ -233,7 +233,7 @@
     <table class="table w-100 mt-4 mb-4" id="contactos_externos_table" style="width:100%">
         <thead>
             <tr>
-                <th class="text-center" style="font-size:12px; color:var(--color-tbj) background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="2" class="text-center">Descripción</th>
 
             </tr>
@@ -241,7 +241,7 @@
         <tbody id="contenedor_contactos_externos">
             <tr>
                 <th style="font-size:12px; color:var(--color-tbj)">Muy alto</th>
-                <th style="font-size:12px; color:var(--color-tbj) background-color:rgb(240, 240, 150);">Riesgo
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
                     catastrófico que
                     puede afectar la permanencia del n_registro
                     y que genera impactos graves.
@@ -249,21 +249,21 @@
             </tr>
             <tr>
                 <th style="font-size:12px; color:var(--color-tbj)">Alto</th>
-                <th style="font-size:12px; color:var(--color-tbj) background-color:rgb(240, 240, 150);">Riesgo
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
                     intolerable para
                     la organización que genera impactos relevantes.
                 </th>
             </tr>
             <tr>
                 <th style="font-size:12px; color:var(--color-tbj)">Medio</th>
-                <th style="font-size:12px;color:var(--color-tbj) background-color:rgb(240, 240, 150);">Riesgo moderado
+                <th style="font-size:12px;color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo moderado
                     para la
                     organización que genera impactos significativos.
                 </th>
             </tr>
             <tr>
                 <th style="font-size:12px; color:var(--color-tbj)">Bajo</th>
-                <th style="font-size:12px; color:var(--color-tbj) background-color:rgb(240, 240, 150);">Riesgo
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
                     tolerable para
                     la
                     organización que no genera impactos significativos.
@@ -271,7 +271,7 @@
             </tr>
             <tr>
                 <th style="font-size:12px; color:var(--color-tbj)">Muy bajo</th>
-                <th style="font-size:12px;color:var(--color-tbj) background-color:rgb(240, 240, 150);">Sin riesgo para
+                <th style="font-size:12px;color:var(--color-tbj); background-color:rgb(240, 240, 150);">Sin riesgo para
                     la
                     organización y no genera algún impacto significativo.
                 </th>
@@ -283,11 +283,11 @@
         <table class="table">
             <thead>
                 <tr style="background-color:#cccccc;">
-                    <th style="color:var(--color-tbj) font-size:12px; min-width: 100px;">ID Activo</th>
-                    <th style="color:var(--color-tbj) font-size:12px; min-width: 300px;">Nombre</th>
-                    <th style="color:var(--color-tbj) font-size:12px; min-width: 150px;">Criticidad</th>
-                    <th style="color:var(--color-tbj) font-size:12px; min-width: 150px;">Confidencialidad</th>
-                    <th style="color:var(--color-tbj) font-size:12px; min-width: 100px;">Revisión</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 100px;">ID Activo</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 300px;">Nombre</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 150px;">Criticidad</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 150px;">Confidencialidad</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 100px;">Revisión</th>
                 </tr>
             </thead>
             <tbody>
@@ -381,7 +381,7 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:var(--color-tbj) background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="2">
                     2.Evaluación del Riesgo a Aceptar</th>
             </tr>
@@ -440,7 +440,7 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:var(--color-tbj) background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="6">
                     <div>
                         Tipo de Impacto del Riesgo
@@ -449,15 +449,15 @@
             </tr>
             <tr>
                 <th scope="col"
-                    style="font-size:12px; background-color:#fff; color:var(--color-tbj) min-width: 200px;">
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 200px;">
                     Criterio
                 </th>
                 <th scope="col"
-                    style="font-size:12px; background-color:#fff; color:var(--color-tbj) min-width: 100x;">
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 100x;">
                     Valor
                 </th>
                 <th scope="col"
-                    style="font-size:12px; background-color:#fff; color:var(--color-tbj) min-width: 400px;">
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 400px;">
                     Detalle
                 </th>
             </tr>
@@ -803,7 +803,7 @@
 
         <div class="col-12">
             <div class="text-center form-group"
-                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 1. Clasificación del Activo relacionado
             </div>
         </div>
@@ -841,7 +841,7 @@
 
         <div class="col-12">
             <div class="text-center form-group"
-                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 2. Evaluación del riesgo a Aceptar
             </div>
         </div>

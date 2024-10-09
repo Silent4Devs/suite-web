@@ -28,7 +28,7 @@
 
                 <div class="datatable-fix" style="width: 100%;">
                     <div class="mb-3 text-right">
-                        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario#capacitaciones') }}">Regresar</a>
+                        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario#capacitaciones') }}">Regresar</a>
                     </div>
 
                     <table class="table tabla_archi">

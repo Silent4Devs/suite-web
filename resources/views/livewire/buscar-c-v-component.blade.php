@@ -67,7 +67,8 @@
             width: 98%;
             left: 0;
             line-height: 134px;
-            background: var(--color-tbj) color: white;
+            background: var(--color-tbj);
+            color: white;
             font-weight: 500;
         }
 
@@ -85,11 +86,11 @@
 
     @if ($isPersonal)
         <div class="d-flex justify-content-end">
-            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
+            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-primary btn-md"><i
                     class="fas fa-plus mr-1"></i>Certificación</button>
             <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
-                class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
-            <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
+                class="btn btn-primary btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
+            <a class="btn btn-primary btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
         </div>
     @endif
 
@@ -101,12 +102,13 @@
                     <div class="card-body">
                         <h4 style="color: var(--color-tbj);">Filtros</h4>
                         <hr>
-                        <div class="row">
-                            <div class="col-12 col-sm-12 px-3">
-                                <button wire:click="resetFilter" type="button" class="btn btn-link p-0 mb-3">Limpiar
+                        <div class="">
+                            <div class="px-3">
+                                <button wire:click="resetFilter" type="button"
+                                    class="btn btn-outline-secondary w-100">Limpiar
                                     Filtros</button>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group px-3 anima-focus mt-4">
                                 <select id="type" style="max-width:614px; width:100%;" class="form-control"
                                     name="type" wire:model.live="type_id" wire:change="getCatalogueName"
                                     @if ($enableField) disabled @endif>
@@ -121,7 +123,7 @@
                                 </select>
                                 <label for="type">Tipo de capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="name" style="max-width:614px; width:100%;" class="form-control"
                                     name="name" wire:model.live="name_id" wire:change="filterName"
                                     @if ($enableField) disabled @endif>
@@ -142,7 +144,7 @@
                                 </select>
                                 <label for="name">Nombre de la capacitación</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="area" style="max-width:614px; width:100%;" class="form-control"
                                     name="area" wire:model.live="area_id" wire:change="filterArea"
                                     @if ($enableField) disabled @endif>
@@ -157,7 +159,7 @@
                                 </select>
                                 <label for="area">Área</label>
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
+                            <div class="form-group  px-3 mb-0 anima-focus">
                                 <select id="employees" style="max-width:614px; width:100%;" class="form-control"
                                     name="employees" wire:model.live="employ_id" wire:change="filterEmploy"
                                     @if ($enableField) disabled @endif>
@@ -175,7 +177,7 @@
                             <div class="col-12 px-3">
                                 <hr style="border: none; border-top: 1px dashed #8F8F8F;">
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 mb-0 anima-focus">
+                            <div class="form-group  px-3 mb-0 anima-focus">
                                 <select id="issuing_company" style="max-width:614px; width:100%;" class="form-control"
                                     name="issuing_company" wire:model.live="issuingCompanyId"
                                     wire:change="filterIssuingCompany"
@@ -194,7 +196,7 @@
                             <div class="col-12 px-3">
                                 <hr style="border: none; border-top: 1px dashed #8F8F8F;">
                             </div>
-                            <div class="col-12 col-sm-12 form-group  px-3 anima-focus">
+                            <div class="form-group  px-3 anima-focus">
                                 <select id="norma" style="max-width:614px; width:100%;" class="form-control"
                                     name="type" wire:model.live="normaId" wire:change="filterNorma"
                                     @if ($enableField) disabled @endif>

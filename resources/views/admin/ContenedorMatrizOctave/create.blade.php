@@ -14,7 +14,7 @@
                     @include('admin.OCTAVE.menu')
                 </div>
                 <div class="py-1 text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius:100px; color: white;">REGISTRO DE CONTENEDORES
+                    style="background-color:var(--color-tbj); border-radius:100px; color: white;">REGISTRO DE CONTENEDORES
                 </div>
 
                 {{-- <div class="form-group">
@@ -81,7 +81,7 @@
                         @endif
                     </div>
                 </div>
-                {{-- <div class="py-1 text-center form-group col-12" style="background-color:var(--color-tbj) border-radius:100px; color: white;">ESCENARIOS</div> --}}
+                {{-- <div class="py-1 text-center form-group col-12" style="background-color:var(--color-tbj); border-radius:100px; color: white;">ESCENARIOS</div> --}}
 
                 {{-- <div class="row">
                 <div class="form-group col-md-2 col-lg-2 col-sm-12">
@@ -163,7 +163,7 @@
             </div> --}}
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -147,7 +147,8 @@
         }
 
         .iconos_cabecera {
-            color: var(--color-tbj) font-size: 1.2rem;
+            color: var(--color-tbj);
+            font-size: 1.2rem;
         }
 
 
@@ -359,7 +360,8 @@
         .caja_botones_menu a {
             text-decoration: none;
             display: inline-block;
-            color: var(--color-tbj) padding: 5px 20px;
+            color: var(--color-tbj);
+            padding: 5px 20px;
             font-weight: bold;
             margin: 0;
             text-align: center;
@@ -379,7 +381,8 @@
 
         .caja_botones_menu a.btn_activo,
         .caja_botones_menu a.btn_activo:hover {
-            background-color: var(--color-tbj) box-shadow: 0px -2px 0px 0px;
+            background-color: var(--color-tbj);
+            box-shadow: 0px -2px 0px 0px;
             color: #fff;
         }
 

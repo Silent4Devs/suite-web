@@ -48,7 +48,7 @@
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
     <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}">Crear reporte</a>
+        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}">Crear reporte</a>
     </div>
 @endcan
 @include('partials.flashMessages')
@@ -169,8 +169,7 @@
                 window.tabla_mejoras_desk = $(".tabla_mejoras").DataTable({
                     buttons: dtButtons,
                     ajax: '/admin/desk/mejoras',
-                    columnDefs: [
-                        {
+                    columnDefs: [{
                             "targets": [2, 3, 4, 8, 9, 10, 12, 14],
                             "visible": false,
                             "searchable": true
@@ -182,7 +181,8 @@
                         {
                             data: 'folio',
                             render: function(data, type, row, meta) {
-                                return data ? data : ''; }
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'estatus',
@@ -211,7 +211,8 @@
                         {
                             data: 'id',
                             render: function(data, type, row, meta) {
-                                let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.mejoro?.avatar}" title="${row.mejoro?.name}"></img>`;
+                                let html =
+                                    `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.mejoro?.avatar}" title="${row.mejoro?.name}"></img>`;
 
                                 return html;
                             }
@@ -261,13 +262,13 @@
                         },
                         {
                             data: 'descripcion',
-                            render: function(data, type, row, meta){
+                            render: function(data, type, row, meta) {
                                 return row.descripcion_html;
                             }
                         },
                         {
                             data: 'beneficios',
-                            render: function(data, type, row, meta){
+                            render: function(data, type, row, meta) {
                                 return row.beneficio_html;
                             }
                         },
@@ -295,8 +296,8 @@
                             }
                         },
                     ],
-                    order:[
-                        [0,'desc']
+                    order: [
+                        [0, 'desc']
                     ]
                 });
             }
@@ -323,7 +324,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_mejoras_desk.ajax.reload(null,false);
+                                    tabla_mejoras_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Mejora Archivada',
                                         '',

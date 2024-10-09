@@ -49,6 +49,12 @@ class CourseIndex extends Component
                 $course->lesson_introduction = null;
             }
         }
+        //            foreach ($courses as $course){
+        //     dump($course->id, $course->title);
+        //     // dump($course->instructor->name);
+        //     dump($course->user);
+        // }
+        // dd('stop');
 
         return view('livewire.escuela.course-index', compact('courses', 'categories', 'levels'));
     }

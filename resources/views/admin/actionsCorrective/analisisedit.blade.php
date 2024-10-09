@@ -23,8 +23,7 @@
     <div class="form-group col-md-6">
         <label for="solucion"><i
                 class="fas fa-file-signature iconos-crear"></i>{{ trans('cruds.accionCorrectiva.fields.solucion') }}</label>
-        <textarea class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion"
-            id="solucion">{{ old('solucion', $accionCorrectiva->solucion) }}</textarea>
+        <textarea class="form-control {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion" id="solucion">{{ old('solucion', $accionCorrectiva->solucion) }}</textarea>
 
         @if ($errors->has('solucion'))
             <div class="invalid-feedback">
@@ -151,7 +150,7 @@
     </div>
 
     <div class="text-right form-group col-12">
-        <button class="btn btn-danger" type="submit">
+        <button class="btn btn-primary" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

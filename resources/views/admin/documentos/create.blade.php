@@ -98,8 +98,8 @@
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.documentos.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <input type="submit" class="btn btn-danger" value="Guardar">
-                    <button id="publicar" class="btn btn-danger">Publicar</button>
+                    <input type="submit" class="btn btn-primary" value="Guardar">
+                    <button id="publicar" class="btn btn-primary">Publicar</button>
                 </div>
             </form>
             <!-- Modal -->
@@ -186,7 +186,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
+                            <button type="button" id="finalizarPublicacion" class="btn btn-primary">Enviar</button>
                         </div>
                     </div>
                 </div>

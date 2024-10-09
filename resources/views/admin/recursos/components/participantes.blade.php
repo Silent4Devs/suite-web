@@ -35,7 +35,7 @@
                 readonly style="cursor: not-allowed" />
         </div> --}}
         {{-- <div class="col-12" style="text-align: end;">
-            <button id="btnAgregarParticipante" class="btn btn-success">Añadir</button>
+            <button id="btnAgregarParticipante" class="btn btn-primary">Añadir</button>
         </div> --}}
         <div class="col-12 mt-3">
             <div id="sinParticipantes" class="col-12 text-center">
@@ -50,7 +50,7 @@
 </div>
 <div class="text-right form-group col-12">
     <a href="{{ route('admin.recursos.index') }}" class="btn btn-outline-primary">Cancelar</a>
-    <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
+    <button class="btn btn-primary btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>
 </div>

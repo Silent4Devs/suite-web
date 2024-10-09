@@ -10,7 +10,7 @@
                 @include('admin.recursos-humanos.evaluacion-360.objetivos._form')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn btn-outline-primary">Regresar</a>
-                    {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
+                    {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
                 </div>
             </form>
         </div>

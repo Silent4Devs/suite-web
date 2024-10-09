@@ -28,7 +28,7 @@
     </style>
 
     {{ Breadcrumbs::render('admin.auditoria-internas.create') }}
-    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría  </h5>
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -206,8 +206,8 @@
     </div>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn_cancelar">Cancelar</a>
-            <button class="btn btn-success" type="submit">
+            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+            <button class="btn btn-primary" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -218,7 +218,7 @@
 
     <div class="row">
         <div class="form-group col-12 text-center">
-            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn_cancelar">Cancelar</a>
+            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn-outline-primary">Cancelar</a>
         </div>
     </div>
 @endsection

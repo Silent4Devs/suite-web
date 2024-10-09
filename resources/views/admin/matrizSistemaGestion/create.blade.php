@@ -488,7 +488,7 @@
                 @csrf
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -644,7 +644,7 @@
                 </div>
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -998,7 +998,7 @@
 
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 
@@ -1455,7 +1455,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.sistema-gestion', ['id' => $id_analisis]) }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

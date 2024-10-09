@@ -97,7 +97,7 @@
                                                     id="password_confirmation" required>
                                             </div>
                                             <div class="form-group" style="text-align: end">
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -185,7 +185,7 @@
                                                     style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en
                                                     directorio
                                                     organizacional</label>
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -207,7 +207,7 @@
                                                             class="fas fa-question-circle ml-2"
                                                             title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i>
                                                     </h6>
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
                                                 </form>
@@ -263,7 +263,7 @@
                                         'empleado' => $empleado,
                                     ])
                                     <div class="form-group" style="text-align: end">
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-primary" type="submit">
                                             {{ trans('global.save') }}
                                         </button>
                                     </div>
@@ -282,7 +282,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class="" style="background-color:var(--color-tbj) padding: 10px;">
+                                        <div class="" style="background-color:var(--color-tbj); padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
                                             permisos
                                         </div>
@@ -319,7 +319,7 @@
                                                 onsubmit="return prompt('{{ __('global.delete_account_warning') }}') == '{{ auth()->user()->email }}'">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ trans('global.delete') }}
                                                     </button>
                                                 </div>

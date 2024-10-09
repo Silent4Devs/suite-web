@@ -83,7 +83,7 @@
         </div>
         <div class="form-group">
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-            <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
+            <button class="btn btn-primary" type="submit" id="btnEnviarPermisos">
                 {{ trans('global.save') }}
             </button>
         </div>

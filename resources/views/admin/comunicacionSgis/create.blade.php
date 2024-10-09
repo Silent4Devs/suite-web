@@ -155,7 +155,7 @@
 
                 <div class="text-right form-group col-12"><br>
                     <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

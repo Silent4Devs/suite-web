@@ -2,7 +2,7 @@
 
     <div class="row col-12 ml-5">
         <div class="mb-3 col-12 mt-4 " style="text-align: end">
-            <button type="button" wire:click.prevent="create" class="btn btn-success">Agregar</button>
+            <button type="button" wire:click.prevent="create" class="btn btn-primary">Agregar</button>
         </div>
     </div>
 
@@ -25,7 +25,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label class="required" for="incumplimiento_requisito"><i class="fas fa-clipboard-list iconos-crear"></i>
+                            <label class="required" for="incumplimiento_requisito"><i
+                                    class="fas fa-clipboard-list iconos-crear"></i>
                                 Requisito</label>
                             <textarea class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
                                 name="incumplimiento_requisito" id="incumplimiento_requisito" wire:model="incumplimiento_requisito">{{ old('incumplimiento_requisito') }}</textarea>
@@ -39,7 +40,7 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label class="required"  for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>
+                            <label class="required" for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>
                                 Descripción</label>
                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
                                 wire:model="descripcion">{{ old('descripcion') }}</textarea>
@@ -58,8 +59,7 @@
                                     class="fas fa-user-tie iconos-crear"></i>Clasificación del Hallazgo</label>
                             <input class="form-control {{ $errors->has('clasificacion_hallazgo') ? 'is-invalid' : '' }}"
                                 type="text" name="clasificacion_hallazgo" id="clasificacion_hallazgo"
-                                value="{{ old('clasificacion_hallazgo', '') }}"
-                                wire:model="clasificacion_hallazgo">
+                                value="{{ old('clasificacion_hallazgo', '') }}" wire:model="clasificacion_hallazgo">
                             @if ($errors->has('clasificacion_hallazgo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('clasificacion_hallazgo') }}
@@ -70,8 +70,7 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="proceso_id"><i
-                                    class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
+                            <label for="proceso_id"><i class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
                             <select class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
                                 name="proceso_id" id="proceso_id" wire:model="proceso">
                                 <option value="">Seleccione un proceso</option>
@@ -89,8 +88,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6 col-md-12 col-lg-12">
-                            <label for="area_id"><i
-                                    class="fas fa-street-view iconos-crear"></i>Área</label>
+                            <label for="area_id"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                             <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" name="area_id"
                                 id="area_id" wire:model="area">
                                 <option value="">Seleccione un proceso</option>

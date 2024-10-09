@@ -197,7 +197,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="text-center form-group"
-                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                             Datos Generales
                         </div>
                     </div>
@@ -331,7 +331,7 @@
                     {{-- 3. Políticas/Control asociados al Riesgo --}}
                     <div class="col-12">
                         <div class="text-center form-group"
-                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                             3. Políticas/Control asociados al Riesgo
                         </div>
                     </div>
@@ -360,7 +360,7 @@
                     {{-- 4. Hallazgos asociados al Riesgo --}}
                     <div class="col-12">
                         <div class="text-center form-group"
-                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                             4. Hallazgos asociados al Riesgo
                         </div>
                     </div>
@@ -381,7 +381,7 @@
                     {{-- 5. Autorización de Aceptación de Riesgos --}}
                     <div class="col-12">
                         <div class="text-center form-group"
-                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                             5. Autorización de Aceptación de Riesgos
                         </div>
                     </div>
@@ -481,7 +481,7 @@
                     {{-- 6. Recomendaciones mandatorias de seguridad --}}
                     <div class="col-12">
                         <div class="text-center form-group"
-                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                             6. Recomendaciones mandatorias de seguridad
                         </div>
                     </div>
@@ -504,7 +504,7 @@
                     <div class="text-right form-group col-12">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}"
                             class="btn btn-outline-primary">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             {{ trans('global.save') }}
                         </button>
                     </div>

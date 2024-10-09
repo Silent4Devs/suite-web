@@ -133,7 +133,7 @@
         </div>
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.courses-inscribed') }}"
-                style="display: inline-block; vertical-align: middle; color:var(--color-tbj) margin-top:21px;">
+                style="display: inline-block; vertical-align: middle; color:var(--color-tbj); margin-top:21px;">
                 <span class="material-symbols-outlined" style="vertical-align: middle;">
                     add
                 </span>

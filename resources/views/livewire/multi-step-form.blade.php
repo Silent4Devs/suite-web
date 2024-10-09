@@ -12,7 +12,8 @@
             font-size: 13px;
             padding: 5px;
             background: #3451837a;
-            border: 2px solid var(--color-tbj) color: #353535;
+            border: 2px solid var(--color-tbj);
+            color: #353535;
             border-radius: 5px;
         }
 
@@ -93,7 +94,8 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid var(--color-tbj) box-sizing: border-box;
+            border: 2px solid var(--color-tbj);
+            box-sizing: border-box;
             border-radius: 10px;
         }
 
@@ -133,7 +135,8 @@
 
         input[type=checkbox]:checked~div {
             color: #ffffff;
-            background: var(--color-tbj) border-radius: 7px;
+            background: var(--color-tbj);
+            border-radius: 7px;
             border: none;
             /* box-shadow: 5px 5px 5px 0px #004d4d; */
         }
@@ -141,7 +144,8 @@
         input[type=checkbox]:checked~input[type=number] {
             border-bottom: 2px solid rgb(78 230 236);
             color: #ffffff;
-            background: var(--color-tbj) text-align: center;
+            background: var(--color-tbj);
+            text-align: center;
         }
 
         .silent-color {
@@ -175,9 +179,10 @@
             padding: 0;
         }
 
+        #progressbar .active:before,
         #progressbar .active {
             z-index: 1;
-            color: var(--color-tbj);
+            color: var(--color-tbj) !important;
         }
 
         #progressbar li {
@@ -228,9 +233,12 @@
             font-size: 20px;
             color: #ffffff;
             background: lightgray;
+            backdrop-filter: blur(1000px);
             border-radius: 50%;
             margin: 0 auto 10px auto;
-            padding: 2px
+            padding: 2px;
+            position: relative;
+            z-index: 5;
         }
 
         #progressbar li:after {
@@ -246,7 +254,8 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: var(--color-tbj) z-index: -1;
+            background: var(--color-tbj);
+            color: #fff !important;
         }
 
         .progress {
@@ -259,7 +268,8 @@
 
         .head {
             text-transform: capitalize;
-            color: var(--color-tbj) font-weight: normal
+            color: var(--color-tbj);
+            font-weight: normal
         }
 
         .iconos-evaluacion {

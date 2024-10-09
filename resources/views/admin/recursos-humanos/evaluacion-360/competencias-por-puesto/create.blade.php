@@ -9,7 +9,8 @@
     <h5 class="col-12 titulo_general_funcion">Competencias para: {{ $puesto->puesto }}</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            <div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 Asignar Competencias
             </div>
             <form id="formCompetenciaCreate" method="POST"
@@ -24,7 +25,7 @@
             <span id="asignando_competencia" class="d-none"><i class=" fas fa-circle-notch fa-spin"></i>
                 Asignando competencia</span>
             <div class="text-center form-group"
-                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 Competencias Asignadas
             </div>
 
@@ -51,7 +52,7 @@
             <div class="d-flex justify-content-end w-100">
                 <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}"
                     class="btn btn-outline-primary">Regresar</a>
-                {{-- <button type="submit" class="btn btn-danger">Guardar</button> --}}
+                {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
             </div>
         </div>
     </div>
@@ -71,8 +72,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="cambiarNivelEsperado">Cambiar Nivel</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
         </div>

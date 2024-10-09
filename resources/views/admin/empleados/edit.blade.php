@@ -263,7 +263,7 @@
         @else
             <div class="p-4">
                 <div class="mt-4 text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     CURRICULUM
                 </div>
                 <label id="urlFormEmpleados"
@@ -272,7 +272,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.miCurriculum', $empleado) }}" class="btn btn-outline-primary" id="btn_cancelar"
                         style="color:#057BE2;">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         Guardar
                     </button>
                 </div>

@@ -52,7 +52,7 @@
                 <div class="modal-footer">
                     <button type="button" id="btnCancelarEvaluacion" class="btn btn-outline-primary"
                         data-dismiss="modal">Descartar</button>
-                    <button type="button" id="btnGuardarEvaluacion" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnGuardarEvaluacion" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>

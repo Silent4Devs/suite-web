@@ -1,4 +1,19 @@
 <header>
+    @php
+        use App\Models\Organizacion;
+        use App\Models\User;
+        use App\Models\Empleado;
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logo-ltr.png';
+        }
+
+        $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
+    @endphp
     <div class="content-header-blue">
         <div class="caja-inicio-options-header">
             <button class="btn-menu-header" onclick="menuHeader();">
@@ -15,37 +30,51 @@
                 </div>
                 <div class="close-menu-header"></div>
             </button>
-            <a href="{{ url('/admin/portal-comunicacion') }}"><img src="{{ asset('img/logo-ltr.png') }}"
-                    alt="Logo Tabantaj" style="height: 40px;"></a>
+            <a href="{{ url('/admin/portal-comunicacion') }}">
+                <img src="{{ asset($logotipo) }}" style="height: 40px;">
+            </a>
             @livewire('global-search-component', ['lugar' => 'header'])
         </div>
         @if ($empleado)
             <ul class="ml-auto c-header-nav gap-3">
                 <li class="time-custom d-none">
-                    <a href="{{ route('admin.timesheet-create') }}">
+                    <a href="{{ route('admin.timesheet-create') }}" title="Timesheet" data-toggle="tooltip"
+                        data-placement="bottom">
                         <i class="bi bi-calendar-plus"></i>
                     </a>
                 </li>
-                <li class="calendar-custom d-none">
-                    <a href="{{ route('admin.systemCalendar') }}">
-                        <i class="bi bi-calendar3"></i>
-                    </a>
-                </li>
-                <li class="document-custom d-none">
-                    <a href="{{ route('admin.documentos.publicados') }}">
-                        <i class="bi bi-folder"></i>
-                    </a>
-                </li>
-                <li class="planes-custom d-none">
-                    <a href="{{ route('admin.planes-de-accion.index') }}">
-                        <i class="bi bi-file-earmark-check"></i>
-                    </a>
-                </li>
-                <li class="centro-custom d-none">
-                    <a href="{{ route('admin.desk.index') }}">
-                        <i class="bi bi-person-workspace"></i>
-                    </a>
-                </li>
+                @can('calendario_corporativo_acceder')
+                    <li class="calendar-custom d-none">
+                        <a href="{{ route('admin.systemCalendar') }}" title="Calendario" data-toggle="tooltip"
+                            data-placement="bottom">
+                            <i class="bi bi-calendar3"></i>
+                        </a>
+                    </li>
+                @endcan
+                @can('documentos_publicados_acceder')
+                    <li class="document-custom d-none">
+                        <a href="{{ route('admin.documentos.publicados') }}" title="Ver Documentos" data-toggle="tooltip"
+                            data-placement="bottom">
+                            <i class="bi bi-folder"></i>
+                        </a>
+                    </li>
+                @endcan
+                @can('planes_de_accion_acceder')
+                    <li class="planes-custom d-none">
+                        <a href="{{ route('admin.planes-de-accion.index') }}" title="Planes de Acción" data-toggle="tooltip"
+                            data-placement="bottom">
+                            <i class="bi bi-file-earmark-check"></i>
+                        </a>
+                    </li>
+                @endcan
+                @can('centro_de_atencion_acceder')
+                    <li class="centro-custom d-none">
+                        <a href="{{ route('admin.desk.index') }}" title="Centro de Trabajo" data-toggle="tooltip"
+                            data-placement="bottom">
+                            <i class="bi bi-person-workspace"></i>
+                        </a>
+                    </li>
+                @endcan
                 <li>
                     <button class="" data-toggle="modal" data-target="#modalCustomLinks">
                         <i class="material-symbols-outlined"> add_circle</i>
@@ -132,7 +161,7 @@
                                     </a>
                                 </div>
                                 <div class="mt-3">
-                                    <button style="all: unset; color: #747474; cursor: pointer;"
+                                    <button style="all: unset;  cursor: pointer;"
                                         onclick="document.querySelector('.content-custom-design').classList.remove('invisible')">
                                         <i class="bi bi-pencil-square"></i>
                                         Personalización visual
@@ -408,7 +437,8 @@
                 $usuario->can('roles_acceder') ||
                 $usuario->can('usuarios_acceder') ||
                 $usuario->can('configurar_soporte_acceder'))
-            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden">
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
+                style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
@@ -420,6 +450,18 @@
                                     <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                 </a>
                                 <ul>
+                                    @can('matriz_bia_menu_acceder')
+                                        <li>
+                                            <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
+                                                Análisis de Impacto
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('lista_distribucion_acceder')
+                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                distribución</a>
+                                        </li>
+                                    @endcan
                                     @can('clausulas_auditorias_acceder')
                                         <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                         </li>
@@ -450,11 +492,6 @@
                                     @can('crear_area_acceder')
                                         <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                     @endcan
-                                    @can('lista_distribucion_acceder')
-                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                distribución</a>
-                                        </li>
-                                    @endcan
                                     @can('lista_informativa_acceder')
                                         <li>
                                             <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -481,8 +518,6 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
-
-                                    <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan
@@ -578,46 +613,51 @@
 <!-- Modal -->
 <div class="modal fade" id="modalCustomLinks" tabindex="-1" aria-labelledby="modalCustomLinksLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 600px;">
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
-                <h5 class="mt-3">Accesos directos</h5>
+                <h5 class="mt-3 text-center">Accesos directos</h5>
 
                 <div class="mt-5">
-                    <div class="d-flex jsutify-content-center flex-wrap gap-3">
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
+                    <div class="box-acces-custom-items">
+                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
                             style="color: #606060;" data-custom="time-custom">
                             <i class="bi bi-calendar-plus" style="font-size: 38px;"></i>
                             <small style="font-size: 9px;">Timesheet</small>
                         </button>
+                        @can('calendario_corporativo_acceder')
+                            <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
+                                style="color: #606060;" data-custom="calendar-custom">
+                                <i class="bi bi-calendar3" style="font-size: 38px;"></i>
+                                <small style="font-size: 9px;">Calendario</small>
+                            </button>
+                        @endcan
+                        @can('documentos_publicados_acceder')
+                            <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
+                                style="color: #606060;" data-custom="document-custom">
+                                <i class="bi bi-folder" style="font-size: 38px;"></i>
+                                <small style="font-size: 9px;">Documentos</small>
+                            </button>
+                        @endcan
+                        @can('planes_de_accion_acceder')
+                            <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
+                                style="color: #606060;" data-custom="planes-custom">
+                                <i class="bi bi-file-earmark-check" style="font-size: 38px;"></i>
+                                <small style="font-size: 9px;">Planes de Trabajo</small>
+                            </button>
+                        @endcan
 
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;" data-custom="calendar-custom">
-                            <i class="bi bi-calendar3" style="font-size: 38px;"></i>
-                            <small style="font-size: 9px;">Calendario</small>
-                        </button>
-
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;" data-custom="document-custom">
-                            <i class="bi bi-folder" style="font-size: 38px;"></i>
-                            <small style="font-size: 9px;">Documentos</small>
-                        </button>
-
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;" data-custom="planes-custom">
-                            <i class="bi bi-file-earmark-check" style="font-size: 38px;"></i>
-                            <small style="font-size: 9px;">Planes de Trabajo</small>
-                        </button>
-
-                        <button class="btn btn-acces-custom border d-flex align-items-center flex-column py-1 px-3"
-                            style="color: #606060;" data-custom="centro-custom">
-                            <i class="bi bi-person-workspace" style="font-size: 38px;"></i>
-                            <small style="font-size: 9px;">Centro de atención</small>
-                        </button>
+                        @can('centro_de_atencion_acceder')
+                            <button class="btn btn-acces-custom border d-flex align-items-center flex-column p-1 px-3"
+                                style="color: #606060;" data-custom="centro-custom">
+                                <i class="bi bi-person-workspace" style="font-size: 38px;"></i>
+                                <small style="font-size: 9px;">Centro de atención</small>
+                            </button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -664,7 +704,11 @@
                 localStorage.setItem(`btn-${customClass}-active`, isActive);
 
                 // Cambiar el estado de "d-none" en el contenido y guardarlo en localStorage
-                contentElement.classList.toggle('d-none');
+                if (isActive) {
+                    contentElement.classList.remove('d-none');
+                } else {
+                    contentElement.classList.add('d-none');
+                }
                 const isHidden = contentElement.classList.contains('d-none');
                 localStorage.setItem(`content-${customClass}-hidden`, isHidden);
             });
@@ -675,5 +719,9 @@
     document.addEventListener('DOMContentLoaded', () => {
         initializeButtons();
         setupButtonListeners();
+    });
+
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip(); // Initialize all tooltips
     });
 </script>

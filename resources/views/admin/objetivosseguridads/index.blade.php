@@ -24,7 +24,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -46,7 +48,7 @@
                 <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar
                     Objetivo</a>
                 &nbsp; &nbsp;
-                <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+                <a class="btn btn-primary" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
             </div>
         </div>
         <div class="mt-5 card">

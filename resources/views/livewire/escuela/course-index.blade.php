@@ -33,7 +33,7 @@
         @foreach ($courses as $c)
             @if ($c->status != '4')
                 @php
-                    $instructor = $c->instructor;
+                    $instructor = $c->user;
                 @endphp
 
                 <div class="card card-body mi-curso" style="height: auto">
@@ -42,11 +42,11 @@
                     </div>
                     <div class="caja-info-card-mc">
                         <p style="font-size: 18px; color:#000000">{{ $c->title }}</p>
-                        @if ($instructor && isset($instructor->empleado) && isset($instructor->empleado->avatar_ruta))
+                        @if ($instructor && isset($instructor->profesor) && isset($instructor->profesor->avatar_ruta))
                             <p>Instructor: </p>
                             <div class="d-flex align-items-center gap-1">
                                 <div class="img-person">
-                                    <img src="{{ $instructor->empleado->avatar_ruta }}" alt="{{ $instructor->name }}">
+                                    <img src="{{ $instructor->profesor->avatar_ruta }}" alt="{{ $instructor->name }}">
                                 </div>
                                 {{ $instructor->name }}
                             </div>
@@ -130,7 +130,7 @@
                                 @endif
 
                                 <a href="{{ route('admin.courses.show', $c) }}"
-                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj) margin-bottom:81px; margin-top:21px;">
+                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj); margin-bottom:81px; margin-top:21px;">
                                     Más información
                                     <span class="material-symbols-outlined"
                                         style="vertical-align: middle;">more_horiz</span>
@@ -157,7 +157,9 @@
     <style>
         /* Estilos personalizados para la paginación */
         .pagination .page-item.active .page-link {
-            background-color: var(--color-tbj) border-color: var(--color-tbj) color: white;
+            background-color: var(--color-tbj);
+            border-color: var(--color-tbj);
+            color: white;
         }
 
         .pagination .page-link {

@@ -192,7 +192,7 @@
                                     @endif
                                     @if ($i > 1)
                                         <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
-                                            wire:click="removerFila" style="color:var(--color-tbj) font-size:20px;"
+                                            wire:click="removerFila" style="color:var(--color-tbj); font-size:20px;"
                                             title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
@@ -254,7 +254,7 @@
                     <font class="d-mobile"><i class="fa-solid fa-plus mr-2"></i> Agregar actividad</font>
                 </button>
                 <div class="caja-botones-time-forms">
-                    <button class="btn btn_cancelar btn_enviar_formulario btn-borrador-time"
+                    <button class="btn btn-outline-primary btn_enviar_formulario btn-borrador-time"
                         style="position:relative;">
                         <input id="estatus_papelera" type="radio" name="estatus" value="papelera"
                             style="opacity:0; position: absolute;">
@@ -266,7 +266,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </button>
 
-                    <div class="btn btn-success btn-regisrtar-time" style="position: relative;" data-toggle="modal"
+                    <div class="btn btn-primary btn-regisrtar-time" style="position: relative;" data-toggle="modal"
                         data-target="#modal_aprobar_">
                         <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente"
                             style="opacity:0; position: absolute;">
@@ -295,7 +295,7 @@
 
                                 <div class="mt-4">
                                     <div class="col-12 text-center">
-                                        <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Cancelar
                                         </div>
                                         <button data-dismiss="modal" onclick="event.preventDefault();"

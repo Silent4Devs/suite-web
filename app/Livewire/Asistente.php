@@ -19,44 +19,42 @@ class Asistente extends Component
 
     public $chatboxOpen = false;
 
+    // Nuevo array para almacenar las preguntas
+    public $preguntas = [];
+
+    public $respuestas = []; // Asegúrate de tener esta propiedad para las respuestas
+
+    // Nueva propiedad para controlar la visibilidad del mensaje de bienvenida
+    public $firstMessageVisible = true;
+
     public function toggleChatbox()
     {
         $this->chatboxOpen = ! $this->chatboxOpen;
         $this->search = '';
         $this->respuesta = '';
-    }
-
-    public function postDataText()
-    {
-        $asistenService = app(AsistentService::class);
-        $result = $asistenService->postDataTextPythonAPI($this->filePath, $this->filename);
-
-        return $result;
-    }
-
-    public function postData()
-    {
-        $asistenService = app(AsistentService::class);
-        $result = $asistenService->postDataToPythonAPI($this->filename);
-
-        return $result;
-    }
-
-    public function askAsistenText()
-    {
-        $this->filename = 'requisicion.pdf';
-        $this->postData();
-        $this->filePath = storage_path('requisicion.pdf');
-        $this->postDataText();
+        $this->firstMessageVisible = true; // Reiniciar la visibilidad al abrir el chat
     }
 
     public function askAsisten()
     {
         $asistenService = app(AsistentService::class);
+
+        // Guardar la pregunta en el array
+        $this->preguntas[] = $this->search;
+
         $response = $asistenService->postQuestionToPythonAPI($this->search);
-        $this->respuesta = response()->json($response);
-        $this->respuesta = $response;
-        $this->search = '';
+
+        // Verificar si la respuesta es un array y acceder a la cadena
+        if (is_array($response) && isset($response['response'])) {
+            $this->respuestas[] = $response['response']; // Añadir la respuesta al array
+        } else {
+            $this->respuestas[] = 'Error: respuesta no válida';
+        }
+
+        // Cambiar la visibilidad del mensaje de bienvenida
+        $this->firstMessageVisible = false;
+
+        $this->search = ''; // Limpiar el input de búsqueda
     }
 
     public function render()

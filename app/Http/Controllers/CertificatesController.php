@@ -107,8 +107,12 @@ class CertificatesController extends Controller
         $catalogueTraining = TBCatalogueTrainingModel::find($id);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
-
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado', 'LD'));
+        try {
+            //code...
+            event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado', 'LD'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -170,7 +174,13 @@ class CertificatesController extends Controller
     public function correosAprobacion($proceso, $catalogueTraining)
     {
         $emailAprobado = $catalogueTraining->empleado->email;
-        Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new ApprovalNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining->name));
+        try {
+            //code...
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new ApprovalNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining->name));
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
@@ -184,7 +194,12 @@ class CertificatesController extends Controller
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
-        event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado', 'LD'));
+        try {
+            //code...
+            event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado', 'LD'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,

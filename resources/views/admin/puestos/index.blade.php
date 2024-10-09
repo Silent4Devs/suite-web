@@ -3,7 +3,9 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -70,8 +72,8 @@
                     <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
                 </a> &nbsp;&nbsp;&nbsp;
                 <!-- <a class="boton-transparente boton-sin-borde" id="btnImport">
-                                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                                    </a> -->
+                                                <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                                            </a> -->
                 @include('csvImport.modalperfilpuesto', [
                     'model' => 'Vulnerabilidad',
                     'route' => 'admin.vulnerabilidads.parseCsvImport',
@@ -279,9 +281,32 @@
                         name: 'descripcion'
                     },
                     {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            let urlBtnEditar = `/admin/puestos/${data}/edit`;
+                            let urlBtnEliminar = `/admin/puestos/destroy/${data}`;
+
+                            let botones = `
+                                <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>
+                            `;
+
+                            // Check if the area is not utilized
+                            if (!row.utilizada) {
+                                botones += `
+                                    <form style="display:inline-block" action="${urlBtnEliminar}" method="POST">
+                                        @csrf
+                                        @method('DELETE') <!-- Use DELETE method for delete action -->
+                                        <button class="btn btn-sm btn-eliminar" type="submit" title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                `;
+                            }
+
+                            return botones;
+                        }
                     }
+
                 ],
                 orderCellsTop: true,
                 order: [

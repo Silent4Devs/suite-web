@@ -16,7 +16,7 @@
                 {{-- Informacion General --}}
                 <div class="col-12">
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         Información General
                     </div>
                     <div class="row">
@@ -181,7 +181,7 @@
                 {{-- 1 Creas/Reccibes --}}
                 <div class="col-12" x-data='{openCrea:false, openRecibe:false}'>
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         1. ¿ A través de que medio CREAS al interno o RECIBES de un tercero el activo de información?
                     </div>
                     <p style="text-align: center">
@@ -328,7 +328,7 @@
                 {{-- 2 Usas/tratas --}}
                 <div class="col-12">
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         2. ¿A través de que medio USAS / TRATAS el activo de información?
                     </div>
 
@@ -401,7 +401,7 @@
                 {{-- 3 Envias/Guardas --}}
                 <div class="col-12">
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         3. ¿A través de que medio ENVÍAS / TRANSPORTAS el activo de información?
                     </div>
                     <div class="accordion" id="accordionExample">
@@ -681,7 +681,7 @@
                 {{-- 4 Almacenas/resguardas --}}
                 <div class="col-12">
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         4. ¿A través de que medio ALMACENAS / RESGUARDAS el activo de información?
                     </div>
                     <div class="accordion1" id="accordionAlmacenamiento">
@@ -796,7 +796,7 @@
                 {{-- 5 BORRAS / DESTRUYES --}}
                 <div class="col-12" id="contenedor-activos">
                     <div class="mt-4 text-center form-group"
-                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         5. ¿A través de que medio BORRAS / DESTRUYES el activo de información?
                     </div>
                     {{-- Formulario --}}
@@ -1019,8 +1019,8 @@
                 <div class="col-12">
                     <div class="form-group col-12 text-right" style="margin-left:15px;">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}"
-               class="btn btn-outline-primary">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">
                             {{ trans('global.save') }}
                         </button>
                     </div>

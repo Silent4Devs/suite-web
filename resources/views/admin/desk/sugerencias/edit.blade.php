@@ -38,7 +38,7 @@
 
         .caja-space-firma canvas {
             /* width: 100%;
-                    height: 100%; */
+                            height: 100%; */
             border: 1px solid #5a5a5a;
             ;
         }
@@ -299,8 +299,8 @@
 
 
                             <div class="mt-2 text-right form-group col-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
-                                <input type="submit" name="" class="btn btn-success" value="Enviar">
+                                <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cancelar</a>
+                                <input type="submit" name="" class="btn btn-primary" value="Enviar">
                             </div>
                         </form>
                     </div>
@@ -483,7 +483,7 @@
                                     </div>
                                 </div>
                                 <div class="py-3 text-right col-12">
-                                    <input type="submit" class="btn btn-success">
+                                    <input type="submit" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>
@@ -499,7 +499,7 @@
                         <div
                             style="display: flex; justify-content: flex-start; align-items: center; position: relative;">
                             <h5 style="margin: 0; flex-grow: 1;"><b>Acciones para la Atención de la Sugerencia</b></h5>
-                            <button class="btn btn-success btn_modal_form">Agregar actividad</button>
+                            <button class="btn btn-primary btn_modal_form">Agregar actividad</button>
                         </div>
                         <div class="mt-4 datatable-fix" style="width: 100%;">
                             <table id="tabla_plan_accion_sugerencias" class="table">
@@ -593,9 +593,9 @@
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
                                         <div class="text-right form-group col-md-12">
-                                            <a href="#" class="btn btn_cancelar">Cancelar</a>
+                                            <a href="#" class="btn btn-outline-primary">Cancelar</a>
                                             <input type="submit" value="Guardar"
-                                                class="btn btn-success btn_enviar_form_modal">
+                                                class="btn btn-primary btn_enviar_form_modal">
                                         </div>
                                     </div>
                                 </div>

@@ -1,35 +1,22 @@
 services:
-  # nginx-tabantaj:
-  #   image: nginx:stable-alpine
-  #   container_name: nginx-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #     - 8080:8080
-  #   volumes:
-  #     - .:/var/www/html
-  #     - ./infra/nginx/nginx.conf:/etc/nginx/default.conf
-  #   depends_on:
-  #     - php
-  #     - postgres-tabantaj
-  #     - redis-tabantaj
-  #   env_file:
-  #     - .env
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "30m"
-  #       max-file: "1"
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 3
-  #     start_period: 20s
-  #   networks:
-  #     - tabantajnetwork
+  postgres-tabantaj:
+    image: postgres:16-alpine
+    container_name: postgres-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+      - tabantaj-database:/var/lib/postgresql/data
+      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    environment:
+      - POSTGRES_USER=homestead
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=homestead
+    ports:
+      - "5432:5432"
+    networks:
+      - tabantajnetwork
+    mem_limit: 6g
 
   php:
     #uncomment this if you will use only docker compose
@@ -123,22 +110,22 @@ services:
       - tabantajnetwork
     mem_limit: 3g
 
-  rabbitmq-tabantaj:
-    image: rabbitmq:3-management-alpine
-    container_name: rabbit-tabantaj
-    env_file:
-      - .env
-    ports:
-      - 5672:5672
-      - 15672:15672
-    restart: unless-stopped
-    tty: true
-    networks:
-      - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+  # rabbitmq-tabantaj:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: rabbitmq-tabantaj
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   restart: unless-stopped
+  #   tty: true
+  #   networks:
+  #     - tabantajnetwork
+  #   # networks:
+  #   #   - tabantajnetwork
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
 
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
@@ -175,8 +162,10 @@ volumes:
     driver: local
   caddy_config:
     driver: local
-  rabbitmq_data:
+  reportservice_data:
     driver: local
+  # rabbitmq_data:
+  #   driver: local
   # pgadmin-data:
   #   driver: local
   goservices_data:

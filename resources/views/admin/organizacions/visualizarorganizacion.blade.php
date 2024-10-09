@@ -57,7 +57,8 @@
             transition: 0.1s;
             cursor: pointer;
 
-            background-color: var(--color-tbj) width: 50px;
+            background-color: var(--color-tbj);
+            width: 50px;
             height: 50px;
             border-radius: 100px;
             display: flex;
@@ -588,11 +589,11 @@
                     /*
                     if (number > 1) {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-primary remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
                     } else {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-primary col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
                         $("#user_table tbody").html(html);
                     }
                     */
@@ -640,14 +641,14 @@
                     if (number > 1) {
                         /*
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-primary remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' + element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
                         */
                         $("#user_table tbody").append(html);
                     } else {
                         /*
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-primary col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
                         $("#user_table tbody").html(html);
                         */
                         $("#user_table tbody").html(html);

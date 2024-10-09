@@ -141,12 +141,12 @@
                             @endcan
                             &nbsp;&nbsp;&nbsp;
                             @can('katbol_contratos_eliminar')
-                                {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
-                                    'type' => 'submit',
-                                    'style' => 'color:#2395AA; background: none; border: none; padding: 0; font: inherit; cursor: pointer;',
-                                    'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
-                                ]) !!}
-                            @endcan
+                            <a href="#"
+                                onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.delete', [$contrato->id]) }}')"
+                                style="color:#e5760e;">
+                                <i class="fas fa-trash" title="Eliminar"></i>
+                            </a>
+                        @endcan
                         </div>
                         {!! Form::close() !!}
                     </td>
@@ -158,7 +158,27 @@
     {{-- <p class="lead">
         <button id="json" class="btn tb-btn-primary">TO JSON</button>
         <button id="csv" class="btn btn-info">TO CSV</button>
-        <button id="pdf" class="btn btn-danger">TO PDF</button>
-        <button id="txt" class="btn btn-success">TO TXT</button>
+        <button id="pdf" class="btn btn-primary">TO PDF</button>
+        <button id="txt" class="btn btn-primary">TO TXT</button>
     </p> --}}
 </div>
+
+<script>
+        function confirmDelete(url) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás recuperar este ítem después de eliminarlo.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la URL de eliminación
+                window.location.href = url;
+            }
+        });
+    }
+</script>

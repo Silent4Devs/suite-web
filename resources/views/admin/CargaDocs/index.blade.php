@@ -14,7 +14,9 @@
 
         .btn_cargar {
             border-radius: 100px;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -59,7 +61,7 @@
         <div class="card-body">
 
             <div class="py-1 form-group col-12"
-                style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold;">Análisis de
+                style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold;">Análisis de
                 Riesgos</div>
 
 
@@ -144,7 +146,7 @@
                 </div> --}}
 
                 <div class="py-1 form-group col-12"
-                    style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">
+                    style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">
                     ISO 27001 | Contexto</div>
 
 
@@ -225,7 +227,7 @@
 
 
                 <div class="py-1 form-group col-12"
-                    style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">
+                    style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">
                     ISO 27001 | Liderazgo</div>
 
 
@@ -289,7 +291,7 @@
 
 
                 <div class="py-1 form-group col-12"
-                    style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">
+                    style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">
                     Soporte</div>
 
 
@@ -343,7 +345,7 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">Activos</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">Activos</div> --}}
 
                 {{-- pendiente da error de ruta 06/01 --}}
                 <!-- Categoria Field -->
@@ -363,7 +365,7 @@
 
 
                 <div class="py-1 form-group col-12"
-                    style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">
+                    style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">
                     Ajustes de Usuario</div>
 
 
@@ -450,7 +452,7 @@
 
 
 
-                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
+                {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
 
 
                 <!-- Categoria Field -->
@@ -479,7 +481,7 @@
 
 
                 <div class="py-1 form-group col-12"
-                    style="border-bottom:2px solid var(--color-tbj) color: var(--color-tbj) font-weight: bold; margin-top: 25px;">
+                    style="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">
                     Configuración de datos</div>
 
 

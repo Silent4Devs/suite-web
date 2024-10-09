@@ -1,4 +1,4 @@
-<div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DE LA SOLICITUD
 </div>
 <!-- Categoria Field -->
@@ -36,7 +36,7 @@
         </fieldset>
     </div>
 </div>
-<div class="text-center form-group" style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DEL DESTINO
 </div>
 <div class="row">
@@ -134,7 +134,7 @@
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-    <button class="btn btn-danger" id="enviar" type="submit">
+    <button class="btn btn-primary" id="enviar" type="submit">
         {{ trans('global.save') }}
     </button>
 </div>

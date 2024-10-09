@@ -170,7 +170,7 @@
 <div class="row">
     <div class="text-right form-group col-12"><br>
         <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn btn-outline-primary">Cancelar</a>
-        <button id="btnGuardar" class="btn btn-danger" type="submit">
+        <button id="btnGuardar" class="btn btn-primary" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

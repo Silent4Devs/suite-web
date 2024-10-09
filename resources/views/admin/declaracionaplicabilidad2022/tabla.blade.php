@@ -41,7 +41,7 @@
                 <tbody></tbody>
             </table>
             <div>
-                <a href="{{ route('admin.iso27001.guia') }}" class="btn btn-success">Regresar</a>
+                <a href="{{ route('admin.iso27001.guia') }}" class="">Regresar</a>
             </div>
         </div>
     </div>
@@ -178,7 +178,8 @@
                     {
                         data: 'id',
                         render: function(data, row, meta, type) {
-                            let rutaEdit = "{{ route('admin.declaracion-aplicabilidad-2022.edit', ':id') }}";
+                            let rutaEdit =
+                                "{{ route('admin.declaracion-aplicabilidad-2022.edit', ':id') }}";
                             rutaEdit = rutaEdit.replaceAll(':id', data);
                             let html = `
                                 <a href="${rutaEdit}" class="btn btn-sm" title="editar"><i class="fas fa-pen"></i></a>
@@ -195,4 +196,3 @@
             let table = $('.datatable-Area').DataTable(dtOverrideGlobals);
         });
     </script>
-@endsection

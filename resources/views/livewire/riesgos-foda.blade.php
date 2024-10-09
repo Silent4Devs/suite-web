@@ -3,25 +3,26 @@
         <select class="select2" id="seleccionAnalisis">
             <option value="">Selecciona un análisis</option>
             @foreach ($analisis as $a)
-                <option value="{{$a->id}}">{{ $a->nombre }}</option>
+                <option value="{{ $a->id }}">{{ $a->nombre }}</option>
             @endforeach
         </select>
     </div>
 
-        <div class="col-12">
+    <div class="col-12">
 
-            <select multiple class="select2" id="seleccionRiesgos">
+        <select multiple class="select2" id="seleccionRiesgos">
             @if ($riesgosPorAnalisis != null)
                 @foreach ($riesgosPorAnalisis as $riesgoPorAnalisis)
-                    <option value="{{$riesgoPorAnalisis->id}}">{{ Str::limit($riesgoPorAnalisis->descripcionriesgo, 50, '...') }}</option>
+                    <option value="{{ $riesgoPorAnalisis->id }}">
+                        {{ Str::limit($riesgoPorAnalisis->descripcionriesgo, 50, '...') }}</option>
                 @endforeach
             @endif
-            </select>
-        </div>
+        </select>
+    </div>
 
 
     <div class="col-12">
-        <button type="button" class="btn btn-success" wire:click.defer="save">Guardar</button>
+        <button type="button" class="btn btn-primary" wire:click.defer="save">Guardar</button>
     </div>
 
     <div class="col-12">
@@ -32,13 +33,13 @@
 
             </thead>
             <tbody>
-                @if($globalModel != null)
-                @foreach ($globalModel->riesgos as $riesgoModel)
-                <tr>
-                    <td>{{$riesgoModel->id}}</td>
-                    <td>{{$riesgoModel->descripcionriesgo}}</td>
-                </tr>
-                @endforeach
+                @if ($globalModel != null)
+                    @foreach ($globalModel->riesgos as $riesgoModel)
+                        <tr>
+                            <td>{{ $riesgoModel->id }}</td>
+                            <td>{{ $riesgoModel->descripcionriesgo }}</td>
+                        </tr>
+                    @endforeach
                 @endif
             </tbody>
         </table>
@@ -47,13 +48,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             $('#seleccionAnalisis').on('select2:select', function(e) {
                 var data = e.params.data;
-                @this.set('analisisSeleccionado',data.id);
+                @this.set('analisisSeleccionado', data.id);
                 console.log(data);
             });
-            $('#seleccionRiesgos').on('change', function (e) {
+            $('#seleccionRiesgos').on('change', function(e) {
                 console.log(e.target);
                 let data = $(this).val();
-                 @this.set('riesgosSeleccionados', data);
+                @this.set('riesgosSeleccionados', data);
             });
             Livewire.on('select2', () => {
                 initSelect2();

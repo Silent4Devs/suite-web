@@ -97,7 +97,7 @@
 
             <div>
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESUMEN GENERAL
                 </div>
                 <div class="row">
@@ -159,7 +159,7 @@
                             <img class="img-fluid" src="{{ asset('img/mensaje2.png') }}">
                         </div>
                         <div class="col-12 text-center">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-success">Regresar</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-primary">Regresar</a>
                         </div>
                     </div>
                 @else
@@ -194,7 +194,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
                                     <section id="sectionCompetencias" class="mt-2" x-data="{ show: true }">
@@ -329,7 +329,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                         SECCIÓN DE OBJETIVOS
                                     </div>
                                     <section class="mt-1" x-data="{ show: true }">
@@ -507,7 +507,7 @@
                         <!-- Sección Firmas -->
                         <div class="mt-4">
                             <div class="text-center form-group"
-                                style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 SECCIÓN DE FIRMAS
                             </div>
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>
@@ -600,10 +600,10 @@
                         </div>
 
                         <div class="mt-3 d-flex justify-content-end">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-outline-primary">Salir</a>
                             <button
                                 onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
-                                class="btn btn-danger">Finalizar</button>
+                                class="btn btn-primary">Finalizar</button>
                         </div>
                     @endif
 

@@ -9,7 +9,7 @@
         </strong>
     </p>
 
-    <p class="mt-5">
+    {{-- <p class="mt-5">
         Modo
     </p>
 
@@ -20,7 +20,7 @@
         <button class="btn border btn-dark-mode btn-option-dark" onclick="darkMode('dark');">
             <i class="material-symbols-outlined">bedtime</i>
         </button>
-    </div>
+    </div> --}}
 
     <p class="mt-5">
         Colores
@@ -40,16 +40,16 @@
 
     <div class="d-flex justify-content-between">
         <div class="example-menu-position btn-menu-position" style="border-top: 10px solid #8ec6ff;"
-            onclick="menuPosition('top');">
+            onclick="menuPosition('top');" data-position="top">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-left: 10px solid #8ec6ff;"
-            onclick="menuPosition('left');">
+            onclick="menuPosition('left');" data-position="left">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-bottom: 10px solid #8ec6ff;"
-            onclick="menuPosition('bottom');">
+            onclick="menuPosition('bottom');" data-position="bottom">
         </div>
         <div class="example-menu-position btn-menu-position" style="border-right: 10px solid #8ec6ff;"
-            onclick="menuPosition('right');">
+            onclick="menuPosition('right');" data-position="right">
         </div>
     </div>
 
@@ -58,11 +58,13 @@
     </p>
 
     <div class="d-flex gap-4">
-        <div class="d-flex align-items-center flex-column" onclick="themeContrast(false);">
+        <div class="d-flex align-items-center flex-column btn-theme-estilo" onclick="themeContrast(false);"
+            data-estilo="false">
             <small style="font-size: 10px;">Clasico</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff;"></div>
         </div>
-        <div class="d-flex align-items-center flex-column" onclick="themeContrast(true);">
+        <div class="d-flex align-items-center flex-column btn-theme-estilo" onclick="themeContrast(true);"
+            data-estilo="true">
             <small style="font-size: 10px;">Transparente</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff; background-color: #fff;"></div>
         </div>
@@ -83,15 +85,13 @@
         document.querySelector('.btn-dark-mode:not(.btn-option-' + theme + ')').classList.remove('active');
         document.querySelector('.btn-dark-mode.btn-option-' + theme).classList.add('active');
     }
-    darkMode(localStorage.getItem('theme'));
 
     function themeColor(color = '#4870b2') {
         localStorage.setItem('themeColor', color);
         document.documentElement.style.setProperty('--color-tbj', color);
     }
-    themeColor(localStorage.getItem('themeColor'));
 
-    function menuPosition(position = 'top', e) {
+    function menuPosition(position = 'top') {
         localStorage.setItem('menuPosition', position);
         let positions = ['top', 'left', 'right', 'bottom'];
         positions.forEach(pst => {
@@ -101,17 +101,30 @@
         if (document.querySelector('.btn-menu-position.active')) {
             document.querySelector('.btn-menu-position.active').classList.remove('active');
         }
-        document.querySelector('.btn-menu-position:hover').classList.add('active');
+        document.querySelector('.btn-menu-position[data-position="' + position + '"]').classList.add('active');
+
+        console.log(localStorage.getItem('menuPosition'));
     }
-    menuPosition(localStorage.getItem('menuPosition'));
 
     function themeContrast(contrast = false) {
         localStorage.setItem('themeContrast', contrast);
+        console.log(localStorage.getItem('themeContrast'));
         if (contrast) {
             bodyElement.classList.add('transparente');
         } else {
             bodyElement.classList.remove('transparente');
         }
-        document.querySelector('')
+        if (document.querySelector('.btn-theme-estilo.active')) {
+            document.querySelector('.btn-theme-estilo.active').classList.remove('active');
+        }
+        document.querySelector('.btn-theme-estilo[data-estilo="' + contrast + '"]').classList.add('active');
     }
+</script>
+<script>
+    addEventListener("DOMContentLoaded", () => {
+        themeContrast(JSON.parse(localStorage.getItem('themeContrast')) || false);
+        menuPosition(localStorage.getItem('menuPosition') || 'top');
+        themeColor(localStorage.getItem('themeColor') || '#4870b2');
+        darkMode(localStorage.getItem('theme') || 'light');
+    });
 </script>

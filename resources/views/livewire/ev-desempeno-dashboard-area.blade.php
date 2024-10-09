@@ -3,7 +3,8 @@
         .btn.btn-evaluacion {
             border: 1px solid var(--unnamed-color-006ddb);
             background: #D6EBFF 0% 0% no-repeat padding-box;
-            border: 1px solid var(--color-tbj) border-radius: 8px;
+            border: 1px solid var(--color-tbj);
+            border-radius: 8px;
             opacity: 1;
         }
     </style>

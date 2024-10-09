@@ -22,8 +22,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de fin</label>
@@ -52,10 +51,10 @@
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                     Exportar&nbsp;Excel
                 </button>
-                <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
+                {{-- <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
                     wire:click="exportEmpleadosPuestosReport()">
                     Reporte&nbsp;Empleados y puestos
-                </button>
+                </button> --}}
                 <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
                     wire:click="refreshComponent">
                     <i class="fas fa-search" style="font-size: 1.1rem;"></i>

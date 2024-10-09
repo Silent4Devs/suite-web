@@ -87,7 +87,7 @@
             <!--  RESPONSABLES DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPONSABLES DEL PROCESO
                 </div>
             </div>
@@ -282,7 +282,7 @@
             <!-- FLUJO DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FLUJO DEL PROCESO
                 </div>
             </div>
@@ -519,7 +519,7 @@
             <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
@@ -532,7 +532,7 @@
             <!-- RECURSOS HUMANOS (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS HUMANOS
                 </div>
             </div>
@@ -546,7 +546,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS MATERIALES
                 </div>
             </div>
@@ -559,7 +559,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PERÍODOS CRÍTICOS
                 </div>
             </div>
@@ -1291,7 +1291,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     TIEMPOS DE RECUPERACIÓN
                 </div>
             </div>
@@ -1539,7 +1539,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPALDOS DE INFORMACIÓN
                 </div>
             </div>
@@ -1611,7 +1611,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PROBABILIDAD DE INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -1836,7 +1836,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RIESGOS E INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -2036,7 +2036,7 @@
             {{-- Firmas --}}
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FIRMAS
                 </div>
             </div>
@@ -2076,7 +2076,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     Anexos
                 </div>
             </div>
@@ -2085,8 +2085,8 @@
 
                 <table class="table table-border" style="font-size: 12px">
                     <tr>
-                        <th class="col-sm-4" style="background-color:var(--color-tbj) color: white;">Clasificación</th>
-                        <th class="col-sm-8" style="background-color:var(--color-tbj) color: white;">Escenarios de
+                        <th class="col-sm-4" style="background-color:var(--color-tbj); color: white;">Clasificación</th>
+                        <th class="col-sm-8" style="background-color:var(--color-tbj); color: white;">Escenarios de
                             Contingencia
                         </th>
                     </tr>
@@ -2649,7 +2649,7 @@
             <div class="row">
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.analisis-impacto.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-primary">
                         {{ trans('global.save') }}
                     </button>
                 </div>

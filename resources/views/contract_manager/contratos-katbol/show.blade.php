@@ -14,7 +14,8 @@
             margin-top: 20px;
             margin-bottom: 30px;
             height: 30px;
-            background: var(--color-tbj) border-bottom-right-radius: 100px;
+            background: var(--color-tbj);
+            border-bottom-right-radius: 100px;
             border-top-right-radius: 100px;
             border-bottom-left-radius: 100px;
             border-top-left-radius: 100px;
@@ -272,7 +273,7 @@
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-success'>Salir</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-primary'>Salir</a>
         </div>
     </div>
 

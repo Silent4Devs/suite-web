@@ -20,7 +20,7 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             DATOS GENERALES
                                         </div>
                                     </th>
@@ -94,7 +94,7 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             EVALUACIÓN DE RIESGO INICIAL
                                         </div>
                                     </th>
@@ -172,7 +172,7 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             EVALUACIÓN DE RIESGO RESIDUAL
                                         </div>
                                     </th>
@@ -249,7 +249,7 @@
                                 {{-- <tr>
                                     <th colspan="2">
                                         <div class="text-center form-group"
-                                            style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                                            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                             Tratamiento
                                         </div>
                                     </th>

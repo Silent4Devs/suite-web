@@ -526,11 +526,11 @@
                                     <img class="screenshot-image d-none" alt="">
 
                                     <div class="controls">
-                                        <button class="btn btn-danger play" title="Iniciar"><i
+                                        <button class="btn btn-primary play" title="Iniciar"><i
                                                 class="fas fa-play-circle"></i></button>
                                         <button class="btn btn-info pause d-none" title="Pausar"><i
                                                 class="fas fa-pause-circle"></i></button>
-                                        <button class="btn btn-danger stop d-none" title="Detener"><i
+                                        <button class="btn btn-primary stop d-none" title="Detener"><i
                                                 class="fas fa-stop"></i></button>
                                         <button class="btn btn-outline-success screenshot d-none" title="Capturar"><i
                                                 class="fas fa-image"></i></button>

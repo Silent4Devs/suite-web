@@ -405,7 +405,8 @@
         </div>
         <br>
         <div class="padding-top: 30px;">
-            <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}" class="btn btn-danger">Cerrar</a>
+            <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
+                class="btn btn-primary">Cerrar</a>
         </div>
     </div>
     <br>

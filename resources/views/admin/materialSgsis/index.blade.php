@@ -24,7 +24,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -37,7 +39,7 @@
 
         .img-size {
             /* 	padding: 0;
-                margin: 0; */
+                            margin: 0; */
             height: 450px;
             width: 700px;
             background-size: cover;
@@ -85,9 +87,9 @@
         /* se comento por que se descuadra la cabecera de la tabla y el registro */
         /* .table tr th:nth-child(6){
 
-                width:415px !important;
-                max-width:415px !important;
-            } */
+                            width:415px !important;
+                            max-width:415px !important;
+                        } */
 
         .table tr td:nth-child(2) {
 
@@ -166,7 +168,7 @@
     <div class="mt-5 card">
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.material-sgsis.create') }}">
+            <a class="btn btn-primary" href="{{ route('admin.material-sgsis.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
@@ -473,25 +475,26 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                            <li
-                                                            data-target='#carouselExampleIndicators${row.id}'
-                                                            data-slide-to='${idx}'></li>`})}
+                                                                        <li
+                                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                                        data-slide-to='${idx}'></li>`})}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         const [extension, ...nameParts] = archivo.documento.split('.').reverse();
                                                         if(extension == 'pdf'){
                                                         return `
-                                                            <div class='carousel-item ${idx==0?"active":""}'>
-                                                                <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
-                                                            </div>`
+                                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                                            <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
+                                                                        </div>`
                                                     }else{
                                                         return ` <
                                         div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
                                         <
                                         a href =
                                         '{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}' >
-                                        < i class = "fas fa-file-download mr-2"
+                                        <
+                                        i class = "fas fa-file-download mr-2"
                                     style = "font-size:18px" > < /i> ${archivo.documento}</a >
                                         <
                                         /div>`

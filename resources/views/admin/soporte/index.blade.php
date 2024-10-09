@@ -39,7 +39,7 @@
 
         .info {
             /* width: 475px;
-       */
+                   */
             margin: 0;
 
             font-size: 12px;
@@ -67,27 +67,27 @@
         }
 
         /* .btn_consultores {
-       width: 140px;
-       height: 37px;
-       border: 1px solid #fff;
+                   width: 140px;
+                   height: 37px;
+                   border: 1px solid #fff;
 
-       color: #fff;
-       font-size: 12pt;
-       border-radius: 8px;
-       box-shadow: 0px 0px 5px -1px;
-       cursor: pointer;
-       margin:auto;
+                   color: #fff;
+                   font-size: 12pt;
+                   border-radius: 8px;
+                   box-shadow: 0px 0px 5px -1px;
+                   cursor: pointer;
+                   margin:auto;
 
-       display: flex;
-       align-items: center;
-       justify-content: center;
-      }
-      .btn_consultores:hover{
-       background-color: #fff;
-       color: #888888;
-       box-shadow: none;
-       transition: 0.1s;
-      } */
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                  }
+                  .btn_consultores:hover{
+                   background-color: #fff;
+                   color: #888888;
+                   box-shadow: none;
+                   transition: 0.1s;
+                  } */
 
         .tabla_consultores,
         .tabla_soporte {
@@ -103,7 +103,8 @@
         }
 
         .contacto table thead tr {
-            background-color: var(--color-tbj) transform: scale(1.01);
+            background-color: var(--color-tbj);
+            transform: scale(1.01);
             box-shadow: 0px 3px 5px -3px #000;
         }
 
@@ -140,7 +141,8 @@
         .icono_cerrar {
             font-size: 40px;
             cursor: pointer;
-            color: var(--color-tbj) margin-top: -25px;
+            color: var(--color-tbj);
+            margin-top: -25px;
         }
 
         .icono_cerrar:hover {
@@ -218,7 +220,7 @@
                             <strong>Equipo de consultores</strong><br><br>
                             Si requieres asesoría sobre el llenado de un módulo, contacta a nuestro equipo de consultores.
                         </p><br>
-                        <div id="btn_consultores" class="btn btn-success">Consultores</div>
+                        <div id="btn_consultores" class="btn btn-primary">Consultores</div>
                     </div>
                     <div class="card_equipos">
                         <p class="info">
@@ -226,7 +228,7 @@
                             <strong>Equipo de soporte técnico</strong><br><br> Si deseas reportar alguna falla del sistema,
                             contacta a nuestro equipo de soporte técnico.
                         </p><br>
-                        <div id="btn_soporte" class="btn btn-success">Soporte técnico</div>
+                        <div id="btn_soporte" class="btn btn-primary">Soporte técnico</div>
                     </div>
                 </div>
 
@@ -237,10 +239,10 @@
                     <h3 class="mb-2 text-center text-white"><strong>Consultores</strong></h3>
                 </div>
                 <div class="caja_btn text-center">
-                    <a class="btn btn-success" href="tel:525572480010"><i class="fas fa-phone"></i>Teléfono</a>
-                    <a class="btn btn-success" href="https://wa.me/525572480010" target="_blank"><i
+                    <a class="btn btn-primary" href="tel:525572480010"><i class="fas fa-phone"></i>Teléfono</a>
+                    <a class="btn btn-primary" href="https://wa.me/525572480010" target="_blank"><i
                             class="fab fa-whatsapp"></i>Whatsapp</a>
-                    <a class="btn btn-success" href="mailto:miguel.gaspar@silent4business.com"><i
+                    <a class="btn btn-primary" href="mailto:miguel.gaspar@silent4business.com"><i
                             class="fas fa-envelope"></i>Correo</a>
                 </div>
 
@@ -299,7 +301,7 @@
 						</tr>
 					</tbody>
 				</table> --}}
-                <div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 40px;margin-right:10px;">Regresar
+                <div class="btn_cerrar btn btn-primary" style="color:#30289d;margin-top: 40px;margin-right:10px;">Regresar
                 </div>
             </div>
             <div class="tabla_soporte">
@@ -308,10 +310,10 @@
                     <h3 class="mb-2 text-center text-white"><strong>Soporte Técnico</strong></h3>
                 </div>
                 <div class="caja_btn text-center">
-                    <a class="btn btn-success" href="tel:525525115770"><i class="fas fa-phone"></i>Teléfono</a>
-                    <a class="btn btn-success" href="https://wa.me/525525115770" target="_blank"><i
+                    <a class="btn btn-primary" href="tel:525525115770"><i class="fas fa-phone"></i>Teléfono</a>
+                    <a class="btn btn-primary" href="https://wa.me/525525115770" target="_blank"><i
                             class="fab fa-whatsapp"></i>Whatsapp</a>
-                    <a class="btn btn-success" href="mailto:contacto@silent4business.com"><i
+                    <a class="btn btn-primary" href="mailto:contacto@silent4business.com"><i
                             class="fas fa-envelope"></i>Correo</a>
                 </div>
                 <table>
@@ -338,7 +340,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="btn_cerrar btn btn-success" style="color:#30289d;margin-top: 15px;margin-right:10px;">Regresar
+                <div class="btn_cerrar btn btn-primary" style="color:#30289d;margin-top: 15px;margin-right:10px;">Regresar
                 </div>
             </div>
         </div>

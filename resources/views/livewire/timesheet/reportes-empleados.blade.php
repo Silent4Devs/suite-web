@@ -45,7 +45,7 @@
                             style="background-color: #42ADDC; border:none !important;">
                             Todos
                         </div>
-                        <button class="btn btn-success" wire:click="correoMasivo()">
+                        <button class="btn btn-primary" wire:click="correoMasivo()">
                             Enviar correo a todos los colaboradores con horas faltantes de registrar
                         </button>
                     </div>
@@ -269,8 +269,9 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-outline-primary"
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary"
                                 wire:click="correoRetraso({{ $empleado_md['id'] }}, {{ $empleado_md['times_atrasados'] }})"
                                 data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>

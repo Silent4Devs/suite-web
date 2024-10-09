@@ -63,12 +63,12 @@
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESUMEN GENERAL <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'" @click="open = !open"></i>
                 </div>
             </div>
             <div class="my-2 col-12" style="text-align: end;">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#normalizarResultados">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#normalizarResultados">
                     <i class="fas fa-chart-line mr-2"></i>Normalizar Resultados
                 </button>
             </div>
@@ -110,7 +110,7 @@
                                 <button id="resetValues" type="button" class="btn tb-btn-primary">Restablecer
                                     Valores</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success" style="float: right;">Normalizar</button>
+                                <button type="submit" class="btn btn-primary" style="float: right;">Normalizar</button>
                             </form>
                         </div>
                         {{-- <div class="modal-footer">
@@ -145,7 +145,7 @@
         <div x-data="{ open: true }">
             <div class="mt-3 col-12">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESULTADO DE LA EVALUACIÓN <i x-bind:class="open ? 'fas fa-minus' : 'fas fa-plus'"
                         @click="open = !open"></i>
                 </div>

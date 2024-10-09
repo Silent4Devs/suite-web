@@ -5,7 +5,9 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 45px;
             height: 45px;
@@ -41,7 +43,7 @@
 
     <div class="mt-5 card">
 
-        {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+        {{-- <a class="pr-3 ml-2 rounded btn btn-primary" style=" margin: 13px 12px 12px 10px;"
         href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
 
 

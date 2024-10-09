@@ -27,7 +27,9 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid var(--color-tbj) color: var(--color-tbj) text-align: center;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
             padding: 0;
             width: 35px;
             height: 35px;
@@ -39,9 +41,9 @@
         }
 
         /* th {
-                            background-color: var(--color-tbj);                        color: #ffff;
+                                        background-color: var(--color-tbj);                        color: #ffff;
 
-                        } */
+                                    } */
 
         .iconos-tabla {
             color: #fff;
@@ -106,7 +108,7 @@
 
         {{-- <div style="margin-bottom:10px; margin-left:12px;" class="row">
                   <div class="col-lg-12">
-                      <a class="btn btn-success" href="{{ route('admin.matriz-riesgos.create') }}">
+                      <a class="btn btn-primary" href="{{ route('admin.matriz-riesgos.create') }}">
                           Agregar Riesgo
                       </a>
                   </div>

@@ -634,7 +634,7 @@
 
 
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     Evaluacion del Riesgo
                 </div>
 
@@ -697,7 +697,7 @@
 
                 <div class="row">
                     <div class="col-12" style="text-align: right">
-                        <button type="submit" class="btn btn-danger">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </form>

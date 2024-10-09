@@ -46,7 +46,7 @@
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
     <div class="mb-3 text-right">
-        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/quejas') }}">Crear reporte</a>
+        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/quejas') }}">Crear reporte</a>
     </div>
 @endcan
 

@@ -266,8 +266,8 @@
         }
 
         /* #shot_screen{
-                        width:100% !important;
-                    } */
+                                width:100% !important;
+                            } */
     </style>
     <style>
         .range-slider {
@@ -478,12 +478,14 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: var(--color-tbj) display: inline-block;
+            color: var(--color-tbj);
+            display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid var(--color-tbj) margin-bottom: -2px;
+            border-bottom: 2px solid var(--color-tbj);
+            margin-bottom: -2px;
             margin-right: 10px;
         }
 

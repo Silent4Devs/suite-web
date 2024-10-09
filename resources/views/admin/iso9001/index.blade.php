@@ -10,7 +10,8 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: var(--color-tbj) padding: 5px 0px;
+            color: var(--color-tbj);
+            padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
             background-color: #f9f9f9;
@@ -117,7 +118,8 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: var(--color-tbj) border-radius: 6px;
+            color: var(--color-tbj);
+            border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
             padding: 7px;
@@ -125,7 +127,9 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: var(--color-tbj) border: 1px solid var(--color-tbj) box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
+            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
 
@@ -199,7 +203,7 @@
                 GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <a href="{{ route('admin.home') }}" class="btn btn-primary">
                 <i class="fas fa-chart-pie mr-2"></i>
                 DASHBOARD
             </a>
@@ -211,7 +215,7 @@
             <div class="row">
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end">
                     <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Dashboard
                         </a>

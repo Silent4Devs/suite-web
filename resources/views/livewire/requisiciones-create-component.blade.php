@@ -11,7 +11,8 @@
                 <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
                 <p>
                     Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
-                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                    optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las
+                    transacciones.&nbsp;
                 </p>
             </div>
         </div>
@@ -59,7 +60,7 @@
                                     </div>
                                     <div>
                                         @error('fecha_solicitud')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -113,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <br>
                             <div class="row">
                                 <div class="col s12 l6">
                                     <div class="anima-focus">
@@ -310,9 +311,18 @@
                                 AGREGAR SERVICIOS Y PRODUCTOS
                             </div>
 
-                            <button class="btn btn-primary" type="submit">
-                                Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                <!-- Button content when not loading -->
+                                <span wire:loading.remove>
+                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                </span>
+
+                                <!-- Loading spinner when loading -->
+                                <span wire:loading>
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                </span>
                             </button>
+
                         </div>
                     </form>
                 </div>
@@ -383,7 +393,7 @@
                                                 Fecha inicio*
                                             </label>
                                         </div>
-                                        <div class="col s12 l6 anima-focus">
+                                        <div class="col s12 l6 anima-focus mt-3 mb-3">
                                             <input type="date" id="fechaFin"
                                                 wire:model= "array_proveedores.{{ $keyP }}.fechaFin"
                                                 class="form-control modal-end"
@@ -571,8 +581,16 @@
                                 <i class="fa-regular fa-square-plus icon-prior"></i>
                                 AGREGAR PROVEEDOR
                             </button>
-                            <button class="btn btn-primary" type="submit">
-                                Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                <!-- Button content when not loading -->
+                                <span wire:loading.remove>
+                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                </span>
+
+                                <!-- Loading spinner when loading -->
+                                <span wire:loading>
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                </span>
                             </button>
                         </div>
                     </form>
@@ -911,6 +929,21 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log('DOMContentLoaded profile');
+
+        // Correctly set the Livewire property using Livewire.find()
+        @this.set('products_servs_count', 1);
+
+        // Listen for the Livewire 'cambiarTab' event and activate the correct tab
+        Livewire.on('cambiarTab', (id_tab) => {
+            console.log('cambiarTab');
+            document.querySelector(`#myTab a[href="#${id_tab}"]`).click(); // Activates the tab
+            console.log('cambiarTab paso id');
+        });
+    });
+
+
     document.addEventListener('livewire:initialized', () => {
         @this.on('probando', (event) => {
             document.getElementById('formulario-firma').style.display = 'block';

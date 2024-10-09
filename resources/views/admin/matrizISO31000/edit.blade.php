@@ -630,7 +630,7 @@
                 </div>
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
                 <div class="row">
@@ -693,7 +693,7 @@
 
                 <hr>
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO SOPORTE PROVEEDOR
                 </div>
                 @livewire('i-s-o31000.impactos-asociados', [
@@ -706,7 +706,7 @@
                 ])
                 <hr>
                 <div class="text-center form-group"
-                    style="background-color:var(--color-tbj) border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
                 </div>
 
@@ -783,7 +783,7 @@
 
                 <div class="mb-3 ml-3 col-12 mt-4 text-right">
                     <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
-                        class="btn btn-success">Agregar</button>
+                        class="btn btn-primary">Agregar</button>
                 </div>
 
 
@@ -823,7 +823,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.ISO31000', ['id' => $id_analisis]) }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

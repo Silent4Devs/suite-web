@@ -58,7 +58,7 @@
                                 <form method="POST" action="{{ route('profile.password.toggleTwoFactor') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-primary" type="submit">
                                             {{ $user->two_factor ? trans('global.two_factor.disable') : trans('global.two_factor.enable') }}
                                         </button>
                                     </div>

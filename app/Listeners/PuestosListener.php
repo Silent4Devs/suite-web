@@ -38,15 +38,22 @@ class PuestosListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $puestos = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
+        // $puestos = FirmaModule::where('modulo_id', '4')->where('submodulo_id', '9')->first();
 
-        // Decodificar el JSON para obtener los participantes
-        $participantes = json_decode($puestos->participantes, true);
+        // if ($puestos) {
+        //     // Decodificar el JSON para obtener los participantes
+        //     $participantes = json_decode($puestos->participantes, true);
 
-        // Obtener los usuarios correspondientes a esos correos electrónicos o IDs
-        $users = User::whereIn('id', $participantes)->get();
+        //     // Obtener los usuarios correspondientes a esos correos electrónicos o IDs
+        //     $users = User::whereIn('id', $participantes)->get();
 
-        // Enviar la notificación a cada usuario
-        Notification::send($users, new PuestosNotification($event->puestos, $event->tipo_consulta, $event->tabla, $event->slug));
+        //     // Enviar la notificación a cada usuario
+        //     Notification::send($users, new PuestosNotification($event->puestos, $event->tipo_consulta, $event->tabla, $event->slug));
+        // } else {
+        //     // Manejar el caso cuando no se encuentra el registro
+        //     return view('admin.empleados.index');
+        //     // Puedes lanzar una excepción o hacer otra cosa en caso de que sea necesario.
+        // }
+
     }
 }

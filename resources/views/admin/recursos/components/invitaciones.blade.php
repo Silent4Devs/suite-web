@@ -72,10 +72,10 @@
 </div>
 <div class="text-right form-group col-12">
     <a href="{{ route('admin.recursos.index') }}" class="btn btn-outline-primary">Cancelar</a>
-    <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
+    <button class="btn btn-primary btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>
-    <button class="btn btn-danger btnGuardarRecurso" type="submit" id="btnGuardarRecurso">
+    <button class="btn btn-primary btnGuardarRecurso" type="submit" id="btnGuardarRecurso">
         Enviar
     </button>
 </div>

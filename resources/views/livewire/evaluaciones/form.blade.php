@@ -33,7 +33,7 @@
         @if ($customField != null)
             <div class="mb-0 form-group col-sm-6">
                 <div class="form-group mb-1">
-                    <label for="formSlugs.{{ $key }}.{{ $customField}}"><i
+                    <label for="formSlugs.{{ $key }}.{{ $customField }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField, 1)) }}</label>
                     <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
                         min="0" wire:model.live="formSlugs.{{ $key }}.{{ $customField }}"
@@ -49,7 +49,7 @@
             </div>
         @endif
     @endforeach
-    {{-- <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Enviar</button> --}}
+    {{-- <button type="button" wire:click.prevent="store()" class="btn btn-primary btn-sm">Enviar</button> --}}
 
 </div>
 {{-- </form> --}}

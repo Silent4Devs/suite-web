@@ -10,10 +10,10 @@
             <span wire:loading.remove wire:target="update">Actualizar</span>
             <span wire:loading wire:target="update">Actualizando</span>
         </button>
-        <button wire:click="default" class="ml-2 btn btn_cancelar">
+        <button wire:click="default" class="ml-2 btn btn-outline-primary">
             Cancelar
         </button>
-        <button class="btn btn_cancelar ml-2" onclick="window.close()">Salir</button>
+        <button class="btn btn-outline-primary ml-2" onclick="window.close()">Salir</button>
     </div>
 
 </div>

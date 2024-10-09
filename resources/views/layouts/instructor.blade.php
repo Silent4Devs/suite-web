@@ -19,7 +19,8 @@
     }
 
     .advance {
-        background-color: var(--color-tbj) color: #FFFFFF;
+        background-color: var(--color-tbj);
+        color: #FFFFFF;
     }
 
     .advance:hover {
@@ -28,7 +29,8 @@
 
     .cancel {
         background: #FFFFFF;
-        color: var(--color-tbj) border: 1px solid var(--color-tbj);
+        color: var(--color-tbj);
+        border: 1px solid var(--color-tbj);
     }
 
     .cancel:hover {
@@ -81,8 +83,8 @@
                     <div class="flex justify-end">
                         {!! Form::submit('Actualizar información', [
                             'class' => 'inline-flex items-center px-4 py-2 m-4 text-xs font-semibold
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25',
                         ]) !!}
                     </div>
                     {!! Form::close() !!}

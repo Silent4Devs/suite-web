@@ -311,7 +311,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div style="color: var(--color-tbj) font-size:13pt;" class="text-right"
+                    <div style="color: var(--color-tbj); font-size:13pt;" class="text-right"
                         title="
                 @foreach ($cumpleaños_felicitados_like_usuarios as $usuarios_like) {{ $usuarios_like->felicitador->name }}&#013; @endforeach
             ">
@@ -366,7 +366,7 @@
                         <img class="img-responsive pastel" src="{{ asset('img/pastel.gif') }}" style="width: 100%;">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
 
@@ -675,7 +675,7 @@
                                         <div class="modal-content">
 
                                             <div class="modal-header"
-                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj) font-size:20px;">
+                                                style="display: flex; justify-content: space-between; align-items:center; color: #fff; background-color:var(--color-tbj); font-size:20px;">
                                                 <span><img class="img_empleado mr-4"
                                                         src="{{ $competencia->competencia->imagen_ruta }}">
                                                     <strong>{{ $competencia->competencia->nombre }}</strong></span>
@@ -1162,8 +1162,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" id="btnEnviarInvitacion">Enviar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarInvitacion">Enviar</button>
             </div>
             <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
                 <div class="col-12">

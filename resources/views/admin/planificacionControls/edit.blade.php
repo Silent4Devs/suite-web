@@ -297,7 +297,7 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.planificacion-controls.index') }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
                 </div>

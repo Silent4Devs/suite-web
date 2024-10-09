@@ -39,12 +39,24 @@ class tbApiMobileControllerDocumentos extends Controller
         $empleado = User::getCurrentUser()->empleado;
 
         // Obtener documentos con sus revisiones y empleados relacionados
+        // $documentos = Documento::with('revisiones.empleadoMobile')
+        //     ->where('estatus', 2)
+        //     ->orWhere('estatus', 3)
+        //     ->orderByDesc('id')
+        //     ->get();
+
         $documentos = Documento::with('revisiones.empleadoMobile')
-            ->where('estatus', 2)
-            ->orWhere('estatus', 3)
+            ->where(function ($query) {
+                $query->where('estatus', 2)
+                    ->orWhere('estatus', 3);
+            })
+            ->whereHas('revisiones.empleadoMobile', function ($query) use ($empleado) {
+                $query->where('id', $empleado->id); // Compara el id de empleadoMobile con tu variable
+            })
             ->orderByDesc('id')
             ->get();
 
+        // dd($documentos);
         // Eliminar documentos que no tengan revisores (revisiones vacías)
         $documentos = $documentos->reject(function ($documento) {
             return $documento->revisiones->isEmpty(); // Elimina el documento si no tiene revisiones

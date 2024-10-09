@@ -126,7 +126,7 @@
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
                     <a href="{{ route('admin.plan-auditoria.index') }}" class="btn btn-outline-primary">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
@@ -147,7 +147,7 @@
                             <span
                                 style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                             <br>
-                            <span style="color:var(--color-tbj) font-size:15px;"><strong>Plan de Auditoría</strong></span>
+                            <span style="color:var(--color-tbj); font-size:15px;"><strong>Plan de Auditoría</strong></span>
 
                         </div>
                         <div class="col-3 p-2">

@@ -30,8 +30,30 @@ return [
 
     'connections' => [
 
+        // RabbitMQ Connection
         'rabbitmq' => [
-            'driver' => 'sync',
+            'driver' => 'rabbitmq',
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
+            'connection' => [
+                'host' => env('RABBITMQ_HOST', 'rabbitmq-tabantaj'),
+                'port' => env('RABBITMQ_PORT', 5672),
+                'user' => env('RABBITMQ_USER', 'desarrollo'),
+                'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
+                'vhost' => env('RABBITMQ_VHOST', 'desarrollo'),
+            ],
+            'options' => [
+                'exchange' => [
+                    'name' => env('RABBITMQ_EXCHANGE', 'default_exchange'),
+                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'), // e.g., direct, topic, fanout
+                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+                ],
+                'queue' => [
+                    'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
+                ],
+                // Additional options can be added here
+            ],
+            'retry_after' => 90,
+            'block_for' => null,
         ],
 
         'database' => [
@@ -67,22 +89,10 @@ return [
             'block_for' => null,
         ],
 
-        // 'rabbitmq' => [
-
-        //     'driver' => 'rabbitmq',
-        //     'hosts' => [
-        //         [
-        //             'host' => env('RABBITMQ_HOST', 'rabbit-tabantaj'),
-        //             'port' => env('RABBITMQ_PORT', 5672),
-        //             'user' => env('RABBITMQ_USER', 'desarrollo'),
-        //             'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
-        //             'vhost' => env('RABBITMQ_VHOST', 'desarrollo'),
-        //         ],
-        //         // ...
-        //     ],
-
-        //     // ...
-        // ],
+        // Synchronous Queue Connection
+        'sync' => [
+            'driver' => 'sync',
+        ],
 
     ],
 

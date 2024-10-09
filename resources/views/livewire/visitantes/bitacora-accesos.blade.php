@@ -99,7 +99,7 @@
         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
             <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
             <br>
-            <span style="color:var(--color-tbj) font-size:15px;"><strong>Bitácora de Accesos</strong></span>
+            <span style="color:var(--color-tbj); font-size:15px;"><strong>Bitácora de Accesos</strong></span>
         </div>
         <div class="col-3 p-2">
             <span style="color:var(--color-tbj)">Fecha:
@@ -160,12 +160,12 @@
                                 <i class="fas fa-filter mr-2"></i> Opciones
                             </div>
                             <div class="col-12 mb-2">
-                                <button class="btn btn-success" wire:click.prevent="search">
+                                <button class="btn btn-primary" wire:click.prevent="search">
                                     <i class="fas fa-search"></i> Realizar Búsqueda
                                 </button>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-success" wire:click.prevent="default"
+                                <button class="btn btn-primary" wire:click.prevent="default"
                                     style="background: #a7a7a7 !important">
                                     <i class="fas fa-times"></i> Resetear Valores&nbsp;&nbsp;&nbsp;
                                 </button>

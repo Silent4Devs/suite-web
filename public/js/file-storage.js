@@ -45553,7 +45553,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-danger mr-2",
+            staticClass: "btn btn-primary mr-2",
             attrs: { title: _vm.lang.modal.cropper.save },
             on: {
               click: function($event) {
@@ -46154,7 +46154,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-danger",
+          staticClass: "btn btn-primary",
           attrs: { disabled: !_vm.clipboard.type },
           on: { click: _vm.resetClipboard }
         },
@@ -46222,7 +46222,7 @@ var render = function() {
     _c("div", { staticClass: "modal-footer" }, [
       _c(
         "button",
-        { staticClass: "btn btn-danger", on: { click: _vm.deleteItems } },
+        { staticClass: "btn btn-primary", on: { click: _vm.deleteItems } },
         [_vm._v(_vm._s(_vm.lang.modal.delete.title) + "\n        ")]
       ),
       _vm._v(" "),
@@ -46991,7 +46991,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-danger",
+          staticClass: "btn btn-primary",
           attrs: { disabled: !_vm.errors.length },
           on: { click: _vm.clearErrors }
         },

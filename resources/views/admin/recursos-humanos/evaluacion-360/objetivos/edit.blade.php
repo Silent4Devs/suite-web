@@ -9,7 +9,7 @@
                 @include('admin.recursos-humanos.evaluacion-360.objetivos._form')
                 <div class="d-flex justify-content-end w-100">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">Actualizar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </form>
         </div>
