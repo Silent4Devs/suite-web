@@ -180,8 +180,8 @@
                         <div class="anima-focus">
                             <select name="proveedor_id" id="proveedor_id" class="form-control" required
                                 placeholder="">
-                                @if ($requisicion->proveedor_id)
-                                    <option value="{{ $requisicion->proveedor_id }}" selected
+                                @if ($requisicion->proveedoroc_id)
+                                    <option value="{{ $requisicion->proveedoroc_id }}" selected
                                         data-nombre="{{ $requisicion->proveedor->nombre }}"
                                         data-rfc="{{ $requisicion->proveedor->rfc }}"
                                         data-contacto="{{ $requisicion->proveedor->contacto }}"
@@ -209,7 +209,7 @@
                     </div>
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" id="proveedor-nombre" name="nombre" value=""
+                            <input type="text" id="proveedor-nombre" name="nombre" value="{{ $requisicion->proveedor->nombre }}"
                                 placeholder="" class="form-control">
                             <label for="proveedor-nombre">
                                 Nombre Comercial
@@ -218,7 +218,7 @@
                     </div>
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" id="proveedor-rfc" name="rfc" value="" placeholder=""
+                            <input type="text" id="proveedor-rfc" name="rfc" value="{{ $requisicion->proveedor->rfc }}" placeholder=""
                                 class="form-control">
                             <label for="proveedor-rfc">
                                 RFC
@@ -229,7 +229,7 @@
                 <div class="row">
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" id="proveedor-contacto" value="" name="contacto"
+                            <input type="text" id="proveedor-contacto" value="{{ $requisicion->proveedor->contacto }}" name="contacto"
                                 placeholder="" class="form-control">
                             <label for="proveedor-contacto">
                                 Nombre del contacto
@@ -250,7 +250,7 @@
                     <div class="col s12 l6 ">
                         <div class="anima-focus">
                             <input type="text" id="envio" name="direccion_envio"
-                                value="{{ $proveedor->envio }}" placeholder="" class="form-control">
+                                value="{{ $requisicion->direccion_envio_proveedor }}" placeholder="" class="form-control">
                             <label for="envio">
                                 Envío a
                             </label>
@@ -267,7 +267,7 @@
                     </div>
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" value="{{ $proveedor->credito }}" name="credito_proveedor"
+                            <input type="text" value="{{ $requisicion->credito_proveedor }}" name="credito_proveedor"
                                 placeholder="" id="cred_prov" class="form-control">
                             <label for="cred_prov">
                                 Crédito disponible

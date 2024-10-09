@@ -969,7 +969,14 @@ class RequisicionesController extends Controller
 
             $requisicion->update([
                 'estado' => 'cancelada',
+                'firma_solicitante' => null,
+                'firma_finanzas' => null,
+                'firma_jefe' => null,
+                'firma_compras' => null,
                 'estado_orden' => 'cancelada',
+                'firma_solicitante_orden' => null,
+                'firma_finanzas_orden' => null,
+                'firma_comprador_orden' => null,
             ]);
 
             return response()->json(['success' => true]);

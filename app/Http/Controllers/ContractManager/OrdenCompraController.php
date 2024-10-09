@@ -227,6 +227,7 @@ class OrdenCompraController extends Controller
             if (! $requisicion) {
                 abort(404);
             }
+
             $proveedores = KatbolProveedorOC::getAll();
             $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
             $contratos = KatbolContrato::getAll();
@@ -579,6 +580,9 @@ class OrdenCompraController extends Controller
 
             $oc->update([
                 'estado_orden' => 'cancelada',
+                'firma_solicitante_orden'=> null,
+                'firma_finanzas_orden'=> null,
+                'firma_comprador_orden'=> null,
             ]);
 
             return response()->json(['success' => true]);
