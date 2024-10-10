@@ -159,6 +159,8 @@ class OrdenCompraController extends Controller
     {
         $requisicion = KatbolRequsicion::find($id);
 
+        dd($requisicion, $request->all());
+
         $requisicion->update([
             'fecha_entrega' => $request->fecha_entrega,
             'pago' => $request->pago,
@@ -289,16 +291,16 @@ class OrdenCompraController extends Controller
 
                 if ($responsableNivel) {
                     if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-            
+
                         $responsable = $responsableNivel->empleado;
                         $userEmail = $responsable->email;
-            
+
                         $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
-            
+
                         foreach ($cN as $key => $c) {
                             $copiasNivel[] = $c->empleado->email;
                         }
-            
+
                         break;
                     } else {
                         // Si el responsable está ausente, lo añadimos a la lista de ausentes
