@@ -557,7 +557,7 @@
         </div>
         <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
             <a href="{{ route('contract_manager.orden-compra') }}" class="btn btn-outline-primary">Regresar</a>
-            <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
+            <button class="btn tb-btn-primary">Guardar</button>
         </div>
     </form>
 </div>
