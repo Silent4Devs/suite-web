@@ -450,6 +450,8 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            $razones_sociales = Sucursal::getArchivoFalse();
+
             // aprobadores
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
             $firmar = false;
@@ -465,7 +467,7 @@ class ContratosController extends AppBaseController
                 }
             }
 
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.show', compact('razones_sociales', 'proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
@@ -575,6 +577,8 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            $razones_sociales = Sucursal::getArchivoFalse();
+
             // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
             // dd($firma->aprobadores);
@@ -594,7 +598,7 @@ class ContratosController extends AppBaseController
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales','proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }

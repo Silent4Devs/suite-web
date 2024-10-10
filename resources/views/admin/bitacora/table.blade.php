@@ -254,7 +254,7 @@
                 @endif
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="distancia form-group col-md-4">
                 <label for="razon_soc_id">Razón Social con la que se prestara el servicio</label>
                 <select class=" form-control" name="razon_soc_id" id="razon_soc_id" required>
                     <option selected disabled>-- Seleccione una Razón Social --</option>
