@@ -27,6 +27,8 @@
             @include('admin.listadistribucion.flujoAprobacion')
         @elseif ($tipo == 'suplentesLideres')
             @include('admin.listadistribucion.lideresSuplentes')
+        @elseif ($tipo == 'responsablesFijos')
+            @include('admin.listadistribucion.responsablesFijos')
         @elseif ($tipo == 'suplentes')
             @include('admin.listadistribucion.suplentes')
         @endif
@@ -44,6 +46,8 @@
         @include('admin.listadistribucion.scriptsflujoAprobacion')
     @elseif ($tipo == 'suplentesLideres')
         @include('admin.listadistribucion.scriptslideresSuplentes')
+    @elseif ($tipo == 'responsablesFijos')
+        @include('admin.listadistribucion.scriptsresponsablesFijos')
     @elseif ($tipo == 'suplentes')
         @include('admin.listadistribucion.scriptsSuplentes')
     @endif
