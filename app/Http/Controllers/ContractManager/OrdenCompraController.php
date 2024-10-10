@@ -159,8 +159,6 @@ class OrdenCompraController extends Controller
     {
         $requisicion = KatbolRequsicion::find($id);
 
-        dd($requisicion, $request->all());
-
         $requisicion->update([
             'fecha_entrega' => $request->fecha_entrega,
             'pago' => $request->pago,
