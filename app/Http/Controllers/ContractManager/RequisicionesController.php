@@ -14,6 +14,8 @@ use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Empleado;
 use App\Models\FirmasRequisiciones;
+use App\Models\HistorialEdicionesOC;
+use App\Models\HistorialEdicionesReq;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
@@ -115,7 +117,24 @@ class RequisicionesController extends Controller
 
             $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
-            return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas'));
+            // En el controlador para requisiciones
+            $historialesRequisicion = HistorialEdicionesReq::with('version')->where('requisicion_id', $requisicion->id)->get();
+
+            // Agrupando los historiales de requisiciones por versión
+            $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
+                return $item->version->version; // Suponiendo que la columna es 'version'
+            });
+
+            $resultadoRequisiciones = [];
+            foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
+
+                $resultadoRequisiciones[] = [
+                    'version' => $version,
+                    'cambios' => $cambios,
+                ];
+            }
+
+            return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas', 'resultadoRequisiciones'));
         } catch (\Exception $e) {
             abort(404);
         }
@@ -133,7 +152,24 @@ class RequisicionesController extends Controller
         // $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->where('id', $id)->first();
         $organizacion = $this->obtenerOrganizacion();
 
-        return view('contract_manager.requisiciones.edit', compact('id', 'organizacion'));
+            // En el controlador para requisiciones
+            $historialesRequisicion = HistorialEdicionesReq::with('version')->where('requisicion_id', $id)->get();
+
+            // Agrupando los historiales de requisiciones por versión
+            $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
+                return $item->version->version; // Suponiendo que la columna es 'version'
+            });
+
+            $resultadoRequisiciones = [];
+            foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
+
+                $resultadoRequisiciones[] = [
+                    'version' => $version,
+                    'cambios' => $cambios,
+                ];
+            }
+
+        return view('contract_manager.requisiciones.edit', compact('id', 'organizacion', 'resultadoRequisiciones'));
     }
 
     /**

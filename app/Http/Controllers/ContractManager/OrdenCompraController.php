@@ -14,6 +14,7 @@ use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequ
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\HistorialEdicionesOC;
 use App\Models\ListaDistribucion;
 use App\Models\ListaInformativa;
 use App\Models\Organizacion;
@@ -115,7 +116,23 @@ class OrdenCompraController extends Controller
                 abort(404);
             }
 
-            return view('contract_manager.ordenes-compra.show', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'proveedores'));
+            // En el controlador para órdenes de compra
+            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
+
+            // Agrupando los historiales de órdenes de compra por versión
+            $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
+                return $item->version->version; // Suponiendo que la columna es 'version'
+            });
+
+            $resultadoOrdenesCompra = [];
+            foreach ($agrupadosPorVersionOrdenesCompra as $version => $cambios) {
+                $resultadoOrdenesCompra[] = [
+                    'version' => $version,
+                    'cambios' => $cambios,
+                ];
+            }
+
+            return view('contract_manager.ordenes-compra.show', compact('firma_finanzas_name', 'requisicion', 'organizacion', 'proveedores', 'resultadoOrdenesCompra'));
         } catch (\Throwable $th) {
             abort(404);
         }
@@ -235,7 +252,24 @@ class OrdenCompraController extends Controller
             $monedas = KatbolMoneda::getAll();
             $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
             // dd($requisicion);
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
+
+            // En el controlador para órdenes de compra
+            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
+
+            // Agrupando los historiales de órdenes de compra por versión
+            $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
+                return $item->version->version; // Suponiendo que la columna es 'version'
+            });
+
+            $resultadoOrdenesCompra = [];
+            foreach ($agrupadosPorVersionOrdenesCompra as $version => $cambios) {
+                $resultadoOrdenesCompra[] = [
+                    'version' => $version,
+                    'cambios' => $cambios,
+                ];
+            }
+
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra'));
         } catch (\Throwable $th) {
             abort(404);
         }

@@ -193,7 +193,7 @@ class RequisicionesEditComponent extends Component
 
         $this->user_name = $this->editRequisicion->user;
         $this->user_area = $this->editRequisicion->area;
-        $this->user_email = $this->editRequisicion->id_user;
+        $this->user_email = $this->user->email;
 
         $collections = [
             'sucursales' => 'Sucursales',
@@ -620,6 +620,8 @@ class RequisicionesEditComponent extends Component
                     'comprador_id' => $this->nueva_requisicion['comprador_id'],
                     'contrato_id' => $this->nueva_requisicion['contrato_id'],
                     'id_user' => $this->nueva_requisicion['id_user'],
+                    'estado' => 'curso',
+                    'estado_orden' => null,
                 ]
             );
 
@@ -704,7 +706,7 @@ class RequisicionesEditComponent extends Component
 
             $firmas_requi = FirmasRequisiciones::updateOrCreate(
                 [
-                    'id' => $this->editRequisicion->registroFirmas->id,
+                    'id' => $this->editRequisicion->registroFirmas->id ?? null,
                     'requisicion_id' => $this->editRequisicion->id,
                 ],
                 [
