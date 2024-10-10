@@ -576,6 +576,31 @@
 </script>
 @section('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form'); // Selecciona el formulario
+        const requiredInputs = form.querySelectorAll(
+            'input[required], select[required]'); // Selecciona todos los inputs y selects requeridos
+
+        form.addEventListener('submit', function(event) {
+            let valid = true;
+
+            requiredInputs.forEach(input => {
+                if (!input.value) {
+                    input.style.borderColor = 'red'; // Cambia el borde a rojo si está vacío
+                    input.style.backgroundColor = '#ffe6e6'; // Fondo rojo claro
+                    valid = false;
+                } else {
+                    input.style.borderColor = ''; // Resetea el estilo si es válido
+                    input.style.backgroundColor = '';
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault(); // Evita que el formulario se envíe si hay campos vacíos
+            }
+        });
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
         $('select').select2('destroy');
 
