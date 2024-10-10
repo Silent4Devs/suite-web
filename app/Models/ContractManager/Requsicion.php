@@ -11,6 +11,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Requsicion extends Model implements Auditable
@@ -148,7 +149,7 @@ class Requsicion extends Model implements Auditable
          'direccion',
         //  'estado_orden',
         //  'estado_orden_dos',
-         'proveedor_catalogo',
+        //  'proveedor_catalogo',
          'proveedor_catalogo_oc',
          'proveedor_catalogo_id',
          'ids_proveedores',
@@ -159,44 +160,142 @@ class Requsicion extends Model implements Auditable
   protected static function booted()
   {
       static::updating(function ($registro) {
-          // Obtén el ID del empleado que está realizando el cambio
           $idEmpleado = User::getCurrentUser()->empleado->id;
-
-          // Define los campos de requisiciones y órdenes de compra
           $camposRequisiciones = $registro->camposRequisiciones();
           $camposOrdenesCompra = $registro->camposOrdenesCompra();
 
-          // Recorre los atributos modificados
+          // Obtener la última versión activa si existe y si fue creada/actualizada en los últimos X minutos
+          $versionReqId = DB::table('versiones_requisicion')
+              ->where('requisicion_id', $registro->id)
+              ->where('last_updated_at', '>=', now()->subMinutes(1))
+              ->value('id');
+
+          $versionOCId = DB::table('versiones_orden_compra')
+              ->where('orden_compra_id', $registro->id)
+              ->where('last_updated_at', '>=', now()->subMinutes(1))
+              ->value('id');
+
+          $nuevaVersionReq = false;
+          $nuevaVersionOC = false;
+
+          // Verificamos si hay cambios en los campos de requisición
+          $hayCambiosRequisicion = false;
+          foreach ($registro->getDirty() as $campo => $nuevoValor) {
+              if (in_array($campo, $camposRequisiciones)) {
+                  $hayCambiosRequisicion = true;
+                  break;
+              }
+          }
+
+          // Verificamos si hay cambios en los campos de orden de compra
+          $hayCambiosOrdenCompra = false;
+          foreach ($registro->getDirty() as $campo => $nuevoValor) {
+              if (in_array($campo, $camposOrdenesCompra)) {
+                  $hayCambiosOrdenCompra = true;
+                  break;
+              }
+          }
+
+          // Si no hay una versión reciente de requisición y hay cambios, creamos una nueva versión
+          if (!$versionReqId && $hayCambiosRequisicion) {
+              $ultimaVersionRequisicion = DB::table('versiones_requisicion')
+                  ->where('requisicion_id', $registro->id)
+                  ->orderBy('version', 'desc')
+                  ->first();
+
+              $nuevaVersion = $ultimaVersionRequisicion ? $ultimaVersionRequisicion->version + 1 : 1;
+
+              // Crear la nueva versión
+              $versionReqId = DB::table('versiones_requisicion')->insertGetId([
+                  'requisicion_id' => $registro->id,
+                  'version' => $nuevaVersion,
+                  'created_at' => now(),
+                  'updated_at' => now(),
+                  'last_updated_at' => now(),
+              ]);
+
+              $nuevaVersionReq = true;
+          }
+
+          // Solo crear una nueva versión de orden de compra si hay cambios reales
+          if (!$versionOCId && $hayCambiosOrdenCompra) {
+              $ultimaVersionOrdenCompra = DB::table('versiones_orden_compra')
+              ->where('orden_compra_id', $registro->id)
+              ->orderBy('version', 'desc')
+              ->first();
+
+              $nuevaVersion = $ultimaVersionOrdenCompra ? $ultimaVersionOrdenCompra->version + 1 : 1;
+
+              // Crear la nueva versión
+              $versionOCId = DB::table('versiones_orden_compra')->insertGetId([
+                  'orden_compra_id' => $registro->id,
+                  'version' => $nuevaVersion,
+                  'created_at' => now(),
+                  'updated_at' => now(),
+                  'last_updated_at' => now(),
+              ]);
+
+              $nuevaVersionOC = true;
+          }
+
+          // Iteramos por los cambios para registrar cada uno en el historial
           foreach ($registro->getDirty() as $campo => $nuevoValor) {
               $valorAnterior = $registro->getOriginal($campo);
 
-              // Determina a qué módulo pertenece el campo modificado
-              if (in_array($campo, $camposRequisiciones)) {
-                  // Registro en la tabla de historial de requisiciones
+              if (in_array($campo, $camposRequisiciones) && $versionReqId) {
+                  // Crear el registro en la tabla de historial de requisiciones
                   HistorialEdicionesReq::create([
                       'requisicion_id' => $registro->id,
-                      'numero_edicion' => 1, // Ajusta este valor según tu lógica
                       'registro_tipo' => self::class,
                       'id_empleado' => $idEmpleado,
                       'campo' => $campo,
                       'valor_anterior' => $valorAnterior,
                       'valor_nuevo' => $nuevoValor,
+                      'version_id' => $versionReqId,
                   ]);
-              } elseif (in_array($campo, $camposOrdenesCompra)) {
-                  // Registro en la tabla de historial de órdenes de compra
-                  HistorialEdicionesOC::create([
-                      'requisicion_id' => $registro->id,
-                    //   'numero_edicion' => 1, // Ajusta este valor según tu lógica
-                      'registro_tipo' => self::class,
-                      'id_empleado' => $idEmpleado,
-                      'campo' => $campo,
-                      'valor_anterior' => $valorAnterior,
-                      'valor_nuevo' => $nuevoValor,
-                  ]);
+              } elseif (in_array($campo, $camposOrdenesCompra) && $versionOCId) {
+                  // Verificar si el cambio es significativo antes de crear el historial
+                  if ($hayCambiosOrdenCompra) {
+                      // Crear el registro en la tabla de historial de órdenes de compra
+                      HistorialEdicionesOC::create([
+                          'requisicion_id' => $registro->id,
+                          'registro_tipo' => self::class,
+                          'id_empleado' => $idEmpleado,
+                          'campo' => $campo,
+                          'valor_anterior' => $valorAnterior,
+                          'valor_nuevo' => $nuevoValor,
+                          'version_id' => $versionOCId,
+                      ]);
+                  }
               }
+          }
+
+          // Actualizar la columna last_updated_at de la versión si se creó o reutilizó una
+          if ($nuevaVersionReq || $versionReqId) {
+              DB::table('versiones_requisicion')
+                  ->where('id', $versionReqId)
+                  ->update(['last_updated_at' => now()]);
+          }
+
+          if ($nuevaVersionOC || $versionOCId) {
+              DB::table('versiones_orden_compra')
+                  ->where('id', $versionOCId)
+                  ->update(['last_updated_at' => now()]);
           }
       });
   }
+
+    // Relación con el historial de ediciones de requisiciones
+    public function historialesRequisicion()
+    {
+        return $this->hasMany(HistorialEdicionesReq::class, 'requisicion_id');
+    }
+
+    // Relación con el historial de ediciones de órdenes de compra
+    public function historialesOrdenCompra()
+    {
+        return $this->hasMany(HistorialEdicionesOC::class, 'requisicion_id');
+    }
 
     //Redis methods
     public static function getAll()

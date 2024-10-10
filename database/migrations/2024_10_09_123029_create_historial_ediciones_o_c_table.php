@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('valor_anterior')->nullable(); // Valor anterior
             $table->text('valor_nuevo')->nullable(); // Valor nuevo
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('requisicion_id')->references('id')->on('requisiciones')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_empleado')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class HistorialEdicionesReq extends Model
 {
@@ -20,5 +21,13 @@ class HistorialEdicionesReq extends Model
         'campo', // Campo modificado
         'valor_anterior', // Valor anterior
         'valor_nuevo', // Valor nuevo
+        'version_id',
     ];
+
+    // Otras relaciones
+
+    public function version()
+    {
+        return $this->belongsTo(VersionesRequisiciones::class, 'version_id'); // Asegúrate de que 'version_id' sea la clave foránea correcta
+    }
 }
