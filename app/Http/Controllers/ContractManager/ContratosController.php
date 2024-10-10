@@ -638,6 +638,7 @@ class ContratosController extends AppBaseController
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            'razon_soc_id' => 'required|integer',
         ], [
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -752,6 +753,7 @@ class ContratosController extends AppBaseController
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
             'updated_by' => User::getCurrentUser()->empleado->id,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $id);
 
         $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
