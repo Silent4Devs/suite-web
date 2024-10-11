@@ -1,9 +1,85 @@
-<style>
-    table {
-        width: auto;
-        height: auto;
-    }
-</style>
+<div class="cards-status-centro-atencion">
+    <div class="card-status-centro" style="background-color: #4A98FF !important;">
+        <i class="material-symbols-outlined">warning</i>
+        <div class="info">
+            <span>Quejas</span><br>
+            <strong>{{ $total_quejas }}</strong>
+        </div>
+    </div>
+    <div class="card-status-centro" style="background-color: #FF8F55 !important;">
+        <i class="material-symbols-outlined">flag</i>
+        <div class="info">
+            <span>Sin atender</span><br>
+            <strong>{{ $nuevos_quejas }}</strong>
+        </div>
+    </div>
+    <div class="card-status-centro" style="background-color: #78BB50 !important;">
+        <i class="material-symbols-outlined">check_circle</i>
+        <div class="info">
+            <span>En curso</span><br>
+            <strong>{{ $en_curso_quejas }}</strong>
+        </div>
+    </div>
+    <div class="card-status-centro" style="background-color: #BE74FF !important;">
+        <i class="material-symbols-outlined">pause</i>
+        <div class="info">
+            <span>En espera</span><br>
+            <strong>{{ $en_espera_quejas }}</strong>
+        </div>
+    </div>
+    <div class="card-status-centro" style="background-color: #7A7A7A !important;">
+        <i class="material-symbols-outlined">cancel_presentation</i>
+        <div class="info">
+            <span>Cerrados</span><br>
+            <strong>{{ $cerrados_quejas }}</strong>
+        </div>
+    </div>
+    <div class="card-status-centro" style="background-color: #FE5661 !important;">
+        <i class="material-symbols-outlined">block</i>
+        <div class="info">
+            <span>Cancelados</span><br>
+            <strong>{{ $cancelados_quejas }}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="card card-body box-sentimientos mt-4">
+    <div class="card-sentimiento">
+        <div>
+            <span>No prioritario</span><br>
+            <strong>10</strong>
+        </div>
+        <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji">
+    </div>
+    <div class="card-sentimiento">
+        <div>
+            <span>Bajo</span><br>
+            <strong>20</strong>
+        </div>
+        <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji">
+    </div>
+    <div class="card-sentimiento">
+        <div>
+            <span>Medio</span><br>
+            <strong>40</strong>
+        </div>
+        <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji">
+    </div>
+    <div class="card-sentimiento">
+        <div>
+            <span>Alto</span><br>
+            <strong>80</strong>
+        </div>
+        <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji">
+    </div>
+    <div class="card-sentimiento">
+        <div>
+            <span>Urgente</span><br>
+            <strong>100</strong>
+        </div>
+        <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
+    </div>
+</div>
 
 <div class="row">
     <div class="col-6 col-md-2">
@@ -81,6 +157,88 @@
         </thead>
     </table>
 </div>
+
+@foreach ($quejas as $item)
+    <div class="modal fade" id="sentimiento-modal-quejas-{{ $item->id }}" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <strong>Ticket:</strong>
+                                <span>{{ $item->folio }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Palabras clave:</strong>
+                                <span>Mobiliario, sucio, proyecto</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Categoría de la queja:</strong>
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card card-body">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
+                                        style="width: 60px;">
+                                    <div>
+                                        <strong style="font-size: 16px;">{{ $item->titulo }}</strong><br>
+                                        <span>Prioridad de atención:</span> <span>Alta</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div>
+                        <h5>Frases nominales</h5>
+                        <ul class="mt-3">
+                            <li>
+                                Últimamente hemos tenido malentendidos constantes en el equipo, especialmente cuando se
+                                trata de definir responsabilidades en los proyectos.
+                            </li>
+                            <li>
+                                Estoy viendo un conflicto de intereses entre lo que mi equipo prioriza y lo que la
+                                gerencia espera de nosotros.
+                            </li>
+                            <li>
+                                El ambiente en el equipo se ha vuelto tóxico. Hay comentarios sarcásticos constantes y
+                                falta de respeto en las reuniones, lo cual afecta mucho la motivación.
+                            </li>
+                        </ul>
+
+                        <h5 class="mt-5">Resumen</h5>
+                        <p class="mt-3">
+                            Los colaboradores a menudo utilizan frases nominales para describir los problemas que
+                            enfrentan en su entorno de trabajo, abarcando tanto conflictos con otros compañeros como
+                            dificultades internas en su labor diaria. Uno de los problemas más comunes que mencionan es
+                            la falta de comunicación, donde indican que reciben información incompleta o tardía, lo que
+                            complica la coordinación y cumplimiento de tareas. También reportan malentendidos
+                            constantes, refiriéndose a confusiones sobre las responsabilidades o expectativas, lo que
+                            genera tensiones en el equipo y afecta la productividad.
+                        </p>
+
+                        <h5 class="mt-5">Interpretación de Sentimientos</h5>
+                        <p class="mt-3">
+                            En cuanto al clima laboral, algunos empleados señalan la presencia de un ambiente tóxico,
+                            caracterizado por actitudes negativas, comentarios sarcásticos y falta de respeto entre los
+                            compañeros, lo que impacta la motivación. Además, muchos describen la falta de apoyo por
+                            parte de sus supervisores, quienes no están disponibles para brindar orientación o ayuda
+                            cuando es necesario, dejando a los empleados sintiéndose desamparados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
 @section('scripts')
     @parent
@@ -301,6 +459,10 @@
                                 @can('centro_atencion_quejas_editar')
                 				<a href="/admin/desk/${data}/quejas-edit/"><i class="fas fa-edit"></i></a>
                                 @endcan
+
+                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-quejas-${data}">
+                                    <i class="fa-regular fa-face-smile"></i>
+                                </button>
                                 `;
 
 

@@ -1,6 +1,8 @@
 <div class="menu-global-tbj">
     <div class="title-page-global item-menu-slider">
-        Inicio
+        <div class="caja-logo-ltr-light">
+            <img src="{{ asset('img/logo-ltr-light.png') }}" alt="">
+        </div>
     </div>
     <div class="menu-slider item-menu-slider">
         <div class="box-menu-slider">
@@ -181,69 +183,73 @@
                     @endcan
                 </div>
 
-                <div class="gruop-item-menu-slider group-menu-centro-atencion">
+                <div class="gruop-item-menu-slider group-menu-centro-atencion" role="tablist">
 
                     @can('centro_atencion_incidentes_de_seguridad_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="item-ms" id="incidentes-tab">
+                        <div class="item-ms nav-item" role="presentation" role="presentation">
+                            <a class="nav-link" title="Incidentes de seguridad" data-toggle="tooltip"
+                                data-placement="bottom" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes"
+                                role="tab" aria-controls="incidentes" aria-selected="true">
                                 <i class="fas fa-exclamation-triangle"></i>
                                 <span>Incidentes de seguridad</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_riesgos_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab"
-                                aria-controls="riesgos" aria-selected="false" style="background-color: #4A98FF !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title="Riesgos" data-toggle="tooltip" data-placement="bottom"
+                                id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab" aria-controls="riesgos"
+                                aria-selected="false">
                                 <i class="fas fa-shield-alt"></i>
                                 <span>Riesgos</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_quejas_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="quejas-tab" data-bs-toggle="tab" href="#quejas" role="tab"
-                                aria-controls="quejas" aria-selected="false" style="background-color: #FF8F55 !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title=" Quejas" data-toggle="tooltip" data-placement="bottom"
+                                id="quejas-tab" data-bs-toggle="tab" href="#quejas" role="tab" aria-controls="quejas"
+                                aria-selected="false">
                                 <i class="fas fa-frown"></i>
                                 <span> Quejas</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_quejas_clientes_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="quejasClientes-tab" data-bs-toggle="tab" href="#quejasClientes"
-                                role="tab" aria-controls="quejasClientes" aria-selected="false"
-                                style="background-color: #78BB50 !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title=" Quejas Clientes" data-toggle="tooltip" data-placement="bottom"
+                                id="quejasClientes-tab" data-bs-toggle="tab" href="#quejasClientes" role="tab"
+                                aria-controls="quejasClientes" aria-selected="false">
                                 <i class="fas fa-thumbs-down"></i>
                                 <span> Quejas Clientes</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_denuncias_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="denuncias-tab" data-bs-toggle="tab" href="#denuncias" role="tab"
-                                aria-controls="denuncias" aria-selected="false"
-                                style="background-color: #BE74FF !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title=" Denuncias" data-toggle="tooltip" data-placement="bottom"
+                                id="denuncias-tab" data-bs-toggle="tab" href="#denuncias" role="tab"
+                                aria-controls="denuncias" aria-selected="false">
                                 <i class="fas fa-hand-paper"></i>
                                 <span> Denuncias</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_mejoras_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="mejoras-tab" data-bs-toggle="tab" href="#mejoras" role="tab"
-                                aria-controls="mejoras" aria-selected="false"
-                                style="background-color: #7A7A7A !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title=" Mejoras" data-toggle="tooltip" data-placement="bottom"
+                                id="mejoras-tab" data-bs-toggle="tab" href="#mejoras" role="tab"
+                                aria-controls="mejoras" aria-selected="false">
                                 <i class="fas fa-rocket"></i>
                                 <span> Mejoras</span>
                             </a>
                         </div>
                     @endcan
                     @can('centro_atencion_sugerencias_acceder')
-                        <div class="nav-item" role="presentation">
-                            <a class="nav-link" id="sugerencias-tab" data-bs-toggle="tab" href="#sugerencias"
-                                role="tab" aria-controls="sugerencias" aria-selected="false"
-                                style="background-color: #FE5661 !important;">
+                        <div class="item-ms nav-item" role="presentation">
+                            <a class="nav-link" title="Sugerencias" data-toggle="tooltip" data-placement="bottom"
+                                id="sugerencias-tab" data-bs-toggle="tab" href="#sugerencias" role="tab"
+                                aria-controls="sugerencias" aria-selected="false">
                                 <i class="fas fa-lightbulb"></i>
                                 <span> Sugerencias</span>
                             </a>
