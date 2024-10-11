@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Services\AsistentService;
 use Livewire\Component;
+use Stichoza\GoogleTranslate\GoogleTranslate; // Agregar la clase para traducción
 
 class Asistente extends Component
 {
@@ -42,7 +43,12 @@ class Asistente extends Component
         
         // Verificar si la respuesta es un array y acceder a la cadena
         if (is_array($response) && isset($response['response'])) {
-            $this->respuestas[] = $response['response']; // Añadir la respuesta al array
+            // Traducir la respuesta al español antes de guardarla
+            $tr = new GoogleTranslate('es'); // Establecer idioma a español
+            $respuestaEnEspanol = $tr->translate($response['response']);
+            
+            // Añadir la respuesta traducida al array
+            $this->respuestas[] = $respuestaEnEspanol;
         } else {
             $this->respuestas[] = 'Error: respuesta no válida';
         }
@@ -58,4 +64,3 @@ class Asistente extends Component
         return view('livewire.asistente');
     }
 }
-
