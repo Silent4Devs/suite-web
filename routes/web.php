@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
+use App\Http\Controllers\Central\RegisterTenantController;
+use App\Http\Controllers\Central\LoginTenantController;
+use App\Http\Controllers\Central as Controllers;
 use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Admin\QuejasClienteController;
@@ -22,6 +25,18 @@ use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+
+Route::view('/', 'central.landing')->name('central.landing');
+
+Route::get('/register-tenant', [Controllers\RegisterTenantController::class, 'show'])->name('central.tenants.register');
+Route::post('/register/submit', [Controllers\RegisterTenantController::class, 'submit'])->name('central.tenants.register.submit');
+
+Route::get('/login-tenant', [Controllers\LoginTenantController::class, 'show'])->name('central.tenants.login');
+Route::post('/login/submit', [Controllers\LoginTenantController::class, 'submit'])->name('central.tenants.login.submit');
+
+
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');

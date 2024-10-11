@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
-            \App\Http\Middleware\TenantMiddleware::class,
+            // \App\Http\Middleware\TenantMiddleware::class,
         ],
         'api' => [
             'throttle:60,1',
