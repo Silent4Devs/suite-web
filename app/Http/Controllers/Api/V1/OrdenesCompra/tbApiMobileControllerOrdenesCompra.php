@@ -53,7 +53,6 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        // if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
         $ordenes_compra = KatbolRequsicion::ordenesCompraAprobadorMobile($user->empleado->id, 'general');
 
         if ($ordenes_compra->isEmpty()) {
@@ -63,6 +62,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         }
 
         foreach ($ordenes_compra as $keyOrd => $orden_compra) {
+
             if ($orden_compra->id_user != null) {
 
                 if ($orden_compra->proveedor_catalogo_oc === null || isEmpty($orden_compra->proveedor_catalogo_oc)) {
@@ -100,6 +100,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 }
 
                 $json_orden[$keyOrd] = [
+                    'id' => $orden_compra->id,
                     'folio' => $orden_compra->folio,
                     'fecha' => $orden_compra->fecha,
                     'referencia' => $orden_compra->referencia,
@@ -114,6 +115,21 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                     // "total" => $orden_compra->total,
                 ];
             }
+
+            $json_orden[$keyOrd] = [
+                'folio' => $orden_compra->folio,
+                'fecha' => $orden_compra->fecha,
+                'referencia' => $orden_compra->referencia,
+                'estatus' => $estado,
+                'proveedor_catalogo_oc' => $proveedor,
+                'no_contrato' => $orden_compra->contrato->no_contrato ?? 'Campo Vacío',
+                'nombre_servicio' => $orden_compra->contrato->nombre_servicio ?? 'Campo Vacío',
+                'area' => $orden_compra->area,
+                'user' => $orden_compra->user,
+                // "sub_total" => $orden_compra->sub_total,
+                // "iva" => $orden_compra->iva,
+                // "total" => $orden_compra->total,
+            ];
         }
 
         return response(json_encode([
@@ -173,6 +189,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         //         'ordenCompra' => $json_orden,
         //     ]), 200)->header('Content-Type', 'application/json');
         // }
+
     }
 
     public function firmarAprobadores($id)

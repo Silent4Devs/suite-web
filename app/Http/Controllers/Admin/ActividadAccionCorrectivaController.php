@@ -15,7 +15,7 @@ class ActividadAccionCorrectivaController extends Controller
     public function index(Request $request, $accion_correctiva_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accion_correctiva_id)->get();
+            $actividades = ActividadAccionCorrectiva::with('responsables:id,name,foto,email')->where('accion_correctiva_id', $accion_correctiva_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }

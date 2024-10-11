@@ -332,7 +332,7 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Archivo',
                     action: function(e, dt, node, config) {
-                        window.location.href = '/admin/desk/quejas-archivo';
+                        window.location.href = '/admin/desk/quejas-cliente-archivo';
                     }
                 }
 
@@ -479,7 +479,7 @@
                                 if ((row.estatus == 'Cerrado') || (row.estatus ==
                                         'No procedente')) {
 
-                                    html += `<button class="btn archivar" onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
+                                    html += `<button onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
 				       					</button>
 				       					</div>`;
