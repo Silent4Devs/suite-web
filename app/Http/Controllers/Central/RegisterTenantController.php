@@ -21,7 +21,7 @@ class RegisterTenantController extends Controller
             'domain' => 'required|string|unique:domains',
             'company' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:tenants',
+            // 'email' => 'required|email|max:255|unique:tenants',
             'password' => 'required|string|confirmed|max:255',
         ]);
 
