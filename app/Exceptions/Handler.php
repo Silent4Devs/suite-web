@@ -43,10 +43,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            // Puedes devolver una vista personalizada o un mensaje de error
-            return response()->json(['error' => 'Método HTTP no permitido para esta ruta'], 405);
-        }
+        // if ($exception instanceof MethodNotAllowedHttpException) {
+        //     // Puedes devolver una vista personalizada o un mensaje de error
+        //     return response()->json(['error' => 'Método HTTP no permitido para esta ruta'], 405);
+        // }
         
         if ($e instanceof ValidationException) {
             if ($request->expectsJson()) {
