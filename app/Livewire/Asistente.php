@@ -50,7 +50,7 @@ class Asistente extends Component
             // Traducir la respuesta al español antes de guardarla
             $tr = new GoogleTranslate('es'); // Establecer idioma a español
             $respuestaEnEspanol = $tr->translate($response['response']);
-            
+
             // Añadir la respuesta traducida al array
             $this->respuestas[] = $respuestaEnEspanol;
         } else {

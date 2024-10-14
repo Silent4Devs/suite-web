@@ -8878,12 +8878,6 @@ namespace Illuminate\Support\Facades {
             /**
      * 
      *
-     * @method static mixed getJobTries(mixed $job)
-     * @method static mixed getJobBackoff(mixed $job)
-     * @method static mixed getJobExpiration(mixed $job)
-     * @method static void createPayloadUsing(callable|null $callback)
-     * @method static \Illuminate\Container\Container getContainer()
-     * @method static void setContainer(\Illuminate\Container\Container $container)
      * @see \Illuminate\Queue\QueueManager
      * @see \Illuminate\Queue\Queue
      * @see \Illuminate\Support\Testing\Fakes\QueueFake
