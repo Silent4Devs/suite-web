@@ -2,6 +2,17 @@
 @section('css')
     @vite(['resources/css/centroAtencion.css'])
 @endsection
+@section('styles')
+    <style>
+        .gruop-item-menu-slider {
+            display: none !important;
+        }
+
+        .group-menu-centro-atencion {
+            display: flex !important;
+        }
+    </style>
+@endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
 
@@ -9,8 +20,8 @@
     <div class="">
 
         <!-- Tabs -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            {{-- @can('centro_atencion_incidentes_de_seguridad_acceder')
+        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes" role="tab"
                         aria-controls="incidentes" aria-selected="true" style="background-color: #4A98FF !important;">
@@ -18,7 +29,7 @@
                         <span>Incidentes de seguridad</span>
                     </a>
                 </li>
-            @endcan --}}
+            @endcan
             @can('centro_atencion_riesgos_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab"
@@ -73,55 +84,17 @@
                     </a>
                 </li>
             @endcan
-        </ul>
-
-        {{-- <div class="card card-body box-sentimientos">
-            <div class="card-sentimiento">
-                <div>
-                    <span>No prioritario</span><br>
-                    <strong>10</strong>
-                </div>
-                <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji">
-            </div>
-            <div class="card-sentimiento">
-                <div>
-                    <span>Bajo</span><br>
-                    <strong>20</strong>
-                </div>
-                <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji">
-            </div>
-            <div class="card-sentimiento">
-                <div>
-                    <span>Medio</span><br>
-                    <strong>40</strong>
-                </div>
-                <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji">
-            </div>
-            <div class="card-sentimiento">
-                <div>
-                    <span>Alto</span><br>
-                    <strong>80</strong>
-                </div>
-                <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji">
-            </div>
-            <div class="card-sentimiento">
-                <div>
-                    <span>Urgente</span><br>
-                    <strong>100</strong>
-                </div>
-                <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
-            </div>
-        </div> --}}
+        </ul> --}}
 
         <!-- Tabs Content -->
         <div class="tab-content" id="myTabContent">
-            {{-- @can('centro_atencion_incidentes_de_seguridad_acceder')
-                <div class="tab-pane fade" id="incidentes" role="tabpanel" aria-labelledby="incidentes-tab">
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
+                <div class="tab-pane fade show active" id="incidentes" role="tabpanel" aria-labelledby="incidentes-tab">
                     @include('admin.desk.seguridad.seguridad')
                 </div>
-            @endcan --}}
+            @endcan
             @can('centro_atencion_riesgos_acceder')
-                <div class="tab-pane fade show active" id="riesgos" role="tabpanel" aria-labelledby="riesgos-tab">
+                <div class="tab-pane fade " id="riesgos" role="tabpanel" aria-labelledby="riesgos-tab">
                     @include('admin.desk.riesgos.riesgos')
                 </div>
             @endcan

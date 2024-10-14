@@ -410,7 +410,7 @@ class EV360ObjetivosController extends Controller
             if ($request->ajax()) {
                 return datatables()->of($objetivos)->toJson();
             }
-    
+
             return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
         } catch (\Throwable $th) {
             abort(404);

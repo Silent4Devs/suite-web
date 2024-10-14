@@ -39,7 +39,7 @@
 
         .img-size {
             /* 	padding: 0;
-                        margin: 0; */
+                                        margin: 0; */
             height: 450px;
             width: 700px;
             background-size: cover;
@@ -87,9 +87,9 @@
         /* se comento por que se descuadra la cabecera de la tabla y el registro */
         /* .table tr th:nth-child(6){
 
-                        width:415px !important;
-                        max-width:415px !important;
-                    } */
+                                        width:415px !important;
+                                        max-width:415px !important;
+                                    } */
 
         .table tr td:nth-child(5) {
 
@@ -147,7 +147,7 @@
             </div> --}}
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="" href="{{ route('admin.concientizacion-sgis.create') }}">
+            <a class="btn btn-primary" href="{{ route('admin.concientizacion-sgis.create') }}">
                       Agregar <strong>+</strong>
             </a>
         </div>
@@ -447,18 +447,18 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                                    <li
-                                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                                    data-slide-to='${idx}'></li>`})}
+                                                                                    <li
+                                                                                    data-target='#carouselExampleIndicators${row.id}'
+                                                                                    data-slide-to='${idx}'></li>`})}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         const [extension, ...nameParts] = archivo.documento.split('.').reverse();
                                                         if(extension == 'pdf'){
                                                         return `
-                                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                                        <iframe seamless class='img-size' src='{{ asset('storage/documentos_concientSgsi') }}/${archivo.documento}'></iframe>
-                                                                    </div>`
+                                                                                    <div class='carousel-item ${idx==0?"active":""}'>
+                                                                                        <iframe seamless class='img-size' src='{{ asset('storage/documentos_concientSgsi') }}/${archivo.documento}'></iframe>
+                                                                                    </div>`
                                                 }else{
                                                     return ` <
                                             div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
@@ -512,30 +512,30 @@
                 div > <
                     /div> < /
                 div > `
-                        return archivo;
-                    }
-                    }, {
-                    data: 'actions',
-                    name: '{{ trans('global.actions') }}'
-                    }],
-                    orderCellsTop: true,
-                        order: [
-                            [0, 'desc']
-                        ]
-                    };
-                    let table = $('.datatable-ConcientizacionSgi').DataTable(dtOverrideGlobals);
-                    // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-                    //     $($.fn.dataTable.tables(true)).DataTable()
-                    //         .columns.adjust();
-                    // });
-                    // $('.datatable thead').on('input', '.search', function() {
-                    //     let strict = $(this).attr('strict') || false
-                    //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-                    //     table
-                    //         .column($(this).parent().index())
-                    //         .search(value, strict)
-                    //         .draw()
-                    // });
-                    });
+                                        return archivo;
+                                    }
+                                    }, {
+                                    data: 'actions',
+                                    name: '{{ trans('global.actions') }}'
+                                    }],
+                                    orderCellsTop: true,
+                                        order: [
+                                            [0, 'desc']
+                                        ]
+                                    };
+                                    let table = $('.datatable-ConcientizacionSgi').DataTable(dtOverrideGlobals);
+                                    // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                                    //     $($.fn.dataTable.tables(true)).DataTable()
+                                    //         .columns.adjust();
+                                    // });
+                                    // $('.datatable thead').on('input', '.search', function() {
+                                    //     let strict = $(this).attr('strict') || false
+                                    //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+                                    //     table
+                                    //         .column($(this).parent().index())
+                                    //         .search(value, strict)
+                                    //         .draw()
+                                    // });
+                                    });
     </script>
 @endsection
