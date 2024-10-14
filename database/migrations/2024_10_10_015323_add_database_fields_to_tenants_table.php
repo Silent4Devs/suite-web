@@ -12,10 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('tenants', function (Blueprint $table) {
-            $table->string('db_name')->after('name');
+            $table->string('db_name')->after('name')->nullable();
             $table->string('db_host')->default('127.0.0.1')->after('db_name');
-            $table->string('db_username')->after('db_host');
-            $table->string('db_password')->after('db_username');
+            $table->string('db_username')->after('db_host')->nullable();
+            $table->string('db_password')->after('db_username')->nullable();
         });
     }
 
