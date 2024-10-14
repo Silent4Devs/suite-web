@@ -498,153 +498,11 @@
                     </div>
                 @endif
             </div>
-
-
-            <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">Tipo
-                    Cambio
-                    <font class="asterisco">*
-                    </font>
-                </label>
-                @php
-                    $divisas = [
-                        '0' => 'MXN',
-                        '1' => 'USD',
-                        '2' => 'EUR',
-                        '3' => 'GBP',
-                        '4' => 'CHF',
-                        '5' => 'JPY',
-                        '6' => 'HKD',
-                        '7' => 'CAD',
-                        '8' => 'CNY',
-                        '9' => 'AUD',
-                        '10' => 'BRL',
-                        '11' => 'RUB',
-                    ];
-                @endphp
-                <div id="contenedor_dolares">
-                    <select name="tipo_cambio" id="dolares_filtro" class="form-control" required>
-                        <option value="">Seleccione </option>
-                        @foreach ($divisas as $key => $divisa)
-                            <option value='{{ $divisa }}'>{{ $divisa }}</option>
-                        @endforeach
-                    </select>
-
-                    @if ($errors->has('tipo_cambio'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('tipo_cambio') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
         </div>
-        {{-- modal --}}
+
+        @livewire('moneda-ext-contratos-create')
+
         <div class="col s12">
-            <div id="campos_dolares" class="{{ $contratos->tipo_cambio == 'USD' ? '' : 'd-none' }}">
-                <div class="col l12 m12 s12">
-                    <div class="card hoverable">
-                        <div class="card-content center-align">
-
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Valor del Dolar
-                                    </label>
-                                    {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'valor_dol',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto de
-                                        pago
-                                    </label>
-                                    {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto
-                                        Máximo
-                                    </label>
-                                    {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_maximo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto
-                                        Mínimo
-                                    </label>
-                                    {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_minimo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                            </div>
-                            <div class="row">
-                                @php
-                                    $contrato_importe_total = $contratos->monto_pago;
-                                @endphp
-                                @foreach ($contratos->ampliaciones as $ampliacion)
-                                    @php
-                                        $contrato_importe_total += $ampliacion->importe;
-                                    @endphp
-                                @endforeach
-                                </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto de
-                        Pago M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('monto_pago', null, [
-                        'id' => 'teste',
-                        'class' => 'form-control',
-                        'autocomplete' => 'off',
-                        'required',
-                    ]) !!}
-                    @if ($errors->has('monto_pago'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('monto_pago') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto
-                        máximo
-                        M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('maximo', null, ['id' => 'este', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto
-                        mínimo
-                        M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('minimo', null, [
-                        'id' => 'prueba',
-                        'class' => 'form-control',
-                        'autocomplete' => 'off',
-                        'required',
-                    ]) !!}
-                </div>
-            </div>
-
             <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
                 <div class="col s12 m4 distancia">
                     <p style="color:#2395AA">
@@ -1192,7 +1050,7 @@
     });
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {
         console.log('select');
         if ($('#dolares_filtro option:selected').attr('value') == 'USD') {
@@ -1202,7 +1060,7 @@
         }
 
     });
-</script>
+</script> --}}
 
 <script type="text/javascript">
     $('#check_aplica_fianza').click(function(e) {

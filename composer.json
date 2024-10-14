@@ -22,6 +22,7 @@
     "league/flysystem-ftp": "^3.28",
     "livewire/livewire": "^3.0",
     "maatwebsite/excel": "^3.1",
+    "mgcodeur/laravel-currency-converter": "^1.0",
     "nuovo/spreadsheet-reader": "^0.5.11",
     "owen-it/laravel-auditing": "^13.5",
     "php-amqplib/php-amqplib": "^3.7",
