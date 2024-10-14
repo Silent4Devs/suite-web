@@ -12,7 +12,7 @@
                 <select name="tipo_cambio" wire:model.live="tipo_cambio" id="tipo_cambio"
                 {{-- id="dolares_filtro" --}}
                  class="form-control" required>
-                    <option value="">Seleccione una moneda</option>
+                    <option value="" readonly selected>Seleccione una moneda</option>
                     @foreach ($divisas as $key => $divisa)
                         <option value='{{ $divisa }}'>{{ $divisa }}</option>
                     @endforeach
@@ -31,9 +31,9 @@
                 <label for="valor_dolar" class="txt-tamaño">
                     Valor de la moneda (a día de hoy)
                 </label>
-                <input class="form-control" type="number" step=".01" name="valor_dolar" id="valor_dolar" wire:model="valor_moneda" wire:change="valorManual($event.target.value)"
+                <input class="form-control" type="number" step=".01" name="valor_dolar" id="valor_dolar" wire:model="valor_dolar" wire:change="valorManual($event.target.value)"
                     @if (!$edit_moneda)
-                        disabled
+                        readonly
                     @endif>
             </div>
             <div class="form-group col-md-4 d-flex align-items-center">
@@ -80,7 +80,10 @@
         <div class="form-group col-md-4">
             <label for="monto_pago" class="txt-tamaño">Monto de
                 Pago M.X.N.<font class="asterisco">*</font></label>
-                <input type="number" name="monto_pago" wire:model.live="monto_pago" class="form-control" step=".01" required>
+                <input type="number" name="monto_pago" wire:model.live="monto_pago" class="form-control" step=".01" required
+                @if ($moneda_extranjera)
+                readonly @endif
+                >
             @if ($errors->has('monto_pago'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('monto_pago') }}
@@ -91,13 +94,17 @@
             <label for="maximo" class="txt-tamaño">Monto
                 máximo
                 M.X.N.<font class="asterisco">*</font></label>
-                <input type="number" name="maximo" wire:model.live="maximo" class="form-control" step=".01" required>
+                <input type="number" name="maximo" wire:model.live="maximo" class="form-control" step=".01" required
+                @if ($moneda_extranjera)
+                readonly @endif>
         </div>
         <div class="form-group col-md-4">
             <label for="minimo" class="txt-tamaño">Monto
                 mínimo
                 M.X.N.<font class="asterisco">*</font></label>
-                <input type="number" name="minimo" wire:model.live="minimo" class="form-control" step=".01" required>
+                <input type="number" name="minimo" wire:model.live="minimo" class="form-control" step=".01" required
+                @if ($moneda_extranjera)
+                readonly @endif>
         </div>
     </div>
 </div>

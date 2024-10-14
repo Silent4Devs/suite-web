@@ -12,7 +12,6 @@ class MonedaExtContratosCreate extends Component
     public $tipo_cambio = '';
 
     public $valor_dolar = 0;
-    public $valor_moneda = 0;
 
     public $moneda_extranjera = false;
 
@@ -62,21 +61,21 @@ class MonedaExtContratosCreate extends Component
 
     public function updatedTipoCambio($value)
     {
-        if ($value != 'MXN') {
+        if($value != 'MXN')
+        {
             $this->moneda_extranjera = true;
             $convertedAmount = CurrencyConverter::convert(1.0)
-                ->from($value)
-                ->to('MXN')
-                ->format();
+            ->from($value)
+            ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+            ->format();
 
-            $this->valor_moneda = number_format(floatval($convertedAmount), 2);
-        } else {
+            $this->valor_dolar = floatval($convertedAmount);
+        }else{
             $this->moneda_extranjera = false;
-            $this->valor_moneda = 0;
+            $this->valor_dolar = 0;
             $this->edit_moneda = false;
         }
     }
-
 
     public function updatedEditMoneda($bool)
     {
@@ -88,21 +87,23 @@ class MonedaExtContratosCreate extends Component
             ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
             ->format();
 
-            $this->valor_moneda = floatval($convertedAmount);
+            $this->valor_dolar = floatval($convertedAmount);
 
-            $this->valorManual($this->valor_moneda);
-            // dd($convertedAmount, $this->valor_moneda);
+            $this->valorManual($this->valor_dolar);
+
         }
     }
 
     public function valorManual($val)
     {
         $valor = floatval($val);
-        $this->monto_pago = number_format(floatval($this->monto_dolares) * $valor, 2);
-        $this->maximo = number_format(floatval($this->maximo_dolares) * $valor, 2);
-        $this->minimo = number_format(floatval($this->minimo_dolares) * $valor, 2);
-    }
 
+        $this->monto_pago = (floatval($this->monto_dolares) * $valor);
+
+        $this->maximo = (floatval($this->maximo_dolares) * $valor);
+
+        $this->minimo = (floatval($this->minimo_dolares) * $valor);
+    }
 
     public function convertirME($valor, $tipo)
     {
@@ -118,19 +119,19 @@ class MonedaExtContratosCreate extends Component
             case 'monto':
                 # code...
                 $this->monto_dolares = $valor;
-                $this->monto_pago = number_format(floatval($convertirDolares));
+                $this->monto_pago = floatval($convertirDolares);
                 break;
 
             case 'maximo':
                 # code...
                 $this->maximo_dolares = $valor;
-                $this->maximo = number_format(floatval($convertirDolares));
+                $this->maximo = floatval($convertirDolares);
                 break;
 
             case 'minimo':
                 # code...
                 $this->minimo_dolares = $valor;
-                $this->minimo = number_format(floatval($convertirDolares));
+                $this->minimo = floatval($convertirDolares);
                 break;
 
             default:

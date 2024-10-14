@@ -108,7 +108,6 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required|max:500',
@@ -129,9 +128,9 @@ class ContratosController extends AppBaseController
             'fecha_firma' => 'required|before_or_equal:fecha_fin',
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
-            'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
-            'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
+            'monto_pago' => ['required'],
+            'minimo' => ['required'],
+            'maximo' => ['required'],
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
             // "creacion_proyecto" => "nullable|boolean",
@@ -146,9 +145,9 @@ class ContratosController extends AppBaseController
             'razon_soc_id' => 'required|integer',
         ], [
             'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
-            'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            // 'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            // 'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            // 'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
             'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
