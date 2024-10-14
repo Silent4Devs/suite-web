@@ -93,17 +93,32 @@
         </a>
     </div>
     @if ($place == 'notificaciones-page')
-        <div class="text-muted" style="flex-basis: calc(15% - 2px)">
-            <i class="fas fa-clock"></i>
-            {{ \Carbon\Carbon::parse($last_unread_notification->data['time'])->diffForHumans() }}
+    <div class="text-muted" style="flex-basis: calc(15% - 2px)">
+        <i class="fas fa-clock"></i>
+        {{ \Carbon\Carbon::parse($last_unread_notification->data['time'])->diffForHumans() }}
+    </div>
+
+    @if (!$readed)
+        <div style="flex-basis: calc(5% - 2px)">
+            <span class="btn-read" data-toggle="tooltip" data-placement="top" title="Marcar como leído"
+                wire:click="markAsRead('{{ $last_unread_notification->id }}')">
+                <i class="fas fa-check"></i>
+            </span>
         </div>
-        @if (!$readed)
-            <div style="flex-basis: calc(5% - 2px)">
-                <span class="btn-read" data-toggle="tooltip" data-placement="top" title="Marcar como leído"
-                    wire:click="markAsRead('{{ $last_unread_notification->id }}')">
-                    <i class="fas fa-check"></i>
-                </span>
-            </div>
-        @endif
     @endif
+
+    <!-- Botón de eliminar -->
+    <div style="flex-basis: calc(5% - 2px)">
+        <span class="btn-delete" data-toggle="tooltip" data-placement="top" onclick="reloadPage()" title="Eliminar notificación"
+            wire:click="deleteNotification('{{ $last_unread_notification->id }}')">
+            <i class="fas fa-trash"></i>
+        </span>
+    </div>
+@endif
 </div>
+
+<script>
+    function reloadPage() {
+        location.reload(); // Recarga la página
+    }
+</script>
