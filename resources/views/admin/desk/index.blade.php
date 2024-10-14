@@ -14,8 +14,6 @@
     </style>
 @endsection
 @section('content')
-    {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
-
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
 
     @include('partials.flashMessages')
