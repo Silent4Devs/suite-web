@@ -204,7 +204,7 @@
 
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
-        <div class="distancia form-group col-md-6">
+        <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">N°
                 Contrato<font class="asterisco">*
                 </font></label>
@@ -224,7 +224,7 @@
                 @endif --}}
         </div>
 
-        <div class="distancia form-group col-md-6">
+        <div class="distancia form-group col-md-4">
             <label for="" class="txt-tamaño">Tipo de
                 contrato<font class="asterisco">*</font></label>
             <div>
@@ -265,6 +265,20 @@
                 ) }}
             </div>
         </div>
+
+        <div class="distancia form-group col-md-4">
+            <label for="razon_soc_id">Razón Social con la que se prestará el servicio</label>
+            <select class="form-control" name="razon_soc_id" id="razon_soc_id" {{ $show_contrato ? 'disabled' : 'required' }}>
+                <option disabled {{ $contrato->razonSocial ? '' : 'selected' }}>-- Seleccione una Razón Social --</option>
+                @foreach ($razones_sociales as $razon)
+                    <option value="{{ $razon->id }}"
+                        {{ (isset($contrato->razonSocial) && $contrato->razonSocial->id == $razon->id) ? 'selected' : '' }}>
+                        {{ $razon->descripcion }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
     </div>
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">

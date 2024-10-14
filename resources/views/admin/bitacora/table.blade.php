@@ -189,7 +189,7 @@
         <div class="row">
             @if ($contratos->no_contrato == null)
                 <div class="distancia
-            form-group col-md-6">
+            form-group col-md-4">
                     <label for="no_contrato" class="txt-tamaño">N° Contrato
                         <font class="asterisco">*
                         </font>
@@ -214,10 +214,7 @@
                     {{ $contratos->no_contrato }}</p>
             @endif
 
-
-
-
-            <div class="distancia form-group col-md-6">
+            <div class="distancia form-group col-md-4">
                 <label for="tipo_contrato" class="txt-tamaño">&nbsp;Tipo de
                     contrato
                     <font class="asterisco">*</font>
@@ -255,6 +252,16 @@
                         {{ $errors->first('tipo_contrato') }}
                     </div>
                 @endif
+            </div>
+
+            <div class="distancia form-group col-md-4">
+                <label for="razon_soc_id">Razón Social con la que se prestara el servicio</label>
+                <select class=" form-control" name="razon_soc_id" id="razon_soc_id" required>
+                    <option selected disabled>-- Seleccione una Razón Social --</option>
+                    @foreach ($razones_sociales as $keyRazon => $razon)
+                        <option value="{{ $razon->id }}">{{ $razon->descripcion }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="row">

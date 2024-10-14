@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Sucursal;
 
 class ContratosController extends AppBaseController
 {
@@ -92,10 +93,11 @@ class ContratosController extends AppBaseController
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
         $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
+        $razones_sociales = Sucursal::getArchivoFalse();
 
         $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
-        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma', 'razones_sociales'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
     /**
@@ -141,6 +143,7 @@ class ContratosController extends AppBaseController
             'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
             'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
             'horas_proyecto' => 'nullable|integer|min:0',
+            'razon_soc_id' => 'required|integer',
         ], [
             'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -271,6 +274,7 @@ class ContratosController extends AppBaseController
             'no_proyecto' => $request->no_proyecto,
             'area_id' => $request->area_id,
             // 'firma1' => $firma,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $input);
 
         $convergencia = ConvergenciaContratos::create([
@@ -446,6 +450,8 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            $razones_sociales = Sucursal::getArchivoFalse();
+
             // aprobadores
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
             $firmar = false;
@@ -461,7 +467,7 @@ class ContratosController extends AppBaseController
                 }
             }
 
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.show', compact('razones_sociales', 'proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
@@ -571,6 +577,8 @@ class ContratosController extends AppBaseController
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
+            $razones_sociales = Sucursal::getArchivoFalse();
+
             // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
             // dd($firma->aprobadores);
@@ -590,7 +598,7 @@ class ContratosController extends AppBaseController
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales','proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -630,6 +638,7 @@ class ContratosController extends AppBaseController
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            'razon_soc_id' => 'required|integer',
         ], [
             'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -744,6 +753,7 @@ class ContratosController extends AppBaseController
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
             'updated_by' => User::getCurrentUser()->empleado->id,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $id);
 
         $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
