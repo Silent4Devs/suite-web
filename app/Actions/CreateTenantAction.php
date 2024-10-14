@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Tenant;
 use App\Services\TenantManager;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -53,5 +54,11 @@ class CreateTenantAction
             'artisanCommand' => 'migrate --database=tenant',
             '--tenants' => tenant('id'),
         ]);
+
+        // Artisan::call('migrate', [
+        //     '--database' => 'tenant_',
+        //     '--path' => 'database/migration/tenat',
+        //     '--force' => true,
+        // ]);
     }
 }
