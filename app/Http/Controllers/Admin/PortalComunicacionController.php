@@ -40,7 +40,7 @@ class PortalComunicacionController extends Controller
 
         $nuevos = Empleado::getNuevos();
         $cumpleaños = Empleado::getCumpleanos();
-
+        dd($nuevos);
 
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
