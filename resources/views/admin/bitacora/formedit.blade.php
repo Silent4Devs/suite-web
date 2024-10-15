@@ -268,11 +268,13 @@
 
         <div class="distancia form-group col-md-4">
             <label for="razon_soc_id">Razón Social con la que se prestará el servicio</label>
-            <select class="form-control" name="razon_soc_id" id="razon_soc_id" {{ $show_contrato ? 'disabled' : 'required' }}>
-                <option disabled {{ $contrato->razonSocial ? '' : 'selected' }}>-- Seleccione una Razón Social --</option>
+            <select class="form-control" name="razon_soc_id" id="razon_soc_id"
+                {{ $show_contrato ? 'disabled' : 'required' }}>
+                <option disabled {{ $contrato->razonSocial ? '' : 'selected' }}>-- Seleccione una Razón Social --
+                </option>
                 @foreach ($razones_sociales as $razon)
                     <option value="{{ $razon->id }}"
-                        {{ (isset($contrato->razonSocial) && $contrato->razonSocial->id == $razon->id) ? 'selected' : '' }}>
+                        {{ isset($contrato->razonSocial) && $contrato->razonSocial->id == $razon->id ? 'selected' : '' }}>
                         {{ $razon->descripcion }}
                     </option>
                 @endforeach
@@ -585,202 +587,50 @@
                 </div>
             @endif
         </div>
-        <div class="form-group col-md-4">
-            <label for="no_contrato" class="txt-tamaño">Tipo
-                Cambio<font class="asterisco">*</font></label>
-            @php
-                $divisas = [
-                    '0' => 'MXN',
-                    '1' => 'USD',
-                    '2' => 'EUR',
-                    '3' => 'GBP',
-                    '4' => 'CHF',
-                    '5' => 'JPY',
-                    '6' => 'HKD',
-                    '7' => 'CAD',
-                    '8' => 'CNY',
-                    '9' => 'AUD',
-                    '10' => 'BRL',
-                    '11' => 'RUB',
-                ];
-            @endphp
-            <div id="contenedor_dolares">
-                <select name="tipo_cambio" id="dolares_filtro" class="form-control"
-                    @if ($show_contrato) disabled @endif required>
-                    <option value="">Seleccione </option>
-                    @foreach ($divisas as $key => $divisa)
-                        <option value='{{ $divisa }}'
-                            {{ $divisa == $contratos->tipo_cambio ? 'selected' : '' }}>
-                            {{ $divisa }}</option>
-                    @endforeach
-                </select>
-
-                @if ($errors->has('tipo_cambio'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('tipo_cambio') }}
-                    </div>
-                @endif
-            </div>
-        </div>
     </div>
-    @if ($contrato->tipo_cambio == 'USD')
-        <div id="campos_dolares">
-        @else
-            <div id="campos_dolares" class="d-none">
-    @endif
-    <div class="col s12">
-        <div class="col l12 m12 s12">
-            <div class="card-body center-align">
-                <table class="table">
-                    <thead style="background-color: transparent !important; color:#3086AF !important;">
-                        <tr>
 
-                            <br>
-                            <th>
-                                Valor del Dolar
-                            </th>
-                            <th>
-                                Monto
-                                de
-                                pago
-                            </th>
-                            <th>
-                                Monto
-                                Máximo
+    @livewire('moneda-ext-contratos-edit', ['id_contrato' => $contrato->id])
 
-                            </th>
-                            <th>
-                                Monto
-                                Mínimo
-                            </th>
+    <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12">
+            <table class="table">
+                <thead style="background-color: transparent !important; color:#3086AF !important;">
+                    <th class=""> <label> ¿Aplica fianza o
+                            responsabilidad civil? </label></th>
+                    <th class=" txt-frm">
+                        <label>
+                            <font class="td_fianza">Número de folio</font>
+                        </label>
+                    </th>
+                    <th class=" txt-frm">
+                        <label>
+                            <font class="td_fianza">Adjuntar documento</font>
+                        </label>
+                    </th>
+                </thead>
+                <tbody>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-
-                                {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                    'class' => 'form-control',
-                                    'id' => 'valor_dol',
-                                    'autocomplete' => 'off',
-                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    $show_contrato ? 'readonly' : '',
-                                ]) !!}
-
-                            </td>
-
-                            <td>
-                                {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                    'class' => 'form-control',
-                                    'id' => 'dolar',
-                                    'autocomplete' => 'off',
-                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    $show_contrato ? 'readonly' : '',
-                                ]) !!}
-                            </td>
-
-
-                            <td>
-                                {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                    'class' => 'form-control',
-                                    'id' => 'dolar_maximo',
-                                    'autocomplete' => 'off',
-                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    $show_contrato ? 'readonly' : '',
-                                ]) !!}
-
-                            </td>
-
-                            <td>
-                                {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                    'class' => 'form-control',
-                                    'id' => 'dolar_minimo',
-                                    'autocomplete' => 'off',
-                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    $show_contrato ? 'readonly' : '',
-                                ]) !!}
-
-                            </td>
-
-
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-    <div class="distancia form-group col-md-4">
-        <label for="no_contrato" class="txt-tamaño">Monto
-            de Pago M.X.N.<font class="asterisco">*</font></label>
-        {!! Form::text('monto_pago', $contratos->monto_pago, [
-            'class' => 'form-control',
-            'name' => 'monto_pago',
-            'id' => 'monto_pago',
-            'autocomplete' => 'off',
-            'onkeyup' => 'formatarMoeda()',
-            $show_contrato ? 'readonly' : '',
-            'required',
-        ]) !!}
-    </div>
-    <div class="distancia form-group col-md-4">
-        <label for="no_contrato" class="txt-tamaño">Monto
-            máximo M.X.N.</label>
-        {!! Form::text('maximo', $contratos->maximo, [
-            'class' => 'form-control',
-            'autocomplete' => 'off',
-            'id' => 'maximo',
-            'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-            $show_contrato ? 'readonly' : '',
-        ]) !!}
-    </div>
-    <div class="distancia form-group col-md-4">
-        <label for="no_contrato" class="txt-tamaño">Monto
-            mínimo M.X.N.</label>
-        {!! Form::text('minimo', $contratos->minimo, [
-            'class' => 'form-control',
-            'id' => 'minimo',
-            'autocomplete' => 'off',
-            'onkeypress' => "$(this).mask('$ ###,##0.00', {reverse: true});",
-            $show_contrato ? 'readonly' : '',
-        ]) !!}
-    </div>
-</div>
-
-<div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-    <div class="col s12 m12">
-        <table class="table">
-            <thead style="background-color: transparent !important; color:#3086AF !important;">
-                <th class=""> <label> ¿Aplica fianza o
-                        responsabilidad civil? </label></th>
-                <th class=" txt-frm">
-                    <label>
-                        <font class="td_fianza">Número de folio</font>
-                    </label>
-                </th>
-                <th class=" txt-frm">
-                    <label>
-                        <font class="td_fianza">Adjuntar documento</font>
-                    </label>
-                </th>
-            </thead>
-            <tbody>
-
-                <td>
-                    <div class="inline input-field linea">
-                        <div class="switch" style="margin-top: -5px; margin-left: 8px;">
-                            @if (isset($contratos))
-                                @if ($contrato->documento)
-                                    <div class="custom-control custom-switch form">
-                                        <input type="checkbox" class="custom-control-input" id="check_fianza"
-                                            name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }} checked>
-                                        <label class="custom-control-label" for="check_fianza">No/Sí</label>
-                                    </div>
-                                    {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza" checked
+                    <td>
+                        <div class="inline input-field linea">
+                            <div class="switch" style="margin-top: -5px; margin-left: 8px;">
+                                @if (isset($contratos))
+                                    @if ($contrato->documento)
+                                        <div class="custom-control custom-switch form">
+                                            <input type="checkbox" class="custom-control-input" id="check_fianza"
+                                                name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }} checked>
+                                            <label class="custom-control-label" for="check_fianza">No/Sí</label>
+                                        </div>
+                                        {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza" checked
                                             {{ $show_contrato ? 'disabled' : '' }}> --}}
+                                    @else
+                                        <div class="custom-control custom-switch form">
+                                            <input type="checkbox" class="custom-control-input" id="check_fianza"
+                                                name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}>
+                                            <label class="custom-control-label" for="check_fianza">No/Sí</label>
+                                        </div>
+                                        {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza"
+                                            {{ $show_contrato ? 'disabled' : '' }}> --}}
+                                    @endif
                                 @else
                                     <div class="custom-control custom-switch form">
                                         <input type="checkbox" class="custom-control-input" id="check_fianza"
@@ -788,48 +638,39 @@
                                         <label class="custom-control-label" for="check_fianza">No/Sí</label>
                                     </div>
                                     {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza"
-                                            {{ $show_contrato ? 'disabled' : '' }}> --}}
-                                @endif
-                            @else
-                                <div class="custom-control custom-switch form">
-                                    <input type="checkbox" class="custom-control-input" id="check_fianza"
-                                        name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}>
-                                    <label class="custom-control-label" for="check_fianza">No/Sí</label>
-                                </div>
-                                {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza"
                                         {{ $show_contrato ? 'disabled' : '' }}> --}}
-                            @endif
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                </td>
+                    </td>
 
-                <td>
-                    <div class="td_fianza">
-                        {!! Form::text('folio', $contratos->folio, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
-                    </div>
-                </td>
-                <td>
-                    <div class="td_fianza">
-                        <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
-                    </div>
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                    </div>
-                    @if ($contrato->documento != null)
-                        <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                            target="_blank" class="descarga_archivo" style="margin-left:20px;">
-                            Descargar
-                        </a>
-                    @endif
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                    </div>
+                    <td>
+                        <div class="td_fianza">
+                            {!! Form::text('folio', $contratos->folio, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td_fianza">
+                            <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
+                        </div>
+                        <div class="ml-4 display-flex">
+                            <label class="red-text">{{ $errors->first('Type') }}</label>
+                        </div>
+                        @if ($contrato->documento != null)
+                            <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
+                                target="_blank" class="descarga_archivo" style="margin-left:20px;">
+                                Descargar
+                            </a>
+                        @endif
+                        <div class="ml-4 display-flex">
+                            <label class="red-text">{{ $errors->first('Type') }}</label>
+                        </div>
+        </div>
+        </td>
+
+        </tbody>
+        </table>
     </div>
-    </td>
-
-    </tbody>
-    </table>
-</div>
 </div>
 
 <div class="row">
@@ -1391,7 +1232,7 @@
     $("#dolares_filtro").select2('destroy');
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {
         console.log('select');
         if ($('#dolares_filtro option:selected').attr('value') == 'USD') {
@@ -1401,7 +1242,7 @@
         }
 
     });
-</script>
+</script> --}}
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const url = "{{ route('contract_manager.contratos-katbol.validar-documento') }}";
