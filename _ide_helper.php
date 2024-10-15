@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.48.19.
+ * Generated for Laravel 10.48.22.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -9311,6 +9311,86 @@ namespace Illuminate\Support\Facades {
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @param int $limit
+         * @return array 
+         * @static 
+         */        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */        public static function clear($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */        public static function getQueue($queue)
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */        public static function getConnection()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */        public static function getRedis()
+        {
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
          * Get the maximum number of attempts for an object-based queue handler.
          *
          * @param mixed $job
@@ -9318,7 +9398,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobTries($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobTries($job);
         }
                     /**
@@ -9329,7 +9409,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -9340,7 +9420,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -9351,7 +9431,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -9360,7 +9440,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -9371,7 +9451,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Illuminate\Queue\RedisQueue $instance */
                         $instance->setContainer($container);
         }
             }
@@ -17020,6 +17100,48 @@ namespace Maatwebsite\Excel\Facades {
         {
                         /** @var \Maatwebsite\Excel\Excel $instance */
                         return $instance->queueImport($import, $filePath, $disk, $readerType);
+        }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */        public static function macro($name, $macro)
+        {
+                        \Maatwebsite\Excel\Excel::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */        public static function mixin($mixin, $replace = true)
+        {
+                        \Maatwebsite\Excel\Excel::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */        public static function hasMacro($name)
+        {
+                        return \Maatwebsite\Excel\Excel::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */        public static function flushMacros()
+        {
+                        \Maatwebsite\Excel\Excel::flushMacros();
         }
                     /**
          * 

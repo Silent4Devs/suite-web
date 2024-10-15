@@ -19,6 +19,7 @@ class AnalisisdeRiesgosController extends Controller
 {
     use ObtenerOrganizacion;
 
+
     public function menu()
     {
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -221,12 +222,16 @@ class AnalisisdeRiesgosController extends Controller
 
     public function ShowRiskAnalysis($id)
     {
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
         $riskAnalysis = TBRiskAnalysisGeneralModel::FindOrFail($id);
         $newDate = Carbon::createFromFormat('Y-m-d', $riskAnalysis->fecha)->format('d-m-Y');
         $riskAnalysis->fecha = $newDate;
         $riskAnalysisId = $riskAnalysis->id;
         // dd($riskAnalysis);
 
-        return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis','riskAnalysisId'));
+        return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis','riskAnalysisId','logo_actual', 'empresa_actual'));
     }
 }

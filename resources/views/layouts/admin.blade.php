@@ -80,6 +80,8 @@
     {{-- Laravel vite --}}
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
+    {{-- library mathjs --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.0/math.min.js"></script>
 </head>
 
 <body style="zoom: 99%">

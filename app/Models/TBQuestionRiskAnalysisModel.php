@@ -34,4 +34,9 @@ class TBQuestionRiskAnalysisModel extends Model
     {
         return $this->belongsToMany(TBDataQuestionRiskAnalysisModel::class, 'questions_ar_data_questions_ar_pivote', 'question_id', 'dataquestion_id');
     }
+
+    public function getFormula()
+    {
+        return $this->hasOne(TBFormulaRiskAnalysisModel::class,'question_id','id');
+    }
 }

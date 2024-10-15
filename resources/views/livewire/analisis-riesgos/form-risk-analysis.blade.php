@@ -29,9 +29,10 @@
         </button>
     </div>
     <hr style="margin-top: 20px;">
-    <div>
-        <table class="table table-bordered w-100 datatable datatable-risk-analysis" id="datatable-risk-analysis">
-            <thead class="thead-dark">
+    <div class="datatable-fix">
+        <table class="table w-100 datatable datatable-risk-analysis" id="datatable-risk-analysis">
+            {{-- id="datatable_timesheet" class="table w-100 datatable_timesheet_registros_reportes" --}}
+            <thead class="">
                 <tr>
                     @foreach ($questionSettigns as $questionSettign)
                         <th>
@@ -43,6 +44,7 @@
                             {{ $formulaSettign->formula->title }}
                         </th>
                     @endforeach
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -50,7 +52,7 @@
                     @foreach ($sheetTables as $sheetTable )
                     <tr>
                         @foreach ( $sheetTable->sheet->answersTable as $answerTable )
-                            @isset($sheetTable->sheet->answersTable->value)
+                            @isset($answerTable->value)
                                     <td>
                                         {{ $answerTable->value }}
                                     </td>
@@ -61,8 +63,23 @@
                             @endisset
                         @endforeach
                         <td>
-                            <div>
-                                <div class="d-flex align-items-start options">
+                            <div class="btn-group dropstart">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="material-symbols-outlined">
+                                        more_vert
+                                    </i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(false,{{$sheetTable->sheet->id}})">
+                                    <p class="m-0">Evaluar/editar formulario</p>
+                                </a></li>
+                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(true,{{$sheetTable->sheet->id}})">
+                                    <p class="m-0">Finalizar /editar formulario</p>
+                                </a></li>
+                                </ul>
+                              </div>
+                            {{-- <div> --}}
+                                {{-- <div class="d-flex align-items-start options">
                                     <div class="caja-options card card-body" style="border-radius: 0px !important; position: absolute;">
                                         <a type="button" data-toggle="modal" data-target="#formRiskAnalysis">
                                             <p class="m-0">Evaluar/editar formulario</p>
@@ -76,8 +93,9 @@
                                     <button class="btn pt-0">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
-                                </div>
-                            </div>
+                                </div> --}}
+
+                            {{-- </div> --}}
                         </td>
                     </tr>
                     @endforeach
@@ -92,53 +110,73 @@
         </table>
     </div>
 
+
     {{-- Modal --}}
-    <div wire:ignore class="modal fade" id="formRiskAnalysis" tabindex="-1"
-        aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content" style="background:none; border:none; gap:28px;">
-                <div class="card" style="width: 100%; margin:0px;">
-                    <form id='Form' class="card-body" onsubmit="return false;">
-                        @foreach ($sections as $section)
-                            <div style="width:100%; column-gap: 20px;">
-                                <div class="encabezado">
-                                    <div class="section d-flex justify-content-between" style="margin-top:15px;">
-                                        {{ $section->title }}
+            <div wire:loading>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div wire:loading.remove>
+                <div class="modal-content" style="background:none; border:none; gap:28px;">
+                    <div class="card d-flex align-items-center" style="width: 100%; margin:0px; padding-top:31px; padding-bottom:31px; background-color:{{$statusForm ? '#FFDEAC':'#FFFFD8'}};">
+                        @if (!$statusForm)
+                            <h3>Riesgo inicial</h3>
+                            <p class="m-0">Evalúa tu riesgo inicial</p>
+                        @else
+                            <h3>Riesgo Residual</h3>
+                            <p class="m-0">Evalúa tu riesgo residual</p>
+                        @endif
+                    </div>
+                    <div class="card" style="width: 100%; margin:0px;">
+                        <form id='Form' class="card-body" onsubmit="return false;">
+
+                            @foreach ($sections as $section)
+                                <div style="width:100%; column-gap: 20px;">
+                                    <div class="encabezado">
+                                        <div class="section d-flex justify-content-between" style="margin-top:15px;">
+                                            {{ $section->title }}
+                                        </div>
+                                        <div class="section2"></div>
                                     </div>
-                                    <div class="section2"></div>
-                                </div>
-                                <div class="row">
-                                    @foreach ($section->questions as $question)
-                                        <div class="col-{{ $question->size }}">
-                                            <div class="card">
-                                                <div class="card-body mb-0">
-                                                    <label>
-                                                        @if ($question->type != 10)
-                                                            {{ $question->title }}
-                                                            <span
-                                                                style="color:#FF0000">{{ $question->obligatory ? '*' : null }}</span>
-                                                        @endif
-                                                    </label>
-                                                    @include('admin.analisis-riesgos.tbFormMaker', [
-                                                        'question' => $question,
-                                                    ])
+                                    <div class="row">
+                                        @foreach ($section->questions as $question)
+                                            <div class="col-{{ $question->size }}">
+                                                <div class="card">
+                                                    <div class="card-body mb-0">
+                                                        <label>
+                                                            @if ($question->type != 10)
+                                                                {{ $question->title }}
+                                                                {{$question->type}}
+
+                                                                <span
+                                                                    style="color:#FF0000">{{ $question->obligatory ? '*' : null }}</span>
+                                                            @endif
+                                                        </label>
+                                                        @include('admin.analisis-riesgos.tbFormMaker', [
+                                                            'question' => $question,
+                                                        ])
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
+                            @endforeach
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="limpiarFormulario()">Close</button>
+                                <button type="submit" id="submitButton" >Enviar</button>
                             </div>
-                        @endforeach
-                        <div class="d-flex justify-content-end gap-3">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" id="submitButton">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card" style="width: 100%; margin:0px;">
-                    <div class="card-body">
-                        hola 2
+                        </form>
                     </div>
+                    <div class="card" style="width: 100%; margin:0px;">
+                        <div class="card-body">
+                            hola 2
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -216,19 +254,23 @@
         });
     </script>
 
-    <script>
-        $(function() {
-            let dtButtons = [];
+<script>
+    function limpiarFormulario() {
+        const form = document.getElementById('Form');
+        form.reset(); // Esto restablece los valores del formulario a los valores por defecto (vaciar si no hay valor predeterminado)
+    }
+</script>
 
-            let dtOverrideGlobals = {
-                pageLength: 5,
-                buttons: dtButtons,
-                processing: true,
-                retrieve: true,
-            };
-            let table = $('.datatable-risk-analysis').DataTable(dtOverrideGlobals);
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.on('scriptTabla', () => {
+            console.log('liwe');
+            setTimeout(() => {
+                tablaLivewire('datatable-risk-analysis');
+            }, 200);
         });
-    </script>
+    });
+</script>
 
     @yield('js')
     <script>
@@ -262,4 +304,7 @@
             })
         });
     </script>
+
+
+
 </div>
