@@ -11,8 +11,11 @@
                 class="form-control" required>
                 <option value="" readonly selected>Seleccione una moneda</option>
                 @foreach ($divisas as $key => $divisa)
-                    <option {{ old('tipo_cambio') == $divisa ? 'selected' : '' }} value='{{ $divisa }}'>
-                        {{ $divisa }}</option>
+                    <option
+                        {{ $tipo_cambio == $divisa || (old('tipo_cambio') == $divisa && $tipo_cambio == null) ? 'selected' : '' }}
+                        value="{{ $divisa }}">
+                        {{ $divisa }}
+                    </option>
                 @endforeach
             </select>
 

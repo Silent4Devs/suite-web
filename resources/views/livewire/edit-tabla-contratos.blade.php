@@ -5,64 +5,38 @@
             <div class="card-body blue-text" style="overflow-x:auto !important;">
                 <h3>Contrato</h3>
                 <table class="refresco table" id="tblContrato">
-                    <thead style="overflow-x:auto !important;">
+                    <thead>
                         <tr>
-                            <th>
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">No. contrato</p>
-                            </th>
-                            <th>
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Vigencia</p>
-                            </th>
-                            <th>
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Fase</p>
-                            </th>
-                            <th>
-                                @if ($contratos->tipo_cambio == 'USD')
-                                    <p></p>
-                                @else
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">IVA&nbsp;@for ($i = 0; $i < 20; $i++)
-                                            &nbsp;
-                                        @endfor
-                                    </p>
-                                @endif
-
-                            </th>
-                            <th>
-                                @if ($contratos->tipo_cambio == 'USD')
-                                    <p></p>
-                                @else
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">Subtotal&nbsp;
-                                        @for ($i = 0; $i < 20; $i++)
-                                            &nbsp;
-                                        @endfor
-                                    </p>
-                                @endif
-                            </th>
-                            <th>
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Monto&nbsp;total&nbsp;
-                                    @for ($i = 0; $i < 15; $i++)
-                                        &nbsp;
-                                    @endfor
-                                </p>
-                            </th>
-                            <th>
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Estado</p>
-                            </th>
-                            <th style="text-align: center">
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Habilitar ampliación</p>
-                            </th>
-                            <th style="text-align: center">
-                                <p class="grey-text" style="font-size:17px;font-weight:bold;">Convenio Modificatorio</p>
-                            </th>
+                            <th>No. contrato</th>
+                            <th>Vigencia</th>
+                            <th>Fase</th>
+                            @if (!empty($this->contratos->dolares))
+                                <th>Valor (USD) del contrato</th>
+                                <th>IVA (USD)</th>
+                                <th>Subtotal (USD)</th>
+                                <th>Monto de pago total (USD)</th>
+                            @endif
+                            <th>IVA</th>
+                            <th>Subtotal</th>
+                            <th>Monto de pago total</th>
+                            <th>Estado</th>
+                            <th style="text-align: center">Habilitar ampliación</th>
+                            <th style="text-align: center">Convenios Modificatorios</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $contrato_importe_total = $contratos->monto_pago;
+                            $contrato_importe_total_dolares = $contratos->dolares->monto_dolares ?? 0;
                         @endphp
                         @foreach ($contratos->ampliaciones as $ampliacion)
                             @php
                                 $contrato_importe_total += $ampliacion->importe;
+                                if (!empty($contratos->dolares)) {
+                                    # code...
+                                    $contrato_importe_total_dolares +=
+                                        $ampliacion->importe / $contratos->dolares->valor_dolar;
+                                }
                             @endphp
                         @endforeach
                         <tr class="black-text">
@@ -72,20 +46,23 @@
                                 {{ $contratos->vigencia_contrato }}
                             </td>
                             <td>{{ $contratos->fase }}</td>
+                            @if (!empty($contratos->dolares))
+                                <td>$ {{ number_format($contratos->dolares->valor_dolar, 2) }}</td>
+                                <td>$
+                                    {{ number_format(($contrato_importe_total_dolares / 1.16) * 0.16, 2) }}
+                                </td>
+                                <td>$
+                                    {{ number_format($contrato_importe_total_dolares / 1.16, 2) }}
+                                </td>
+                                <td>$
+                                    {{ number_format($contrato_importe_total_dolares, 2) }}
+                                </td>
+                            @endif
                             <td>
-                                @if ($contratos->tipo_cambio == 'USD')
-                                    <p></p>
-                                @else
-                                    $ {{ number_format(($contrato_importe_total / 1.16) * 0.16, 2) }}
-                                @endif
-
+                                $ {{ number_format(($contrato_importe_total / 1.16) * 0.16, 2) }}
                             </td>
                             <td>
-                                @if ($contratos->tipo_cambio == 'USD')
-                                    <p></p>
-                                @else
-                                    $ {{ number_format($contrato_importe_total / 1.16, 2) }}
-                                @endif
+                                $ {{ number_format($contrato_importe_total / 1.16, 2) }}
                             </td>
                             <td>
                                 $ {{ number_format($contrato_importe_total, 2) }}

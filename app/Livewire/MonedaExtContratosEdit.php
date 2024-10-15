@@ -2,10 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\ContractManager\Contrato;
 use Livewire\Component;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 
-class MonedaExtContratosCreate extends Component
+class MonedaExtContratosEdit extends Component
 {
     public $divisas;
 
@@ -25,14 +26,29 @@ class MonedaExtContratosCreate extends Component
     public $maximo = 0;
     public $minimo = 0;
 
-    public function mount()
+    public function mount($id_contrato)
     {
         // $currencies = CurrencyConverter::currencies()->get();
 
-        // convert 5 EUR to all currencies
-        // $convertedAmount = CurrencyConverter::convert(5)
-        //             ->from('EUR')
-        //             ->get();
+        $contratos = Contrato::where('id', $id_contrato)->first();
+        // dd($contratos);
+
+        if (!empty($contratos->dolares)) {
+            # code...
+            $this->moneda_extranjera = true;
+
+            $this->tipo_cambio = $contratos->tipo_cambio;
+
+            $this->valor_dolar = $contratos->dolares->valor_dolar;
+
+            $this->monto_dolares = $contratos->dolares->monto_dolares;
+            $this->maximo_dolares = $contratos->dolares->maximo_dolares;
+            $this->minimo_dolares = $contratos->dolares->minimo_dolares;
+        }
+
+        $this->monto_pago = $contratos->monto_pago;
+        $this->maximo = $contratos->maximo;
+        $this->minimo = $contratos->minimo;
 
         $this->divisas = [
             'MXN',
@@ -57,7 +73,7 @@ class MonedaExtContratosCreate extends Component
 
     public function render()
     {
-        return view('livewire.moneda-ext-contratos-create');
+        return view('livewire.moneda-ext-contratos-edit');
     }
 
     public function changeTipoCambio($value)

@@ -220,32 +220,57 @@
                     <font class="asterisco">*</font>
                 </label>
                 <select name="tipo_contrato" class="form-control required">
-                    <option value="Fábrica de desarrollo">Fábrica de desarrollo</option>
-                    <option value="Fábrica de pruebas">Fábrica de pruebas</option>
-                    <option value="Telecomunicaciones">Telecomunicaciones</option>
-                    <option value="Seguridad de la información">Seguridad de la información</option>
-                    <option value="Infraestructura">Infraestructura</option>
-                    <option value="Servicios en la Nube">Servicios en la Nube</option>
-                    <option value="Servicios de consultoría Normativa">Servicios de consultoría Normativa</option>
-                    <option value="Arrendamiento de Equipos">Arrendamiento de Equipos</option>
-                    <option value="Impresión">Impresión</option>
-                    <option value="Licenciamiento">Licenciamiento</option>
-                    <option value="Administrativo">Administrativo</option>
-                    <option value="Adquisición de papelería">Adquisición de papelería</option>
-                    <option value="Servicios de Consultoría">Servicios de Consultoría</option>
-                    <option value="Servicios Médicos">Servicios Médicos</option>
-                    <option value="Servicio de Seguros">Servicio de Seguros</option>
-                    <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
-                    <option value="Servicio de Limpieza">Servicio de Limpieza</option>
-                    <option value="Servicios de Alimentos">Servicios de Alimentos</option>
-                    <option value="Educación Continua">Educación Continua</option>
-                    <option value="Mantenimiento a Edificio">Mantenimiento a Edificio</option>
-                    <option value="Adquisición de Mascarillas">Adquisición de Mascarillas</option>
-                    <option value="Adquisición de Pruebas COVID">Adquisición de Pruebas COVID</option>
-                    <option value="Restauracion">Restauración de Edificios</option>
-                    <option value="Servicio">Servicio de Estacionamiento</option>
-                    <option value="Abastecimiento">Abastecimiento y Distribución de Revista y Periodicos</option>
-                    <option value="Otro">Otro</option>
+                    <option {{ old('tipo_contrato') == 'Fábrica de desarrollo' ? 'selected' : '' }}
+                        value="Fábrica de desarrollo">Fábrica de desarrollo</option>
+                    <option {{ old('tipo_contrato') == 'Fábrica de pruebas' ? 'selected' : '' }}
+                        value="Fábrica de pruebas">Fábrica de pruebas</option>
+                    <option {{ old('tipo_contrato') == 'Telecomunicaciones' ? 'selected' : '' }}
+                        value="Telecomunicaciones">Telecomunicaciones</option>
+                    <option {{ old('tipo_contrato') == 'Seguridad de la información' ? 'selected' : '' }}
+                        value="Seguridad de la información">Seguridad de la información</option>
+                    <option {{ old('tipo_contrato') == 'Infraestructura' ? 'selected' : '' }} value="Infraestructura">
+                        Infraestructura</option>
+                    <option {{ old('tipo_contrato') == 'Servicios en la Nube' ? 'selected' : '' }}
+                        value="Servicios en la Nube">Servicios en la Nube</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de consultoría Normativa' ? 'selected' : '' }}
+                        value="Servicios de consultoría Normativa">Servicios de consultoría Normativa</option>
+                    <option {{ old('tipo_contrato') == 'Arrendamiento de Equipos' ? 'selected' : '' }}
+                        value="Arrendamiento de Equipos">Arrendamiento de Equipos</option>
+                    <option {{ old('tipo_contrato') == 'Impresión' ? 'selected' : '' }} value="Impresión">Impresión
+                    </option>
+                    <option {{ old('tipo_contrato') == 'Licenciamiento' ? 'selected' : '' }} value="Licenciamiento">
+                        Licenciamiento</option>
+                    <option {{ old('tipo_contrato') == 'Administrativo' ? 'selected' : '' }} value="Administrativo">
+                        Administrativo</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de papelería' ? 'selected' : '' }}
+                        value="Adquisición de papelería">Adquisición de papelería</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de Consultoría' ? 'selected' : '' }}
+                        value="Servicios de Consultoría">Servicios de Consultoría</option>
+                    <option {{ old('tipo_contrato') == 'Servicios Médicos' ? 'selected' : '' }}
+                        value="Servicios Médicos">Servicios Médicos</option>
+                    <option {{ old('tipo_contrato') == 'Servicio de Seguros' ? 'selected' : '' }}
+                        value="Servicio de Seguros">Servicio de Seguros</option>
+                    <option {{ old('tipo_contrato') == 'Seguridad y Vigilancia' ? 'selected' : '' }}
+                        value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                    <option {{ old('tipo_contrato') == 'Servicio de Limpieza' ? 'selected' : '' }}
+                        value="Servicio de Limpieza">Servicio de Limpieza</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de Alimentos' ? 'selected' : '' }}
+                        value="Servicios de Alimentos">Servicios de Alimentos</option>
+                    <option {{ old('tipo_contrato') == 'Educación Continua' ? 'selected' : '' }}
+                        value="Educación Continua">Educación Continua</option>
+                    <option {{ old('tipo_contrato') == 'Mantenimiento a Edificio' ? 'selected' : '' }}
+                        value="Mantenimiento a Edificio">Mantenimiento a Edificio</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de Mascarillas' ? 'selected' : '' }}
+                        value="Adquisición de Mascarillas">Adquisición de Mascarillas</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de Pruebas COVID' ? 'selected' : '' }}
+                        value="Adquisición de Pruebas COVID">Adquisición de Pruebas COVID</option>
+                    <option {{ old('tipo_contrato') == 'Restauracion' ? 'selected' : '' }} value="Restauracion">
+                        Restauración de Edificios</option>
+                    <option {{ old('tipo_contrato') == 'Servicio' ? 'selected' : '' }} value="Servicio">Servicio de
+                        Estacionamiento</option>
+                    <option {{ old('tipo_contrato') == 'Abastecimiento' ? 'selected' : '' }} value="Abastecimiento">
+                        Abastecimiento y Distribución de Revista y Periodicos</option>
+                    <option {{ old('tipo_contrato') == 'Otro' ? 'selected' : '' }} value="Otro">Otro</option>
                 </select>
                 @if ($errors->has('tipo_contrato'))
                     <div class="invalid-feedback red-text">
@@ -256,10 +281,11 @@
 
             <div class="distancia form-group col-md-4">
                 <label for="razon_soc_id">Razón Social con la que se prestara el servicio</label>
-                <select class=" form-control" name="razon_soc_id" id="razon_soc_id" required>
+                <select class="form-control" name="razon_soc_id" id="razon_soc_id" required>
                     <option selected disabled>-- Seleccione una Razón Social --</option>
                     @foreach ($razones_sociales as $keyRazon => $razon)
-                        <option value="{{ $razon->id }}">{{ $razon->descripcion }}</option>
+                        <option {{ old('razon_soc_id') == $razon->id ? 'selected' : '' }}
+                            value="{{ $razon->id }}">{{ $razon->descripcion }}</option>
                     @endforeach
                 </select>
             </div>
@@ -288,7 +314,8 @@
                 <select name="proveedor_id" class="form-control required">
                     @if ($proveedores)
                         @foreach ($proveedores as $proveedores)
-                            <option value="{{ $proveedores->id }}">
+                            <option {{ old('proveedor_id') == $proveedores->id ? 'selected' : '' }}
+                                value="{{ $proveedores->id }}">
                                 {{ $proveedores->nombre }}
                             </option>
                         @endforeach
@@ -312,7 +339,8 @@
                     <option disabled>Seleccione área</option>
                     {{-- <option value="" selected disabled>Seleccione área</option> --}}
                     @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                        <option {{ old('area_id') == $area->id ? 'selected' : '' }} value="{{ $area->id }}">
+                            {{ $area->area }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('area_id'))
@@ -334,15 +362,18 @@
                     </font></label>
                 <select name="fase" class="form-control">
                     <option disabled>Seleccione</option>
-                    <option>Solicitud de contrato</option>
-                    <option>Autorización</option>
-                    <option>Negociación</option>
-                    <option>Aprobación</option>
-                    <option>Ejecución</option>
-                    <option>Gestión de obligaciónes</option>
-                    <option>Modificación de contrato</option>
-                    <option>Auditoría y reportes</option>
-                    <option>Renovación</option>
+                    <option {{ old('fase') == 'Solicitud de contrato' ? 'selected' : '' }}>Solicitud de contrato
+                    </option>
+                    <option {{ old('fase') == 'Autorización' ? 'selected' : '' }}>Autorización</option>
+                    <option {{ old('fase') == 'Negociación' ? 'selected' : '' }}>Negociación</option>
+                    <option {{ old('fase') == 'Aprobación' ? 'selected' : '' }}>Aprobación</option>
+                    <option {{ old('fase') == 'Ejecución' ? 'selected' : '' }}>Ejecución</option>
+                    <option {{ old('fase') == 'Gestión de obligaciónes' ? 'selected' : '' }}>Gestión de obligaciónes
+                    </option>
+                    <option {{ old('fase') == 'Modificación de contrato' ? 'selected' : '' }}>Modificación de contrato
+                    </option>
+                    <option {{ old('fase') == 'Auditoría y reportes' ? 'selected' : '' }}>Auditoría y reportes</option>
+                    <option {{ old('fase') == 'Renovación' ? 'selected' : '' }}>Renovación</option>
                 </select>
                 @if ($errors->has('fase'))
                     <div class="invalid-feedback red-text">
@@ -448,7 +479,8 @@
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     inicio<font class="asterisco">*</font></label>
-                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+                <input type="date" name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio', '') }}"
+                    class="form-control" required>
                 {{-- {!! Form::text('fecha_inicio', null, ['class' => 'form-control fecha_inicio_contrato', 'required']) !!}  --}}
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback red-text" style="position:absolute;">
@@ -477,7 +509,8 @@
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     firma<font class="asterisco">*</font></label>
-                <input type="date" name="fecha_firma" id="fecha_firma" class="form-control" required>
+                <input type="date" name="fecha_firma" id="fecha_firma" value="{{ old('fecha_firma', '') }}"
+                    class="form-control" required>
                 {{-- {!! Form::text('fecha_firma', old('fecha_firma'), ['class' => 'form-control fecha_firma', 'required']) !!} --}}
                 @if ($errors->has('fecha_firma'))
                     <div class="invalid-feedback red-text">
