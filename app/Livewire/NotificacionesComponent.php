@@ -23,7 +23,28 @@ class NotificacionesComponent extends Component
         'echo:notificaciones-campana,AccionCorrectivaEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,RegistroMejoraEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,RecursosEvent' => 'unreadNotifications',
-
+        'echo:notificaciones-campana,PoliticasSgiEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,AlcancesEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,RequisicionesEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,MatrizRequisitosEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,DocumentoEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,TimesheetEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,CoursesEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,SolicitudDayofEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,SolicitudPermisoEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,PlanImplementacionEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,EvaluacionEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,RiesgosEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,QuejasEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,DenunciasEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,MejorasEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,SugerenciasEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,MinutasEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,PuestosEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,TimesheetProyectoEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,CatalogueCertificatesEvent' => 'unreadNotifications',
     ];
 
     public function getQueryString()
@@ -93,6 +114,20 @@ class NotificacionesComponent extends Component
 
         return response()->noContent();
     }
+
+    public function deleteNotification(string $notificationId)
+    {
+        $notification = User::getCurrentUser()->notifications()->find($notificationId);
+
+        if ($notification) {
+            $notification->delete();
+            $this->dispatch('NotificationDeleted'); // Notifica que una notificación ha sido eliminada
+            $this->getUnreadNotifications(); // Actualiza la lista de notificaciones
+        }
+    
+        return response()->noContent();
+    }
+
 
     public function markAllAsRead()
     {
