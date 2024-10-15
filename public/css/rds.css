@@ -1050,3 +1050,7 @@ header.mostrar-menu {
     border-color: var(--color-tbj) !important;
     color: var(--color-tbj) !important;
 }
+
+.caja-items-menu-slider > div.group-menu-centro-atencion{
+    display: none;
+}
