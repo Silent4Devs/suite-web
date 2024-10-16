@@ -18,7 +18,8 @@
                     <select class="form-control float-right" name="no_proyecto" id="no_proyecto" required>
                         <option value="" selected>Seleccione un Numero de proyecto</option>
                         @foreach ($proyectos as $proyecto)
-                            <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
+                            <option {{ old('no_proyecto') == $proyecto->identificador ? 'selected' : '' }}
+                                data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
                                 {{ $proyecto->identificador }}-{{ $proyecto->proyecto }}</option>
                         @endforeach
                     </select>
@@ -44,6 +45,7 @@
                     <div class="form-group">
                         {!! Form::label('identificador_proyect', 'ID*', ['class' => 'asterisco']) !!}
                         <input type="text" id="identificador_proyect" placeholder=""
+                            value="{{ old('identificador', '') }}"
                             wire:model.live.debounce.1000ms="identificador_proyect" wire:ignore
                             wire:change="verificarIdentificador($event.target.value)"
                             title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador"
@@ -71,7 +73,8 @@
                         <select class="form-control" name="tipo" id="tipo" wire:model.live="tipo" required>
                             <option value="" selected>Seleccione una opción</option>
                             @foreach ($select_tipos as $tipo_it)
-                                <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
+                                <option {{ old('tipo') == $tipo_it ? 'selected' : '' }} value="{{ $tipo_it }}"
+                                    {{ $tipo == $tipo_it ? 'selected' : '' }}>
                                     {{ $tipo_it }}
                                 </option>
                             @endforeach
@@ -80,8 +83,8 @@
                 </div>
                 <div class="form-group col-md-4 ">
                     {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
-                    <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control"
-                        maxlength="254" required>
+                    <input value="{{ old('proyecto_name', '') }}" type="text" id="name_proyect" placeholder=""
+                        name="proyecto_name" class="form-control" maxlength="254" required>
                     <span id="alertaGenerica" style="color: red; display: none;"></span>
                 </div>
             </div>
@@ -92,7 +95,8 @@
                     <select class="form-control" name="sede_id" id="sede_id">
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
-                            <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                            <option {{ old('sede_id') == $sede->id ? 'selected' : '' }} value="{{ $sede->id }}">
+                                {{ $sede->sede }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -100,7 +104,7 @@
                 <div class="form-group col-md-4 ">
                     {!! Form::label('fecha_inicio_proyecto', 'Fecha de inicio', ['class' => 'asterisco']) !!}
                     <input type="date" name="fecha_inicio_proyecto" placeholder="" id="fecha_inicio_proyecto"
-                        class="form-control">
+                        class="form-control" value="{{ old('fecha_inicio_proyecto', '') }}">
                     @if ($errors->has('fecha_inicio_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio_proyecto') }}
@@ -112,7 +116,8 @@
                 </div>
                 <div class="form-group col-md-4 ">
                     {!! Form::label('fecha_fin_proyecto', 'Fecha de fin', ['class' => 'asterisco']) !!}
-                    <input type="date" name="fecha_fin_proyecto" id="fecha_fin_proyecto" class="form-control">
+                    <input type="date" name="fecha_fin_proyecto" id="fecha_fin_proyecto" class="form-control"
+                        value="{{ old('fecha_fin_proyecto', '') }}">
                     @if ($errors->has('fecha_fin_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin_proyecto') }}
@@ -127,7 +132,8 @@
                 <div class="form-group col-md-4 ">
                     {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
                     <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
-                        placeholder="" name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control">
+                        placeholder="" name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control"
+                        value="{{ old('horas_proyecto', '') }}">
                     @if ($errors->has('horas_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('horas_proyecto') }}
