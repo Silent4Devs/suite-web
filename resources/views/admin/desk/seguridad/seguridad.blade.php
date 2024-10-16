@@ -171,7 +171,11 @@
                             </div>
                             <div class="mb-2">
                                 <strong>Palabras clave:</strong>
-                                <span>Mobiliario, sucio, proyecto</span>
+                                <span>
+                                    @foreach ($item->sentimiento['palabras_clave'][0] as $palabra)
+                                        {{ $palabra }},
+                                    @endforeach
+                                </span>
                             </div>
                             <div class="mb-2">
                                 <strong>Categoría de la queja:</strong>

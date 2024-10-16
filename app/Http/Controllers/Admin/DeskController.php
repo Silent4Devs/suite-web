@@ -13,6 +13,7 @@ use App\Models\Sugerencias;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use App\Services\SentimentService;
 
 //mejora apunta a este modelo
 
@@ -25,6 +26,13 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentesSeguridad = IncidentesSeguridad::getAll();
 
+        $apiResponse = SentimentService::analyzeSentiment('hola amigo');
+
+        dd($apiResponse,
+            $apiResponse['analisis_de_sentimientos'][0]['compound'],
+            $apiResponse['analisis_de_sentimientos'][0]['compound'],
+        );
+
         $incidentes_seguridad = $incidentesSeguridad->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
         $riesgos_identificados = RiesgoIdentificado::getAll();
         $quejas = Quejas::getAll();
@@ -32,6 +40,35 @@ class DeskController extends Controller
         $denuncias = Denuncias::getAll();
         $mejoras = Mejoras::getAll();
         $sugerencias = Sugerencias::getAll();
+
+        // foreach ($incidentes_seguridad as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($riesgos_identificados as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($quejas as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($quejasClientes as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($denuncias as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($mejoras as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
+        // foreach ($sugerencias as $item) {
+        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+        // }
+
 
         $total_seguridad = $incidentesSeguridad->count();
         $nuevos_seguridad = $incidentesSeguridad->where('estatus', 'Sin atender')->count();
