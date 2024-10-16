@@ -435,7 +435,7 @@
                                     <div>
                                         <span class="title-item-carr-port">{{ $nuv->name }} </span> <br>
                                         <p>
-                                            {{ $nuv->puesto }} <br>
+                                            {{ $nuv->puestoRelacionado->puesto ?? '' }} <br>
                                             {{ $nuv->area->area }}
                                         </p>
                                     </div>
