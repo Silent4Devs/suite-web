@@ -36,7 +36,6 @@ class Activo extends Model implements Auditable
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
         'marca',
         'modelo',
         'n_serie',
@@ -94,11 +93,6 @@ class Activo extends Model implements Auditable
     public function ubicacion()
     {
         return $this->belongsTo(Sede::class, 'ubicacion_id');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function empleado()
