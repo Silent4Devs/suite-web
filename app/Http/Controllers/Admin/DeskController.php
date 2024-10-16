@@ -26,12 +26,12 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentesSeguridad = IncidentesSeguridad::getAll();
 
-        $apiResponse = SentimentService::analyzeSentiment('hola amigo');
+        // $apiResponse = SentimentService::analyzeSentiment('hola amigo');
 
-        dd($apiResponse,
-            $apiResponse['analisis_de_sentimientos'][0]['compound'],
-            $apiResponse['analisis_de_sentimientos'][0]['compound'],
-        );
+        // dd($apiResponse,
+        //     $apiResponse['analisis_de_sentimientos'][0]['compound'],
+        //     $apiResponse['analisis_de_sentimientos'][0]['compound'],
+        // );
 
         $incidentes_seguridad = $incidentesSeguridad->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
         $riesgos_identificados = RiesgoIdentificado::getAll();
@@ -41,33 +41,82 @@ class DeskController extends Controller
         $mejoras = Mejoras::getAll();
         $sugerencias = Sugerencias::getAll();
 
-        // foreach ($incidentes_seguridad as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+        foreach ($incidentes_seguridad as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
 
-        // foreach ($riesgos_identificados as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $seguridad_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $seguridad_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $seguridad_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $seguridad_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $seguridad_sentiment_5 += 1; }                
+        }
 
-        // foreach ($quejas as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+        foreach ($riesgos_identificados as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
 
-        // foreach ($quejasClientes as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $riesgos_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $riesgos_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $riesgos_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $riesgos_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $riesgos_sentiment_5 += 1; }  
+        }
 
-        // foreach ($denuncias as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+        foreach ($quejas as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
 
-        // foreach ($mejoras as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $quejas_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $quejas_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $quejas_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $quejas_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $quejas_sentiment_5 += 1; }  
+        }
 
-        // foreach ($sugerencias as $item) {
-        //     $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-        // }
+        foreach ($quejasClientes as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $clientes_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $clientes_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $clientes_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $clientes_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $clientes_sentiment_5 += 1; }  
+        }
+
+        foreach ($denuncias as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $denuncias_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $denuncias_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $denuncias_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $denuncias_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $denuncias_sentiment_5 += 1; }  
+        }
+
+        foreach ($mejoras as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $mejoras_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $mejoras_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $mejoras_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $mejoras_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $mejoras_sentiment_5 += 1; }  
+        }
+
+        foreach ($sugerencias as $item) {
+            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
+
+            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $sugerencias_sentiment_1 += 1; }                
+            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $sugerencias_sentiment_2 += 1; }                
+            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $sugerencias_sentiment_3 += 1; }                
+            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $sugerencias_sentiment_4 += 1; }                
+            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $sugerencias_sentiment_5 += 1; }  
+        }
 
 
         $total_seguridad = $incidentesSeguridad->count();
@@ -175,6 +224,41 @@ class DeskController extends Controller
             'en_espera_sugerencias',
             'cerrados_sugerencias',
             'cancelados_sugerencias',
+            'seguridad_sentiment_1',
+            'seguridad_sentiment_2',
+            'seguridad_sentiment_3',
+            'seguridad_sentiment_4',
+            'seguridad_sentiment_5',
+            'riesgos_sentiment_1',
+            'riesgos_sentiment_2',
+            'riesgos_sentiment_3',
+            'riesgos_sentiment_4',
+            'riesgos_sentiment_5',
+            'quejas_sentiment_1',
+            'quejas_sentiment_2',
+            'quejas_sentiment_3',
+            'quejas_sentiment_4',
+            'quejas_sentiment_5',
+            'clientes_sentiment_1',
+            'clientes_sentiment_2',
+            'clientes_sentiment_3',
+            'clientes_sentiment_4',
+            'clientes_sentiment_5',
+            'denuncias_sentiment_1',
+            'denuncias_sentiment_2',   
+            'denuncias_sentiment_3',   
+            'denuncias_sentiment_4',   
+            'denuncias_sentiment_5',   
+            'mejoras_sentiment_1',
+            'mejoras_sentiment_2',
+            'mejoras_sentiment_3',
+            'mejoras_sentiment_4',
+            'mejoras_sentiment_5',
+            'sugerencias_sentiment_1',
+            'sugerencias_sentiment_2',
+            'sugerencias_sentiment_3',
+            'sugerencias_sentiment_4',
+            'sugerencias_sentiment_5',
         ));
     }
 }
