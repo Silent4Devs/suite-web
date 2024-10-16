@@ -99,6 +99,10 @@ class ListaDistribucionController extends Controller
             // Sincronizar compradores y participantes
             $this->syncCompradores($lista);
             $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+        }elseif($lista->modelo == "Empleado"){
+            // Sincronizar lideres y participantes
+            $this->syncLideres($lista);
+            $lista = ListaDistribucion::with('participantes.empleado')->find($id);
         }
 
         $empleados = Empleado::getAltaDataColumns();
@@ -114,7 +118,7 @@ class ListaDistribucionController extends Controller
     {
         return match ($modelo) {
             'KatbolRequsicion', 'OrdenCompra' => 'suplentes',
-            'Empleado' => 'suplentesLideres',
+            'Empleado' => 'responsablesFijos',
             'Comprador' => 'responsablesFijos',
             default => 'flujoAprobacion',
         };
@@ -142,6 +146,58 @@ class ListaDistribucionController extends Controller
         }
 
         return $participantes_seleccionados;
+    }
+
+    public function syncLideres($lista)
+    {
+        // Obtener los compradores actuales del modelo 'Comprador'
+        $supervisores = Empleado::listaSupervisores();
+        $count_supervisores = $supervisores->count();
+
+        // Filtrar los participantes existentes cuyo numero_orden sea 1
+        $participantes = $lista->participantes->where('numero_orden', 1);
+
+        // Convertir las colecciones a arrays de IDs para facilidad de comparación
+        $supervisorIds = $supervisores->toArray();
+        $participanteIds = $participantes->pluck('empleado_id')->toArray();
+
+        // Crear registros en participantes si existen en compradores pero no en participantes
+        $idsParaAgregar = array_diff($supervisorIds, $participanteIds);
+
+        // Obtener el máximo nivel actual en participantes con numero_orden = 1
+        $nivelMaximo = $participantes->max('nivel');
+        // Comenzamos a agregar desde el nivel máximo + 1
+        $nivelActual = $nivelMaximo + 1;
+
+        // Agregar nuevos participantes
+        foreach ($idsParaAgregar as $id) {
+            ParticipantesListaDistribucion::create([
+                'modulo_id' => $lista->id,
+                'nivel' => $nivelActual,
+                'numero_orden' => 1, // Puedes ajustar este valor según tu lógica de negocio
+                'empleado_id' => $id,
+            ]);
+            $nivelActual++;
+        }
+
+        // Eliminar registros en participantes si existen en participantes pero no en compradores
+        // También eliminar los participantes que pertenecen al nivel de los que se eliminan
+        $idsParaEliminar = array_diff($participanteIds, $supervisorIds);
+
+        // Obtenemos los niveles de los participantes a eliminar
+        $nivelesParaEliminar = ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
+            ->pluck('nivel')
+            ->unique();
+
+        // Eliminar los participantes correspondientes a esos niveles
+        foreach ($nivelesParaEliminar as $nivel) {
+            ParticipantesListaDistribucion::where('modulo_id', $lista->id)
+                ->where('nivel', $nivel)
+                ->delete();
+        }
+
+        // Actualizar el valor de 'niveles' en la lista con el nuevo nivel máximo
+        $lista->update(['niveles' => $count_supervisores]);
     }
 
     public function syncCompradores($lista)
@@ -213,7 +269,7 @@ class ListaDistribucionController extends Controller
         if (isset($request->$nom_niv)) {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
 
-            if ($lista->modelo == "Comprador") {
+            if ($lista->modelo == "Comprador" || $lista->modelo == "Empleado") {
                 $lista = ListaDistribucion::with('participantes.empleado')->find($id);
                 // Sincronizar compradores y participantes
                 $this->syncCompradores($lista);

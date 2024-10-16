@@ -32,7 +32,7 @@
         <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
         <hr>
         <div class="row g-0">
-
+<h1>{{$lista->niveles}}</h1>
             <input name="niveles" id="niveles" type="hidden" value="{{ $lista->niveles }}">
 
             <div class="col-12">

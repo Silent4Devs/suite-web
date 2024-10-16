@@ -326,27 +326,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Dashboard permisos
         Route::get('dashboard-permisos/dashboard-org/{id}', [DashboardPermisosController::class, 'dashboardOrg'])->name('dashboard-permisos.dashboard-org');
 
-        // Lista Distribucion
-        Route::resource('lista-distribucion', ListaDistribucionController::class)->names([
-            'index' => 'lista-distribucion.index',
-            'create' => null, // No hay ruta create
-            'store' => null,  // No hay ruta store
-            'show' => 'lista-distribucion.show',
-            'edit' => 'lista-distribucion.edit',
-            'update' => 'lista-distribucion.update',
-            'destroy' => null, // No hay ruta destroy
-        ]);
+        // Lista Distribución
+        Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
+        Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
+        Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
+        Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.show');
 
-        // Lista Informativa
-        Route::resource('lista-informativa', ListaInformativaController::class)->names([
-            'index' => 'lista-informativa.index',
-            'create' => null, // No hay ruta create
-            'store' => null,  // No hay ruta store
-            'show' => 'lista-informativa.show',
-            'edit' => 'lista-informativa.edit',
-            'update' => 'lista-informativa.update',
-            'destroy' => null, // No hay ruta destroy
-        ]);
+        //Lista Informativa
+        Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
+        Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
+        Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
+        Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
 
         //Control de Ausencias- Day-Off
         Route::controller(DayOffController::class)->group(function () {
