@@ -17,6 +17,13 @@ class CreateTenantAction
 {
     public function __invoke(array $data, string $domain, bool $createStripeCustomer = true): Tenant
     {
+        $data = array_merge($data, [
+            'db_name' => $domain ?? 'default_db_name',
+            'db_host' => 'localhost',
+            'db_username' => 'postgres',
+            'db_password' => '',
+        ]);
+
         $tenant = Tenant::create($data + [
             'ready' => false,
             'trial_ends_at' => now()->addDays(config('saas.trial_days')),
@@ -32,7 +39,7 @@ class CreateTenantAction
 
         $this->createDatabase($tenant);
         tenancy()->initialize($tenant);
-        $this->runMigrations();
+
 
         return $tenant;
     }
@@ -41,24 +48,21 @@ class CreateTenantAction
     {
         $databaseName = 'tenant_' . $tenant->id;
 
-        DB::statement("CREATE DATABASE `$databaseName`");
+        $databaseName = str_replace('-', '_', $databaseName);
+        $tenant->update(['db_name' => $databaseName]);
+        DB::statement("CREATE DATABASE $databaseName");
 
         app(TenantManager::class)->setTenant($tenant);
 
-        // DB::purge('tenant');
+        $this->runMigrations();
     }
 
     protected function runMigrations()
     {
-        \Illuminate\Support\Facades\Artisan::call('tenants:artisan', [
-            'artisanCommand' => 'migrate --database=tenant',
-            '--tenants' => tenant('id'),
+        Artisan::call('migrate', [
+            '--database' => 'tenant',
+            '--path' => 'database/migrations/tenant',
+            '--force' => true,
         ]);
-
-        // Artisan::call('migrate', [
-        //     '--database' => 'tenant_',
-        //     '--path' => 'database/migration/tenat',
-        //     '--force' => true,
-        // ]);
     }
 }

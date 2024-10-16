@@ -11,6 +11,7 @@ use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
+
 /**
  * @property-read string $plan_name The tenant's subscription plan name
  * @property-read bool $on_active_subscription Is the tenant actively subscribed (not on grace period)
@@ -26,12 +27,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'trial_ends_at' => 'datetime',
     ];
 
-
-    protected $primaryKey = 'id'; // Si tu ID es diferente, asegúrate de configurarlo
-    
-    protected $fillable = ['data']; // Agrega tus campos personalizables aquí
-
-
     public static function getCustomColumns(): array
     {
         return [
@@ -41,12 +36,11 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'pm_type',
             'pm_last_four',
             'trial_ends_at',
+            'db_name',
+            'db_host',
+            'db_username',
+            'db_password',
         ];
-    }
-
-    public function domains()
-    {
-        return $this->hasMany(Domain::class);
     }
 
     public function primary_domain()
