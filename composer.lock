@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc301ba2d51d25447b2ae623401f2d90",
+    "content-hash": "c81f7a308bcc1aa591fb7995de4ba3c8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3902,6 +3902,85 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.9.0"
             },
             "time": "2024-03-31T07:05:07+00:00"
+        },
+        {
+            "name": "mgcodeur/laravel-currency-converter",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mgcodeur/laravel-currency-converter.git",
+                "reference": "a3f8d14a7c1ba9416aadefaef1f3cbc5905b993c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mgcodeur/laravel-currency-converter/zipball/a3f8d14a7c1ba9416aadefaef1f3cbc5905b993c",
+                "reference": "a3f8d14a7c1ba9416aadefaef1f3cbc5905b993c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "php": "^8.1||^8.2",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.0.1",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.10.0||^8.1.1",
+                "orchestra/testbench": "^8.22.0||^9.0.0",
+                "pestphp/pest": "^2.20",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mgcodeur\\CurrencyConverter\\CurrencyConverterServiceProvider"
+                    ],
+                    "aliases": {
+                        "CurrencyConverter": "Mgcodeur\\CurrencyConverter\\Facades\\CurrencyConverter"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mgcodeur\\CurrencyConverter\\": "src/",
+                    "Mgcodeur\\CurrencyConverter\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mgcodeur",
+                    "email": "mgcodeur@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Currency Converter: Effortlessly convert currencies in your Laravel applications, no API key required. It's fast, easy, and completely free.",
+            "homepage": "https://github.com/mgcodeur/laravel-currency-converter",
+            "keywords": [
+                "laravel",
+                "laravel-currency-converter",
+                "mgcodeur"
+            ],
+            "support": {
+                "issues": "https://github.com/mgcodeur/laravel-currency-converter/issues",
+                "source": "https://github.com/mgcodeur/laravel-currency-converter/tree/1.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mgcodeur",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-29T09:06:16+00:00"
         },
         {
             "name": "monolog/monolog",

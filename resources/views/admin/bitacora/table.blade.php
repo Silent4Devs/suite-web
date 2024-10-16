@@ -189,7 +189,7 @@
         <div class="row">
             @if ($contratos->no_contrato == null)
                 <div class="distancia
-            form-group col-md-6">
+            form-group col-md-4">
                     <label for="no_contrato" class="txt-tamaño">N° Contrato
                         <font class="asterisco">*
                         </font>
@@ -214,47 +214,80 @@
                     {{ $contratos->no_contrato }}</p>
             @endif
 
-
-
-
-            <div class="distancia form-group col-md-6">
+            <div class="distancia form-group col-md-4">
                 <label for="tipo_contrato" class="txt-tamaño">&nbsp;Tipo de
                     contrato
                     <font class="asterisco">*</font>
                 </label>
                 <select name="tipo_contrato" class="form-control required">
-                    <option value="Fábrica de desarrollo">Fábrica de desarrollo</option>
-                    <option value="Fábrica de pruebas">Fábrica de pruebas</option>
-                    <option value="Telecomunicaciones">Telecomunicaciones</option>
-                    <option value="Seguridad de la información">Seguridad de la información</option>
-                    <option value="Infraestructura">Infraestructura</option>
-                    <option value="Servicios en la Nube">Servicios en la Nube</option>
-                    <option value="Servicios de consultoría Normativa">Servicios de consultoría Normativa</option>
-                    <option value="Arrendamiento de Equipos">Arrendamiento de Equipos</option>
-                    <option value="Impresión">Impresión</option>
-                    <option value="Licenciamiento">Licenciamiento</option>
-                    <option value="Administrativo">Administrativo</option>
-                    <option value="Adquisición de papelería">Adquisición de papelería</option>
-                    <option value="Servicios de Consultoría">Servicios de Consultoría</option>
-                    <option value="Servicios Médicos">Servicios Médicos</option>
-                    <option value="Servicio de Seguros">Servicio de Seguros</option>
-                    <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
-                    <option value="Servicio de Limpieza">Servicio de Limpieza</option>
-                    <option value="Servicios de Alimentos">Servicios de Alimentos</option>
-                    <option value="Educación Continua">Educación Continua</option>
-                    <option value="Mantenimiento a Edificio">Mantenimiento a Edificio</option>
-                    <option value="Adquisición de Mascarillas">Adquisición de Mascarillas</option>
-                    <option value="Adquisición de Pruebas COVID">Adquisición de Pruebas COVID</option>
-                    <option value="Restauracion">Restauración de Edificios</option>
-                    <option value="Servicio">Servicio de Estacionamiento</option>
-                    <option value="Abastecimiento">Abastecimiento y Distribución de Revista y Periodicos</option>
-                    <option value="Otro">Otro</option>
+                    <option {{ old('tipo_contrato') == 'Fábrica de desarrollo' ? 'selected' : '' }}
+                        value="Fábrica de desarrollo">Fábrica de desarrollo</option>
+                    <option {{ old('tipo_contrato') == 'Fábrica de pruebas' ? 'selected' : '' }}
+                        value="Fábrica de pruebas">Fábrica de pruebas</option>
+                    <option {{ old('tipo_contrato') == 'Telecomunicaciones' ? 'selected' : '' }}
+                        value="Telecomunicaciones">Telecomunicaciones</option>
+                    <option {{ old('tipo_contrato') == 'Seguridad de la información' ? 'selected' : '' }}
+                        value="Seguridad de la información">Seguridad de la información</option>
+                    <option {{ old('tipo_contrato') == 'Infraestructura' ? 'selected' : '' }} value="Infraestructura">
+                        Infraestructura</option>
+                    <option {{ old('tipo_contrato') == 'Servicios en la Nube' ? 'selected' : '' }}
+                        value="Servicios en la Nube">Servicios en la Nube</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de consultoría Normativa' ? 'selected' : '' }}
+                        value="Servicios de consultoría Normativa">Servicios de consultoría Normativa</option>
+                    <option {{ old('tipo_contrato') == 'Arrendamiento de Equipos' ? 'selected' : '' }}
+                        value="Arrendamiento de Equipos">Arrendamiento de Equipos</option>
+                    <option {{ old('tipo_contrato') == 'Impresión' ? 'selected' : '' }} value="Impresión">Impresión
+                    </option>
+                    <option {{ old('tipo_contrato') == 'Licenciamiento' ? 'selected' : '' }} value="Licenciamiento">
+                        Licenciamiento</option>
+                    <option {{ old('tipo_contrato') == 'Administrativo' ? 'selected' : '' }} value="Administrativo">
+                        Administrativo</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de papelería' ? 'selected' : '' }}
+                        value="Adquisición de papelería">Adquisición de papelería</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de Consultoría' ? 'selected' : '' }}
+                        value="Servicios de Consultoría">Servicios de Consultoría</option>
+                    <option {{ old('tipo_contrato') == 'Servicios Médicos' ? 'selected' : '' }}
+                        value="Servicios Médicos">Servicios Médicos</option>
+                    <option {{ old('tipo_contrato') == 'Servicio de Seguros' ? 'selected' : '' }}
+                        value="Servicio de Seguros">Servicio de Seguros</option>
+                    <option {{ old('tipo_contrato') == 'Seguridad y Vigilancia' ? 'selected' : '' }}
+                        value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                    <option {{ old('tipo_contrato') == 'Servicio de Limpieza' ? 'selected' : '' }}
+                        value="Servicio de Limpieza">Servicio de Limpieza</option>
+                    <option {{ old('tipo_contrato') == 'Servicios de Alimentos' ? 'selected' : '' }}
+                        value="Servicios de Alimentos">Servicios de Alimentos</option>
+                    <option {{ old('tipo_contrato') == 'Educación Continua' ? 'selected' : '' }}
+                        value="Educación Continua">Educación Continua</option>
+                    <option {{ old('tipo_contrato') == 'Mantenimiento a Edificio' ? 'selected' : '' }}
+                        value="Mantenimiento a Edificio">Mantenimiento a Edificio</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de Mascarillas' ? 'selected' : '' }}
+                        value="Adquisición de Mascarillas">Adquisición de Mascarillas</option>
+                    <option {{ old('tipo_contrato') == 'Adquisición de Pruebas COVID' ? 'selected' : '' }}
+                        value="Adquisición de Pruebas COVID">Adquisición de Pruebas COVID</option>
+                    <option {{ old('tipo_contrato') == 'Restauracion' ? 'selected' : '' }} value="Restauracion">
+                        Restauración de Edificios</option>
+                    <option {{ old('tipo_contrato') == 'Servicio' ? 'selected' : '' }} value="Servicio">Servicio de
+                        Estacionamiento</option>
+                    <option {{ old('tipo_contrato') == 'Abastecimiento' ? 'selected' : '' }} value="Abastecimiento">
+                        Abastecimiento y Distribución de Revista y Periodicos</option>
+                    <option {{ old('tipo_contrato') == 'Otro' ? 'selected' : '' }} value="Otro">Otro</option>
                 </select>
                 @if ($errors->has('tipo_contrato'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('tipo_contrato') }}
                     </div>
                 @endif
+            </div>
+
+            <div class="distancia form-group col-md-4">
+                <label for="razon_soc_id">Razón Social con la que se prestara el servicio</label>
+                <select class="form-control" name="razon_soc_id" id="razon_soc_id" required>
+                    <option selected disabled>-- Seleccione una Razón Social --</option>
+                    @foreach ($razones_sociales as $keyRazon => $razon)
+                        <option {{ old('razon_soc_id') == $razon->id ? 'selected' : '' }}
+                            value="{{ $razon->id }}">{{ $razon->descripcion }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="row">
@@ -281,7 +314,8 @@
                 <select name="proveedor_id" class="form-control required">
                     @if ($proveedores)
                         @foreach ($proveedores as $proveedores)
-                            <option value="{{ $proveedores->id }}">
+                            <option {{ old('proveedor_id') == $proveedores->id ? 'selected' : '' }}
+                                value="{{ $proveedores->id }}">
                                 {{ $proveedores->nombre }}
                             </option>
                         @endforeach
@@ -305,7 +339,8 @@
                     <option disabled>Seleccione área</option>
                     {{-- <option value="" selected disabled>Seleccione área</option> --}}
                     @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                        <option {{ old('area_id') == $area->id ? 'selected' : '' }} value="{{ $area->id }}">
+                            {{ $area->area }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('area_id'))
@@ -327,15 +362,18 @@
                     </font></label>
                 <select name="fase" class="form-control">
                     <option disabled>Seleccione</option>
-                    <option>Solicitud de contrato</option>
-                    <option>Autorización</option>
-                    <option>Negociación</option>
-                    <option>Aprobación</option>
-                    <option>Ejecución</option>
-                    <option>Gestión de obligaciónes</option>
-                    <option>Modificación de contrato</option>
-                    <option>Auditoría y reportes</option>
-                    <option>Renovación</option>
+                    <option {{ old('fase') == 'Solicitud de contrato' ? 'selected' : '' }}>Solicitud de contrato
+                    </option>
+                    <option {{ old('fase') == 'Autorización' ? 'selected' : '' }}>Autorización</option>
+                    <option {{ old('fase') == 'Negociación' ? 'selected' : '' }}>Negociación</option>
+                    <option {{ old('fase') == 'Aprobación' ? 'selected' : '' }}>Aprobación</option>
+                    <option {{ old('fase') == 'Ejecución' ? 'selected' : '' }}>Ejecución</option>
+                    <option {{ old('fase') == 'Gestión de obligaciónes' ? 'selected' : '' }}>Gestión de obligaciónes
+                    </option>
+                    <option {{ old('fase') == 'Modificación de contrato' ? 'selected' : '' }}>Modificación de contrato
+                    </option>
+                    <option {{ old('fase') == 'Auditoría y reportes' ? 'selected' : '' }}>Auditoría y reportes</option>
+                    <option {{ old('fase') == 'Renovación' ? 'selected' : '' }}>Renovación</option>
                 </select>
                 @if ($errors->has('fase'))
                     <div class="invalid-feedback red-text">
@@ -441,7 +479,8 @@
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     inicio<font class="asterisco">*</font></label>
-                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+                <input type="date" name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio', '') }}"
+                    class="form-control" required>
                 {{-- {!! Form::text('fecha_inicio', null, ['class' => 'form-control fecha_inicio_contrato', 'required']) !!}  --}}
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback red-text" style="position:absolute;">
@@ -470,7 +509,8 @@
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     firma<font class="asterisco">*</font></label>
-                <input type="date" name="fecha_firma" id="fecha_firma" class="form-control" required>
+                <input type="date" name="fecha_firma" id="fecha_firma" value="{{ old('fecha_firma', '') }}"
+                    class="form-control" required>
                 {{-- {!! Form::text('fecha_firma', old('fecha_firma'), ['class' => 'form-control fecha_firma', 'required']) !!} --}}
                 @if ($errors->has('fecha_firma'))
                     <div class="invalid-feedback red-text">
@@ -491,153 +531,11 @@
                     </div>
                 @endif
             </div>
-
-
-            <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">Tipo
-                    Cambio
-                    <font class="asterisco">*
-                    </font>
-                </label>
-                @php
-                    $divisas = [
-                        '0' => 'MXN',
-                        '1' => 'USD',
-                        '2' => 'EUR',
-                        '3' => 'GBP',
-                        '4' => 'CHF',
-                        '5' => 'JPY',
-                        '6' => 'HKD',
-                        '7' => 'CAD',
-                        '8' => 'CNY',
-                        '9' => 'AUD',
-                        '10' => 'BRL',
-                        '11' => 'RUB',
-                    ];
-                @endphp
-                <div id="contenedor_dolares">
-                    <select name="tipo_cambio" id="dolares_filtro" class="form-control" required>
-                        <option value="">Seleccione </option>
-                        @foreach ($divisas as $key => $divisa)
-                            <option value='{{ $divisa }}'>{{ $divisa }}</option>
-                        @endforeach
-                    </select>
-
-                    @if ($errors->has('tipo_cambio'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('tipo_cambio') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
         </div>
-        {{-- modal --}}
+
+        @livewire('moneda-ext-contratos-create')
+
         <div class="col s12">
-            <div id="campos_dolares" class="{{ $contratos->tipo_cambio == 'USD' ? '' : 'd-none' }}">
-                <div class="col l12 m12 s12">
-                    <div class="card hoverable">
-                        <div class="card-content center-align">
-
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Valor del Dolar
-                                    </label>
-                                    {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'valor_dol',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto de
-                                        pago
-                                    </label>
-                                    {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto
-                                        Máximo
-                                    </label>
-                                    {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_maximo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="no_contrato" class="txt-tamaño">
-                                        Monto
-                                        Mínimo
-                                    </label>
-                                    {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_minimo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                    ]) !!}
-                                </div>
-                            </div>
-                            <div class="row">
-                                @php
-                                    $contrato_importe_total = $contratos->monto_pago;
-                                @endphp
-                                @foreach ($contratos->ampliaciones as $ampliacion)
-                                    @php
-                                        $contrato_importe_total += $ampliacion->importe;
-                                    @endphp
-                                @endforeach
-                                </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto de
-                        Pago M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('monto_pago', null, [
-                        'id' => 'teste',
-                        'class' => 'form-control',
-                        'autocomplete' => 'off',
-                        'required',
-                    ]) !!}
-                    @if ($errors->has('monto_pago'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('monto_pago') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto
-                        máximo
-                        M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('maximo', null, ['id' => 'este', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="no_contrato" class="txt-tamaño">Monto
-                        mínimo
-                        M.X.N.<font class="asterisco">*</font></label>
-                    {!! Form::text('minimo', null, [
-                        'id' => 'prueba',
-                        'class' => 'form-control',
-                        'autocomplete' => 'off',
-                        'required',
-                    ]) !!}
-                </div>
-            </div>
-
             <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
                 <div class="col s12 m4 distancia">
                     <p style="color:#2395AA">
@@ -1185,7 +1083,7 @@
     });
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {
         console.log('select');
         if ($('#dolares_filtro option:selected').attr('value') == 'USD') {
@@ -1195,7 +1093,7 @@
         }
 
     });
-</script>
+</script> --}}
 
 <script type="text/javascript">
     $('#check_aplica_fianza').click(function(e) {

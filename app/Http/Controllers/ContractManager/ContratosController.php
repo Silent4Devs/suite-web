@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Sucursal;
 
 class ContratosController extends AppBaseController
 {
@@ -92,10 +93,11 @@ class ContratosController extends AppBaseController
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
         $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
+        $razones_sociales = Sucursal::getArchivoFalse();
 
         $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
-        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma', 'razones_sociales'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
     /**
@@ -106,7 +108,6 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required|max:500',
@@ -127,9 +128,13 @@ class ContratosController extends AppBaseController
             'fecha_firma' => 'required|before_or_equal:fecha_fin',
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
-            'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
-            'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
+            'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
+            'minimo' => 'required|numeric|max:99999999999.99|lte:monto_pago',
+            'maximo' => 'required|numeric|max:99999999999.99|gte:monto_pago',
+            'monto_dolares' => 'nullable|numeric|max:99999999999.99',
+            'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'valor_dolar' => 'nullable|numeric|max:99999999999.99',
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
             // "creacion_proyecto" => "nullable|boolean",
@@ -141,11 +146,16 @@ class ContratosController extends AppBaseController
             'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
             'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
             'horas_proyecto' => 'nullable|integer|min:0',
+            'razon_soc_id' => 'required|integer',
         ], [
             'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
-            'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_pago.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'valor_dolar.max' => 'El valor del dolar no puede superar 99,999,999,999.99',
             'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
             'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
@@ -212,12 +222,12 @@ class ContratosController extends AppBaseController
             $fecha_firma = null;
         }
         if ($request->identificador_privado == true) {
-            $no_contrato_sin_slashes = 'privado'.''.$ultimo_id->id + 1 .'-'.$date;
+            $no_contrato_sin_slashes = 'privado' . '' . $ultimo_id->id + 1 . '-' . $date;
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
 
         if ($request->identificador_privado == true) {
-            $num_contrato = 'privado'.'-'.$ultimo_id->id + 1 .'-'.$date;
+            $num_contrato = 'privado' . '-' . $ultimo_id->id + 1 . '-' . $date;
         } else {
             $num_contrato = $no_contrato_sin_slashes;
         }
@@ -271,6 +281,7 @@ class ContratosController extends AppBaseController
             'no_proyecto' => $request->no_proyecto,
             'area_id' => $request->area_id,
             // 'firma1' => $firma,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $input);
 
         $convergencia = ConvergenciaContratos::create([
@@ -289,50 +300,50 @@ class ContratosController extends AppBaseController
 
         //########## SE CREAN DIRECTORIOS VACÍOS ###################
 
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio')) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
-            Storage::copy('public/contratos/.gitignore', 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio')) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
+            Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/niveles servicio');
         }
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales')) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales');
-            Storage::copy('public/contratos/.gitignore', 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables mensuales');
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales')) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
+            Storage::copy('public/contratos/.gitignore', 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables mensuales');
         }
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/cierre contrato')) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/cierre contrato');
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato')) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/cierre contrato');
         }
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf')) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf');
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf')) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/pdf');
         }
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml')) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml');
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml')) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/facturas/xml');
         }
 
         //############# GESTIÓN ARCHIVOS ##################
 
         $file = $request->file('documento');
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
         }
 
         if ($file != null) {
             $nombre = $file->getClientOriginalName();
 
-            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones')) {
-                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
+            if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
+                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
             }
 
-            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones';
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+            Storage::disk('public')->put($ruta . '/' . $contrato->id . $fecha_inicio . $nombre, file_get_contents($file));
 
-            $ruta_carpeta = storage_path('app/public/'.$ruta);
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
 
             $contratos = Contrato::find($contrato->id);
-            $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
+            $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
             $contratos->save();
         }
 
@@ -340,17 +351,17 @@ class ContratosController extends AppBaseController
         $nombre_f = null;
         if ($request->file('file_contrato') != null) {
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
+            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
 
             $file = $request->file('file_contrato');
 
             // Ruta completa donde se guardará el archivo
-            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($file));
+            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($file));
 
-            $ruta_carpeta = storage_path('app/public/'.$ruta);
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
@@ -358,9 +369,9 @@ class ContratosController extends AppBaseController
 
         // Move file from tmp directory if name is send
         if ($request->file_contrato) {
-            if (Storage::disk('local')->exists('katbol-contratos-tmp/'.$request->file_contrato)) {
-                $nombre_f = $contrato->id.$fecha_inicio.$request->file_contrato;
-                Storage::move('katbol-contratos-tmp/'.$request->file_contrato, "public/contratos/{$contrato->id}_contrato_{$contrato->no_contrato}/{$nombre_f}");
+            if (Storage::disk('local')->exists('katbol-contratos-tmp/' . $request->file_contrato)) {
+                $nombre_f = $contrato->id . $fecha_inicio . $request->file_contrato;
+                Storage::move('katbol-contratos-tmp/' . $request->file_contrato, "public/contratos/{$contrato->id}_contrato_{$contrato->no_contrato}/{$nombre_f}");
                 // Storage::disk('local')->delete("katbol-contratos-tmp/{$request->file_contrato}");
             }
         }
@@ -414,7 +425,7 @@ class ContratosController extends AppBaseController
         ]);
 
         //return redirect(route('contratos.index'));
-        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
+        return redirect('contract_manager/contratos-katbol/contratoinsert/' . $contrato->id);
     }
 
     /**
@@ -440,11 +451,13 @@ class ContratosController extends AppBaseController
             $contrato->fecha_fin = $contrato->fecha_fin;
             $contrato->fecha_firma = $contrato->fecha_firma;
             $descargar_archivo =
-                '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
+                '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            $razones_sociales = Sucursal::getArchivoFalse();
 
             // aprobadores
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
@@ -461,7 +474,7 @@ class ContratosController extends AppBaseController
                 }
             }
 
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.show', compact('razones_sociales', 'proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
@@ -497,24 +510,24 @@ class ContratosController extends AppBaseController
         }
 
         // Generar un nombre único para la imagen
-        $imageName = uniqid().'.'.$type;
+        $imageName = uniqid() . '.' . $type;
         // Guardar la imagen en el sistema de archivos
 
-        $ruta_carpeta = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
+        $ruta_carpeta = storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma');
 
-        Storage::put('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName, $image);
+        Storage::put('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName, $image);
 
         // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);
 
         // Obtener la URL de la imagen guardada
-        $imageUrl = Storage::url('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName);
+        $imageUrl = Storage::url('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName);
 
         $aprobacionFirmaContrato->update([
             'firma' => $imageName,
         ]);
 
-        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
+        return redirect('contract_manager/contratos-katbol/contratoinsert/' . $contrato->id);
     }
 
     public function historicoAprobacion()
@@ -561,7 +574,7 @@ class ContratosController extends AppBaseController
                 $fecha_firma = null;
             }
 
-            $descargar_archivo = '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
+            $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             // dd($convenios);
@@ -570,6 +583,8 @@ class ContratosController extends AppBaseController
             $organizacion = Organizacion::getFirst();
 
             $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            $razones_sociales = Sucursal::getArchivoFalse();
 
             // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
@@ -590,7 +605,7 @@ class ContratosController extends AppBaseController
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -627,13 +642,22 @@ class ContratosController extends AppBaseController
             'fecha_firma' => 'required|before_or_equal:fecha_fin',
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
-            'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
+            'minimo' => 'required|numeric|max:99999999999.99|lte:monto_pago',
+            'maximo' => 'required|numeric|max:99999999999.99|gte:monto_pago',
+            'monto_dolares' => 'nullable|numeric|max:99999999999.99',
+            'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'valor_dolar' => 'nullable|numeric|max:99999999999.99',
+            'razon_soc_id' => 'required|integer',
         ], [
-            'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_pago.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'valor_dolar.max' => 'El valor del dolar no puede superar 99,999,999,999.99',
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
         ]);
 
@@ -706,8 +730,8 @@ class ContratosController extends AppBaseController
 
         //#Cambiar nombre de carpeta
         if ($contrato->no_contrato != $request->no_contrato) {
-            if (Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); //rename folder
+            if (Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
+                Storage::move('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato, 'public/contratos/' . $contrato->id . '_contrato_' . $request->no_contrato); //rename folder
             }
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
@@ -744,6 +768,7 @@ class ContratosController extends AppBaseController
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
             'updated_by' => User::getCurrentUser()->empleado->id,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $id);
 
         $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
@@ -776,8 +801,8 @@ class ContratosController extends AppBaseController
         $ruta_file_contrato = null;
         $nombre_f = $contrato->file_contrato;
         if ($request->file('file_contrato') != null) {
-            $storagePath = 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
-            $currentFilePath = $storagePath.'/'.$contrato->file_contrato;
+            $storagePath = 'public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
+            $currentFilePath = $storagePath . '/' . $contrato->file_contrato;
 
             // Verificar si el archivo ya existe y eliminarlo
             if (Storage::disk('public')->exists($currentFilePath)) {
@@ -786,14 +811,14 @@ class ContratosController extends AppBaseController
 
             // Obtener el nombre original del archivo
             $nombre = $request->file('file_contrato')->getClientOriginalName();
-            $nombre_f = $contrato->id.$fecha_inicio.$nombre;
+            $nombre_f = $contrato->id . $fecha_inicio . $nombre;
 
-            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
+            Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($request->file('file_contrato')));
 
-            $ruta_carpeta = storage_path('app/public/'.$ruta);
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
@@ -807,34 +832,34 @@ class ContratosController extends AppBaseController
         // dd($request->file('documento'));
 
         $file = $request->file('documento');
-        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
+        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
         }
         if ($file != null) {
-            $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento);
+            $isExists = Storage::disk('public')->exists('contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento);
             if ($isExists) {
                 if ($contrato->documento != null) {
-                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento));
+                    unlink(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones' . '/' . $contrato->documento));
                 }
             }
             $nombre = $file->getClientOriginalName();
 
-            if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones')) {
-                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
+            if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones')) {
+                Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones');
             }
 
-            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+            $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones';
 
             // Guardar el archivo en el disco 'public' con la ruta específica
-            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+            Storage::disk('public')->put($ruta . '/' . $contrato->id . $fecha_inicio . $nombre, file_get_contents($file));
 
-            $ruta_carpeta = storage_path('app/public/'.$ruta);
+            $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
 
             $contratos = Contrato::find($contrato->id);
-            $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
+            $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
             $contratos->save();
         }
 
@@ -1007,7 +1032,7 @@ class ContratosController extends AppBaseController
         $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024;
 
         $request->validate([
-            'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
+            'file' => 'required|mimes:' . $mines . '|max:' . $tamaño_limite,
         ]);
         $storagePath = Storage::disk('local')->put('katbol-contratos-tmp/', $request->file);
         $storageName = basename($storagePath);
