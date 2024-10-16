@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\Area;
 use App\Models\ConvergenciaContratos;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
@@ -183,6 +184,7 @@ class Contrato extends Model implements Auditable
         'updated_by',
         'identificador_privado',
         'firma1',
+        'razon_soc_id',
     ];
 
     /**
@@ -232,7 +234,7 @@ class Contrato extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-    /*  'no_contrato' => 'none',
+        /*  'no_contrato' => 'none',
         *'nombre_proveedor' => 'none',
        * 'area' => 'none',
         *'nombre_servicio' => 'none',
@@ -282,7 +284,12 @@ class Contrato extends Model implements Auditable
 
     public function dolares()
     {
-        return $this->hasMany(DolaresContrato::class, 'contrato_id');
+        return $this->hasOne(DolaresContrato::class, 'contrato_id', 'id');
+    }
+
+    public function razonSocial()
+    {
+        return $this->belongsTo(Sucursal::class, 'razon_soc_id', 'id');
     }
 
     public function getArchivoAttribute()
@@ -292,14 +299,14 @@ class Contrato extends Model implements Auditable
         // dd($archivo);
         $ruta = asset('storage/contratos/');
         // $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato);
-        $ruta = $ruta.'/'.$archivo;
+        $ruta = $ruta . '/' . $archivo;
 
         return $ruta;
     }
 
     public function getNameProveedorAttribute()
     {
-        return $this->no_contrato.'-'.$this->nombre_servicio;
+        return $this->no_contrato . '-' . $this->nombre_servicio;
     }
 
     public function cliente()
