@@ -26,6 +26,7 @@ class Puesto extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'id',
         'puesto',
         'descripcion',
         'created_at',
@@ -61,6 +62,8 @@ class Puesto extends Model implements Auditable
         'autoriza_id',
         'reporta_puesto_id',
     ];
+
+    protected $appends = ['utilizada'];
 
     //Redis methods
     public static function getExists()
@@ -182,5 +185,10 @@ class Puesto extends Model implements Auditable
     public function externos()
     {
         return $this->hasMany('App\Models\ContactosExternosPuestos', 'puesto_id', 'id')->orderBy('id');
+    }
+
+    public function getUtilizadaAttribute()
+    {
+        return $this->empleados ? $this->empleados->count() > 0 : false;
     }
 }

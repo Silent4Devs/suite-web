@@ -29,13 +29,7 @@ class EvidenciasSgsiController extends Controller
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = EvidenciasSgsi::with([
-                'empleado' => function ($query) {
-                    $query->select('id', 'name', 'foto');
-                },
-            ])
-                ->select(sprintf('%s.*', (new EvidenciasSgsi)->table))
-                ->orderByDesc('id');
+            $query = EvidenciasSgsi::select('id', 'nombredocumento', 'fechadocumento', 'objetivodocumento')->get();
 
             $table = Datatables::of($query);
 

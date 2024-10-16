@@ -442,9 +442,11 @@ class Empleado extends Model implements Auditable
     {
         $hoy = Carbon::now();
 
+
         return Cache::remember('Empleados:portal_cumpleaños', 3600, function () use ($hoy) {
-            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños', 'antiguedad')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
+
     }
 
     public static function getNuevos()

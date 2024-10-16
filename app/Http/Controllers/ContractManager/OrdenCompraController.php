@@ -345,20 +345,23 @@ class OrdenCompraController extends Controller
             for ($i = 0; $i <= $listaReq->niveles; $i++) {
                 $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
-                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+                if ($responsableNivel) {
+                    if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
 
-                    $responsable = $responsableNivel->empleado;
-                    $userEmail = $responsable->email;
+                        $responsable = $responsableNivel->empleado;
+                        $userEmail = $responsable->email;
 
-                    $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
+                        $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
-                    foreach ($cN as $key => $c) {
-                        $copiasNivel[] = $c->empleado->email;
+                        foreach ($cN as $key => $c) {
+                            $copiasNivel[] = $c->empleado->email;
+                        }
+
+                        break;
+                    } else {
+                        // Si el responsable está ausente, lo añadimos a la lista de ausentes
+                        $responsablesAusentes[] = $responsableNivel->empleado->email;
                     }
-
-                    break;
-                } else {
-                    $responsablesAusentes[] = $responsableNivel->empleado->email;
                 }
             }
 

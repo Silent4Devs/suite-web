@@ -370,6 +370,7 @@ class RequisicionesCreateComponent extends Component
                         'fecha_inicio' => $proveedor['fechaInicio'],
                         'fecha_fin' => $proveedor['fechaFin'],
                         'extArchivo' => $proveedor['archivo']->getClientOriginalExtension(),
+                        'archivo' => $proveedor['archivo'],
                         // 'cotizacion' => null,
                         // 'requisiciones_id' => $proveedor[''],
                     ];
@@ -454,7 +455,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
+                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key.'_'.uniqid().'.'.$provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],
@@ -470,6 +471,7 @@ class RequisicionesCreateComponent extends Component
                     'cotizacion' => $name,
                 ]);
 
+                $ruta_cotizacion = $provSug['archivo']->storeAs('public/cotizaciones_requisiciones_proveedores/', $name);
             }
 
             foreach ($dataProvedoresCatalogo as $key => $provCat) {

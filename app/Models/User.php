@@ -117,6 +117,16 @@ class User extends Authenticatable implements Auditable
         }
     }
 
+    //Funcion para capacitaciones devuelve pocos datos
+    public function profesor()
+    {
+        if ($this->empleado_id != null) {
+            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto', 'email', 'n_empleado')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->select('id', 'name', 'foto', 'email', 'n_empleado')->alta();
+        }
+    }
+
     //empleadoId attribute
     public function getEmpleadoIdAttribute($value)
     {

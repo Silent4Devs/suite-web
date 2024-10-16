@@ -1,4 +1,19 @@
 <header>
+    @php
+        use App\Models\Organizacion;
+        use App\Models\User;
+        use App\Models\Empleado;
+        $usuario = User::getCurrentUser();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'logo-ltr.png';
+        }
+
+        $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
+    @endphp
     <div class="content-header-blue">
         <div class="caja-inicio-options-header">
             <button class="btn-menu-header" onclick="menuHeader();">
@@ -15,8 +30,9 @@
                 </div>
                 <div class="close-menu-header"></div>
             </button>
-            <a href="{{ url('/admin/portal-comunicacion') }}"><img src="{{ asset('img/logo-ltr.png') }}"
-                    alt="Logo Tabantaj" style="height: 40px;"></a>
+            <a href="{{ url('/admin/portal-comunicacion') }}">
+                <img src="{{ asset($logotipo) }}" style="height: 40px;">
+            </a>
             @livewire('global-search-component', ['lugar' => 'header'])
         </div>
         @if ($empleado)
@@ -421,7 +437,8 @@
                 $usuario->can('roles_acceder') ||
                 $usuario->can('usuarios_acceder') ||
                 $usuario->can('configurar_soporte_acceder'))
-            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden">
+            <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
+                style="background-color: #fff; min-width: 280px;">
                 <span class="title-item-menu-header">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
@@ -433,6 +450,18 @@
                                     <i class="material-symbols-outlined i-direct">keyboard_arrow_down</i>
                                 </a>
                                 <ul>
+                                    @can('matriz_bia_menu_acceder')
+                                        <li>
+                                            <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
+                                                Análisis de Impacto
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('lista_distribucion_acceder')
+                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
+                                                distribución</a>
+                                        </li>
+                                    @endcan
                                     @can('clausulas_auditorias_acceder')
                                         <li><a href="{{ route('admin.auditoria-clasificacion') }}">Clasificación</a>
                                         </li>
@@ -463,11 +492,6 @@
                                     @can('crear_area_acceder')
                                         <li><a href="{{ route('admin.areas.index') }}">Crear Áreas</a></li>
                                     @endcan
-                                    @can('lista_distribucion_acceder')
-                                        <li><a href="{{ asset('admin/lista-distribucion') }}">Lista de
-                                                distribución</a>
-                                        </li>
-                                    @endcan
                                     @can('lista_informativa_acceder')
                                         <li>
                                             <a href="{{ route('admin.lista-informativa.index') }}">Lista Informativa</a>
@@ -494,8 +518,6 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
-
-                                    <li><a href="{{ route('admin.module_firmas') }}">Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan
