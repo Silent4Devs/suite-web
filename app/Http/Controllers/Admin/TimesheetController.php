@@ -619,7 +619,7 @@ class TimesheetController extends Controller
                         'timesheet_id' => $timesheet_edit->id,
                         'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
                         'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-                        'facturable' => $hora['facturable'],
+                        'facturable' => array_key_exists('facturable', $hora) ? true : false,
                         'horas_lunes' => $hora['lunes'],
                         'horas_martes' => $hora['martes'],
                         'horas_miercoles' => $hora['miercoles'],
