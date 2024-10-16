@@ -81,7 +81,7 @@
                                     </div>
                                     <div>
                                         @error('sucursal_id')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                                     </div>
                                     <div>
                                         @error('user_name')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                     </div>
                                     <div>
                                         @error('user_area')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                     </div>
                                     <div>
                                         @error('descripcion')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                                     </div>
                                     <div>
                                         @error('comprador_id')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -173,8 +173,8 @@
                                         <label for="contrato_id">Proyecto<font class="asterisco">*
                                             </font></label>
                                     </div>
-                                    @error('comprador_id')
-                                        <span class="error">{{ $message }}</span>
+                                    @error('contrato_id')
+                                        <span style="color: red;" class="error">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                         </label>
                                     </div>
                                     @error('cantidad_oblig')
-                                        <span class="error">{{ $message }}</span>
+                                        <span style="color: red;" class="error">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col s12 l8">
@@ -218,13 +218,13 @@
                                         </label>
                                     </div>
                                     @error('producto_oblig')
-                                        <span class="error">{{ $message }}</span>
+                                        <span style="color: red;" class="error">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col s12 l12">
-                                    <div class="anima-focus">
+                                    <div class="anima-focus mt-3">
                                         <textarea class="model-especificaciones form-control" maxlength="500" id="especificaciones_oblig"
                                             name="especificaciones_oblig" wire:model="especificaciones_oblig"></textarea>
                                         <label for="especificaciones_oblig">
@@ -233,7 +233,7 @@
                                         </label>
                                     </div>
                                     @error('especificaciones_oblig')
-                                        <span class="error">{{ $message }}</span>
+                                        <span style="color: red;" class="error">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
                                             </label>
                                         </div>
                                         @error('cantidad_oblig')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col s12 l8">
@@ -283,7 +283,7 @@
                                             </label>
                                         </div>
                                         @error('producto_oblig')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@
                                             </label>
                                         </div>
                                         @error('especificaciones_oblig')
-                                            <span class="error">{{ $message }}</span>
+                                            <span style="color: red;" class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
