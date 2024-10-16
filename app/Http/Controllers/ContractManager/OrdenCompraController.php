@@ -147,7 +147,6 @@ class OrdenCompraController extends Controller
     public function edit($id)
     {
         try {
-
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
             if (! $requisicion) {
@@ -269,7 +268,11 @@ class OrdenCompraController extends Controller
                 ];
             }
 
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra'));
+            $maximaVersion = collect($resultadoOrdenesCompra)->max('version');
+
+            $contadorEdit = 3 - $maximaVersion;
+
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit'));
         } catch (\Throwable $th) {
             abort(404);
         }
