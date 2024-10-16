@@ -36,6 +36,7 @@ Route::post('/register/submit', [Controllers\RegisterTenantController::class, 's
 Route::get('/login-tenant', [Controllers\LoginTenantController::class, 'show'])->name('central.tenants.login');
 Route::post('/login/submit', [Controllers\LoginTenantController::class, 'submit'])->name('central.tenants.login.submit');
 
+Route::post('/home', [HomeController::class, 'index'])->name('tenant.home');
 
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
