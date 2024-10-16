@@ -149,27 +149,33 @@ class RequisicionesController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('katbol_requisiciones_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->where('id', $id)->first();
+
         $organizacion = $this->obtenerOrganizacion();
 
-            // En el controlador para requisiciones
-            $historialesRequisicion = HistorialEdicionesReq::with('version')->where('requisicion_id', $id)->get();
+        // Obtener los historiales de la requisición específica
+        $historialesRequisicion = HistorialEdicionesReq::with('version')
+            ->where('requisicion_id', $id)
+            ->get();
 
-            // Agrupando los historiales de requisiciones por versión
-            $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
-                return $item->version->version; // Suponiendo que la columna es 'version'
-            });
+        // Agrupar los historiales por versión
+        $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
+            return $item->version->version; // Suponiendo que 'version' es una columna en la relación
+        });
 
-            $resultadoRequisiciones = [];
-            foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
+        $resultadoRequisiciones = [];
+        foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
+            $resultadoRequisiciones[] = [
+                'version' => $version,
+                'cambios' => $cambios,
+            ];
+        }
 
-                $resultadoRequisiciones[] = [
-                    'version' => $version,
-                    'cambios' => $cambios,
-                ];
-            }
+        // Obtener el valor máximo de la versión del array de resultados
+        $maximaVersion = collect($resultadoRequisiciones)->max('version');
 
-        return view('contract_manager.requisiciones.edit', compact('id', 'organizacion', 'resultadoRequisiciones'));
+        $contadorEdit = 3 - $maximaVersion;
+
+        return view('contract_manager.requisiciones.edit', compact('id', 'organizacion', 'resultadoRequisiciones', 'contadorEdit'));
     }
 
     /**
