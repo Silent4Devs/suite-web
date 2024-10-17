@@ -16,7 +16,7 @@
                     } else {
                         var option = new Option(item.empleado_id, item.empleado_id);
                         $(option).html(item
-                        .empleado_id); // Cambia esto según tus requisitos de visualización
+                            .empleado_id); // Cambia esto según tus requisitos de visualización
 
                         nivelSelect.append(option);
                     }
@@ -51,7 +51,7 @@
             $('.form-row').hide(); // Hide all select boxes initially
             for (var i = 1; i <= selectedNivel; i++) {
                 $('.nivel' + i + 'Div')
-            .show(); // Show the selected nivel and preceding nivel's select boxes
+                    .show(); // Show the selected nivel and preceding nivel's select boxes
                 $('.nivel' + i + 'Div select').select2({
                     maximumSelectionLength: 5, // Max selection
                     language: {
@@ -132,7 +132,7 @@
                 var unselectedOptionId = e.params.data.id;
                 var index = selectedOptions['nivel' + nivel].indexOf(unselectedOptionId);
                 if (index !== -1) {
-                    selectedOptions['nivel' + nivel].splice(index, 1);
+                    selectedOptions['nivel' + nivel].splice(index, 0);
                 }
             });
         })(i);
