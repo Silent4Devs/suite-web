@@ -124,10 +124,9 @@ class NotificacionesComponent extends Component
             $this->dispatch('NotificationDeleted'); // Notifica que una notificación ha sido eliminada
             $this->getUnreadNotifications(); // Actualiza la lista de notificaciones
         }
-    
+
         return response()->noContent();
     }
-
 
     public function markAllAsRead()
     {

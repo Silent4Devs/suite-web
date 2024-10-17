@@ -35,6 +35,7 @@ class RequisicionesEditComponent extends Component
     public $editRequisicion = null;
 
     public $currentUser;
+
     public $user;
 
     public $paso = 1;
@@ -148,7 +149,7 @@ class RequisicionesEditComponent extends Component
         'actualizarCountProveedores' => 'actualizarCountProveedores',
         'redirigirFaltantes' => 'redirigirFaltantes',
         'removeProductoConfirmed' => 'removeProductoConfirmed',
-        'removeProveedorConfirmed' => 'removeProveedorConfirmed'
+        'removeProveedorConfirmed' => 'removeProveedorConfirmed',
     ];
 
     public $filename;
@@ -180,7 +181,7 @@ class RequisicionesEditComponent extends Component
     {
         $this->editRequisicion = KatbolRequsicion::where('id', $id_requisiciondata)->first();
 
-        $this->currentUser =  User::getCurrentUser();
+        $this->currentUser = User::getCurrentUser();
 
         $this->user = User::where('id', $this->editRequisicion->id_user)->first();
 
@@ -213,7 +214,7 @@ class RequisicionesEditComponent extends Component
         $this->fecha_solicitud = $this->editRequisicion->fecha;
         $this->sucursal_id = $this->editRequisicion->sucursal_id;
         $this->descripcion = $this->editRequisicion->referencia;
-        $this->comprador_id =  $this->editRequisicion->comprador_id;
+        $this->comprador_id = $this->editRequisicion->comprador_id;
         $this->contrato_id = $this->editRequisicion->contrato_id;
 
         foreach ($this->editRequisicion->productos_requisiciones as $keyProducto => $producto) {
@@ -232,9 +233,8 @@ class RequisicionesEditComponent extends Component
             }
         }
 
-
         foreach ($this->editRequisicion->provedores_requisiciones_catalogo as $keyrequisiciones_catalogo => $prov_requisiciones) {
-            # code...
+            // code...
             $this->array_proveedores[] = [
                 'proveedor_id' => $prov_requisiciones->proveedor_id,
                 'fechaInicio' => $prov_requisiciones->fecha_inicio,
@@ -253,7 +253,7 @@ class RequisicionesEditComponent extends Component
             ];
         }
         foreach ($this->editRequisicion->provedores_indistintos_requisiciones as $keyindistintos_requisiciones => $prov_indistintos_requisiciones) {
-            # code...
+            // code...
             $this->array_proveedores[] = [
                 'proveedor_id' => 'otro',
                 'fechaInicio' => $prov_indistintos_requisiciones->fecha_inicio,
@@ -273,7 +273,7 @@ class RequisicionesEditComponent extends Component
         }
 
         foreach ($this->editRequisicion->provedores_requisiciones as $keyrequisiciones => $prov_requisiciones_catalogo) {
-            # code...
+            // code...
             $this->array_proveedores[] = [
                 'proveedor_id' => $prov_requisiciones_catalogo->proveedor,
                 'fechaInicio' => $prov_requisiciones_catalogo->fecha_inicio,
@@ -315,7 +315,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -397,26 +397,26 @@ class RequisicionesEditComponent extends Component
             switch ($this->array_proveedores[$keyP]['tabla_origen']) {
                 case 'ProvedorRequisicionCatalogo':
                     KatbolProvedorRequisicionCatalogo::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
-                    # code...
+                    // code...
                     $this->alert('success', 'Registro Eliminado');
 
                     break;
                 case 'ProveedorIndistinto':
                     KatbolProveedorIndistinto::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
-                    # code...
+                    // code...
                     $this->alert('success', 'Registro Eliminado');
 
                     break;
 
                 case 'ProveedorRequisicion':
                     KatbolProveedorRequisicion::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
-                    # code...
+                    // code...
                     $this->alert('success', 'Registro Eliminado');
 
                     break;
                 default:
                     $this->alert('error', 'Error al buscar el registro.');
-                    # code...
+                    // code...
                     break;
             }
 
@@ -474,20 +474,20 @@ class RequisicionesEditComponent extends Component
                         switch ($proveedor['tabla_origen']) {
                             case 'ProvedorRequisicionCatalogo':
                                 KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
-                                # code...
+                                // code...
                                 $this->alert('success', 'Registro Eliminado');
 
                                 break;
 
                             case 'ProveedorRequisicion':
                                 KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
-                                # code...
+                                // code...
                                 $this->alert('success', 'Registro Eliminado');
 
                                 break;
                             default:
                                 $this->alert('error', 'Error al buscar el registro.');
-                                # code...
+                                // code...
                                 break;
                         }
                     }
@@ -513,16 +513,16 @@ class RequisicionesEditComponent extends Component
                         switch ($proveedor['tabla_origen']) {
                             case 'ProvedorRequisicionCatalogo':
                                 KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
-                                # code...
+                                // code...
                                 break;
 
                             case 'ProveedorIndistinto':
                                 KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
-                                # code...
+                                // code...
                                 break;
 
                             default:
-                                # code...
+                                // code...
                                 break;
                         }
                     }
@@ -551,15 +551,15 @@ class RequisicionesEditComponent extends Component
                     switch ($proveedor['tabla_origen']) {
                         case 'ProveedorIndistinto':
                             KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
-                            # code...
+                            // code...
                             break;
 
                         case 'ProveedorRequisicion':
                             KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
-                            # code...
+                            // code...
                             break;
                         default:
-                            # code...
+                            // code...
                             break;
                     }
                 }
@@ -655,7 +655,7 @@ class RequisicionesEditComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
                 KatbolProveedorRequisicion::updateOrCreate(
                     [
                         'id' => $provSug['id_registro'],
@@ -724,7 +724,6 @@ class RequisicionesEditComponent extends Component
             DB::rollback();
             dd($e);
         }
-
 
         if ($this->currentUser->id == $this->user->id) {
             $this->dataFirma();
