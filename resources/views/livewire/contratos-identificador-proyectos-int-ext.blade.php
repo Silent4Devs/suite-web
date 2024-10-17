@@ -5,7 +5,7 @@
                 <br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="creacion_proyecto" id="creacion_proyecto"
-                        wire:model.live="creacion_proyecto" value="true">
+                        wire:model.live="creacion_proyecto">
                     <label class="form-check-label" for="creacion_proyecto">
                         Crear Proyecto para Contrato
                     </label>
