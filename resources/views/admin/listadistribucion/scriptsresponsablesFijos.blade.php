@@ -7,7 +7,7 @@
 
             participantesSeleccionados[nivel].forEach(function(item) {
                 // Ignorar el participante con numero_orden igual a 1
-                if (item.numero_orden !== 0 && nivelSelect.length && item.empleado_id) {
+                if (item.numero_orden !== 1 && nivelSelect.length && item.empleado_id) {
                     var foundOption = nivelSelect.find('option[value="' + item.empleado_id + '"]');
 
                     // Check if the option exists and select it if it does
@@ -16,7 +16,7 @@
                     } else {
                         var option = new Option(item.empleado_id, item.empleado_id);
                         $(option).html(item
-                        .empleado_id); // Cambia esto según tus requisitos de visualización
+                            .empleado_id); // Cambia esto según tus requisitos de visualización
 
                         nivelSelect.append(option);
                     }
@@ -49,9 +49,9 @@
         $('#niveles').change(function() {
             var selectedNivel = $(this).val();
             $('.form-row').hide(); // Hide all select boxes initially
-            for (var i = 0; i <= selectedNivel; i++) {
+            for (var i = 1; i <= selectedNivel; i++) {
                 $('.nivel' + i + 'Div')
-            .show(); // Show the selected nivel and preceding nivel's select boxes
+                    .show(); // Show the selected nivel and preceding nivel's select boxes
                 $('.nivel' + i + 'Div select').select2({
                     maximumSelectionLength: 5, // Max selection
                     language: {
@@ -65,7 +65,7 @@
 
         var initialNivel = $('#niveles').val();
         $('.form-row').hide(); // Hide all select boxes initially
-        for (var i = 0; i <= initialNivel; i++) {
+        for (var i = 1; i <= initialNivel; i++) {
             $('.nivel' + i + 'Div').show(); // Show the preselected nivel and preceding nivel's select boxes
             $('.nivel' + i + 'Div select').select2({
                 maximumSelectionLength: 5, // Max selection
@@ -78,7 +78,7 @@
         }
 
         // Apply select2 to each nivel select
-        for (let i = 0; i <= {{ $lista->niveles }}; i++) {
+        for (let i = 1; i <= {{ $lista->niveles }}; i++) {
             $('#nivel' + i).select2({
                 templateResult: formatAvatar,
                 templateSelection: formatAvatar,
@@ -111,7 +111,7 @@
     var niveles = @json($lista->niveles);
     var selectedOptions = {}; // Object to store selected options for each nivel in order
 
-    for (var i = 0; i <= niveles; i++) {
+    for (var i = 1; i <= niveles; i++) {
         selectedOptions['nivel' + i] = [];
 
         (function(nivel) {

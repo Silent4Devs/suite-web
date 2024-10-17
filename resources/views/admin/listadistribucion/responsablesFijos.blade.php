@@ -32,7 +32,6 @@
         <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
         <hr>
         <div class="row g-0">
-<h1>{{$lista->niveles}}</h1>
             <input name="niveles" id="niveles" type="hidden" value="{{ $lista->niveles }}">
 
             <div class="col-12">
@@ -58,7 +57,9 @@
                             </div>
                             <div class="row">
                                 <div class="mt-4 col-3">
-                                    <h6>Comprador:</h6>
+                                    <h6>Responsable:</h6>
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $comprador->avatar) }}"
+                                        alt="{{ $comprador->name }}" class="img_empleado">
                                     {{ $comprador->name }}
                                 </div>
                                 <div class="mt-4 col-9">
