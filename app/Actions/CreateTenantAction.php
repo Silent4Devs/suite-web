@@ -61,7 +61,7 @@ class CreateTenantAction
     {
         Artisan::call('migrate', [
             '--database' => 'tenant',
-            '--path' => 'database/migrations/tenant',
+            '--path' => 'database/migrations/tabantaj',
             '--force' => true,
         ]);
     }

@@ -14,6 +14,8 @@ class LoginTenantController extends Controller
 {
     public function show(): View
     {
+        // $currentDatabase = DB::connection('tenant')->getDatabaseName();
+        // dd($currentDatabase);
         return view('central.tenants.login');
     }
 
@@ -25,8 +27,7 @@ class LoginTenantController extends Controller
 
         /** @var Tenant $tenant */
         $tenant = Tenant::where('email', $email = $request->post('email'))->firstOrFail();
-        $currentDatabase = DB::connection('tenant')->getDatabaseName();
-        dd($currentDatabase);
+
         return redirect(
             $tenant->route('tenant.login', ['email' => $email]),
         );

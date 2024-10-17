@@ -35,7 +35,8 @@ class TenantMiddleware
 
 
         // Configurar la conexión a la base de datos para el inquilino
-        $this->tenantManager->setTenant($tenant);
+        $db = $this->tenantManager->setTenant($tenant);
+        dd($db);
 
         return $next($request);
     }
