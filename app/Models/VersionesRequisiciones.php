@@ -9,5 +9,5 @@ class VersionesRequisiciones extends Model
 {
     use HasFactory;
 
-    protected $table = "versiones_requisicion";
+    protected $table = 'versiones_requisicion';
 }

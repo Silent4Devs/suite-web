@@ -890,13 +890,12 @@ class Empleado extends Model implements Auditable
     public static function listaSupervisores()
     {
         return self::alta()->select('supervisor_id', 'id')
-                    ->get()
-                    ->filter(function ($emp) {
-                        return $emp->es_supervisor;
-                    })
-                    ->pluck('id');
+            ->get()
+            ->filter(function ($emp) {
+                return $emp->es_supervisor;
+            })
+            ->pluck('id');
     }
-
 
     //declaraciones iso
 

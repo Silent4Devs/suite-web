@@ -18,11 +18,15 @@ class MonedaExtContratosCreate extends Component
     public $edit_moneda = false;
 
     public $monto_dolares = 0;
+
     public $maximo_dolares = 0;
+
     public $minimo_dolares = 0;
 
     public $monto_pago = 0;
+
     public $maximo = 0;
+
     public $minimo = 0;
 
     public function mount()
@@ -36,7 +40,7 @@ class MonedaExtContratosCreate extends Component
 
         $this->divisas = [
             'MXN',
-            'USD'
+            'USD',
         ];
 
         // $this->divisas = [
@@ -87,15 +91,14 @@ class MonedaExtContratosCreate extends Component
         $this->dispatch('actualizarValores', [
             'monto_pago' => $monto_pago,
             'maximo' => $maximo,
-            'minimo' => $minimo
+            'minimo' => $minimo,
         ]);
     }
-
 
     public function updatedEditMoneda($bool)
     {
         // dd($bool);
-        if (!$bool) {
+        if (! $bool) {
             $convertedAmount = CurrencyConverter::convert(1.0)
                 ->from($this->tipo_cambio)
                 ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
@@ -132,25 +135,25 @@ class MonedaExtContratosCreate extends Component
 
         switch ($tipo) {
             case 'monto':
-                # code...
+                // code...
                 $this->monto_dolares = $valor;
                 $this->monto_pago = floatval($convertirDolares);
                 break;
 
             case 'maximo':
-                # code...
+                // code...
                 $this->maximo_dolares = $valor;
                 $this->maximo = floatval($convertirDolares);
                 break;
 
             case 'minimo':
-                # code...
+                // code...
                 $this->minimo_dolares = $valor;
                 $this->minimo = floatval($convertirDolares);
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 

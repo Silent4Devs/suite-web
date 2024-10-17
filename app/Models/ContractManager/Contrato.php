@@ -234,7 +234,7 @@ class Contrato extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        /*  'no_contrato' => 'none',
+    /*  'no_contrato' => 'none',
         *'nombre_proveedor' => 'none',
        * 'area' => 'none',
         *'nombre_servicio' => 'none',
@@ -299,14 +299,14 @@ class Contrato extends Model implements Auditable
         // dd($archivo);
         $ruta = asset('storage/contratos/');
         // $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato);
-        $ruta = $ruta . '/' . $archivo;
+        $ruta = $ruta.'/'.$archivo;
 
         return $ruta;
     }
 
     public function getNameProveedorAttribute()
     {
-        return $this->no_contrato . '-' . $this->nombre_servicio;
+        return $this->no_contrato.'-'.$this->nombre_servicio;
     }
 
     public function cliente()

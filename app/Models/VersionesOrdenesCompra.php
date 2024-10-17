@@ -9,5 +9,5 @@ class VersionesOrdenesCompra extends Model
 {
     use HasFactory;
 
-    protected $table ="versiones_orden_compra";
+    protected $table = 'versiones_orden_compra';
 }

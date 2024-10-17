@@ -517,18 +517,16 @@ class PoliticaSgsiController extends Controller
 
     public function rechazado($id, Request $request)
     {
-        $politica = PoliticaSgsi::where('id',$id)->first();
+        $politica = PoliticaSgsi::where('id', $id)->first();
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
         event(new PoliticasSgiEvent($politica, 'rechazado', 'politica_sgsis', 'Politica'));
 
-        
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
             'proceso_id' => $aprobacion->id,
         ]);
-
 
         $aprobacion->update([
             'estatus' => 'Rechazado',
@@ -552,7 +550,7 @@ class PoliticaSgsiController extends Controller
         foreach ($aprobacion->participantes as $participante) {
             Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoPolitica($politica->nombre_politica));
         }
-       
+
         return redirect(route('admin.politica-sgsis.index'));
     }
 
