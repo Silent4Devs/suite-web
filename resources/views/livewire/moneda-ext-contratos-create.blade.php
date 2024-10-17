@@ -64,20 +64,18 @@
                         Monto
                         Máximo ({{ $tipo_cambio }})
                     </label>
-                    <input min="{{ $monto_dolares }}" type="number" {{-- wire:model="maximo_dolares" --}}
-                        value="{{ old('maximo_dolares', $maximo_dolares) }}" name="maximo_dolares"
-                        wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo" class="form-control"
-                        step=".01">
+                    <input type="number" {{-- wire:model="maximo_dolares" --}} value="{{ old('maximo_dolares', $maximo_dolares) }}"
+                        name="maximo_dolares" wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo"
+                        class="form-control" step=".01">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="minimo_dolares" class="txt-tamaño">
                         Monto
                         Mínimo ({{ $tipo_cambio }})
                     </label>
-                    <input max="{{ $monto_dolares }}" type="number" {{-- wire:model="minimo_dolares" --}}
-                        value="{{ old('minimo_dolares', $minimo_dolares) }}" name="minimo_dolares"
-                        wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo" class="form-control"
-                        step=".01">
+                    <input type="number" {{-- wire:model="minimo_dolares" --}} value="{{ old('minimo_dolares', $minimo_dolares) }}"
+                        name="minimo_dolares" wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo"
+                        class="form-control" step=".01">
                 </div>
             </div>
         </div>
