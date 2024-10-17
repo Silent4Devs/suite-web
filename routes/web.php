@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::view('/tenant', 'central.landing')->name('central.landing');
+Route::view('tenant', 'central.landing')->name('central.landing');
 
 Route::get('/register-tenant', [Controllers\RegisterTenantController::class, 'show'])->name('central.tenants.register');
 Route::post('/register/submit', [Controllers\RegisterTenantController::class, 'submit'])->name('central.tenants.register.submit');

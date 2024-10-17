@@ -20,7 +20,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 
-Route::middleware('/tenant', PreventAccessFromCentralDomains::class)->name('tenant.')->group(function () {
+Route::middleware('tenant', PreventAccessFromCentralDomains::class)->name('tenant.')->group(function () {
     Route::redirect('/', '/home');
 
     Route::get('/impersonate/{token}', function ($token) {
