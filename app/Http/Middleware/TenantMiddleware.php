@@ -6,8 +6,17 @@ use Closure;
 use App\Models\Tenant;
 use App\Services\TenantManager;
 
+use Illuminate\Support\Facades\DB;
+
 class TenantMiddleware
 {
+    protected $tenantManager;
+
+    public function __construct(TenantManager $tenantManager)
+    {
+        $this->tenantManager = $tenantManager;
+    }
+
     public function handle($request, Closure $next)
     {
         // Detectar el inquilino según el dominio
@@ -19,14 +28,14 @@ class TenantMiddleware
             $subdomain = $domain;
         }
 
-        $tenant = Tenant::whereHas('domains', function ($query) use ($domain) {
+        $tenant = Tenant::whereHas('domains', function ($query) use ($subdomain) {
 
-            $query->where('domain', $domain);
+            $query->where('domain', $subdomain);
         })->firstOrfail();
 
-        dd($tenant);
+
         // Configurar la conexión a la base de datos para el inquilino
-        app(TenantManager::class)->setTenant($tenant);
+        $this->tenantManager->setTenant($tenant);
 
         return $next($request);
     }

@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
+use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,16 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 Route::get('/register-tenant', [Controllers\RegisterTenantController::class, 'show'])->name('central.tenants.register');
 Route::post('/register/submit', [Controllers\RegisterTenantController::class, 'submit'])->name('central.tenants.register.submit');
 
-Route::get('/login-tenant', [Controllers\LoginTenantController::class, 'show'])->name('central.tenants.login');
-Route::post('/login/submit', [Controllers\LoginTenantController::class, 'submit'])->name('central.tenants.login.submit');
+Route::group(['middleware' => ['tenant']], function () {
+    // Aquí van tus rutas que requieren conexión a la base de datos del inquilino
+    Route::get('/login-tenant', [Controllers\LoginTenantController::class, 'show'])->name('central.tenants.login');
+
+    Route::post('/login/submit', [Controllers\LoginTenantController::class, 'submit'])->name('central.tenants.login.submit');
+    // Otras rutas...
+});
+
+
+
 
 Route::post('/home', [HomeController::class, 'index'])->name('tenant.home');
 
