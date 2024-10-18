@@ -54,9 +54,14 @@ services:
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "."
-      dockerfile: Dockerfile.prod
-    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
+    #uncomment this if you will use only docker compose
+    #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
     restart: unless-stopped
     tty: true
@@ -71,8 +76,8 @@ services:
 
   queue-worker:
     build:
-      context: "."
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -89,8 +94,8 @@ services:
 
   schedule-worker:
     build:
-      context: "."
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
