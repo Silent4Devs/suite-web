@@ -201,21 +201,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad'.$i],
-                'producto_id' => $data['producto'.$i],
-                'centro_costo_id' => $data['centro_costo'.$i],
-                'espesificaciones' => $data['especificaciones'.$i],
-                'contrato_id' => $data['contrato'.$i],
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas'.$i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
-                'sub_total' => $data['sub_total'.$i],
-                'iva' => $data['iva'.$i],
-                'iva_retenido' => $data['iva_retenido'.$i],
-                'descuento' => $data['descuento'.$i],
-                'otro_impuesto' => $data['otro_impuesto'.$i],
-                'isr_retenido' => $data['isr_retenido'.$i],
-                'total' => $data['total'.$i],
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
             ]);
         }
 
@@ -233,7 +233,7 @@ class OrdenCompraController extends Controller
         ]);
         KatbolRequsicion::activarHistorial();
 
-        return redirect(route('contract_manager.orden-compra.firmar', ['tipo_firma' => 'firma_comprador_orden', 'id' => $requisicion->id]));
+        return redirect(route('contract_manager.orden-compra.firmarAprobadores', ['id' => $requisicion->id]));
     }
 
     public function editarOrdenCompra($id)
@@ -241,6 +241,7 @@ class OrdenCompraController extends Controller
         try {
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            // dd($requisicion, $requisicion->proveedoroc_id, $requisicion->proveedor);
             if (! $requisicion) {
                 abort(404);
             }
@@ -309,21 +310,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad'.$i],
-                'producto_id' => $data['producto'.$i],
-                'centro_costo_id' => $data['centro_costo'.$i],
-                'espesificaciones' => $data['especificaciones'.$i],
-                'contrato_id' => $data['contrato'.$i],
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas'.$i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
-                'sub_total' => $data['sub_total'.$i],
-                'iva' => $data['iva'.$i],
-                'iva_retenido' => $data['iva_retenido'.$i],
-                'descuento' => $data['descuento'.$i],
-                'otro_impuesto' => $data['otro_impuesto'.$i],
-                'isr_retenido' => $data['isr_retenido'.$i],
-                'total' => $data['total'.$i],
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
             ]);
         }
 
@@ -340,7 +341,7 @@ class OrdenCompraController extends Controller
             'credito' => $request->credito_proveedor,
         ]);
 
-        return redirect(route('contract_manager.orden-compra.firmar', ['tipo_firma' => 'firma_comprador_orden', 'id' => $requisicion->id]));
+        return redirect(route('contract_manager.orden-compra.firmarAprobadores', ['id' => $requisicion->id]));
     }
 
     /**
@@ -358,28 +359,28 @@ class OrdenCompraController extends Controller
         return redirect(route('contract_manager.orden-compra'));
     }
 
-    public function firmar($tipo_firma, $id)
-    {
-        try {
-            $requisicion = KatbolRequsicion::find($id);
-            $organizacion = Organizacion::getFirst();
-            $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
-            $user = User::find($requisicion->id_finanzas_oc);
+    // public function firmar($tipo_firma, $id)
+    // {
+    //     try {
+    //         $requisicion = KatbolRequsicion::find($id);
+    //         $organizacion = Organizacion::getFirst();
+    //         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
+    //         $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
+    //         $user = User::find($requisicion->id_finanzas_oc);
 
-            if ($user) {
-                $firma_finanzas_name = $user->name;
-            } else {
-                $firma_finanzas_name = null;
-            }
-            $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-            $proveedores_catalogo = KatbolProveedorOC::where('id', $requisicion->proveedor_catalogo_id)->first();
+    //         if ($user) {
+    //             $firma_finanzas_name = $user->name;
+    //         } else {
+    //             $firma_finanzas_name = null;
+    //         }
+    //         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+    //         $proveedores_catalogo = KatbolProveedorOC::where('id', $requisicion->proveedor_catalogo_id)->first();
 
-            return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'proveedores', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'proveedores_catalogo'));
-        } catch (\Exception $e) {
-            return view('contract_manager.ordenes-compra.error');
-        }
-    }
+    //         return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'proveedores', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'proveedores_catalogo'));
+    //     } catch (\Exception $e) {
+    //         return view('contract_manager.ordenes-compra.error');
+    //     }
+    // }
 
     public function FirmarUpdate(Request $request, $tipo_firma, $id)
     {
@@ -640,13 +641,13 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas_orden === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -658,7 +659,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -688,7 +689,6 @@ class OrdenCompraController extends Controller
                 'firma_finanzas_orden' => null,
                 'firma_comprador_orden' => null,
             ]);
-
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
