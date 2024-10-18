@@ -54,7 +54,7 @@ services:
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile.prod
     entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
     container_name: php-tabantaj
@@ -69,7 +69,7 @@ services:
 
   queue-worker:
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile.prod
     volumes:
       - .:/var/www/html
@@ -87,7 +87,7 @@ services:
 
   schedule-worker:
     build:
-      context: "./infra/php/"
+      context: "."
       dockerfile: Dockerfile.prod
     depends_on:
       - php
