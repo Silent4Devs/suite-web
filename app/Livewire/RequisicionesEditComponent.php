@@ -95,45 +95,6 @@ class RequisicionesEditComponent extends Component
 
     public $array_proveedores = [];
 
-    #[Validate('required')]
-    public $fecha_solicitud;
-
-    #[Validate('required|int')]
-    public $sucursal_id = '';
-
-    #[Validate('required')]
-    public $user_name;
-
-    #[Validate('required')]
-    public $user_area;
-
-    #[Validate('required')]
-    public $user_email;
-
-    #[Validate('required|max:255')]
-    public $descripcion;
-
-    #[Validate('required|int')]
-    public $comprador_id = '';
-
-    #[Validate('required|int')]
-    public $contrato_id = '';
-
-    #[Validate('required|int|min:1')]
-    public $cantidad_oblig = 0;
-
-    #[Validate('required|int')]
-    public $producto_oblig = '';
-
-    public $id_registro_oblig = null;
-
-    #[Validate('required|max:500')]
-    public $especificaciones_oblig = '';
-
-    public $array_productos = [];
-
-    public $array_proveedores = [];
-
     public $nueva_requisicion;
 
     public $productos_view;
@@ -354,7 +315,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -694,7 +655,7 @@ class RequisicionesEditComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
+                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
                 KatbolProveedorRequisicion::updateOrCreate(
                     [
                         'id' => $provSug['id_registro'],
@@ -835,7 +796,6 @@ class RequisicionesEditComponent extends Component
 
         if ($data['firma']) {
             $this->editRequisicion->update([
-            $this->editRequisicion->update([
                 'firma_solicitante' => $data['firma'],
                 'estado' => 'curso',
                 'email' => $this->user->email,
@@ -844,52 +804,10 @@ class RequisicionesEditComponent extends Component
             $fecha = date('d-m-Y');
             $this->editRequisicion->fecha_firma_solicitante_requi = $fecha;
             $this->editRequisicion->save();
-            $fecha = date('d-m-Y');
-            $this->editRequisicion->fecha_firma_solicitante_requi = $fecha;
-            $this->editRequisicion->save();
 
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-            //Traemos participantes
-            $listaPart = $listaReq->participantes;
-
-            $jefe = $this->user->empleado->supervisor;
-            //Buscamos al supervisor por su id
-            $supList = $listaPart->where('empleado_id', $jefe->id)->first();
-
-            //Buscamos en que nivel se encuentra el supervisor
-            $nivel = $supList->nivel;
-
-            //traemos a todos los participantes correspondientes a ese nivel
-            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
-
-            //Buscamos 1 por 1 los participantes del nivel (area)
-            foreach ($participantesNivel as $key => $partNiv) {
-                //Si su estado esta activo se le manda el correo
-                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
-                    $responsable = $partNiv->empleado;
-                    $supervisor = $responsable->email;
-
-                    break;
-                }
-            }
-
-            $firmas_requi = FirmasRequisiciones::where('requisicion_id', $this->editRequisicion->id)->first();
-
-            $firmas_requi->update([
-                'jefe_id' => $responsable->id,
-                // 'responsable_finanzas_id' => $responsable->id,
-                // 'comprador_id' => $comprador->user->empleado->id,
-            ]);
-
-            if ($responsable->id == $this->user->empleado->id) {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesFirmaDuplicadaEmail($this->editRequisicion, $organizacion, $tipo_firma));
-            } else {
-                Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->editRequisicion, $organizacion, $tipo_firma));
-            }
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
             //Traemos participantes
             $listaPart = $listaReq->participantes;
