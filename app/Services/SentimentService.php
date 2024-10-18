@@ -8,7 +8,7 @@ class SentimentService
 {
     public static function analyzeSentiment($text)
     {
-        $api = env('GOSERVICES_API'); // Asegúrate de que esta variable esté correctamente definida en tu .env
+        $api = env('REPORTSERVICES_API'); // Asegúrate de que esta variable esté correctamente definida en tu .env
         $apiEndpoint = $api.'/sentimentAnalysis/'; // Cambia la ruta según la API que estés utilizando
 
         $texts = is_array($text) ? $text : [$text];

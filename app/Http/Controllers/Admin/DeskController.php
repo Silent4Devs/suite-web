@@ -41,6 +41,8 @@ class DeskController extends Controller
         $mejoras = Mejoras::getAll();
         $sugerencias = Sugerencias::getAll();
 
+        $seguridad_sentiment_5 = 0;$seguridad_sentiment_4 = 0;$seguridad_sentiment_3 = 0;$seguridad_sentiment_2 = 0;$seguridad_sentiment_1 = 0;$riesgos_sentiment_5 = 0;$riesgos_sentiment_4 = 0;$riesgos_sentiment_3 = 0;$riesgos_sentiment_2 = 0;$riesgos_sentiment_1 = 0;$quejas_sentiment_5 = 0;$quejas_sentiment_4 = 0;$quejas_sentiment_3 = 0;$quejas_sentiment_2 = 0;$quejas_sentiment_1 = 0;$clientes_sentiment_5 = 0;$clientes_sentiment_4 = 0;$clientes_sentiment_3 = 0;$clientes_sentiment_2 = 0;$clientes_sentiment_1 = 0;$denuncias_sentiment_5 = 0;$denuncias_sentiment_4 = 0;$denuncias_sentiment_3 = 0;$denuncias_sentiment_2 = 0;$denuncias_sentiment_1 = 0;$mejoras_sentiment_5 = 0;$mejoras_sentiment_4 = 0;$mejoras_sentiment_3 = 0;$mejoras_sentiment_2 = 0;$mejoras_sentiment_1 = 0;$sugerencias_sentiment_5 = 0;$sugerencias_sentiment_4 = 0;$sugerencias_sentiment_3 = 0;$sugerencias_sentiment_2 = 0;$sugerencias_sentiment_1 = 0;
+
         foreach ($incidentes_seguridad as $item) {
             $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
 
