@@ -117,7 +117,7 @@ class OrdenCompraController extends Controller
             }
 
             // En el controlador para órdenes de compra
-            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
+            $historialesOrdenCompra = HistorialEdicionesOC::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
 
             // Agrupando los historiales de órdenes de compra por versión
             $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
@@ -253,7 +253,7 @@ class OrdenCompraController extends Controller
             // dd($requisicion);
 
             // En el controlador para órdenes de compra
-            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
+            $historialesOrdenCompra = HistorialEdicionesOC::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
 
             // Agrupando los historiales de órdenes de compra por versión
             $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {

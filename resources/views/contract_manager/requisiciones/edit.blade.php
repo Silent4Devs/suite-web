@@ -52,13 +52,14 @@
 <div class="card card-body">
     <h4>Tienes
         @if ($contadorEdit == 3 || $contadorEdit == 2)
-            <span class="badge badge-pill badge-success">{{$contadorEdit}}</span>
+            <span class="badge badge-pill badge-success">{{ $contadorEdit }}</span>
         @elseif ($contadorEdit == 1)
-            <span class="badge badge-pill badge-warning">{{$contadorEdit}}</span>
+            <span class="badge badge-pill badge-warning">{{ $contadorEdit }}</span>
         @else
-            <span class="badge badge-pill badge-danger">{{$contadorEdit}}</span>
+            <span class="badge badge-pill badge-danger">{{ $contadorEdit }}</span>
         @endif
-    ediciones disponibles:</h4>
+        ediciones disponibles:
+    </h4>
 
 
 </div>
@@ -79,6 +80,7 @@
                             <th>Campo</th>
                             <th>Valor Anterior</th>
                             <th>Valor Modificado</th>
+                            <th>Autor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +90,7 @@
                                     <td>{{ $cambio->campo }}</td>
                                     <td>{{ $cambio->valor_anterior }}</td>
                                     <td>{{ $cambio->valor_nuevo }}</td>
+                                    <td>{{ $cambio->empleado->name }}</td>
                                 </tr>
                             @endforeach
                         @else
