@@ -31,7 +31,7 @@ RUN apk add --no-cache \
     unzip \
     libsodium-dev
 
-# Install php extensions
+# Install PHP extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
@@ -50,16 +50,14 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sockets \
     sodium \
     excimer \
-    pcntl \
     posix \
     amqp \
     ftp
 
-COPY composer.json ./
+# Copy composer files and install dependencies
+COPY composer.json ./ 
 COPY composer.lock ./
-#RUN composer update
 RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
-#RUN composer dump-autoload
 
 # Set working directory
 WORKDIR /app
@@ -71,6 +69,7 @@ COPY . /app
 RUN chown -R www-data:www-data /app \
     && chmod 755 -R /app
 
+# Expose ports
 EXPOSE 80 443 8000
 
 # Healthcheck
