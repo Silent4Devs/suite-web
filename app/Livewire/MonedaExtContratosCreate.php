@@ -130,7 +130,8 @@ class MonedaExtContratosCreate extends Component
             ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
             ->format();
 
-        $conversion = round(floatval($convertirDolares) * floatval($valor), 2);
+        $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
+        $conversion = number_format($conversion, 2, '.', '');
 
         switch ($tipo) {
             case 'monto':

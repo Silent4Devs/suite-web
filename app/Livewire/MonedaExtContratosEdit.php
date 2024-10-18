@@ -43,11 +43,11 @@ class MonedaExtContratosEdit extends Component
 
             $this->tipo_cambio = $contratos->tipo_cambio;
 
-            $this->valor_dolar = $contratos->dolares->valor_dolar;
+            $this->valor_dolar = $contratos->dolares->valor_dolar ?? 0;
 
             $this->monto_dolares = $contratos->dolares->monto_dolares;
-            $this->maximo_dolares = $contratos->dolares->maximo_dolares;
-            $this->minimo_dolares = $contratos->dolares->minimo_dolares;
+            $this->maximo_dolares = $contratos->dolares->maximo_dolares ?? 0;
+            $this->minimo_dolares = $contratos->dolares->minimo_dolares ?? 0;
         }
 
         $this->monto_pago = $contratos->monto_pago;
@@ -141,31 +141,34 @@ class MonedaExtContratosEdit extends Component
 
     public function convertirME($valor, $tipo)
     {
-        // dump($valor);
-        $convertirDolares = CurrencyConverter::convert(floatval($valor))
+        $convertirDolares = CurrencyConverter::convert(1)
             ->from($this->tipo_cambio)
             ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
             ->format();
 
-        // dd($convertirDolares);
+        $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
+        $conversion = number_format($conversion, 2, '.', '');
 
         switch ($tipo) {
             case 'monto':
                 // code...
                 $this->monto_dolares = $valor;
-                $this->monto_pago = floatval($convertirDolares);
+                // $this->monto_pago = floatval($convertirDolares);
+                $this->monto_pago = $conversion;
                 break;
 
             case 'maximo':
                 // code...
                 $this->maximo_dolares = $valor;
-                $this->maximo = floatval($convertirDolares);
+                // $this->maximo = floatval($convertirDolares);
+                $this->maximo = $conversion;
                 break;
 
             case 'minimo':
                 // code...
                 $this->minimo_dolares = $valor;
-                $this->minimo = floatval($convertirDolares);
+                // $this->minimo = floatval($convertirDolares);
+                $this->minimo = $conversion;
                 break;
 
             default:
