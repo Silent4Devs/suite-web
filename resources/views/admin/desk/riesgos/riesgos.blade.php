@@ -201,11 +201,11 @@
                                 <div class="d-flex gap-3 align-items-center">
 
                                     @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
-                                        <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji"
+                                        <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
-                                        <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji"
+                                        <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
@@ -213,11 +213,11 @@
                                             style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
-                                        <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji"
+                                        <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
-                                        <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
+                                        <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
 
@@ -226,19 +226,19 @@
                                         <span>Prioridad de atención:</span>
 
                                         @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
-                                            <span class="span-sentiment-1">1</span>
+                                            <span class="span-sentiment-5">5</span>
                                         @endif
                                         @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
-                                            <span class="span-sentiment-2">2</span>
+                                            <span class="span-sentiment-4">4</span>
                                         @endif
                                         @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
                                             <span class="span-sentiment-3">3</span>
                                         @endif
                                         @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
-                                            <span class="span-sentiment-4">4</span>
+                                            <span class="span-sentiment-2">2</span>
                                         @endif
                                         @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
-                                            <span class="span-sentiment-5">5</span>
+                                            <span class="span-sentiment-1">1</span>
                                         @endif
                                     </div>
                                 </div>
