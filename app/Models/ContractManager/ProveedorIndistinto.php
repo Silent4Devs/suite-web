@@ -37,7 +37,7 @@ class ProveedorIndistinto extends Model implements Auditable
                 ->first();
 
             // Verificar si existe una versión reciente
-            if (!$versionActual || $versionActual->last_updated_at < now()->subMinutes(1)) {
+            if (! $versionActual || $versionActual->last_updated_at < now()->subMinutes(1)) {
                 // Crear nueva versión
                 $nuevaVersion = $versionActual ? $versionActual->version + 1 : 1;
 

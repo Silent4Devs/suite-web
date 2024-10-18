@@ -72,7 +72,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -95,9 +95,13 @@ class ListaDistribucionController extends Controller
 
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
-        if ($lista->modelo == "Comprador") {
+        if ($lista->modelo == 'Comprador') {
             // Sincronizar compradores y participantes
             $this->syncCompradores($lista);
+            $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+        } elseif ($lista->modelo == 'Empleado') {
+            // Sincronizar lideres y participantes
+            $this->syncLideres($lista);
             $lista = ListaDistribucion::with('participantes.empleado')->find($id);
         }
 
@@ -106,6 +110,7 @@ class ListaDistribucionController extends Controller
 
         $superaprobadores_seleccionados = $this->getSuperAprobadores($lista->participantes);
         $participantes_seleccionados = $this->getParticipantesSeleccionados($lista);
+
         // dd($participantes_seleccionados["nivel1"]);
         return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados', 'tipo'));
     }
@@ -114,7 +119,7 @@ class ListaDistribucionController extends Controller
     {
         return match ($modelo) {
             'KatbolRequsicion', 'OrdenCompra' => 'suplentes',
-            'Empleado' => 'suplentesLideres',
+            'Empleado' => 'responsablesFijos',
             'Comprador' => 'responsablesFijos',
             default => 'flujoAprobacion',
         };
@@ -122,8 +127,8 @@ class ListaDistribucionController extends Controller
 
     private function getSuperAprobadores($participantes)
     {
-        return $participantes->filter(fn($p) => $p->nivel == 0)
-            ->map(fn($p) => [
+        return $participantes->filter(fn ($p) => $p->nivel == 0)
+            ->map(fn ($p) => [
                 'empleado_id' => $p->empleado_id,
                 'numero_orden' => $p->numero_orden,
             ])->values()->toArray();
@@ -133,15 +138,67 @@ class ListaDistribucionController extends Controller
     {
         $participantes_seleccionados = [];
         for ($i = 1; $i <= $lista->niveles; $i++) {
-            $participantes_seleccionados['nivel' . $i] = $lista->participantes
-                ->filter(fn($p) => $p->nivel == $i)
-                ->map(fn($p) => [
+            $participantes_seleccionados['nivel'.$i] = $lista->participantes
+                ->filter(fn ($p) => $p->nivel == $i)
+                ->map(fn ($p) => [
                     'empleado_id' => $p->empleado_id,
                     'numero_orden' => $p->numero_orden,
                 ])->values()->toArray();
         }
 
         return $participantes_seleccionados;
+    }
+
+    public function syncLideres($lista)
+    {
+        // Obtener los compradores actuales del modelo 'Comprador'
+        $supervisores = Empleado::listaSupervisores();
+        $count_supervisores = $supervisores->count();
+
+        // Filtrar los participantes existentes cuyo numero_orden sea 1
+        $participantes = $lista->participantes->where('numero_orden', 1);
+
+        // Convertir las colecciones a arrays de IDs para facilidad de comparación
+        $supervisorIds = $supervisores->toArray();
+        $participanteIds = $participantes->pluck('empleado_id')->toArray();
+
+        // Crear registros en participantes si existen en compradores pero no en participantes
+        $idsParaAgregar = array_diff($supervisorIds, $participanteIds);
+
+        // Obtener el máximo nivel actual en participantes con numero_orden = 1
+        $nivelMaximo = $participantes->max('nivel');
+        // Comenzamos a agregar desde el nivel máximo + 1
+        $nivelActual = $nivelMaximo + 1;
+
+        // Agregar nuevos participantes
+        foreach ($idsParaAgregar as $id) {
+            ParticipantesListaDistribucion::create([
+                'modulo_id' => $lista->id,
+                'nivel' => $nivelActual,
+                'numero_orden' => 1, // Puedes ajustar este valor según tu lógica de negocio
+                'empleado_id' => $id,
+            ]);
+            $nivelActual++;
+        }
+
+        // Eliminar registros en participantes si existen en participantes pero no en compradores
+        // También eliminar los participantes que pertenecen al nivel de los que se eliminan
+        $idsParaEliminar = array_diff($participanteIds, $supervisorIds);
+
+        // Obtenemos los niveles de los participantes a eliminar
+        $nivelesParaEliminar = ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
+            ->pluck('nivel')
+            ->unique();
+
+        // Eliminar los participantes correspondientes a esos niveles
+        foreach ($nivelesParaEliminar as $nivel) {
+            ParticipantesListaDistribucion::where('modulo_id', $lista->id)
+                ->where('nivel', $nivel)
+                ->delete();
+        }
+
+        // Actualizar el valor de 'niveles' en la lista con el nuevo nivel máximo
+        $lista->update(['niveles' => $count_supervisores]);
     }
 
     public function syncCompradores($lista)
@@ -196,7 +253,6 @@ class ListaDistribucionController extends Controller
         $lista->update(['niveles' => $count_compradores]);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -208,97 +264,90 @@ class ListaDistribucionController extends Controller
 
         // Sincronizar compradores y participantes
         $val_niv = $request->niveles;
-        $nom_niv = 'nivel' . $val_niv;
+        $nom_niv = 'nivel'.$val_niv;
 
-        if (isset($request->$nom_niv)) {
+        if (isset($request->$nom_niv) && ($lista->modelo != 'Comprador') && ($lista->modelo != 'Empleado')) {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
 
-            if ($lista->modelo == "Comprador") {
-                $lista = ListaDistribucion::with('participantes.empleado')->find($id);
-                // Sincronizar compradores y participantes
+            $lista->update([
+                'niveles' => $request->niveles,
+            ]);
+
+            $data = [];
+            for ($i = 1; $i <= $request->niveles; $i++) {
+                $nivelArrayName = 'nivel'.$i;
+                if (isset($nivelArrayName)) {
+                    $data[$i] = $request->$nivelArrayName;
+                    // $data[$nivelArrayName] = $nivelArrayName;
+                }
+            }
+
+            if (isset($request->superaprobadores)) {
+                $superi = 1;
+                foreach ($request->superaprobadores as $superaprobador) {
+                    // dd("superaprobador", $superaprobador);
+                    $super = ParticipantesListaDistribucion::create(
+                        [
+                            'modulo_id' => $lista->id,
+                            'nivel' => 0,
+                            'numero_orden' => $superi,
+                            'empleado_id' => $superaprobador,
+                        ],
+                    );
+                    $superi++;
+                }
+            }
+
+            foreach ($data as $key => $nivel) {
+                $i = 1;
+                foreach ($nivel as $participante) {
+
+                    $participantes = ParticipantesListaDistribucion::create(
+                        [
+                            'modulo_id' => $lista->id,
+                            'nivel' => $key,
+                            'numero_orden' => $i,
+                            'empleado_id' => $participante,
+                        ],
+                    );
+                    $i++;
+                }
+            }
+        } elseif ($lista->modelo == 'Comprador' || $lista->modelo == 'Empleado') {
+            $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->whereNot('numero_orden', 1)->delete();
+            $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+
+            if ($lista->modelo == 'Comprador') {
+                // code...
                 $this->syncCompradores($lista);
-                $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+            } elseif ($lista->modelo == 'Empleado') {
+                $this->syncLideres($lista);
+            }
 
-                $data = [];
-                for ($i = 1; $i <= $request->niveles; $i++) {
-                    $nivelArrayName = 'nivel' . $i;
-                    if (isset($nivelArrayName)) {
-                        $data[$i] = $request->$nivelArrayName;
-                        // $data[$nivelArrayName] = $nivelArrayName;
-                    }
+            $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+
+            $data = [];
+            for ($i = 1; $i <= $request->niveles; $i++) {
+                $nivelArrayName = 'nivel'.$i;
+                if (isset($nivelArrayName)) {
+                    $data[$i] = $request->$nivelArrayName;
+                    // $data[$nivelArrayName] = $nivelArrayName;
                 }
+            }
 
-                if (isset($request->superaprobadores)) {
-                    $superi = 1;
-                    foreach ($request->superaprobadores as $superaprobador) {
-                        // dd("superaprobador", $superaprobador);
-                        $super = ParticipantesListaDistribucion::create(
-                            [
-                                'modulo_id' => $lista->id,
-                                'nivel' => 0,
-                                'numero_orden' => $superi,
-                                'empleado_id' => $superaprobador,
-                            ],
-                        );
-                        $superi++;
-                    }
-                }
-
-                foreach ($data as $key => $nivel) {
-                    $i = 2;
+            foreach ($data as $key => $nivel) {
+                // dd($key, $nivel);
+                $i = 2;
+                if (! empty($nivel)) {
                     foreach ($nivel as $participante) {
-
-                        $participantes = ParticipantesListaDistribucion::create(
+                        $participantes = ParticipantesListaDistribucion::updateOrCreate(
                             [
                                 'modulo_id' => $lista->id,
-                                'nivel' => $key,
-                                'numero_orden' => $i,
                                 'empleado_id' => $participante,
-                            ],
-                        );
-                        $i++;
-                    }
-                }
-            } else {
-                $lista->update([
-                    'niveles' => $request->niveles,
-                ]);
-
-                $data = [];
-                for ($i = 1; $i <= $request->niveles; $i++) {
-                    $nivelArrayName = 'nivel' . $i;
-                    if (isset($nivelArrayName)) {
-                        $data[$i] = $request->$nivelArrayName;
-                        // $data[$nivelArrayName] = $nivelArrayName;
-                    }
-                }
-
-                if (isset($request->superaprobadores)) {
-                    $superi = 1;
-                    foreach ($request->superaprobadores as $superaprobador) {
-                        // dd("superaprobador", $superaprobador);
-                        $super = ParticipantesListaDistribucion::create(
-                            [
-                                'modulo_id' => $lista->id,
-                                'nivel' => 0,
-                                'numero_orden' => $superi,
-                                'empleado_id' => $superaprobador,
-                            ],
-                        );
-                        $superi++;
-                    }
-                }
-
-                foreach ($data as $key => $nivel) {
-                    $i = 1;
-                    foreach ($nivel as $participante) {
-
-                        $participantes = ParticipantesListaDistribucion::create(
-                            [
-                                'modulo_id' => $lista->id,
                                 'nivel' => $key,
+                            ],
+                            [
                                 'numero_orden' => $i,
-                                'empleado_id' => $participante,
                             ],
                         );
                         $i++;

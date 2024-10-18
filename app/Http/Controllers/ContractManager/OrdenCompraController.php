@@ -173,6 +173,114 @@ class OrdenCompraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        KatbolRequsicion::desactivarHistorial();
+        $requisicion = KatbolRequsicion::find($id);
+
+        $requisicion->update([
+            'fecha_entrega' => $request->fecha_entrega,
+            'pago' => $request->pago,
+            'dias_credito' => $request->dias_credito,
+            'moneda' => $request->moneda,
+            'cambio' => $request->cambio,
+            'proveedoroc_id' => $request->proveedor_id,
+            'direccion_envio_proveedor' => $request->direccion_envio,
+            'credito_proveedor' => $request->credito_proveedor,
+
+            'sub_total' => $request->sub_total,
+            'iva' => $request->iva,
+            'iva_retenido' => $request->iva_retenido,
+            'isr_retenido' => $request->isr_retenido,
+            'total' => $request->total,
+        ]);
+
+        $productos = KatbolProductoRequisicion::where('requisiciones_id', $requisicion->id)->get();
+        foreach ($productos as $producto) {
+            $producto->delete();
+        }
+
+        $data = $request->all();
+        for ($i = 1; $i <= $request->count_productos; $i++) {
+            $producto_nuevo = KatbolProductoRequisicion::create([
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
+                'requisiciones_id' => $requisicion->id,
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
+            ]);
+        }
+
+        $proveedor = KatbolProveedorOC::where('id', $request->proveedor_id)->first();
+
+        $requisicion->update([
+            'proveedor_catalogo_oc' => $proveedor->nombre,
+        ]);
+
+        $proveedor->update([
+            'direccion' => $request->direccion,
+            'facturacion' => $request->facturacion,
+            'envio' => $request->direccion_envio,
+            'credito' => $request->credito_proveedor,
+        ]);
+        KatbolRequsicion::activarHistorial();
+        return redirect(route('contract_manager.orden-compra.firmar', ['tipo_firma' => 'firma_comprador_orden', 'id' => $requisicion->id]));
+    }
+
+    public function editarOrdenCompra($id)
+    {
+        try {
+            abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            if (! $requisicion) {
+                abort(404);
+            }
+
+            $proveedores = KatbolProveedorOC::getAll();
+            $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
+            $contratos = KatbolContrato::getAll();
+            $centro_costos = KatbolCentroCosto::getAll();
+            $monedas = KatbolMoneda::getAll();
+            $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
+            // dd($requisicion);
+
+            // En el controlador para órdenes de compra
+            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
+
+            // Agrupando los historiales de órdenes de compra por versión
+            $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
+                return $item->version->version; // Suponiendo que la columna es 'version'
+            });
+
+            $resultadoOrdenesCompra = [];
+            foreach ($agrupadosPorVersionOrdenesCompra as $version => $cambios) {
+                $resultadoOrdenesCompra[] = [
+                    'version' => $version,
+                    'cambios' => $cambios,
+                ];
+            }
+
+            $maximaVersion = collect($resultadoOrdenesCompra)->max('version');
+
+            $contadorEdit = 3 - $maximaVersion;
+
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit'));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+    }
+
+    public function updateOrdenCompra(Request $request, $id)
+    {
+
         $requisicion = KatbolRequsicion::find($id);
 
         $requisicion->update([
@@ -233,51 +341,6 @@ class OrdenCompraController extends Controller
 
         return redirect(route('contract_manager.orden-compra.firmar', ['tipo_firma' => 'firma_comprador_orden', 'id' => $requisicion->id]));
     }
-
-
-    public function editarOrdenCompra($id)
-    {
-        try {
-            abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
-            if (! $requisicion) {
-                abort(404);
-            }
-
-            $proveedores = KatbolProveedorOC::getAll();
-            $proveedor = $proveedores->where('id', $requisicion->proveedor_id)->first();
-            $contratos = KatbolContrato::getAll();
-            $centro_costos = KatbolCentroCosto::getAll();
-            $monedas = KatbolMoneda::getAll();
-            $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
-            // dd($requisicion);
-
-            // En el controlador para órdenes de compra
-            $historialesOrdenCompra = HistorialEdicionesOC::with('version')->where('requisicion_id', $requisicion->id)->get();
-
-            // Agrupando los historiales de órdenes de compra por versión
-            $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
-                return $item->version->version; // Suponiendo que la columna es 'version'
-            });
-
-            $resultadoOrdenesCompra = [];
-            foreach ($agrupadosPorVersionOrdenesCompra as $version => $cambios) {
-                $resultadoOrdenesCompra[] = [
-                    'version' => $version,
-                    'cambios' => $cambios,
-                ];
-            }
-
-            $maximaVersion = collect($resultadoOrdenesCompra)->max('version');
-
-            $contadorEdit = 3 - $maximaVersion;
-
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit'));
-        } catch (\Throwable $th) {
-            abort(404);
-        }
-    }
-
 
     /**
      * Remove the specified resource from storage.
@@ -620,9 +683,9 @@ class OrdenCompraController extends Controller
 
             $oc->update([
                 'estado_orden' => 'cancelada',
-                'firma_solicitante_orden'=> null,
-                'firma_finanzas_orden'=> null,
-                'firma_comprador_orden'=> null,
+                'firma_solicitante_orden' => null,
+                'firma_finanzas_orden' => null,
+                'firma_comprador_orden' => null,
             ]);
 
             return response()->json(['success' => true]);

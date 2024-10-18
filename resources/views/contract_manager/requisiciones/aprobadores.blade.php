@@ -25,7 +25,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
-    <div class="d-flex flex-wrap gap-3">
+    <div class="d-flex flex-wrap gap-4">
         <!-- Botón 1 -->
         <button type="button"
             class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"

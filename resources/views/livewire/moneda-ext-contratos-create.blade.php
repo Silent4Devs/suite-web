@@ -9,7 +9,7 @@
             </label>
             <select name="tipo_cambio" wire:change="changeTipoCambio($event.target.value)" id="tipo_cambio"
                 class="form-control" required>
-                <option value="" readonly selected>Seleccione una moneda</option>
+                <option value="" disabled selected>Seleccione una moneda</option>
                 @foreach ($divisas as $key => $divisa)
                     <option {{ old('tipo_cambio') == $divisa ? 'selected' : '' }} value='{{ $divisa }}'>
                         {{ $divisa }}</option>
@@ -26,7 +26,8 @@
         @if ($moneda_extranjera)
             <div class="form-group col-md-4">
                 <label for="valor_dolar" class="txt-tamaño">
-                    Valor de la moneda (a día de hoy)
+                    Valor de la moneda (a día de hoy)<font class="asterisco">*
+                    </font>
                 </label>
                 <input min="0" required class="form-control" type="number" step=".01" name="valor_dolar"
                     id="valor_dolar" value="{{ old('valor_dolar', $valor_dolar) }}" {{-- wire:model="valor_dolar" --}}
@@ -49,9 +50,10 @@
         <div class="col l12 m12 s12">
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="monto_dolares" class="txt-tamaño">
+                    <label for="monto_dolares" class="txt-tamaño required">
                         Monto de
                         pago ({{ $tipo_cambio }})
+                        <font class="asterisco">*</font>
                     </label>
                     <input min="0" required type="number" name="monto_dolares" {{-- wire:model="monto_dolares" --}}
                         value="{{ old('monto_dolares', $monto_dolares) }}"
@@ -63,20 +65,18 @@
                         Monto
                         Máximo ({{ $tipo_cambio }})
                     </label>
-                    <input min="{{ $monto_dolares }}" required type="number" {{-- wire:model="maximo_dolares" --}}
-                        value="{{ old('maximo_dolares', $maximo_dolares) }}" name="maximo_dolares"
-                        wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo" class="form-control"
-                        step=".01">
+                    <input type="number" {{-- wire:model="maximo_dolares" --}} value="{{ old('maximo_dolares', $maximo_dolares) }}"
+                        name="maximo_dolares" wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo"
+                        class="form-control" step=".01">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="minimo_dolares" class="txt-tamaño">
                         Monto
                         Mínimo ({{ $tipo_cambio }})
                     </label>
-                    <input max="{{ $monto_dolares }}" required type="number" {{-- wire:model="minimo_dolares" --}}
-                        value="{{ old('minimo_dolares', $minimo_dolares) }}" name="minimo_dolares"
-                        wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo" class="form-control"
-                        step=".01">
+                    <input type="number" {{-- wire:model="minimo_dolares" --}} value="{{ old('minimo_dolares', $minimo_dolares) }}"
+                        name="minimo_dolares" wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo"
+                        class="form-control" step=".01">
                 </div>
             </div>
         </div>
@@ -96,15 +96,15 @@
         </div>
 
         <div class="form-group col-md-4">
-            <label for="maximo" class="txt-tamaño">Monto máximo M.X.N.<font class="asterisco">*</font></label>
+            <label for="maximo" class="txt-tamaño">Monto máximo M.X.N.</label>
             <input type="number" name="maximo" id="maximo" class="form-control" step=".01"
-                value="{{ old('maximo', $maximo) }}" required @if ($moneda_extranjera) readonly @endif>
+                value="{{ old('maximo', $maximo) }}" @if ($moneda_extranjera) readonly @endif>
         </div>
 
         <div class="form-group col-md-4">
-            <label for="minimo" class="txt-tamaño">Monto mínimo M.X.N.<font class="asterisco">*</font></label>
+            <label for="minimo" class="txt-tamaño">Monto mínimo M.X.N.</label>
             <input type="number" name="minimo" id="minimo" class="form-control" step=".01"
-                value="{{ old('minimo', $minimo) }}" required @if ($moneda_extranjera) readonly @endif>
+                value="{{ old('minimo', $minimo) }}" @if ($moneda_extranjera) readonly @endif>
         </div>
 
         <script>

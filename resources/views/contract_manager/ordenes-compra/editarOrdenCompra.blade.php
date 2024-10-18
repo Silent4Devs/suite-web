@@ -64,7 +64,7 @@
 </div>
 @if ($contadorEdit > 0)
     <div class="create-requisicion">
-        <form method="POST" action="{{ route('contract_manager.orden-compra.update', ['id' => $requisicion->id]) }}">
+        <form method="POST" action="{{ route('contract_manager.orden-compra.updateOrdenCompra', ['id' => $requisicion->id]) }}">
             @csrf
             <div class="card card-body caja-blue">
 

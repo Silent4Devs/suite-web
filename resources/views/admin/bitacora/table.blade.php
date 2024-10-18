@@ -280,7 +280,8 @@
             </div>
 
             <div class="distancia form-group col-md-4">
-                <label for="razon_soc_id">Razón Social con la que se prestara el servicio</label>
+                <label for="razon_soc_id">Razón Social con la que se prestara el servicio<font class="asterisco">*
+                    </font></label></label>
                 <select class="form-control" name="razon_soc_id" id="razon_soc_id" required>
                     <option selected disabled>-- Seleccione una Razón Social --</option>
                     @foreach ($razones_sociales as $keyRazon => $razon)

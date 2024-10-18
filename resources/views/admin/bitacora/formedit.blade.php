@@ -267,7 +267,8 @@
         </div>
 
         <div class="distancia form-group col-md-4">
-            <label for="razon_soc_id">Razón Social con la que se prestará el servicio</label>
+            <label for="razon_soc_id">Razón Social con la que se prestará el servicio<font class="asterisco">*
+                </font></label>
             <select class="form-control" name="razon_soc_id" id="razon_soc_id"
                 {{ $show_contrato ? 'disabled' : 'required' }}>
                 <option disabled {{ $contrato->razonSocial ? '' : 'selected' }}>-- Seleccione una Razón Social --
