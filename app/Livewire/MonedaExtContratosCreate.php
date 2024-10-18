@@ -18,11 +18,15 @@ class MonedaExtContratosCreate extends Component
     public $edit_moneda = false;
 
     public $monto_dolares = 0;
+
     public $maximo_dolares = 0;
+
     public $minimo_dolares = 0;
 
     public $monto_pago = 0;
+
     public $maximo = 0;
+
     public $minimo = 0;
 
     public function mount()
@@ -36,7 +40,7 @@ class MonedaExtContratosCreate extends Component
 
         $this->divisas = [
             'MXN',
-            'USD'
+            'USD',
         ];
 
         // $this->divisas = [
@@ -65,7 +69,7 @@ class MonedaExtContratosCreate extends Component
         $this->tipo_cambio = $value;
         if ($value != 'MXN') {
             $this->moneda_extranjera = true;
-            $convertedAmount = CurrencyConverter::convert(1.0)
+            $convertedAmount = CurrencyConverter::convert(1)
                 ->from($value)
                 ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
                 ->format();
@@ -87,15 +91,14 @@ class MonedaExtContratosCreate extends Component
         $this->dispatch('actualizarValores', [
             'monto_pago' => $monto_pago,
             'maximo' => $maximo,
-            'minimo' => $minimo
+            'minimo' => $minimo,
         ]);
     }
-
 
     public function updatedEditMoneda($bool)
     {
         // dd($bool);
-        if (!$bool) {
+        if (! $bool) {
             $convertedAmount = CurrencyConverter::convert(1.0)
                 ->from($this->tipo_cambio)
                 ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
@@ -122,35 +125,37 @@ class MonedaExtContratosCreate extends Component
 
     public function convertirME($valor, $tipo)
     {
-        // dump($valor);
-        $convertirDolares = CurrencyConverter::convert(floatval($valor))
+        $convertirDolares = CurrencyConverter::convert(1)
             ->from($this->tipo_cambio)
             ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
             ->format();
 
-        // dd($convertirDolares);
+        $conversion = round(floatval($convertirDolares) * floatval($valor), 2);
 
         switch ($tipo) {
             case 'monto':
-                # code...
+                // code...
                 $this->monto_dolares = $valor;
-                $this->monto_pago = floatval($convertirDolares);
+                // $this->monto_pago = floatval($convertirDolares);
+                $this->monto_pago = $conversion;
                 break;
 
             case 'maximo':
-                # code...
+                // code...
                 $this->maximo_dolares = $valor;
-                $this->maximo = floatval($convertirDolares);
+                // $this->maximo = floatval($convertirDolares);
+                $this->maximo = $conversion;
                 break;
 
             case 'minimo':
-                # code...
+                // code...
                 $this->minimo_dolares = $valor;
-                $this->minimo = floatval($convertirDolares);
+                // $this->minimo = floatval($convertirDolares);
+                $this->minimo = $conversion;
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 

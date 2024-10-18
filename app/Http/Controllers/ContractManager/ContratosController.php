@@ -20,6 +20,7 @@ use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\Sucursal;
 use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
 use App\Models\FirmaModule;
@@ -40,7 +41,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\ContractManager\Sucursal;
 
 class ContratosController extends AppBaseController
 {
@@ -129,8 +129,8 @@ class ContratosController extends AppBaseController
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
             'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
-            'minimo' => 'required|numeric|max:99999999999.99|lte:monto_pago',
-            'maximo' => 'required|numeric|max:99999999999.99|gte:monto_pago',
+            'minimo' => 'nullable|numeric|max:99999999999.99',
+            'maximo' => 'nullable|numeric|max:99999999999.99',
             'monto_dolares' => 'nullable|numeric|max:99999999999.99',
             'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
             'minimo_dolares' => 'nullable|numeric|max:99999999999.99',

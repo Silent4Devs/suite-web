@@ -18,8 +18,6 @@ use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\admin\IncidentesDayOffController;
 use App\Http\Controllers\admin\IncidentesVacacionesController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
-use App\Http\Controllers\Admin\ListaDistribucionController;
-use App\Http\Controllers\Admin\ListaInformativaController;
 use App\Http\Controllers\Admin\MatrizRiesgosController;
 use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\OrganizacionController;
@@ -45,7 +43,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContractManager\ContratosController;
 use App\Http\Controllers\ContractManager\DashboardController;
-use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ContractManager\RequisicionesController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
@@ -55,11 +52,6 @@ use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -477,7 +469,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('{id}', 'destroy')->name('tabla-calendario.destroy');
         });
 
-
         Route::get('tabla-calendario/index', [TablaCalendarioController::class, 'index'])->name('tabla-calendario.index');
 
         Route::resource('recursos-humanos/calendario', TablaCalendarioController::class)->names([
@@ -508,7 +499,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('contactos-emergencia-empleados', 'RH\ContactosEmergenciaEmpleadoController');
             Route::resource('beneficiarios-empleados', 'RH\BeneficiariosEmpleadoController');
 
-                    // Evaluaciones 360
+            // Evaluaciones 360
             Route::get('evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
             Route::post('evaluacion-360/normalizar/{evaluacion}/resultados', 'RH\EV360EvaluacionesController@normalizarResultados')->name('ev360-normalizar-resultados');
             Route::get('evaluacion-360', 'RH\EV360EvaluacionesController@index')->name('rh-evaluacion360.index');

@@ -72,7 +72,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -95,11 +95,11 @@ class ListaDistribucionController extends Controller
 
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
-        if ($lista->modelo == "Comprador") {
+        if ($lista->modelo == 'Comprador') {
             // Sincronizar compradores y participantes
             $this->syncCompradores($lista);
             $lista = ListaDistribucion::with('participantes.empleado')->find($id);
-        } elseif ($lista->modelo == "Empleado") {
+        } elseif ($lista->modelo == 'Empleado') {
             // Sincronizar lideres y participantes
             $this->syncLideres($lista);
             $lista = ListaDistribucion::with('participantes.empleado')->find($id);
@@ -110,6 +110,7 @@ class ListaDistribucionController extends Controller
 
         $superaprobadores_seleccionados = $this->getSuperAprobadores($lista->participantes);
         $participantes_seleccionados = $this->getParticipantesSeleccionados($lista);
+
         // dd($participantes_seleccionados["nivel1"]);
         return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados', 'tipo'));
     }
@@ -126,8 +127,8 @@ class ListaDistribucionController extends Controller
 
     private function getSuperAprobadores($participantes)
     {
-        return $participantes->filter(fn($p) => $p->nivel == 0)
-            ->map(fn($p) => [
+        return $participantes->filter(fn ($p) => $p->nivel == 0)
+            ->map(fn ($p) => [
                 'empleado_id' => $p->empleado_id,
                 'numero_orden' => $p->numero_orden,
             ])->values()->toArray();
@@ -137,9 +138,9 @@ class ListaDistribucionController extends Controller
     {
         $participantes_seleccionados = [];
         for ($i = 1; $i <= $lista->niveles; $i++) {
-            $participantes_seleccionados['nivel' . $i] = $lista->participantes
-                ->filter(fn($p) => $p->nivel == $i)
-                ->map(fn($p) => [
+            $participantes_seleccionados['nivel'.$i] = $lista->participantes
+                ->filter(fn ($p) => $p->nivel == $i)
+                ->map(fn ($p) => [
                     'empleado_id' => $p->empleado_id,
                     'numero_orden' => $p->numero_orden,
                 ])->values()->toArray();
@@ -252,7 +253,6 @@ class ListaDistribucionController extends Controller
         $lista->update(['niveles' => $count_compradores]);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -264,9 +264,9 @@ class ListaDistribucionController extends Controller
 
         // Sincronizar compradores y participantes
         $val_niv = $request->niveles;
-        $nom_niv = 'nivel' . $val_niv;
+        $nom_niv = 'nivel'.$val_niv;
 
-        if (isset($request->$nom_niv) && ($lista->modelo != "Comprador") && ($lista->modelo != "Empleado")) {
+        if (isset($request->$nom_niv) && ($lista->modelo != 'Comprador') && ($lista->modelo != 'Empleado')) {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
 
             $lista->update([
@@ -275,7 +275,7 @@ class ListaDistribucionController extends Controller
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel' . $i;
+                $nivelArrayName = 'nivel'.$i;
                 if (isset($nivelArrayName)) {
                     $data[$i] = $request->$nivelArrayName;
                     // $data[$nivelArrayName] = $nivelArrayName;
@@ -313,14 +313,14 @@ class ListaDistribucionController extends Controller
                     $i++;
                 }
             }
-        } elseif ($lista->modelo == "Comprador" || $lista->modelo == "Empleado") {
+        } elseif ($lista->modelo == 'Comprador' || $lista->modelo == 'Empleado') {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->whereNot('numero_orden', 1)->delete();
             $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
-            if ($lista->modelo == "Comprador") {
-                # code...
+            if ($lista->modelo == 'Comprador') {
+                // code...
                 $this->syncCompradores($lista);
-            } elseif ($lista->modelo == "Empleado") {
+            } elseif ($lista->modelo == 'Empleado') {
                 $this->syncLideres($lista);
             }
 
@@ -328,7 +328,7 @@ class ListaDistribucionController extends Controller
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel' . $i;
+                $nivelArrayName = 'nivel'.$i;
                 if (isset($nivelArrayName)) {
                     $data[$i] = $request->$nivelArrayName;
                     // $data[$nivelArrayName] = $nivelArrayName;
@@ -338,7 +338,7 @@ class ListaDistribucionController extends Controller
             foreach ($data as $key => $nivel) {
                 // dd($key, $nivel);
                 $i = 2;
-                if (!empty($nivel)) {
+                if (! empty($nivel)) {
                     foreach ($nivel as $participante) {
                         $participantes = ParticipantesListaDistribucion::updateOrCreate(
                             [
