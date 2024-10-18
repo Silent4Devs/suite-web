@@ -300,9 +300,9 @@ class EventServiceProvider extends ServiceProvider
         TaskRecursosEvent::class => [
             TaskRecursosListener::class,
         ],
-        PoliticasSgiEvent::class => [
-            PoliticasSgiListener::class,
-        ],
+        // PoliticasSgiEvent::class => [
+        //     PoliticasSgiListener::class,
+        // ],
         AlcancesEvent::class => [
             AlcancesListener::class,
         ],

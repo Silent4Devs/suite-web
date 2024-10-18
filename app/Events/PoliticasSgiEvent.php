@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Jobs\SendPoliticasSgiNotificationJob; // Importación del Job
 
 class PoliticasSgiEvent implements ShouldBroadcast
 {
@@ -27,6 +28,8 @@ class PoliticasSgiEvent implements ShouldBroadcast
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
+
+        SendPoliticasSgiNotificationJob::dispatch($this->politicas, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**
