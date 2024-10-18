@@ -499,6 +499,7 @@
                         <th>Campo</th>
                         <th>Valor Anterior</th>
                         <th>Valor Modificado</th>
+                        <th>Autor</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -508,6 +509,7 @@
                                 <td>{{ $cambio->campo }}</td>
                                 <td>{{ $cambio->valor_anterior }}</td>
                                 <td>{{ $cambio->valor_nuevo }}</td>
+                                <td>{{ $cambio->empleado->name }}</td>
                             </tr>
                         @endforeach
                     @else

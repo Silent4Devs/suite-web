@@ -117,7 +117,7 @@ class RequisicionesController extends Controller
             $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
             // En el controlador para requisiciones
-            $historialesRequisicion = HistorialEdicionesReq::with('version')->where('requisicion_id', $requisicion->id)->get();
+            $historialesRequisicion = HistorialEdicionesReq::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
 
             // Agrupando los historiales de requisiciones por versión
             $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
@@ -152,7 +152,7 @@ class RequisicionesController extends Controller
         $organizacion = $this->obtenerOrganizacion();
 
         // Obtener los historiales de la requisición específica
-        $historialesRequisicion = HistorialEdicionesReq::with('version')
+        $historialesRequisicion = HistorialEdicionesReq::with('version', 'empleado')
             ->where('requisicion_id', $id)
             ->get();
 
@@ -556,7 +556,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -578,7 +578,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -616,7 +616,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_finanzas';
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -647,7 +647,7 @@ class RequisicionesController extends Controller
                 if ($user->empleado->id == $firma_siguiente->comprador_id) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -674,7 +674,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
