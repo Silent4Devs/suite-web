@@ -26,7 +26,8 @@
         @if ($moneda_extranjera)
             <div class="form-group col-md-4">
                 <label for="valor_dolar" class="txt-tamaño">
-                    Valor de la moneda (a día de hoy)
+                    Valor de la moneda (a día de hoy)<font class="asterisco">*
+                    </font>
                 </label>
                 <input min="0" required class="form-control" type="number" step=".01" name="valor_dolar"
                     id="valor_dolar" value="{{ old('valor_dolar', $valor_dolar) }}" {{-- wire:model="valor_dolar" --}}
