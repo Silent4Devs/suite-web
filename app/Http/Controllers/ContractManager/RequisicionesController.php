@@ -117,7 +117,7 @@ class RequisicionesController extends Controller
             $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
 
             // En el controlador para requisiciones
-            $historialesRequisicion = HistorialEdicionesReq::with('version')->where('requisicion_id', $requisicion->id)->get();
+            $historialesRequisicion = HistorialEdicionesReq::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
 
             // Agrupando los historiales de requisiciones por versión
             $agrupadosPorVersionRequisiciones = $historialesRequisicion->groupBy(function ($item) {
@@ -152,7 +152,7 @@ class RequisicionesController extends Controller
         $organizacion = $this->obtenerOrganizacion();
 
         // Obtener los historiales de la requisición específica
-        $historialesRequisicion = HistorialEdicionesReq::with('version')
+        $historialesRequisicion = HistorialEdicionesReq::with('version', 'empleado')
             ->where('requisicion_id', $id)
             ->get();
 

@@ -29,4 +29,9 @@ class HistorialEdicionesReq extends Model
     {
         return $this->belongsTo(VersionesRequisiciones::class, 'version_id'); // Asegúrate de que 'version_id' sea la clave foránea correcta
     }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado')->select('id', 'name'); // Asegúrate de que 'version_id' sea la clave foránea correcta
+    }
 }
