@@ -157,9 +157,28 @@ class Requsicion extends Model implements Auditable
         ];
     }
 
+    protected static $ignorarHistorial = false;
+
+    // Función para desactivar el histórico
+    public static function desactivarHistorial()
+    {
+        self::$ignorarHistorial = true;
+    }
+
+    // Función para activar el histórico
+    public static function activarHistorial()
+    {
+        self::$ignorarHistorial = false;
+    }
+
     protected static function booted()
     {
         static::updating(function ($registro) {
+            // Verificar si la bandera está activada para ignorar la creación de historial
+            if (self::$ignorarHistorial) {
+                return;
+            }
+
             $idEmpleado = User::getCurrentUser()->empleado->id;
             $camposRequisiciones = $registro->camposRequisiciones();
             $camposOrdenesCompra = $registro->camposOrdenesCompra();
@@ -715,7 +734,6 @@ class Requsicion extends Model implements Auditable
                             $coleccion->push($req);
                         }
                     }
-
                 }
                 // dd($coleccion);
                 break;
@@ -911,10 +929,12 @@ class Requsicion extends Model implements Auditable
                             }
                         }
 
-                        if (! is_null($ord->firma_solicitante_orden)
+                        if (
+                            ! is_null($ord->firma_solicitante_orden)
                             && isset($responsableFinanzas)
                             && $responsableFinanzas->id == $id_empleado
-                            && is_null($ord->firma_comprador_orden)) {
+                            && is_null($ord->firma_comprador_orden)
+                        ) {
 
                             $coleccion->push($ord);
                         }
@@ -1160,7 +1180,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }

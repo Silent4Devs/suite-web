@@ -618,7 +618,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 'destroy' => 'ev360-objetivos.destroy',
             ])->except(['show']);
             Route::resource('evaluacion-360/objetivos/rangos', 'RH\CatalogoRangosObjetivosController');
-
         });
 
         Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
@@ -1980,7 +1979,6 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::get('ExportPoliticaSgsi', 'PoliticaSgsi')->name('descarga-politica_sgi');
         Route::get('ExportGrupoArea', 'GrupoArea')->name('descarga-grupo_area');
     });
-
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
@@ -2111,6 +2109,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
     Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
     Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
+    Route::post('orden-compra/updateOrdenCompra/{id}', 'OrdenCompraController@updateOrdenCompra')->name('orden-compra.updateOrdenCompra');
     Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
     Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
     Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
