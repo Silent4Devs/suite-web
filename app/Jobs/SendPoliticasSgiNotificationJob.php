@@ -67,6 +67,7 @@ class SendPoliticasSgiNotificationJob implements ShouldQueue
             }
 
             try {
+                dd('Enviando notificación para el usuario: ' . $user); //
                 Notification::send($user, new PoliticasSgiNotification($this->politicas, $this->tipo_consulta, $this->tabla, $this->slug));
             } catch (\Exception $e) {
                 dd('Error al enviar la notificación: '.$e->getMessage());
