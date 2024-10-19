@@ -240,27 +240,32 @@
                                 <select name="proveedor_id" id="proveedor_id" class="form-control" required
                                     placeholder="">
                                     @if ($requisicion->proveedoroc_id)
-                                        <option value="{{ $requisicion->proveedoroc_id }}" selected
-                                            data-nombre="{{ $requisicion->proveedor->nombre }}"
-                                            data-rfc="{{ $requisicion->proveedor->rfc }}"
-                                            data-contacto="{{ $requisicion->proveedor->contacto }}"
-                                            data-direccion="{{ $requisicion->proveedor->calle }}, {{ $requisicion->proveedor->colonia }}, {{ $requisicion->proveedor->ciudad }}"
-                                            data-razon="{{ $requisicion->proveedor->razon_social }}">
-                                            {{ $requisicion->proveedor->razon_social }}
-                                        </option>
+                                        @foreach ($proveedores as $proveedor)
+                                            <option value="{{ $proveedor->id }}"
+                                                {{ $requisicion->proveedoroc_id == $proveedor->id ? 'selected' : '' }}
+                                                data-nombre="{{ $proveedor->nombre }}"
+                                                data-rfc="{{ $proveedor->rfc }}"
+                                                data-contacto="{{ $proveedor->contacto }}"
+                                                data-direccion="{{ $proveedor->calle }}, {{ $proveedor->colonia }}, {{ $proveedor->ciudad }}"
+                                                data-razon="{{ $proveedor->razon_social }}">
+
+                                                {{ $proveedor->razon_social }}
+                                            </option>
+                                        @endforeach
                                     @else
                                         <option value="" selected disabled> Seleccione un Proveedor</option>
-                                    @endif
-                                    @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->id }}" data-nombre="{{ $proveedor->nombre }}"
-                                            data-rfc="{{ $proveedor->rfc }}"
-                                            data-contacto="{{ $proveedor->contacto }}"
-                                            data-direccion="{{ $proveedor->calle }}, {{ $proveedor->colonia }}, {{ $proveedor->ciudad }}"
-                                            data-razon="{{ $proveedor->razon_social }}">
+                                        @foreach ($proveedores as $proveedor)
+                                            <option value="{{ $proveedor->id }}"
+                                                data-nombre="{{ $proveedor->nombre }}"
+                                                data-rfc="{{ $proveedor->rfc }}"
+                                                data-contacto="{{ $proveedor->contacto }}"
+                                                data-direccion="{{ $proveedor->calle }}, {{ $proveedor->colonia }}, {{ $proveedor->ciudad }}"
+                                                data-razon="{{ $proveedor->razon_social }}">
 
-                                            {{ $proveedor->razon_social }}
-                                        </option>
-                                    @endforeach
+                                                {{ $proveedor->razon_social }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <label for="proveedor_id">
                                     Proveedor <font class="asterisco">*</font>
@@ -270,7 +275,7 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-nombre" name="nombre"
-                                    value="{{ $requisicion->proveedor->nombre }}" placeholder=""
+                                    value="{{ $requisicion->proveedor->nombre ?? '' }}" placeholder=""
                                     class="form-control">
                                 <label for="proveedor-nombre">
                                     Nombre Comercial
@@ -280,7 +285,8 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-rfc" name="rfc"
-                                    value="{{ $requisicion->proveedor->rfc }}" placeholder="" class="form-control">
+                                    value="{{ $requisicion->proveedor->rfc ?? '' }}" placeholder=""
+                                    class="form-control">
                                 <label for="proveedor-rfc">
                                     RFC
                                 </label>
@@ -291,8 +297,8 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-contacto"
-                                    value="{{ $requisicion->proveedor->contacto }}" name="contacto" placeholder=""
-                                    class="form-control">
+                                    value="{{ $requisicion->proveedor->contacto ?? '' }}" name="contacto"
+                                    placeholder="" class="form-control">
                                 <label for="proveedor-contacto">
                                     Nombre del contacto
                                 </label>
@@ -300,8 +306,9 @@
                         </div>
                         <div class="col s12 l9 ">
                             <div class="anima-focus">
-                                <input type="text" id="proveedor-direccion" value="{{ $proveedor->direccion }}"
-                                    placeholder="" name="direccion" class="form-control">
+                                <input type="text" id="proveedor-direccion"
+                                    value="{{ $proveedor->direccion ?? '' }}" placeholder="" name="direccion"
+                                    class="form-control">
                                 <label for="proveedor-direccion">
                                     Dirección
                                 </label>
@@ -312,7 +319,7 @@
                         <div class="col s12 l6 ">
                             <div class="anima-focus">
                                 <input type="text" id="envio" name="direccion_envio"
-                                    value="{{ $requisicion->direccion_envio_proveedor }}" placeholder=""
+                                    value="{{ $requisicion->direccion_envio_proveedor ?? '' }}" placeholder=""
                                     class="form-control">
                                 <label for="envio">
                                     Envío a
@@ -321,8 +328,9 @@
                         </div>
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
-                                <input type="text" id="proveedor-razon" value="{{ $proveedor->facturacion }}"
-                                    placeholder="" name="facturacion" class="form-control">
+                                <input type="text" id="proveedor-razon"
+                                    value="{{ $proveedor->facturacion ?? '' }}" placeholder="" name="facturacion"
+                                    class="form-control">
                                 <label for="proveedor-razon">
                                     Facturación a
                                 </label>
@@ -330,7 +338,7 @@
                         </div>
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
-                                <input type="text" value="{{ $requisicion->credito_proveedor }}"
+                                <input type="text" value="{{ $requisicion->credito_proveedor ?? '' }}"
                                     name="credito_proveedor" placeholder="" id="cred_prov" class="form-control">
                                 <label for="cred_prov">
                                     Crédito disponible
@@ -387,7 +395,8 @@
                                         <textarea class="mod-especificaciones form-control" id="espec_{{ $count }}" placeholder=""
                                             name="especificaciones{{ $count }}">{{ $producto->espesificaciones }}</textarea>
                                         <label for="espec_{{ $count }}">
-                                            Especificaciones del producto o servicio <font class="asterisco">*</font>
+                                            Especificaciones del producto o servicio <font class="asterisco">*
+                                            </font>
                                         </label>
                                     </div>
                                 </div>
