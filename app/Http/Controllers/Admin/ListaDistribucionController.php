@@ -72,7 +72,7 @@ class ListaDistribucionController extends Controller
             foreach ($lista->participantes as $participante) {
                 if ($participante->nivel == $i) {
 
-                    $participantes_seleccionados['nivel' . $i][] =
+                    $participantes_seleccionados['nivel'.$i][] =
                         [
                             'empleado_id' => $participante->empleado_id,
                             'numero_orden' => $participante->numero_orden,
@@ -127,8 +127,8 @@ class ListaDistribucionController extends Controller
 
     private function getSuperAprobadores($participantes)
     {
-        return $participantes->filter(fn($p) => $p->nivel == 0)
-            ->map(fn($p) => [
+        return $participantes->filter(fn ($p) => $p->nivel == 0)
+            ->map(fn ($p) => [
                 'empleado_id' => $p->empleado_id,
                 'numero_orden' => $p->numero_orden,
             ])->values()->toArray();
@@ -138,9 +138,9 @@ class ListaDistribucionController extends Controller
     {
         $participantes_seleccionados = [];
         for ($i = 1; $i <= $lista->niveles; $i++) {
-            $participantes_seleccionados['nivel' . $i] = $lista->participantes
-                ->filter(fn($p) => $p->nivel == $i)
-                ->map(fn($p) => [
+            $participantes_seleccionados['nivel'.$i] = $lista->participantes
+                ->filter(fn ($p) => $p->nivel == $i)
+                ->map(fn ($p) => [
                     'empleado_id' => $p->empleado_id,
                     'numero_orden' => $p->numero_orden,
                 ])->values()->toArray();
@@ -256,7 +256,7 @@ class ListaDistribucionController extends Controller
 
         // Sincronizar compradores y participantes
         $val_niv = $request->niveles;
-        $nom_niv = 'nivel' . $val_niv;
+        $nom_niv = 'nivel'.$val_niv;
 
         if (isset($request->$nom_niv) && ($lista->modelo != 'Comprador') && ($lista->modelo != 'Empleado')) {
             $participantes = ParticipantesListaDistribucion::where('modulo_id', '=', $lista->id)->delete();
@@ -267,7 +267,7 @@ class ListaDistribucionController extends Controller
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel' . $i;
+                $nivelArrayName = 'nivel'.$i;
                 if (isset($nivelArrayName)) {
                     $data[$i] = $request->$nivelArrayName;
                     // $data[$nivelArrayName] = $nivelArrayName;
@@ -320,7 +320,7 @@ class ListaDistribucionController extends Controller
 
             $data = [];
             for ($i = 1; $i <= $request->niveles; $i++) {
-                $nivelArrayName = 'nivel' . $i;
+                $nivelArrayName = 'nivel'.$i;
                 if (isset($nivelArrayName)) {
                     $data[$i] = $request->$nivelArrayName;
                     // $data[$nivelArrayName] = $nivelArrayName;
