@@ -2,13 +2,13 @@
 
 namespace App\Events;
 
+use App\Jobs\SendPoliticasSgiNotificationJob;
 use App\Models\PoliticaSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
-use App\Jobs\SendPoliticasSgiNotificationJob; // Importación del Job
+use Illuminate\Queue\SerializesModels; // Importación del Job
 
 class PoliticasSgiEvent implements ShouldBroadcast
 {
