@@ -39,12 +39,12 @@
         <!-- Botón 3 -->
         <button type="button"
             class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar requisiciones pendientes finanzas</button>
+            id="filtrarBtn" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes finanzas</button>
 
         <!-- Botón 4 -->
         <button type="button"
             class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn3" style="position: relative; left: 6rem;">Filtrar requisiciones pendientes compradores</button>
+            id="filtrarBtn3" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes compradores</button>
     </div>
 
 
