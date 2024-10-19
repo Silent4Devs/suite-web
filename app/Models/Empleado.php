@@ -443,8 +443,9 @@ class Empleado extends Model implements Auditable
         $hoy = Carbon::now();
 
         return Cache::remember('Empleados:portal_cumpleaños', 3600, function () use ($hoy) {
-            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños', 'antiguedad')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
+
     }
 
     public static function getNuevos()
@@ -452,7 +453,7 @@ class Empleado extends Model implements Auditable
         $hoy = Carbon::now();
 
         return Cache::remember('Empleados:portal_nuevos', 3600, function () use ($hoy) {
-            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero', 'cumpleaños', 'antiguedad')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         });
     }
 
@@ -886,6 +887,16 @@ class Empleado extends Model implements Auditable
         return Carbon::parse($this->antiguedad)->format('d-m-Y');
     }
 
+    public static function listaSupervisores()
+    {
+        return self::alta()->select('supervisor_id', 'id')
+            ->get()
+            ->filter(function ($emp) {
+                return $emp->es_supervisor;
+            })
+            ->pluck('id');
+    }
+
     //declaraciones iso
 
     public function getDeclaracionesResponsable2022Attribute()
@@ -1000,9 +1011,4 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasOne(DisponibilidadEmpleados::class, 'empleado_id', 'id');
     }
-
-    // public function getDisposicionAttribute()
-    // {
-    //     return $this->disponibilidad->disposicion;
-    // }
 }

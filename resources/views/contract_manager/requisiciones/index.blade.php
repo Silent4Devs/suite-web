@@ -45,6 +45,10 @@
                                         <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('rechazado')
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
@@ -127,6 +131,20 @@
                                     onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i
                                         class="fas fa-trash text-danger"></i></a>
 
+                                @if ($requisicion->estado == 'cancelada')
+                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
+                                            class="fas fa-pen"></i></a>
+                                @endif
+
+                                @if ($requisicion->estado == 'curso')
+                                    <a
+                                        onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 1, {{ $requisicion->id }})"><i
+                                            class="fa-regular fa-rectangle-xmark"></i></a>
+                                @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
+                                    <a
+                                        onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})"><i
+                                            class="fa-regular fa-rectangle-xmark"></i></a>
+                                @endif
 
                             </td>
                         </tr>
@@ -200,6 +218,53 @@
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
                     window.location.href = url;
+                }
+            });
+        }
+
+        function mostrarAlerta3(url, tipo, id) {
+            let titleText = tipo == 1 ?
+                '¿Está seguro de cancelar la requisición RQ-' + id + '?' :
+                '¿Está seguro de cancelar la requisición RQ-' + id +
+                '? Al realizar esta acción también se cancelará la orden de compra.';
+
+            Swal.fire({
+                title: titleText,
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la solicitud AJAX usando fetch
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Cancelado!', 'La Requisición ha sido cancelada.', 'success').then(
+                                    () => {
+                                        window.location.reload(); // Refresca la página
+                                    });
+                            } else {
+                                Swal.fire('Error', 'No se pudo cancelar la requisición. Inténtelo de nuevo.',
+                                    'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'Hubo un problema al procesar la solicitud.', 'error');
+                            console.error('Error:', error);
+                        });
                 }
             });
         }

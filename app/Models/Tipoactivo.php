@@ -17,7 +17,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $team_id
  * @property Team|null $team
  * @property Collection|SubcategoriaActivo[] $subcategoria_activos
  * @property Collection|Marca[] $marcas

@@ -30,7 +30,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $team_id
  * @property string|null $antecedentes
  * @property string|null $logotipo
  * @property Team|null $team
@@ -46,8 +45,7 @@ class Organizacion extends Model implements Auditable
     protected $appends = ['logotipo', 'fecha_min_timesheet'];
 
     protected $casts = [
-        'telefono' => 'int',
-        'team_id' => 'int',
+        'telefono' => 'int'
     ];
 
     protected $fillable = [
@@ -61,7 +59,6 @@ class Organizacion extends Model implements Auditable
         'mision',
         'vision',
         'valores',
-        'team_id',
         'antecedentes',
         'logotipo',
         'razon_social',

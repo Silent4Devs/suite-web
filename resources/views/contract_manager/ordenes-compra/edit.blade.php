@@ -366,7 +366,7 @@
                                             <option value="{{ $contrato->id }}"
                                                 data-no="{{ $contrato->no_contrato }}"
                                                 data-servicio="{{ $contrato->nombre_servicio }}"
-                                                {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
+                                                {{ $requisicion->contrato_id == $contrato->id ? 'selected' : '' }}>
                                                 {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
                                                 {{ $contrato->nombre_servicio }}
                                             </option>
