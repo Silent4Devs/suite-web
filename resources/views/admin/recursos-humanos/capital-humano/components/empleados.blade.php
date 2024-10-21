@@ -300,7 +300,7 @@
     @endcan
 
     <li>
-        <a href="Ausencias">
+        <a href="ausencias">
             <div>
                 <i class="bi bi-chat-square-dots"></i>
                 <br>
