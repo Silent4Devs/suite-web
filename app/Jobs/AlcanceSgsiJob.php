@@ -6,8 +6,8 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\AlcancesNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -30,7 +30,13 @@ class AlcanceSgsiJob implements ShouldQueue
         $this->slug = $slug;
     }
 
-    public function handle()
+    /**
+     * Handle the event.
+     *
+     * @param  object  $event
+     * @return void
+     */
+    public function handle($event)
     {
         try {
             // Cargar la lista de distribución
@@ -53,7 +59,6 @@ class AlcanceSgsiJob implements ShouldQueue
                 }
             }
         } catch (\Exception $e) {
-            // Manejo del error con logging en lugar de dd
             dd('Error processing notifications: ' . $e->getMessage());
         }
     }

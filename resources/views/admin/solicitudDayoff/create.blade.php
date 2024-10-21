@@ -5,7 +5,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.solicitud-dayoff.index') !!}">Solicitud de Day Off</a>
+            {{-- <a href="{!! route('admin.solicitud-dayoff.index') !!}">Solicitud de Day Off</a> --}}
         </li>
         <li class="breadcrumb-item active">Crear</li>
     </ol>
