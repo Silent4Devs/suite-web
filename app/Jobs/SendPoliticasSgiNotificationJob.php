@@ -37,41 +37,13 @@ class SendPoliticasSgiNotificationJob implements ShouldQueue
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', 'PoliticaSgsi')->first();
 
-        if (! $lista) {
-            dd('No se encontró la lista de distribución para PoliticaSgsi.');
-
-            return;
-        }
-
-        if ($lista->participantes->isEmpty()) {
-            dd('La lista de distribución no tiene participantes.');
-
-            return;
-        }
-
         foreach ($lista->participantes as $participante) {
+
             $empleados = Empleado::find($participante->empleado_id);
-
-            if (! $empleados) {
-                dd('Empleado no encontrado para el ID: '.$participante->empleado_id);
-
-                continue;
-            }
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
-            if (! $user) {
-                dd('Usuario no encontrado para el correo: '.$empleados->email);
-
-                continue;
-            }
-
-            try {
-                dd('Enviando notificación para el usuario: ' . $user); //
-                Notification::send($user, new PoliticasSgiNotification($this->politicas, $this->tipo_consulta, $this->tabla, $this->slug));
-            } catch (\Exception $e) {
-                dd('Error al enviar la notificación: '.$e->getMessage());
-            }
+            Notification::send($user, new PoliticasSgiNotification($this->politicas, $this->tipo_consulta, $this->tabla, $this->slug));
         }
     }
 }
