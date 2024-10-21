@@ -29,7 +29,7 @@ class AlcancesEvent implements ShouldBroadcast
         $this->tabla = $tabla;
         $this->slug = $slug;
 
-        AlcancesJob::dispatch($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug);
+        dispatch(new AlcancesJob($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug));
     }
 
     /**
