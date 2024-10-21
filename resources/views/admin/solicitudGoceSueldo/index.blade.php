@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('Solicitud-Permiso-Goce') }}
+        {{-- {{ Breadcrumbs::render('Solicitud-Permiso-Goce') }} --}}
     </div>
 
     <style>
@@ -202,29 +202,7 @@
                     window.location.href = url;
                 }
             };
-            // let btnExport = {
-            //     text: '<i  class="fas fa-download"></i>',
-            //     titleAttr: 'Descargar plantilla',
-            //     className: "btn btn_cargar",
-            //     url: "{{ route('descarga-amenaza') }}",
-            //     action: function(e, dt, node, config) {
-            //         let {
-            //             url
-            //         } = config;
-            //         window.location.href = url;
-            //     }
-            // };
-            // let btnImport = {
-            //     text: '<i  class="fas fa-file-upload"></i>',
-            //     titleAttr: 'Importar datos',
-            //     className: "btn btn_cargar",
-            //     action: function(e, dt, node, config) {
-            //         $('#csvImportModal').modal('show');
-            //     }
-            // };
 
-            // dtButtons.push(btnExport);
-            // dtButtons.push(btnImport);
 
             @can('solicitud_goce_sueldo_crear')
                 dtButtons.push(btnAgregar);
@@ -237,142 +215,7 @@
                 serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                // ajax: "{{ route('admin.solicitud-permiso-goce-sueldo.index') }}",
-                // columns: [{
-                //         data: 'dias_solicitados',
-                //         name: 'dias_solicitados',
-                //         render: function(data, type, row) {
-                //             return `<div style="text-align:center">${data}</div>`;
-                //         }
 
-                //     },
-                //     {
-                //         data: 'permiso',
-                //         name: 'permiso',
-                //         render: function(data, type, row) {
-                //             data = JSON.parse(data);
-                //             return `<div style="text-align:left">${data.nombre}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'tipo',
-                //         name: 'tipo',
-                //         render: function(data, type, row) {
-                //             const tipo = row.tipo;
-                //             switch (Number(tipo)) {
-                //                 case 1:
-                //                     return `
-            //                     <div  style="text-align:left">
-            //                         Permisos conforme a la ley
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 case 2:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                         Permisos otorgados por la empresa
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 default:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                        No definido
-            //                     </div>
-            //                     `;
-                //             }
-                //         }
-                //     },
-                //     {
-                //         data: 'fecha_inicio',
-                //         name: 'fecha_inicio',
-                //         render: function(data, type, row) {
-                //             let fecha = data.split('-');
-                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                //             return `<div style="text-align:left">${fechaDMY}</div>`;
-                //             return `<div style="text-align:left">${data}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'fecha_fin',
-                //         name: 'fecha_fin',
-                //         render: function(data, type, row) {
-                //             let fecha = data.split('-');
-                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                //             return `<div style="text-align:left">${fechaDMY}</div>`;
-                //             return `<div style="text-align:left">${data}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'aprobacion',
-                //         name: 'aprobacion',
-                //         render: function(data, type, row) {
-                //             const aprobacion = row.aprobacion;
-
-                //             switch (Number(aprobacion)) {
-                //                 case 1:
-                //                     return `
-            //                     <div  style="text-align:left">
-            //                         <span class="badge badge-pill badge-warning">Pendiente</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 case 2:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                         <span class="badge badge-pill badge-danger">Rechazado</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 case 3:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                         <span class="badge badge-pill badge-success">Aprobado</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 default:
-                //                     return `
-            //                     <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-            //                     `;
-                //             }
-                //         }
-                //     },
-
-                //     {
-                //         data: 'descripcion',
-                //         name: 'descripcion',
-                //         render: function(data, type, row) {
-                //             return `<div style="text-align:left">${data}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'actions',
-                //         render: function(data, type, row, meta) {
-                //             let aprobacion = row.aprobacion;
-                //             let id = row.id;
-                //             console.log(id);
-                //             if (aprobacion == 3) {
-                //                 return `
-            //                 <div style="text-aling:center">
-            //                 <a href="solicitud-permiso-goce-sueldo/${row.id}/show"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-            //                 </div>
-            //                `;
-
-                //             } else {
-                //                 let urlEliminar =
-                //                     '{{ route('admin.solicitud-permiso-goce-sueldo.destroy') }}'
-                //                 return `
-            //                 <div style="text-aling:center">
-            //                 <a href="solicitud-permiso-goce-sueldo/${row.id}/show"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-            //                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
-            //                 </div>
-            //                `;
-                //             }
-
-                //         }
-                //     }
-                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

@@ -29,9 +29,9 @@ use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\SeguridadController;
-use App\Http\Controllers\admin\SolicitudDayOffController;
-use App\Http\Controllers\admin\SolicitudPermisoGoceSueldoController;
-use App\Http\Controllers\admin\SolicitudVacacionesController;
+use App\Http\Controllers\Admin\SolicitudDayOffController;
+use App\Http\Controllers\Admin\SolicitudPermisoGoceSueldoController;
+use App\Http\Controllers\Admin\SolicitudVacacionesController;
 use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Admin\TablaCalendarioController;
 use App\Http\Controllers\Admin\UsersController;
@@ -392,6 +392,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 'store' => 'solicitud-vacaciones.store',
                 'edit' => 'solicitud-vacaciones.edit',
                 'update' => 'solicitud-vacaciones.update',
+                'index' => 'solicitud-vacaciones.index',
             ])->except(['show', 'destroy']);
         });
 
@@ -412,6 +413,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 'store' => 'solicitud-dayoff.store',
                 'edit' => 'solicitud-dayoff.edit',
                 'update' => 'solicitud-dayoff.update',
+                'index' => 'solicitud-dayoff.index',
             ])->except(['show', 'destroy']);
         });
 
@@ -435,6 +437,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'solicitud-permiso-goce-sueldo.edit',
             'update' => 'solicitud-permiso-goce-sueldo.update',
             'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
+            'index' => 'solicitud-permiso-goce-sueldo.index',
         ])->except(['show', 'destroy']);
 
         // Rutas de recursos para Incidentes Vacaciones
