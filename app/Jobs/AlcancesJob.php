@@ -43,14 +43,25 @@ class AlcancesJob implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaDistribucion::with('participantes')->where('modelo', 'AlcanceSgsi')->first();
+        try {
+            $lista = ListaDistribucion::with('participantes')->where('modelo', 'AlcanceSgsi')->first();
 
-        foreach ($lista->participantes as $participantes) {
-            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+            if ($lista) {
+                foreach ($lista->participantes as $participantes) {
+                    $empleados = Empleado::find($participantes->empleado_id);
 
-            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+                    if ($empleados) {
+                        $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
-            Notification::send($user, new AlcancesNotification($event->alcances, $event->tipo_consulta, $event->tabla, $event->slug));
+                        if ($user) {
+                            Notification::send($user, new AlcancesNotification($event->alcances, $event->tipo_consulta, $event->tabla, $event->slug));
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+           dd('Error processing notifications: ' . $e->getMessage());
         }
+
     }
 }
