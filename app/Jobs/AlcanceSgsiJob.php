@@ -18,11 +18,8 @@ class AlcanceSgsiJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $alcances;
-
     protected $tipo_consulta;
-
     protected $tabla;
-
     protected $slug;
 
     public function __construct($alcances, $tipo_consulta, $tabla, $slug)
@@ -42,24 +39,27 @@ class AlcanceSgsiJob implements ShouldQueue
     public function handle($event)
     {
         try {
+            // Cargar la lista de distribución
             $lista = ListaDistribucion::with('participantes')->where('modelo', 'AlcanceSgsi')->first();
 
             if ($lista) {
-                foreach ($lista->participantes as $participantes) {
-                    $empleados = Empleado::find($participantes->empleado_id);
+                foreach ($lista->participantes as $participante) {
+                    // Cargar el empleado
+                    $empleado = Empleado::find($participante->empleado_id);
 
-                    if ($empleados) {
-                        $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
+                    if ($empleado) {
+                        // Buscar el usuario por email
+                        $user = User::where('email', trim(removeUnicodeCharacters($empleado->email)))->first();
 
                         if ($user) {
-                            Notification::send($user, new AlcancesNotification($event->alcances, $event->tipo_consulta, $event->tabla, $event->slug));
+                            // Enviar la notificación
+                            Notification::send($user, new AlcancesNotification($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug));
                         }
                     }
                 }
             }
         } catch (\Exception $e) {
-            dd('Error processing notifications: '.$e->getMessage());
+            dd('Error processing notifications: ' . $e->getMessage());
         }
-
     }
 }
