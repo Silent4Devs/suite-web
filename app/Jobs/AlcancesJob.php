@@ -9,22 +9,31 @@ use App\Notifications\AlcancesNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Bus\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
 
 class AlcancesJob implements ShouldQueue
 {
-    use InteractsWithQueue;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 5;
+    protected $alcances;
 
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $tipo_consulta;
+
+    protected $tabla;
+
+    protected $slug;
+
+    public function __construct($politicas, $tipo_consulta, $tabla, $slug)
     {
-        //
+        $this->alcances = $politicas;
+        $this->tipo_consulta = $tipo_consulta;
+        $this->tabla = $tabla;
+        $this->slug = $slug;
     }
+
 
     /**
      * Handle the event.
