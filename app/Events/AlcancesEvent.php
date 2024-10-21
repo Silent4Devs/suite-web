@@ -2,13 +2,14 @@
 
 namespace App\Events;
 
+use App\Jobs\AlcancesJob;
 use App\Models\AlcanceSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Jobs\AlcancesJob;
+
 
 class AlcancesEvent implements ShouldBroadcast
 {
@@ -29,7 +30,7 @@ class AlcancesEvent implements ShouldBroadcast
         $this->tabla = $tabla;
         $this->slug = $slug;
 
-        dispatch(new AlcancesJob($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug));
+        AlcancesJob::dispatch($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**
