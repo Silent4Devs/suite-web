@@ -6,13 +6,12 @@ use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\AlcancesNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
-
 
 class AlcanceSgsiJob implements ShouldQueue
 {
@@ -33,7 +32,6 @@ class AlcanceSgsiJob implements ShouldQueue
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
-
 
     /**
      * Handle the event.
@@ -60,7 +58,7 @@ class AlcanceSgsiJob implements ShouldQueue
                 }
             }
         } catch (\Exception $e) {
-           dd('Error processing notifications: ' . $e->getMessage());
+            dd('Error processing notifications: '.$e->getMessage());
         }
 
     }

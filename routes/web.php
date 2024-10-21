@@ -3,39 +3,39 @@
 use App\Http\Controllers\Admin\ArbolRiesgosOctaveController;
 use App\Http\Controllers\Admin\AreasController;
 use App\Http\Controllers\Admin\AusenciasController;
-use App\Http\Controllers\admin\CalendarioOficialController;
+use App\Http\Controllers\Admin\CalendarioOficialController;
 use App\Http\Controllers\Admin\ContenedorMatrizOctaveController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DashboardPermisosController;
-use App\Http\Controllers\admin\DayOffController;
+use App\Http\Controllers\Admin\DayOffController;
 use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
-use App\Http\Controllers\admin\EnvioDocumentosController;
+use App\Http\Controllers\Admin\EnvioDocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
 use App\Http\Controllers\Admin\FirmasModuleController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\admin\IncidentesDayOffController;
-use App\Http\Controllers\admin\IncidentesVacacionesController;
+use App\Http\Controllers\Admin\IncidentesDayOffController;
+use App\Http\Controllers\Admin\IncidentesVacacionesController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
 use App\Http\Controllers\Admin\MatrizRiesgosController;
 use App\Http\Controllers\Admin\MejorasController;
 use App\Http\Controllers\Admin\OrganizacionController;
-use App\Http\Controllers\admin\PermisosGoceSueldoController;
+use App\Http\Controllers\Admin\PermisosGoceSueldoController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
-use App\Http\Controllers\admin\ProcesosOctaveController;
+use App\Http\Controllers\Admin\ProcesosOctaveController;
 use App\Http\Controllers\Admin\PuestosController;
 use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\SeguridadController;
-use App\Http\Controllers\admin\SolicitudDayOffController;
-use App\Http\Controllers\admin\SolicitudPermisoGoceSueldoController;
-use App\Http\Controllers\admin\SolicitudVacacionesController;
+use App\Http\Controllers\Admin\SolicitudDayOffController;
+use App\Http\Controllers\Admin\SolicitudPermisoGoceSueldoController;
+use App\Http\Controllers\Admin\SolicitudVacacionesController;
 use App\Http\Controllers\Admin\SugerenciasController;
 use App\Http\Controllers\Admin\TablaCalendarioController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\admin\VacacionesController;
+use App\Http\Controllers\Admin\VacacionesController;
 use App\Http\Controllers\Admin\VisitanteQuoteController;
 use App\Http\Controllers\Admin\VisitantesAvisoPrivacidadController;
 use App\Http\Controllers\Admin\VisitantesController;
@@ -392,6 +392,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 'store' => 'solicitud-vacaciones.store',
                 'edit' => 'solicitud-vacaciones.edit',
                 'update' => 'solicitud-vacaciones.update',
+                'index' => 'solicitud-vacaciones.index',
             ])->except(['show', 'destroy']);
         });
 
@@ -412,6 +413,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 'store' => 'solicitud-dayoff.store',
                 'edit' => 'solicitud-dayoff.edit',
                 'update' => 'solicitud-dayoff.update',
+                'index' => 'solicitud-dayoff.index',
             ])->except(['show', 'destroy']);
         });
 
@@ -435,6 +437,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'solicitud-permiso-goce-sueldo.edit',
             'update' => 'solicitud-permiso-goce-sueldo.update',
             'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
+            'index' => 'solicitud-permiso-goce-sueldo.index',
         ])->except(['show', 'destroy']);
 
         // Rutas de recursos para Incidentes Vacaciones

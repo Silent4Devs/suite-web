@@ -280,7 +280,7 @@ class PuestosController extends Controller
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto->update($request->all());
         $request->validate([
-            'puesto' => 'required|unique:puestos,puesto,' . $puesto->id,
+            'puesto' => 'required|unique:puestos,puesto,'.$puesto->id,
         ]);
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
@@ -390,20 +390,20 @@ class PuestosController extends Controller
         }
 
         // Generar un nombre único para la imagen
-        $imageName = uniqid() . '.' . $type;
+        $imageName = uniqid().'.'.$type;
         // Guardar la imagen en el sistema de archivos
 
         $ruta_carpeta = storage_path('app/public/puestos/firmasAprobadores');
         $ruta_carpeta_content = storage_path('app/public/puestos');
 
-        Storage::put('public/puestos/firmasAprobadores/' . $imageName, $image);
+        Storage::put('public/puestos/firmasAprobadores/'.$imageName, $image);
 
         // Dar permisos chmod 777 a la carpeta
         chmod($ruta_carpeta, 0777);
         chmod($ruta_carpeta_content, 0777);
 
         // Obtener la URL de la imagen guardada
-        $imageUrl = Storage::url('public/puestos/firmasAprobadores/' . $imageName);
+        $imageUrl = Storage::url('public/puestos/firmasAprobadores/'.$imageName);
 
         $aprobacionFirmapuesto->update([
             'firma' => $imageName,
