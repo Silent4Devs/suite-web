@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('Ausencias') }}
+    {{-- {{ Breadcrumbs::render('admin.ausencias') }} --}}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {

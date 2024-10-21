@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ArbolRiesgosOctaveController;
 use App\Http\Controllers\Admin\AreasController;
-use App\Http\Controllers\admin\AusenciasController;
+use App\Http\Controllers\Admin\AusenciasController;
 use App\Http\Controllers\admin\CalendarioOficialController;
 use App\Http\Controllers\Admin\ContenedorMatrizOctaveController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
