@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Reglas-DayOff') }}
+    {{-- {{ Breadcrumbs::render('Reglas-DayOff') }} --}}
 
 
     <h5 class="titulo_general_funcion">Lineamientos para Days Off´s</h5>
