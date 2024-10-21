@@ -1,3 +1,4 @@
+
 <div class="mt-4 card card-body shadow-sm">
     <h4 style="margin: 0px;">Formulario</h4>
     <hr style="margin-top: 20px;">
@@ -70,32 +71,14 @@
                                     </i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(false,{{$sheetTable->sheet->id}})">
+                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(1,{{$sheetTable->sheet->id}})">
                                     <p class="m-0">Evaluar/editar formulario</p>
                                 </a></li>
-                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(true,{{$sheetTable->sheet->id}})">
+                                  <li><a class="dropdown-item" type="button" data-toggle="modal" data-target="#formRiskAnalysis" wire:click="chageStatusForm(2,{{$sheetTable->sheet->id}})">
                                     <p class="m-0">Finalizar /editar formulario</p>
                                 </a></li>
                                 </ul>
                               </div>
-                            {{-- <div> --}}
-                                {{-- <div class="d-flex align-items-start options">
-                                    <div class="caja-options card card-body" style="border-radius: 0px !important; position: absolute;">
-                                        <a type="button" data-toggle="modal" data-target="#formRiskAnalysis">
-                                            <p class="m-0">Evaluar/editar formulario</p>
-                                        </a>
-                                        <a type="button" data-toggle="modal" data-target="#formRiskAnalysis">
-                                            <p class="m-0">Finalizar /editar formulario</p>
-                                        </a>
-
-
-                                    </div>
-                                    <button class="btn pt-0">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                </div> --}}
-
-                            {{-- </div> --}}
                         </td>
                     </tr>
                     @endforeach
@@ -113,6 +96,7 @@
 
     {{-- Modal --}}
     <div wire:ignore.self class="modal fade" id="formRiskAnalysis" tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div wire:loading>
                 <div class="spinner-border text-primary" role="status">
@@ -121,8 +105,8 @@
             </div>
             <div wire:loading.remove>
                 <div class="modal-content" style="background:none; border:none; gap:28px;">
-                    <div class="card d-flex align-items-center" style="width: 100%; margin:0px; padding-top:31px; padding-bottom:31px; background-color:{{$statusForm ? '#FFDEAC':'#FFFFD8'}};">
-                        @if (!$statusForm)
+                    <div class="card d-flex align-items-center" style="width: 100%; margin:0px; padding-top:31px; padding-bottom:31px; background-color:{{$sheetForm['bg']}};">
+                        @if ($sheetForm['status'] === 1)
                             <h3>Riesgo inicial</h3>
                             <p class="m-0">Evalúa tu riesgo inicial</p>
                         @else
@@ -132,6 +116,7 @@
                     </div>
                     <div class="card" style="width: 100%; margin:0px;">
                         <form id='Form' class="card-body" onsubmit="return false;">
+                            {{$sheetId}}
 
                             @foreach ($sections as $section)
                                 <div style="width:100%; column-gap: 20px;">
@@ -150,13 +135,14 @@
                                                             @if ($question->type != 10)
                                                                 {{ $question->title }}
                                                                 {{$question->type}}
-
                                                                 <span
                                                                     style="color:#FF0000">{{ $question->obligatory ? '*' : null }}</span>
                                                             @endif
                                                         </label>
+
                                                         @include('admin.analisis-riesgos.tbFormMaker', [
                                                             'question' => $question,
+                                                            'answersForm' => $answersForm,
                                                         ])
                                                     </div>
                                                 </div>
@@ -165,9 +151,10 @@
                                     </div>
                                 </div>
                             @endforeach
+
                             <div class="d-flex justify-content-end gap-3">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="limpiarFormulario()">Close</button>
-                                <button type="submit" id="submitButton" >Enviar</button>
+                                <button type="button" class="btn tb-btn-secondary" data-dismiss="modal" onclick="limpiarFormulario()">CANCELAR</button>
+                                <button type="submit" id="submitButton" class="btn tb-btn-primary" >GUARDAR</button>
                             </div>
                         </form>
                     </div>
@@ -224,6 +211,7 @@
         </div>
     </div>
 
+    {{-- send form --}}
     <script>
         function submitForm() {
             e.preventDefault();
@@ -254,25 +242,30 @@
         });
     </script>
 
-<script>
-    function limpiarFormulario() {
-        const form = document.getElementById('Form');
-        form.reset(); // Esto restablece los valores del formulario a los valores por defecto (vaciar si no hay valor predeterminado)
-    }
-</script>
+    {{-- clear form --}}
+    <script>
+        function limpiarFormulario() {
+            const form = document.getElementById('Form');
+            form.reset(); // Esto restablece los valores del formulario a los valores por defecto (vaciar si no hay valor predeterminado)
+        }
+    </script>
 
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        Livewire.on('scriptTabla', () => {
-            console.log('liwe');
-            setTimeout(() => {
-                tablaLivewire('datatable-risk-analysis');
-            }, 200);
+    {{-- table sheets --}}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('scriptTabla', () => {
+                console.log('liwe');
+                setTimeout(() => {
+                    tablaLivewire('datatable-risk-analysis');
+                }, 200);
+            });
         });
-    });
-</script>
+    </script>
 
+    {{-- alerts --}}
     @yield('js')
+
+    {{-- alert finish period sheet --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             Livewire.on("finishPeriod", id => {
@@ -305,6 +298,27 @@
         });
     </script>
 
+    {{-- alert response form sheet --}}
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Livewire.on("responseForm", (edit) => {
+                let title = "";
+                let action = "";
+                if(!edit){
+                    title = "Guardado";
+                    action = "guardo";
+                }else{
+                    title="Editado";
+                    action="edito";
+                }
+                Swal.fire({
+                    title: title,
+                    text: `Se ${action} exitosamente el formulario`,
+                    icon: "success"
+                });
+            })
+        });
+    </script>
 
 </div>

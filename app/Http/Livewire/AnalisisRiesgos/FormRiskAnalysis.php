@@ -13,7 +13,6 @@ use App\Models\TBSheetRiskAnalysisModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Maatwebsite\Excel\Sheet;
 
 class FormRiskAnalysis extends Component
 {
@@ -24,28 +23,52 @@ class FormRiskAnalysis extends Component
 
     public $verifyPeriod;
     public $period_id;
+
     public $questionSettigns;
     public $formulasSettings;
+
     public $answersTable = [];
     public $verifyAnswers;
     public $sheetTables;
     public $sheetId;
-    public $statusForm= false; //status form modal false=create, true=edit
+
+    // variable control sheet form
+    public $sheetForm = [
+        'status' => 1, // evaluate = 1, finish = 2
+        'bg' => '#FFFFD8',
+        'edit' => false,
+    ];
+
     public $answersForm;
-    // public $sectionsRegisters;
 
     protected $listeners = ['formData'];
 
-    public function getQuestionsAnswer(){
-        // dd($this->sheetId);
-        $this->answersForm = TBAnswerRASheetRAModel::where('sheet_id',$this->sheetId)->get();
-        dd($this->answersForm);
+    public function getQuestionsAnswer()
+    {
+        $answersFormRegister = TBAnswerRASheetRAModel::where('sheet_id', $this->sheetId)->get();
+
+        if ($answersFormRegister->isNotEmpty()) {
+            $this->sheetForm['edit'] = true;
+            foreach ($answersFormRegister as $answerRegister) {
+                $this->answersForm[$answerRegister->answer->question_id] = $answerRegister->answer;
+            }
+            // dump($this->answersForm);
+        }else {
+            $this->answersForm = [];
+            $this->sheetForm['edit']=false;
+        }
     }
 
-    public function chageStatusForm($status,$id)
+
+    public function chageStatusForm($status, $id)
     {
-        $this->statusForm = $status;
         $this->sheetId = $id;
+        $this->sheetForm['status'] = $status;
+        $this->sheetForm['bg'] = match ($status) {
+            1 => '#FFFFD8',
+            2 => '#FFDEAC',
+            default => '#FFFFD8',
+        };
         $this->getQuestionsAnswer();
     }
 
@@ -118,14 +141,31 @@ class FormRiskAnalysis extends Component
         }
     }
 
-    public function formData($data)
-    {
-        $this->questionsAnswer = $data;
-        // dd($this->questionsAnswer);
+    public function editForm(){
+        // dd($this->answersForm, $this->questionsAnswer);
         foreach($this->questionsAnswer as $index => $questionAnswer){
             $questionId = str_replace('qs-', '', $index);
-            // dump($questionId);
-            // dump('indice:'. $index . ' value:'.$questionAnswer);
+
+            $answerRegisterId = $this->answersForm[$questionId]['id'];
+            $answerRegister = TBAnswerSheetRiskAnalysisModel::find($answerRegisterId);
+            $answerRegister->value = $questionAnswer;
+            if ($answerRegister->isDirty()) {
+                $answerRegister->save();
+            }
+
+            // se iguala el valor del input para formulas
+            if($answerRegister->value !=  $this->answersForm[$questionId]['value']){
+                $this->answersForm[$questionId]['value'] = $answerRegister->value;
+            }
+        }
+
+
+        $this->emit('responseForm',$this->sheetForm['edit']);
+    }
+
+    public function createForm(){
+        foreach($this->questionsAnswer as $index => $questionAnswer){
+            $questionId = str_replace('qs-', '', $index);
             $answerRegister = TBAnswerSheetRiskAnalysisModel::create([
                 'question_id' => $questionId,
                 'value' => $questionAnswer
@@ -136,11 +176,27 @@ class FormRiskAnalysis extends Component
                 'answer_id'=> $answerRegister->id
             ]);
         }
+
+        $this->emit('responseForm',$this->sheetForm['edit']);
+        $this->sheetForm['edit'] = true;
+        $this->getQuestionsAnswer();
+
+    }
+
+    public function formData($data)
+    {
+        $this->questionsAnswer = $data;
+        if(!$this->sheetForm['edit']){
+            $this->createForm();
+        }else {
+            $this->editForm();
+        }
     }
 
     public function mount($RiskAnalysisId)
     {
         $this->riskAnalysisId = $RiskAnalysisId;
+        // $this->sheetForm = new \stdClass();
     }
 
     public function render()
@@ -207,12 +263,9 @@ class FormRiskAnalysis extends Component
                                     // $this->answersTable[] = [];
                                 }
                             }
-                            // dd($this->answersTable);
                         }
                         $sheetTable->sheet->answersTable = $this->answersTable;
-
                     } else {
-
                         foreach ($this->questionSettigns as $questionSetting) {
                             $empty1[] = [];
                         }
@@ -227,16 +280,11 @@ class FormRiskAnalysis extends Component
                     }
                 }
 
-
-
                 $this->sheetTables = $sheetsTable;
-
             }
         }
 
         $this->emit('scriptTabla');
-
-        // dd($sheetTable->sheet,$this->questionsAnswer);
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }

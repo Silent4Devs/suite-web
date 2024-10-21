@@ -21,6 +21,6 @@ class TBSheetRiskAnalysisModel extends Model
 
     public function answersSheet()
     {
-        return $this->belongsToMany(TBAnswerSheetRiskAnalysisModel::class, 'answers_sheet_risk_analysis_pivote', 'sheet_id', 'answer_id');
+        return $this->belongsToMany(TBAnswerSheetRiskAnalysisModel::class, 'answers_sheet_risk_analysis_pivote', 'sheet_id', 'answer_id')->orderBy('id');
     }
 }
