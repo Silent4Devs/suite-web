@@ -7,8 +7,8 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -22,7 +22,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -55,42 +55,125 @@
 
 
         @include('partials.flashMessages')
-        <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable datatable-aprobacion-permisos-goce tblCSV"
-                id="datatable-aprobacion-permisos-goce">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="min-width: 200px;">
-                            Solicitante
-                        </th>
-                        <th style="min-width: 200px;">
-                            Nombre del permiso
-                        </th>
-                        <th style="min-width: 200px;">
-                            Tipo de permiso
-                        </th>
-                        {{-- <th style="min-width: 110px;">
+        <div class="card-body">
+            <div class="datatable-rds">
+                <table class="table w-100 datatable datatable-aprobacion-permisos-goce tblCSV"
+                    id="datatable-aprobacion-permisos-goce">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="min-width: 200px;">
+                                Solicitante
+                            </th>
+                            <th style="min-width: 200px;">
+                                Nombre del permiso
+                            </th>
+                            <th style="min-width: 200px;">
+                                Tipo de permiso
+                            </th>
+                            {{-- <th style="min-width: 110px;">
                             Días Solicitados
                         </th> --}}
-                        <th style="min-width: 75px;">
-                            Inicio
-                        </th>
-                        <th style="min-width: 75px;">
-                            Fin
-                        </th>
-                        <th style="min-width: 75px;">
-                            Estatus
-                        </th>
-                        {{-- <th style="min-width: 150px;">
+                            <th style="min-width: 75px;">
+                                Inicio
+                            </th>
+                            <th style="min-width: 75px;">
+                                Fin
+                            </th>
+                            <th style="min-width: 75px;">
+                                Estatus
+                            </th>
+                            {{-- <th style="min-width: 150px;">
                             Comentarios
                         </th> --}}
-                        <th style="min-width: 70px;">
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+                            <th style="min-width: 70px;">
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($query as $keySol => $sol)
+                            <tr>
+                                <td> <img src="{{ asset('storage/empleados/imagenes') }}/{{ $sol->empleado->avatar }}"
+                                        title="{{ $sol->empleado->avatar }}" class="rounded-circle"
+                                        style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                                    <span>{{ $sol->empleado->avatar }}</span>
+                                </td>
+                                <td>{{ $sol->permiso['nombre'] }}</td>
+                                <td>
+                                    @switch($sol->permiso->tipo_permiso)
+                                        @case(1)
+                                            <div style="text-align:left">
+                                                Permisos conforme a la ley
+                                            </div>
+                                        @break
 
+                                        @case(2)
+                                            <div style="text-align:left">
+                                                Permisos otorgados por la empresa
+                                            </div>
+                                        @break
+
+                                        @default
+                                            <div style="text-align:left">
+                                                No definido
+                                            </div>
+                                    @endswitch
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($sol->fecha_inicio)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($sol->fecha_fin)->format('d-m-Y') }}</td>
+                                <td>
+                                    @switch($sol->aprobacion)
+                                        @case(1)
+                                            <div style="text-align:left">
+                                                <span class="badge badge-pill badge-warning">Pendiente</span>
+                                            </div>
+                                        @break
+
+                                        @case(2)
+                                            <div style="text-align:left">
+                                                <span class="badge badge-pill badge-danger">Rechazado</span>
+                                            </div>
+                                        @break
+
+                                        @case(3)
+                                            <div style="text-align:left">
+                                                <span class="badge badge-pill badge-success">Aprobado</span>
+                                            </div>
+                                        @break
+
+                                        @default
+                                            <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+                                    @endswitch
+                                </td>
+                                <td>
+                                    {{ $sol->descripcion }}
+                                </td>
+                                <td>
+                                    @if ($sol->aprobacion == 3)
+                                        <div style="text-aling:center">
+                                            <a href="solicitud-permiso-goce-sueldo/{{ $sol->id }}/show"
+                                                title="Ver Solicitud"><i
+                                                    class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                        </div>
+                                    @else
+                                        <div style="text-aling:center">
+                                            <a href="solicitud-permiso-goce-sueldo/{{ $sol->id }}/show"
+                                                title="Ver Solicitud"><i
+                                                    class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                            <button
+                                                onclick="eliminar('{{ route('admin.solicitud-permiso-goce-sueldo.destroy') }}', {{ $sol->id }})"
+                                                title="Cancelar solicitud" class="btn btn-sm text-danger"
+                                                style="display:inline-block"><i
+                                                    class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                        </div>
+                                    @endif
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -230,141 +313,141 @@
                 pageLength: 10,
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.solicitud-permiso-goce-sueldo.aprobacion') }}",
-                columns: [{
-                        data: 'empleado',
-                        name: 'empleado',
-                        render: function(data, type, row, meta) {
-                            data = JSON.parse(data);
-                            return `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            <span>${data.name}</span>
-                            `;
-                        }
-                    },
-                    {
-                        data: 'permiso',
-                        name: 'permiso',
-                        render: function(data, type, row) {
-                            data = JSON.parse(data);
-                            return `<div style="text-align:left">${data.nombre}</div>`;
-                        }
+                // ajax: "{{ route('admin.solicitud-permiso-goce-sueldo.aprobacion') }}",
+                // columns: [{
+                //         data: 'empleado',
+                //         name: 'empleado',
+                //         render: function(data, type, row, meta) {
+                //             data = JSON.parse(data);
+                //             return `
+            //             <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+            //             <span>${data.name}</span>
+            //             `;
+                //         }
+                //     },
+                //     {
+                //         data: 'permiso',
+                //         name: 'permiso',
+                //         render: function(data, type, row) {
+                //             data = JSON.parse(data);
+                //             return `<div style="text-align:left">${data.nombre}</div>`;
+                //         }
 
-                    },
-                    {
-                        data: 'tipo',
-                        name: 'tipo',
-                        render: function(data, type, row) {
-                            const tipo = row.tipo;
-                            switch (Number(tipo)) {
-                                case 1:
-                                    return `
-                                    <div  style="text-align:left">
-                                        Permisos conforme a la ley
-                                    </div>
-                                    `;
-                                    break;
-                                case 2:
-                                    return `
-                                    <div style="text-align:left">
-                                        Permisos otorgados por la empresa
-                                    </div>
-                                    `;
-                                    break;
-                                default:
-                                    return `
-                                    <div style="text-align:left">
-                                       No definido
-                                    </div>
-                                    `;
-                            }
-                        }
-                    },
-                    // {
-                    //     data: 'dias_solicitados',
-                    //     name: 'dias_solicitados',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:center">${data}</div>`;
-                    //     }
+                //     },
+                //     {
+                //         data: 'tipo',
+                //         name: 'tipo',
+                //         render: function(data, type, row) {
+                //             const tipo = row.tipo;
+                //             switch (Number(tipo)) {
+                //                 case 1:
+                //                     return `
+            //                     <div  style="text-align:left">
+            //                         Permisos conforme a la ley
+            //                     </div>
+            //                     `;
+                //                     break;
+                //                 case 2:
+                //                     return `
+            //                     <div style="text-align:left">
+            //                         Permisos otorgados por la empresa
+            //                     </div>
+            //                     `;
+                //                     break;
+                //                 default:
+                //                     return `
+            //                     <div style="text-align:left">
+            //                        No definido
+            //                     </div>
+            //                     `;
+                //             }
+                //         }
+                //     },
+                //     // {
+                //     //     data: 'dias_solicitados',
+                //     //     name: 'dias_solicitados',
+                //     //     render: function(data, type, row) {
+                //     //         return `<div style="text-align:center">${data}</div>`;
+                //     //     }
 
-                    // },
+                //     // },
 
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                        }
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'aprobacion',
-                        name: 'aprobacion',
-                        render: function(data, type, row) {
-                            const aprobacion = row.aprobacion;
-                            console.log(aprobacion)
-                            switch (Number(aprobacion)) {
-                                case 1:
-                                    return `
-                                <div  style="text-align:left">
-                                    <span class="badge badge-pill badge-warning">Pendiente</span>
-                                </div>
-                                `;
-                                    break;
-                                case 2:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-danger">Rechazado</span>
-                                </div>
-                                `;
-                                    break;
-                                case 3:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-success">Aprobado</span>
-                                </div>
-                                `;
-                                    break;
-                                default:
-                                    return `
-                                <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                `;
-                            }
-                        }
-                    },
+                //     {
+                //         data: 'fecha_inicio',
+                //         name: 'fecha_inicio',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'fecha_fin',
+                //         name: 'fecha_fin',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //             return `<div style="text-align:left">${data}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'aprobacion',
+                //         name: 'aprobacion',
+                //         render: function(data, type, row) {
+                //             const aprobacion = row.aprobacion;
+                //             console.log(aprobacion)
+                //             switch (Number(aprobacion)) {
+                //                 case 1:
+                //                     return `
+            //                 <div  style="text-align:left">
+            //                     <span class="badge badge-pill badge-warning">Pendiente</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 case 2:
+                //                     return `
+            //                 <div style="text-align:left">
+            //                     <span class="badge badge-pill badge-danger">Rechazado</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 case 3:
+                //                     return `
+            //                 <div style="text-align:left">
+            //                     <span class="badge badge-pill badge-success">Aprobado</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 default:
+                //                     return `
+            //                 <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+            //                 `;
+                //             }
+                //         }
+                //     },
 
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:left">${data}</div>`;
-                    //     }
-                    // },
-                    {
-                        data: 'opciones',
-                        render: function(data, type, row, meta) {
-                            return `
-                                <div style="text-aling:center">
-                                <a href="${row.id}/respuesta"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i></a>
-                                </div
-                               `;
-                        }
-                    }
-                ],
+                //     // {
+                //     //     data: 'descripcion',
+                //     //     name: 'descripcion',
+                //     //     render: function(data, type, row) {
+                //     //         return `<div style="text-align:left">${data}</div>`;
+                //     //     }
+                //     // },
+                //     {
+                //         data: 'opciones',
+                //         render: function(data, type, row, meta) {
+                //             return `
+            //                 <div style="text-aling:center">
+            //                 <a href="${row.id}/respuesta"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i></a>
+            //                 </div
+            //                `;
+                //         }
+                //     }
+                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

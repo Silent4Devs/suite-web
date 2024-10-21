@@ -78,8 +78,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -103,10 +103,13 @@
                 <br>
                 <h4>¿Qué es Evidencia de Asignación de Recursos al SGSI?</h4>
                 <p>
-                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                    Registro de información y documentación que le permita a la organización mostrar que ha destinado los
+                    recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información
+                    (SGI).
                 </p>
                 <p>
-                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la seguridad de la información.
+                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la
+                    seguridad de la información.
                 </p>
             </div>
         </div>
@@ -287,178 +290,170 @@
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.evidencias-sgsis.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nombredocumento',
-                        name: 'nombredocumento'
-                    },
-                    {
-                        data: 'objetivodocumento',
-                        name: 'objetivodocumento'
-                    },
-                    {
-                        data: 'responsable_name',
-                        name: 'responsable_name',
-                        render: function(data, type, row, meta) {
-                            if (type === "empleadoText") {
-                                return row.empleado.name;
-                            }
-                            let responsablereunion = "";
-                            if (row.empleado) {
-                                responsablereunion += `
+          
+              
+
+            $(document).ready(function() {
+    let dtButtons = []; // Aquí puedes agregar botones si los necesitas
+
+    let dtOverrideGlobals = {
+        buttons: dtButtons,
+        processing: true,
+        serverSide: true,
+        retrieve: true,
+        aaSorting: [],
+        ajax: {
+            url: "{{ route('admin.evidencias-sgsis.index') }}",
+            method: "GET",
+            dataType: "json",
+            data: function(d) {
+                // Puedes agregar datos adicionales aquí si es necesario
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText); // Muestra errores en la consola
+            }
+        },
+        columns: [
+            {
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'nombredocumento',
+                name: 'nombredocumento'
+            },
+            {
+                data: 'objetivodocumento',
+                name: 'objetivodocumento'
+            },
+            {
+                data: 'responsable_name',
+                name: 'responsable_name',
+                render: function(data, type, row, meta) {
+                    if (type === "empleadoText") {
+                        return row.empleado?.name || 'N/A'; // Manejo de caso donde empleado no está definido
+                    }
+                    let responsablereunion = "";
+                    if (row.empleado) {
+                        responsablereunion += `
                             <img src="{{ asset('storage/empleados/imagenes') }}/${row.empleado.avatar}" title="${row.empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            `;
-                            }
-                            return responsablereunion;
-                        }
-                    },
-                    {
-                        data: 'area',
-                        render: function(data, type, row, meta) {
-                            console.log(row)
-                            return JSON.parse(row.area).area;
-                        }
+                        `;
+                    }
+                    return responsablereunion;
+                }
+            },
+            {
+                data: 'area',
+                render: function(data, type, row, meta) {
+                    try {
+                        return JSON.parse(row.area).area; // Manejo de errores de JSON
+                    } catch (e) {
+                        console.error('Error al parsear el área:', e);
+                        return 'N/A'; // Valor por defecto si hay un error
+                    }
+                }
+            },
+            {
+                data: 'fecha_documento',
+                name: 'fecha_documento'
+            },
+            {
+                data: 'evidencia',
+                name: 'evidencia',
+                render: function(data, type, row, meta) {
+                    let archivo = "";
+                    let archivos = JSON.parse(data || '[]'); // Asegúrate de que data sea un JSON válido
 
-                    },
-                    {
-                        data: 'fecha_documento',
-                        name: 'fecha_documento'
-                    },
-                    {
-                        data: 'evidencia',
-                        name: 'evidencia',
-                        render: function(data, type, row, meta) {
-                            let archivo = "";
-                            let archivos = JSON.parse(data);
-                            archivo = `
+                    archivo += `
+                        <div class="container">
+                            <div class="mb-4 row">
+                                <div class="text-center col">
+                                    @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
+                                    <a href="#" class="btn btn-sm tb-btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}">
+                                        <i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias
+                                    </a>
+                                    @endcan
+                                </div>
+                            </div>
 
-                               <div class="container">
-
-                                    <div class="mb-4 row">
-                                    <div class="text-center col">
-                                        @can('evidencia_asignacion_recursos_sgsi_ver_evidencia')
-                                         <a href="#" class="btn btn-sm tb-btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
-                                         @endcan
-                                    </div>
-                                    </div>
-
-                                    <!-- modal -->
-                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
+                            <!-- Modal -->
+                            <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
                                         <div class="modal-body">`;
-                            if (archivos.length > 0) {
-                                archivo += `
-                                            <!-- carousel -->
-                                            <div
-                                                id='carouselExampleIndicators${row.id}'
-                                                class='carousel slide'
-                                                data-ride='carousel'
-                                                >
-                                            <ol class='carousel-indicators'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        return `
-                                                        <li
-                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                        data-slide-to='${idx}'
-                                                        ></li>`
-                                                    })}
-                                            </ol>
-                                            <div class='carousel-inner'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        const [extension, ...nameParts] = archivo.evidencia.split('.').reverse();
 
-                                                        if(extension == 'pdf'){
-                                                        return `
-                                                                <div class='carousel-item ${idx==0?"active":""}'>
-                                                                    <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
-                                                                </div>`
-                                                    }else{
-                                                        return `
-                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
-                                                                       <a href='{{ asset("storage/evidencias_sgsi") }}/${archivo.evidencia}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.evidencia}</a>
-                                                                    </div>`
-                                                    }
-                                                    })}
-
-                                            </div>
-
-                                            </div>`;
-                            } else {
-                                archivo += `
-                                                <div class="text-center">
-                                                    <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
-                                                    </div>
-                                                `
-                            }
-                            archivo += `</div>
+                    if (archivos.length > 0) {
+                        archivo += `
+                            <div id='carouselExampleIndicators${row.id}' class='carousel slide' data-ride='carousel'>
+                                <ol class='carousel-indicators'>
+                                    ${archivos.map((archivo, idx) => `
+                                        <li data-target='#carouselExampleIndicators${row.id}' data-slide-to='${idx}'></li>
+                                    `).join('')}
+                                </ol>
+                                <div class='carousel-inner'>
+                                    ${archivos.map((archivo, idx) => {
+                                        const [extension] = archivo.evidencia.split('.').reverse();
+                                        if (extension === 'pdf') {
+                                            return `
+                                                <div class='carousel-item ${idx === 0 ? "active" : ""}'>
+                                                    <embed seamless class='img-size' src='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'></embed>
+                                                </div>`;
+                                        } else {
+                                            return `
+                                                <div class='text-center my-5 carousel-item ${idx === 0 ? "active" : ""}'>
+                                                    <a href='{{ asset('storage/evidencias_sgsi') }}/${archivo.evidencia}'>
+                                                        <i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.evidencia}
+                                                    </a>
+                                                </div>`;
+                                        }
+                                    }).join('')}
+                                </div>
+                            </div>`;
+                    } else {
+                        archivo += `
+                            <div class="text-center">
+                                <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
+                                <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
+                            </div>`;
+                    }
+                    
+                    archivo += `
+                                        </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <a
-                                                class='carousel-control-prev'
-                                                href='#carouselExampleIndicators${row.id}'
-                                                role='button'
-                                                data-slide='prev'
-                                                >
-                                                <span class='carousel-control-prev-icon'
-                                                    aria-hidden='true'
-                                                    ></span>
+                                            <a class='carousel-control-prev' href='#carouselExampleIndicators${row.id}' role='button' data-slide='prev'>
+                                                <span class='carousel-control-prev-icon' aria-hidden='true'></span>
                                                 <span class='sr-only'>Previous</span>
                                             </a>
-                                            <a
-                                                class='carousel-control-next'
-                                                href='#carouselExampleIndicators${row.id}'
-                                                role='button'
-                                                data-slide='next'
-                                                >
-                                                <span
-                                                    class='carousel-control-next-icon'
-                                                    aria-hidden='true'
-                                                    ></span>
+                                            <a class='carousel-control-next' href='#carouselExampleIndicators${row.id}' role='button' data-slide='next'>
+                                                <span class='carousel-control-next-icon' aria-hidden='true'></span>
                                                 <span class='sr-only'>Next</span>
                                             </a>
                                         </div>
-                                        </div>
                                     </div>
-                                    </div>
-                                    `
-                            return archivo;
-                        }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-EvidenciasSgsi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+                                </div>
+                            </div>`;
+                    return archivo;
+                }
+            },
+            {
+                data: 'actions',
+                name: '{{ trans('global.actions') }}'
+            }
+        ],
+        orderCellsTop: true,
+        order: [[0, 'desc']]
+    };
+
+    let table = $('.datatable-EvidenciasSgsi').DataTable(dtOverrideGlobals);
+});
+
+      
+       
+            
+            
+      
+    
         });
     </script>
 @endsection

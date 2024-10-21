@@ -14,7 +14,7 @@
             margin-top: 20px;
             margin-bottom: 30px;
             height: 30px;
-            background: #345183;
+            background: var(--color-tbj);
             border-bottom-right-radius: 100px;
             border-top-right-radius: 100px;
             border-bottom-left-radius: 100px;
@@ -39,11 +39,6 @@
         <div class="col s12 m12">
             <div class="" style="margin-top:-20px; margin-left:10px; margin-right:10px;">
                 <div class="">
-                    <!--  <section class="content-header">
-                                                                                                                                                                                                                                <h1>
-                                                                                                                                                                                                                                    Contrato
-                                                                                                                                                                                                                                </h1>
-                                                                                                                                                                                                                            </section>-->
 
                     <div class="col s12">
                         <div class="form-group diseño-titulo">
@@ -278,7 +273,7 @@
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-success'>Salir</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-primary'>Salir</a>
         </div>
     </div>
 

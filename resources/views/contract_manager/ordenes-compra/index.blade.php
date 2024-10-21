@@ -12,13 +12,14 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-    <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4"
-        style="position: relative; left: 75rem;">Aprobadores</button>
+    <div class="text-right">
+        <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4">Aprobadores</button>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Requisiciones">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Requisiciones">
+                <thead class="">
                     <tr>
 
                         <th style="vertical-align: top">Folio</th>
@@ -174,7 +175,7 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'proveedor_catalogo',
+                        data: 'proveedor_catalogo_oc',
                         render: function(data, type, row) {
                             // Verifica si 'data' es null o undefined
                             if (data === null || typeof data === 'undefined') {
@@ -183,7 +184,7 @@
                                     .length > 0) {
                                     return row.proveedores_requisiciones[0].contacto;
                                 } else {
-                                    return 'Indistinto'; // Puedes personalizar el mensaje
+                                    return 'Pendiente';
                                 }
                             } else {
                                 return data; // Valor no es null ni undefined
@@ -196,13 +197,18 @@
                             var firma_solicitante = row.firma_solicitante_orden;
                             var firma_comprador = row.firma_comprador_orden;
                             var firma_finanzas = row.firma_finanzas_orden;
+                            var estatus = row.estado_orden;
 
-                            if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
-                            } else if (firma_solicitante && firma_comprador && firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                            if (estatus == "rechazado_oc") {
+                                return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
                             } else {
-                                return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                                } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                                } else {
+                                    return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                }
                             }
                         }
                     },
@@ -257,7 +263,6 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;

@@ -65,7 +65,7 @@ class Area extends Model implements Auditable
         'empleados_id',
     ];
 
-    protected $appends = ['grupo_name', 'foto_ruta'];
+    protected $appends = ['grupo_name', 'foto_ruta', 'utilizada'];
 
     //Redis methods
     public static function getExists()
@@ -169,6 +169,11 @@ class Area extends Model implements Auditable
         return $this->hasMany(Empleado::class, 'area_id', 'id')->alta()->select('id', 'name', 'area_id', 'puesto_id');
     }
 
+    public function totalIDEmpleados()
+    {
+        return $this->hasMany(Empleado::class, 'area_id', 'id')->alta()->select('id', 'area_id');
+    }
+
     public function material_iso_veinticientes()
     {
         return $this->hasMany(MaterialIsoVeinticiente::class, 'arearesponsable_id');
@@ -202,6 +207,11 @@ class Area extends Model implements Auditable
         }
 
         return $foto_url;
+    }
+
+    public function getUtilizadaAttribute()
+    {
+        return $this->empleados->count() > 0;
     }
 
     public function lider()

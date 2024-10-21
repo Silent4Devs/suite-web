@@ -1,23 +1,22 @@
 @extends('layouts.admin')
 @section('content')
-<style type="text/css">
-    sup {
-        color: red;
-    }
+    <style type="text/css">
+        sup {
+            color: red;
+        }
 
-    ol.breadcrumb {
-        margin-bottom: 0px;
-    }
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+    </style>
 
-</style>
-
-    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create-perfil') }}
     @endif
-    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create-portal') }}
     @endif
-    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('riesgos-create') }}
     @endif
 
@@ -34,7 +33,8 @@
                 <hr style="">
 
                 <div class="mt-4">
-                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
+                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
+                    "Enviar"
                 </div>
 
                 <form class="row" method="POST" action="{{ route('admin.reportes-riesgos-store') }}"
@@ -158,8 +158,9 @@
                     </div>
 
                     <div class="mt-2 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" class="btn btn-success" value="Enviar">
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <input type="submit" class="btn btn-primary" value="Enviar">
                     </div>
 
                 </form>
@@ -172,70 +173,65 @@
 
 
 @section('scripts')
-
     <script type="text/javascript">
-       document.addEventListener('DOMContentLoaded', function() {
-        let select = document.querySelector('.areas_multiselect #activos');
-        let textarea = document.querySelector('.areas_multiselect #texto_activos');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.areas_multiselect #activos');
+            let textarea = document.querySelector('.areas_multiselect #texto_activos');
 
-        select.addEventListener('change', function(e) {
-            e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!textarea.value.includes(this.value)) {
-                textarea.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este elemento ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-    });
 
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-    let select = document.querySelector('.procesos_multiselect #activos');
-    let textarea = document.querySelector('.procesos_multiselect #texto_activos');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.procesos_multiselect #activos');
+            let textarea = document.querySelector('.procesos_multiselect #texto_activos');
 
-    select.addEventListener('change', function(e) {
-        e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        // Verificar si el valor ya está presente en el área de texto
-        if (!textarea.value.includes(this.value)) {
-            textarea.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este elemento ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    let select = document.querySelector('.activos_multiselect #activos');
-    let textarea = document.querySelector('.activos_multiselect #texto_activos');
-
-    select.addEventListener('change', function(e) {
-        e.preventDefault();
-
-        // Verificar si el valor ya está presente en el área de texto
-        if (!textarea.value.includes(this.value)) {
-            textarea.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este elemento ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
 
 
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.activos_multiselect #activos');
+            let textarea = document.querySelector('.activos_multiselect #texto_activos');
 
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
+
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
     </script>
-
 @endsection

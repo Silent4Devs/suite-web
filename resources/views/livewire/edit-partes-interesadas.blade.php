@@ -20,13 +20,13 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Necesidad EDIT</label>
                             <input type="text" class="form-control" id="necesidades" name="nececidades"
-                                aria-describedby="emailHelp" wire:model.defer="necesidades" value="{{ old('necesidades', $id_requisito->necesidades) }}">
+                                aria-describedby="emailHelp" wire:model="necesidades" value="{{ old('necesidades', $id_requisito->necesidades) }}">
 
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Expectativa EDIT</label>
                             <input type="text" class="form-control" id="expectativas" name="expectativas"
-                                wire:model.defer="expectativas" value="{{ old('expectativas', $id_requisito->expectativas) }}">
+                                wire:model="expectativas" value="{{ old('expectativas', $id_requisito->expectativas) }}">
 
                         </div>
 

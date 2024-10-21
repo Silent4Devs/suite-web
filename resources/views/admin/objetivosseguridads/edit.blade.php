@@ -401,7 +401,7 @@
                                         <input id="variable" class="form-control" type="text"
                                             placeholder="Variable"><br>
                                     </div>
-                                    <button id="añadir" class="btn btn-success" type="button">Añadir</button>
+                                    <button id="añadir" class="btn btn-primary" type="button">Añadir</button>
                                 </div>
 
                                 <table id="mytable" class="table table-bordered table-hover ">
@@ -419,8 +419,9 @@
 
                     <div class="form-group">
                         <div class="text-right form-group col-12" style="margin-left:15px;">
-                            <a href="{{ route('admin.objetivosseguridads.index') }}" class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
+                            <a href="{{ route('admin.objetivosseguridads.index') }}"
+                                class="btn btn-outline-primary">Cancelar</a>
+                            <button class="btn btn-primary" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>
@@ -505,7 +506,7 @@
                     '<td><button type="button" name="usar" id="' + i +
                     '" class="btn btn-info btnAñadir" value="' + variable + '">Usar</button></td>' +
                     '<td><button type="button" name="remove" id="' + i +
-                    '" class="btn btn-danger btn_remove">Quitar</button></td>' +
+                    '" class="btn btn-primary btn_remove">Quitar</button></td>' +
                     '</tr>'; //esto seria lo que contendria la fila
 
                 $('#mytable tr:first').after(fila);

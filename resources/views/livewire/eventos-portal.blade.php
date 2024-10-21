@@ -30,7 +30,7 @@
         }
 
         .indicador_numero {
-            background-color: #3086AF;
+            background-color: var(--color-tbj);
             color: #fff !important;
             display: flex;
             align-items: center;
@@ -224,7 +224,20 @@
                                             </p>
                                             <h6 class="mt-3">Fecha de cumpleaños</h6>
                                             @php
-                                                $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                                                $meses = [
+                                                    'Enero',
+                                                    'Febrero',
+                                                    'Marzo',
+                                                    'Abril',
+                                                    'Mayo',
+                                                    'Junio',
+                                                    'Julio',
+                                                    'Agosto',
+                                                    'Septiembre',
+                                                    'Octubre',
+                                                    'Noviembre',
+                                                    'Diciembre',
+                                                ];
                                                 $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $cumple->cumpleaños);
                                                 $mes = $meses[$fecha->format('n') - 1];
                                                 $inputs['Fecha'] = $fecha->format('d') . ' de ' . $mes;
@@ -233,31 +246,46 @@
                                             <span>{{ $inputs['Fecha'] }}</span>
 
                                             @php
-                                                $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                $cumples_felicitados_like_contador_usuarios = App\Models\FelicitarCumpleaños::where(
+                                                    'cumpleañero_id',
+                                                    $cumple->id,
+                                                )
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
 
-                                                $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                $cumples_felicitados_like_contador = App\Models\FelicitarCumpleaños::where(
+                                                    'cumpleañero_id',
+                                                    $cumple->id,
+                                                )
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->count();
 
-                                                $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                $cumples_felicitados_like = App\Models\FelicitarCumpleaños::where(
+                                                    'cumpleañero_id',
+                                                    $cumple->id,
+                                                )
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', true)
                                                     ->first();
 
-                                                $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                $cumples_felicitados_comentarios_contador = App\Models\FelicitarCumpleaños::where(
+                                                    'cumpleañero_id',
+                                                    $cumple->id,
+                                                )
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', false)
                                                     ->where('comentarios', '!=', null)
                                                     ->count();
 
-                                                $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where('cumpleañero_id', $cumple->id)
+                                                $cumples_felicitados_comentarios = App\Models\FelicitarCumpleaños::where(
+                                                    'cumpleañero_id',
+                                                    $cumple->id,
+                                                )
                                                     ->where('felicitador_id', auth()->user()->empleado->id)
                                                     ->whereYear('created_at', $hoy->format('Y'))
                                                     ->where('like', false)
@@ -275,7 +303,7 @@
                                                             {{ $cumples_felicitados_like_contador_usuarios }}
                                                         </font>
                                                     @else
-                                                        <i class="fas fa-thumbs-up" style="color:#345183;"></i>
+                                                        <i class="fas fa-thumbs-up" style="color:var(--color-tbj)"></i>
                                                         <font style="color:#345183">
                                                             {{ $cumples_felicitados_like_contador_usuarios }}
                                                         </font>
@@ -372,7 +400,7 @@
                         <div class="modal-body">
 
                             <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong
-                                    id="nombre_cumple" style="color: #3086AF;"></strong></label>
+                                    id="nombre_cumple" style="color: var(--color-tbj);"></strong></label>
 
                             <div id="formulario_comentarios"></div>
                             <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
@@ -414,10 +442,10 @@
 
                             <div>
                                 <div class="form-group">
-                                    <textarea class="comentario" name="comentario" wire:model="comentarios" class="form-control" data-sample-short></textarea>
+                                    <textarea class="comentario" name="comentario" wire:model.live="comentarios" class="form-control" data-sample-short></textarea>
                                 </div>
                                 <div class="form-group text-right">
-                                <button type="submit" id="btn_guardar" data-funcion="felicitarCumplesComentarios" data-cumple-id="${cumple_id}" class="btn btn-success">Enviar</button>
+                                <button type="submit" id="btn_guardar" data-funcion="felicitarCumplesComentarios" data-cumple-id="${cumple_id}" class="btn btn-primary">Enviar</button>
                                 </div>
                             </div>
                         `;
@@ -426,10 +454,10 @@
 
                             <div>
                                 <div class="form-group">
-                                    <textarea class="comentario" name="comentario" wire:model="comentarios_update" class="form-control" data-sample-short>${comentarios_comentarios}</textarea>
+                                    <textarea class="comentario" name="comentario" wire:model.live="comentarios_update" class="form-control" data-sample-short>${comentarios_comentarios}</textarea>
                                 </div>
                                 <div class="form-group text-right">
-                                    <button type="submit" id="btn_actualizar" data-funcion="felicitarCumplesComentariosUpdate" data-comentario-id="${comentarios_id}" class="btn btn-success btn_almacenar">Enviar</button>
+                                    <button type="submit" id="btn_actualizar" data-funcion="felicitarCumplesComentariosUpdate" data-comentario-id="${comentarios_id}" class="btn btn-primary btn_almacenar">Enviar</button>
                                 </div>
                             </div>
                         `;

@@ -15,7 +15,7 @@
                 <div class="d-flex" style="justify-content: space-around">
                     <div class="form-check">
                         <input class="form-check-input @error('tipo_visita') is-invalid @enderror" type="radio"
-                            wire:model.defer="tipo_visita" value="persona" name="tipo_visita" id="radioPersona"
+                            wire:model="tipo_visita" value="persona" name="tipo_visita" id="radioPersona"
                             {{ $tipo_visita == 'persona' ? 'checked' : '' }} x-on:click="showPersona=true">
                         <label class="form-check-label" for="radioPersona">
                             Persona
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input @error('tipo_visita') is-invalid @enderror" type="radio"
-                            {{ $tipo_visita == 'area' ? 'checked' : '' }} value="area" wire:model.defer="tipo_visita"
+                            {{ $tipo_visita == 'area' ? 'checked' : '' }} value="area" wire:model="tipo_visita"
                             name="tipo_visita" id="radioArea" x-on:click="showPersona=false">
                         <label class="form-check-label" for="radioArea">
                             Área
@@ -47,7 +47,7 @@
             <p>Despliega la lista y selecciona una persona</p>
             <div class="w-100 grid justify-content-center">
                 <div class="col-12">
-                    <select wire:model.defer="empleado_id"
+                    <select wire:model="empleado_id"
                         class="form-control select-buscador @error('empleado_id') is-invalid @enderror" name="persona"
                         id="persona">
                         <option value="">Selecciona una persona</option>
@@ -69,7 +69,7 @@
             <p>Despliega la lista y selecciona una área</p>
             <div class="w-100 row justify-content-center">
                 <div class="col-12">
-                    <select wire:model.defer="area_id"
+                    <select wire:model="area_id"
                         class="select-buscador form-control @error('area_id') is-invalid @enderror" name="area"
                         id="area">
                         <option value="">Selecciona un área</option>

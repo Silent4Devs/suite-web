@@ -13,14 +13,15 @@
 
     <!-- Descripcion Field -->
     <div class="form-group col-sm-12">
-        <label for="exampleFormControlTextarea1"> <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
+        <label for="exampleFormControlTextarea1"> <i
+                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
         <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $amenaza->descripcion) }}</textarea>
     </div>
 
     <!-- Submit Field -->
-   <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" type="submit">
-        {{ trans('global.save') }}
-    </button>
-</div>
+    <div class="text-right form-group col-12">
+        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+        <button class="btn btn-primary" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>

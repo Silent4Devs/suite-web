@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.entendimiento-organizacions.index') }}
     <h5 class="col-12 titulo_general_funcion">Entendimiento de Organización (FODA)</h5>
     <div class="mt-5 card">
@@ -67,8 +66,8 @@
                     <h5 class="mt-3"><i class="mr-2 fas fa-lightbulb"
                             style="color: #41c541; text-shadow: 1px 1px 1px black;"></i>
                         <strong>OPORTUNIDADES</strong>
-                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal" data-target="#oportunidades_modal"
-                            style="float: right;">
+                        <button class="mr-2 btn btn-xs" type="button" data-toggle="modal"
+                            data-target="#oportunidades_modal" style="float: right;">
                             <i class="fas fa-question-circle" style="font-size: 13px"></i>
                         </button>
                     </h5>
@@ -103,10 +102,8 @@
                     <a href="{{ route('admin.entendimiento-organizacions.edit', $obtener_FODA->id) }}"
                         class="mr-5 btn tb-btn-primary"><i class="fas fa-pen"></i> Editar Análisis FODA</a>
                 @else
-
-                    <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="mr-5 btn btn-success"><i
+                    <a href="{{ route('admin.entendimiento-organizacions.create') }}" class="mr-5 btn btn-primary"><i
                             class="fas fa-pen"></i> Realizar Análisis FODA</a>
-
                 @endif
             </div>
         </div>
@@ -178,7 +175,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="amenazas_modal" tabindex="-1" aria-labelledby="amenazas_modalLabel" aria-hidden="true">
+    <div class="modal fade" id="amenazas_modal" tabindex="-1" aria-labelledby="amenazas_modalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

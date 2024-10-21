@@ -1,19 +1,19 @@
 <div>
-    <form wire:submit.prevent="submitForm(Object.fromEntries(new FormData($event.target)))">
+    <form wire:submit="submitForm(Object.fromEntries(new FormData($event.target)))">
         <div class="card card-body mt-5">
-            <div style="color:#306BA9; font-size:16px;">Datos Generales</div>
+            <div style="color:var(--color-tbj); font-size:16px;">Datos Generales</div>
             <hr style="">
             <div class="row">
                 <div class="col-md-6">
                     <div class="anima-focus mb-3 ">
                         <input type="text" class="form-control" placeholder="" id="nombre_template"
-                            name="nombre_template" wire:model.defer="nombre_template" maxlength="200" required>
+                            name="nombre_template" wire:model="nombre_template" maxlength="200" required>
                         <label for="nombre_template">Nombre del Template <sup>*</sup></label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="anima-focus mb-3 ">
-                        <select id="norma" name="norma" wire:model.defer="norma" class="form-control " required>
+                        <select id="norma" name="norma" wire:model="norma" class="form-control " required>
                             @foreach ($normas as $norma)
                                 <option value="{{ $norma->id }}">{{ $norma->norma }}</option>
                             @endforeach
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="anima-focus mb-3">
-                        <textarea class="form-control" id="descripcion" name="descripcion" wire:model.defer="descripcion" placeholder=""
+                        <textarea class="form-control" id="descripcion" name="descripcion" wire:model="descripcion" placeholder=""
                             style="height: 150px !important;"></textarea>
                         <label for="">Descripción</label>
                     </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="card card-body mt-5">
-            <div class="col-m-12" style="color:#306BA9; font-size:16px;">
+            <div class="col-m-12" style="color:var(--color-tbj); font-size:16px;">
                 Define el valor de los parámetros con los que se evaluará tu cuestionario
             </div>
             <div class="col-m-12 mt-3" style="font: italic 14px Roboto;">
@@ -48,12 +48,12 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_1" name="color_estatus_1"
-                            wire:model.defer="color_estatus_1" class="color-input form-control"
+                            wire:model="color_estatus_1" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
-                            <input type="text" id="estatus_1" name="estatus_1" wire:model.defer="estatus_1"
+                            <input type="text" id="estatus_1" name="estatus_1" wire:model="estatus_1"
                                 class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_1">Estatus<sup>*</sup></label>
                         </div>
@@ -61,14 +61,14 @@
                     <div class="col-2">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_1" name="valor_estatus_1"
-                                wire:model.defer="valor_estatus_1" class="form-control" placeholder="" required>
+                                wire:model="valor_estatus_1" class="form-control" placeholder="" required>
                             <label for="valor_estatus_1">Valor<sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="descripcion_parametros_1" name="descripcion_parametros_1"
-                                wire:model.defer="descripcion_parametros_1" class="form-control" placeholder="">
+                                wire:model="descripcion_parametros_1" class="form-control" placeholder="">
                             <label for="descripcion_parametros_1">Descripción</label>
                         </div>
                     </div>
@@ -78,12 +78,12 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_2" name="color_estatus_2"
-                            wire:model.defer="color_estatus_2" class="color-input form-control"
+                            wire:model="color_estatus_2" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
-                            <input type="text" id="estatus_2" name="estatus_2" wire:model.defer="estatus_2"
+                            <input type="text" id="estatus_2" name="estatus_2" wire:model="estatus_2"
                                 class="form-control" placeholder="" maxlength="200" required>
                             <label for="estatus_2">Estatus <sup>*</sup></label>
                         </div>
@@ -91,14 +91,14 @@
                     <div class="col-2">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_2" name="valor_estatus_2"
-                                wire:model.defer="valor_estatus_2" class="form-control" placeholder="" required>
+                                wire:model="valor_estatus_2" class="form-control" placeholder="" required>
                             <label for="valor_estatus_2">Valor <sup>*</sup></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="descripcion_parametros_2" name="descripcion_parametros_2"
-                                wire:model.defer="descripcion_parametros_2" class="form-control" placeholder="">
+                                wire:model="descripcion_parametros_2" class="form-control" placeholder="">
                             <label for="descripcion_parametros_2">Descripción</label>
                         </div>
                     </div>
@@ -108,12 +108,12 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_3" name="color_estatus_3"
-                            wire:model.defer="color_estatus_3" class="color-input form-control"
+                            wire:model="color_estatus_3" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
-                            <input type="text" id="estatus_3" name="estatus_3" wire:model.defer="estatus_3"
+                            <input type="text" id="estatus_3" name="estatus_3" wire:model="estatus_3"
                                 class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_3">Estatus</label>
                         </div>
@@ -121,14 +121,14 @@
                     <div class="col-2">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_3" name="valor_estatus_3"
-                                wire:model.defer="valor_estatus_3" class="form-control" placeholder="">
+                                wire:model="valor_estatus_3" class="form-control" placeholder="">
                             <label for="valor_estatus_3">Valor</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="descripcion_parametros_3" name="descripcion_parametros_3"
-                                wire:model.defer="descripcion_parametros_3" class="form-control" placeholder="">
+                                wire:model="descripcion_parametros_3" class="form-control" placeholder="">
                             <label for="descripcion_parametros_3">Descripción</label>
                         </div>
                     </div>
@@ -138,12 +138,12 @@
                 <div class="form-row">
                     <div class="col-1 color-picker">
                         <input type="color" id="color_estatus_4" name="color_estatus_4"
-                            wire:model.defer="color_estatus_4" class="color-input form-control"
+                            wire:model="color_estatus_4" class="color-input form-control"
                             title="Seleccione un color">
                     </div>
                     <div class="col-3">
                         <div class="anima-focus mb-3 ">
-                            <input type="text" id="estatus_4" name="estatus_4" wire:model.defer="estatus_4"
+                            <input type="text" id="estatus_4" name="estatus_4" wire:model="estatus_4"
                                 class="form-control" placeholder="" maxlength="200">
                             <label for="estatus_4">Estatus</label>
                         </div>
@@ -151,14 +151,14 @@
                     <div class="col-2">
                         <div class="anima-focus mb-3 ">
                             <input type="number" id="valor_estatus_4" name="valor_estatus_4"
-                                wire:model.defer="valor_estatus_4" class="form-control" placeholder="">
+                                wire:model="valor_estatus_4" class="form-control" placeholder="">
                             <label for="valor_estatus_4">Valor</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="descripcion_parametros_4" name="descripcion_parametros_4"
-                                wire:model.defer="descripcion_parametros_4" class="form-control" placeholder="">
+                                wire:model="descripcion_parametros_4" class="form-control" placeholder="">
                             <label for="descripcion_parametros_4">Descripción</label>
                         </div>
                     </div>
@@ -169,15 +169,15 @@
         <div class="card card-body" style="padding-top: 15px; padding-bottom:15px;">
             <div class="form-row">
                 <div class="col-md-9 titulo-card-template"
-                    style="font-family: roboto; color: #306BA9; font-size: 16px;">
+                    style="font-family: roboto; color: var(--color-tbj); font-size: 16px;">
                     Define cuantas secciones tendrá tu cuestionario
                 </div>
-                <div class="col-md-2" style="font:roboto;color:#306BA9; font-size:14px; text-align:right;">
+                <div class="col-md-2" style="font:roboto;color:var(--color-tbj); font-size:14px; text-align:right;">
                     <p>Añadir Sección</p>
                 </div>
                 {{-- Establece cuantas secciones habra --}}
                 <div class="col-md-1">
-                    <select id="secciones" name="secciones" wire:model.lazy="secciones" class="form-control">
+                    <select id="secciones" name="secciones" wire:model.blur="secciones" class="form-control">
                         <option value=1 selected>1</option>
                         <option value=2>2</option>
                         <option value=3>3</option>
@@ -228,7 +228,7 @@
                                 <input type="number" min="0.01" max="99.99" step="0.01"
                                     name="porcentaje_seccion_{{ $posicion_seccion }}"
                                     id="porcentaje_seccion_{{ $posicion_seccion }}"
-                                    wire:model.defer="porcentaje_seccion_{{ $posicion_seccion }}">
+                                    wire:model="porcentaje_seccion_{{ $posicion_seccion }}">
                             </div>
                             @error('porcentaje')
                                 <small class="text-danger"><i
@@ -247,7 +247,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="descripcion_s1" name="descripcion_s1" wire:model.defer="descripcion_s1"
+                                <textarea class="form-control" id="descripcion_s1" name="descripcion_s1" wire:model="descripcion_s1"
                                     placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s1">Descripción <sup>*</sup></label>
                             </div>
@@ -257,7 +257,7 @@
             </div>
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion1">
@@ -285,7 +285,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta1" name="pregunta1" wire:model.defer="pregunta1" placeholder=""
+                                <textarea class="form-control" id="pregunta1" name="pregunta1" wire:model="pregunta1" placeholder=""
                                     style="height: 76px;" required></textarea>
                                 <label for="pregunta1">Pregunta <sup>*</sup><label>
                             </div>
@@ -346,7 +346,7 @@
                             <input type="number" min="0.01" max="99.99" step="0.01"
                                 name="porcentaje_seccion_{{ $posicion_seccion }}"
                                 id="porcentaje_seccion_{{ $posicion_seccion }}"
-                                wire:model.defer="porcentaje_seccion_{{ $posicion_seccion }}">
+                                wire:model="porcentaje_seccion_{{ $posicion_seccion }}">
                         </div>
                         @error('porcentaje')
                             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -362,7 +362,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="descripcion_s2" name="descripcion_s2" wire:model.defer="descripcion_s2"
+                                <textarea class="form-control" id="descripcion_s2" name="descripcion_s2" wire:model="descripcion_s2"
                                     placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s2">Descripción<sup>*</sup></label>
                             </div>
@@ -372,7 +372,7 @@
             </div>
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion2">
@@ -398,7 +398,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta2" name="pregunta2" wire:model.defer="pregunta2" placeholder=""
+                                <textarea class="form-control" id="pregunta2" name="pregunta2" wire:model="pregunta2" placeholder=""
                                     style="height: 76px;" required></textarea>
                                 <label for="pregunta2">Pregunta<sup>*</sup></label>
                             </div>
@@ -456,7 +456,7 @@
                             <input type="number" min="0.01" max="99.99" step="0.01"
                                 name="porcentaje_seccion_{{ $posicion_seccion }}"
                                 id="porcentaje_seccion_{{ $posicion_seccion }}"
-                                wire:model.defer="porcentaje_seccion_{{ $posicion_seccion }}">
+                                wire:model="porcentaje_seccion_{{ $posicion_seccion }}">
                         </div>
                         @error('porcentaje')
                             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -473,7 +473,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" wire:model.defer="descripcion_s3"
+                                <textarea class="form-control" id="descripcion_s3" name="descripcion_s3" wire:model="descripcion_s3"
                                     placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s3">Descripción<sup>*</sup></label>
                             </div>
@@ -484,7 +484,7 @@
 
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion3">
@@ -509,7 +509,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta3" name="pregunta3" wire:model.defer="pregunta3" placeholder=""
+                                <textarea class="form-control" id="pregunta3" name="pregunta3" wire:model="pregunta3" placeholder=""
                                     style="height: 76px;" required></textarea>
                                 <label for="pregunta3">Pregunta<sup>*</sup></label>
                             </div>
@@ -567,7 +567,7 @@
                             <input type="number" min="0.01" max="99.99" step="0.01"
                                 name="porcentaje_seccion_{{ $posicion_seccion }}"
                                 id="porcentaje_seccion_{{ $posicion_seccion }}"
-                                wire:model.defer="porcentaje_seccion_{{ $posicion_seccion }}">
+                                wire:model="porcentaje_seccion_{{ $posicion_seccion }}">
                         </div>
                         @error('porcentaje')
                             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -584,7 +584,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" wire:model.defer="descripcion_s4"
+                                <textarea class="form-control" id="descripcion_s4" name="descripcion_s4" wire:model="descripcion_s4"
                                     placeholder="" style="height: 150px !important"></textarea>
                                 <label for="descripcion_s4">Descripción<sup>*</sup></label>
                             </div>
@@ -595,7 +595,7 @@
 
             <div class="card card-body mt-5">
                 <div class="row">
-                    <div class="col-9" style="color:#306BA9; font-size:16px;">Formulario
+                    <div class="col-9" style="color:var(--color-tbj); font-size:16px;">Formulario
                     </div>
                     <div class="col-3" style="justify-content: right;">
                         <button class="btn btn-link" wire:click.prevent="addPreguntaSeccion4">
@@ -620,7 +620,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="anima-focus mb-3">
-                                <textarea class="form-control" id="pregunta4" name="pregunta4" wire:model.defer="pregunta4" placeholder=""
+                                <textarea class="form-control" id="pregunta4" name="pregunta4" wire:model="pregunta4" placeholder=""
                                     style="height: 76px;" required></textarea>
                                 <label for="pregunta4">Pregunta<sup>*</sup></label>
                             </div>

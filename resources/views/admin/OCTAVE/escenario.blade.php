@@ -1,18 +1,18 @@
-    <div style="margin-top:80px !important;" >
+    <div style="margin-top:80px !important;">
 
         <div class="row">
             <div class="col-sm-12 col-lg-12 col-md-12">
                 <label for="nombre"> <i class="fas fa-camera-retro iconos-crear"></i>Nombre Escenario</label>
                 <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
                     id="nombre_escenario" value="{{ old('indicador', '') }}">
-                    <small class="text-danger errores escenario_error"></small>
+                <small class="text-danger errores escenario_error"></small>
             </div>
 
             <div class="col-sm-12 col-lg-12 col-md-12 mt-4">
                 <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
-                    id="descripcion_escenario" >{{ old('descripcion', '') }}</textarea>
-                    <small class="text-danger errores descripcion_error"></small>
+                    id="descripcion_escenario">{{ old('descripcion', '') }}</textarea>
+                <small class="text-danger errores descripcion_error"></small>
             </div>
         </div>
 
@@ -48,8 +48,8 @@
 
             <div class="form-group col-md-4 col-sm-12">
                 <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
-                <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}" name="integridad"
-                    id="integridad_escenario">
+                <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}"
+                    name="integridad" id="integridad_escenario">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -82,7 +82,7 @@
         <div class="row col-12">
             <div class="mb-3 col-12 mt-4 " style="text-align: end">
                 <button type="button" name="btn-suscribir-escenario" id="btn-suscribir-escenario"
-                    class="btn btn-success">Agregar</button>
+                    class="btn btn-primary">Agregar</button>
             </div>
         </div>
 
@@ -108,5 +108,3 @@
         </div>
 
     </div>
-
-

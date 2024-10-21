@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-3 form-group">
                 <label class="form-label">Proyecto</label>
-                <select class="form-control" wire:model="selectedProjectId">
+                <select class="form-control" wire:model.live="selectedProjectId">
                     <option selected value="0">
                         Selecciona un proyecto
                     </option>

@@ -26,9 +26,29 @@ class Evaluacion extends Model implements Auditable
     ];
 
     protected $fillable = [
+        'nombre',
+        'descripcion',
+        'estatus',
         'created_at',
         'updated_at',
         'deleted_at',
+        'autor_id',
+        'autoevaluacion',
+        'evaluado_por_jefe',
+        'evaluado_por_equipo_a_cargo',
+        'evaluado_por_misma_area',
+        'fecha_inicio',
+        'fecha_fin',
+        'include_competencias',
+        'include_objetivos',
+        'evaluados_objetivo',
+        'peso_autoevaluacion',
+        'peso_jefe_inmediato',
+        'peso_equipo',
+        'peso_area',
+        'peso_general_competencias',
+        'peso_general_objetivos',
+        'email_sended',
     ];
 
     const DRAFT = '1';

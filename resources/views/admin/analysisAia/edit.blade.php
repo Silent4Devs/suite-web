@@ -67,10 +67,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.menu-AIA') !!}">AIA</a>
+            <a href="{!! route('admin.analisis-impacto.menu-AIA') !!}">AIA</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisAia.index') !!}">Cuestionario</a>
+            <a href="{!! route('admin.analisis-aia.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -78,7 +78,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             {!! Form::model($cuestionario, [
-                'route' => ['admin.analysisAia.update', $cuestionario->id],
+                'route' => ['admin.analisis-aia.update', $cuestionario->id],
                 'method' => 'patch',
             ]) !!}
 
@@ -87,7 +87,7 @@
             <!--  RESPONSABLES DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPONSABLES DEL PROCESO
                 </div>
             </div>
@@ -97,33 +97,32 @@
                         <span class="input-group-text"><strong>Titular *</strong></span>
                     </div>
                     <input type="text" name="titular_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" required
-                        value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
+                        placeholder="Nombre(s)" required value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
                     <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
                         placeholder="A. Paterno" required
                         value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
                     <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
                         placeholder="A. Materno" required
                         value="{{ old('titular_a_materno', $cuestionario->titular_a_materno) }}"><br>
-                        @error('titular_nombre')
-                        <small style="color: red">{{$message}}</small>
+                    @error('titular_nombre')
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('titular_a_paterno')
-                    <small style="color: red">{{$message}}</small>
-                        @enderror
+                        <small style="color: red">{{ $message }}</small>
+                    @enderror
                     @error('titular_a_materno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('titular_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('titular_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('titular_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -131,12 +130,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('titular_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('titular_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -144,12 +143,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
                     @error('titular_extencion')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('titular_extencion', null, [
                         'class' => 'form-control extencion',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'min=0',
                         'max=9999',
@@ -170,24 +169,24 @@
                         placeholder="A. Materno" required
                         value="{{ old('suplente_a_materno', $cuestionario->suplente_a_materno) }}"><br>
                     @error('suplente_nombre')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('suplente_a_paterno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('suplente_a_materno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('suplente_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('suplente_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('suplente_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -195,12 +194,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('suplente_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('suplente_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -208,12 +207,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_extencion', 'Extensión') !!}
                     @error('suplente_extencion')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('suplente_extencion', null, [
                         'class' => 'form-control extencion1',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'min=0',
                         'max=9999',
@@ -233,24 +232,24 @@
                         placeholder="A. Materno" required
                         value="{{ old('supervisor_a_materno', $cuestionario->supervisor_a_materno) }}"><br>
                     @error('supervisor_nombre')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('supervisor_a_paterno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     @error('supervisor_a_materno')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('supervisor_puesto', 'Puesto', ['class' => 'required']) !!}
                     @error('supervisor_puesto')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('supervisor_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -258,12 +257,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_correo', 'Correo electrónico:', ['class' => 'required']) !!}
                     @error('supervisor_correo')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('supervisor_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -271,12 +270,12 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_extencion', 'Extensión') !!}
                     @error('supervisor_extencion')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('supervisor_extencion', null, [
                         'class' => 'form-control extencion2',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'min=0',
                         'max=9999',
@@ -288,7 +287,7 @@
             <!-- FLUJO DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FLUJO DEL PROCESO DE SOPORTE A LA APLICACIÓN
                 </div>
             </div>
@@ -300,12 +299,12 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_1')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_1', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -317,12 +316,12 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_2')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_2', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -343,12 +342,12 @@
                         ['class' => 'required'],
                     ) !!}
                     @error('flujo_q_5')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('flujo_q_5', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -357,7 +356,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
@@ -395,22 +394,22 @@
                 <label class="col-sm-3 col-form-label">Ubicación IP:</label>
 
                 @error('app_ip')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_ip')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_ip')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="app_ip" placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="app_ip" placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -421,22 +420,22 @@
                 <label class="col-sm-3 col-form-label">Hostname:</label>
 
                 @error('app_host')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_host')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_host')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="bd_host" placeholder="..." value="{{ old('bd_host', $cuestionario->bd_host) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_host" placeholder="..." value="{{ old('bd_host', $cuestionario->bd_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -447,22 +446,22 @@
                 <label class="col-sm-3 col-form-label">Instancias o Bases de Datos:</label>
 
                 @error('app_base')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_base')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_base')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
                 </div>
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="bd_base" placeholder="..." value="{{ old('bd_base', $cuestionario->bd_base) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_base" placeholder="..." value="{{ old('bd_base', $cuestionario->bd_base) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -473,39 +472,40 @@
                 <label class="col-sm-3 col-form-label">Puertos que utilizan:</label>
 
                 @error('app_puerto')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_puerto')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_puerto')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_puerto" placeholder="..." value="{{ old('bd_puerto', $cuestionario->bd_puerto) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        required name="bd_puerto" placeholder="..." value="{{ old('bd_puerto', $cuestionario->bd_puerto) }}">
-                </div>
-                <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="otro_puerto" placeholder="..." value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
+                        name="otro_puerto" placeholder="..."
+                        value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
                 </div>
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
 
                 @error('app_servidor')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_servidor')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_servidor')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -549,13 +549,13 @@
                 <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
 
                 @error('app_SO')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_SO')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_SO')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -577,13 +577,13 @@
                 </label>
 
                 @error('app_acceso')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_acceso')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_acceso')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -627,13 +627,13 @@
                 <label class="col-sm-3 col-form-label">URL de Acceso:</label>
 
                 @error('app_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -653,13 +653,13 @@
                 <label class="col-sm-3 col-form-label">IP Pública:</label>
 
                 @error('app_ip_publica')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_ip_publica')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_ip_publica')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -682,13 +682,13 @@
                 <label class="col-sm-3 col-form-label">Uso de Certificado: (SI / NO)</label>
 
                 @error('app_certificado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_certificado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_certificado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -732,13 +732,13 @@
                 <label class="col-sm-3 col-form-label">Datos del Certificado (tipo de cifrado, etc.).</label>
 
                 @error('app_tipo_cifrado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_tipo_cifrado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_tipo_cifrado')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -761,13 +761,13 @@
                 <label class="col-sm-3 col-form-label">Salida a Internet: (SI / NO)</label>
 
                 @error('app_internet')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_internet')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_internet')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -811,13 +811,13 @@
                 <label class="col-sm-3 col-form-label">Datos URL o tipo de enlace:</label>
 
                 @error('app_datos_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_datos_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_datos_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -840,13 +840,13 @@
                 <label class="col-sm-3 col-form-label">Acceso a la aplicación desde dispositivos móviles: (SI / NO)</label>
 
                 @error('app_acceso_moviles')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_acceso_moviles')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_acceso_moviles')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -890,13 +890,13 @@
                 <label class="col-sm-3 col-form-label">Nombre de la aplicación móvil:</label>
 
                 @error('app_nombre_app_movil')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_nombre_app_movil')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_nombre_app_movil')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -919,13 +919,13 @@
                 <label class="col-sm-3 col-form-label">Interacción con otras aplicaciones:</label>
 
                 @error('app_interaccion_otras_apps')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_interaccion_otras_apps')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_interaccion_otras_apps')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -970,13 +970,13 @@
                     conectividad:</label>
 
                 @error('app_datos_interactuan')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_datos_interactuan')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_datos_interactuan')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -996,13 +996,13 @@
                 <label class="col-sm-3 col-form-label">Administración o Soporte por terceros:</label>
 
                 @error('app_soporte_terceros')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_soporte_terceros')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_soporte_terceros')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1048,13 +1048,13 @@
                     Contacto)</label>
 
                 @error('app_datos_terceros')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_datos_terceros')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_datos_terceros')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1075,13 +1075,13 @@
                 <label class="col-sm-3 col-form-label">Instancia de balanceo:</label>
 
                 @error('app_instancia_balanceo')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_instancia_balanceo')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_instancia_balanceo')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1125,13 +1125,13 @@
                 <label class="col-sm-3 col-form-label">Tipo y características de instancia:</label>
 
                 @error('app_datos_balanceo')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_datos_balanceo')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_datos_balanceo')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1156,13 +1156,13 @@
                     usarse. (java, glashfish, tomcat, etc):</label>
 
                 @error('app_sofware_adicional')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_sofware_adicional')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_sofware_adicional')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1183,13 +1183,13 @@
                     usarse. (BDL), application Server (GAS), despliegue de apps (GDC):</label>
 
                 @error('app_lenguajes')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('bd_lenguajes')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('otro_lenguajes')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1236,13 +1236,13 @@
                 <label class="col-sm-3 col-form-label">Ubicación IP:</label>
 
                 @error('contingencia_app_ip')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_ip')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_ip')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1265,13 +1265,13 @@
                 <label class="col-sm-3 col-form-label">Hostname:</label>
 
                 @error('contingencia_app_host')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_host')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_host')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1294,13 +1294,13 @@
                 <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
 
                 @error('contingencia_app_servidor')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_servidor')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_servidor')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1344,13 +1344,13 @@
                 <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
 
                 @error('contingencia_app_SO')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_SO')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_SO')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1375,13 +1375,13 @@
                 </label>
 
                 @error('contingencia_app_acceso')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_acceso')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_acceso')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1425,13 +1425,13 @@
                 <label class="col-sm-3 col-form-label">URL de Acceso:</label>
 
                 @error('contingencia_app_url')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_bd_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('contingencia_otro_url')
-                        <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-3">
@@ -1459,7 +1459,7 @@
             <!-- RECURSOS HUMANOS (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS HUMANOS
                 </div>
             </div>
@@ -1473,7 +1473,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS MATERIALES
                 </div>
             </div>
@@ -1486,7 +1486,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PERÍODOS CRÍTICOS
                 </div>
             </div>
@@ -1706,8 +1706,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d1">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d1"
-                                        id="check_number_01" {{ old('d1', $cuestionario->d1) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d1" id="check_number_01"
+                                        {{ old('d1', $cuestionario->d1) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1715,8 +1716,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d2">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d2"
-                                        id="check_number_02" {{ old('d2', $cuestionario->d2) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d2" id="check_number_02"
+                                        {{ old('d2', $cuestionario->d2) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1724,8 +1726,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d3">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d3"
-                                        id="check_number_03" {{ old('d3', $cuestionario->d3) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d3" id="check_number_03"
+                                        {{ old('d3', $cuestionario->d3) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1733,8 +1736,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d4">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d4"
-                                        id="check_number_04" {{ old('d4', $cuestionario->d4) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d4" id="check_number_04"
+                                        {{ old('d4', $cuestionario->d4) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1742,8 +1746,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d5">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d5"
-                                        id="check_number_05" {{ old('d5', $cuestionario->d5) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d5" id="check_number_05"
+                                        {{ old('d5', $cuestionario->d5) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1751,8 +1756,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d6">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d6"
-                                        id="check_number_06" {{ old('d6', $cuestionario->d6) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d6" id="check_number_06"
+                                        {{ old('d6', $cuestionario->d6) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1760,8 +1766,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d7">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d7"
-                                        id="check_number_07" {{ old('d7', $cuestionario->d7) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="d7" id="check_number_07"
+                                        {{ old('d7', $cuestionario->d7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
 
@@ -1783,8 +1790,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h1">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h1"
-                                        id="check_no_01" {{ old('h1', $cuestionario->h1) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h1" id="check_no_01"
+                                        {{ old('h1', $cuestionario->h1) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1792,8 +1800,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h2">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h2"
-                                        id="check_no_02" {{ old('h2', $cuestionario->h2) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h2" id="check_no_02"
+                                        {{ old('h2', $cuestionario->h2) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -2029,7 +2038,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     TIEMPOS DE RECUPERACIÓN
                 </div>
             </div>
@@ -2057,7 +2066,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_mes', 'Mes(es)') !!}
                     @error('rpo_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
@@ -2070,7 +2079,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_semana', 'Semana(s)') !!}
                     @error('rpo_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
@@ -2083,7 +2092,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_dia', 'Día(s)') !!}
                     @error('rpo_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
@@ -2096,7 +2105,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_hora', 'Horas(s)') !!}
                     @error('rpo_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
@@ -2117,7 +2126,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_mes', 'Mes(es)') !!}
                     @error('rto_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
@@ -2130,7 +2139,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_semana', 'Semana(s)') !!}
                     @error('rto_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
@@ -2143,7 +2152,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_dia', 'Día(s)') !!}
                     @error('rto_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
@@ -2156,7 +2165,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_hora', 'Horas(s)') !!}
                     @error('rto_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
@@ -2177,7 +2186,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_mes', 'Mes(es)') !!}
                     @error('wrt_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
@@ -2190,7 +2199,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_semana', 'Semana(s)') !!}
                     @error('wrt_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
@@ -2203,7 +2212,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_dia', 'Día(s)') !!}
                     @error('wrt_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
@@ -2216,7 +2225,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_hora', 'Horas(s)') !!}
                     @error('wrt_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
@@ -2238,7 +2247,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_mes', 'Mes(es)') !!}
                     @error('mtpd_mes')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
@@ -2251,7 +2260,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_semana', 'Semana(s)') !!}
                     @error('mtpd_semana')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
@@ -2264,7 +2273,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_dia', 'Día(s)') !!}
                     @error('mtpd_dia')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
@@ -2277,7 +2286,7 @@
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_hora', 'Horas(s)') !!}
                     @error('mtpd_hora')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
@@ -2293,7 +2302,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPALDOS DE INFORMACIÓN
                 </div>
             </div>
@@ -2305,12 +2314,12 @@
                         'class' => 'required',
                     ]) !!}
                     @error('respaldo_q_14')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_14', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -2318,12 +2327,12 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label('respaldo_q_15', '15. ¿Cuál es la periodicidad del respaldo?', ['class' => 'required']) !!}
                     @error('respaldo_q_15')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_15', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -2333,12 +2342,12 @@
                         'class' => 'required',
                     ]) !!}
                     @error('respaldo_q_16')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     {!! Form::text('respaldo_q_16', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-//                        'maxlength' => 255,
+                        //                        'maxlength' => 255,
                         'placeholder' => '...',
                         'required',
                     ]) !!}
@@ -2348,7 +2357,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PROBABILIDAD DE INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -2359,7 +2368,8 @@
                         data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
                         title="Dar click"><i class="fas fa-info-circle"></i></a>
                     </a>
-                    <label class="required">17. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido
+                    <label class="required">17. Por favor, indique los tipos de incidentes en los que el proceso se ha
+                        visto interrumpido
                         y
                         aproximadamente cada cuando ha ocurrido.</label>
                 </div>
@@ -2368,7 +2378,7 @@
                 <label class="col-sm-8 col-form-label">Indisponibilidad de las instalaciones
                     (oficinas), por bloqueo de acceso, manifestaciones.</label>
                 @error('disruptivos_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_1" required>
@@ -2387,7 +2397,7 @@
                 <label class="col-sm-8 col-form-label">Ataques cibernéticos o a la actividad
                     informática.</label>
                 @error('disruptivos_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_2" required>
@@ -2405,7 +2415,7 @@
 
                 <label class="col-sm-8 col-form-label">Desastres naturales y ambientales.</label>
                 @error('disruptivos_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_3" required>
@@ -2423,7 +2433,7 @@
 
                 <label class="col-sm-8 col-form-label">Enfermedades infecciosas.</label>
                 @error('disruptivos_q_4')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_4" required>
@@ -2441,7 +2451,7 @@
 
                 <label class="col-sm-8 col-form-label">Error Humano.</label>
                 @error('disruptivos_q_5')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_5" required>
@@ -2460,7 +2470,7 @@
                 <label class="col-sm-8 col-form-label">Fallas o indisponibilidad en la infraestructura
                     tecnológica (telecomunicaciones, procesamiento de información y redes).</label>
                 @error('disruptivos_q_6')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_6" required>
@@ -2479,7 +2489,7 @@
                 <label class="col-sm-8 col-form-label">Indisponibilidad de recursos humanos,
                     materiales o técnicos.</label>
                 @error('disruptivos_q_7')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_7" required>
@@ -2498,7 +2508,7 @@
                 <label class="col-sm-8 col-form-label">Interrupciones en el suministro de
                     energía.</label>
                 @error('disruptivos_q_8')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_8" required>
@@ -2517,7 +2527,7 @@
                 <label class="col-sm-8 col-form-label">Interrupciones ocurridas en servicios prestados
                     por terceros.</label>
                 @error('disruptivos_q_9')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_9" required>
@@ -2535,7 +2545,7 @@
 
                 <label class="col-sm-8 col-form-label">Sabotaje.</label>
                 @error('disruptivos_q_10')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_10" required>
@@ -2553,7 +2563,7 @@
 
                 <label class="col-sm-8 col-form-label">Terrorismo.</label>
                 @error('disruptivos_q_11')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-4">
                     <select class="form-control form-control-sm" name="disruptivos_q_11" required>
@@ -2573,7 +2583,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RIESGOS E INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -2612,13 +2622,13 @@
                             class="fas fa-info-circle"></i></a>
                     Afectación operacional (IO) </label>
                 @error('operacion_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('operacion_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('operacion_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
@@ -2650,13 +2660,13 @@
                             class="fas fa-info-circle"></i></a>
                     Impacto Regulatorio (IR)</label>
                 @error('regulatorio_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('regulatorio_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('regulatorio_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
@@ -2688,13 +2698,13 @@
                     Afectación en la Reputación / Imagen Pública o Política
                     (IIR)</label>
                 @error('reputacion_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('reputacion_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('reputacion_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
 
                 <div class="form-group col-sm-2">
@@ -2726,37 +2736,42 @@
                             class="fas fa-info-circle"></i></a>
                     Impacto Social (IS)</label>
                 @error('social_q_1')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('social_q_2')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 @error('social_q_3')
-                    <small style="color: red">{{$message}}</small>
+                    <small style="color: red">{{ $message }}</small>
                 @enderror
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
+                        name="social_q_1" min="1" max="5" placeholder="..."
+                        value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
+                        name="social_q_2" min="1" max="5" placeholder="..."
+                        value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                        name="social_q_3" min="1" max="5" placeholder="..."
+                        value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_4" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_4) }}">
+                        name="social_q_4" min="1" max="5" placeholder="..."
+                        value="{{ old('meta', $cuestionario->social_q_4) }}">
                 </div>
                 <hr>
 
                 <div class="form-group col-sm-12">
-                    <label class="required">19. En caso de que la aplicación presentara alguna falla o se detuviera su operación, indique
+                    <label class="required">19. En caso de que la aplicación presentara alguna falla o se detuviera su
+                        operación, indique
                         cuáles serían las acciones que se tomarían</label>
                     @error('q_19')
-                        <small style="color: red">{{$message}}</small>
+                        <small style="color: red">{{ $message }}</small>
                     @enderror
                     <input type="text" class="form-control form-control-sm" name="q_19" placeholder="..."
                         value="{{ old('q_19', $cuestionario->q_19) }}">
@@ -2769,7 +2784,7 @@
             {{-- Firmas --}}
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FIRMAS
                 </div>
             </div>
@@ -2809,7 +2824,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     Anexos
                 </div>
             </div>
@@ -2818,8 +2833,8 @@
 
                 <table class="table table-border" style="font-size: 12px">
                     <tr>
-                        <th class="col-sm-4" style="background-color:#345183; color: white;">Clasificación</th>
-                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de
+                        <th class="col-sm-4" style="background-color:var(--color-tbj); color: white;">Clasificación</th>
+                        <th class="col-sm-8" style="background-color:var(--color-tbj); color: white;">Escenarios de
                             Contingencia
                         </th>
                     </tr>
@@ -3405,8 +3420,8 @@
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analysisAia.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.analisis-aia.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

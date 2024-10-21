@@ -222,7 +222,7 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_agregar') && Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new AuditoriaInterna();
+        $model = new AuditoriaInterna;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
@@ -351,7 +351,7 @@ class AuditoriaInternaController extends Controller
         ]);
 
         try {
-            $email = new NotificacionAprobadoReporteAuditoria();
+            $email = new NotificacionAprobadoReporteAuditoria;
             Mail::to(removeUnicodeCharacters($reporte->empleado->email))->queue($email);
 
             return response()->json(['success' => true]);

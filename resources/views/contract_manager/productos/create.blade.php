@@ -9,7 +9,7 @@
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
                         <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number"
                             name="clave" id="clave" value="{{ old('clave') }}" required>
-                            {!! Form::label('clave', 'Clave*', ['class' => 'asterisco']) !!}
+                        {!! Form::label('clave', 'Clave*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('clave'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('clave') }}
@@ -20,7 +20,7 @@
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
                         <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
                             name="descripcion" id="descripcion" required>
-                            {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+                        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('descripcion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('descripcion') }}
@@ -31,8 +31,8 @@
                 </div>
 
                 <div class="text-right form-group col-12" style="margin-left:15px;">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

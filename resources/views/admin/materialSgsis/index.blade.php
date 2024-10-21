@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
-
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -26,8 +24,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -38,9 +36,10 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
+
         .img-size {
             /* 	padding: 0;
-            margin: 0; */
+                            margin: 0; */
             height: 450px;
             width: 700px;
             background-size: cover;
@@ -88,32 +87,33 @@
         /* se comento por que se descuadra la cabecera de la tabla y el registro */
         /* .table tr th:nth-child(6){
 
-            width:415px !important;
-            max-width:415px !important;
-        } */
+                            width:415px !important;
+                            max-width:415px !important;
+                        } */
 
         .table tr td:nth-child(2) {
 
-        min-width:300px !important;
-        text-align: justify !important;
+            min-width: 300px !important;
+            text-align: justify !important;
 
         }
 
         .table tr th:nth-child(2) {
 
-        text-align: center !important;
+            text-align: center !important;
 
         }
+
         .table tr td:nth-child(3) {
 
-            min-width:500px !important;
+            min-width: 500px !important;
             text-align: justify !important;
 
         }
 
         .table tr th:nth-child(3) {
 
-        text-align: center !important;
+            text-align: center !important;
 
         }
 
@@ -135,14 +135,13 @@
             width: 168px !important;
 
         }
-
     </style>
 
 
 
     {{ Breadcrumbs::render('admin.material-sgsis.index') }}
 
-    <h5 class="col-12 titulo_general_funcion">Material SGSI  </h5>
+    <h5 class="col-12 titulo_general_funcion">Material SGSI </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -150,7 +149,8 @@
                 <br>
                 <h4>¿Qué es Material SGSI?</h4>
                 <p>
-                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos de seguridad de la información establecidos por la norma.
+                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos de
+                    seguridad de la información establecidos por la norma.
                 </p>
                 <p>
                     Útil para crear y mantener programas de formación y concientización en seguridad de la información.
@@ -159,15 +159,16 @@
         </div>
     </div>
 
-        <div class="text-right">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.material-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar Material</a>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.material-sgsis.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Material</a>
         </div>
-        <div class="mt-5 card">
-            {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+    </div>
+    <div class="mt-5 card">
+        {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.material-sgsis.create') }}">
+            <a class="btn btn-primary" href="{{ route('admin.material-sgsis.create') }}">
                     Agregar <strong>+</strong>
             </a>
         </div>
@@ -370,29 +371,39 @@
             @can('material_sgsi_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.material-sgsis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.material-sgsis.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -405,40 +416,40 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.material-sgsis.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nombre',
-                        name: 'nombre'
-                    },
-                    {
-                        data: 'objetivo',
-                        name: 'objetivo'
-                    },
-                    {
-                        data: 'personalobjetivo',
-                        name: 'personalobjetivo'
-                    },
-                    {
-                        data: 'arearesponsable_area',
-                        name: 'arearesponsable.area'
-                    },
-                    {
-                        data: 'tipoimparticion',
-                        name: 'tipoimparticion'
-                    },
-                    {
-                        data: 'fechacreacion_actualizacion',
-                        name: 'fechacreacion_actualizacion'
-                    },
-                    {
-                        data: 'documento',
-                        name: 'documento',
-                        render: function(data, type, row, meta) {
-                            let archivo = "";
-                            let archivos = JSON.parse(data);
-                            archivo = ` <div class="container">
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'nombre',
+                            name: 'nombre'
+                        },
+                        {
+                            data: 'objetivo',
+                            name: 'objetivo'
+                        },
+                        {
+                            data: 'personalobjetivo',
+                            name: 'personalobjetivo'
+                        },
+                        {
+                            data: 'arearesponsable_area',
+                            name: 'arearesponsable.area'
+                        },
+                        {
+                            data: 'tipoimparticion',
+                            name: 'tipoimparticion'
+                        },
+                        {
+                            data: 'fechacreacion_actualizacion',
+                            name: 'fechacreacion_actualizacion'
+                        },
+                        {
+                            data: 'documento',
+                            name: 'documento',
+                            render: function(data, type, row, meta) {
+                                let archivo = "";
+                                let archivos = JSON.parse(data);
+                                archivo = ` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
@@ -453,8 +464,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                            if (archivos.length > 0) {
-                                archivo += `
+                                if (archivos.length > 0) {
+                                    archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -464,38 +475,48 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                        <li
-                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                        data-slide-to='${idx}'></li>`})}
+                                                                        <li
+                                                                        data-target='#carouselExampleIndicators${row.id}'
+                                                                        data-slide-to='${idx}'></li>`})}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         const [extension, ...nameParts] = archivo.documento.split('.').reverse();
                                                         if(extension == 'pdf'){
                                                         return `
-                                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                                            <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
-                                                        </div>`
+                                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                                            <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
+                                                                        </div>`
                                                     }else{
-                                                        return `
-                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
-                                                                       <a href='{{ asset("storage/documentos_material_sgsi") }}/${archivo.documento}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.documento}</a>
-                                                                    </div>`
-                                                    }
-                                                    })}
+                                                        return ` <
+                                        div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
+                                        <
+                                        a href =
+                                        '{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}' >
+                                        <
+                                        i class = "fas fa-file-download mr-2"
+                                    style = "font-size:18px" > < /i> ${archivo.documento}</a >
+                                        <
+                                        /div>`
+                            }
+                        })
+                }
 
-                                            </div>
+                <
+                /div>
 
-                                            </div>`;
-                            } else {
-                                archivo += `
+                <
+                /div>`;
+            }
+            else {
+                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
                                                     <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:500px !important">
                                                     </div>
                                                 `
-                            }
-                            archivo += `
+            }
+            archivo += `
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -526,32 +547,30 @@
                                         </div>
                                     </div>
                                     </div>`
-                            return archivo;
-                        }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
-            let table = $('.datatable-MaterialSgsi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+            return archivo;
+        }
+        }, {
+        data: 'actions',
+        name: '{{ trans('global.actions') }}'
+        }],
+        orderCellsTop: true,
+            order: [
+                [0, 'desc']
+            ]
+        };
+        let table = $('.datatable-MaterialSgsi').DataTable(dtOverrideGlobals);
+        // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+        //     $($.fn.dataTable.tables(true)).DataTable()
+        //         .columns.adjust();
+        // });
+        // $('.datatable thead').on('input', '.search', function() {
+        //     let strict = $(this).attr('strict') || false
+        //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+        //     table
+        //         .column($(this).parent().index())
+        //         .search(value, strict)
+        //         .draw()
+        // });
         });
     </script>
 @endsection

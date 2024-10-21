@@ -50,15 +50,13 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
 
-            $curso = Course::where('id', $curso_id)->first();
+            $curso = Course::getAll()->where('id', $curso_id)->first();
 
             if (! $curso) {
                 abort(404);
             }
-
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 
             return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
         } catch (\Throwable $th) {

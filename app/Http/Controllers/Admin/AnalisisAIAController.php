@@ -83,7 +83,7 @@ class AnalisisAIAController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario = new AnalisisAIA();
+        $cuestionario = new AnalisisAIA;
 
         return view('admin.analysisAia.create', compact('cuestionario'));
     }
@@ -117,7 +117,7 @@ class AnalisisAIAController extends Controller
 
         $cuestionario = AnalisisAIA::create($request->all());
 
-        return redirect()->route('admin.analysisAia.edit', ['id' => $cuestionario]);
+        return redirect()->route('admin.analisis-aia.edit', ['id' => $cuestionario]);
     }
 
     public function show($id)
@@ -134,7 +134,7 @@ class AnalisisAIAController extends Controller
         if (empty($cuestionario)) {
             Alert::error('error', 'Cuestionario not found');
 
-            return redirect(route('admin.analysisAia.index'));
+            return redirect(route('admin.analisis-aia.index'));
         }
 
         return view('admin.analysisAia.edit', ['id' => $cuestionario], compact('cuestionario'));
@@ -419,7 +419,7 @@ class AnalisisAIAController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información actualizada con éxito');
 
-        return redirect(route('admin.analysisAia.index'));
+        return redirect(route('admin.analisis-aia.index'));
     }
 
     public function destroy($id)
@@ -447,7 +447,7 @@ class AnalisisAIAController extends Controller
         if (empty($cuestionario)) {
             Alert::error('error', 'Ajustes not found');
 
-            return redirect(route('admin.analysisAia.matriz'));
+            return redirect(route('admin.analisis-aia.matriz'));
         }
 
         return view('admin.analysisAia.ajustes', compact('cuestionario'));
@@ -460,6 +460,6 @@ class AnalisisAIAController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información actualizada con éxito');
 
-        return redirect()->route('admin.analysisAia.matriz');
+        return redirect()->route('admin.analisis-aia.matriz');
     }
 }

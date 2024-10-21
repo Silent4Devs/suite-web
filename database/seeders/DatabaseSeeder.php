@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DatabaseSeeder extends Seeder
 {
@@ -127,9 +128,26 @@ class DatabaseSeeder extends Seeder
                 PermisoTimesheetFinanciero::class,
                 PermisosTimesheetFaltantes::class,
 
+                DisponibilidadEmpleadosSeeder::class,
+                PermisosListasSeeder::class,
                 ListaDistribucionRequisicionOrdenCompraSeeder::class,
                 ListaDistribucionSuplentesLideresSeeder::class,
                 ListaInformativaOrdenesdeCompraSeeder::class,
+                //Competencias
+                //CompetenciasCeroSeeder::class,
+                //AprobadorObjetivoEstrategicoSeeder es un seeder especificamente
+                //para aprobar los objetivos en caso de que sea necesario que algun otro usuario externo a los lideres deba revisarlos
+                // AprobadorObjetivoEstrategicoSeeder::class,
+
+                // certificaciones
+                PermisosCargaObjetivosSeeder::class,
+                CatalogueTrainingSeeder::class,
+                PermissionsCatalogueTrainingSeeder::class,
+                CatalogueTrainingLDSeeder::class,
+                PermissionsProfileProfessionalEditSeeder::class,
+
+                // Dashboard solicitudes
+                PermissionsDashboardSolicitudesSeeder::class,
             ]
         );
     }

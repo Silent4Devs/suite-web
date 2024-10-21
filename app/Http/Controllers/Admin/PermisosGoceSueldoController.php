@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\VistaGlobalPermisosGoceSueldoExport;
 use App\Http\Controllers\Controller;
 use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
@@ -10,6 +11,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PermisosGoceSueldoController extends Controller
@@ -69,7 +71,7 @@ class PermisosGoceSueldoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new PermisosGoceSueldo();
+        $vacacion = new PermisosGoceSueldo;
 
         return view('admin.permisosGoceSueldo.create', compact('vacacion'));
     }
@@ -144,47 +146,20 @@ class PermisosGoceSueldoController extends Controller
         abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudPermisoGoceSueldo::getAllwithEmpleados();
-            $table = datatables()::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
-            $table->editColumn('permiso', function ($row) {
-                return $row->permiso ? $row->permiso : '';
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
-            });
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
+        $solPer = SolicitudPermisoGoceSueldo::getAllwithEmpleados();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.permisosGoceSueldo.solicitudes', compact('logo_actual', 'empresa_actual'));
+        return view('admin.permisosGoceSueldo.solicitudes', compact('logo_actual', 'empresa_actual', 'solPer'));
+    }
+
+    public function exportExcel()
+    {
+        abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $export = new VistaGlobalPermisosGoceSueldoExport;
+
+        return Excel::download($export, 'Control_Ausencias_Permisos_Goce_Sueldo.xlsx');
     }
 }

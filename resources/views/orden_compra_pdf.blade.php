@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>OC</title>
 
-    <link rel="stylesheet" href="css/requisitions/pdf.css{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="css/requisitions/pdf.css{{ config('app.cssVersion') }}">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($requisiciones->sucursal->mylogo)
-                        <img src="{{ public_path('razon_social/'.trim($requisiciones->sucursal->mylogo)) }}">
+                        <img src="{{ public_path('razon_social/' . trim($requisiciones->sucursal->mylogo)) }}">
                     @else
                         <img src="{{ public_path('sinLogo.png') }}">
                     @endif
@@ -28,7 +28,7 @@
                     {{ $requisiciones->sucursal->direccion }} <br>
                 </td>
                 <td class="td-blue-header">
-                    <h5 style="color:#49598A;">ORDEN DE COMPRA</h5>
+                    <h5 style="color:var(--color-tbj);">ORDEN DE COMPRA</h5>
                     Folio: {{ $requisiciones->folio }} <br>
                     Fecha de solicitud: {{ date('d-m-Y', strtotime($requisiciones->fecha)) }}
                 </td>
@@ -67,10 +67,12 @@
             <tr>
                 <td>
                     <strong> Proyecto: </strong> <br>
-                    @if($requisiciones->contrato === null)
-                    <strong>Contrato Eliminado!</strong>
+                    @if ($requisiciones->contrato === null)
+                        <strong>Contrato Eliminado!</strong>
                     @else
-                    {{ optional($requisiciones->contrato)->no_proyecto }} - {{ optional($requisiciones->contrato)->no_contrato }} - {{ optional($requisiciones->contrato)->nombre_servicio }}
+                        {{ optional($requisiciones->contrato)->no_proyecto }} -
+                        {{ optional($requisiciones->contrato)->no_contrato }} -
+                        {{ optional($requisiciones->contrato)->nombre_servicio }}
                     @endif
                 </td>
                 <td>
@@ -221,8 +223,9 @@
                     </td>
                     <td>
                         <strong> Proyecto: </strong> <br>
-                            {{ optional($producto->contrato)->no_proyecto }} / {{ optional($producto->contrato)->no_contrato }} -
-                            {{ optional($producto->contrato)->nombre_servicio }}
+                        {{ optional($producto->contrato)->no_proyecto }} /
+                        {{ optional($producto->contrato)->no_contrato }} -
+                        {{ optional($producto->contrato)->nombre_servicio }}
                     </td>
                     <td>
                         <strong> No. de Personas: </strong> <br>
@@ -357,7 +360,7 @@
                 <td align="center">
                     @if ($requisiciones->fecha_firma_finanzas_orden)
                         <img src="{{ $requisiciones->firma_finanzas_orden }}" class="img-firma"> <br>
-                        <small> {{$firma_finanzas_name ?? '' }}  | {{ $requisiciones->fecha_firma_finanzas_orden }}
+                        <small> {{ $firma_finanzas_name ?? '' }} | {{ $requisiciones->fecha_firma_finanzas_orden }}
                         </small>
                     @else
                         <div style="height: 185px;"></div>

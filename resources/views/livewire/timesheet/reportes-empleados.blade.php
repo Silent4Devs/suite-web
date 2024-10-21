@@ -5,7 +5,7 @@
                 <x-loading-indicator />
                 <div class="col-md-3 form-group" style="padding-left:0 !important;">
                     <label class="form-label">Colaboradores del Área: </label>
-                    <select class="form-control" wire:model="area_id">
+                    <select class="form-control" wire:model.live="area_id">
                         <option selected value="0">Todos</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -15,12 +15,12 @@
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de inicio</label>
                     <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
-                        name="fecha_inicio" wire:model="fecha_inicio">
+                        name="fecha_inicio" wire:model.live="fecha_inicio">
                 </div>
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de fin</label>
                     <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                        name="fecha_fin" wire:model="fecha_fin">
+                        name="fecha_fin" wire:model.live="fecha_fin">
                 </div>
                 <div class="col-md-2 form-group">
                     <label class="form-label">Horas totales</label>
@@ -45,7 +45,7 @@
                             style="background-color: #42ADDC; border:none !important;">
                             Todos
                         </div>
-                        <button class="btn btn-success" wire:click="correoMasivo()">
+                        <button class="btn btn-primary" wire:click="correoMasivo()">
                             Enviar correo a todos los colaboradores con horas faltantes de registrar
                         </button>
                     </div>
@@ -61,7 +61,7 @@
                 <table id="timesheet_empleados_lista"
                     class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
                     data-semanas="{{ $semanas_totales_calendario }}">
-                    <thead class="w-100" style="position: sticky !important; top: 250px;">
+                    <thead class="w-100">
                         <tr>
                             <th class="cde-foto">Foto</th>
                             <th class="cde-nombre" style="text-align: right;">Nombre </th>
@@ -269,8 +269,9 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-outline-primary"
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary"
                                 wire:click="correoRetraso({{ $empleado_md['id'] }}, {{ $empleado_md['times_atrasados'] }})"
                                 data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>

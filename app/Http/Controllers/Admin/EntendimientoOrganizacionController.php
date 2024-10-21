@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\EntendimientoOrganizacionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
@@ -384,10 +385,12 @@ class EntendimientoOrganizacionController extends Controller
                                 $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
                                 && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
                             ) {
-
                                 return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
                                 break;
-                            } else {
+                            } elseif (
+                                ! ($part->estatus == 'Pendiente')
+                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                            ) {
                                 $acceso_restringido = 'turno';
 
                                 return view('admin.entendimientoOrganizacions.show-admin', compact('foda_actual', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'acceso_restringido'));
@@ -415,9 +418,11 @@ class EntendimientoOrganizacionController extends Controller
 
     public function solicitudAprobacion($id_foda)
     {
-        // $modelo = 'EntendimientoOrganizacion';
+
         $foda = EntendimientoOrganizacion::find($id_foda);
-        // dd($foda);
+
+        event(new EntendimientoOrganizacionEvent($foda, 'solicitudAprobacion', 'entendimiento_organizacions', 'Foda'));
+
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         // $no_niveles = $lista->niveles;
@@ -485,6 +490,8 @@ class EntendimientoOrganizacionController extends Controller
         $foda = EntendimientoOrganizacion::find($id);
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+
+        event(new EntendimientoOrganizacionEvent($foda, 'aprobado', 'entendimiento_organizacions', 'Foda'));
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
             ->where('modulo_id', '=', $modulo->id)
@@ -560,11 +567,11 @@ class EntendimientoOrganizacionController extends Controller
 
     public function rechazado($id, Request $request)
     {
-        // dd($id, $request->all());
         $foda = EntendimientoOrganizacion::with('empleado')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
-        // dd($aprobacion);
+
+        event(new EntendimientoOrganizacionEvent($foda, 'rechazado', 'entendimiento_organizacions', 'Foda'));
 
         $comentario = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
@@ -591,7 +598,7 @@ class EntendimientoOrganizacionController extends Controller
         Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAnalisisFODALider($foda->id, $analisis_foda));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->email))->queue(new NotificacionRechazoAnalisisFODA($foda->id, $analisis_foda));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoAnalisisFODA($foda->id, $analisis_foda));
         }
 
         return redirect(route('admin.entendimiento-organizacions.index'));
@@ -627,22 +634,38 @@ class EntendimientoOrganizacionController extends Controller
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
+        $proceso_actualizado = ProcesosListaDistribucion::with('participantes')
+            ->where('id', '=', $proceso->id)
+            ->with([
+                'modulo' => function ($query) {
+                    $query->where('modelo', '=', $this->modelo);
+                },
+            ])
+            ->first();
+
         $no_niveles = $lista->niveles;
 
-        // dd($proceso, $foda);
+        $breakLoop = false;
 
         for ($i = 1; $i <= $no_niveles; $i++) {
-            foreach ($proceso->participantes as $part) {
+            foreach ($proceso_actualizado->participantes as $part) {
                 if ($part->participante->nivel == $i && $part->estatus == 'Pendiente') {
                     for ($j = 1; $j <= 5; $j++) {
                         if ($part->participante->numero_orden == $j && $part->estatus == 'Pendiente') {
                             $emailAprobador = $part->participante->empleado->email;
                             // dd($emailAprobador);
                             Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
+                            $breakLoop = true;
                             break;
                         }
                     }
+                    if ($breakLoop) {
+                        break;
+                    }
                 }
+            }
+            if ($breakLoop) {
+                break;
             }
         }
     }

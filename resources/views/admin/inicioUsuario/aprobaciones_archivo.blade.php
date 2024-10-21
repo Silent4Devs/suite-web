@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
+    <div class="mt-5 card">
+        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
+            <h3 class="mb-2 text-center text-white"><strong>Archivo de Aprobaciones</strong></h3>
+        </div>
 
-	<div class="mt-5 card">
-	    <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-	        <h3 class="mb-2 text-center text-white"><strong>Archivo de Aprobaciones</strong></h3>
-	    </div>
-		
-		<div class="card-body">
-			<div class="row px-3">
+        <div class="card-body">
+            <div class="row px-3">
 
-                <div class=" col-12 px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
+                <div class=" col-12 px-1 py-2 mb-4 rounded "
+                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                             <div class="w-100">
@@ -18,21 +18,22 @@
                         </div>
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las aprobaciónes que han sido archivadas.
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección encontrará las
+                                aprobaciónes que han sido archivadas.
                             </p>
 
                         </div>
                     </div>
                 </div>
-					
-				<div class="datatable-fix" style="width: 100%;">
-				    <div class="mb-3 text-right">
-				        <a class="btn btn-danger" href="{{asset('admin/inicioUsuario#capacitaciones')}}">Regresar</a>
-				    </div>
 
-				   <table class="table tabla_archi">
-				   		<thead>
-				            <tr>
+                <div class="datatable-fix" style="width: 100%;">
+                    <div class="mb-3 text-right">
+                        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario#capacitaciones') }}">Regresar</a>
+                    </div>
+
+                    <table class="table tabla_archi">
+                        <thead>
+                            <tr>
                                 <th style="vertical-align: top">
                                     Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
@@ -71,10 +72,10 @@
                                     Recuperar
                                 </th>
                             </tr>
-				   		</thead>
-				   		<tbody>
-                			@foreach ($mis_documentos as $documento)
-                                @if($documento->archivo == 'archivado')
+                        </thead>
+                        <tbody>
+                            @foreach ($mis_documentos as $documento)
+                                @if ($documento->archivo == 'archivado')
                                     <tr>
                                         <td>
                                             {{ $documento->codigo ?? '' }}
@@ -100,19 +101,22 @@
                                                     @case(1)
                                                         <span class="badge badge-info">EN ELABORACIÓN</span>
                                                     @break
+
                                                     @case(2)
                                                         <span class="badge badge-primary">EN REVISIÓN</span>
                                                     @break
+
                                                     @case(3)
                                                         <span class="badge badge-success">PUBLICADO</span>
                                                     @break
+
                                                     @case(4)
                                                         <span class="badge badge-danger">RECHAZADO</span>
                                                     @break
+
                                                     @default
                                                         <span class="badge badge-info">EN ELABORACIÓN</span>
                                                 @endswitch
-
                                             @endif
                                         </td>
                                         <td>
@@ -158,31 +162,33 @@
                                             @endif
                                         </td>
                                         <td>
-                                           <form action="{{route('admin.inicio-Usuario.aprobacion.recuperar', $documento->id)}}" method="POST">
+                                            <form
+                                                action="{{ route('admin.inicio-Usuario.aprobacion.recuperar', $documento->id) }}"
+                                                method="POST">
                                                 @csrf
                                                 <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                    <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                                    <i class="fas fa-sign-in-alt"
+                                                        style="font-size: 20pt; color:var(--color-tbj)"></i>
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endif
                             @endforeach
-				   		</tbody>
-				   </table>
-				</div>
+                        </tbody>
+                    </table>
+                </div>
 
-			</div>
-		</div>
-		
-	</div>
+            </div>
+        </div>
+
+    </div>
 @endsection
 
 
 
 @section('scripts')
-
-  @parent
+    @parent
     <script>
         $(function() {
             let dtButtons = [{
@@ -255,22 +261,22 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar empleado',
-                url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                 action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
                 }
             };
 
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
-                order:[
-                            [0,'desc']
-                        ]
+                order: [
+                    [0, 'desc']
+                ]
             };
             let table = $('.tabla_archi').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
@@ -286,7 +292,5 @@
             //         .draw()
             // });
         });
-
     </script>
-
 @endsection

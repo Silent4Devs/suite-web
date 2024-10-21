@@ -92,7 +92,7 @@
     height: 40px !important;
 }
 .btn-submit{
-    background-color: #306BA9;
+    background-color: var(--color-tbj);
     color: #fff;
 }
 
@@ -103,6 +103,6 @@
 }
 
 .sub-title-vac{
-    color:#306BA9;
+    color:var(--color-tbj);
     font-size:18px;
 }

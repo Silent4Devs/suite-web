@@ -15,7 +15,7 @@
     </style>
 @endsection
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">PLAN DE TRABAJO</h5>
+    <h5 class="col-12 titulo_general_funcion">Planes de Trabajo</h5>
     <div class="text-right">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPlanAccion">
             Agregar nuevo
@@ -27,13 +27,13 @@
         <div class="blue-menu-header-plan d-flex align-items-center justify-content-between px-5">
             <h3 id="titlo-tab" class="mb-0" style="font-weight: lighter;">Mis Planes de Trabajo</h3>
             <div class="d-flex align-items-center gap-2">
-                <button class="btn" onclick="cambiarTituloIndex('Mis Planes de Trabajo'); navSectionIndex('plan_trabajo');">
+                <button class="btn"
+                    onclick="cambiarTituloIndex('Mis Planes de Trabajo'); navSectionIndex('plan_trabajo');">
                     <i class="material-symbols-outlined"> content_paste</i>
                     <span>Mis Planes de Trabajo</span>
                 </button>
                 <hr>
-                <button class="btn"
-                    onclick="cambiarTituloIndex('Mis asignaciones'); navSectionIndex('asignaciones');">
+                <button class="btn" onclick="cambiarTituloIndex('Mis asignaciones'); navSectionIndex('asignaciones');">
                     <i class="material-symbols-outlined"> receipt_long</i>
                     <span>Mis asignaciones</span>
                 </button>
@@ -48,21 +48,24 @@
                 </button> --}}
             </div>
         </div>
-        <div id="plan_trabajo_workspace" style="background-color: white; border-radius: 25px;">
-            <div class="content-sections">
-                <section id="plan_trabajo" class="caja_tab_reveldada active">
-                    @include('partials.flashMessages')
-                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
-                </section>
+        <div class="card card-body">
 
-                <section id="asignaciones">
-                    @include('partials.flashMessages')
-                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
-                </section>
-                <section id="area">
-                    @include('partials.flashMessages')
-                    @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
-                </section>
+            <div id="plan_trabajo_workspace">
+                <div class="content-sections">
+                    <section id="plan_trabajo" class="caja_tab_reveldada active">
+                        @include('partials.flashMessages')
+                        @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 1])
+                    </section>
+
+                    <section id="asignaciones">
+                        @include('partials.flashMessages')
+                        @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 2])
+                    </section>
+                    <section id="area">
+                        @include('partials.flashMessages')
+                        @livewire('plan-de-accion.plan-accion-index-component', ['tab' => 3])
+                    </section>
+                </div>
             </div>
         </div>
     </div>
@@ -75,7 +78,8 @@
                     <h5 class="titulo_general_funcion"
                         style="
                     margin-bottom: 0px !important;
-                ">Registrar: Plan de Trabajo</h5>
+                ">Registrar: Plan de
+                        Trabajo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -148,21 +152,21 @@
     </div>
 @endsection
 @section('scripts')
-<script type="text/javascript">
-    $(".botones_vistas_gantt a").click(function() {
-        $(".botones_vistas_gantt a").removeClass("boton_activo");
-        $(".botones_vistas_gantt a:hover").addClass("boton_activo");
-    });
+    <script type="text/javascript">
+        $(".botones_vistas_gantt a").click(function() {
+            $(".botones_vistas_gantt a").removeClass("boton_activo");
+            $(".botones_vistas_gantt a:hover").addClass("boton_activo");
+        });
 
-    function cambiarTituloIndex(titulo) {
-        setTimeout(() => {
-            document.getElementById('titlo-tab').innerText = titulo;
-        }, 100);
-    }
+        function cambiarTituloIndex(titulo) {
+            setTimeout(() => {
+                document.getElementById('titlo-tab').innerText = titulo;
+            }, 100);
+        }
 
-    function navSectionIndex(id) {
-        document.querySelector('.content-sections section.active').classList.remove('active');
-        document.getElementById(id).classList.add('active');
-    }
-</script>
+        function navSectionIndex(id) {
+            document.querySelector('.content-sections section.active').classList.remove('active');
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
 @endsection

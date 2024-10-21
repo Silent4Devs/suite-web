@@ -121,7 +121,7 @@
         x-on:livewire-upload-progress="progress = $event.detail.progress">
         <!-- File Input -->
         <div class="custom-file" wire:ignore>
-            <input type="file" class="custom-file-input" wire:model="file" id="file">
+            <input type="file" class="custom-file-input" wire:model.live="file" id="file">
             <label class="custom-file-label" for="file">Selecciona un archivo de
                 importación</label>
         </div>
@@ -137,8 +137,8 @@
         </div>
         <div>
 
-            <a class="btn btn-success mt-4" href="{{ route('admin.empleados.index') }}">Regresar</a>
-            <button class="btn btn-success mt-4" wire:click.prevent="import"><i
+            <a class="btn btn-primary mt-4" href="{{ route('admin.empleados.index') }}">Regresar</a>
+            <button class="btn btn-primary mt-4" wire:click.prevent="import"><i
                     class="fas fa-file-excel mr-2"></i>Importar</button>
         </div>
     </div>

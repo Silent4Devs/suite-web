@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     @inject('Empleado', 'App\Models\Empleado')
 
     <style type="text/css">
@@ -13,7 +12,6 @@
         .td_nombre {
             min-width: 400px !important;
         }
-
     </style>
 
     <div class="mt-5 card">
@@ -45,7 +43,7 @@
 
                 <div class="datatable-fix" style="width: 100%;">
                     <div class="mb-3 text-right">
-                        <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario#actividades') }}">Regresar</a>
+                        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario#actividades') }}">Regresar</a>
                     </div>
 
                     <table class="table tabla_archi" id="tblArchivo">
@@ -86,7 +84,9 @@
                                             <div class="td_div_recursos">
                                                 @foreach ($task->assigs as $assig)
                                                     @php
-                                                        $empleado = $Empleado->where('id', intval($assig->resourceId))->first();
+                                                        $empleado = $Empleado
+                                                            ->where('id', intval($assig->resourceId))
+                                                            ->first();
                                                     @endphp
                                                     @if ($empleado)
                                                         <img src="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
@@ -105,30 +105,34 @@
                                                     <span class="badge" style="background-color:rgb(253, 171, 61)">En
                                                         proceso</span>
                                                 @break
+
                                                 @case('STATUS_DONE')
-                                                    <span class="badge"
-                                                        style="background-color:rgb(0, 200, 117)">Completada</span>
+                                                    <span class="badge" style="background-color:rgb(0, 200, 117)">Completada</span>
                                                 @break
+
                                                 @case ('STATUS_FAILED')
                                                     <span class="badge" style="background-color:rgb(226, 68, 92)">Con
                                                         retraso</span>
                                                 @break
+
                                                 @case ('STATUS_SUSPENDED')
-                                                    <span class="badge"
-                                                        style="background-color:#aaaaaa">Suspendida</span>
+                                                    <span class="badge" style="background-color:#aaaaaa">Suspendida</span>
                                                 @break
+
                                                 @case ('STATUS_UNDEFINED')
                                                     <span class="badge" style="background-color:#00b1e1">Sin
                                                         iniciar</span>
                                                 @break
+
                                                 @default
                                                     <span class="badge" style="background-color:#00b1e1">Sin iniciar</span>
                                             @endswitch
                                         </td>
                                         <td class="d-flex">
                                             <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"
-                                                    data-archivar="false" data-actividad-id="{{ $task->id }}"
+                                                <i class="fas fa-sign-in-alt"
+                                                    style="font-size: 20pt; color:var(--color-tbj)" data-archivar="false"
+                                                    data-actividad-id="{{ $task->id }}"
                                                     data-plan-implementacion="{{ $task->id_implementacion }}"></i>
                                             </button>
                                         </td>
@@ -148,7 +152,6 @@
 
 
 @section('scripts')
-
     @parent
     <script>
         $(function() {

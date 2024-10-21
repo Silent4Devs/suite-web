@@ -13,7 +13,13 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
-        event(new CoursesEvent($course, 'create', 'courses', 'Curso'));
+        try {
+            //code...
+            event(new CoursesEvent($course, 'create', 'courses', 'Curso'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
         $this->forgetCache();
     }
 

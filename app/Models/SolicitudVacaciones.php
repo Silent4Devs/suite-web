@@ -32,13 +32,13 @@ class SolicitudVacaciones extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id', 'foto', 'area_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id')->select('name', 'id', 'foto', 'area_id', 'puesto_id');
     }
 
     public static function getAllwithEmpleados()
     {
         return Cache::remember('SolicitudVacaciones:solicitud_vacaciones_all', 3600 * 12, function () {
-            return self::with('empleado')->orderBy('id', 'desc')->get(); // Ordering by 'id' column in descending order
+            return self::with('empleado')->orderByDesc('id')->get(); // Ordering by 'id' column in descending order
         });
     }
 }

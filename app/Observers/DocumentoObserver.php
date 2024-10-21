@@ -14,7 +14,11 @@ class DocumentoObserver
      */
     public function created(Documento $documento): void
     {
-        event(new DocumentoEvent($documento, 'create', 'documentos', 'Documento'));
+        try {
+            event(new DocumentoEvent($documento, 'create', 'documentos', 'Documento'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -23,7 +27,11 @@ class DocumentoObserver
      */
     public function updated(Documento $documento): void
     {
-        event(new DocumentoEvent($documento, 'update', 'documentos', 'Documento'));
+        try {
+            event(new DocumentoEvent($documento, 'update', 'documentos', 'Documento'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -32,7 +40,11 @@ class DocumentoObserver
      */
     public function deleted(Documento $documento): void
     {
-        event(new DocumentoEvent($documento, 'delete', 'documentos', 'Documento'));
+        try {
+            event(new DocumentoEvent($documento, 'delete', 'documentos', 'Documento'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 

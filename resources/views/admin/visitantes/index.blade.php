@@ -16,7 +16,7 @@
         </div>
         <div class="row p-4 print-none">
             <div class="col-12" style="text-align: end">
-                <a href="{{ route('admin.visitantes.menu') }}" class="btn btn-success">Regresar</a>
+                <a href="{{ route('admin.visitantes.menu') }}" class="btn btn-primary">Regresar</a>
             </div>
         </div>
     </div>

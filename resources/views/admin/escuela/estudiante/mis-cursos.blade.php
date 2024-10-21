@@ -31,13 +31,13 @@
         @if ($lastCourse->cursos->status != '4')
             <h3 class="title-main-cursos">Continuar aprendiendo</h3>
             <div class="card last-course">
-                <div class="row g-0">
-                    <div class="col-md-4" style="padding-left:0px; padding-right:0px; ">
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="content-img">
                             <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen">
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 d-flex align-items-center">
                         <div class="card-body" style="padding-left:0px; padding-right:0px;">
                             <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
                             @if (isset($lastCourse->cursos->instructor))
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-center justify-content-center">
                         <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}"
-                            class="btn btn-last-course">
+                            class="btn btn-primary btn-last-course">
                             Reanudar Curso
                         </a>
 
@@ -118,7 +118,7 @@
 
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}"
-                                        class="btn btn-mi-course">Ir a
+                                        class="btn btn-primary btn-mi-course">Ir a
                                         mi
                                         curso</a>
                                 </div>
@@ -133,7 +133,7 @@
         </div>
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.courses-inscribed') }}"
-                style="display: inline-block; vertical-align: middle; color:#006DDB; margin-top:21px;">
+                style="display: inline-block; vertical-align: middle; color:var(--color-tbj); margin-top:21px;">
                 <span class="material-symbols-outlined" style="vertical-align: middle;">
                     add
                 </span>

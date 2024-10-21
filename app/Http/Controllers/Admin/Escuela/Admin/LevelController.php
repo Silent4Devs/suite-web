@@ -18,7 +18,7 @@ class LevelController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Level::get();
+            $query = Level::getAll();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,7 +51,7 @@ class LevelController extends Controller
             return $table->make(true);
         }
 
-        $levels = Level::get();
+        $levels = Level::getAll();
 
         return view('admin.escuela.admin.levels.index', compact('levels'));
     }

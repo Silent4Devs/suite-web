@@ -10,7 +10,7 @@
                 @csrf
                 <div>
                     <div class="form-group anima-focus">
-                        <select wire:model.defer="section_id" id="section_id" name="section[is_active]"
+                        <select wire:model="section_id" id="section_id" name="section[is_active]"
                             value="{{ old('section.is_active') }}" class="form-control">
                             <option value="" selected disabled>Seleccionar una o más secciones
                             </option>
@@ -30,7 +30,7 @@
                     @error('section.name')
                         <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
                     @enderror
-                    <input class="form-control" type="text" value="" id="title" wire:model.defer="name" placeholder="">
+                    <input class="form-control" type="text" value="" id="title" wire:model="name" placeholder="">
                     <label for="name">Nombre*</label>
                     @error('name')
                         <p class="text-danger">{{ $message }}</p>
@@ -40,7 +40,7 @@
 
                 <div class="form-group anima-focus ">
                     {{-- {!! Form::label('description', 'Descripción:', ['class' => 'text-primary mt-4']) !!} --}}
-                    <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model.defer="description"
+                    <textarea class="mb-2 form-control" type="text" value="" id="title" wire:model="description"
                     placeholder=""></textarea>
                     <label for="description">Descripción:</label>
                     @error('description')

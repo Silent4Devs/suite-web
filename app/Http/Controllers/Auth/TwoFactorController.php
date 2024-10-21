@@ -44,7 +44,7 @@ class TwoFactorController extends Controller
             '403 Forbidden'
         );
 
-        auth()->user()->notify(new TwoFactorCodeNotification());
+        auth()->user()->notify(new TwoFactorCodeNotification);
 
         return redirect()->back()->with('message', __('global.two_factor.sent_again'));
     }

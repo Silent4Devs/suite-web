@@ -20,6 +20,23 @@ class Quejas extends Model implements Auditable
         'id',
     ];
 
+    protected $fillable = [
+        'id',
+        'titulo',
+        'fecha',
+        'estatus',
+        'fecha_cierre',
+        'sede',
+        'ubicacion',
+        'descripcion',
+        'area_quejado',
+        'colaborador_quejado',
+        'proceso_quejado',
+        'externo_quejado',
+        'comentarios',
+        'fecha_cierre',
+    ];
+
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
     //Redis methods

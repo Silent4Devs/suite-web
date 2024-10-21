@@ -170,7 +170,7 @@ class TimesheetService
                 'times_rechazados' => $contador_times_rechazados_areas,
                 'times_papelera' => $contador_times_papelera_areas,
                 'partisipacion' => $porcentaje_participacion_area,
-                'nivel_p' => $nivel_participacion ?? "",
+                'nivel_p' => $nivel_participacion ?? '',
                 'times_esperados' => $times_complete_esperados_area,
                 'empleados' => $empleados_array,
             ];

@@ -180,7 +180,7 @@
 
     $('#superaprobadores').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }
@@ -213,7 +213,7 @@
         }
 
         var avatar = $(option.element).data('avatar');
-        var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+        var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
         var avatarText = option.text;
 
         var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
@@ -246,7 +246,7 @@
 
     $('#nivel1').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }
@@ -277,7 +277,7 @@
 
     $('#nivel2').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }
@@ -308,7 +308,7 @@
 
     $('#nivel3').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }
@@ -339,7 +339,7 @@
 
     $('#nivel4').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }
@@ -369,7 +369,7 @@
 
     $('#nivel5').on('select2:unselect', function(e) {
         var unselectedOptionId = e.params.data.id;
-        var index = selectedOptions.indexOf(unselectedOptionId);
+        // var index = selectedOptions.indexOf(unselectedOptionId);
         if (index !== -1) {
             selectedOptions.splice(index, 1);
         }

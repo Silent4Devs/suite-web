@@ -19,11 +19,13 @@
 
     {{ Breadcrumbs::render('timesheet-index') }}
 
+
+
     <h5 class="col-12 titulo_general_funcion">Timesheet: <font style="font-weight:lighter;">Mis Registros</font>
     </h5>
-
     @livewire('timesheet.tabla-mis-registros', ['estatus' => $estatus])
 @endsection
+
 
 
 @section('scripts')
@@ -46,6 +48,7 @@
                     }
                 },
                 {
+
                     extend: 'excelHtml5',
                     title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
@@ -56,6 +59,7 @@
                     }
                 },
                 {
+
                     extend: 'print',
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;color:#345183"></i>',
                     className: "btn-sm rounded pr-2",

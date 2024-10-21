@@ -3,7 +3,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.matriz') !!}">Matriz de Análisis de Impacto</a>
+            <a href="{!! route('admin.analisis-impacto.matriz') !!}">Matriz de Análisis de Impacto</a>
         </li>
         <li class="breadcrumb-item active">Ajustar</li>
     </ol>
@@ -29,7 +29,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             {!! Form::model($cuestionario, [
-                'route' => ['admin.analysisImpact.updateAjustesBIA', $cuestionario->id],
+                'route' => ['admin.analisis-impacto.updateAjustesBIA', $cuestionario->id],
                 'method' => 'put',
             ]) !!}
 
@@ -72,8 +72,8 @@
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

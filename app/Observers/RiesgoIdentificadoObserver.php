@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\RiesgosEvent;
 use App\Models\RiesgoIdentificado;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,8 @@ class RiesgoIdentificadoObserver
      */
     public function created(RiesgoIdentificado $riesgoIdentificado)
     {
+        event(new RiesgosEvent($riesgoIdentificado, 'create', 'riesgos_identificados', 'Riesgo'));
+
         $this->forgetCache();
     }
 
@@ -24,6 +27,8 @@ class RiesgoIdentificadoObserver
      */
     public function updated(RiesgoIdentificado $riesgoIdentificado)
     {
+        event(new RiesgosEvent($riesgoIdentificado, 'update', 'riesgos_identificados', 'Riesgo'));
+
         $this->forgetCache();
     }
 
@@ -34,26 +39,8 @@ class RiesgoIdentificadoObserver
      */
     public function deleted(RiesgoIdentificado $riesgoIdentificado)
     {
-        $this->forgetCache();
-    }
+        event(new RiesgosEvent($riesgoIdentificado, 'delete', 'riesgos_identificados', 'Riesgo'));
 
-    /**
-     * Handle the RiesgoIdentificado "restored" event.
-     *
-     * @return void
-     */
-    public function restored(RiesgoIdentificado $riesgoIdentificado)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the RiesgoIdentificado "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(RiesgoIdentificado $riesgoIdentificado)
-    {
         $this->forgetCache();
     }
 

@@ -64,11 +64,11 @@
     }
 
     .card h5 {
-        color: #306BA9;
+        color: var(--color-tbj);
     }
 
     .instrucciones {
-        background-color: #306BA9;
+        background-color: var(--color-tbj);
         border-radius: 8px;
         color: #fff;
         padding: 20px;

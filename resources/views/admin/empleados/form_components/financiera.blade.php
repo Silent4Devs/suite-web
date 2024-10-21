@@ -1,11 +1,11 @@
-<div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+<div class="mt-4 text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     Datos Financieros
 </div>
 <div class="row mt-4">
     <div class="form-group col-sm-6">
         <label for="banco"><i class="fas fa-landmark iconos-crear"></i>Banco</label>
-        <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="banco" id="banco"
-            value="{{ old('banco', $empleado->banco) }}">
+        <input class="form-control {{ $errors->has('banco') ? 'is-invalid' : '' }}" type="text" name="banco"
+            id="banco" value="{{ old('banco', $empleado->banco) }}">
         <small id="error_banco" class="text-danger"></small>
     </div>
     <div class="form-group col-sm-6">
@@ -84,8 +84,7 @@
                 value="Decenal">Decenal</option>
             <option {{ old('periodicidad_nomina', $empleado->periodicidad_nomina) == 'Oncenal' ? 'selected' : '' }}
                 value="Oncenal">Oncenal</option>
-            <option
-                {{ old('periodicidad_nomina', $empleado->periodicidad_nomina) == 'Catorcenal' ? 'selected' : '' }}
+            <option {{ old('periodicidad_nomina', $empleado->periodicidad_nomina) == 'Catorcenal' ? 'selected' : '' }}
                 value="Catorcenal">Catorcenal</option>
             <option {{ old('periodicidad_nomina', $empleado->periodicidad_nomina) == 'Quincenal' ? 'selected' : '' }}
                 value="Quincenal">Quincenal</option>
@@ -101,8 +100,8 @@
     {{-- Componente Beneficiarios --}}
     <div class="col-sm-12">
         <label><i class="fas fa-users iconos-crear"></i>Beneficiarios</label>
-        @include('admin.empleados.components.beneficiarios',[
-        'empleado'=>$empleado
+        @include('admin.empleados.components.beneficiarios', [
+            'empleado' => $empleado,
         ])
     </div>
     {{-- Fin Componente Beneficiarios --}}
@@ -124,7 +123,8 @@
     <div class="form-group col-sm-6">
         <label for="numero_credito"><i class="fas fa-barcode iconos-crear"></i>Número de crédito</label>
         <input class="form-control {{ $errors->has('numero_credito') ? 'is-invalid' : '' }}" type="text"
-            name="numero_credito" id="numero_credito" value="{{ old('numero_credito', $empleado->numero_credito) }}">
+            name="numero_credito" id="numero_credito"
+            value="{{ old('numero_credito', $empleado->numero_credito) }}">
         <small id="error_numero_credito" class="text-danger"></small>
     </div>
     <div class="form-group col-sm-12">

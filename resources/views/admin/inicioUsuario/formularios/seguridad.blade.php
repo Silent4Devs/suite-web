@@ -12,16 +12,13 @@
         }
     </style>
 
-    @if (asset('admin/inicioUsuario') ==
-        redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('seguridad-create-perfil') }}
     @endif
-    @if (asset('admin/portal-comunicacion/reportes') ==
-        redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('seguridad-create-portal') }}
     @endif
-    @if (asset('admin/desk') ==
-        redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('seguridad-create') }}
     @endif
 
@@ -89,8 +86,8 @@
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto del
                             incidente<sup>*</sup></label>
-                            <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                                title="Describa de forma breve y con palabras clave el motivo del incidente."></i>
+                        <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Describa de forma breve y con palabras clave el motivo del incidente."></i>
                         <input type="text" maxlength="255" name="titulo" class="form-control" required>
                     </div>
 
@@ -104,7 +101,8 @@
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
-                        <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Sede<sup>*</sup></label>
+                        <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
+                            Sede<sup>*</sup></label>
                         <select required class="form-control" name="sede">
                             <option value="" selected disabled>Seleccione sede</option>
                             @foreach ($sedes as $sede)
@@ -116,15 +114,15 @@
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
                         <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                                title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
+                            title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
                         <input type="text" name="ubicacion" class="form-control" maxlength="255">
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente el
                             incidente<sup>*</sup></label>
-                            <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                                title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
+                        <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                            title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
                         <textarea name="descripcion" class="form-control" maxlength="550" required></textarea>
                     </div>
 
@@ -154,7 +152,8 @@
                     </div>
 
                     <div class="mt-2 form-group col-4 activos_multiselect">
-                        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activos afectados</label>
+                        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activos
+                            afectados</label>
                         <select class="form-control" id="activos_afectados_id">
                             <option disabled selected>Seleccionar afectados</option>
                             @foreach ($activos as $activo)
@@ -219,8 +218,9 @@
 
 
                     <div class="mt-2 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" name="" class="btn btn-success" value="Enviar" id="btn_enviar">
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <input type="submit" name="" class="btn btn-primary" value="Enviar" id="btn_enviar">
                     </div>
                 </form>
 
@@ -302,20 +302,20 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-        let select_activos = document.querySelector('.areas_multiselect #activos_areas');
-        let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
+            let select_activos = document.querySelector('.areas_multiselect #activos_areas');
+            let texto_activos = document.querySelector('.areas_multiselect #texto_activos');
 
-        select_activos.addEventListener('change', function(e) {
-            e.preventDefault();
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!texto_activos.value.includes(this.value)) {
-                texto_activos.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Esta área ya está seleccionada.');
-                // Deseleccionar la opción
-                this.value = '';
+                // Verificar si el valor ya está presente en el área de texto
+                if (!texto_activos.value.includes(this.value)) {
+                    texto_activos.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Esta área ya está seleccionada.');
+                    // Deseleccionar la opción
+                    this.value = '';
                 }
             });
         });
@@ -323,47 +323,47 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
-        let select_activos = document.querySelector('.procesos_multiselect #activos_procesos');
-        let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
+            let select_activos = document.querySelector('.procesos_multiselect #activos_procesos');
+            let texto_activos = document.querySelector('.procesos_multiselect #texto_activos');
 
-        select_activos.addEventListener('change', function(e) {
-            e.preventDefault();
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!texto_activos.value.includes(this.value)) {
-                texto_activos.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este proceso ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!texto_activos.value.includes(this.value)) {
+                    texto_activos.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este proceso ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-    });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-    let select_activos = document.querySelector('.activos_multiselect #activos_afectados_id');
-    let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select_activos = document.querySelector('.activos_multiselect #activos_afectados_id');
+            let texto_activos = document.querySelector('.activos_multiselect #texto_activos');
 
-    select_activos.addEventListener('change', function(e) {
-        e.preventDefault();
+            select_activos.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        // Verificar si el valor ya está presente en el área de texto
-        if (!texto_activos.value.includes(this.value)) {
-            texto_activos.value += `${this.value}, `;
-        } else {
-            // Mostrar mensaje de advertencia si el valor ya está presente
-            alert('Este elemento ya está seleccionado.');
-            // Deseleccionar la opción
-            this.value = '';
-        }
-    });
-});
+                // Verificar si el valor ya está presente en el área de texto
+                if (!texto_activos.value.includes(this.value)) {
+                    texto_activos.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
+        });
 
         $(document).ready(function() {
-            let incidente=@json($incidentes_seguridad);
-            if ( incidente.procedente == true) {
+            let incidente = @json($incidentes_seguridad);
+            if (incidente.procedente == true) {
 
                 $("#porque_queja_procedente").fadeOut(100);
 

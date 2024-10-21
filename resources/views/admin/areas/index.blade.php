@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 <style>
- #form_id {
-    display: none;
-}
-
+    #form_id {
+        display: none;
+    }
 </style>
 @section('content')
-
-
     <h5 class="col-12 titulo_general_funcion">Registro de Áreas</h5>
     <div class="mt-5 card">
         @can('crear_area_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    @include('csvImport.modal', ['model' => 'Area', 'route' => 'admin.areas.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'Area',
+                        'route' => 'admin.areas.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -27,7 +27,8 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización comenzando
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Agregue las áreas de la organización
+                        comenzando
                         por la de más alta jerarquía
 
                     </p>
@@ -38,69 +39,129 @@
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-Area">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="max-width: 40px;">ID</th>
-                        <th>
-                            Nombre&nbsp;de&nbsp;Área
-                        </th>
-                        <th>
-                            Foto
-                        </th>
-                        <th>
-                            Grupo
-                        </th>
-                        <th>
-                            Reporta&nbsp;a
-                        </th>
-                        <th>
-                            Descripción
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="d-flex justify-content-end">
+                <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-registro-area') }}">
+                    <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                    <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+                </a> &nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="datatable-fix datatable-rds">
+                <table class="datatable datatable-Area">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="max-width: 40px;">ID</th>
+                            <th>
+                                Nombre&nbsp;de&nbsp;Área
+                            </th>
+                            <th>
+                                Foto
+                            </th>
+                            <th>
+                                Grupo
+                            </th>
+                            <th>
+                                Reporta&nbsp;a
+                            </th>
+                            <th>
+                                Descripción
+                            </th>
+                            <th>
+                                Opciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($areas as $keyAreas => $area)
+                            <tr>
+                                <td>{{ $area->id }}</td>
+                                <td>{{ $area->area }}</td>
+                                <td>
+                                    @if ($area->foto_ruta)
+                                        <img src="{{ $area->foto_ruta }}" style="width:80px;" alt="Foto">
+                                    @endif
+                                </td>
+                                <td>{{ $area->grupo->nombre ?? '' }}</td>
+                                <td>
+                                    <div style="text-align:left">{{ $area->supervisor->area ?? '' }}</div>
+                                </td>
+                                <td>
+                                    <div style="text-align:left">{{ $area->descripcion ?? '' }}</div>
+                                </td>
+                                <td>
+                                    {{-- {{ $area->id }} --}}
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            @can('crear_area_ver')
+                                                <a class="dropdown-item" href="{{ route('admin.areas.show', $area->id) }}">
+                                                    <i class="fa-solid fa-eye"></i>&nbsp;Ver</a>
+                                            @endcan
+                                            @can('crear_area_editar')
+                                                <a class="dropdown-item" href="{{ route('admin.areas.edit', $area->id) }}">
+                                                    <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                            @endcan
+                                            @if (!$area->utilizada)
+                                                <form id="delete-form"
+                                                    action="{{ route('admin.areas.destroy', $area->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                @can('crear_area_eliminar')
+                                                    <a class="dropdown-item delete-item"
+                                                        onclick="deleteItem({{ $area->id }})">
+                                                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                                @endcan
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
 
-<form method="POST" id="form_id" style="position: relative; left: 10rem; "
-        action="{{ route('admin.areas.pdf') }}">
-        @csrf
-        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-        </button>
-    </form>
+<form method="POST" id="form_id" style="position: relative; left: 10rem; " action="{{ route('admin.areas.pdf') }}">
+    @csrf
+    <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+    </button>
+</form>
 
 @section('scripts')
     @parent
     <script>
+        function deleteItem(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Establecemos la acción del formulario con la URL adecuada
+                    var form = document.getElementById('delete-form');
+                    // Enviamos el formulario
+                    form.submit();
+                }
+            });
+        }
+    </script>
+
+    <script>
         $(function() {
             let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Áreas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Áreas ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
                     extend: 'pdfHtml5',
                     title: `Áreas ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
@@ -116,16 +177,6 @@
                         form.submit();
                     },
                 },
-                // {
-                //     extend: 'print',
-                //     title: `Áreas ${new Date().toLocaleDateString().trim()}`,
-                //     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                //     className: "btn-sm rounded pr-2",
-                //     titleAttr: 'Imprimir',
-                //     exportOptions: {
-                //         columns: ['th:not(:last-child):visible']
-                //     }
-                // },
                 {
                     extend: 'colvis',
                     text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
@@ -150,115 +201,35 @@
 
             @can('crear_area_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar area',
-                url: "{{ route('admin.areas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar area',
+                    url: "{{ route('admin.areas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
+                    titleAttr: 'Importar datos por CSV',
+                    className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        $('#csvImportModal').modal('show');
+                    }
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
-            @endcan
-            @can('crear_area_eliminar')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.areas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-
-                return
-                }
-
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
-                }
-                //dtButtons.push(deleteButton)
             @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
-                retrieve: true,
-                aaSorting: [],
-                ajax: "{{ route('admin.areas.index') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
-                    {
-                        data: 'area',
-                        name: 'area'
-                    },
-                    {
-                        data: 'foto_ruta',
-                        render: function(data, type, row, meta) {
-                            return `<img src="${data}" style="width:${data!=""?"50px":"80px"}">`;
-                        }
-                    },
-                    {
-                        data: 'grupo',
-                        name: 'grupo'
-                    },
-                    {
-                        data: 'reporta',
-                        name: 'reporta',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
+
             };
             let table = $('.datatable-Area').DataTable(dtOverrideGlobals);
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(".caja_btn_a a").click(function() {
-            $(".caja_btn_a a").removeClass("btn_a_seleccionado");
-            $(".caja_btn_a a:hover").addClass("btn_a_seleccionado");
-            $("#contenido1").removeClass("d-block");
-
         });
     </script>
 @endsection

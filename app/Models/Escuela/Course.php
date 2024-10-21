@@ -3,6 +3,7 @@
 namespace App\Models\Escuela;
 
 use App\Traits\ClearsResponseCache;
+use Chelout\RelationshipEvents\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,8 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
+    protected $append = ['sections_order', 'rating', 'last_finished_lesson'];
+
     const BORRADOR = 1;
 
     const REVISION = 2;
@@ -33,7 +36,7 @@ class Course extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('Courses:courses_all', 3600 * 7, function () {
-            return self::get();
+            return self::with('sections.lessons', 'lessons', 'instructor')->get();
         });
     }
 
@@ -128,7 +131,13 @@ class Course extends Model implements Auditable
 
     public function instructor()
     {
-        return $this->belongsTo('App\Models\User', 'empleado_id');
+        return $this->belongsTo('App\Models\User', 'empleado_id')->select('id', 'name', 'email', 'empleado_id', 'n_empleado')->with('empleado:id,name,email,area_id,puesto_id,foto,n_empleado');
+    }
+
+    public function user()
+    {
+
+        return $this->belongsTo('App\Models\User', 'empleado_id')->select('id', 'name', 'email', 'empleado_id', 'n_empleado');
     }
 
     public function level()
@@ -169,5 +178,20 @@ class Course extends Model implements Auditable
     public function lessons()
     {
         return $this->hasManyThrough('App\Models\Escuela\Lesson', 'App\Models\Escuela\Section');
+    }
+
+    public function getLastFinishedLessonAttribute()
+    {
+        foreach ($this->sections_order as $secciones_lecciones) {
+            foreach ($secciones_lecciones->lessons as $lesson) {
+                if (! $lesson->completed) {
+                    // dd($lesson);
+                    return $lesson;
+                    // break;
+                }
+            }
+        }
+
+        return null;
     }
 }

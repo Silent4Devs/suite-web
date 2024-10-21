@@ -39,6 +39,7 @@ class IncidentesDeSeguridad extends Model implements Auditable
     protected $fillable = [
         'folio',
         'resumen',
+        'estatus',
         'prioridad',
         'fechaocurrencia',
         'clasificacion',
@@ -52,6 +53,17 @@ class IncidentesDeSeguridad extends Model implements Auditable
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('incidentesSeguridad_all', 3600, function () {
+
+            return self::select('id', 'titulo', 'estatus', 'fecha', 'fecha_cierre', 'categoria', 'subcategoria', 'sede', 'ubicacion', 'descripcion', 'areas_afectados', 'procesos_afectados', 'activos_afectados', 'urgencia', 'impacto', 'prioridad', 'comentarios',
+                'empleado_reporto_id', 'empleado_asignado_id', 'evidencia')->where('archivado', false)->get();
+        });
     }
 
     public function getFechaocurrenciaAttribute($value)

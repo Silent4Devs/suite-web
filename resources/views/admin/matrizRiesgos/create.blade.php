@@ -476,7 +476,6 @@
             display: block;
             padding: 6px;
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -488,7 +487,8 @@
             <form method="POST" action="{{ route('admin.matriz-riesgos.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
                 <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
@@ -501,7 +501,8 @@
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                             </p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según corresponda:</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según
+                                corresponda:</p>
                         </div>
                     </div>
                 </div><br>
@@ -510,24 +511,28 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_sede"  class="required"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label><br>
+                        <label for="id_sede" class="required"><i
+                                class="fas fa-map-marker-alt iconos-crear"></i>Sede</label><br>
                         <select class="sedeSelect form-control" name="id_sede" id="id_sede">
                             <option value="">Seleccione una opción</option>
                             @foreach ($sedes as $sede)
-                                <option {{old('id_sede') == $sede->id ? ' selected="selected"' : ''}} value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                                <option {{ old('id_sede') == $sede->id ? ' selected="selected"' : '' }}
+                                    value="{{ $sede->id }}">{{ $sede->sede }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_sede'))
-                        <span class="text-danger"> {{ $errors->first('id_sede') }}</span>
+                            <span class="text-danger"> {{ $errors->first('id_sede') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_proceso"  class="required"><i class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
+                        <label for="id_proceso" class="required"><i
+                                class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
                         <select class="procesoSelect form-control" name="id_proceso" id="id_proceso">
                             <option value="">Seleccione una opción</option>
                             @foreach ($procesos as $proceso)
-                                <option {{old('id_proceso') == $proceso->id ? ' selected="selected"' : ''}} value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
+                                <option {{ old('id_proceso') == $proceso->id ? ' selected="selected"' : '' }}
+                                    value="{{ $proceso->id }}">{{ $proceso->codigo }} / {{ $proceso->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -537,30 +542,34 @@
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="activo_id"  class="required"><i class="fas fa-user-tie iconos-crear"></i>Activo (subcategoría)</label><br>
+                        <label for="activo_id" class="required"><i class="fas fa-user-tie iconos-crear"></i>Activo
+                            (subcategoría)</label><br>
                         <select class="responsableSelect form-control" name="activo_id" id="activo_id">
                             <option value="">Seleccione una opción</option>
                             @foreach ($activos as $activo)
-                                <option {{old('activo_id') == $activo->id ? ' selected="selected"' : ''}} value="{{ $activo->id }}">{{ $activo->subcategoria }}
+                                <option {{ old('activo_id') == $activo->id ? ' selected="selected"' : '' }}
+                                    value="{{ $activo->id }}">{{ $activo->subcategoria }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('activo_id'))
-                        <span class="text-danger"> {{ $errors->first('activo_id') }}</span>
+                            <span class="text-danger"> {{ $errors->first('activo_id') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_responsable"  class="required"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label><br>
+                        <label for="id_responsable" class="required"><i
+                                class="fas fa-user-tie iconos-crear"></i>Responsable</label><br>
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option  data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
+                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
+                                    data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_responsable'))
-                        <span class="text-danger"> {{ $errors->first('id_responsable') }}</span>
+                            <span class="text-danger"> {{ $errors->first('id_responsable') }}</span>
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
@@ -580,35 +589,39 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_amenaza"  class="required"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
+                        <label for="id_amenaza" class="required"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
                         <select class="procesoSelect form-control" name="id_amenaza" id="id_amenaza">
                             <option value="">Seleccione una opción</option>
                             @foreach ($amenazas as $amenaza)
-                                <option {{old('id_amenaza') == $amenaza->id ? ' selected="selected"' : ''}} value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
+                                <option {{ old('id_amenaza') == $amenaza->id ? ' selected="selected"' : '' }}
+                                    value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_amenaza'))
-                        <span class="text-danger"> {{ $errors->first('id_amenaza') }}</span>
+                            <span class="text-danger"> {{ $errors->first('id_amenaza') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_vulnerabilidad"  class="required"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
+                        <label for="id_vulnerabilidad" class="required"><i
+                                class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
                         <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
                             <option value="">Seleccione una opción</option>
                             @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option {{old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : ''}} value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
+                                <option {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
+                                    value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_vulnerabilidad'))
-                        <span class="text-danger"> {{ $errors->first('id_vulnerabilidad') }}</span>
+                            <span class="text-danger"> {{ $errors->first('id_vulnerabilidad') }}</span>
                         @endif
                     </div>
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="tipo_riesgo"  class="required"><i class="fas fa-asterisk iconos-crear"></i>Tipo de riesgo</label>
+                        <label for="tipo_riesgo" class="required"><i class="fas fa-asterisk iconos-crear"></i>Tipo de
+                            riesgo</label>
                         <select class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}"
                             name="tipo_riesgo" id="tipo_riesgo">
                             <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>
@@ -632,9 +645,8 @@
 
                 <div class="form-group">
                     <label for="descripcionriesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción Riesgo</label>
-                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}"
-                        type="text" name="descripcionriesgo" id="descripcionriesgo"
-                        value="{{ old('descripcionriesgo', '') }}" rows="3"></textarea>
+                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" type="text"
+                        name="descripcionriesgo" id="descripcionriesgo" value="{{ old('descripcionriesgo', '') }}" rows="3"></textarea>
                     @if ($errors->has('descripcionriesgo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcionriesgo') }}
@@ -643,7 +655,8 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -684,7 +697,8 @@
 
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="disponibilidad" name="disponibilidad">
+                            <input type="checkbox" class="custom-control-input" id="disponibilidad"
+                                name="disponibilidad">
                             <label class="custom-control-label" for="disponibilidad"><i
                                     class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label>
                         </div>
@@ -698,12 +712,14 @@
 
                 </div>
                 <hr>
-                <p class="font-weight-bold" style="font-size:11pt;">Evalue el riesgo inicial de acuerdo a la probabilidad vs
+                <p class="font-weight-bold" style="font-size:11pt;">Evalue el riesgo inicial de acuerdo a la probabilidad
+                    vs
                     impacto</p>
                 <div class="row">
 
                     <div class="form-group col-sm-4">
-                        <label for="probabilidad"  class="required"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
+                        <label for="probabilidad" class="required"><i
+                                class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
                         <select class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}"
                             name="probabilidad" id="probabilidad">
                             <option value disabled {{ old('probabilidad', null) === null ? 'selected' : '' }}>
@@ -724,7 +740,8 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="impacto"  class="required"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
+                        <label for="impacto" class="required"><i
+                                class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                         <select class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" name="impacto"
                             id="impacto">
                             <option value disabled {{ old('impacto', null) === null ? 'selected' : '' }}>
@@ -744,7 +761,7 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                     </div>
 
-                    <div class="form-group col-sm-4" >
+                    <div class="form-group col-sm-4">
                         <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                         </label>
                         <div class="mb-3 input-group" style="pointer-events: none;">
@@ -752,7 +769,8 @@
                                 <span class="input-group-text text-dark mayus" id="nivelriesgo_pre"></span>
                             </div>
                             <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}"
-                                type="number" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
+                                type="number" name="nivelriesgo" id="nivelriesgo"
+                                value="{{ old('nivelriesgo', '') }}">
                             @if ($errors->has('nivelriesgo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('nivelriesgo') }}
@@ -764,17 +782,18 @@
 
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
-                <input class="form-control" type="text" id="version_historico"
-                name="version_historico" value="{{ $version_historico}}" readonly hidden>
+                <input class="form-control" type="text" id="version_historico" name="version_historico"
+                    value="{{ $version_historico }}" readonly hidden>
                 <div class="row">
-                    @if ($version_historico === "true")
+                    @if ($version_historico === 'true')
                         <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p>
                     @else
                         <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p>
                     @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
-                            <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;" class="required"><i class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
+                            <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"
+                                class="required"><i class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
                                 a
                                 aplicar</label>
                             <div class="mb-4 col-12">
@@ -783,17 +802,17 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @if ($version_historico === "true")
+                                    @if ($version_historico === 'true')
                                         @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}">
-                                            {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                                        </option>
+                                            <option value="{{ $control->id }}">
+                                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                            </option>
                                         @endforeach
                                     @else
                                         @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}">
-                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
-                                        </option>
+                                            <option value="{{ $control->id }}">
+                                                {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                            </option>
                                         @endforeach
                                     @endif
 
@@ -810,18 +829,20 @@
 
 
                     <div class="form-group col-sm-12">
-                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el tratamiento que desea darle a este riesgo</label>
+                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el
+                            tratamiento que desea darle a este riesgo</label>
                         <select class="form-control" name="tipo_tratamiento" id="ejemplo">
                             <option selected value="">Seleccione una opción</option>&gt;
                             <option value="1">Aceptar</option>&gt;
                             <option value="0">Mitigar</option>&gt;
                             <option value="2">Transferir</option>&gt;
                         </select>
-                            <!-- Note, I changed hidden to text so you can see it<br/> -->
+                        <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>
                     <div class="form-group col-sm-12">
                         <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
-                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1" placeholder="Justificación" rows="3" style="display: none;"></textarea>
+                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1"
+                            value="1" placeholder="Justificación" rows="3" style="display: none;"></textarea>
                     </div>
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
@@ -844,7 +865,7 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
                         {{-- MODULO AGREGAR PLAN DE Trabajo --}}
 
-                        {{--Pendiente de revisar con Mike y Marco--}}
+                        {{-- Pendiente de revisar con Mike y Marco --}}
                         {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-question-circle iconos-crear"></i> ¿Vincular con Plan de Trabajo?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -859,10 +880,11 @@
                         </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
                     </div>
-<!-- hasta aqui -->
+                    <!-- hasta aqui -->
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 
@@ -890,7 +912,8 @@
 
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="integridad_cid" name="integridad_cid">
+                            <input type="checkbox" class="custom-control-input" id="integridad_cid"
+                                name="integridad_cid">
                             <label class="custom-control-label" for="integridad_cid"><i
                                     class="fab fa-black-tie iconos-crear"></i>Integridad</label>
                         </div>
@@ -988,8 +1011,8 @@
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

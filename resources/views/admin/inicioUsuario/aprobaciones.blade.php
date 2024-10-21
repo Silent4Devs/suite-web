@@ -3,7 +3,6 @@
     .mayusculatext {
         text-tranform: lowercase !important;
     }
-
 </style>
 <div class="card-body datatable-fix pb-0">
     <div class="row">
@@ -30,12 +29,12 @@
             </div>
         </div>
         <div class="col-12">
-            <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">
+            <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px var(--color-tbj)">
                 Requeridos: Documentos que debo aprobar </h5>
             @include('admin.inicioUsuario.aprobaciones.documentos-debo-aprobar.index')
         </div>
         <div class="col-12">
-            <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">
+            <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px var(--color-tbj)">
                 Solicitados: Documentos que me deben aprobar</h5>
             @include('admin.inicioUsuario.aprobaciones.documentos-me-deben-aprobar.index')
         </div>
@@ -45,7 +44,6 @@
 <div>
     @foreach ($mis_documentos as $documento)
         @if (!($documento->archivo == 'archivado'))
-
             <div class="modal fade" id="alert_aprob_arch{{ $documento->id }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -338,5 +336,4 @@
             }
         });
     </script>
-
 @endsection

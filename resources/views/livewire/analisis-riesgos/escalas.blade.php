@@ -16,8 +16,8 @@
                     <div class="row m-0 p-0">
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
-                                <input type="number"
-                                    class="form-control" placeholder="" name="min" wire:model.defer="min" >
+                                <input type="number" class="form-control" placeholder="" name="min"
+                                    wire:model="min">
                                 <label for="min">Minimo*</label>
                                 @error('min')
                                     <div style="color: red;">{{ $message }}</div>
@@ -26,8 +26,8 @@
                         </div>
                         <div class="col-3">
                             <div class="form-group pl-0 anima-focus">
-                                <input type="number"
-                                    class="form-control" placeholder="" name="Maximo" wire:model.defer="max">
+                                <input type="number" class="form-control" placeholder="" name="Maximo"
+                                    wire:model="max">
                                 <label for="Maximo">Máximo*</label>
                                 @error('max')
                                     <div style="color: red;">{{ $message }}</div>
@@ -40,13 +40,14 @@
                     </div>
 
                     <h6 class="title-rango">Escalas</h6>
-                    <p class="subtitle-rango">Define las escalas de medición, asigna su color, valor y nombre para indetificarlos</p>
+                    <p class="subtitle-rango">Define las escalas de medición, asigna su color, valor y nombre para
+                        indetificarlos</p>
 
                     <div class="row m-0 p-0">
                         <div class="col-1"></div>
                         <div class="col-3"></div>
                         <div class="col-6"></div>
-                        <div class="col-1 p-0" >
+                        <div class="col-1 p-0">
                             <p class="column-asignar">Asignar Nivel de Riesgo aceptable</p>
                         </div>
 
@@ -56,13 +57,13 @@
                             <div class="row m-0 p-0">
                                 <div class="col-1" style="padding-left:0px; padding-right:0px;">
                                     <div class="color-picker" style="width: 100%;">
-                                        <input type="color" wire:model.defer="escalas.{{ $key }}.color"
+                                        <input type="color" wire:model="escalas.{{ $key }}.color"
                                             class="color-input form-control" title="Seleccione un color">
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input type="number" wire:model="escalas.{{ $key }}.valor"
+                                        <input type="number" wire:model.live="escalas.{{ $key }}.valor"
                                             class="form-control" placeholder="">
                                         <label for="valor">Valor</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -70,21 +71,22 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input wire:model="escalas.{{ $key }}.nombre" class="form-control"
+                                        <input wire:model.live="escalas.{{ $key }}.nombre" class="form-control"
                                             placeholder="">
                                         <label for="name">Nombre de la escala</label>
                                         @error('escalas.{{ $key }}.nombre')
-                                            <div style="color: red;"> {{$mesagge}}</div>
+                                            <div style="color: red;"> {{ $mesagge }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-1 flex-column">
-                                    <input type="checkbox" wire:model="escalas.{{ $key }}.is_accept"
+                                    <input type="checkbox" wire:model.live="escalas.{{ $key }}.is_accept"
                                         aria-label="Checkbox for following text input">
                                 </div>
                                 <div class="col-1" style="padding-top: 10px;">
-                                    @if ($key>1)
-                                    <i wire:click="removeInput({{ $key }})" class="text-sm text-red-500 fas fa-trash-alt"></i>
+                                    @if ($key > 1)
+                                        <i wire:click="removeInput({{ $key }})"
+                                            class="text-sm text-red-500 fas fa-trash-alt"></i>
                                     @endif
                                 </div>
                             </div>
@@ -94,13 +96,13 @@
                             <div class="row m-0 p-0">
                                 <div class="col-1" style="padding-left:0px; padding-right:0px;">
                                     <div class="color-picker" style="width: 100%;">
-                                        <input type="color" wire:model.defer="escalas.{{ $key }}.color"
+                                        <input type="color" wire:model="escalas.{{ $key }}.color"
                                             class="color-input form-control" title="Seleccione un color">
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input type="number" wire:model="escalas.{{ $key }}.valor"
+                                        <input type="number" wire:model.live="escalas.{{ $key }}.valor"
                                             class="form-control" placeholder="">
                                         <label for="valor">Valor</label>
                                         {{-- @error('name') <span class="text-danger">{{ $message }}</span> @enderror --}}
@@ -108,21 +110,21 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group pl-0 anima-focus">
-                                        <input wire:model="escalas.{{ $key }}.nombre"
+                                        <input wire:model.live="escalas.{{ $key }}.nombre"
                                             class="form-control" placeholder="" value="test">
                                         <label for="name">Nombre de la escala</label>
                                         @error('escalas.{{ $key }}.nombre')
-                                            <div style="color: red;"> {{$message}}</div>
+                                            <div style="color: red;"> {{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-1 flex-column">
-                                    <input type="checkbox" wire:model="escalas.{{ $key }}.is_accept"
+                                    <input type="checkbox" wire:model.live="escalas.{{ $key }}.is_accept"
                                         aria-label="Checkbox for following text input">
                                 </div>
                                 <div class="col-1" style="padding-top: 10px;">
                                     @if ($key > 1 && $escala['id'] !== 0)
-                                        <i wire:click="$emit('delete',{{ $escala['id'] }},{{ $key }})"
+                                        <i wire:click="$dispatch('delete',{{ $escala['id'] }},{{ $key }})"
                                             class="text-sm text-red-500 fas fa-trash-alt"></i>
                                     @elseif ($key > 1 && $escala['id'] === 0)
                                         <i wire:click="removeInput({{ $key }})"
@@ -133,7 +135,8 @@
                         @endforeach
                     @endif
 
-                    <a class="btn btn-link" wire:click.prevent="addInput" style="cursor: pointer; color: #006DDB;">
+                    <a class="btn btn-link" wire:click.prevent="addInput"
+                        style="cursor: pointer; color: var(--color-tbj)">
                         Agregar valor <i class="fas fa-plus"></i>
                     </a>
 

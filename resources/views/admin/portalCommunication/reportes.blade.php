@@ -48,7 +48,7 @@
                 class="container row mt-4 justify-content-center">
 
 
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="a_reporte card card-body">
                         <i class="bi bi-lightbulb"></i>
                         <h4>Sugerencia</h4>
@@ -66,10 +66,10 @@
                         <p>
                             Las sugerencias se canalizarán a las áreas correspondientes.
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="a_reporte card card-body">
                         <i class="bi bi-award"></i>
                         <h4>Mejora</h4>
@@ -94,10 +94,10 @@
                             mejoras donde su impacto se ve
                             reflejado en la operación del día a día.
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="a_reporte card card-body">
                         <i class="bi bi-emoji-frown"></i>
                         <h4>Queja</h4>
@@ -112,10 +112,10 @@
                             de la organización y/o del Manual de
                             Políticas.
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="a_reporte card card-body">
                         <i class="bi bi-flag"></i>
                         <h4>Denuncia</h4>
@@ -137,10 +137,10 @@
                             ninguna circunstancia.
 
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="a_reporte card card-body">
                         <i class="bi bi-exclamation-octagon"></i>
                         <h4>Incidente de Seguridad</h4>
@@ -164,10 +164,10 @@
                             de información y la interrupción de los
                             Servicios.
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
-                <div class=" col-center col-lg-4 col-md-4 col-sm-12">
+                <div class=" col-center col-lg-4 col-md-4 col-sm-12 d-flex">
                     <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte card card-body">
                         <i class="bi bi-shield-exclamation"></i>
                         <h4>Riesgo</h4>
@@ -177,7 +177,7 @@
                             organización o que ponga en peligro la
                             integridad física de los colaboradores.
                         </p>
-                        <div href="" class="btn btn-success btn_g_r">Generar Reporte</div>
+                        <div href="" class="btn btn-primary btn_g_r">Generar Reporte</div>
                     </a>
                 </div>
             </div>

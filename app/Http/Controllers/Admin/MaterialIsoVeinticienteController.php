@@ -177,7 +177,7 @@ class MaterialIsoVeinticienteController extends Controller
     {
         abort_if(Gate::denies('material_iso_veinticiente_create') && Gate::denies('material_iso_veinticiente_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new MaterialIsoVeinticiente();
+        $model = new MaterialIsoVeinticiente;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

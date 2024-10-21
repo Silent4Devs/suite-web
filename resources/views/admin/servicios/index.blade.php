@@ -1,45 +1,45 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
+            text-align: center;
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
 
-<style>
+        .btn_cargar:hover {
+            color: #fff;
+            background: #345183;
+        }
 
-    .btn_cargar{
-        border-radius: 100px !important;
-        border: 1px solid #345183;
-        color: #345183;
-        text-align: center;
-        padding: 0;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 !important;
-        margin-right: 10px !important;
-    }
-    .btn_cargar:hover{
-        color: #fff;
-        background:#345183 ;
-    }
-    .btn_cargar i{
-        font-size: 15pt;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .agregar{
-        margin-right:15px;
-    }
+        .btn_cargar i {
+            font-size: 15pt;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .table tr td:nth-child(4) {
+        .agregar {
+            margin-right: 15px;
+        }
 
-    text-align: left !important;
+        .table tr td:nth-child(4) {
 
-    }
+            text-align: left !important;
 
-</style>
+        }
+    </style>
 
     {{-- {{ Breadcrumbs::render('perfil-puesto') }} --}}
     @can('puesto_create')
@@ -52,13 +52,13 @@
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12"> --}}
-                    {{-- <a class="btn btn-success" href="{{ route('admin.puestos.create') }}">
+            {{-- <a class="btn btn-primary" href="{{ route('admin.puestos.create') }}">
                   Agregar <strong>+</strong>
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button> --}}
-                    {{-- @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
+            {{-- @include('csvImport.modal', ['model' => 'Puesto', 'route' => 'admin.puestos.parseCsvImport'])
                 </div>
             </div> --}}
         @endcan
@@ -73,7 +73,7 @@
                         <th>
                             Descripción
                         </th>
-                       <th>
+                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -156,66 +156,78 @@
 
             @can('puesto_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar area',
-                url: "{{ route('admin.servicios.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar area',
+                    url: "{{ route('admin.servicios.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-puesto') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#xlsxImportModal').modal('show');
-                }
-            };
+                    text: '<i  class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-puesto') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                let btnImport = {
+                    text: '<i  class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
+                };
 
-            dtButtons.push(btnAgregar);
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+                dtButtons.push(btnAgregar);
+                dtButtons.push(btnExport);
+                dtButtons.push(btnImport);
             @endcan
             @can('puesto_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.servicios.destroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.servicios.destroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan

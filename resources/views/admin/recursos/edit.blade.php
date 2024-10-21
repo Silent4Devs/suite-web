@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.recursos.create') }}
     <h5 class="col-12 titulo_general_funcion">Transferencia de conocimiento</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
@@ -13,7 +12,8 @@
                     Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
                 </p>
                 <p>
-                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
+                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por
+                    la organización.
                 </p>
             </div>
         </div>
@@ -38,8 +38,8 @@
                                 Agregar Participantes
                                 <span class="indicador_numero" id="contador-participantes-tab">0</span>
                             </a>
-                            <a class="nav-link" data-type="invitaciones" id="nav-invitaciones-tab"
-                                href="#nav-invitaciones" style="position:relative">
+                            <a class="nav-link" data-type="invitaciones" id="nav-invitaciones-tab" href="#nav-invitaciones"
+                                style="position:relative">
                                 <span class="material-icons">
                                     forward_to_inbox
                                 </span>
@@ -66,13 +66,13 @@
                             </div>
                         </div>
                         {{-- <div class="text-right form-group col-12">
-                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
                             @if ($recurso->estatus == 'Borrador' || $recurso->estatus == null)
-                                <button class="btn btn-danger" type="submit" id="btnGuardarDraftRecurso">
+                                <button class="btn btn-primary" type="submit" id="btnGuardarDraftRecurso">
                                     Borrador
                                 </button>
                             @endif
-                            <button class="btn btn-danger" type="submit" id="btnGuardarRecurso">
+                            <button class="btn btn-primary" type="submit" id="btnGuardarRecurso">
                                 Enviar
                             </button>
                         </div> --}}

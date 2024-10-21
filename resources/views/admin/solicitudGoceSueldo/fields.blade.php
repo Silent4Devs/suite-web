@@ -6,7 +6,8 @@
         <select id="permiso_id" class="form-control" name="permiso_id">
             <option selected>Seleccione...</option>
             @foreach ($permisos as $permiso)
-                <option value="{{ $permiso->id }}" data-dias='{{ $permiso->dias }}'  data-tipo='{{ $permiso->tipo_permiso }}'>{{ $permiso->nombre }}</option>
+                <option value="{{ $permiso->id }}" data-dias='{{ $permiso->dias }}'
+                    data-tipo='{{ $permiso->tipo_permiso }}'>{{ $permiso->nombre }}</option>
             @endforeach
         </select>
         @error('permiso_id')
@@ -64,7 +65,7 @@
     </div>
 
 </div>
-<x-loading-indicator/>
+<x-loading-indicator />
 
 
 <!-- Descripcion Field -->
@@ -81,8 +82,8 @@
 <input type="hidden" value="{{ $autoriza }}" name="autoriza">
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" id="enviar"  type="submit">
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+    <button class="btn btn-primary" id="enviar" type="submit">
         {{ trans('global.save') }}
     </button>
 </div>
@@ -104,12 +105,12 @@
                 let dias_init = e.target.options[e.target.selectedIndex].getAttribute('data-dias');
                 document.getElementById('dias_solicitados').value = dias_init;
                 let tipo = e.target.options[e.target.selectedIndex].getAttribute('data-tipo');
-                if(tipo == 1){
-                    tipo="Permisos conforme a la ley";
-                }else if( tipo == 2){
-                    tipo="Permisos otorgados por la empresa";
-                }else{
-                    tipo="No definido";
+                if (tipo == 1) {
+                    tipo = "Permisos conforme a la ley";
+                } else if (tipo == 2) {
+                    tipo = "Permisos otorgados por la empresa";
+                } else {
+                    tipo = "No definido";
                 }
                 document.getElementById('tipo_permiso').value = tipo;
                 console.log(tipo);
@@ -127,8 +128,8 @@
                 document.getElementById('fecha_fin').value = sumar_dias;
 
             })
-            document.getElementById('enviar').addEventListener('click',(e)=>{
-                document.getElementById('loaderComponent').style.display='block';
+            document.getElementById('enviar').addEventListener('click', (e) => {
+                document.getElementById('loaderComponent').style.display = 'block';
             })
         })
     </script>

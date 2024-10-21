@@ -1,11 +1,11 @@
-{{-- <form wire:submit.prevent="store" enctype="multipart/form-data"> --}}
+{{-- <form wire:submit="store" enctype="multipart/form-data"> --}}
 <div class="row">
 
     <div class="form-group col-sm-6">
         <div class="form-group">
             <label for="evaluacion" class="required"><i class="fas fa-file-signature iconos-crear"></i>Evaluación</label>
             <input id="evaluacion" class="form-control {{ $errors->has('evaluacion') ? 'is-invalid' : '' }}"
-                type="text" name="evaluacion" wire:model="evaluacion" id="evaluacion" required>
+                type="text" name="evaluacion" wire:model.live="evaluacion" id="evaluacion" required>
             @if ($errors->has('evaluacion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('evaluacion') }}
@@ -17,7 +17,7 @@
     <div class="form-group col-md-6 col-sm-6">
         <label for="fecha" class="required"><i class="far fa-calendar-alt iconos-crear"></i>Fecha</label>
         <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha"
-            id="fecha" value="{{ old('fecha') }}" wire:model="fecha" required>
+            id="fecha" value="{{ old('fecha') }}" wire:model.live="fecha" required>
         <div class="input-group-addon">
             <span class="glyphicon glyphicon-th"></span>
         </div>

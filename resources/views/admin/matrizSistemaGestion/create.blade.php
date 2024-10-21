@@ -487,7 +487,8 @@
                 enctype="multipart/form-data">
                 @csrf
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -575,7 +576,7 @@
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
                                 <option {{ old('id_responsable') == $responsable->id ? ' selected="selected"' : '' }}
-                                data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
+                                    data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
@@ -642,7 +643,8 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
@@ -801,20 +803,20 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    @if ($version_historico === "true")
-                    <div class="text-center form-group"
-                        style="background-color: #e3e6eb;
+                    @if ($version_historico === 'true')
+                        <div class="text-center form-group"
+                            style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
-                        ISO 27001:2013
-                    </div>
+                            ISO 27001:2013
+                        </div>
                     @else
-                    <div class="text-center form-group"
-                        style="background-color: #e3e6eb;
+                        <div class="text-center form-group"
+                            style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
-                        ISO 27001:2022
-                    </div>
+                            ISO 27001:2022
+                        </div>
                     @endif
 
 
@@ -995,7 +997,8 @@
                 <hr>
 
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
 
@@ -1156,20 +1159,20 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    @if ($version_historico === "true")
-                    <div class="text-center form-group"
-                        style="background-color: #e3e6eb;
+                    @if ($version_historico === 'true')
+                        <div class="text-center form-group"
+                            style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
-                        ISO 27001:2013
-                    </div>
+                            ISO 27001:2013
+                        </div>
                     @else
-                    <div class="text-center form-group"
-                        style="background-color: #e3e6eb;
+                        <div class="text-center form-group"
+                            style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
-                        ISO 27001:2022
-                    </div>
+                            ISO 27001:2022
+                        </div>
                     @endif
 
                     <hr>
@@ -1357,10 +1360,10 @@
                 <hr>
                 {{-- Acciones --}}
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
-                <input class="form-control" type="text" id="version_historico"
-                name="version_historico" value="{{ $version_historico}}" readonly hidden>
+                <input class="form-control" type="text" id="version_historico" name="version_historico"
+                    value="{{ $version_historico }}" readonly hidden>
                 <div class="row">
-                    @if ($version_historico === "true")
+                    @if ($version_historico === 'true')
                         <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p><br>
                     @else
                         <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p><br>
@@ -1377,17 +1380,17 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                        @if ($version_historico === "true")
+                                    @if ($version_historico === 'true')
                                         @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}">
-                                            {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                                        </option>
+                                            <option value="{{ $control->id }}">
+                                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                            </option>
                                         @endforeach
                                     @else
                                         @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}">
-                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
-                                        </option>
+                                            <option value="{{ $control->id }}">
+                                                {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                            </option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -1451,8 +1454,8 @@
                 {{-- Enviar - Cancelar --}}
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.sistema-gestion', ['id' => $id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

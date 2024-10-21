@@ -1,20 +1,20 @@
-<div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DE LA SOLICITUD
 </div>
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-6">
         <fieldset disabled>
-            <label for="disabledTextInput"><i
-                    class="fa-solid fa-calendar-check iconos-crear"></i>Estatus:</label>
-            <input type="text" class="form-control"  value="{{ $solicitud->status ?: 'Por asignar' }}"
+            <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Estatus:</label>
+            <input type="text" class="form-control" value="{{ $solicitud->status ?: 'Por asignar' }}"
                 style="text-align: center">
         </fieldset>
     </div>
     <div class="form-group col-sm-6">
-        <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Fecha de solicitud:</label>
+        <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Fecha de
+            solicitud:</label>
         <input type="text" class="form-control" name="fecha_solicitud" style="text-align: center"
-            value="{{ $fecha_solicitud  }}" readonly>
+            value="{{ $fecha_solicitud }}" readonly>
     </div>
 
 </div>
@@ -36,7 +36,7 @@
         </fieldset>
     </div>
 </div>
-<div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DEL DESTINO
 </div>
 <div class="row">
@@ -69,7 +69,6 @@
         {!! Form::text('lugar', null, [
             'class' => 'form-control',
             'placeholder' => 'Ingrese lugar de referencia',
-            
         ]) !!}
         @error('lugar')
             <small class="text-danger">{{ $message }}</small>
@@ -94,20 +93,22 @@
         {!! Form::date('fecha_limite', null, [
             'class' => 'form-control',
         ]) !!}
-         @error('fecha_limite')
-         <small class="text-danger">{{ $message }}</small>
-     @enderror
-      
+        @error('fecha_limite')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
+
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Horario desde:</label>
-            <input type="time" class="form-control" name="hora_recepcion_inicio"  value="{{ old('hora_recepcion_inicio', $solicitud->hora_recepcion_inicio) }}">
+        <input type="time" class="form-control" name="hora_recepcion_inicio"
+            value="{{ old('hora_recepcion_inicio', $solicitud->hora_recepcion_inicio) }}">
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Hasta:</label>
-            <input type="time" class="form-control" name="hora_recepcion_fin"  value="{{ old('hora_recepcion_fin', $solicitud->hora_recepcion_fin) }}">
+        <input type="time" class="form-control" name="hora_recepcion_fin"
+            value="{{ old('hora_recepcion_fin', $solicitud->hora_recepcion_fin) }}">
     </div>
-    
+
 
 </div>
 
@@ -132,8 +133,8 @@
 
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" id="enviar" type="submit">
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+    <button class="btn btn-primary" id="enviar" type="submit">
         {{ trans('global.save') }}
     </button>
 </div>

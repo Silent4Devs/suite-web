@@ -1,5 +1,5 @@
 <div>
-    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Editar evaluación</span>
     </div>
@@ -13,7 +13,7 @@
             <span wire:loading.remove wire:target="update">Actualizar</span>
             {{-- <span wire:loading wire:target="update">Actualizando</span> --}}
         </button>
-        <button wire:click="default" class="btn btn_cancelar">
+        <button wire:click="default" class="btn btn-outline-primary">
             Cancelar
         </button>
     </div>

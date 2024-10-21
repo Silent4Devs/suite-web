@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DocumentoEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmacionSolicitudAprobacionMail;
 use App\Mail\SolicitudAprobacionMail;
@@ -466,8 +467,15 @@ class DocumentosController extends Controller
             parse_str($request->datosRevisores, $datos);
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
-            $documento = Documento::find($documento_id);
-            $documento->load('elaborador', 'macroproceso');
+            $documento = Documento::where('id', $documento_id)->first();
+
+            try {
+                event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+
+            // $documento->load('elaborador', 'macroproceso');
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
@@ -749,7 +757,6 @@ class DocumentosController extends Controller
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
         $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
-        // $documentos = Documento::get();
 
         return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }

@@ -47,8 +47,9 @@
 
 
 <div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
+    <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
 </div>
+
 
 @include('partials.flashMessages')
 <div class="datatable-fix datatable-rds">
@@ -78,9 +79,11 @@
     </table>
 </div>
 
+
+
+
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -165,19 +168,34 @@
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
                     columns: [{
-                            data: 'folio'
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'titulo'
+                            data: 'titulo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'sede'
+                            data: 'sede',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'ubicacion'
+                            data: 'ubicacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'areas_afectados',
@@ -198,7 +216,10 @@
                             }
                         },
                         {
-                            data: 'fecha_creacion'
+                            data: 'fecha_creacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'name',

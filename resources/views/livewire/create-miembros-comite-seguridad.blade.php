@@ -14,7 +14,7 @@
                         {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Miembro</h5>
 
                     <input id="comite_id" name="comite_id" type="hidden" value=" {{ $id_comite }}"
-                        wire:model.defer="id_comite">
+                        wire:model="id_comite">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -26,7 +26,7 @@
                             rol</label>
                         <input class="form-control {{ $errors->has('nombre_rol') ? 'is-invalid' : '' }}"
                             type="text" name="nombre_rol" id="nombre_rol" value="{{ old('nombrerol', '') }}"
-                            wire:model.defer="nombre_rol">
+                            wire:model="nombre_rol">
                         @if ($errors->has('nombre_rol'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre_rol') }}
@@ -40,7 +40,7 @@
                             en vigor</label>
                         <input class="form-control date {{ $errors->has('fecha_vigor') ? 'is-invalid' : '' }}"
                             type="date" name="fechavigor" id="fechavigor" value="{{ $fecha_vigor }}"
-                            wire:model.defer="fecha_vigor">
+                            wire:model="fecha_vigor">
                         @if ($errors->has('fecha_vigor'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_vigor') }}
@@ -52,7 +52,7 @@
                         <label class="required" for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a)
                             asignado</label>
                         <select class="form-control  {{ $errors->has('colaborador') ? 'is-invalid' : '' }}"
-                            name="id_asignada" id="id_asignada" wire:model.defer="colaborador">
+                            name="id_asignada" id="id_asignada" wire:model="colaborador">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $empleado)
                                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -82,7 +82,7 @@
                         <label class="required" for="responsabilidades"> <i class="fas fa-business-time iconos-crear"></i>
                             {{ trans('cruds.comiteseguridad.fields.responsabilidades') }}</label>
                         <textarea class="form-control {{ $errors->has('responsabilidades') ? 'is-invalid' : '' }}" name="responsabilidades"
-                            id="responsabilidades" wire:model.defer="responsabilidades">{{ old('responsabilidades') }}</textarea>
+                            id="responsabilidades" wire:model="responsabilidades">{{ old('responsabilidades') }}</textarea>
                         @if ($errors->has('responsabilidades'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('responsabilidades') }}

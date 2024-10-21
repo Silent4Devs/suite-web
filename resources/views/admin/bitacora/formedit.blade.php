@@ -121,14 +121,63 @@
 ]) !!}
 @csrf
 
-<div class="card card-content">
+<div class="card card-body">
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12" style="margin-top: 30px;">
             <h3 class="titulo-form">INSTRUCCIONES</h3>
-            <p class="instrucciones">Edite los datos del contrato</p>
+            <div class="d-flex justify-content-between">
+                <p class="instrucciones">Edite los datos del contrato</p>
+
+            </div>
         </div>
     </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+    @if (!$show_contrato)
+        <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+            @if (!$firmado)
+                <div class="col-12">
+                    <label for="">Activar flujo de aprobación </label>
+                    {!! Form::checkbox(
+                        'firma_check',
+                        1,
+                        isset($aprobacionFirmaContratoHisotricoLast->firma_check)
+                            ? $aprobacionFirmaContratoHisotricoLast->firma_check
+                            : false,
+                        [
+                            'id' => 'aprobadores_firma',
+                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                        ],
+                    ) !!}
+                </div>
+            @endif
+            @if (!$firmado)
+                <div class="col-12 {{ isset($aprobacionFirmaContratoHisotricoLast->firma_check) ? ($aprobacionFirmaContratoHisotricoLast->firma_check ? '' : 'd-none') : 'd-none' }}"
+                    id="aprobadores-firma-box">
+                    <div class="form-group">
+                        <label for="">Asignar Aprobadores</label>
+                        <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                            @if ($firma && $firma->aprobadores)
+                                @foreach ($firma->aprobadores as $aprobador)
+                                    <option value="{{ $aprobador->id }}"
+                                        {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                        {{ $aprobador->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option disabled>No hay aprobadores disponibles</option>
+                            @endif
+                        </select>
+                    </div>
+                </div>
+            @else
+                <div class="col-12">
+                    <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                </div>
+            @endif
+        </div>
+    @endif
+
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
     </div>
 
@@ -859,36 +908,38 @@
         @endif
     </div>
     {{-- <div class="row"></div>
-        <div class="row">
-            <br>
-            <label class="txt-tamaño" for="firma">
-                Firma:</label>
-            <br/>
-            <br>
-            @if ($contratos->firma1 != null)
-                <p>Ya existe una firma registrada para este contrato</p>
-                <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                    firme el espacio.</p><br>
-                <label class="txt-tamaño">Actualizar firma </label>
-                <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-                onclick="var input = document.getElementById('signature64');
-                if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-            @endif
+    <div class="row">
+        <br>
+        <label class="txt-tamaño" for="firma">
+            Firma:</label>
+        <br/>
+        <br>
+        @if ($contratos->firma1 != null)
+            <p>Ya existe una firma registrada para este contrato</p>
+            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
+                firme el espacio.</p><br>
+            <label class="txt-tamaño">Actualizar firma </label>
+            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
+            onclick="var input = document.getElementById('signature64');
+            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+        @endif
+    </div>
+    <div class="col s12 m3 distancia"></div>
+    <div class="distancia form-group col-md-4">
+        <div id="signaturePad" >
+            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
         </div>
-        <div class="col s12 m3 distancia"></div>
-        <div class="distancia form-group col-md-4">
-                <div id="signaturePad" >
-                    <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-                </div>
-                <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
-            <br/>
-        </div> --}}
+        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
+        <br/>
+    </div> --}}
+
 </div>
 <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}"
+                class="btn btn-outline-primary">Cancelar</a>
+            {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
         @endif
     </div>
 </div>
@@ -913,6 +964,74 @@
     </div>
 </div>
 
+@if ($aprobacionFirmaContrato->count())
+    <div class="col-12">
+        <div class="card card-body">
+            <h5 class="text-center">Aprobaciones firmadas</h5>
+            <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                style="width: 100%; max-width: 1000px; margin: auto;">
+                @foreach ($aprobacionFirmaContrato as $firma)
+                    @if ($firma->firma)
+                        <div class="text-center">
+                            <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                            <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
+                            <span>{{ $firma->aprobador->name }}</span>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+
+<style>
+    #firma_aprobador canvas {
+        border: 1px solid #bbb;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
+@if ($firmar)
+    <div class="col-12">
+        <div class="card card-body">
+            <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
+                @csrf
+                <div class="d-flex gap-4 align-items-center flex-column">
+                    <div>
+                        <h5>Ingrese su firma para la aprobación del registro</h5>
+                    </div>
+                    <div id="firma_aprobador" class="" style="width: auto;"></div>
+                    <input type="hidden" name="firma_base" value="" id="firma-input">
+                    <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
+                    <div class="d-flex gap-5">
+                        <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                        <button class="btn btn-primary">Guardar firma</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endif
+<script>
+    // Get the element to render signature component inside
+    const firma_aprobador = document.getElementById("firma_aprobador");
+    const resetCanvas = document.getElementById("resetCanvas");
+    resetCanvas.addEventListener("click", () => {
+        // console.log(component.getImage());
+        component.value = [];
+        document.getElementById('firma-input').value = component.getImage();
+    });
+    document.querySelector('#firma_aprobador').onmouseup = function() {
+        document.getElementById('firma-input').value = component.getImage();
+    }
+    // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
+    const component = Signature(firma_aprobador, {
+        width: 700,
+        height: 300,
+        instructions: ""
+    });
+</script>
 
 
 
@@ -1104,9 +1223,6 @@
     });
 </script>
 
-
-
-
 <script>
     $(document).ready(function() {
 
@@ -1257,7 +1373,6 @@
     });
 </script>
 
-
 <script>
     $("#dolares_filtro").select2('destroy');
 </script>
@@ -1398,5 +1513,23 @@
                 }
             });
         });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aprobadores").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked) {
+            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+        } else {
+            document.getElementById('aprobadores-firma-box').classList.add('d-none');
+        }
     });
 </script>

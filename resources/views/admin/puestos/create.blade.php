@@ -13,8 +13,34 @@
                 <form method="POST" action="{{ route('admin.puestos.store') }}" enctype="multipart/form-data">
                     @csrf
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="">
+                                <label>
+                                    {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                                    <input type="checkbox" name="firma_check" id="aprobadores_firma" value="1"
+                                        style="width: 20px; height: 20px; vertical-align:middle;" />
+                                    <span>Activar flujo de aprobación</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-none" id="aprobadores-firma-box">
+                        <div class="col-md-12 form-group">
+                            <label for="">Asignar Aprobadores</label>
+                            <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                                @if ($firma)
+                                    @foreach ($firma->aprobadores as $aprobador)
+                                        <option value="{{ $aprobador->id }}">
+                                            {{ $aprobador->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Identificación del Puesto</span>
                     </div>
@@ -113,7 +139,7 @@
 
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Descripción del puesto</span>
                     </div>
@@ -133,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Principales responsabilidades</span>
                     </div>
@@ -180,7 +206,7 @@
                     <div class="row col-12">
                         <div class="mb-3 mr-4 col-12 mt-4 text-right">
                             <button type="button" name="btn-suscribir-responsabilidades"
-                                id="btn-suscribir-responsabilidades" class="btn btn-success">Agregar</button>
+                                id="btn-suscribir-responsabilidades" class="btn btn-primary">Agregar</button>
                         </div>
                     </div>
 
@@ -202,14 +228,14 @@
                                     <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
                                     <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
                                     <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
-                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-primary remove">Eliminar</button></td>
                                 </tr> --}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Herramientas para desempeñar el puesto</span>
                     </div>
@@ -238,7 +264,7 @@
                     <div class="row col-12">
                         <div class="mb-3 col-12 mt-4 " style="text-align: end">
                             <button type="button" name="btn-suscribir-herramientas" id="btn-suscribir-herramientas"
-                                class="btn btn-success">Agregar</button>
+                                class="btn btn-primary">Agregar</button>
                         </div>
                     </div>
 
@@ -258,14 +284,14 @@
                                     <td><input class="form-control" type="text" id="resultado" name="resultado"></td>
                                     <td><input class="form-control" type="text" id="cumplimiento" name="indicador"></td>
                                     <td><input class="form-control" type="text" id="tiempo_asignado" name="tiempo_asignado"></td>
-                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+                                    <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-primary remove">Eliminar</button></td>
                                 </tr> --}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Requisitos y habilidades para el puesto</span>
                     </div>
@@ -326,7 +352,7 @@
 
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Idiomas</span>
                     </div>
@@ -352,7 +378,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -382,7 +408,7 @@
                     <div class="row col-12">
                         <div class="mb-3 col-12 mt-4 " style="text-align: end">
                             <button type="button" name="btn-suscribir-certificaciones" id="btn-suscribir-certificaciones"
-                                class="btn btn-success">Agregar</button>
+                                class="btn btn-primary">Agregar</button>
                         </div>
                     </div>
 
@@ -406,7 +432,7 @@
 
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Datos generales</span>
                     </div>
@@ -525,7 +551,7 @@
 
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos del puesto</span>
                     </div>
@@ -570,7 +596,7 @@
                     <div class="row col-12">
                         <div class="mb-3 col-12 mt-4 " style="text-align: end">
                             <button type="button" name="btn-suscribir-contactos" id="btn-suscribir-contactos"
-                                class="btn btn-success">Agregar</button>
+                                class="btn btn-primary">Agregar</button>
                         </div>
                     </div>
 
@@ -593,7 +619,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Contactos Externos del puesto</span>
                     </div>
@@ -622,7 +648,7 @@
                     <div class="row col-12">
                         <div class="mb-3 col-12 mt-4 " style="text-align: end">
                             <button type="button" name="btn-suscribir-contactos-externos"
-                                id="btn-suscribir-contactos-externos" class="btn btn-success">Agregar</button>
+                                id="btn-suscribir-contactos-externos" class="btn btn-primary">Agregar</button>
                         </div>
                     </div>
 
@@ -643,7 +669,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Responsiva</span>
                     </div>
@@ -764,8 +790,9 @@
 
 
                     <div class="form-group col-12 text-right mt-4" style="margin-left:15px;">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">
                             {{ trans('global.save') }}
                         </button>
                     </div>
@@ -779,6 +806,22 @@
 
 
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            $("#aprobadores").select2({
+                theme: "bootstrap4",
+            });
+        });
+
+        document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+            console.log(e.target.checked);
+            if (e.target.checked) {
+                document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+            } else {
+                document.getElementById('aprobadores-firma-box').classList.add('d-none');
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('descripcion', {
@@ -890,11 +933,11 @@
 
                 if (number > 1) {
                     html +=
-                        '<td><button type="button" name="remove" id="remove" class="btn btn-danger remove">Eliminar</button></td></tr>';
+                        '<td><button type="button" name="remove" id="remove" class="btn btn-primary remove">Eliminar</button></td></tr>';
                     $("#user_table tbody").append(html);
                 } else {
                     html +=
-                        '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
+                        '<td col-2><button type="button" name="add" id="add" class="btn btn-primary">Agregar</button></td></tr>';
                     $("#user_table tbody").html(html);
                 }
             }
@@ -942,11 +985,11 @@
 
                 if (number > 1) {
                     html +=
-                        '<td><button type="button" name="remove" id="remove" class="btn btn-danger remove">Eliminar</button></td></tr>';
+                        '<td><button type="button" name="remove" id="remove" class="btn btn-primary remove">Eliminar</button></td></tr>';
                     $("#user_table tbody").append(html);
                 } else {
                     html +=
-                        '<td col-2><button type="button" name="add" id="add" class="btn btn-success">Agregar</button></td></tr>';
+                        '<td col-2><button type="button" name="add" id="add" class="btn btn-primary">Agregar</button></td></tr>';
                     $("#user_table tbody").html(html);
                 }
             }
@@ -978,7 +1021,7 @@
           <tr>
             <td><input type="hidden" name="herramientas[${cont}][id]" value="${informacion.id?informacion.id:0}"><input class="form-control" type="text"  name="herramientas[${cont}][nombre_herramienta]" value="${informacion.nombreHerramienta}" ></td>
             <td><textarea class="form-control" type="text"  style="min-height: 25px !important;" name="herramientas[${cont}][descripcion_herramienta]" value="">${informacion.descripcionHerramienta}</textarea></td>
-            <td><button type="button" name="btn-remove-herramientas" id="" class="btn btn-danger remove">Eliminar</button></td>
+            <td><button type="button" name="btn-remove-herramientas" id="" class="btn btn-primary remove">Eliminar</button></td>
          </tr>
           `
                 contenedorHerramientas.innerHTML += html;
@@ -1049,7 +1092,7 @@
             <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="responsabilidades[${contador}][resultado]" value="" >${formulario.resultado}</textarea></td>
             <td><input class="form-control" type="text"  name="responsabilidades[${contador}][indicador]" value="${formulario.indicador}" ></td>
             <td><input class="form-control" type="text"  name="responsabilidades[${contador}][tiempo_asignado]" value="${formulario.tiempoAsignado}"></td>
-            <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-danger remove">Eliminar</button></td>
+            <td><button type="button" name="btn-remove-responsabilidades" id="" class="btn btn-primary remove">Eliminar</button></td>
          </tr>
           `
                 contenedorResponsabilidades.innerHTML += html;
@@ -1140,7 +1183,7 @@
             <option  ${certificacion.requisito == "Indispensable" ? "selected":''} value="Indispensable" >Indispensable</option>
             <option  ${certificacion.requisito == "Deseable" ? "selected":''} value="Deseable" >Deseable</option>
             </select></td>
-            <td><button type="button" name="btn-remove-certificaciones" id="" class="btn btn-danger remove">Eliminar</button></td>
+            <td><button type="button" name="btn-remove-certificaciones" id="" class="btn btn-primary remove">Eliminar</button></td>
          </tr>
           `
                 contenedorCertificados.innerHTML += html;
@@ -1218,7 +1261,7 @@
             </td >
             <td><div class="form-control" style="white-space:nowrap" id="puesto${contact.id}">${contact.areaContacto}</div>
             <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="contactos[${contable}][descripcion_contacto]" value="" >${contact.descripcionContacto }</textarea></td>
-            <td><button type="button"  name="btn-remove-contactos" id="" class="btn btn-danger remove">Eliminar</button></td>
+            <td><button type="button"  name="btn-remove-contactos" id="" class="btn btn-primary remove">Eliminar</button></td>
          </tr>
           `
                 contenedorContactos.innerHTML += html;
@@ -1307,7 +1350,7 @@
                 <tr>
                   <td><input type="hidden" name="externos[${contable}][id]" value="${contactosexternos.id?contactosexternos.id:0}"><input class="form-control" type="text" name="externos[${contable}][nombre_contacto_int]" value="${contactosexternos.nombreContactoExterno}"></td>
                   <td><textarea class="form-control" style="min-height: 25px !important;" type="text" name="externos[${contable}][proposito]" value="" >${contactosexternos.propositoContactoExterno}</textarea></td>
-                  <td><button type="button" name="btn-remove-contactos-externos" id="" class="btn btn-danger remove">Eliminar</button></td>
+                  <td><button type="button" name="btn-remove-contactos-externos" id="" class="btn btn-primary remove">Eliminar</button></td>
                </tr>
                 `
 

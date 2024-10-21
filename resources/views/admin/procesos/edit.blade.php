@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{ config('app.cssVersion') }}">
     <h5 class="col-12 titulo_general_funcion">Editar: Proceso {{ $proceso->nombre }}</h5>
     <div class="mt-4 card">
 
@@ -18,8 +18,8 @@
                 <div class="form-group col-sm-4">
                     <label class="required" for="codigo"><i class="fas  fa-barcode iconos-crear"></i>
                         Código</label>
-                    <input class="form-control {{ $errors->has('codigo') ? 'is-invalid' : '' }}" type="text" name="codigo"
-                        id="codigo" value="{{ old('codigo', $proceso->codigo) }}" required>
+                    <input class="form-control {{ $errors->has('codigo') ? 'is-invalid' : '' }}" type="text"
+                        name="codigo" id="codigo" value="{{ old('codigo', $proceso->codigo) }}" required>
                     @if ($errors->has('codigo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('codigo') }}
@@ -29,8 +29,8 @@
                 <div class="form-group col-sm-4">
                     <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i>
                         Nombre</label>
-                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                        id="nombre" value="{{ old('nombre', $proceso->nombre) }}" required>
+                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                        name="nombre" id="nombre" value="{{ old('nombre', $proceso->nombre) }}" required>
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
-                    <label class="required" for="id_macroproceso"><i
-                            class="fas fa-users iconos-crear"></i>Macroproceso </label>
+                    <label class="required" for="id_macroproceso"><i class="fas fa-users iconos-crear"></i>Macroproceso
+                    </label>
                     <select class="form-control select2 {{ $errors->has('id_macroproceso') ? 'is-invalid' : '' }}"
                         name="id_macroproceso" id="id_macroproceso" required>
                         <option value="">
@@ -68,8 +68,7 @@
                     <label for="descripcion"><i class="fas fa-sticky-note iconos-crear"></i>
                         Descripción</label>
                     <textarea rows="3" class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcion" id="descripcion"
-                        value="{{ old('descripcion', $proceso->descripcion) }}">{{ $proceso->descripcion }}</textarea>
+                        name="descripcion" id="descripcion" value="{{ old('descripcion', $proceso->descripcion) }}">{{ $proceso->descripcion }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -78,8 +77,8 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

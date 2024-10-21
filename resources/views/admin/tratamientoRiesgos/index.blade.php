@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.index') }}
     <style>
         .btn-outline-success {
@@ -26,8 +25,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -38,11 +37,11 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
-</style>
+    </style>
 
     <h5 class="col-12 titulo_general_funcion">Tratamiento de los Riesgos</h5>
 
-        <div class="mt-5 card">
+    <div class="mt-5 card">
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
@@ -71,7 +70,7 @@
                             Proceso
                         </th>
                         <th style="min-width: 80px;">
-                           Dueño
+                            Dueño
                         </th>
                         <th style="min-width: 130px;">
                             Fecha compromiso
@@ -83,14 +82,11 @@
                             Opciones
                         </th>
                     </tr>
-                   
+
                 </thead>
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -182,8 +178,8 @@
 
             ];
 
-          
-           
+
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -225,7 +221,7 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            if(row.proceso){
+                            if (row.proceso) {
                                 return row.proceso;
                             }
                             return "n/a"
@@ -260,7 +256,7 @@
                             if (inversion == 0) {
                                 return `<div style="text-align:left">No</div>`;
                             }
-                            if(inversion == null){
+                            if (inversion == null) {
                                 return `<div style="text-align:left">Sin resultado</div>`;
                             }
                         }
@@ -271,68 +267,68 @@
                     }
                 ],
                 createdRow: (row, data, dataIndex, cells) => {
-                        let color = "green";
-                        let texto = "white";
-                        if (data.riesgototal <= 185) {
-                            color = "#FF417B";
-                            texto = "white";
-                        }
-                        if (data.riesgototal <= 135) {
-                            color = "#FFAC6A";
-                            texto = "white";
-                        }
-                        if (data.riesgototal <= 90) {
-                            color = "#FFCB63";
-                            texto = "white";
-                        }
-                        if (data.riesgototal <= 45) {
-                            color = "#6DC866";
-                            texto = "white";
-                        }
-                        if (data.riesgototal == null) {
-                            color = "white";
-                            texto = "white";
-                        }
-                        
-                        let fondo = "green";
-                        let letras = "white";
-                        if (data.riesgo_total_residual <= 185) {
-                            fondo = "#FF417B";
-                            letras = "white";
-                        }
-                        if (data.riesgo_total_residual >= 135) {
-                            fondo = "#FFAC6A";
-                            letras = "white";
-                        }
-                        if (data.riesgo_total_residual <= 90) {
-                            fondo = "#FFCB63";
-                            letras = "white";
-                        }
-                        if (data.riesgo_total_residual  <= 45) {
-                            fondo = "#6DC866";
-                            letras = "white";
-                        }
-                        if (data.riesgo_total_residual == null) {
-                            fondo = "#fff";
-                            letras = "white";
-                        }
-                        if(data.riesgototal !=null){
-                            $(cells[3]).css('background-color', color)
-                            $(cells[3]).css('color', texto)
+                    let color = "green";
+                    let texto = "white";
+                    if (data.riesgototal <= 185) {
+                        color = "#FF417B";
+                        texto = "white";
+                    }
+                    if (data.riesgototal <= 135) {
+                        color = "#FFAC6A";
+                        texto = "white";
+                    }
+                    if (data.riesgototal <= 90) {
+                        color = "#FFCB63";
+                        texto = "white";
+                    }
+                    if (data.riesgototal <= 45) {
+                        color = "#6DC866";
+                        texto = "white";
+                    }
+                    if (data.riesgototal == null) {
+                        color = "white";
+                        texto = "white";
+                    }
 
-                        }
-                        if(data.riesgo_total_residual !=null){
-                            $(cells[4]).css('background-color', fondo)
-                            $(cells[4]).css('color', letras)
-                        }
+                    let fondo = "green";
+                    let letras = "white";
+                    if (data.riesgo_total_residual <= 185) {
+                        fondo = "#FF417B";
+                        letras = "white";
+                    }
+                    if (data.riesgo_total_residual >= 135) {
+                        fondo = "#FFAC6A";
+                        letras = "white";
+                    }
+                    if (data.riesgo_total_residual <= 90) {
+                        fondo = "#FFCB63";
+                        letras = "white";
+                    }
+                    if (data.riesgo_total_residual <= 45) {
+                        fondo = "#6DC866";
+                        letras = "white";
+                    }
+                    if (data.riesgo_total_residual == null) {
+                        fondo = "#fff";
+                        letras = "white";
+                    }
+                    if (data.riesgototal != null) {
+                        $(cells[3]).css('background-color', color)
+                        $(cells[3]).css('color', texto)
 
-                    },
+                    }
+                    if (data.riesgo_total_residual != null) {
+                        $(cells[4]).css('background-color', fondo)
+                        $(cells[4]).css('color', letras)
+                    }
+
+                },
 
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
-                
+
             };
             let table = $('.datatable-TratamientoRiesgo').DataTable(dtOverrideGlobals);
             // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
@@ -348,6 +344,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

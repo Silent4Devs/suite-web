@@ -36,7 +36,7 @@
         .titulo-card {
             text-align: left;
             font: 20px Roboto;
-            color: #306BA9;
+            color: var(--color-tbj);
         }
 
         .boton-cancelar {
@@ -108,7 +108,7 @@
                         value="{{ old('nombre') }}" required maxlength="255"
                         pattern="[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\uA720-\uA7FF\uAB30-\uAB6F\uAC00-\uD7AF\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\u3400-\u4DBF\u20000-\u2A6DF\u2A700-\u2B73F\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBEF]+"
                         title="Por favor, introduce un nombre válido con un máximo de 255 caracteres y caracteres de varios idiomas.">
-                        {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
+                    {!! Form::label('nombre', 'Nombre del alcance*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
@@ -182,8 +182,8 @@
             </div>
         </div>
         {{-- <a href="{{ route('admin.alcance-sgsis.index') }}"> --}}
-        <button onclick="redirigirARuta()" type="button" class="btn tb-btn-primary boton-enviar mr-2" data-bs-toggle="modal"
-            data-bs-target="#aprobacion" style="font-size:14px;width:250px;">
+        <button onclick="redirigirARuta()" type="button" class="btn tb-btn-primary boton-enviar mr-2"
+            data-bs-toggle="modal" data-bs-target="#aprobacion" style="font-size:14px;width:250px;">
             {{ trans('global.save') }} y enviar a aprobación
         </button>
 

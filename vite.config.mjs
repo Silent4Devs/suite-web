@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import laravel from "laravel-vite-plugin";
 export default defineConfig({
   plugins: [
+    react(),
     laravel({
       input: [
         "public/css/app.css",
@@ -11,12 +12,15 @@ export default defineConfig({
         "public/css/global/admin.css",
         "public/css/rds.css",
 
-        "resources/js/app.js",
+        "resources/sass/app.scss",
         "resources/js/app.js",
         "public/js/pages/index/template-analisis-riesgos.jsx",
         "public/js/pages/index/FormulasAnalisisRiesgos.jsx",
         "public/js/pages/index/SettingsAnalisisRiesgos.jsx",
-        "public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx"
+        "public/js/pages/index/TemplateViewPrevAnalisisRiesgos.jsx",
+
+        // modulos css
+        "resources/css/centroAtencion.css",
       ],
       refresh: true
     })

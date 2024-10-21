@@ -30,7 +30,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_de_los_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TratamientoRiesgo::with(['control', 'responsable', 'team'])->select(sprintf('%s.*', (new TratamientoRiesgo)->table))->orderByDesc('id');
+            $query = TratamientoRiesgo::select('id', 'identificador', 'descripcionriesgo', 'tipo_riesgo', 'riesgo_total_residual', 'acciones', 'id_proceso', 'fechacompromiso', 'inversion_requerida', 'riesgototal')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

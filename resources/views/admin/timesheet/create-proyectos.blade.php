@@ -6,16 +6,13 @@
 
     <style>
         div.recuadro-instruccion {
-            width: 488px;
-            height: 46px;
+            width: 100%;
             background: #FFFBEE;
             border: 1px solid #FFA200;
             border-radius: 9px;
             opacity: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: #FF8000;
+            padding: 10px 20px;
         }
     </style>
 
@@ -34,7 +31,6 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="title-card-time">Nuevo Proyecto</h4>
-                    <hr class="my-4">
                 </div>
             </div>
             <form id="timesheet-proyectos-form" method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
@@ -155,7 +151,14 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <button id="submit-btn" class="btn btn-success" type="button">Crear Proyecto</button>
+                        <button id="submit-btn" class="btn btn-primary" type="button" onclick="mostrarCargando()">
+                            Crear Proyecto
+                        </button>
+
+                        <!-- Indicador de carga (oculto por defecto) -->
+                        <div id="loading-spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <span class="sr-only">Cargando...</span>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -164,6 +167,20 @@
 @endsection
 
 @section('scripts')
+    <script>
+         function mostrarCargando() {
+        // Desactivar el botón y mostrar el spinner
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('loading-indicator').style.display = 'inline-block';
+
+        // Simula una petición, puedes quitar esto si tienes una petición real
+        setTimeout(function() {
+            // Rehabilitar el botón y ocultar el spinner (cuando termina la carga)
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('loading-indicator').style.display = 'none';
+        }, 3000); // Cambia 3000 por la duración de tu carga (3 segundos en este ejemplo)
+    }
+    </script>
     <script>
         $(document).ready(function() {
             // Select2 Multiple

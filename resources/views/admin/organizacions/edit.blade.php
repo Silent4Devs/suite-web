@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/global/colores.css') }}{{ config('app.cssVersion') }}">
     <h5 class="col-12 titulo_general_funcion"> Editar: </h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -23,7 +22,8 @@
                         <label class="required" for="empresa"><i class="far fa-building iconos-crear"></i> Nombre de la
                             Empresa</label>
                         <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                            name="empresa" id="empresa" maxlength="255" value="{{ old('empresa', $organizacion->empresa) }}" required>
+                            name="empresa" id="empresa" maxlength="255"
+                            value="{{ old('empresa', $organizacion->empresa) }}" required>
                         @if ($errors->has('empresa'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('empresa') }}
@@ -37,7 +37,8 @@
                         <label for="logotipo">Logotipo <strong>(Selecciona tu imagen en formato .png)</strong></label>
                         <div class="mb-3 input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="logotipo" id="logotipo" accept="image/*">
+                                <input type="file" class="custom-file-input" name="logotipo" id="logotipo"
+                                    accept="image/*">
                                 <label class="custom-file-label"
                                     for="inputGroupFile02">{{ $organizacion->logotipo != null ? $organizacion->logotipo : 'imagenes' }}</label>
                             </div>
@@ -48,9 +49,8 @@
                     <div class="form-group col-sm-12">
                         <label class="required" for="direccion"><i
                                 class="fas fa-map-marker-alt iconos-crear"></i>{{ trans('cruds.organizacion.fields.direccion') }}</label>
-                        <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}"
-                            name="direccion" id="direccion" required maxlength="550"
-                            style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
+                        <textarea class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" name="direccion" id="direccion"
+                            required maxlength="550" style="min-height: 0px; max-height: 200px; height: 35px;">{{ old('direccion', $organizacion->direccion) }}</textarea>
                         @if ($errors->has('direccion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('direccion') }}
@@ -110,8 +110,8 @@
                     <div class="form-group col-sm-4">
                         <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
                         <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="number"
-                            name="telefono" maxlength="255"  id="telefono" value="{{ old('telefono', $organizacion->telefono) }}"
-                            step="1">
+                            name="telefono" maxlength="255" id="telefono"
+                            value="{{ old('telefono', $organizacion->telefono) }}" step="1">
                         @if ($errors->has('telefono'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('telefono') }}
@@ -127,8 +127,9 @@
                     <div class="form-group col-sm-6">
                         <label for="correo"> <i
                                 class="far fa-envelope iconos-crear"></i>{{ trans('cruds.organizacion.fields.correo') }}</label>
-                        <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email" maxlength="255"
-                            name="correo" id="correo" value="{{ old('correo', $organizacion->correo) }}">
+                        <input class="form-control {{ $errors->has('correo') ? 'is-invalid' : '' }}" type="email"
+                            maxlength="255" name="correo" id="correo"
+                            value="{{ old('correo', $organizacion->correo) }}">
                         @if ($errors->has('correo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('correo') }}
@@ -138,8 +139,9 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="pagina_web"><i class="fas fa-pager iconos-crear"></i>Página Web</label>
-                        <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                            name="pagina_web" id="pagina_web" value="{{ old('pagina_web', $organizacion->pagina_web) }}">
+                        <input class="form-control {{ $errors->has('pagina_web') ? 'is-invalid' : '' }}" type="text"
+                            maxlength="255" name="pagina_web" id="pagina_web"
+                            value="{{ old('pagina_web', $organizacion->pagina_web) }}">
                         @if ($errors->has('pagina_web'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('pagina_web') }}
@@ -153,7 +155,8 @@
                     <div class="form-group col-sm-3">
                         <label for="linkedln"> <i class="fab fa-linkedin iconos-crear"></i>Linkedln</label>
                         <input class="form-control {{ $errors->has('linkedln') ? 'is-invalid' : '' }}" type="url"
-                            name="linkedln" id="linkedln" maxlength="250" value="{{ old('linkedln', $organizacion->linkedln) }}">
+                            name="linkedln" id="linkedln" maxlength="250"
+                            value="{{ old('linkedln', $organizacion->linkedln) }}">
                         @if ($errors->has('linkedln'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('linkedln') }}
@@ -164,7 +167,8 @@
                     <div class="form-group col-sm-3">
                         <label for="youtube"><i class="fab fa-youtube iconos-crear"></i>YouTube</label>
                         <input class="form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" type="url"
-                            name="youtube" id="youtube" maxlength="250" value="{{ old('youtube', $organizacion->youtube) }}">
+                            name="youtube" id="youtube" maxlength="250"
+                            value="{{ old('youtube', $organizacion->youtube) }}">
                         @if ($errors->has('youtube'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('youtube') }}
@@ -175,7 +179,8 @@
                     <div class="form-group col-sm-3">
                         <label for="facebook"><i class="fab fa-facebook-square iconos-crear"></i>Facebook</label>
                         <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="url"
-                            name="facebook" id="facebook" maxlength="250" value="{{ old('facebook', $organizacion->facebook) }}">
+                            name="facebook" id="facebook" maxlength="250"
+                            value="{{ old('facebook', $organizacion->facebook) }}">
                         @if ($errors->has('facebook'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('facebook') }}
@@ -186,7 +191,8 @@
                     <div class="form-group col-sm-3">
                         <label for="twitter"><i class="fab fa-twitter-square iconos-crear"></i>Twitter</label>
                         <input class="form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" type="url"
-                            name="twitter" id="twitter" maxlength="250" value="{{ old('twitter', $organizacion->twitter) }}">
+                            name="twitter" id="twitter" maxlength="250"
+                            value="{{ old('twitter', $organizacion->twitter) }}">
                         @if ($errors->has('twitter'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('twitter') }}
@@ -254,9 +260,9 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="" for="num_empleados">Número de empleados</label>
-                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}" type="number" maxlength="255"
-                            name="num_empleados" id="num_empleados" value="{{ old('num_empleados', $countEmpleados) }}"
-                            readonly>
+                        <input class="form-control {{ $errors->has('num_empleados') ? 'is-invalid' : '' }}"
+                            type="number" maxlength="255" name="num_empleados" id="num_empleados"
+                            value="{{ old('num_empleados', $countEmpleados) }}" readonly>
                         @if ($errors->has('num_empleados'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('num_empleados') }}
@@ -266,8 +272,9 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label class="" for="tamano">Tamaño</label>
-                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                            name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}" readonly>
+                        <input class="form-control {{ $errors->has('tamano') ? 'is-invalid' : '' }}" type="text"
+                            maxlength="255" name="tamano" id="tamano" value="{{ old('tamano', $tamanoEmpresa) }}"
+                            readonly>
                         @if ($errors->has('tamano'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('tamano') }}
@@ -281,8 +288,9 @@
                     <div class="form-group col-sm-6">
                         <label for="giro"><i
                                 class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.organizacion.fields.giro') }}</label>
-                        <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                            name="giro" id="giro" value="{{ old('giro', $organizacion->giro) }}">
+                        <input class="form-control {{ $errors->has('giro') ? 'is-invalid' : '' }}" type="text"
+                            maxlength="255" name="giro" id="giro"
+                            value="{{ old('giro', $organizacion->giro) }}">
                         @if ($errors->has('giro'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('giro') }}
@@ -293,8 +301,9 @@
                     <div class="form-group col-sm-6">
                         <label for="servicios"><i class="fas fa-briefcase iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.servicios') }}</label>
-                        <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                            name="servicios" id="servicios" value="{{ old('servicios', $organizacion->servicios) }}">
+                        <input class="form-control {{ $errors->has('servicios') ? 'is-invalid' : '' }}" type="text"
+                            maxlength="255" name="servicios" id="servicios"
+                            value="{{ old('servicios', $organizacion->servicios) }}">
                         @if ($errors->has('servicios'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('servicios') }}
@@ -334,8 +343,7 @@
                     <div class="form-group col-sm-6">
                         <label for="valores"><i class="far fa-heart iconos-crear"></i>
                             {{ trans('cruds.organizacion.fields.valores') }}</label>
-                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" maxlength="550"
-                            id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
+                        <textarea class="form-control {{ $errors->has('valores') ? 'is-invalid' : '' }}" name="valores" id="valores">{{ old('valores', $organizacion->valores) }}</textarea>
                         @if ($errors->has('valores'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('valores') }}
@@ -347,8 +355,7 @@
                     <div class="form-group col-sm-6">
                         <label for="antecedentes"> <i class="far fa-file-alt iconos-crear"></i>Antecedentes</label>
                         <textarea class="form-control {{ $errors->has('antecedentes') ? 'is-invalid' : '' }}" maxlength="550"
-                            name="antecedentes"
-                            id="antecedentes">{{ old('antecedentes', $organizacion->antecedentes) }}</textarea>
+                            name="antecedentes" id="antecedentes">{{ old('antecedentes', $organizacion->antecedentes) }}</textarea>
                         @if ($errors->has('antecedentes'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('antecedentes') }}
@@ -358,16 +365,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="float-right btn btn-danger " type="submit">
+                    <button class="float-right btn btn-primary " type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -418,11 +422,11 @@
 
                     if (number > 1) {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-primary remove col-3" style="background-color: #d96161 !important;"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
                     } else {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-primary col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
                         $("#user_table tbody").html(html);
                     }
 
@@ -467,12 +471,12 @@
                     // console.log(html);
                     if (number > 1) {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-danger remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' +
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="remove" id="" class="btn btn-primary remove col-3 removeWithFetch" style="background-color: #d96161 !important;" data-model-id="' +
                             element.id + '"><i class="fas fa-trash-alt"></i></button></td></tr>';
                         $("#user_table tbody").append(html);
                     } else {
                         html +=
-                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-success col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
+                            '<td style="display: flex;align-items: center;justify-content: center;"><button type="button" name="add" id="add" class="btn btn-primary col-3" ><i class="fas fa-plus-square"></i></button></td></tr>';
                         $("#user_table tbody").html(html);
                     }
                 }

@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
     @include('layouts.datatables_css')
-    <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
     <head>
         <meta charset="utf-8">
         <style>
             /* body {
-                                                                    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-                                                                    text-align: justify;
-                                                                    font-size: 12px;
-                                                                    color: #6c6c6c;
-                                                                } */
+                                                                                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                                                                                        text-align: justify;
+                                                                                        font-size: 12px;
+                                                                                        color: #6c6c6c;
+                                                                                    } */
 
             table td {
                 border: none;
@@ -145,7 +145,7 @@
 
             .table-tada-requi {
                 background-color: #EEF5FF;
-                border-right: 20px solid #295082;
+                border-right: 20px solid var(--color-tbj);
             }
 
             .title-product {
@@ -156,7 +156,7 @@
 
             .table-product p,
             .table-proveedor p {
-                color: #3086AF;
+                color: var(--color-tbj);
             }
 
             .caja-proveedor {
@@ -221,13 +221,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn_cancelar">Regresar</a>
+                            <a href="{{ route('admin.auditoria-internas.index') }}"
+                                class="btn btn-outline-primary">Regresar</a>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <form method="POST"
                                 action="{{ route('admin.auditoria-internas.pdf', ['id' => $auditoriaInterna->id]) }}">
                                 @csrf
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
                                 </button>
                             </form>
@@ -237,7 +238,7 @@
                     <div class="mt-3 mb-3">
                         <br>
                     </div>
-                    {{-- <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    {{-- <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir

@@ -1,6 +1,6 @@
 <div>
     <p class="text-muted"><i class="fas fa-info-circle"></i> Seleccionar Evaluados</p>
-    <select class="form-control" wire:model.debounce.800ms="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo"
+    <select class="form-control" wire:model.live.debounce.800ms="evaluados_objetivo" id="evaluados_objetivo" name="evaluados_objetivo"
         wire:change="habilitarSelectAlternativo()">
         <option value="" selected disabled>-- Seleciona una opción --</option>
         <option value="all">Toda la empresa</option>

@@ -90,9 +90,9 @@
                 @csrf
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                    <input type="submit" class="btn btn-danger" value="Actualizar">
-                    <button id="publicar" class="btn btn-danger">Publicar</button>
+                    <a href="{{ route('admin.documentos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <input type="submit" class="btn btn-primary" value="Actualizar">
+                    <button id="publicar" class="btn btn-primary">Publicar</button>
                 </div>
             </form>
             <style>
@@ -177,15 +177,16 @@
                                                 <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
                                                 <textarea class="form-control" id="comentarios" name="comentarios" rows="1"></textarea>
-                                                <span class="text-danger" id="comentarios_error"></span> </div>
+                                                <span class="text-danger" id="comentarios_error"></span>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn_cancelar" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="finalizarPublicacion" class="btn btn-primary">Enviar</button>
                         </div>
                     </div>
                 </div>

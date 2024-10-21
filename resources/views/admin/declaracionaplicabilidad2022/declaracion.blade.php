@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="form-group col-12 text-right">
-    <a href="{{ route('admin.declaracion-aplicabilidad-2022.dashboard') }}" class="btn btn-danger">Dashboard</a>
+    <a href="{{ route('admin.declaracion-aplicabilidad-2022.dashboard') }}" class="btn btn-primary">Dashboard</a>
 </div>
 <div class="row">
     <div class="col">
@@ -80,7 +80,7 @@
                                     $permisoResponsable = false;
                                 }
                             }
-                            
+
                             foreach ($aprobadores as $aprobador) {
                                 if ($usuario->empleado->id == $aprobador->empleado_id) {
                                     $permisoAprobador = true;
@@ -89,7 +89,7 @@
                                     $permisoAprobador = false;
                                 }
                             }
-                            
+
                         @endphp
                         <div class="table-responsive">
                             <table class="table" style="font-size: 12px;">

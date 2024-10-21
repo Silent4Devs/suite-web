@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .select-revisores .select2-selection {
             height: 50px !important;
@@ -16,69 +15,68 @@
             color: #0b9095 !important;
             font-weight: normal !important;
         }
-
     </style>
 
-<div class="mt-4 card">
-    <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
-        <h3 class="mb-1 text-center text-white align-items-centera"><strong> Registrar: </strong>Panel declaración aplicabilidad </h3>
+    <div class="mt-4 card">
+        <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
+            <h3 class="mb-1 text-center text-white align-items-centera"><strong> Registrar: </strong>Panel declaración
+                aplicabilidad </h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('admin.paneldeclaracion.store') }}" class="row">
+                @csrf
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label for="id_amenaza"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
+                    <select class="revisoresSelect" id="revisores" name="revisores[]" multiple="multiple">
+                        @foreach ($empleados as $empleado)
+                            <option data-image="{{ $empleado->foto }}" data-id-empleado="{{ $empleado->id }}"
+                                data-gender="{{ $empleado->genero }}" value="{{ $empleado->id }}">
+                                {{ $empleado->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                    <label class="circulo"><i class="fas fa-user-tie iconos-crear"></i>Aprobador</label>
+                    <select class="revisoresSelect" id="aprobadores" name="aprobadores[]" multiple="multiple">
+                        @foreach ($empleados as $empleado)
+                            <option data-image="{{ $empleado->foto }}" data-id-empleado="{{ $empleado->id }}"
+                                data-gender="{{ $empleado->genero }}" value="{{ $empleado->id }}">
+                                {{ $empleado->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Anexo Indice</th>
+                            <th>Anexo Politica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($controles as $control)
+                            <tr>
+                                <td><input type="checkbox" name="controles[]" value="{{ $control->id }}" /></td>
+                                <td>{{ $control->anexo_indice }}</td>
+                                <td>{{ $control->anexo_politica }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+
+
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-        <form method="POST" action="{{ route('admin.paneldeclaracion.store') }}" class="row">
-            @csrf
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label for="id_amenaza"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                <select class="revisoresSelect" id="revisores" name="revisores[]" multiple="multiple">
-                    @foreach ($empleados as $empleado)
-                        <option data-image="{{ $empleado->foto }}" data-id-empleado="{{ $empleado->id }}"
-                            data-gender="{{ $empleado->genero }}" value="{{ $empleado->id }}">
-                            {{ $empleado->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                <label class="circulo"><i class="fas fa-user-tie iconos-crear"></i>Aprobador</label>
-                <select class="revisoresSelect" id="aprobadores" name="aprobadores[]" multiple="multiple">
-                    @foreach ($empleados as $empleado)
-                        <option data-image="{{ $empleado->foto }}" data-id-empleado="{{ $empleado->id }}"
-                            data-gender="{{ $empleado->genero }}" value="{{ $empleado->id }}">
-                            {{ $empleado->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Anexo Indice</th>
-                        <th>Anexo Politica</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($controles as $control)
-                    <tr>
-                        <td><input type="checkbox" name="controles[]" value="{{$control->id}}"/></td>
-                        <td>{{$control->anexo_indice}}</td>
-                        <td>{{$control->anexo_politica}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-
-
-            <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                            {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
 @endsection
 @section('scripts')
     <script>
@@ -165,5 +163,4 @@
             }
         };
     </script>
-
 @endsection

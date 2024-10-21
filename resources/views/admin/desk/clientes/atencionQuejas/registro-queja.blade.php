@@ -11,7 +11,8 @@
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                     Instrucciones</p>
-                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Revise y complemente la información registrada, al final de
+                <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Revise y complemente la información
+                    registrada, al final de
                     cada formulario dé clic en el botón guardar para que la información sea registrada.
                 </p>
 
@@ -30,8 +31,8 @@
             <select name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
                 <option {{ old('estatus', $quejasClientes->estatus) == 'Sin atender' ? 'selected' : '' }}
                     value="Sin atender">Sin atender</option>
-                <option {{ old('estatus', $quejasClientes->estatus) == 'En curso' ? 'selected' : '' }}
-                    value="En curso">En curso</option>
+                <option {{ old('estatus', $quejasClientes->estatus) == 'En curso' ? 'selected' : '' }} value="En curso">
+                    En curso</option>
                 <option {{ old('estatus', $quejasClientes->estatus) == 'En espera' ? 'selected' : '' }}
                     value="En espera">En espera</option>
                 <option {{ old('estatus', $quejasClientes->estatus) == 'Cerrado' ? 'selected' : '' }} value="Cerrado">
@@ -57,7 +58,7 @@
                 y hora de cierre del ticket</label>
 
 
-                <input class="form-control mt-2" name="fecha_cierre" readonly value="{{ $quejasClientes->fecha_cierre }}"
+            <input class="form-control mt-2" name="fecha_cierre" readonly value="{{ $quejasClientes->fecha_cierre }}"
                 id="solucion" type="datetime">
 
         </div>
@@ -255,7 +256,7 @@
                 recepción de la queja<sup>*</sup>
             </label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                 title="Medio a través del cual se recibió esta queja."></i>
-            <select name="canal"  class="form-control {{ $errors->has('canal') ? 'is-invalid' : '' }}"
+            <select name="canal" class="form-control {{ $errors->has('canal') ? 'is-invalid' : '' }}"
                 id="otros_campo" required>
                 <option value="" disabled selected>Selecciona una opción</option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Correo electronico' ? 'selected' : '' }}
@@ -264,8 +265,8 @@
                     value="Via telefonica">Vía telefónica</option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Presencial' ? 'selected' : '' }}
                     value="Presencial">Presencial</option>
-                <option {{ old('canal', $quejasClientes->canal) == 'Remota' ? 'selected' : '' }}
-                    value="Remota">Remota</option>
+                <option {{ old('canal', $quejasClientes->canal) == 'Remota' ? 'selected' : '' }} value="Remota">Remota
+                </option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Oficio' ? 'selected' : '' }} value="Oficio">
                     Oficio</option>
                 <option {{ old('canal', $quejasClientes->canal) == 'Otro' ? 'selected' : '' }} value="Otro">Otro
@@ -327,8 +328,7 @@
                 que requiere el cliente
                 <sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                 title="Descripción de la solución que requiere el cliente para retirar la queja."></i>
-            <textarea name="solucion_requerida_cliente" class="form-control"
-                required>{{ $quejasClientes->solucion_requerida_cliente }}</textarea>
+            <textarea name="solucion_requerida_cliente" class="form-control" required>{{ $quejasClientes->solucion_requerida_cliente }}</textarea>
             @if ($errors->has('solucion_requerida_cliente'))
                 <div class="invalid-feedback">
                     {{ $errors->first('solucion_requerida_cliente') }}
@@ -342,7 +342,7 @@
         <div class="container">
             {{-- <div class="mb-4 row">
                     <div class="col text-start">
-                        <a href="#" class="btn btn-danger" data-toggle="modal"
+                        <a href="#" class="btn btn-primary" data-toggle="modal"
                             data-target="#largeModal">Evidencia</a>
                     </div>
                 </div> --}}
@@ -495,9 +495,9 @@
 
     <div class="row">
         <div class="float-left mt-4 text-right form-group col-12">
-            <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-            <button class="btn btn-success" id="btn-guardar-registro">Guardar</button>
-            <button class="btn btn-success" id="btn-siguiente-registro">Siguiente</button>
+            <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cerrar</a>
+            <button class="btn btn-primary" id="btn-guardar-registro">Guardar</button>
+            <button class="btn btn-primary" id="btn-siguiente-registro">Siguiente</button>
         </div>
     </div>
 </div>

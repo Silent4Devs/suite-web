@@ -14,6 +14,7 @@ use App\Models\CalendarioOficial;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
+use App\Models\EvaluacionDesempeno;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasDenuncia;
 use App\Models\EvidenciasDocumentosEmpleados;
@@ -26,6 +27,8 @@ use App\Models\ListaDocumentoEmpleado;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\PanelInicioRule;
+use App\Models\PeriodoCargaObjetivos;
+use App\Models\PermisosCargaObjetivos;
 use App\Models\PlanImplementacion;
 use App\Models\Proceso;
 use App\Models\Puesto;
@@ -34,9 +37,7 @@ use App\Models\Quejas;
 use App\Models\Recurso;
 use App\Models\RevisionDocumento;
 use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
-use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\SolicitudDayOff;
@@ -61,6 +62,7 @@ class InicioUsuarioController extends Controller
         abort_if(Gate::denies('mi_perfil_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hoy = Carbon::now();
+
         $hoy->toDateString();
 
         Async::batchRun(
@@ -137,8 +139,8 @@ class InicioUsuarioController extends Controller
                         $task->progress = intval($task->progress);
                     }
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
-                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
+                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
                     $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
@@ -198,10 +200,14 @@ class InicioUsuarioController extends Controller
         $cacheKey = 'AuditoriaInterna:auditoria_internas_'.$usuario->id;
         $auditoria_internas = Cache::remember($cacheKey, 3600 * 8, function () use ($empleado) {
             return AuditoriaInterna::where(function ($query) use ($empleado) {
-                $query->whereHas('equipo', function ($subquery) use ($empleado) {
-                    $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
-                })->orWhere('lider_id', $empleado->id);
-            })->distinct()->get();
+                $query
+                    ->whereHas('equipo', function ($subquery) use ($empleado) {
+                        $subquery->where('auditoria_interno_empleado.empleado_id', $empleado->id);
+                    })
+                    ->orWhere('lider_id', $empleado->id);
+            })
+                ->distinct()
+                ->get();
         });
 
         $cacheKeyRecursos = 'Recursos:recursos_'.$usuario->id;
@@ -228,7 +234,10 @@ class InicioUsuarioController extends Controller
         $mis_objetivos = collect();
 
         if ($empleado) {
-            $revisiones = RevisionDocumento::with('documento')->where('empleado_id', $empleado->id)->where('archivado', 0)->get();
+            $revisiones = RevisionDocumento::with('documento')
+                ->where('empleado_id', $empleado->id)
+                ->where('archivado', 0)
+                ->get();
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($empleado->id);
@@ -237,25 +246,27 @@ class InicioUsuarioController extends Controller
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where(function ($query) {
-                        $query->where('estatus', Evaluacion::ACTIVE)
-                            ->orWhere('estatus', Evaluacion::CLOSED);
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
                     })
                         ->where('fecha_inicio', '<=', Carbon::now())
                         // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where(function ($query) {
-                        $query->where('estatus', Evaluacion::ACTIVE)
-                            ->orWhere('estatus', Evaluacion::CLOSED);
+                        $query->where('estatus', Evaluacion::ACTIVE)->orWhere('estatus', Evaluacion::CLOSED);
                     })
                         ->where('fecha_inicio', '<=', Carbon::now())
                         // ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', $empleado->id)
                     ->first();
             }
@@ -266,7 +277,9 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->where('evaluado', false)
                     ->get();
@@ -275,7 +288,9 @@ class InicioUsuarioController extends Controller
                         ->where('fecha_inicio', '<=', Carbon::now())
                         ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
-                })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', $empleado->id)
+                })
+                    ->with('empleado_evaluado', 'evaluador')
+                    ->where('evaluador_id', $empleado->id)
                     ->where('evaluado_id', '!=', $empleado->id)
                     ->first();
             }
@@ -297,7 +312,9 @@ class InicioUsuarioController extends Controller
         $panel_rules = PanelInicioRule::getAll();
 
         if (! is_null($empleado)) {
-            $activos = Activo::select('*')->where('id_responsable', '=', $empleado->id)->get();
+            $activos = Activo::select('*')
+                ->where('id_responsable', '=', $empleado->id)
+                ->get();
             if ($empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($empleado->cumpleaños)->format('d-m');
             } else {
@@ -322,13 +339,15 @@ class InicioUsuarioController extends Controller
         $competencias = collect();
 
         if ($empleado) {
-            $competencias = Empleado::with(
-                ['puestoRelacionado' => function ($q) {
-                    $q->with(['competencias' => function ($q) {
-                        $q->with('competencia');
-                    }]);
-                }]
-            )->find($empleado->id)->puestoRelacionado;
+            $competencias = Empleado::with([
+                'puestoRelacionado' => function ($q) {
+                    $q->with([
+                        'competencias' => function ($q) {
+                            $q->with('competencia');
+                        },
+                    ]);
+                },
+            ])->find($empleado->id)->puestoRelacionado;
             $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
 
             $quejas = Quejas::getAll()->where('empleado_quejo_id', $empleado->id);
@@ -345,316 +364,165 @@ class InicioUsuarioController extends Controller
             $mis_sugerencias = $sugerencias;
             $mis_sugerencias_count = $sugerencias->count();
 
-            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
-            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', $empleado->id)
+                ->where('aprobacion', 1)
+                ->count();
             $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
             // $solicitudes_pendientes = 1;
         }
 
-        return view('admin.inicioUsuario.index', compact(
-            'empleado',
-            'solicitudes_pendientes',
-            'usuario',
-            'competencias',
-            'recursos',
-            'actividades',
-            'documentos_publicados',
-            'auditorias_anual',
-            'revisiones',
-            'mis_documentos',
-            'contador_actividades',
-            'contador_revisiones',
-            'contador_recursos',
-            'auditoria_internas',
-            'evaluaciones',
-            'oficiales',
-            'mis_evaluaciones',
-            'como_evaluador',
-            'equipo_a_cargo',
-            'equipo_trabajo',
-            'supervisor',
-            'mis_objetivos',
-            'last_evaluacion',
-            'panel_rules',
-            'activos',
-            'eventos',
-            'cumpleaños_usuario',
-            'cumpleaños_felicitados_like_contador',
-            'cumpleaños_felicitados_comentarios',
-            'cumples_aniversarios',
-            'cumpleaños_felicitados_like_usuarios',
-            'esLider',
-            'organizacion',
-            'usuarioVinculadoConEmpleado',
-            'mis_quejas',
-            'mis_quejas_count',
-            'mis_denuncias',
-            'mis_denuncias_count',
-            'mis_propuestas',
-            'mis_propuestas_count',
-            'mis_sugerencias',
-            'mis_sugerencias_count',
-            'existsEmpleado',
-            'existsOrganizacion',
-            'existsVinculoEmpleadoAdmin',
-            'existsAreas',
-            'existsPuesto'
-        ));
+        $redirigirEvaluacion = false;
+
+        try {
+            //Evaluaciones desempeno
+            $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
+
+            $id_evaluado = null;
+            $id_periodo = null;
+            $id_evaluacion = null;
+
+            foreach ($evDes as $keyEv => $evD) {
+                $periodosEv = $evD->periodos->where('habilitado', true)->where('finalizado', false);
+
+                $areasEv = $evD->areas_evaluacion;
+
+                foreach ($periodosEv as $keyP => $p) {
+                    $hoyContestarEvaluacion = $hoy->between($p->fecha_inicio, $p->fecha_fin);
+                    if ($hoyContestarEvaluacion) {
+                        foreach ($evD->evaluados as $keyEval => $evaluado) {
+                            // $evaluado->nombres_evaluadores;
+                            $evaluador = in_array($empleado->id, $evaluado->nombres_evaluadores);
+                            if ($evaluador) {
+                                $redirigirEvaluacion = true;
+                                $id_evaluado = $evaluado->id;
+                                $id_periodo = $p->id;
+                                $id_evaluacion = $evD->id;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $mostrarCargaObjetivos = false;
+
+        try {
+            //code...
+            //Carga de objetivos propios
+            $carga_objetivos_activo = PeriodoCargaObjetivos::first();
+
+            $permisos = PermisosCargaObjetivos::get();
+
+            $fechaInicio = $carga_objetivos_activo->fecha_inicio;
+            $fechaFin = $carga_objetivos_activo->fecha_fin;
+
+            $hoyCargaObjetivos = $hoy->between($fechaInicio, $fechaFin);
+
+            $perfilAdministrador = $permisos->where('perfil', 'Administrador')->first();
+            $perfilJefeInmediato = $permisos->where('perfil', 'Jefe Inmediato')->first();
+            $perfilColaborador = $permisos->where('perfil', 'Colaborador')->first();
+
+            if ($hoyCargaObjetivos && $perfilAdministrador->permisos_asignacion == true && $usuario->roles->contains('title', 'Admin')) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && $perfilJefeInmediato->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivos = true;
+            } elseif ($hoyCargaObjetivos && ($perfilColaborador->permisos_asignacion || $perfilColaborador->permiso_objetivos || $perfilColaborador->permiso_escalas)) {
+                $mostrarCargaObjetivos = true;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $mostrarCargaObjetivosArea = false;
+
+        try {
+            //code...
+            //Carga de objetivos area
+            $carga_objetivos_activo_area = PeriodoCargaObjetivos::first();
+
+            $permisosArea = PermisosCargaObjetivos::get();
+
+            $fechaInicioArea = $carga_objetivos_activo_area->fecha_inicio;
+            $fechaFinArea = $carga_objetivos_activo_area->fecha_fin;
+
+            $hoyCargaObjetivosArea = $hoy->between($fechaInicioArea, $fechaFinArea);
+
+            $perfilJefeInmediatoArea = $permisosArea->where('perfil', 'Jefe Inmediato')->first();
+
+            if ($hoyCargaObjetivosArea && $perfilJefeInmediatoArea->permisos_asignacion == true && $empleado->es_supervisor) {
+                $mostrarCargaObjetivosArea = true;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return view(
+            'admin.inicioUsuario.index',
+            compact(
+                'empleado',
+                'solicitudes_pendientes',
+                'usuario',
+                'competencias',
+                'recursos',
+                'actividades',
+                'documentos_publicados',
+                'auditorias_anual',
+                'revisiones',
+                'mis_documentos',
+                'contador_actividades',
+                'contador_revisiones',
+                'contador_recursos',
+                'auditoria_internas',
+                'evaluaciones',
+                'oficiales',
+                'mis_evaluaciones',
+                'como_evaluador',
+                'equipo_a_cargo',
+                'equipo_trabajo',
+                'supervisor',
+                'mis_objetivos',
+                'last_evaluacion',
+                'panel_rules',
+                'activos',
+                'eventos',
+                'cumpleaños_usuario',
+                'cumpleaños_felicitados_like_contador',
+                'cumpleaños_felicitados_comentarios',
+                'cumples_aniversarios',
+                'cumpleaños_felicitados_like_usuarios',
+                'esLider',
+                'organizacion',
+                'usuarioVinculadoConEmpleado',
+                'mis_quejas',
+                'mis_quejas_count',
+                'mis_denuncias',
+                'mis_denuncias_count',
+                'mis_propuestas',
+                'mis_propuestas_count',
+                'mis_sugerencias',
+                'mis_sugerencias_count',
+                'existsEmpleado',
+                'existsOrganizacion',
+                'existsVinculoEmpleadoAdmin',
+                'existsAreas',
+                'existsPuesto',
+                'redirigirEvaluacion',
+                'id_periodo',
+                'id_evaluacion',
+                'id_evaluado',
+                'mostrarCargaObjetivos',
+                'mostrarCargaObjetivosArea',
+            ),
+        );
     }
-
-    // public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
-    // {
-    //     $evaluacion = Evaluacion::find(intval($evaluacion));
-    //     $evaluado = Empleado::with(['area', 'puestoRelacionado' => function ($q) {
-    //         $q->with('competencias');
-    //     }])->find(intval($evaluado));
-    //     $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
-    //         ->where('evaluado_id', $evaluado->id)
-    //         ->get();
-    //     $calificacion_final = 0;
-
-    //     $promedio_competencias = 0;
-    //     $promedio_general_competencias = 0;
-    //     $evalaciones_lista = collect();
-    //     $lista_autoevaluacion = collect();
-    //     $lista_jefe_inmediato = collect();
-    //     $lista_equipo_a_cargo = collect();
-    //     $lista_misma_area = collect();
-    //     if ($evaluacion->include_competencias) {
-    //         $filtro_autoevaluacion = $evaluadores->filter(function ($evaluador) {
-    //             return intval($evaluador->tipo) == EvaluadoEvaluador::AUTOEVALUACION;
-    //         });
-    //         $filtro_jefe_inmediato = $evaluadores->filter(function ($evaluador) {
-    //             return intval($evaluador->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
-    //         });
-    //         $filtro_equipo_a_cargo = $evaluadores->filter(function ($evaluador) {
-    //             return intval($evaluador->tipo) == EvaluadoEvaluador::EQUIPO;
-    //         });
-    //         $filtro_misma_area = $evaluadores->filter(function ($evaluador) {
-    //             return intval($evaluador->tipo) == EvaluadoEvaluador::MISMA_AREA;
-    //         });
-    //         $promedio_competencias = 0;
-    //         $cantidad_competencias_evaluadas = $evaluado->puestoRelacionado->competencias->count() > 0 ? $evaluado->puestoRelacionado->competencias->count() : 1;
-    //         $lista_autoevaluacion->push([
-    //             'tipo' => 'Autoevaluación',
-    //             'peso_general' => $evaluacion->peso_autoevaluacion,
-    //             'evaluaciones' => $filtro_autoevaluacion->map(function ($evaluador) use ($evaluacion, $evaluado) {
-    //                 $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
-    //                     ->where('evaluado_id', $evaluado->id)
-    //                     ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-    //                 $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
-
-    //                 return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-    //             }),
-    //         ]);
-
-    //         $calificacion = 0;
-    //         if (count($lista_autoevaluacion->first()['evaluaciones'])) {
-    //             foreach ($lista_autoevaluacion->first()['evaluaciones'] as $evaluacion_b) {
-    //                 foreach ($evaluacion_b['competencias'] as $competencia) {
-    //                     $calificacion += $competencia['porcentaje'];
-    //                 }
-    //             }
-    //             $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
-    //         } else {
-    //             $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100);
-    //         }
-
-    //         $lista_jefe_inmediato->push([
-    //             'tipo' => 'Jefe Inmediato',
-    //             'peso_general' => $evaluacion->peso_jefe_inmediato,
-    //             'evaluaciones' => $filtro_jefe_inmediato->map(function ($evaluador) use ($evaluacion, $evaluado) {
-    //                 $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
-    //                     ->where('evaluado_id', $evaluado->id)
-    //                     ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-    //                 $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
-
-    //                 return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-    //             }),
-    //         ]);
-
-    //         $calificacion = 0;
-    //         if (count($lista_jefe_inmediato->first()['evaluaciones'])) {
-    //             foreach ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluacion_b) {
-    //                 foreach ($evaluacion_b['competencias'] as $competencia) {
-    //                     $calificacion += $competencia['porcentaje'];
-    //                 }
-    //             }
-    //             $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
-    //         } else {
-    //             $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_jefe_inmediato / 100);
-    //         }
-
-    //         $lista_equipo_a_cargo->push([
-    //             'tipo' => 'Equipo a cargo',
-    //             'peso_general' => $evaluacion->peso_equipo,
-    //             'evaluaciones' => $filtro_equipo_a_cargo->map(function ($evaluador) use ($evaluacion, $evaluado) {
-    //                 $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
-    //                     ->where('evaluado_id', $evaluado->id)
-    //                     ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-    //                 $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
-
-    //                 return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-    //             }),
-    //         ]);
-
-    //         $calificacion = 0;
-    //         if (count($lista_equipo_a_cargo->first()['evaluaciones'])) {
-    //             foreach ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluacion_b) {
-    //                 foreach ($evaluacion_b['competencias'] as $competencia) {
-    //                     $calificacion += $competencia['porcentaje'];
-    //                 }
-    //             }
-    //             $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
-    //         } else {
-    //             $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_equipo / 100);
-    //         }
-
-    //         $lista_misma_area->push([
-    //             'tipo' => 'Misma área',
-    //             'peso_general' => $evaluacion->peso_area,
-    //             'evaluaciones' => $filtro_misma_area->map(function ($evaluador) use ($evaluacion, $evaluado) {
-    //                 $evaluaciones_competencias = EvaluacionRepuesta::with('competencia', 'evaluador')->where('evaluacion_id', $evaluacion->id)
-    //                     ->where('evaluado_id', $evaluado->id)
-    //                     ->where('evaluador_id', $evaluador->evaluador_id)->orderBy('id')->get();
-    //                 $evaluador_empleado = Empleado::find($evaluador->evaluador_id);
-
-    //                 return $this->obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias);
-    //             }),
-    //         ]);
-
-    //         $calificacion = 0;
-    //         if (count($lista_misma_area->first()['evaluaciones'])) {
-    //             foreach ($lista_misma_area->first()['evaluaciones'] as $evaluacion_b) {
-    //                 foreach ($evaluacion_b['competencias'] as $competencia) {
-    //                     $calificacion += $competencia['porcentaje'];
-    //                 }
-    //             }
-    //             $promedio_competencias += (($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
-    //         } else {
-    //             $promedio_competencias += (($cantidad_competencias_evaluadas * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100);
-    //         }
-    //         // dd($promedio_competencias);
-    //         $promedio_competencias = number_format($promedio_competencias / 100, 2);
-    //         $promedio_general_competencias = $promedio_competencias * $evaluacion->peso_general_competencias;
-    //         $calificacion_final += $promedio_general_competencias;
-    //     } else {
-    //         //Logica para cuando no se evaluan competencias
-    //     }
-
-    //     $promedio_objetivos = 0;
-    //     $promedio_general_objetivos = 0;
-    //     $evaluadores_objetivos = collect();
-    //     if ($evaluacion->include_objetivos) {
-    //         if ($evaluado->supervisor) {
-    //             $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
-    //                 return $q->with('metrica');
-    //             }])->where('evaluacion_id', $evaluacion->id)
-    //                 ->where('evaluado_id', $evaluado->id)
-    //                 ->where('evaluador_id', $evaluado->supervisor->id)
-    //                 ->get();
-    //             $evaluadores_objetivos->push([
-    //                 'id' => $evaluado->supervisor->id, 'nombre' => $evaluado->supervisor->name,
-    //                 'esSupervisor' => true,
-    //                 'esAutoevaluacion' => false,
-    //                 'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
-    //                     return [
-    //                         'nombre' => $objetivo->objetivo->nombre,
-    //                         'KPI' => $objetivo->objetivo->KPI,
-    //                         'meta' => $objetivo->objetivo->meta,
-    //                         'descripcion_meta' => $objetivo->objetivo->descripcion_meta,
-    //                         'metrica' => $objetivo->objetivo->metrica->definicion,
-    //                         'meta_alcanzada' => $objetivo->meta_alcanzada,
-    //                         'calificacion' => $objetivo->calificacion,
-    //                     ];
-    //                 }),
-    //             ]);
-    //         }
-    //         $calificacion_objetivos = 0;
-    //         if (count($evaluadores_objetivos->first()['objetivos'])) {
-    //             foreach ($evaluadores_objetivos->first()['objetivos'] as $objetivo) {
-    //                 $calificacion_objetivos += $objetivo['calificacion'] / $objetivo['meta'];
-    //             }
-    //         }
-
-    //         $objetivos_calificaciones_autoevaluacion = ObjetivoRespuesta::with(['objetivo' => function ($q) {
-    //             return $q->with('metrica');
-    //         }])->where('evaluacion_id', $evaluacion->id)
-    //             ->where('evaluado_id', $evaluado->id)
-    //             ->where('evaluador_id', $evaluado->id)
-    //             ->get();
-
-    //         $evaluadores_objetivos->push([
-    //             'id' => $evaluado->id, 'nombre' => $evaluado->name,
-    //             'esSupervisor' => false,
-    //             'esAutoevaluacion' => true,
-    //             'objetivos' => $objetivos_calificaciones_autoevaluacion->map(function ($objetivo) {
-    //                 return [
-    //                     'nombre' => $objetivo->objetivo->nombre,
-    //                     'KPI' => $objetivo->objetivo->KPI,
-    //                     'meta' => $objetivo->objetivo->meta,
-    //                     'descripcion_meta' => $objetivo->objetivo->descripcion_meta,
-    //                     'metrica' => $objetivo->objetivo->metrica->definicion,
-    //                     'meta_alcanzada' => $objetivo->meta_alcanzada,
-    //                     'calificacion' => $objetivo->calificacion,
-    //                 ];
-    //             }),
-    //         ]);
-
-    //         $promedio_objetivos += (($calificacion_objetivos * 100) / 2) / 100;
-    //         $promedio_general_objetivos += $promedio_objetivos * $evaluacion->peso_general_objetivos;
-    //         $promedio_objetivos = number_format($promedio_objetivos, 2);
-    //         $promedio_general_objetivos = number_format($promedio_general_objetivos, 2);
-    //         $calificacion_final += $promedio_general_objetivos;
-    //     }
-
-    //     return [
-    //         'lista_autoevaluacion' => $lista_autoevaluacion,
-    //         'lista_jefe_inmediato' => $lista_jefe_inmediato,
-    //         'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
-    //         'lista_misma_area' => $lista_misma_area,
-    //         'promedio_competencias' => $promedio_competencias,
-    //         'promedio_general_competencias' => $promedio_general_competencias,
-    //         'evaluadores_objetivos' => $evaluadores_objetivos,
-    //         'promedio_objetivos' => $promedio_objetivos,
-    //         'promedio_general_objetivos' => $promedio_general_objetivos,
-    //         'calificacion_final' => $calificacion_final,
-    //         'evaluadores' => Empleado::find($evaluadores->pluck('evaluador_id')),
-    //     ];
-    // }
-
-    // public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias)
-    // {
-    //     return [
-    //         'id' => $evaluador_empleado->id, 'nombre' => $evaluador_empleado->name,
-    //         'esSupervisor' => $evaluado->supervisor ? ($evaluado->supervisor->id == $evaluador->evaluador_id ? true : false) : false,
-    //         'esAutoevaluacion' => $evaluado->id == $evaluador->evaluador_id ? true : false,
-    //         'tipo' => $evaluador->tipo_formateado,
-    //         'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado) {
-    //             $nivel_esperado = $evaluado->puestoRelacionado->competencias->filter(function ($compe) use ($competencia) {
-    //                 return $compe->competencia_id == $competencia->competencia_id;
-    //             })->first()->nivel_esperado;
-
-    //             $porcentaje = 0;
-    //             if ($competencia->calificacion > 0) {
-    //                 $porcentaje = number_format((($competencia->calificacion) / $nivel_esperado), 2);
-    //             }
-
-    //             return [
-    //                 'competencia' => $competencia->competencia->nombre,
-    //                 'tipo_competencia' => $competencia->competencia->tipo_competencia,
-    //                 'calificacion' => $competencia->calificacion,
-    //                 'porcentaje' => $porcentaje,
-    //                 'evaluado' => $evaluador->evaluado,
-    //                 'peso' => $evaluador->peso,
-    //                 'meta' => $nivel_esperado,
-    //                 'firma_evaluador' => $evaluador->firma_evaluador,
-    //                 'firma_evaluado' => $evaluador->firma_evaluado,
-    //             ];
-    //         }),
-    //     ];
-    // }
 
     public function obtenerEquipo($childrens)
     {
@@ -704,15 +572,18 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'titulo' => 'required|max:255',
-            'ubicacion' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-            'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
-            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'titulo' => 'required|max:255',
+                'ubicacion' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+                'ubicacion.max' => 'El campo ubicación no puede exceder los 255 caracteres.',
+                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+            ],
+        );
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
@@ -776,13 +647,16 @@ class InicioUsuarioController extends Controller
     public function storeDenuncias(Request $request)
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'ubicacion' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
-            'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'ubicacion' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'descripcion.max' => 'El campo título no puede exceder los 550 caracteres.',
+                'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
+            ],
+        );
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -852,7 +726,7 @@ class InicioUsuarioController extends Controller
         ]);
 
         $mejoras = Mejoras::create([
-            'empleado_mejoro_id' => User::getCurrentUser()->empleado->id,
+            'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
             'descripcion' => $request->descripcion,
             'beneficios' => $request->beneficios,
             'titulo' => $request->titulo,
@@ -888,13 +762,16 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'titulo' => 'required|max:255',
-            'descripcion' => 'required|max:550',
-        ], [
-            'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
-            'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
-        ]);
+        $request->validate(
+            [
+                'titulo' => 'required|max:255',
+                'descripcion' => 'required|max:550',
+            ],
+            [
+                'titulo.max' => 'El campo título no puede exceder los 255 caracteres.',
+                'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
+            ],
+        );
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -967,7 +844,6 @@ class InicioUsuarioController extends Controller
         if ($incidente_procedente) {
             $incidentes_seguridad->update([
                 'estatus' => 'Sin atender',
-
             ]);
         } else {
             $incidentes_seguridad->update([
@@ -1151,8 +1027,8 @@ class InicioUsuarioController extends Controller
                     $task->duration = intval($task->duration);
                     $task->progress = intval($task->progress);
                     $task->canDelete = $task->canDelete == 'true' ? true : false;
-                    isset($task->level) ? $task->level = intval($task->level) : $task->level = 0;
-                    isset($task->collapsed) ? $task->collapsed = $task->collapsed == 'true' ? true : false : $task->collapsed = false;
+                    isset($task->level) ? ($task->level = intval($task->level)) : ($task->level = 0);
+                    isset($task->collapsed) ? ($task->collapsed = $task->collapsed == 'true' ? true : false) : ($task->collapsed = false);
                     $task->canAddIssue = $task->canAddIssue == 'true' ? true : false;
                     $task->endIsMilestone = $task->endIsMilestone == 'true' ? true : false;
                     $task->startIsMilestone = $task->startIsMilestone == 'true' ? true : false;
@@ -1305,9 +1181,14 @@ class InicioUsuarioController extends Controller
         $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
-            $documentos_empleado = $evidendiasdocumentos->where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
+            $documentos_empleado = $evidendiasdocumentos
+                ->where('empleado_id', $id_empleado)
+                ->where('lista_documentos_empleados_id', $doc->id)
+                ->first();
             if ($documentos_empleado) {
-                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)->where('archivado', false)->first();
+                $documento = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $documentos_empleado->id)
+                    ->where('archivado', false)
+                    ->first();
                 if ($documento) {
                     $doc_viejo = $documento->ruta_documento;
                     $nombre_doc = $documento->documento;
@@ -1320,14 +1201,16 @@ class InicioUsuarioController extends Controller
                 $nombre_doc = null;
             }
 
-            $lista_docs->push((object) [
-                'id' => $doc->id,
-                'documento' => $doc->documento,
-                'tipo' => $doc->tipo,
-                'empleado' => $documentos_empleado,
-                'ruta_documento' => $doc_viejo,
-                'nombre_doc' => $nombre_doc,
-            ]);
+            $lista_docs->push(
+                (object) [
+                    'id' => $doc->id,
+                    'documento' => $doc->documento,
+                    'tipo' => $doc->tipo,
+                    'empleado' => $documentos_empleado,
+                    'ruta_documento' => $doc_viejo,
+                    'nombre_doc' => $nombre_doc,
+                ],
+            );
         }
 
         // dd($lista_docs);
@@ -1345,7 +1228,9 @@ class InicioUsuarioController extends Controller
             $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
-            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();
+            $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)
+                ->where('archivado', false)
+                ->first();
             if ($doc_viejo) {
                 $doc_viejo->update([
                     'archivado' => true,
@@ -1372,18 +1257,20 @@ class InicioUsuarioController extends Controller
 
     public function updateVersionIso(Request $request)
     {
-        foreach ($request->toArray() as $var) {
-            if ($var === false) {
-                $valor = false;
-            } else {
-                $valor = true;
-            }
-        }
+        // Obtén el valor booleano de 'version' directamente
+        $valor = $request->input('version');
 
-        $ver = VersionesIso::getFirst();
-        $ver->update([
-            'version_historico' => $valor,
-        ]);
+        // Asegúrate de que haya un registro en la base de datos
+        $ver = VersionesIso::first();
+
+        if ($ver) {
+            // Actualiza el registro
+            $ver->update(['version_historico' => $valor]);
+
+            return response()->json(['success' => 'Version updated']); // Respuesta de éxito
+        } else {
+            return response()->json(['error' => 'No version found'], 404); // Respuesta de error
+        }
     }
 
     public function solicitud()

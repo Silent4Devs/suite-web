@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\EmpleadosGeneralExport;
+use App\Exports\HistorialEmpleadoExport;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
+use App\Models\DisponibilidadEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
@@ -72,6 +74,7 @@ class EmpleadoController extends Controller
 
                 return $empleado;
             });
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -191,10 +194,11 @@ class EmpleadoController extends Controller
         $educacions = json_decode($request->educacion);
         $cursos = json_decode($request->curso);
         $certificados = json_decode($request->certificado);
-        // dd($cursos);
 
         $ceo_exists = Empleado::getCeoExists();
+
         $validateSupervisor = 'nullable|exists:empleados,id';
+
         if ($ceo_exists) {
             $validateSupervisor = 'required|exists:empleados,id';
         }
@@ -202,19 +206,23 @@ class EmpleadoController extends Controller
         $request->validate([
             'name' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
-            'area_id' => 'required|exists:areas,id',
-            'supervisor_id' => $validateSupervisor,
-            'puesto_id' => 'required|exists:puestos,id',
-            'antiguedad' => 'required',
-            'email' => 'required|email',
-            'sede_id' => 'required',
+        //     'area_id' => 'required|exists:areas,id',
+        //     'supervisor_id' => $validateSupervisor,
+        //     'puesto_id' => 'required|exists:puestos,id',
+        //     'antiguedad' => 'required',
+            'email' => 'required|email|unique:empleados',
+        //     'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
+            'email.unique' => 'El email de empleado ya ha sido tomado',
         ]);
+
         $sede = Sede::select('id', 'direccion')->find($request->sede_id);
+
         if ($sede) {
             $request->query->set('direccion', $sede->direccion);
         }
+
 
         $this->validateDynamicForms($request);
         $empleado = $this->createEmpleado($request);
@@ -399,6 +407,10 @@ class EmpleadoController extends Controller
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
+        DisponibilidadEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'disponibilidad' => 1,
+        ]);
         $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
 
@@ -509,11 +521,11 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
+        
         $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
 
-        // return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)
@@ -1124,7 +1136,7 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
-    public function agregarHistorico($id, $tabla, $campo, $valor_anterior)
+    public function agregarHistorico($id, $tabla, $campo, $valor_anterior, $userId)
     {
         $hoy = Carbon::today();
 
@@ -1133,6 +1145,7 @@ class EmpleadoController extends Controller
             'campo_modificado' => $campo,
             'fecha_cambio' => $hoy,
             'valor_anterior_id' => $valor_anterior,
+            'user_id' => $userId,
             'tabla_origen' => $tabla,
         ]);
     }
@@ -1145,6 +1158,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
         $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -1157,7 +1171,7 @@ class EmpleadoController extends Controller
             }
         }
         $request->validate([
-            'name' => 'required|string',
+            'nameUsuario' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados,n_empleado,'.$id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
@@ -1229,7 +1243,7 @@ class EmpleadoController extends Controller
         $oldValues = $empleado->getOriginal();
 
         $empleado->update([
-            'name' => $request->name,
+            'name' => $request->nameUsuario,
             'area_id' => $request->area_id,
             'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
@@ -1290,6 +1304,8 @@ class EmpleadoController extends Controller
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
 
+        $userId = auth()->id();
+
         $newValues = $empleado->fresh()->getAttributes();
 
         // Verifica si los campos específicos han cambiado
@@ -1300,13 +1316,13 @@ class EmpleadoController extends Controller
         if ($areaIdChanged) {
             // El campo area_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'areas', 'area_id', $oldValues['area_id']);
+            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
         }
 
         if ($puestoIdChanged) {
             // El campo puesto_id ha sido modificado
             // Realiza las acciones necesarias...
-            $this->agregarHistorico($id, 'puestos', 'puesto_id', $oldValues['puesto_id']);
+            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
         $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
@@ -1717,8 +1733,17 @@ class EmpleadoController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new EmpleadosGeneralExport();
+        $export = new EmpleadosGeneralExport;
 
         return Excel::download($export, 'Empleados.xlsx');
+    }
+
+    public function exportarHistorial($id)
+    {
+        $empleado = Empleado::findOrFail(intval($id)); // Asumiendo que el modelo de empleado es User
+
+        $registrosHistorico = $empleado->registrosHistorico->toArray(); // Asegúrate de que esto sea correcto
+
+        return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_'.$id.'.xlsx');
     }
 }

@@ -16,7 +16,7 @@
                 <!-- Categoria Enabled-->
                 <div class="col-12 col-sm-12">
                     <div class="text-center form-group"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         DETALLES DE LA SOLICITUD
                     </div>
                     <!-- Categoria Field -->
@@ -48,12 +48,17 @@
                             </fieldset>
                         </div>
                     </div>
-                   
+
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Día de inicio:') !!}
-                            {!! Form::date('fecha_inicio', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...', 'id' => 'fecha_inicio', 'readonly']) !!}
+                            {!! Form::date('fecha_inicio', null, [
+                                'class' => 'form-control',
+                                'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...',
+                                'id' => 'fecha_inicio',
+                                'readonly',
+                            ]) !!}
                             @error('fecha_inicio')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -61,7 +66,12 @@
                         <!-- Categoria Field -->
                         <div class="form-group col-sm-6">
                             <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Día de fin:') !!}
-                            {!! Form::date('fecha_fin', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...', 'id' => 'fecha_fin', 'readonly']) !!}
+                            {!! Form::date('fecha_fin', null, [
+                                'class' => 'form-control',
+                                'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
+                                'id' => 'fecha_fin',
+                                'readonly',
+                            ]) !!}
                             @error('fecha_fin')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -71,7 +81,13 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <i class="fa-solid fa-calendar-day iconos-crear"></i>{!! Form::label('dias_solicitados', 'Número de días solicitados:') !!}
-                            {!! Form::number('dias_solicitados', null, ['class' => 'form-control', 'placeholder' => '0', 'readonly', 'id' => 'dias_solicitados', 'style' => 'text-align:center']) !!}
+                            {!! Form::number('dias_solicitados', null, [
+                                'class' => 'form-control',
+                                'placeholder' => '0',
+                                'readonly',
+                                'id' => 'dias_solicitados',
+                                'style' => 'text-align:center',
+                            ]) !!}
                             @error('dias_solicitados')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -92,7 +108,7 @@
 
 
                     <div class="text-center form-group"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         RESPUESTA DEL APROBADOR
                     </div>
 
@@ -116,8 +132,9 @@
                     </div>
                     <!-- Submit Field -->
                     <div class="text-right form-group col-12">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">
                             {{ trans('global.save') }}
                         </button>
                     </div>

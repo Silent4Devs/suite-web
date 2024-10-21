@@ -20,8 +20,8 @@
                                         class="fas fa-file-excel iconos-crear"></i>Importar xslx</label>
 
                                 <div>
-                                    <input id="csv_file" type="file" id="file" class="form-control-file" name="csv_file"
-                                        required>
+                                    <input id="csv_file" type="file" id="file" class="form-control-file"
+                                        name="csv_file" required>
 
                                     @if ($errors->has('csv_file'))
                                         <span class="help-block">
@@ -34,7 +34,8 @@
                                 <div>
                                     <div class="checkbox">
                                         <label style="margin-left: 15px;">
-                                            <input type="checkbox" id="eliminar" name=""> Eliminar datos actuales
+                                            <input type="checkbox" id="eliminar" name=""> Eliminar datos
+                                            actuales
                                         </label>
                                     </div>
                                 </div>
@@ -42,7 +43,7 @@
 
                             <div class="form-group">
                                 <div class="text-right">
-                                    <button id="btn_importar" class="btn btn-success">
+                                    <button id="btn_importar" class="btn btn-primary">
                                         Procesar excel
                                     </button>
                                 </div>
@@ -78,16 +79,16 @@
                     confirmButtonText: 'Si, borrar!'
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        const response  = await importar(formData)
-                        if (response.status=='success') {
+                        const response = await importar(formData)
+                        if (response.status == 'success') {
                             toastr.success(response.message)
                             $('#xlsxImportModal').modal('hide')
                         }
                     }
                 })
-            } else{
+            } else {
                 const response = await importar(formData)
-                if (response.status=='success') {
+                if (response.status == 'success') {
                     toastr.success(response.message)
                     $('#xlsxImportModal').modal('hide')
                 }
@@ -100,16 +101,16 @@
 
     async function importar(formData) {
         const url = "{{ route('carga-politica_sgi') }}";
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    Accept: "application/json",
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-            })
-            const data = await response.json();
-            return data;
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                Accept: "application/json",
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+        })
+        const data = await response.json();
+        return data;
     }
 
     // $("#btn_importar").on("click", function(e) {

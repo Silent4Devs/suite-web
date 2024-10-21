@@ -17,21 +17,27 @@
         #form_id {
             display: none;
         }
-
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Evaluaciones') }}
     </div>
 
-    <h5 class="col-12 titulo_general_funcion">Evaluaciones 360°</h5>
+    <h5 class="col-12 titulo_general_funcion" style="margin-top: 30px;">Evaluaciones 360°</h5>
     <div class="mt-5 card">
+        <div class="col-12 text-left">
+            <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px; margin-top:-70px;"
+                href="{{ route('descarga-evaluaciones-360') }}">
+                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                Reporte
+            </a>
+        </div>
 
         <form method="POST" id="form_id" style="position: relative; left: 75rem; top: 1.5rem; "
-        action="{{ route('admin.ev360-evaluaciones.pdf') }}">
-        @csrf
-        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-        </button>
+            action="{{ route('admin.ev360-evaluaciones.pdf') }}">
+            @csrf
+            <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+                IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+            </button>
         </form>
 
         @include('partials.flashMessages')
@@ -117,9 +123,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarEvaluacion" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEvaluacion" class="btn btn-outline-primary"
                         data-dismiss="modal">Descartar</button>
-                    <button type="button" id="btnGuardarEvaluacion" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnGuardarEvaluacion" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>

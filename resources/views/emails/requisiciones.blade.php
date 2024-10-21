@@ -81,7 +81,8 @@
                                                     @break
 
                                                     @case('firma_finanzas')
-                                                        <strong>{{ $supervisor }}</strong> ha autorizado una requisición y
+                                                        <strong>{{ $supervisor }}</strong> ha autorizado una requisición en el
+                                                        rol de <strong>{{ $puesto }}</strong> y
                                                         solicita su firma.
                                                     @break
 
@@ -143,9 +144,9 @@
 
                                             @if (in_array($tipo_firma_siguiente, ['firma_jefe', 'firma_finanzas', 'firma_compras']))
                                                 <a class="link"
-                                                    href="{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}"
+                                                    href="{{ route('contract_manager.requisiciones.firmarAprobadores', ['id' => $requisicion->id]) }}"
                                                     style="display: block; font-size: 13px;">
-                                                    {{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}
+                                                    {{ route('contract_manager.requisiciones.firmarAprobadores', ['id' => $requisicion->id]) }}
                                                 </a>
                                             @endif
 
@@ -172,7 +173,7 @@
                                                 <a class="link"
                                                     href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}"
                                                     style="display: block; font-size: 13px;">
-                                                    {{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}
+                                                    {{ route('contract_manager.requisiciones.firmarAprobadores', ['id' => $requisicion->id]) }}
                                                 </a>
                                             @break
 

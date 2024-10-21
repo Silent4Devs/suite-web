@@ -14,15 +14,15 @@
     <div>
         <div class="text-right">
             @can('timesheet_administrador_configuracion_access')
-                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-success">Pagina Principal de Proyectos</a>
+                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-primary">Pagina Principal de Proyectos</a>
             @endcan
             @can('asignar_empleados')
-                <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
+                <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-primary">Asignar
                     Empleados</a>
             @endcan
             @can('asignar_externos')
                 @if ($proyecto->tipo === 'Externo')
-                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar
+                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-primary">Asignar
                         Proveedores/Consultores</a>
                 @endif
             @endcan
@@ -37,7 +37,6 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="title-card-time">Editar Proyecto: {{ $proyecto->proyecto }}</h4>
-                    <hr class="my-4">
                 </div>
             </div>
 
@@ -134,8 +133,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn_cancelar">Cancelar</a>
-                        <button class="btn btn-success" type="submit"> Guardar</button>
+                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit"> Guardar</button>
                     </div>
                 </div>
             </form>

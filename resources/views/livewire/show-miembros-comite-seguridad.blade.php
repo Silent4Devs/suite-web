@@ -4,7 +4,7 @@
                 @csrf
                     <div class="form-group col-sm-6 anima-focus">
                         <select class="form-control  {{ $errors->has('colaborador') ? 'is-invalid' : '' }}"
-                            name="id_asignada" id="id_asignada" wire:model.defer="colaborador">
+                            name="id_asignada" id="id_asignada" wire:model="colaborador">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $empleado)
                                 <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"

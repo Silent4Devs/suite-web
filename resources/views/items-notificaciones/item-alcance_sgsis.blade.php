@@ -1,14 +1,14 @@
 <div class="d-flex align-items-center justify-content-between">
     <div style="{{ $place == 'notificaciones-page' ? 'flex-basis: calc(80% - 5px)' : 'flex-basis:100%' }}">
         <a class="dropdown-item text-secondary"
-            href="{{ route('admin.alcance-sgsis.show', $last_unread_notification->data['id']) }}">
+            href="{{ route('admin.alcance-sgsis.revision', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
@@ -22,14 +22,14 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['updated_at'] ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['updated_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido actualizada
                         </p>
                     </div>
@@ -40,18 +40,67 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             El {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ $last_unread_notification->data['deleted_at'] ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
                             sido eliminado
                         </p>
                     </div>
                 @break
+
+                @case(' aprobado')
+                <div class="d-flex align-items-center justify-content-start">
+                    @if (!empty($last_unread_notification->data['avatar_ruta']))
+                    <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                        class="rounded-circle" style="width: 50px; height: 50px;">
+                    {{ $last_unread_notification->data['name'] }}:
+                   @else
+                       <i class="pr-2 fas fa-tools text-danger"></i>
+                   @endif
+                   &nbsp;&nbsp;
+                    <p class="p-0 m-0">
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido aprobada  el  {{ date('Y-m-d, h:i A') }}
+                    </p>
+                </div>
+                @break
+
+                @case(' rechazado')
+                <div class="d-flex align-items-center justify-content-start">
+                    @if (!empty($last_unread_notification->data['avatar_ruta']))
+                    <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                        class="rounded-circle" style="width: 50px; height: 50px;">
+                    {{ $last_unread_notification->data['name'] }}:
+                @else
+                    <i class="pr-2 fas fa-tools text-danger"></i>
+                @endif
+                    &nbsp;&nbsp;
+                    <p class="p-0 m-0">
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha sido rechazada  el {{ date('Y-m-d, h:i A') }}
+                    </p>
+                </div>
+                @break
+
+                @case(' solicitudAprobacion')
+                <div class="d-flex align-items-center justify-content-start">
+                    @if (!empty($last_unread_notification->data['avatar_ruta']))
+                    <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                        class="rounded-circle" style="width: 50px; height: 50px;">
+                    {{ $last_unread_notification->data['name'] }}.:
+                @else
+                    <i class="pr-2 fas fa-tools text-danger"></i>
+                @endif
+                    &nbsp;&nbsp;
+                    <p class="p-0 m-0">
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha solicitado su aprobación
+                    </p>
+                </div>
+                @break
+
 
                 @default
             @endswitch

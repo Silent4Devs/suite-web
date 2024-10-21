@@ -13,7 +13,6 @@
         .text-yellow {
             color: #f4c272 !important;
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -27,7 +26,8 @@
                 @method('PUT')
                 @csrf
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
 
@@ -41,7 +41,8 @@
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                             </p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según corresponda:</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según
+                                corresponda:</p>
                         </div>
                     </div>
                 </div><br>
@@ -107,20 +108,21 @@
 
                     <div class="form-group col-md-4">
                         <label for="id_responsable"><i class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                        <select class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}" name="id_responsable" id="id_responsable">
+                        <select class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}"
+                            name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                            <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}"
-                                {{ old('id_responsable', $matrizRiesgo->id_responsable) == $responsable->id ? 'selected' : '' }}>
-                                {{ $responsable->name }}
-                            </option>
-
+                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
+                                    data-area="{{ $responsable->area->area }}"
+                                    {{ old('id_responsable', $matrizRiesgo->id_responsable) == $responsable->id ? 'selected' : '' }}>
+                                    {{ $responsable->name }}
+                                </option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_responsable'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('id_responsable') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('id_responsable') }}
+                            </div>
                         @endif
                     </div>
 
@@ -195,34 +197,33 @@
                                 {{ $errors->first('tipo_riesgo') }}
                             </div>
                         @endif
-                        <span
-                            class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                     </div>
 
                 </div>
 
                 <div class="form-group">
                     <label for="descripcionriesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción Riesgo</label>
-                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}"
-                        type="text" name="descripcionriesgo" id="descripcionriesgo"
-                        rows="3">{{ old('descripcionriesgo', $matrizRiesgo->descripcionriesgo) }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" type="text"
+                        name="descripcionriesgo" id="descripcionriesgo" rows="3">{{ old('descripcionriesgo', $matrizRiesgo->descripcionriesgo) }}</textarea>
                     @if ($errors->has('descripcionriesgo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcionriesgo') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
 
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE RIESGO INICIAL
                 </div>
 
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="hidden"  id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
+                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion"
+                    value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
 
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
@@ -262,7 +263,8 @@
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
                             <input type="hidden" name="disponibilidad" value="off">
-                            <input type="checkbox" class="custom-control-input" id="disponibilidad" name="disponibilidad"
+                            <input type="checkbox" class="custom-control-input" id="disponibilidad"
+                                name="disponibilidad"
                                 {{ old('disponibilidad', $matrizRiesgo->disponibilidad) == 'on' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="disponibilidad"><i
                                     class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label>
@@ -277,7 +279,8 @@
 
                 </div>
                 <hr>
-                <p class="font-weight-bold" style="font-size:11pt;">Evalue el riesgo inicial de acuerdo a la probabilidad vs
+                <p class="font-weight-bold" style="font-size:11pt;">Evalue el riesgo inicial de acuerdo a la probabilidad
+                    vs
                     impacto</p>
                 <div class="row">
 
@@ -285,7 +288,8 @@
                         <label for="probabilidad"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
                         <select class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}"
                             name="probabilidad" id="probabilidad">
-                            <option value disabled {{ old('probabilidad', $matrizRiesgo->probabilidad) === null ? 'selected' : '' }}>
+                            <option value disabled
+                                {{ old('probabilidad', $matrizRiesgo->probabilidad) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
                                 <option value="{{ $key }}"
@@ -299,8 +303,7 @@
                                 {{ $errors->first('probabilidad') }}
                             </div>
                         @endif
-                        <span
-                            class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                     </div>
 
                     <div class="form-group col-sm-4">
@@ -398,25 +401,25 @@
                                 a
                                 aplicar</label>
                             <div class="mb-4 col-12">
-                                 <select
+                                <select
                                     class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
                                     @if ($matrizRiesgo->version_historico === true)
-                                    @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}"
-                                            {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
-                                            {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                                        </option>
-                                    @endforeach
+                                        @foreach ($controles as $control)
+                                            <option value="{{ $control->id }}"
+                                                {{ in_array(old('controles_id[]', $control->id), $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
+                                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                            </option>
+                                        @endforeach
                                     @else
-                                    @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}"
-                                            {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
-                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
-                                        </option>
-                                    @endforeach
+                                        @foreach ($controles as $control)
+                                            <option value="{{ $control->id }}"
+                                                {{ in_array(old('controles_id[]', $control->id), $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
+                                                {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                            </option>
+                                        @endforeach
                                     @endif
                                 </select>
 
@@ -444,20 +447,26 @@
                     </div>
 
                     <div class="form-group col-sm-12">
-                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el tratamiento que desea darle a este riesgo</label>
-                        <select class="form-control" {{$errors->has('tipo_tratamiento')? 'is-invalid':''}} name="tipo_tratamiento" id="ejemplo">
-                            <option  value disabled {{old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento)===null ? 'selected': ''}}>Seleccione una opción</option>
+                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el
+                            tratamiento que desea darle a este riesgo</label>
+                        <select class="form-control" {{ $errors->has('tipo_tratamiento') ? 'is-invalid' : '' }}
+                            name="tipo_tratamiento" id="ejemplo">
+                            <option value disabled
+                                {{ old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento) === null ? 'selected' : '' }}>
+                                Seleccione una opción</option>
                             @foreach (App\Models\MatrizRiesgo::TIPO_TRATAMIENTO_SELECT as $key => $label)
-                            <option value="{{$key}}" {{old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento)=== (string) $key ? 'selected': ''}}>
-                            {{$label}}
-                            </option>
+                                <option value="{{ $key }}"
+                                    {{ old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento) === (string) $key ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
                             @endforeach
                         </select>
-                            <!-- Note, I changed hidden to text so you can see it<br/> -->
+                        <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>
                     <div class="form-group col-sm-12">
                         <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
-                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1" placeholder="Justificación" rows="3" style="display: none;">{{old('aceptar_transferir',$matrizRiesgo->aceptar_transferir)}}</textarea>
+                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1"
+                            value="1" placeholder="Justificación" rows="3" style="display: none;">{{ old('aceptar_transferir', $matrizRiesgo->aceptar_transferir) }}</textarea>
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -497,12 +506,14 @@
 
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DEL RIESGO RESIDUAL
                 </div>
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="hidden" id="resultadoponderacionRes" name="resultadoponderacionRes" value="{{ old('resultadoponderacionRes', $matrizRiesgo->resultadoponderacionRes) }}">
+                <input type="hidden" id="resultadoponderacionRes" name="resultadoponderacionRes"
+                    value="{{ old('resultadoponderacionRes', $matrizRiesgo->resultadoponderacionRes) }}">
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
@@ -525,7 +536,8 @@
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
                             <input type="hidden" name="integridad_cid" value="off">
-                            <input type="checkbox" class="custom-control-input" id="integridad_cid" name="integridad_cid"
+                            <input type="checkbox" class="custom-control-input" id="integridad_cid"
+                                name="integridad_cid"
                                 {{ old('integridad_cid', $matrizRiesgo->integridad_cid) == 'on' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="integridad_cid"><i
                                     class="fab fa-black-tie iconos-crear"></i>Integridad</label>
@@ -565,7 +577,8 @@
                                 class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
                         <select class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
                             name="probabilidad_residual" id="probabilidad_residual">
-                            <option value disabled {{ old('probabilidad_residual', $matrizRiesgo->probabilidad_residual) === null ? 'selected' : '' }}>
+                            <option value disabled
+                                {{ old('probabilidad_residual', $matrizRiesgo->probabilidad_residual) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
                                 <option value="{{ $key }}"
@@ -579,15 +592,15 @@
                                 {{ $errors->first('probabilidad_residual') }}
                             </div>
                         @endif
-                        <span
-                            class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                     </div>
 
                     <div class="form-group col-sm-4">
                         <label for="impacto_residual"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                         <select class="form-control {{ $errors->has('impacto_residual') ? 'is-invalid' : '' }}"
                             name="impacto_residual" id="impacto_residual">
-                            <option value disabled {{ old('impacto_residual', $matrizRiesgo->impacto_residual) === null ? 'selected' : '' }}>
+                            <option value disabled
+                                {{ old('impacto_residual', $matrizRiesgo->impacto_residual) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
                                 <option value="{{ $key }}"
@@ -629,8 +642,8 @@
 
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -643,5 +656,3 @@
 
 
 @include('admin.matrizRiesgos.scripts')
-
-

@@ -4,14 +4,37 @@
 @section('titulo', 'Firmar Requisicion')
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
+@if ($alerta)
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                // title: 'No es posible acceder a esta vista.',
+                imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
+                imageWidth: 100, // Set the width of the image as needed
+                imageHeight: 100,
+                html: `<h4 style="color:red;">Colaboradores no disponibles</h4>
+                        <br><p>Los colaboradores asignados se encuentran ausentes.</p><br>
+                        <p>Es necesario acercarse con el administrador para solicitar que se agregue un responsable, de lo contrario no podrá firmar la requisición.</p>`,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Entendido.',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to another view after user clicks OK
+                    window.location.href = '{{ route('contract_manager.requisiciones') }}';
+                }
+            });
+        });
+    </script>
+@endif
+
 <div class="card card-content caja-blue">
 
     <div>
-        <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-            style="width:150px; position: relative; top: 100px; right: 430px;">
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
     </div>
 
-    <div style="position: relative; top:-5rem; left: 80px;">
+    <div>
         <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
         <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes generar tu firma electrónica</h5>
         <p style="margin-top:10px;">
@@ -38,7 +61,7 @@
                 {{ $requisicion->sucursal->direccion }} <br>
             </div>
             <div class="flex-item item-header-doc-info" style="">
-                <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
+                <h4 style="font-size: 18px; color:var(--color-tbj);">REQUISICIÓN DE ADQUISICIONES</h4>
                 <p>Folio: 00-00{{ $requisicion->id }}</p>
                 <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
             </div>
@@ -255,7 +278,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_solicitante)
                         <img src="{{ $requisicion->firma_solicitante }}" class="img-firma">
-                        <p>{{ $requisicion->user }}</p>
+                        <p>{{ $firma_siguiente->solicitante->name ?? '' }}</p>
                         <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -269,8 +292,8 @@
                     @if ($requisicion->firma_jefe)
                         <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
                         <p>
-                            @isset($supervisor)
-                                {{ $supervisor }}
+                            @isset($firma_siguiente->jefe->name)
+                                {{ $firma_siguiente->jefe->name }}
                             @endisset
                         </p>
                         <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
@@ -287,7 +310,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_finanzas)
                         <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
-                        <p>{{ $firma_finanzas_name ?? '' }} </p>
+                        <p>{{ $firma_siguiente->responsableFinanzas->name ?? '' }} </p>
                         <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -360,23 +383,15 @@
                 action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
                 <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
-                    @if (
-                        !$requisicion->firma_solicitante &&
-                            !$requisicion->firma_jefe &&
-                            !$requisicion->firma_compras &&
-                            !$requisicion->firma_finanzas)
-                        <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
-                            REQUISICIÓN</button>
-                    @else
-                        <div>&nbsp;</div>
-                    @endif
+                    <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR
+                        REQUISICIÓN</button>
                     <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
                 </div>
             </form>
         </div>
     @endif
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function validar(params) {

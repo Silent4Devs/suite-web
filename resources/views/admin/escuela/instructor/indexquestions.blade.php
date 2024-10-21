@@ -1,18 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-<section>
-    <style>
-         .cancel{
-            background: #FFFFFF;
-            color: #006DDB;
-            border: 1px solid #006DDB;
-        }
+    <section>
+        <style>
+            .cancel {
+                background: #FFFFFF;
+                color: var(--color-tbj);
+                border: 1px solid var(--color-tbj);
+            }
 
-        .cancel:hover{
-            color:#006DDB;
-        }
-    </style>
-    @livewire('escuela.instructor.table-questions',['course'=>$course,'evaluation'=>$evaluation])
-</section>
-
+            .cancel:hover {
+                color: var(--color-tbj);
+            }
+        </style>
+        @livewire('escuela.instructor.table-questions', ['course' => $course, 'evaluation' => $evaluation])
+    </section>
 @endsection

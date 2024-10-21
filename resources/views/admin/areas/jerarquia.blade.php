@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}{{ config('app.cssVersion') }}">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #345183;
+            border-color: var(--color-tbj);
         }
 
         .orgchart.r2l .avatar {
@@ -70,7 +70,6 @@
         .orgchart .node {
             width: 200px;
         }
-
     </style>
     <style>
         /* width */
@@ -267,9 +266,8 @@
         }
 
         /* #shot_screen{
-                width:100% !important;
-            } */
-
+                                width:100% !important;
+                            } */
     </style>
     <style>
         .range-slider {
@@ -366,7 +364,6 @@
         input::-moz-focus-outer {
             border: 0;
         }
-
     </style>
     <style>
         .orgchart.l2r {
@@ -440,7 +437,6 @@
         .contenedor-areas {
             position: relative;
         }
-
     </style>
 
     <style>
@@ -482,13 +478,13 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: #345183;
+            color: var(--color-tbj);
             display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid #345183;
+            border-bottom: 2px solid var(--color-tbj);
             margin-bottom: -2px;
             margin-right: 10px;
         }
@@ -512,7 +508,7 @@
             position: absolute;
             top: 30px;
             background: white;
-            z-index: 1;
+            z-index: 101;
         }
 
         .grupos_funciones .caja_grupos {
@@ -543,8 +539,8 @@
             transform: scale(1.25);
         }
 
-        .text-center.img_empleado{
-            margin:auto !important;
+        .text-center.img_empleado {
+            margin: auto !important;
         }
 
         @media(min-width:2000px) {
@@ -552,14 +548,14 @@
                 padding-bottom: 300px !important;
             }
         }
-
     </style>
 @endsection
 @section('content')
     {{ Breadcrumbs::render('areas-render') }}
 
 
-    <h5 class="col-12 titulo_general_funcion" style="font-size:20px;">Áreas de {{ $organizacion->empresa ? $organizacion->empresa : 'La Organización' }}</h5>
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px;">Áreas de
+        {{ $organizacion->empresa ? $organizacion->empresa : 'La Organización' }}</h5>
     <!-- component -->
     <div class="w-full px-6 py-4 mb-16 bg-white rounded-lg shadow-lg contenido_blanco">
 
@@ -587,10 +583,11 @@
         @else
             <div class="caja_botones_menu">
                 <div class="caja_botones_menu">
-                    <a href="#" data-tabs="contenido2" class="btn_activo"><i class="mr-2 bi bi-boxes" style="font-size:30px;"></i> Áreas por
+                    <a href="#" data-tabs="contenido2" class="btn_activo"><i class="mr-2 bi bi-boxes"
+                            style="font-size:30px;"></i> Áreas por
                         Grupo</a>
-                    <a href="#" data-tabs="contenido1"><i class="mr-2 bi bi-diagram-3"
-                            style="font-size:30px;" style="text-decoration:none;"></i> Áreas por Jerarquia</a>
+                    <a href="#" data-tabs="contenido1"><i class="mr-2 bi bi-diagram-3" style="font-size:30px;"
+                            style="text-decoration:none;"></i> Áreas por Jerarquia</a>
 
                 </div>
             </div>
@@ -606,8 +603,8 @@
                                     </span>
                                     <div class="d-flex justify-content-center align-items-center"
                                         style="height: 75%; width:100% !important;">
-                                        <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
-                                            max="200">
+                                        <input id="zoomer" class="range-slider__range" type="range" value="30"
+                                            min="10" max="200">
                                         <span id="output" class="range-slider__value">30</span>
                                     </div>
                                 </div>
@@ -739,7 +736,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="menulogin d-none" style="border:solid 3px rgb(163, 163, 163);">
+                                                <div class="menulogin d-none"
+                                                    style="border:solid 3px rgb(163, 163, 163);">
                                                 </div>
                                             </div>
                                         @endforeach
@@ -754,8 +752,8 @@
                                     <ul class="mt-3 list-group">
                                         @foreach ($areas_sin_grupo as $area)
                                             <a href="{{ route('admin.areas.edit', $area) }}"
-                                                class="mb-1 list-group-item list-group-item-action" title="Asignar Grupo"><i
-                                                    class="fab fa-adn "></i> {{ $area->area }}</a>
+                                                class="mb-1 list-group-item list-group-item-action"
+                                                title="Asignar Grupo"><i class="fab fa-adn "></i> {{ $area->area }}</a>
                                         @endforeach
                                     </ul>
 
@@ -769,7 +767,6 @@
     </div>
 @endsection
 @section('scripts')
-
     <script>
         $(".btn_grupos").click(function() {
             $(".contenedor-areas").toggleClass("grupos_funciones");
@@ -903,9 +900,4 @@
 
         });
     </script>
-
-
-
-
-
 @endsection

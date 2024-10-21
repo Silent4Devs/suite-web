@@ -57,7 +57,7 @@ class RegistrarCalendarioController extends Controller
 
     public function create(Request $request)
     {
-        $calendario = new Calendario();
+        $calendario = new Calendario;
 
         return view('admin.registrarGlosario.create', compact('calendario'));
     }

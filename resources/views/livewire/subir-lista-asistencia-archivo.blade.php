@@ -18,14 +18,15 @@
                                     width="30" style="width:30px;">
                                 <span id="textoLista" wire:ignore>Subir lista de asistencia</span>
                             </label>
-                            <div x-data="{ isUploading: false, progress: 0 }"
-                                x-on:livewire-upload-start="isUploading = true"
+                            <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
                                 x-on:livewire-upload-finish="isUploading = false"
                                 x-on:livewire-upload-error="isUploading = false"
                                 x-on:livewire-upload-progress="progress = $event.detail.progress">
                                 <!-- File Input -->
-                                <input type="file" wire:model="lista" id="listaA" class="d-none">
-                                @error('lista') <small class="error text-danger">{{ $message }}</small> @enderror
+                                <input type="file" wire:model.live="lista" id="listaA" class="d-none">
+                                @error('lista')
+                                    <small class="error text-danger">{{ $message }}</small>
+                                @enderror
                                 <!-- Progress Bar -->
                                 <div x-show="isUploading">
                                     <progress max="100" x-bind:value="progress"></progress>
@@ -33,7 +34,7 @@
                             </div>
                             <p wire:loading wire:target="save"><i class="fas fa-circle-notch fa-spin"></i> Guardando</p>
                         </div>
-                        <button style="background: #345183;color: white;margin-left: 10px;" type="submit"
+                        <button style="background: var(--color-tbj)color: white;margin-left: 10px;" type="submit"
                             wire:click="save" class="btn btn-sm" wire:loading.attr="disabled"><i
                                 class="fas fa-save mr-2"></i>Guardar</button>
                     </td>

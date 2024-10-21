@@ -1,11 +1,11 @@
 <div>
-    <div style="margin-left: 20px; margin-right: 10px;">
+    <div style="margin-left: 20px; margin-right: 25px;">
         <div class="row">
             <div class="form-group col-md-2">
                 <br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="creacion_proyecto" id="creacion_proyecto"
-                        wire:model="creacion_proyecto" value="true">
+                        wire:model.live="creacion_proyecto" value="true">
                     <label class="form-check-label" for="creacion_proyecto">
                         Crear Proyecto para Contrato
                     </label>
@@ -13,11 +13,9 @@
             </div>
 
             @if (!$creacion_proyecto)
-                <div class="form-group col-md-6">
-                    <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
-                        de
-                        proyecto*</label>
-                    <select class="form-control" name="no_proyecto" id="no_proyecto" required>
+                <div class="form-group col-md-10">
+                    <label for="no_proyecto" class="txt-tamaño">Número de proyecto*</label>
+                    <select class="form-control float-right" name="no_proyecto" id="no_proyecto" required>
                         <option value="" selected>Seleccione un Numero de proyecto</option>
                         @foreach ($proyectos as $proyecto)
                             <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}">
@@ -25,7 +23,7 @@
                         @endforeach
                     </select>
                     @if ($errors->has('no_proyecto'))
-                        <div class="invalid-feedback red-text">
+                        <div class="invalid-feedback">
                             {{ $errors->first('no_proyecto') }}
                         </div>
                     @endif
@@ -34,7 +32,7 @@
         </div>
 
         @if ($creacion_proyecto)
-            <div class="row mb-4">
+            <div class="row mb-4" style="margin-left: 2px;">
                 <div class="recuadro-instruccion">
                     <strong>!</strong> &nbsp; Debe Ingresar un Identificador antes de poder seleccionar la categoria del
                     Proyecto.
@@ -46,7 +44,7 @@
                     <div class="form-group">
                         {!! Form::label('identificador_proyect', 'ID*', ['class' => 'asterisco']) !!}
                         <input type="text" id="identificador_proyect" placeholder=""
-                            wire:model.debounce.1000ms="identificador_proyect" wire:ignore
+                            wire:model.live.debounce.1000ms="identificador_proyect" wire:ignore
                             wire:change="verificarIdentificador($event.target.value)"
                             title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador"
                             pattern="[^\.,]*" class="form-control" maxlength="254" required>
@@ -70,7 +68,7 @@
                 <div class="col-md-4">
                     <div class="form-group ">
                         {!! Form::label('tipo', 'Categoria del Proyecto*', ['class' => 'asterisco']) !!}
-                        <select class="form-control" name="tipo" id="tipo" wire:model="tipo" required>
+                        <select class="form-control" name="tipo" id="tipo" wire:model.live="tipo" required>
                             <option value="" selected>Seleccione una opción</option>
                             @foreach ($select_tipos as $tipo_it)
                                 <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>

@@ -44,8 +44,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -207,7 +207,7 @@
             text-align: left;
             font: normal normal medium 20px/20px Roboto;
             letter-spacing: 0px;
-            color: #306BA9;
+            color: var(--color-tbj);
             opacity: 1;
             position: relative;
             left: 1rem;
@@ -227,8 +227,6 @@
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
 
-
-    <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -263,9 +261,9 @@
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            style="margin:50px 0px 50px 1230px; background:none; border: none;">
-        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-       </button>
+                style="margin:50px 0px 50px 1230px; background:none; border: none;">
+                <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+            </button>
             <div class="modal-dialog" style="margin-top: 0px;">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -278,7 +276,8 @@
                                     <form method="POST" style="position: relative; left: 10rem; "
                                         action="{{ route('admin.politica-sgsis.pdf') }}">
                                         @csrf
-                                        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                        <button class="boton-transparentev2" type="submit"
+                                            style="color: var(--color-tbj);">
                                             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                                         </button>
                                     </form>
@@ -287,23 +286,23 @@
                                     <div class="row col-12 ml-0"
                                         style="border-radius;
                                         padding-left: 0px;padding-right: 0px;">
-                                          @php
-                                          use App\Models\Organizacion;
-                                          $organizacion = Organizacion::first();
-                                          $logotipo = $organizacion->logotipo;
-                                          $empresa = $organizacion->empresa;
-                                          @endphp
+                                        @php
+                                            use App\Models\Organizacion;
+                                            $organizacion = Organizacion::first();
+                                            $logotipo = $organizacion->logotipo;
+                                            $empresa = $organizacion->empresa;
+                                        @endphp
 
 
                                         <div class="col-3" style="border-left: 25px solid #2395AA">
-                                            <img src="{{ asset($logotipo) }}" style="width:100%; max-width:100px; position: relative; top: 1rem;">
+                                            <img src="{{ asset($logotipo) }}"
+                                                style="width:100%; max-width:100px; position: relative; top: 1rem;">
 
                                         </div>
 
                                         <div class="col-5 p-2 mt-3">
                                             <br>
-                                            <span class=""
-                                                style="position: relative; top: -1.5rem; right: 3rem;">
+                                            <span class="" style="position: relative; top: -1.5rem; right: 3rem;">
                                                 {{ $empresa_actual }} <br>
                                                 RFC: {{ $rfc }} <br>
                                                 {{ $direccion }} <br>
@@ -320,7 +319,7 @@
                                     </div>
                                     @foreach ($politicaSgsis as $politica)
                                         <div style="margin: 4%">
-                                            <h5 style="color:#306BA9;">{{ $politica->nombre_politica }}</h5>
+                                            <h5 style="color:var(--color-tbj);">{{ $politica->nombre_politica }}</h5>
                                             <p>Fecha de publicación: {{ $politica->fecha_publicacion }} &nbsp;&nbsp;&nbsp;
                                                 Fecha de revision: {{ $politica->fecha_revision }}</p>
                                             <br>
@@ -419,6 +418,7 @@
 @endsection
 @section('scripts')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script>
         $(function() {

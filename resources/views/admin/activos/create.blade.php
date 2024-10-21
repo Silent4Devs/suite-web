@@ -29,13 +29,13 @@
                     <span class="help-block"></span>
                 </div>
 
-                    @livewire('categoria-subcategoria',['categoriasSeleccionado'=>null, 'subcategoriaSeleccionado'=>null])
+                @livewire('categoria-subcategoria', ['categoriasSeleccionado' => null, 'subcategoriaSeleccionado' => null])
 
                 <div class="form-group col-12">
                     <label for="descripcion"><i
                             class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.activo.fields.descripcion') }}</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                        name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                        id="descripcion">{{ old('descripcion') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -64,7 +64,8 @@
                 <div class="col-sm-12 form-group">
                     <label for="evidencia"><i class="fas fa-folder-open iconos-crear"></i>Documentos Relacionados</label>
                     <div class="custom-file">
-                        <input type="file" name="documentos_relacionados[]" multiple id="inputGroupFile01" class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
+                        <input type="file" name="documentos_relacionados[]" multiple id="inputGroupFile01"
+                            class="form-control {{ $errors->has('documentos_relacionados') ? 'is-invalid' : '' }}"
                             value="{{ old('documentos_relacionados', '') }}">
                         @if ($errors->has('documentos_relacionados'))
                             <div class="invalid-feedback">
@@ -79,15 +80,14 @@
 
                 <div class="form-group col-md-4">
                     <label for="dueno_id"><i class="fas fa-user-tie iconos-crear"></i>Dueño</label>
-                    <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}"
-                        name="dueno_id" id="dueno_id">
+                    <select class="form-control select2 {{ $errors->has('dueno_id') ? 'is-invalid' : '' }}" name="dueno_id"
+                        id="dueno_id">
                         @foreach ($empleados as $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                 data-area="{{ $empleado->area->area }}">
 
                                 {{ $empleado->name }}
                             </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('dueno_id'))
@@ -125,7 +125,6 @@
 
                                 {{ $empleado->name }}
                             </option>
-
                         @endforeach
                     </select>
                     @if ($errors->has('empleados'))
@@ -149,15 +148,15 @@
 
                 <div class="form-group col-md-4">
                     <label for="proceso_id"><i class="bi bi-file-earmark-post iconos-crear"></i>Proceso</label>
-                        <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
-                            name="proceso_id" id="proceso_id">
-                            @foreach ($procesos as $proceso)
-                                <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
-                                    data-macroproceso="{{ $proceso->macroproceso->nombre }}">
-                                    {{ $proceso->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <select class="form-control select2 {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                        name="proceso_id" id="proceso_id">
+                        @foreach ($procesos as $proceso)
+                            <option data-codigo="{{ $proceso->codigo }}" value="{{ $proceso->id }}"
+                                data-macroproceso="{{ $proceso->macroproceso->nombre }}">
+                                {{ $proceso->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
                     @if ($errors->has('empleados'))
                         <div class="invalid-feedback">
                             {{ $errors->first('area') }}
@@ -166,12 +165,14 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear" style="margin-top: 8px"></i>Codigo</label>
+                    <label for="codigo_proceso"><i class="fas fa-barcode iconos-crear"
+                            style="margin-top: 8px"></i>Codigo</label>
                     <div class="form-control" id="codigo_proceso"></div>
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="macroproceso"><i class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
+                    <label for="macroproceso"><i
+                            class="bi bi-file-earmark-post-fill iconos-crear"></i>Macroproceso</label>
                     <div class="form-control" id="macroproceso"></div>
                 </div>
 
@@ -234,9 +235,10 @@
                         </div>
 
                         <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
-                            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
-                            data-toggle="modal" data-target="#marcaslec" data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
-                                class="fas fa-plus"></i></button>
+                            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm"
+                                style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#marcaslec"
+                                data-whatever="@mdo" data-whatever="@mdo" title="Agregar Tipo"><i
+                                    class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -259,9 +261,9 @@
                         </div>
 
                         <div style="margin-top:17px;height: 28px !important;margin-left: -10px !important;">
-                            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
-                            data-toggle="modal" data-target="#modelolec" data-whatever="@mdo" title="Agregar Tipo"><i
-                                class="fas fa-plus"></i></button>
+                            <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm"
+                                style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#modelolec"
+                                data-whatever="@mdo" title="Agregar Tipo"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -270,7 +272,7 @@
                 <div class="form-group col-md-6">
                     <label for="n_serie"><i class="fas fa-barcode iconos-crear"></i>No de serie</label>
                     <input class="form-control {{ $errors->has('n_serie') ? 'is-invalid' : '' }}" name="n_serie"
-                        id="n_serie" >
+                        id="n_serie">
                     @if ($errors->has('n_serie'))
                         <div class="invalid-feedback">
                             {{ $errors->first('n_serie') }}
@@ -292,39 +294,39 @@
                 </div>
 
 
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
-                        <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
-                            name="fecha_alta">
-                        @if ($errors->has('fecha_alta'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_alta') }}
-                            </div>
-                        @endif
-                    </div>
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                    <label for="fecha_alta"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de alta </label>
+                    <input class="form-control" type="date" id="fecha_alta" value="{{ date('Y-m-d') }}"
+                        name="fecha_alta">
+                    @if ($errors->has('fecha_alta'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_alta') }}
+                        </div>
+                    @endif
+                </div>
 
 
 
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
-                        <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
-                        @if ($errors->has('fecha_compra'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_compra') }}
-                            </div>
-                        @endif
-                    </div>
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                    <label for="fecha_compra"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de compra </label>
+                    <input class="form-control" type="date" id="fecha_compra" name="fecha_compra">
+                    @if ($errors->has('fecha_compra'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_compra') }}
+                        </div>
+                    @endif
+                </div>
 
 
-                    <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de garantía</label>
-                        <input class="form-control" type="date" id="fecha_fin" name="fecha_fin">
-                        @if ($errors->has('fecha_fin'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('fecha_fin') }}
-                            </div>
-                        @endif
-                    </div>
+                <div class="form-group col-sm-12 col-md-4 col-lg-4">
+                    <label for="fecha_fin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de garantía</label>
+                    <input class="form-control" type="date" id="fecha_fin" name="fecha_fin">
+                    @if ($errors->has('fecha_fin'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_fin') }}
+                        </div>
+                    @endif
+                </div>
 
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
@@ -340,8 +342,8 @@
 
                 <div class="form-group col-12">
                     <label for="observaciones"><i class="fas fa-align-left iconos-crear"></i>Observaciones</label>
-                    <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}"
-                        name="observaciones" id="observaciones">{{ old('observaciones') }}</textarea>
+                    <textarea class="form-control {{ $errors->has('observaciones') ? 'is-invalid' : '' }}" name="observaciones"
+                        id="observaciones">{{ old('observaciones') }}</textarea>
                     @if ($errors->has('observaciones'))
                         <div class="invalid-feedback">
                             {{ $errors->first('observaciones') }}
@@ -350,19 +352,21 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <li><a href="{{url('admin/activos/descargar')}}">Descargar formato sugerido de responsiva </a></li>
+                    <li><a href="{{ url('admin/activos/descargar') }}">Descargar formato sugerido de responsiva </a></li>
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label  for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Responsiva</label>
-                    <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8" enctype="multipart/form-data">
-                    <input type="file" name="documento" multiple class="form-control" id="documento"
-                        accept="application/pdf" value="{{ old('files[]') }}" >
+                    <label for="documento"><i class="fas fa-folder-open iconos-crear"></i>Cargar Responsiva</label>
+                    <form method="POST" action="{{ route('admin.activos.store') }}" accept-charset="UTF-8"
+                        enctype="multipart/form-data">
+                        <input type="file" name="documento" multiple class="form-control" id="documento"
+                            accept="application/pdf" value="{{ old('files[]') }}">
                 </div>
 
-                <div class="text-right form-group col-12" style="margin-left:15px;" >
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                <div class="text-right form-group col-12" style="margin-left:15px;">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -370,130 +374,136 @@
 
                 {{-- Modales  --}}
 
-            <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nuevo Modelo</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="form-group">
-                          <label for="modelo-name" class="col-form-label">Nombre:</label>
-                          <input type="text" class="form-control" id="modelo-name">
-                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                <div class="modal fade" id="modelolec" tabindex="-1" aria-labelledby="modelolecLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nuevo Modelo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="modelo-name" class="col-form-label">Nombre:</label>
+                                        <input type="text" class="form-control" id="modelo-name">
+                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_modelo">Guardar</button>
+                            </div>
                         </div>
-                      </form>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn tb-btn-primary" id="guardar_modelo">Guardar</button>
-                    </div>
-                  </div>
                 </div>
-            </div>
 
-            <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Nombre:</label>
-                          <input type="text" class="form-control" id="recipient-name">
-                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                <div class="modal fade" id="marcaslec" tabindex="-1" aria-labelledby="marcaslecLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Marca</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_marca">Guardar</button>
+                            </div>
                         </div>
-                      </form>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn tb-btn-primary" id="guardar_marca">Guardar</button>
-                    </div>
-                  </div>
                 </div>
-            </div>
 
 
-            <div class="modal fade" id="categorialec" tabindex="-1" aria-labelledby="categorialecLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Categoria</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <div class="form-group">
-                          <label for="modelo-name" class="col-form-label">Nombre:</label>
-                          <input type="text" class="form-control" id="tipo-name">
-                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                <div class="modal fade" id="categorialec" tabindex="-1" aria-labelledby="categorialecLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Nueva Categoria</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="modelo-name" class="col-form-label">Nombre:</label>
+                                        <input type="text" class="form-control" id="tipo-name">
+                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn tb-btn-primary" id="guardar_categoria"
+                                    data-dismiss="modal">Guardar</button>
+                            </div>
                         </div>
-                      </form>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn tb-btn-primary" id="guardar_categoria" data-dismiss="modal">Guardar</button>
-                    </div>
-                  </div>
                 </div>
-            </div>
 
-            <div class="modal fade" id="subcategorialec" tabindex="-1" aria-labelledby="subcategorialecLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Subcategoria</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
+                <div class="modal fade" id="subcategorialec" tabindex="-1" aria-labelledby="subcategorialecLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="marcaslec" id="exampleModalLabel">Nueva Subcategoria</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
 
-                        <div class="form-group">
-                            <label for="id_asignada">Categoría</label>
-                            <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
-                                name="categoria_id" id="categoria_id">
-                                <option value="">Seleccione una opción</option>
-                                @foreach ($tipos as $tipo)
-                                    <option data-puesto="{{ $tipo->tipo }}" value="{{ $tipo->id }}">
-                                        {{ $tipo->tipo }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('tipo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('tipo') }}
-                                </div>
-                            @endif
+                                    <div class="form-group">
+                                        <label for="id_asignada">Categoría</label>
+                                        <select class="form-control  {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                                            name="categoria_id" id="categoria_id">
+                                            <option value="">Seleccione una opción</option>
+                                            @foreach ($tipos as $tipo)
+                                                <option data-puesto="{{ $tipo->tipo }}" value="{{ $tipo->id }}">
+                                                    {{ $tipo->tipo }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('tipo'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('tipo') }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Subcategoria:</label>
+                                        <input type="text" class="form-control" id="subtipo-name">
+                                        <span class="text-danger" id="nombre_error" class="nombre_error"></span>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn tb-btn-primary"
+                                    id="guardar_subcategoria">Guardar</button>
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Subcategoria:</label>
-                          <input type="text" class="form-control" id="subtipo-name">
-                          <span class="text-danger" id="nombre_error" class="nombre_error"></span>
-                        </div>
-                      </form>
                     </div>
-
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn tb-btn-primary" id="guardar_subcategoria">Guardar</button>
-                    </div>
-                  </div>
                 </div>
-            </div>
 
 
 
@@ -502,14 +512,10 @@
 
             </form>
         </div>
-
-
-
     @endsection
 
 
     @section('scripts')
-
         <script>
             document.addEventListener('DOMContentLoaded', function(e) {
 
@@ -520,8 +526,10 @@
                 document.getElementById('area_responsable').innerHTML = area_init
                 let proceso = document.getElementById('proceso_id');
 
-                document.getElementById('codigo_proceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-codigo')
-                document.getElementById('macroproceso').innerHTML=proceso.options[proceso.selectedIndex].getAttribute('data-macroproceso')
+                document.getElementById('codigo_proceso').innerHTML = proceso.options[proceso.selectedIndex]
+                    .getAttribute('data-codigo')
+                document.getElementById('macroproceso').innerHTML = proceso.options[proceso.selectedIndex].getAttribute(
+                    'data-macroproceso')
 
                 let dueno = document.querySelector('#dueno_id');
                 let area = dueno.options[dueno.selectedIndex].getAttribute('data-area');
@@ -532,8 +540,10 @@
                 proceso.addEventListener('change', function(e) {
                     e.preventDefault();
                     console.log()
-                    document.getElementById('codigo_proceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-codigo')
-                    document.getElementById('macroproceso').innerHTML=e.target.options[e.target.selectedIndex].getAttribute('data-macroproceso')
+                    document.getElementById('codigo_proceso').innerHTML = e.target.options[e.target
+                        .selectedIndex].getAttribute('data-codigo')
+                    document.getElementById('macroproceso').innerHTML = e.target.options[e.target.selectedIndex]
+                        .getAttribute('data-macroproceso')
                 })
 
 
@@ -552,7 +562,7 @@
                     document.getElementById('area_dueno').innerHTML = area
                 })
 
-                 // Script Marca activos
+                // Script Marca activos
                 document.getElementById('guardar_marca').addEventListener('click', function(e) {
                     e.preventDefault();
                     let nombre = document.querySelector('#recipient-name').value;
@@ -585,9 +595,9 @@
                                     '',
                                     'success'
                                 )
-                                const marca=response.marca
+                                const marca = response.marca
                                 console.log(marca);
-                                var option = new Option(marca.nombre,marca.id, true, true);
+                                var option = new Option(marca.nombre, marca.id, true, true);
                                 $('.selecmarca').append(option).trigger('change');
 
                             }
@@ -618,7 +628,8 @@
                         },
                         url: "{{ route('admin.tipoactivos.store') }}",
                         data: {
-                            tipo,ajax:true
+                            tipo,
+                            ajax: true
                         },
                         dataType: "json",
                         success: function(response) {
@@ -639,9 +650,9 @@
                                     '',
                                     'success'
                                 )
-                                const activo=response.activo
+                                const activo = response.activo
                                 console.log(activo);
-                                var option = new Option(activo.tipo,activo.id, true, true);
+                                var option = new Option(activo.tipo, activo.id, true, true);
                                 $('.selecCategoria').append(option).trigger('change');
 
                             }
@@ -660,9 +671,9 @@
                     console.log('Guardando')
                 });
 
-                 // Script subcategoria activos
+                // Script subcategoria activos
 
-                 document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
+                document.getElementById('guardar_subcategoria').addEventListener('click', function(e) {
                     e.preventDefault();
                     let subcategoria = document.querySelector('#subtipo-name').value;
                     let categoria_id = document.querySelector('#categoria_id').value;
@@ -674,7 +685,9 @@
                         },
                         url: "{{ route('admin.subtipoactivos.store') }}",
                         data: {
-                            categoria_id,subcategoria, ajax:true
+                            categoria_id,
+                            subcategoria,
+                            ajax: true
                         },
                         dataType: "json",
                         success: function(response) {
@@ -685,7 +698,7 @@
                                     ajax: {
                                         url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
                                         data: {
-                                            categoria:1
+                                            categoria: 1
                                         },
                                         dataType: "json",
                                     },
@@ -698,10 +711,11 @@
                                     '',
                                     'success'
                                 )
-                                const subtipo=response.subtipo
+                                const subtipo = response.subtipo
                                 // const tipo=response.tipo
                                 console.log(subtipo);
-                                var option = new Option(subtipo.subcategoria,subtipo.id, true, true);
+                                var option = new Option(subtipo.subcategoria, subtipo.id, true,
+                                    true);
                                 $('.selecSubcategoria').append(option).trigger('change');
                                 // var option = new Option(subtipo.categoria_id,subtipo.id, true, true);
                                 // $('.selecCategoria').append(option).trigger('change');
@@ -723,7 +737,7 @@
                 });
 
 
-                 // Script Modelo activos
+                // Script Modelo activos
                 document.getElementById('guardar_modelo').addEventListener('click', function(e) {
                     e.preventDefault();
                     let nombre = document.querySelector('#modelo-name').value;
@@ -757,9 +771,9 @@
                                     '',
                                     'success'
                                 )
-                                const modelo=response.modelo
+                                const modelo = response.modelo
                                 console.log(modelo);
-                                var option = new Option(modelo.nombre,modelo.id, true, true);
+                                var option = new Option(modelo.nombre, modelo.id, true, true);
                                 $('.selecmodelo').append(option).trigger('change');
 
                             }
@@ -811,32 +825,31 @@
                 $('.selecSubcategoria').select2({
                     ajax: {
                         url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                        data:{categoria:1},
+                        data: {
+                            categoria: 1
+                        },
                         dataType: "json",
                     },
                     theme: "bootstrap4"
                 });
-                $('.selecCategoria').on('select2:select', function (e) {
-                    var data = e.params.data; console.log(data);
+                $('.selecCategoria').on('select2:select', function(e) {
+                    var data = e.params.data;
+                    console.log(data);
                     $('.selecSubcategoria').select2({
-                    ajax: {
-                        url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
-                        data:{categoria:data.id},
-                        dataType: "json",
-                    },
-                    theme: "bootstrap4"
+                        ajax: {
+                            url: "{{ route('admin.subtipoactivos.getSubtipos') }}",
+                            data: {
+                                categoria: data.id
+                            },
+                            dataType: "json",
+                        },
+                        theme: "bootstrap4"
+                    });
                 });
-                  });
 
             });
 
             // $('.selecCategoria').val('1');
             // $('.selecCategoria').trigger('changue');
-
-
-
         </script>
-
-
-
     @endsection

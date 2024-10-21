@@ -24,7 +24,7 @@
     }
 
     .img_empleado {
-        width: 20px;
+        width: 40px;
         height: 20px;
         border-radius: 50%;
         margin-right: 5px;
@@ -93,7 +93,7 @@
                                     <h4>Colaboradores Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los colaboradores que seran informados de los procesos en el modulo.
+                                    Asigna a los colaboradores que serán informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -106,7 +106,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                     <h4>Usuarios Informados</h4>
                                 </div>
                                 <div class="row">
-                                    Asigna a los usuarios que seran informados de los procesos en el modulo.
+                                    Asigna a los usuarios que serán informados de los procesos en el módulo.
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
@@ -128,7 +128,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                         } else {
                             var option = new Option(item.empleado_id, item.empleado_id);
                             $(option).html(item
-                            .empleado_id); // Change this according to your display requirements
+                                .empleado_id); // Change this according to your display requirements
 
                             nivelSelect.append(option);
                         }
@@ -210,7 +210,7 @@
                 maximumSelectionLength: 5,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo pueden seleccionarse un maximo de 5 informadores por modulo.';
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
                     }
                 },
                 escapeMarkup: function(m) {
@@ -222,7 +222,7 @@
                 maximumSelectionLength: 5,
                 language: {
                     maximumSelected: function(maximumSelect) {
-                        return 'Solo pueden seleccionarse un maximo de 5 informadores por modulo.';
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
                     }
                 }
             });
@@ -235,7 +235,7 @@
 
             var avatar = $(option.element).data('avatar');
             if (avatar) {
-                var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+                var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
                 var avatarText = option.text;
 
                 var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
@@ -263,7 +263,7 @@
 
         $('#nivel1').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions1.indexOf(unselectedOptionId);
+            // var index = selectedOptions1.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions1.splice(index, 1);
             }
@@ -285,7 +285,7 @@
 
         $('#nivel2').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions2.indexOf(unselectedOptionId);
+            // var index = selectedOptions2.indexOf(unselectedOptionId);
             if (index !== -1) {
                 selectedOptions2.splice(index, 1);
             }

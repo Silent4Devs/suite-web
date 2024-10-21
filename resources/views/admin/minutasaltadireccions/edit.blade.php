@@ -5,6 +5,71 @@
         .select2-search.select2-search--inline {
             margin-top: -20px !important;
         }
+
+        .caja-firmas-doc .flex {
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .caja-firmas-doc .flex-item {
+            width: 300px;
+            padding: 20px !important;
+        }
+
+        .firma-content {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .caja-space-firma {
+            position: relative;
+            width: 500px;
+            height: 350px;
+        }
+
+        .caja-space-firma input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .caja-space-firma canvas {
+            /* width: 100%;
+                                                                                                                    height: 100%; */
+            border: 1px solid #5a5a5a;
+            ;
+        }
+
+        .img-firma {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .caja-firmas-doc p {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item {
+            width: 100%;
+            max-height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            align-self: stretch;
+        }
+
+        #info-bar {
+            display: none;
+        }
     </style>
 
     {{ Breadcrumbs::render('admin.minutasaltadireccions.create') }}
@@ -38,7 +103,21 @@
                 <h5>Minuta Revisión por Dirección</h5>
             </div>
             <div>
-                <div class="form-row">
+                <div class="form-row mt-4">
+                    @if (!$firmado)
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                            <label>
+                                <input type="checkbox" name="firma_check" id="toggle-info"
+                                    {{ $minutasaltadireccion->firma_check ? 'checked' : '' }}
+                                    value={{ $minutasaltadireccion->firma_check ? 1 : 0 }}>
+                                Activar flujo de firma(s)
+                            </label>
+                        </div>
+                    @else
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                            <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                        </div>
+                    @endif
                     <div class="form-group anima-focus col-sm-12 col-md-6 col-lg-6">
                         <select required class="form-control" name="responsable_id" id="responsable_id">
                             @foreach ($responsablereunions as $responsablereunion)
@@ -53,6 +132,8 @@
                                 {{ $errors->first('responsable_id') }}
                             </span>
                         @endif
+                        <br>
+                        <br>
                         <label class="required" for="responsable_id">Elaboró</label>
                         <span
                             class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
@@ -242,19 +323,23 @@
                             <p class="font-weight-bold col-12" style="font-size:11pt;">Participantes externos.</p>
                             <hr>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="nombreEXT" maxlength="255" placeholder="" />
+                                <input class="form-control" type="text" id="nombreEXT" maxlength="255"
+                                    placeholder="" />
                                 <label for="nombreEXT">Nombre</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="emailEXT" maxlength="255" placeholder="" />
+                                <input class="form-control" type="text" id="emailEXT" maxlength="255"
+                                    placeholder="" />
                                 <label for="emailEXT">Email</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="puestoEXT" maxlength="255" placeholder="" />
+                                <input class="form-control" type="text" id="puestoEXT" maxlength="255"
+                                    placeholder="" />
                                 <label for="puestoEXT">Puesto</label>
                             </div>
                             <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <input class="form-control" type="text" id="empresaEXT" maxlength="255" placeholder="" />
+                                <input class="form-control" type="text" id="empresaEXT" maxlength="255"
+                                    placeholder="" />
                                 <label for="empresaEXT">Empresa u
                                     Organización</label>
                             </div>
@@ -303,12 +388,8 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="mt-3 col-sm-12 form-group anima-focus">
-                    <label for="evidencia">Documento</label>
-                    <div class="custom-file">
-                        <input type="file" name="files[]" multiple class="form-control" id="evidencia">
-                    </div>
-                </div> --}}
+
+
         <div class="card card-body">
             <div class="card-header">
                 <h5>Temas Tratados<span class="text-danger">*</span></h5>
@@ -329,30 +410,267 @@
 
         {{-- MODULO AGREGAR PLAN DE Trabajo --}}
 
-
         @include('admin.workPlan.actividades.tabla', [
             'empleados' => $responsablereunions,
             'actividades' => $actividades,
         ])
 
 
+        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @if (session('alert'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito el proceso de firma acaba de ser  aprobado!',
+                    text: '{{ session('alert') }}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+            </script>
+        @endif
 
         {{-- FIN MODULO AGREGAR PLAN DE Trabajo --}}
-
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary"
                 style="text-decoration: none;">Cancelar</a>
-            <button class="btn btn-danger" id="btnGuardar" type="submit" style="width: 13%;">
+            <button class="btn btn-primary" id="btnGuardar" type="submit" style="width: 13%;">
                 Actualizar
             </button>
-            <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 25%;">
+            <button class="btn btn-primary" id="btnUpdateAndReview" type="submit" style="width: 25%;">
                 Actualizar y enviar a revisión
             </button>
         </div>
     </form>
 @endsection
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @section('scripts')
+    <script>
+        function validar(params) {
+            var x = $("#firma").val();
+            if (x) {
+                document.getElementById("myForm").submit();
+            } else {
+                Swal.fire(
+                    'Aun no ha firmado',
+                    'Porfavor Intentelo nuevamente',
+                    'error');
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            (function() {
+
+
+                window.requestAnimFrame = (function(callback) {
+                    return window.requestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame ||
+                        window.oRequestAnimationFrame ||
+                        window.msRequestAnimaitonFrame ||
+                        function(callback) {
+                            window.setTimeout(callback, 1000 / 60);
+                        };
+                })();
+
+                if (document.getElementById('firma_requi')) {
+                    renderCanvas("firma_requi", "clear");
+                }
+
+            })();
+
+            $('#firma_requi').mouseleave(function() {
+                var canvas = document.getElementById('firma_requi');
+                var dataUrl = canvas.toDataURL();
+                $('#firma').val(dataUrl);
+            });
+
+            function renderCanvas(contenedor, clearBtnCanvas) {
+
+                var canvas = document.getElementById(contenedor);
+                console.log(canvas);
+                var ctx = canvas.getContext("2d");
+                ctx.strokeStyle = "#222222";
+                ctx.lineWidth = 1;
+
+                var drawing = false;
+                var mousePos = {
+                    x: 0,
+                    y: 0
+                };
+                var lastPos = mousePos;
+
+                canvas.addEventListener("mousedown", function(e) {
+                    drawing = true;
+                    lastPos = getMousePos(canvas, e);
+                }, false);
+
+                canvas.addEventListener("mouseup", function(e) {
+                    drawing = false;
+                }, false);
+
+                canvas.addEventListener("mousemove", function(e) {
+                    mousePos = getMousePos(canvas, e);
+                }, false);
+
+                // Add touch event support for mobile
+                canvas.addEventListener("touchstart", function(e) {
+
+                }, false);
+
+                canvas.addEventListener("touchmove", function(e) {
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousemove", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchstart", function(e) {
+                    mousePos = getTouchPos(canvas, e);
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousedown", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchend", function(e) {
+                    var me = new MouseEvent("mouseup", {});
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                function getMousePos(canvasDom, mouseEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: mouseEvent.clientX - rect.left,
+                        y: mouseEvent.clientY - rect.top
+                    }
+                }
+
+                function getTouchPos(canvasDom, touchEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: touchEvent.touches[0].clientX - rect.left,
+                        y: touchEvent.touches[0].clientY - rect.top
+                    }
+                }
+
+                function renderCanvas() {
+                    if (drawing) {
+                        ctx.moveTo(lastPos.x, lastPos.y);
+                        ctx.lineTo(mousePos.x, mousePos.y);
+                        ctx.stroke();
+                        lastPos = mousePos;
+                    }
+                }
+
+                // Prevent scrolling when touching the canvas
+                document.body.addEventListener("touchstart", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchend", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchmove", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+
+                (function drawLoop() {
+                    requestAnimFrame(drawLoop);
+                    renderCanvas();
+                })();
+
+                function clearCanvas() {
+                    canvas.width = canvas.width;
+                }
+
+                function isCanvasBlank() {
+                    const context = canvas.getContext('2d');
+
+                    const pixelBuffer = new Uint32Array(
+                        context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                    );
+
+                    return !pixelBuffer.some(color => color !== 0);
+                }
+
+                var clearBtn = document.getElementById(clearBtnCanvas);
+                clearBtn.addEventListener("click", function(e) {
+                    clearCanvas();
+                }, false);
+
+            }
+
+            function isCanvasEmpty(canvas) {
+                const context = canvas.getContext('2d');
+
+                const pixelBuffer = new Uint32Array(
+                    context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                );
+
+                return !pixelBuffer.some(color => color !== 0);
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#participantes').select2({
+                placeholder: 'Selecciona participantes',
+                allowClear: true,
+                tags: true,
+                tokenSeparators: [',', ' '],
+                templateResult: formatEmpleado,
+                templateSelection: formatEmpleadoSelection,
+                maximumSelectionLength: 5 // Limita a un máximo de 5 selecciones
+            });
+
+            function formatEmpleado(empleado) {
+                if (!empleado.id) {
+                    return empleado.text;
+                }
+                var avatar = $(empleado.element).data('avatar');
+                var $avatar = $('<img class="avatar" src="' + avatar + '">');
+                var $nombre = $('<span>' + empleado.text + '</span>');
+                var $container = $('<span>').append($avatar).append($nombre);
+                return $container;
+            }
+
+            function formatEmpleadoSelection(empleado) {
+                return empleado.text;
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('toggle-info');
+            const infoBar = document.getElementById('info-bar');
+
+            checkbox.addEventListener('change', function() {
+                if (checkbox.checked) {
+                    infoBar.style.display = 'block';
+                } else {
+                    infoBar.style.display = 'none';
+                }
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('btnGuardar').addEventListener('click', function(e) {
@@ -665,312 +983,4 @@
             document.getElementById('participantesExt').value = JSON.stringify(arrParticipantes);
         }
     </script>
-
-    {{-- <script type="text/javascript">
-        Livewire.on('planStore', () => {
-            $('#planAccionModal').modal('hide');
-            $('.modal-backdrop').hide();
-            toastr.success('Plan de Trabajo creado con éxito');
-        });
-        window.initSelect2 = () => {
-            $('.select2').select2({
-                'theme': 'bootstrap4'
-            });
-        }
-
-        initSelect2();
-
-        Livewire.on('select2', () => {
-            initSelect2();
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            window.tblParticipantes = $('#tbl-participantes').DataTable({
-                buttons: []
-            })
-            $("#cargando_participantes").hide();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            let url = "{{ route('admin.empleados.get') }}";
-            $("#participantes_search").keyup(function() {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: 'nombre=' + $(this).val(),
-                    beforeSend: function() {
-                        $("#cargando_participantes").show();
-                    },
-                    success: function(data) {
-                        $("#cargando_participantes").hide();
-                        $("#participantes_sugeridos").show();
-                        let sugeridos = document.querySelector(
-                            "#participantes_sugeridos");
-                        sugeridos.innerHTML = data;
-
-                        $("#participantes_search").css("background", "#FFF");
-                    }
-                });
-
-            });
-
-            document.getElementById('btn-suscribir-participante').addEventListener('click', function(e) {
-                e.preventDefault();
-                suscribirParticipante()
-            })
-
-            document.getElementById('btnGuardar').addEventListener('click', function(e) {
-                // e.preventDefault();
-                enviarParticipantes();
-                enviarActividades();
-            })
-
-        });
-
-        function seleccionarUsuario(user) {
-            $("#participantes_search").val(user.name);
-            $("#id_empleado").val(user.id);
-            $("#email").val(user.email);
-            $("#puesto").val(user.puesto);
-            $("#area").val(user.area);
-            $("#participantes_sugeridos").hide();
-        }
-
-
-        function suscribirParticipante() {
-            //form-participantes
-
-            let participantes = tblParticipantes.rows().data().toArray();
-            let arrParticipantes = [];
-            participantes.forEach(participante => {
-                arrParticipantes.push(participante[0])
-            });
-            let id_empleado = $("#id_empleado").val();
-            if (id_empleado == '') {
-                Swal.fire('Debes de buscar un empleado', '', 'info')
-            } else {
-                if (!arrParticipantes.includes(id_empleado)) {
-                    let nombre = $("#participantes_search").val();
-                    let puesto = $("#puesto").val();
-                    let email = $("#email").val();
-                    tblParticipantes.row.add([
-                        id_empleado,
-                        nombre,
-                        puesto,
-                        email,
-                    ]).draw();
-
-                } else {
-                    Swal.fire('Este participante ya ha sido agregado', '', 'error')
-                }
-
-                $("#participantes_search").val('');
-                $("#id_empleado").val('');
-                $("#email").val('');
-                $("#puesto").val('');
-                $("#area").val('');
-            }
-        }
-
-        function enviarParticipantes() {
-            let participantes = tblParticipantes.rows().data().toArray();
-            let arrParticipantes = [];
-            participantes.forEach(participante => {
-                arrParticipantes.push(participante[0])
-
-            });
-            document.getElementById('participantes').value = arrParticipantes;
-            console.log(arrParticipantes);
-        }
-    </script> --}}
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $(document).ready(function() {
-                window.tblActividades = $('#tblActividades').DataTable({
-                    buttons: []
-                });
-            });
-            $('.responsables_actividad').select2({
-                theme: 'bootstrap4',
-            });
-            document.getElementById('btnAgregar').addEventListener('click', function(e) {
-                e.preventDefault();
-                limpiarErrores();
-                agregarActividad();
-            })
-
-            // document.getElementById('btnVincularNombre').addEventListener('click', function(e) {
-            //     e.preventDefault();
-            //     let elementNombre = document.querySelector('[data-vincular-nombre="true"]').value;
-            //     if (elementNombre != "") {
-            //         if (document.getElementById('actividad').value == "") {
-            //             document.getElementById('actividad').value = elementNombre;
-            //         } else {
-            //             if (elementNombre == document.getElementById('actividad').value) {
-            //                 Swal.fire('El nombre ya ha sido vinculado', '', 'info');
-            //             } else {
-            //                 Swal.fire({
-            //                     title: 'Atención',
-            //                     text: "El campo de actividad actualmente contiene texto, ¿Desea sobreescribirlo?",
-            //                     icon: 'warning',
-            //                     showCancelButton: true,
-            //                     confirmButtonColor: '#3085d6',
-            //                     cancelButtonColor: '#d33',
-            //                     confirmButtonText: 'Si',
-            //                     cancelButtonText: 'No',
-            //                 }).then((result) => {
-            //                     if (result.isConfirmed) {
-            //                         document.getElementById('actividad').value = elementNombre;
-            //                     }
-            //                 })
-            //             }
-            //         }
-            //     } else {
-            //         Swal.fire('No se ha descrito el nombre, no se puede vincular', '', 'info');
-            //     }
-            // })
-        });
-
-        function limpiarErrores() {
-            document.querySelectorAll('.errores').forEach(element => {
-                element.innerHTML = "";
-            });
-        }
-
-        function limpiarCampos() {
-            document.getElementById('actividad').value = '';
-            document.getElementById('inicio').value = '';
-            document.getElementById('finalizacion').value = '';
-            document.getElementById('comentarios').value = '';
-            $('.responsables_actividad').val(null).trigger('change');
-        }
-
-        function limpiarCampoPorId(id) {
-            document.getElementById(id).value = '';
-        }
-
-        function agregarActividad() {
-            let actividad = document.getElementById('actividad').value;
-            let inicio = document.getElementById('inicio').value;
-            let finalizacion = document.getElementById('finalizacion').value;
-            let selectedValues = $('.responsables_actividad').select2('data');
-            let comentarios = document.getElementById('comentarios').value;
-            // let progreso = document.getElementById('progreso').value;
-            let esFechaAnterior = Math.round((new Date(finalizacion).getTime() - new Date(inicio).getTime()) / (1000 *
-                60 * 60 * 24)) < 0;
-            if (actividad == '') {
-                document.querySelector('.error_actividad').innerHTML = "El nombre de la actividad es requerido";
-                limpiarCampoPorId('actividad');
-            }
-            if (inicio == '') {
-                document.querySelector('.error_inicio').innerHTML = "El inicio de la actividad es requerido";
-                limpiarCampoPorId('inicio');
-            }
-            if (finalizacion == '') {
-                document.querySelector('.error_finalizacion').innerHTML = "La finalización de la actividad es requerido";
-                limpiarCampoPorId('finalizacion');
-            } else if (esFechaAnterior) {
-                document.querySelector('.error_finalizacion').innerHTML =
-                    "La finalización de la actividad no puede ser días antes del día de inicio";
-                limpiarCampoPorId('finalizacion');
-            }
-            if (selectedValues.length === 0) {
-                document.querySelector('.error_participantes').innerHTML =
-                    "La actividad debe de tener al menos un participante";
-                limpiarCampoPorId('responsables_actividad');
-            }
-
-            if (comentarios == '') {
-                document.querySelector('.error_comentarios').innerHTML =
-                    "El los comentarios de la actividad son requeridos";
-                limpiarCampoPorId('comentarios');
-            }
-            // if (progreso == '' || progreso < 0 || progreso > 100) {
-            //     document.querySelector('.error_progreso').innerHTML =
-            //         "El progreso de la actividad es requerido y debe estár en un rango de 0-100";
-            //     limpiarCampoPorId('progreso');
-            // }
-            // && progreso != '' && progreso >= 0 && progreso <= 100 // Validaciones de progreso
-            if (actividad != '' && inicio != '' && finalizacion != '' && !esFechaAnterior && comentarios != '' &&
-                selectedValues.length > 0) {
-                limpiarCampos();
-
-                let actividades = tblActividades.rows().data().toArray();
-                let arrActividades = [];
-                actividades.forEach(actividad => {
-                    arrActividades.push(actividad[1]);
-                });
-                let name = actividad;
-                // let start = new Date(inicio).getTime();
-                // let end = new Date(finalizacion).getTime();
-                let start = inicio;
-                let end = finalizacion;
-                let id = `tmp_${new Date().getTime()}_1`;
-                let resta = new Date(end).getTime() - new Date(start).getTime();
-                let duration = Math.round(resta / (1000 * 60 * 60 * 24));
-                let images = "";
-                let participantes_id = [];
-                selectedValues.forEach(selected => {
-                    console.log(selected);
-                    images += `
-                        <img class="rounded-circle" title="${selected.text.trim()}" src="{{ asset('storage/empleados/imagenes') }}/${selected.element.attributes.avatar.nodeValue}" id="res_${selected.id}" style="clip-path: circle(15px at 50% 50%);width: 45px;"/>
-                    `;
-                    participantes_id.push(selected.id);
-                });
-
-                // let progress = progreso;
-
-                if (!arrActividades.includes(actividad)) {
-                    tblActividades.row.add([
-                        // id,
-                        // 'STATUS_ACTIVE',
-                        name,
-                        start,
-                        end,
-                        // duration,
-                        images,
-                        // participantes_id,
-                        comentarios,
-                        // `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
-                    ]).draw();
-
-                    let additionalData = {
-                        id: id,
-                        status: 'STATUS_ACTIVE',
-                        duration: duration,
-                        participantes_id: participantes_id,
-                        // button: `<button class="btn btn-sm text-danger" title="Eliminar actividad" onclick="event.preventDefault(); EliminarFila(this)"></button>`,
-                    };
-                    tblActividades.rows().data()[tblActividades.rows().length - 1].push(additionalData);
-                } else {
-                    Swal.fire('Esta actividad ya ha sido agregada', '', 'info');
-                    limpiarCampos();
-                }
-            }
-        }
-        window.EliminarFila = function(element) {
-            tblActividades
-                .row($(element).parents('tr'))
-                .remove()
-                .draw();
-        }
-        // window.enviarActividades = function() {
-        //     let actividades = tblActividades.rows().data().toArray();
-        //     document.getElementById('actividades').value = JSON.stringify(actividades);
-        // }
-        window.enviarActividades = function() {
-            let actividades = tblActividades.rows().data().toArray();
-
-            // Filter out null or empty string values from each row
-            let filteredActividades = actividades.map(row =>
-                row.filter(value => value !== null && value !== '')
-            );
-
-            document.getElementById('actividades').value = JSON.stringify(filteredActividades);
-        }
-    </script> --}}
 @endsection

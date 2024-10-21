@@ -33,7 +33,7 @@
                             <small class="text-muted">Importante: Una vez que establezca nuevos objetivos tendrá que
                                 realizar la carga de objetivos nuevamente</small>
                         </p>
-                        <button class="btn btn-success" id="btnNuevosObjetivos">Definir nuevos objetivos</button> --}}
+                        <button class="btn btn-primary" id="btnNuevosObjetivos">Definir nuevos objetivos</button> --}}
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
         aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background: #345183;color: white;">
+                <div class="modal-header" style="background: var(--color-tbj)color: white;">
                     <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i class="mr-2 fas fa-copy"></i>Copiar
                         Objetivos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -162,8 +162,8 @@
                     <div id="contenidoModal"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnGuardarCopia" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnGuardarCopia" class="btn btn-primary">Guardar</button>
                 </div>
                 @include('layouts.loader')
             </div>

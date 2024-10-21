@@ -129,7 +129,7 @@
 
                                             </p>
                                             <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                style="color:var(--color-tbj)padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                 Información de la queja
                                             </strong>
 

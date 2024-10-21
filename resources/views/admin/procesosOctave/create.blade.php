@@ -192,7 +192,7 @@
 
 
                 <div class="text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS DEL PROCESO
                 </div>
                 {{-- <input type="text" value="{{$id_matriz}}"> --}}
@@ -293,7 +293,7 @@
                 </div>
 
                 <div class="text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS
                 </div>
 
@@ -302,7 +302,7 @@
 
 
                 <div class="text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DEL PROCESO
                 </div>
 
@@ -847,8 +847,9 @@
 
 
                 <div class="form-group col-12 text-right mt-4" style="margin-left:15px;">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

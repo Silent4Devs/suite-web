@@ -3,7 +3,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
             <label for="estrategico"><i class="fas fa-chess-knight iconos-crear"></i>Estratégico</label>
             <select class="form-control select2 {{ $errors->has('estrategico') ? 'is-invalid' : '' }}"
-                name="estrategico" wire:model="estrategico" id="estrategico">
+                name="estrategico" wire:model.live="estrategico" id="estrategico">
                 <option value="" selected disabled>Selecciona una opción</option>
                 <option value="1" {{ $estrategico == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $estrategico == 2 ? 'selected' : '' }}>2</option>
@@ -20,7 +20,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
             <label for="operacional"><i class="fas fa-project-diagram iconos-crear"></i>Operacional</label>
             <select class="form-control select2 {{ $errors->has('operacional') ? 'is-invalid' : '' }}"
-                name="operacional" wire:model="operacional" id="operacional">
+                name="operacional" wire:model.live="operacional" id="operacional">
                 <option value="" selected disabled>Selecciona una opción</option>
                 <option value="1" {{ $operacional == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $operacional == 2 ? 'selected' : '' }}>2</option>
@@ -37,7 +37,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-4 col-lg-4">
             <label for="cumplimiento"><i class="fas fa-check iconos-crear"></i>Cumplimiento</label>
             <select class="form-control select2 {{ $errors->has('cumplimiento') ? 'is-invalid' : '' }}"
-                name="cumplimiento" wire:model="cumplimiento" id="cumplimiento">
+                name="cumplimiento" wire:model.live="cumplimiento" id="cumplimiento">
                 <option value="" selected disabled>Selecciona</option>
                 <option value="1" {{ $cumplimiento == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $cumplimiento == 2 ? 'selected' : '' }}>2</option>
@@ -56,7 +56,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-3 col-lg-3">
             <label for="legal"><i class="fas fa-gavel iconos-crear"></i>Legal</label>
             <select class="form-control select2 {{ $errors->has('legal') ? 'is-invalid' : '' }}" name="legal"
-                id="legal" wire:model="legal">
+                id="legal" wire:model.live="legal">
                 <option value="" selected disabled>Selecciona una opción</option>
                 <option value="1" {{ $legal == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $legal == 2 ? 'selected' : '' }}>2</option>
@@ -73,7 +73,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-3 col-lg-3">
             <label for="reputacional"><i class="fas fa-newspaper iconos-crear"></i>Reputacional</label>
             <select class="form-control select2 {{ $errors->has('reputacional') ? 'is-invalid' : '' }}"
-                name="reputacional" id="reputacional" wire:model="reputacional">
+                name="reputacional" id="reputacional" wire:model.live="reputacional">
                 <option value="" selected disabled>Selecciona una opción</option>
                 <option value="1" {{ $reputacional == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $reputacional == 2 ? 'selected' : '' }}>2</option>
@@ -90,7 +90,7 @@
         <div wire:ignore class="form-group col-sm-4 col-md-3 col-lg-3">
             <label for="tecnologico"><i class="fas fa-laptop iconos-crear"></i>Tecnológico</label>
             <select class="form-control select2 {{ $errors->has('tecnologico') ? 'is-invalid' : '' }}"
-                name="tecnologico" id="tecnologico" wire:model="tecnologico">
+                name="tecnologico" id="tecnologico" wire:model.live="tecnologico">
                 <option value="" selected disabled>Selecciona una opción</option>
                 <option value="1" {{ $tecnologico == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $tecnologico == 2 ? 'selected' : '' }}>2</option>
@@ -107,7 +107,7 @@
         <div wire:ignore.self class="form-group col-sm-4 col-md-3 col-lg-3">
             <label for="valor"><i class="fas fa-bullseye iconos-crear"></i>Valor del impacto</label>
             <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                name="valor" value="{{ old('valor', '') }}" id="valor" wire:model.defer="valor"
+                name="valor" value="{{ old('valor', '') }}" id="valor" wire:model="valor"
                 style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" readonly>
             @if ($errors->has('valor'))
                 <div class="invalid-feedback">

@@ -19,6 +19,7 @@ class HistoricoEmpleados extends Model
         'fecha_cambio',
         'valor_anterior_id',
         'tabla_origen',
+        'user_id',
     ];
 
     public function empleadoHistorico()

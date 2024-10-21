@@ -13,8 +13,9 @@
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas ydarles el nivel
-                            de prioridad para ser administradas conforme a su nivel asignado</p>
+                        <p>En esta sección puedes generar las listas de distribucion de correos, agruparlas y darles el
+                            nivel
+                            de prioridad para ser administradas conforme a su nivel asignado.</p>
                 </div>
             </div>
         </div>

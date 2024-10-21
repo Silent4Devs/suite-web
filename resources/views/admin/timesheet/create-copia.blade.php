@@ -258,8 +258,10 @@
             document.getElementById('suma_dia_domingo').innerText = suma_horas_domingo + ' h';
             document.getElementById('suma_dia_domingo_no_fact').innerText = suma_horas_domingo_no_fact + ' h';
 
-            document.getElementById('total_h_facts').innerText = 'Total: ' + total_h_fact + ' h';
-            document.getElementById('total_h_no_facts').innerText = 'Total: ' + total_h_no_fact + ' h';
+            let total_h_fact_redondeado = total_h_fact.toFixed(2);
+            document.getElementById('total_h_facts').innerText = 'Total: ' + total_h_fact_redondeado + ' h';
+            let total_h_no_fact_redondeado = total_h_no_fact.toFixed(2);
+            document.getElementById('total_h_no_facts').innerText = 'Total: ' + total_h_no_fact_redondeado + ' h';
 
         }
         Livewire.on('calcularSumatoriasFacturables', () => {
@@ -274,10 +276,12 @@
             let total_horas_filas = 0;
             let tota_filas_elemnt = document.querySelectorAll('.total_filas');
             tota_filas_elemnt.forEach(item => {
-                total_horas_filas += Number(item.innerHTML.split(' ')[0]);
+                total_horas_filas += parseFloat(item.innerHTML.split(' ')[0]);
             });
-            document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
+            total_horas_filas = Math.round(total_horas_filas * 10) / 10; // Redondear a 1 decimal
+            document.getElementById('total_horas_filas').innerText =  ' h';
         }
+
 
         // $('.ingresar_horas').focus(function(){
         //     let input_hora = $('.ingresar_horas:focus').attr('id');

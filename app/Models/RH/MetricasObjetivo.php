@@ -17,6 +17,12 @@ class MetricasObjetivo extends Model implements Auditable
 
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        'definicion',
+        'valor_minimo',
+        'valor_maximo',
+    ];
+
     //Redis methods
     public static function getAll()
     {

@@ -35,4 +35,9 @@ class GruposEvaluado extends Model implements Auditable
     {
         return $this->belongsToMany('App\Models\Empleado', 'ev360_empleados_grupos_evaluados', 'grupo_id', 'empleado_id');
     }
+
+    public function empleadosEvaluacion()
+    {
+        return $this->belongsToMany('App\Models\Empleado', 'ev360_empleados_grupos_evaluados', 'grupo_id', 'empleado_id')->select('empleados.id', 'empleados.name');
+    }
 }

@@ -2,36 +2,36 @@
     <h5 class="d-flex justify-content-between">Asignar Proveedor/Consultor Externo a Proyecto</h5>
     <div class="row">
         <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar
+            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn-outline-primary">Editar
                 Proyecto</a>
-            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
+            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-primary">Asignar
                 Empleados</a>
             <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
 
-    <form wire:submit.prevent="addExterno" wire:ignore>
+    <form wire:submit="addExterno" wire:ignore>
         <x-loading-indicator />
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model.defer="externo_añadido" name="" maxlength="255" id=""type="text" class="form-control"
-                    required>
+                <input wire:model="externo_añadido" name="" maxlength="255" id=""type="text"
+                    class="form-control" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="horas_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_tercero" name="" id="" step="0.01" type="number"
+                <input wire:model="costo_tercero" name="" id="" step="0.01" type="number"
                     min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                <button class="btn btn-success">Agregar</button>
+                <button class="btn btn-primary">Agregar</button>
             </div>
         </div>
     </form>
@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
@@ -121,7 +121,7 @@
                                     <small>{{ $proyecto_proveedor->proveedor_tercero }}</small>
                                 </h1>
                                 <form
-                                    wire:submit.prevent="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
+                                    wire:submit="editExterno({{ $proyecto_proveedor->id }}, Object.fromEntries(new FormData($event.target)))">
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label for="">Externo<sup>*</sup>(obligatorio)</label>
@@ -148,13 +148,13 @@
                                         <div class="mt-4 d-flex justify-content-between">
                                             <div class="form-group col-md-4"
                                                 style="display: flex; align-items: flex-end;">
-                                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                                     Cancelar
                                                 </button>
                                             </div>
                                             <div class="form-group col-md-4"
                                                 style="display: flex; align-items: flex-end;">
-                                                <button class="btn btn-success">Editar</button>
+                                                <button class="btn btn-primary">Editar</button>
                                             </div>
                                         </div>
                                     </div>

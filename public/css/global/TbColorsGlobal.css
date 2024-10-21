@@ -22,8 +22,7 @@
 
     /*  */
 
-    --color-background: #345183;
-
+    --color-background:var(--color-tbj);
     /*  Colores de los registros del calendario*/
     /* Eventos,Cumpleaños, etc*/
 

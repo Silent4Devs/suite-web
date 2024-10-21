@@ -3,12 +3,12 @@
         <div class="d-flex align-items-center">
             <div class="caja-buscador-header" wire:loading.remove>
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="search" class="" placeholder="Buscar ..." wire:model="search">
+                <input type="search" class="" placeholder="Buscar ..." wire:model.live="search">
             </div>
 
-            <div class="spinner-border text-red ml-2" role="status" wire:loading wire:target="search">
+            {{-- <div class="spinner-border text-red ml-2" role="status" wire:loading wire:target="search">
                 <span class="sr-only">Loading...</span>
-            </div>
+            </div> --}}
         </div>
 
         <div class="caja-list-search-global scroll_estilo">
@@ -29,7 +29,7 @@
     @endif
     @if ($lugar == 'portal')
         <input class="h-100" type="text" placeholder="Ejem: Cargar mis horas en Timesheet" autocomplete="off"
-            wire:model="search">
+            wire:model.blur="search">
 
         <div class="caja-list-search-global scroll_estilo">
             <ul class="list-group">

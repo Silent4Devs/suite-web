@@ -40,7 +40,8 @@
         </div>
         <div class="col-6" id="participantes_invitaciones" style="max-height: 500px;overflow: auto;"></div>
         <div class="col-12">
-            <label class="required" for="enviarInvitacionAhora"><i class="fas fa-calendar-day mr-1 iconos-crear"></i>Fecha Limite
+            <label class="required" for="enviarInvitacionAhora"><i
+                    class="fas fa-calendar-day mr-1 iconos-crear"></i>Fecha Limite
                 para confirmar asistencia</label>
         </div>
         <div class="col-6 form-group">
@@ -70,11 +71,11 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
+    <a href="{{ route('admin.recursos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+    <button class="btn btn-primary btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>
-    <button class="btn btn-danger btnGuardarRecurso" type="submit" id="btnGuardarRecurso">
+    <button class="btn btn-primary btnGuardarRecurso" type="submit" id="btnGuardarRecurso">
         Enviar
     </button>
 </div>

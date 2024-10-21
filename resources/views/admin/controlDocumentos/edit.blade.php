@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.edit') }} Control de documento
@@ -37,8 +36,8 @@
                 </div> --}}
                 <div class="form-group">
                     <label for="fecha_creacion">{{ trans('cruds.controlDocumento.fields.fecha_creacion') }}</label>
-                    <input class="form-control date {{ $errors->has('fecha_creacion') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_creacion" id="fecha_creacion"
+                    <input class="form-control date {{ $errors->has('fecha_creacion') ? 'is-invalid' : '' }}"
+                        type="date" name="fecha_creacion" id="fecha_creacion"
                         value="{{ old('fecha_creacion', $controlDocumento->fecha_creacion) }}">
                     @if ($errors->has('fecha_creacion'))
                         <div class="invalid-feedback">
@@ -77,8 +76,8 @@
                 </div>
                 <div class="form-group">
                     <label for="reviso_id">{{ trans('cruds.controlDocumento.fields.reviso') }}</label>
-                    <select class="form-control select2 {{ $errors->has('reviso') ? 'is-invalid' : '' }}"
-                        name="reviso_id" id="reviso_id">
+                    <select class="form-control select2 {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="reviso_id"
+                        id="reviso_id">
                         @foreach ($revisos as $id => $reviso)
                             <option value="{{ $id }}"
                                 {{ (old('reviso_id') ? old('reviso_id') : $controlDocumento->reviso->id ?? '') == $id ? 'selected' : '' }}>
@@ -110,15 +109,12 @@
                     <span class="help-block">{{ trans('cruds.controlDocumento.fields.estado_helper') }}</span>
                 </div> --}}
                 <div class="form-group">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
-
-
-
 @endsection

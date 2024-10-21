@@ -19,7 +19,7 @@
     }
 
     .advance {
-        background-color: #345183;
+        background-color: var(--color-tbj);
         color: #FFFFFF;
     }
 
@@ -29,12 +29,12 @@
 
     .cancel {
         background: #FFFFFF;
-        color: #006DDB;
-        border: 1px solid #006DDB;
+        color: var(--color-tbj);
+        border: 1px solid var(--color-tbj);
     }
 
     .cancel:hover {
-        color: #006DDB;
+        color: var(--color-tbj);
     }
 
     /* Texto de cada meta  */
@@ -83,8 +83,8 @@
                     <div class="flex justify-end">
                         {!! Form::submit('Actualizar información', [
                             'class' => 'inline-flex items-center px-4 py-2 m-4 text-xs font-semibold
-                                                                                                                                                                                                                                                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
-                                                                                                                                                                                                                                                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25',
                         ]) !!}
                     </div>
                     {!! Form::close() !!}
@@ -163,7 +163,8 @@
         aria-labelledby="nav-contorg-tab">
         @livewire('escuela.instructor.courses-curriculum', ['course' => $course])
         <div class="d-flex justify-content-end">
-            <button class="btn advance" onclick="cambiarPestana('meta-curso-tab')">GUARDAR Y CONTINUAR</button>
+            <button class="btn btn-primary advance" onclick="cambiarPestana('meta-curso-tab')">GUARDAR Y
+                CONTINUAR</button>
         </div>
 
     </div>
@@ -180,19 +181,22 @@
             @livewire('escuela.instructor.course-audiences', ['course' => $course], key('course-audiences' . $course->id))
         </div>
         <div class="d-flex justify-content-end">
-            <button class="btn  advance" onclick="cambiarPestana('estudiantes-curso-tab')">GUARDAR Y CONTINUAR</button>
+            <button class="btn btn-primary  advance" onclick="cambiarPestana('estudiantes-curso-tab')">GUARDAR Y
+                CONTINUAR</button>
         </div>
     </div>
     <div class="tab-pane mb-4 fade" id="nav-estudiantes-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         @livewire('escuela.instructor.courses-students', ['course' => $course])
         <div class="d-flex justify-content-end">
-            <button class="btn  advance" onclick="cambiarPestana('evaluaciones-curso-tab')">GUARDAR Y CONTINUAR</button>
+            <button class="btn btn-primary" onclick="cambiarPestana('evaluaciones-curso-tab')">GUARDAR Y
+                CONTINUAR</button>
         </div>
     </div>
     <div class="tab-pane mb-4 fade" id="nav-evaluaciones-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         @livewire('escuela.instructor.evaluaciones-instructor', ['course' => $course])
         <div class="d-flex justify-content-end">
-            <a class="btn advance" href="{{ route('admin.courses.index') }}" role="button">GENERAR CURSO Y GUARDAR</a>
+            <a class="btn btn-primary advance" href="{{ route('admin.courses.index') }}" role="button">GENERAR CURSO Y
+                GUARDAR</a>
         </div>
     </div>
     <script>
