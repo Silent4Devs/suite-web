@@ -63,7 +63,7 @@ class TablaCalendarioController extends Controller
     public function create(Request $request)
     {
         abort_if(Gate::denies('eventos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $calendario = new Calendario();
+        $calendario = new Calendario;
 
         return view('admin.tabla-calendario.create', compact('calendario'));
     }

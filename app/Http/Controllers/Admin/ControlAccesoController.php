@@ -168,7 +168,7 @@ class ControlAccesoController extends Controller
     {
         abort_if(Gate::denies('control_de_accesos_agregar') && Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new ControlAcceso();
+        $model = new ControlAcceso;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

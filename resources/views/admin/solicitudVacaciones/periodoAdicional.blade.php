@@ -27,16 +27,16 @@
                     $valor = $dias_disponibles;
                     $mostrar = true;
                 }
-                
+
                 if ($dias_pendientes >= 1) {
                     $leyenda_dias_pendientes = true;
                 } else {
                     $leyenda_dias_pendientes = false;
                 }
-                
+
             @endphp
 
-        
+
             {{-- Leyenda dias Pendientes de aprobacion --}}
             <div class="row" x-data="{ open: @js($leyenda_dias_pendientes) }">
                 <!-- Categoria Enabled-->
@@ -54,7 +54,8 @@
                                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Importante ...
                                 </p>
                                 <p class="m-0" style="font-size: 14px; color:#1E3A8A "> Actualmente tienes
-                                    <strong>{{ $dias_pendientes }} día(s)</strong> en estado de <strong>"Pendientes"</strong>,
+                                    <strong>{{ $dias_pendientes }} día(s)</strong> en estado de
+                                    <strong>"Pendientes"</strong>,
                                     los
                                     cuales están descontados y en caso de ser rechazados estos serán reembolsados.
                                 </p>
@@ -150,8 +151,9 @@
                     <input type="hidden" value="{{ $autoriza }}" name="autoriza">
                     <!-- Submit Field -->
                     <div class="text-right form-group col-12">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                        <button class="btn btn-danger" type="submit">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">
                             {{ trans('global.save') }}
                         </button>
                     </div>

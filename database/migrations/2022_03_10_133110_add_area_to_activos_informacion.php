@@ -25,7 +25,6 @@ class AddAreaToActivosInformacion extends Migration
      */
     public function down()
     {
-        Schema::table('activos_informacion', function (Blueprint $table) {
-        });
+        Schema::table('activos_informacion', function (Blueprint $table) {});
     }
 }

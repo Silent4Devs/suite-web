@@ -33,6 +33,7 @@ class EvidenciasSgsi extends Model implements Auditable, HasMedia
     ];
 
     protected $fillable = [
+        'id',
         'responsable_evidencia_id',
         'nombredocumento',
         'objetivodocumento',

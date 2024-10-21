@@ -12,7 +12,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             <div class="py-1 text-center form-group col-12"
-                style="background-color:#345183; border-radius:100px; color: white;">Eventos</div>
+                style="background-color:var(--color-tbj); border-radius:100px; color: white;">Eventos</div>
             @include('partials.flashMessages')
             <div class="card-body datatable-fix">
                 @include('admin.tabla-calendario.table')

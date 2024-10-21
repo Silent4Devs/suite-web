@@ -144,8 +144,7 @@ body.c-dark-theme .needsclick {
 #sidebar .active:before,
 #sidebar .c-active:before {
     content: "";
-    background: #345183;
-    z-index: -1;
+    background: var(--color-tbj);    z-index: -1;
     width: 5px;
     height: 50%;
     top: 25%;
@@ -158,12 +157,10 @@ body.c-dark-theme .needsclick {
 #sidebar a.active font,
 #sidebar a.c-active font,
 #sidebar a.c-active .letra_blanca {
-    color: #345183;
-}
+    color: var(--color-tbj);}
 
 #sidebar li a:hover .letra_blanca {
-    color: #345183;
-}
+    color: var(--color-tbj);}
 
 .caja_img_logo {
     padding: 0 !important;

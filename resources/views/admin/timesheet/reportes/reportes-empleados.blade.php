@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -143,8 +143,6 @@
         }
 
         .dataTables_scrollHead {
-            position: sticky !important;
-            top: 50px;
             z-index: 7;
         }
 

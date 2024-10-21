@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{ config('app.cssVersion') }}">
 
     <style type="text/css">
         .img_comunicado {
@@ -72,29 +72,31 @@
 </div>
 
 <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
-        <div class="card card-body" style="background-color: #5397D5; color: #fff;">
-            <div class="d-flex" style="gap: 25px;">
-                <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
-                <div>
-                    <br>
-                    <br>
-                    <h4>¿Qué es Comunicados Generales?  </h4>
-                    <p>
-                        Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
-                    </p>
-                    <p>
-                        Son fundamentales ya que contribuye a la concientización y comprensión general.
-                    </p>
-                </div>
-            </div>
+<div class="card card-body" style="background-color: #5397D5; color: #fff;">
+    <div class="d-flex" style="gap: 25px;">
+        <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+            class="mt-2 mb-2 ml-2 img-fluid">
+        <div>
+            <br>
+            <br>
+            <h4>¿Qué es Comunicados Generales? </h4>
+            <p>
+                Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar
+                aspectos importantes.
+            </p>
+            <p>
+                Son fundamentales ya que contribuye a la concientización y comprensión general.
+            </p>
         </div>
+    </div>
+</div>
 
 
 <div class="mt-5 card" style="">
 
     <div class=" card-body" style="">
 
-        <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+        <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
             onclick="javascript:window.print()">
             <i class="fas fa-print"></i>
             Imprimir
@@ -105,7 +107,7 @@
 
         <div class="row" id="impreso_row">
             {{-- <div class="col-12">
-                <h1 style="color:#345183;">{{ $comunicacionSgi->titulo }}</h1>
+                <h1 style="color:var(--color-tbj)">{{ $comunicacionSgi->titulo }}</h1>
             </div> --}}
             @php
                 use App\Models\Organizacion;
@@ -118,14 +120,15 @@
                     <img src="{{ asset($logotipo) }}" class="mt-2 mb-2 ml-4" style="width:100px;">
                 </div>
                 <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                    <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                    <span
+                        style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                     <br>
-                    <span style="color:#345183; font-size:15px;"><strong>Comunicados:
+                    <span style="color:var(--color-tbj); font-size:15px;"><strong>Comunicados:
                             {{ $comunicacionSgi->titulo }}</strong></span>
 
                 </div>
                 <div class="col-3 p-2">
-                    <span style="color:#345183;">Fecha:
+                    <span style="color:var(--color-tbj)">Fecha:
                         {{ \Carbon\Carbon::parse($comunicacionSgi->fecha_publicacion)->format('d-m-Y') }}
                     </span>
                 </div>
@@ -133,7 +136,8 @@
             <div class="mt-3 col-lg-12">
                 @php
                     if ($comunicacionSgi->first()->count()) {
-                        $imagen = 'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
+                        $imagen =
+                            'storage/imagen_comunicado_SGI/' . $comunicacionSgi->imagenes_comunicacion->first()->imagen;
                     } else {
                         $imagen = 'img/portal_404.png';
                     }

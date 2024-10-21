@@ -1,11 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- {{ Breadcrumbs::render('riesgo-archivo') }} --}}
+<h3 class="col-12 titulo_general_funcion">Archivo Mejoras</h3>
     <div class="pl-4 pr-4 mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo Mejoras</strong></h3>
-        </div>
-
         <div class="datatable-fix" style="width: 100%;">
 
             <table class="table tabla_riesgos">
@@ -30,63 +26,64 @@
                 </thead>
                 <tbody>
                     @foreach ($mejoras as $mejora)
-                        {{-- @if($incidentes->archivar == 'false') --}}
-                            <tr>
-                                <td>{{ $mejora->folio }}</td>
-                                <td>{{ $mejora->estatus }}</td>
-                                <td>{{ $mejora->fecha_creacion }}</td>
-                                <td>{{ $mejora->fecha_reporte }}</td>
-                                <td>{{ $mejora->fecha_de_cierre }}</td>
-                                <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $mejora->mejoro->avatar }}" title="{{ $mejora->mejoro->name }}">
-                                </td>
-                                <td>{{ $mejora->mejoro->email }}</td>
-                                <td>{{ $mejora->mejoro->telefono }}</td>
-                                <td>{{ $mejora->titulo }}</td>
-                                <td>{{ $mejora->tipo }}</td>
-                                <td>{{ $mejora->area_mejora }}</td>
-                                <td>{{ $mejora->proceso_mejora }}</td>
-                                <td>{{ $mejora->descripcion }}</td>
-                                <td>{{ $mejora->beneficios }}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i
+                        {{-- @if ($incidentes->archivar == 'false') --}}
+                        <tr>
+                            <td>{{ $mejora->folio }}</td>
+                            <td>{{ $mejora->estatus }}</td>
+                            <td>{{ $mejora->fecha_creacion }}</td>
+                            <td>{{ $mejora->fecha_reporte }}</td>
+                            <td>{{ $mejora->fecha_de_cierre }}</td>
+                            <td>
+                                <img class="img_empleado"
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $mejora->mejoro->avatar }}"
+                                    title="{{ $mejora->mejoro->name }}">
+                            </td>
+                            <td>{{ $mejora->mejoro->email }}</td>
+                            <td>{{ $mejora->mejoro->telefono }}</td>
+                            <td>{{ $mejora->titulo }}</td>
+                            <td>{{ $mejora->tipo }}</td>
+                            <td>{{ $mejora->area_mejora }}</td>
+                            <td>{{ $mejora->proceso_mejora }}</td>
+                            <td>{{ $mejora->descripcion }}</td>
+                            <td>{{ $mejora->beneficios }}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{{ route('admin.desk.mejoras-edit', $mejora->id) }}"><i
                                                 class="fas fa-edit"></i></a>
-                                        </div>
-                                        <div class="col-6">
-                                            <form action="{{route('admin.desk.mejora-archivo.recuperar', $mejora->id)}}" method="POST">
-                                                @csrf
-                                                <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                    <i class="fas fa-sign-in-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-
+                                    </div>
+                                    <div class="col-6">
+                                        <form action="{{ route('admin.desk.mejora-archivo.recuperar', $mejora->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
 
-                                </td>
-                                {{-- <td class="opciones_iconos">
+                                </div>
+
+                            </td>
+                            {{-- <td class="opciones_iconos">
                                     <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $incidentes->id)}}" method="POST">
                                         @csrf
                                         <button class="btn" title="Recuperar" style="all: unset !important;">
-                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:var(--color-tbj)"></i>
                                         </button>
                                     </form>
                                 </td> --}}
-                            </tr>
-			   			{{-- @endif --}}
-
+                        </tr>
+                        {{-- @endif --}}
                     @endforeach
                 </tbody>
             </table>
         </div><br>
-        <div class="form-group"  style="text-align: right;">
-            <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
+        <div class="form-group" style="text-align: right;">
+            <a class="btn btn-outline-primary" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
-
     @endsection
     @section('scripts')
         @parent

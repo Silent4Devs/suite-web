@@ -1,5 +1,5 @@
-<form method="POST" action="{{ route('admin.accion-correctivas.store') }}" enctype="multipart/form-data"
-    class="row" id="formulario">
+<form method="POST" action="{{ route('admin.accion-correctivas.store') }}" enctype="multipart/form-data" class="row"
+    id="formulario">
     @csrf
 
     {{ Form::hidden('pdf-value', 'accioncorrectiva') }}
@@ -7,9 +7,9 @@
 
 
     <div class="form-group col-md-8 col-lg-8 col-sm-12 anima-focus ">
-        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" placeholder="" name="tema" id="tema"
-            maxlength="255" {{ old('tema') }} required>
-            {!! Form::label('tema', 'Título corto de la acción correctiva*', ['class' => 'asterisco']) !!}
+        <input class="form-control {{ $errors->has('tema') ? 'is-invalid' : '' }}" placeholder="" name="tema"
+            id="tema" maxlength="255" {{ old('tema') }} required>
+        {!! Form::label('tema', 'Título corto de la acción correctiva*', ['class' => 'asterisco']) !!}
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
                 {{ $errors->first('tema') }}
@@ -30,9 +30,10 @@
     </div> --}}
 
     <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
-        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local" placeholder=""
-            min="1945-01-01T00:00" name="fecharegistro" id="fecharegistro" value="{{ old('fecharegistro') }}">
-            {!! Form::label('fecharegistro', 'Fecha y hora de registro de la AC*', ['class' => 'asterisco']) !!}
+        <input required class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}"
+            type="datetime-local" placeholder="" min="1945-01-01T00:00" name="fecharegistro" id="fecharegistro"
+            value="{{ old('fecharegistro') }}">
+        {!! Form::label('fecharegistro', 'Fecha y hora de registro de la AC*', ['class' => 'asterisco']) !!}
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -71,7 +72,6 @@
                     data-area="{{ $empleado->area->area }}">
                     {{ $empleado->name }}
                 </option>
-
             @endforeach
         </select>
         {!! Form::label('id_reporto', 'Nombre*', ['class' => 'asterisco']) !!}
@@ -109,7 +109,6 @@
 
                     {{ $empleado->name }}
                 </option>
-
             @endforeach
         </select>
         {!! Form::label('id_reporto_area', 'Nombre*', ['class' => 'asterisco']) !!}
@@ -142,8 +141,8 @@
             <option value disabled {{ old('causaorigen', null) === null ? 'selected' : '' }}>
                 {{ trans('global.pleaseSelect') }}</option>
             @foreach (App\Models\AccionCorrectiva::CAUSAORIGEN_SELECT as $key => $label)
-                <option value="{{ $key }}"
-                    {{ old('causaorigen', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                <option value="{{ $key }}" {{ old('causaorigen', '') === (string) $key ? 'selected' : '' }}>
+                    {{ $label }}</option>
             @endforeach
         </select>
         {!! Form::label('causaorigen', 'Causas de origen*', ['class' => 'asterisco']) !!}
@@ -158,7 +157,7 @@
     <div class="form-group col-12 anima-focus">
         <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
             id="descripcion">{{ old('descripcion') }}</textarea>
-            {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
         @if ($errors->has('descripcion'))
             <div class="invalid-feedback">
                 {{ $errors->first('descripcion') }}
@@ -169,10 +168,10 @@
 
 
     <div class="text-right form-group col-12">
-        <a href="{{ route('admin.accion-correctivas.index') }}" class="btn_cancelar">Cancelar</a>
-        <button class="btn btn-danger" type="submit" id="btnGuardar">
+        <a href="{{ route('admin.accion-correctivas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+        <button class="btn btn-primary" type="submit" id="btnGuardar">
             {{ trans('global.save') }}
         </button>
-        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-danger">Siguiente</button> --}}
+        {{-- <button id="form-siguienteaccion" data-toggle="collapse" onclick="closetabcollanext2()" data-target="#collapseplan" class="btn btn-primary">Siguiente</button> --}}
     </div>
 </form>

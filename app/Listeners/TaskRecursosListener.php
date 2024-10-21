@@ -2,8 +2,15 @@
 
 namespace App\Listeners;
 
-class TaskRecursosListener
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+
+class TaskRecursosListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *

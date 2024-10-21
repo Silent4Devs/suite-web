@@ -143,8 +143,8 @@
 
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

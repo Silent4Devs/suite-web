@@ -15,8 +15,9 @@
 
                 <div class="form-group col-md-6">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>ID del cambio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number" min="0"
-                        name="folio_cambio" id="folio_cambio" value="{{ old('folio_cambio', '') }}">
+                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}"
+                        type="number" min="0" name="folio_cambio" id="folio_cambio"
+                        value="{{ old('folio_cambio', '') }}">
                     @if ($errors->has('folio_cambio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('folio_cambio') }}
@@ -26,8 +27,9 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de registro del cambio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_registro" id="fecha_registro" value="{{ old('fecha_registro', '') }}">
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_registro" id="fecha_registro"
+                        value="{{ old('fecha_registro', '') }}">
                     @if ($errors->has('fecha_registro'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_registro') }}
@@ -64,15 +66,16 @@
                     <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="id_area" readonly></div>
                 </div>
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span style="font-size: 17px; font-weight: bold;">
                         Información general del cambio administrativo</span>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio', '') }}">
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_inicio" id="fecha_inicio"
+                        value="{{ old('fecha_inicio', '') }}">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio') }}
@@ -83,8 +86,9 @@
 
                 <div class="form-group col-md-4">
                     <label class="required"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
-                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_termino" id="fecha_termino" value="{{ old('fecha_termino', '') }}">
+                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_termino" id="fecha_termino"
+                        value="{{ old('fecha_termino', '') }}">
                     @if ($errors->has('fecha_termino'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_termino') }}
@@ -107,9 +111,10 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del cambio<sup>*</sup></label>
-                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
-                        name="objetivo" id="objetivo">{{ old('objetivo') }}</textarea>
+                    <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del
+                        cambio<sup>*</sup></label>
+                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo"
+                        id="objetivo">{{ old('objetivo') }}</textarea>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -202,7 +207,7 @@
                     @endif
                 </div>
 
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span style="font-size: 17px; font-weight: bold;">
                         Participantes de la implementación del cambio</span>
                 </div>
@@ -275,8 +280,9 @@
                 </div>
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <a href="{{ route('admin.planificacion-controls.index') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -538,7 +544,7 @@
                             "name":"${usuario.name}",
                             "email":"${usuario.email}",
                             "puesto":"${usuario.puesto}",
-                            "area":"${usuario.area.area}"
+                            "area":"${usuario.area}"
                             }`;
                             lista +=
                                 "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +

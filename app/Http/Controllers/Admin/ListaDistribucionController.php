@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
+use Gate;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListaDistribucionController extends Controller
 {
@@ -15,50 +17,9 @@ class ListaDistribucionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
-        // dd($query);
+        abort_if(Gate::denies('lista_distribucion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // if ($request->ajax()) {
-
-        //     $query = ListaDistribucion::with('participantes.empleado')->orderByDesc('id')->get();
-        //     $table = datatables()::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'incidentes_vacaciones_crear';
-        //         $editGate = 'incidentes_vacaciones_editar';
-        //         $deleteGate = 'incidentes_vacaciones_eliminar';
-        //         $crudRoutePart = 'incidentes-vacaciones';
-
-        //         return view('partials.datatablesActions', compact(
-        //             'viewGate',
-        //             'editGate',
-        //             'deleteGate',
-        //             'crudRoutePart',
-        //             'row'
-        //         ));
-        //     });
-
-        //     $table->editColumn('modulo', function ($row) {
-        //         return $row->modulo ? $row->modulo : '';
-        //     });
-        //     $table->editColumn('submodulo', function ($row) {
-        //         return $row->submodulo ? $row->submodulo : '';
-        //     });
-        //     $table->editColumn('participantes', function ($row) {
-        //         return $row->participantes ? $row->participantes : '';
-        //     });
-
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $table->make(true);
-        // }
+        $query = ListaDistribucion::getAll();
 
         $participantes = ListaDistribucion::with('participantes.empleado')->get();
 
@@ -87,13 +48,14 @@ class ListaDistribucionController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('lista_distribucion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
 
         $superaprobadores_seleccionados = [];
 
         foreach ($lista->participantes as $participante) {
             if ($participante->nivel == 0) {
-                // dd('entra');
                 $superaprobadores_seleccionados[] =
                     [
                         'empleado_id' => $participante->empleado_id,
@@ -128,13 +90,17 @@ class ListaDistribucionController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('lista_distribucion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaDistribucion::with('participantes.empleado')->find($id);
+        $empleados = Empleado::getAltaDataColumns();
+
+        $tipo = 'flujo';
 
         $superaprobadores_seleccionados = [];
 
         foreach ($lista->participantes as $participante) {
             if ($participante->nivel == 0) {
-                // dd('entra');
                 $superaprobadores_seleccionados[] =
                     [
                         'empleado_id' => $participante->empleado_id,
@@ -159,9 +125,15 @@ class ListaDistribucionController extends Controller
             }
         }
 
-        $empleados = Empleado::getAltaDataColumns();
+        if ($lista->modelo == 'KatbolRequsicion' || $lista->modelo == 'OrdenCompra') {
+            $tipo = 'suplentes';
+        } elseif ($lista->modelo == 'Empleado') {
+            $tipo = 'suplentesLideres';
+        } else {
+            $tipo = 'flujoAprobacion';
+        }
 
-        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados'));
+        return view('admin.listadistribucion.edit', compact('lista', 'superaprobadores_seleccionados', 'participantes_seleccionados', 'empleados', 'tipo'));
     }
 
     /**
@@ -169,12 +141,10 @@ class ListaDistribucionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('lista_distribucion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
-        // dd($id);
-        // dd($request->niveles, $request->all());
         $lista = ListaDistribucion::select('id')->find($id);
-        // dd($lista_id);
-        // dd($request->all());
+
         $val_niv = $request->niveles;
         $nom_niv = 'nivel'.$val_niv;
 
@@ -205,7 +175,7 @@ class ListaDistribucionController extends Controller
                             'empleado_id' => $superaprobador,
                         ],
                     );
-                    $i++;
+                    $superi++;
                 }
             }
 
@@ -229,7 +199,7 @@ class ListaDistribucionController extends Controller
             $errorMessage = 'No puede haber niveles sin colaboradores asignados';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('nivel_null', $errorMessage);
 
             // Redirect back with the input data and errors

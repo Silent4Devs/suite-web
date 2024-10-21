@@ -1,0 +1,38 @@
+.fileContainer {
+    max-width: auto;
+    height: 300px;
+    border: 1px dashed #4870B2;
+    border-radius: 2px;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px 0px; */
+}
+
+.fileImg {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    object-position: "center center";
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.lblFile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 232px;
+    height: 48px;
+    background: #F1F1F1 0% 0% no-repeat padding-box;
+    border: 1px solid #D5D5D5;
+    border-radius: 4px;
+    opacity: 1;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+

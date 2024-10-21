@@ -107,9 +107,9 @@
 
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
@@ -117,17 +117,67 @@
     'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
+    'id' => 'update-form',
 ]) !!}
 @csrf
 
-<div class="card card-content">
+<div class="card card-body">
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12" style="margin-top: 30px;">
             <h3 class="titulo-form">INSTRUCCIONES</h3>
-            <p class="instrucciones">Edite los datos del contrato</p>
+            <div class="d-flex justify-content-between">
+                <p class="instrucciones">Edite los datos del contrato</p>
+
+            </div>
         </div>
     </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+    @if (!$show_contrato)
+        <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
+            @if (!$firmado)
+                <div class="col-12">
+                    <label for="">Activar flujo de aprobación </label>
+                    {!! Form::checkbox(
+                        'firma_check',
+                        1,
+                        isset($aprobacionFirmaContratoHisotricoLast->firma_check)
+                            ? $aprobacionFirmaContratoHisotricoLast->firma_check
+                            : false,
+                        [
+                            'id' => 'aprobadores_firma',
+                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
+                        ],
+                    ) !!}
+                </div>
+            @endif
+            @if (!$firmado)
+                <div class="col-12 {{ isset($aprobacionFirmaContratoHisotricoLast->firma_check) ? ($aprobacionFirmaContratoHisotricoLast->firma_check ? '' : 'd-none') : 'd-none' }}"
+                    id="aprobadores-firma-box">
+                    <div class="form-group">
+                        <label for="">Asignar Aprobadores</label>
+                        <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                            @if ($firma && $firma->aprobadores)
+                                @foreach ($firma->aprobadores as $aprobador)
+                                    <option value="{{ $aprobador->id }}"
+                                        {{ $aprobacionFirmaContrato->contains('aprobador_id', $aprobador->id) ? 'selected' : '' }}>
+                                        {{ $aprobador->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option disabled>No hay aprobadores disponibles</option>
+                            @endif
+                        </select>
+                    </div>
+                </div>
+            @else
+                <div class="col-12">
+                    <p>No es posible modificar el flujo de aprobación una vez iniciado</p>
+                </div>
+            @endif
+        </div>
+    @endif
+
+    <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
         <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
     </div>
 
@@ -222,8 +272,9 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1"  maxlength="550"  class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
-                    {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
+                <textarea id="textarea1" maxlength="550" class="form-control" value="{{ $contrato->nombre_servicio }}"
+                    name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif
+                    required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
                 <div class="invalid-feedback red-text">
@@ -250,12 +301,33 @@
             </select>
         </div>
 
-        <div class="distancia form-group col-md-4">
-            <label for="no_proyecto" class="txt-tamaño">
-                Número de proyecto</label>
-            <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
-                value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
-        </div>
+        @if ($contrato->proyectoConvergencia)
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">Número de proyecto</label>
+                <select class="form-control" name="no_proyecto" id="no_proyecto"
+                    @if ($show_contrato) disabled @endif>
+                    <option value="" selected>Seleccione un Número de proyecto</option>
+                    @foreach ($proyectos as $proyecto)
+                        <option data-id="{{ $proyecto->id }}" value="{{ $proyecto->identificador }}"
+                            @if ($contrato->proyectoConvergencia->id == $proyecto->id) selected @endif>
+                            {{ $proyecto->identificador }} - {{ $proyecto->proyecto }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('no_proyecto'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_proyecto') }}
+                    </div>
+                @endif
+            </div>
+        @else
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño">
+                    Número de proyecto</label>
+                <input type="text" maxlength="250" name="no_proyecto" id="no_proyecto" class="form-control"
+                    value="{{ $contrato->no_proyecto }}" @if ($show_contrato) disabled @endif>
+            </div>
+        @endif
 
         @if ($areas->count() > 0)
             <div class="distancia form-group col-md-4">
@@ -328,8 +400,8 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
-                name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
+            <textarea style="text-align:justify" maxlength="500" id="textarea1" class="form-control"
+                value="{{ $contrato->objetivo }}" name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -339,29 +411,28 @@
     </div>
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-6">
-            <label for="" class="txt-tamaño">
-                Adjuntar Contrato
-                <font class="asterisco">*</font>
-            </label>
-            <div class="file-field input-field">
+        @if ($contrato->file_contrato != null)
+            <div class="distancia form-group col-md-6">
+                <label for="" class="txt-tamaño">
+                    Adjuntar Contrato
+                    <font class="asterisco">*</font>
+                </label>
+                <div class="file-field input-field">
+                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                        <span>Documento Actual:</span>
+                    </div>
 
-                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                    <span>Documento Actual:</span>
-                </div>
-
-                <div class="file-path-wrapper">
-                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
-                        readonly>
+                    <div class="file-path-wrapper">
+                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                            type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
+                            readonly>
+                    </div>
+                    <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
+                        target="_blank" class=" descarga_archivo" style="margin-left:20px;">
+                        Descargar archivo actual</a>
                 </div>
             </div>
-            @if ($contrato->file_contrato != null)
-                <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
-                    target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                    Descargar archivo actual</a>
-            @endif
-        </div>
+        @endif
         <div class="distancia form-group col-md-6">
             @if (!$show_contrato)
                 <div class="fondo_delete">
@@ -452,7 +523,7 @@
                 de firma
                 <font class="asterisco">*</font>
             </label>
-            <input type="date" name="fecha_firma" id="fecha_firma" class="form-control"
+            <input required type="date" name="fecha_firma" id="fecha_firma" class="form-control"
                 value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
                 @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
@@ -486,14 +557,14 @@
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
-                {!! Form::number('no_pagos', $contrato->no_pagos, [
-                    'class' => 'form-control',
-                    'required',
-                    'pattern' => '[0-9]+',
-                    'min' => 0, // Opcional: especifica el valor mínimo permitido
-                    'step' => 1, // Opcional: especifica el paso de incremento/decremento
-                    $show_contrato ? 'readonly' : '',
-                ]) !!}
+            {!! Form::number('no_pagos', $contrato->no_pagos, [
+                'class' => 'form-control',
+                'required',
+                'pattern' => '[0-9]+',
+                'min' => 0, // Opcional: especifica el valor mínimo permitido
+                'step' => 1, // Opcional: especifica el paso de incremento/decremento
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
             @if ($errors->has('no_pagos'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('no_pagos') }}
@@ -725,43 +796,26 @@
                 </td>
                 <td>
                     <div class="td_fianza">
-                        @if (is_null($organizacion))
-                        @else
-                            <div class="row">
-                                PDF:
-                                <div class="file-field input-field">
-                                    <div class="btn">
-                                        <input class="input_file_validar form-control" type="file"
-                                            name="documento" accept=".pdf" readonly>
-                                        {{-- <input type="hidden" id="" name="" value=""> --}}
-                                    </div>
-                                    {{-- <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text"
-                                        placeholder="Elegir documento pdf" readonly>
-                                </div> --}}
-                                </div>
-                            </div>
-                        @endif
-
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
-                        @if ($contrato->documento != null)
-                            <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
-                                target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-
-                                Descargar
-                            </a>
-                        @endif
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                        </div>
+                        <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
                     </div>
-                </td>
-
-            </tbody>
-        </table>
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
+                    @if ($contrato->documento != null)
+                        <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
+                            target="_blank" class="descarga_archivo" style="margin-left:20px;">
+                            Descargar
+                        </a>
+                    @endif
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
     </div>
+    </td>
+
+    </tbody>
+    </table>
+</div>
 </div>
 
 <div class="row">
@@ -854,36 +908,38 @@
         @endif
     </div>
     {{-- <div class="row"></div>
-        <div class="row">
-            <br>
-            <label class="txt-tamaño" for="firma">
-                Firma:</label>
-            <br/>
-            <br>
-            @if ($contratos->firma1 != null)
-                <p>Ya existe una firma registrada para este contrato</p>
-                <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                    firme el espacio.</p><br>
-                <label class="txt-tamaño">Actualizar firma </label>
-                <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-                onclick="var input = document.getElementById('signature64');
-                if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-            @endif
+    <div class="row">
+        <br>
+        <label class="txt-tamaño" for="firma">
+            Firma:</label>
+        <br/>
+        <br>
+        @if ($contratos->firma1 != null)
+            <p>Ya existe una firma registrada para este contrato</p>
+            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
+                firme el espacio.</p><br>
+            <label class="txt-tamaño">Actualizar firma </label>
+            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
+            onclick="var input = document.getElementById('signature64');
+            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+        @endif
+    </div>
+    <div class="col s12 m3 distancia"></div>
+    <div class="distancia form-group col-md-4">
+        <div id="signaturePad" >
+            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
         </div>
-        <div class="col s12 m3 distancia"></div>
-        <div class="distancia form-group col-md-4">
-                <div id="signaturePad" >
-                    <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-                </div>
-                <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
-            <br/>
-        </div> --}}
+        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
+        <br/>
+    </div> --}}
+
 </div>
 <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
     <div class="col s12 right-align btn-grd distancia">
         @if (!$show_contrato)
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn_cancelar">Cancelar</a>
-            {!! Form::submit('Guardar', ['class' => 'btn btn-success',  'onclick' => 'miFuncion()']) !!}
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}"
+                class="btn btn-outline-primary">Cancelar</a>
+            {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
         @endif
     </div>
 </div>
@@ -908,12 +964,80 @@
     </div>
 </div>
 
+@if ($aprobacionFirmaContrato->count())
+    <div class="col-12">
+        <div class="card card-body">
+            <h5 class="text-center">Aprobaciones firmadas</h5>
+            <div class="d-flex flex-wrap gap-4 mt-4 justify-content-center"
+                style="width: 100%; max-width: 1000px; margin: auto;">
+                @foreach ($aprobacionFirmaContrato as $firma)
+                    @if ($firma->firma)
+                        <div class="text-center">
+                            <img src="{{ $firma->firma_ruta }}" alt="firma" style="width: 400px;"> <br>
+                            <span>{{ \Carbon\Carbon::parse($firma->aprobador->created_at)->format('d/m/Y') }}</span><br>
+                            <span>{{ $firma->aprobador->name }}</span>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+
+<style>
+    #firma_aprobador canvas {
+        border: 1px solid #bbb;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/lemonadejs/dist/lemonade.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lemonadejs/signature/dist/index.min.js"></script>
+@if ($firmar)
+    <div class="col-12">
+        <div class="card card-body">
+            <form action="{{ route('contract_manager.contratos-katbol.aprobacion-firma-contrato') }}" method="POST">
+                @csrf
+                <div class="d-flex gap-4 align-items-center flex-column">
+                    <div>
+                        <h5>Ingrese su firma para la aprobación del registro</h5>
+                    </div>
+                    <div id="firma_aprobador" class="" style="width: auto;"></div>
+                    <input type="hidden" name="firma_base" value="" id="firma-input">
+                    <input type="hidden" name="contrato_id" value="{{ $contrato->id }}">
+                    <div class="d-flex gap-5">
+                        <div id="resetCanvas" class="btn btn-outline-secondary">Limpiar</div>
+                        <button class="btn btn-primary">Guardar firma</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endif
+<script>
+    // Get the element to render signature component inside
+    const firma_aprobador = document.getElementById("firma_aprobador");
+    const resetCanvas = document.getElementById("resetCanvas");
+    resetCanvas.addEventListener("click", () => {
+        // console.log(component.getImage());
+        component.value = [];
+        document.getElementById('firma-input').value = component.getImage();
+    });
+    document.querySelector('#firma_aprobador').onmouseup = function() {
+        document.getElementById('firma-input').value = component.getImage();
+    }
+    // Call signature with the firma_aprobador element and the options object, saving its reference in a variable
+    const component = Signature(firma_aprobador, {
+        width: 700,
+        height: 300,
+        instructions: ""
+    });
+</script>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     function miFuncion() {
         Swal.fire({
             position: 'top-end',
@@ -925,9 +1049,8 @@
             // redirigir a la misma página
             window.location.href = window.location.href;
         });
-}
-
-</script>
+    }
+</script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
@@ -1086,7 +1209,7 @@
     $(document).ready(function() {
 
         if ($('#check_fianza').checked) {
-           $(".td_fianza").fadeOut(0);
+            $(".td_fianza").fadeOut(0);
         } else {
             $(".td_fianza").fadeIn(0);
         }
@@ -1099,8 +1222,6 @@
         }
     });
 </script>
-
-
 
 <script>
     $(document).ready(function() {
@@ -1252,7 +1373,6 @@
     });
 </script>
 
-
 <script>
     $("#dolares_filtro").select2('destroy');
 </script>
@@ -1274,117 +1394,142 @@
         $('.input-field').click(function(e) {
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
-        $('.input_file_validar').change(function(e) {
+        // $('.input_file_validar').change(function(e) {
 
-            $('.caja_input_file_activa .errors').remove();
-            let loader_file = $('<div>');
-            loader_file.addClass('progress');
-            loader_file.addClass('d-none');
-            $('.caja_input_file_activa').append(loader_file);
-            let loader_progres_file = $('<div>');
-            loader_progres_file.addClass('indeterminate');
-            $('.caja_input_file_activa .progress').append(loader_progres_file);
+        //     $('.caja_input_file_activa .errors').remove();
+        //     let loader_file = $('<div>');
+        //     loader_file.addClass('progress');
+        //     loader_file.addClass('d-none');
+        //     $('.caja_input_file_activa').append(loader_file);
+        //     let loader_progres_file = $('<div>');
+        //     loader_progres_file.addClass('indeterminate');
+        //     $('.caja_input_file_activa .progress').append(loader_progres_file);
 
-            let file = e.target.files[0];
-            let formData = new FormData();
-            formData.append('file', file);
-            $.ajax({
-                xhr: function() {
-                    let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function(evt) {
+        //     let file = e.target.files[0];
+        //     let formData = new FormData();
+        //     formData.append('file', file);
+        //     $.ajax({
+        //         xhr: function() {
+        //             let xhr = new window.XMLHttpRequest();
+        //             xhr.upload.addEventListener("progress", function(evt) {
 
 
-                        if (evt.lengthComputable) {
-                            let percentComplete = (evt.loaded / evt.total) * 100;
-                            // Place upload progress bar visibility code here
-                            $('.caja_input_file_activa .progress').removeClass(
-                                'd-none');
-                            if (percentComplete == 100) {
+        //                 if (evt.lengthComputable) {
+        //                     let percentComplete = (evt.loaded / evt.total) * 100;
+        //                     // Place upload progress bar visibility code here
+        //                     $('.caja_input_file_activa .progress').removeClass(
+        //                         'd-none');
+        //                     if (percentComplete == 100) {
 
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                },
+        //                     }
+        //                 }
+        //             }, false);
+        //             return xhr;
+        //         },
 
-                url: url,
+        //         url: url,
 
-                data: formData,
+        //         data: formData,
 
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
 
-                type: 'POST',
+        //         type: 'POST',
 
-                dataType: 'json',
+        //         dataType: 'json',
 
-                contentType: false,
-                processData: false,
+        //         contentType: false,
+        //         processData: false,
 
-                success: function(json) {
-                    console.log('json');
-                },
+        //         success: function(json) {
+        //             console.log('json');
+        //         },
 
-                error: function(request, status, error) {
-                    console.log('Disculpe, existió un problema');
-                    $.each(request.responseJSON.errors, function(indexInArray,
-                        valueOfElement) {
-                        console.log(indexInArray);
+        //         error: function(request, status, error) {
+        //             console.log('Disculpe, existió un problema');
+        //             $.each(request.responseJSON.errors, function(indexInArray,
+        //                 valueOfElement) {
+        //                 console.log(indexInArray);
 
-                        let error_small = $('<small>');
-                        error_small.addClass(`${indexInArray}_error`);
-                        error_small.addClass('errors');
-                        $('.caja_input_file_activa').append(error_small);
+        //                 let error_small = $('<small>');
+        //                 error_small.addClass(`${indexInArray}_error`);
+        //                 error_small.addClass('errors');
+        //                 $('.caja_input_file_activa').append(error_small);
 
-                        document.querySelector(
-                                `.caja_input_file_activa .${indexInArray}_error`)
-                            .innerHTML =
-                            ` ${valueOfElement[0]}`;
+        //                 document.querySelector(
+        //                         `.caja_input_file_activa .${indexInArray}_error`)
+        //                     .innerHTML =
+        //                     ` ${valueOfElement[0]}`;
 
-                        e.target.value = '';
-                    });
-                },
+        //                 e.target.value = '';
+        //             });
+        //         },
 
-                complete: function(jqXHR, status) {
-                    console.log('Petición realizada');
-                    $('.caja_input_file_activa .progress').remove();
-                    $('.caja_input_file_activa').removeClass('caja_input_file_activa');
-                }
-            });
-        });
+        //         complete: function(jqXHR, status) {
+        //             console.log('Petición realizada');
+        //             $('.caja_input_file_activa .progress').remove();
+        //             $('.caja_input_file_activa').removeClass('caja_input_file_activa');
+        //         }
+        //     });
+        // });
     });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#miFormulario').on('submit', function(e) {
-            e.preventDefault();
+        $('#update-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object from the form
+            var formData = new FormData(this);
 
             $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: $(this).attr('action'), // Form action URL
+                method: $(this).attr('method'), // Form method
+                data: formData,
+                processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                contentType: false, // Set the content type to false as jQuery will tell the server it's a query string request
                 success: function(response) {
-                    if(response.success) {
-                        Swal.fire(
-                            '¡Buen trabajo!',
-                            response.message,
-                            'success'
-                        );
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: response.message,
+                        });
                     }
                 },
                 error: function(xhr) {
-                    // Manejo de errores
-                    Swal.fire(
-                        'Error',
-                        'Ocurrió un error al guardar los datos',
-                        'error'
-                    );
+                    var errorMessage = 'An error occurred. Please try again.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMessage,
+                    });
                 }
             });
         });
     });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aprobadores").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked) {
+            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+        } else {
+            document.getElementById('aprobadores-firma-box').classList.add('d-none');
+        }
+    });
+</script>

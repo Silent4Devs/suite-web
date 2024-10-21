@@ -97,12 +97,12 @@
             <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
         </div>
         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-            <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+            <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
             <br>
-            <span style="color:#345183; font-size:15px;"><strong>Bitácora de Accesos</strong></span>
+            <span style="color:var(--color-tbj); font-size:15px;"><strong>Bitácora de Accesos</strong></span>
         </div>
         <div class="col-3 p-2">
-            <span style="color:#345183;">Fecha:
+            <span style="color:var(--color-tbj)">Fecha:
                 {{ \Carbon\Carbon::now()->format('d-m-Y h:i A') }}
             </span>
         </div>
@@ -122,8 +122,8 @@
                                 <i class="fas fa-filter mr-2"></i> Filtros
                             </div>
                             <div class="col-6">
-                                <select wire:model.defer="colaborador" class="custom-select" name=""
-                                    id="" style="position: relative">
+                                <select wire:model="colaborador" class="custom-select" name="" id=""
+                                    style="position: relative">
                                     <option value="" disabled selected>Filtrar por colaborador visitado</option>
                                     @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
@@ -134,7 +134,7 @@
                                     style="position:  absolute;top:0; right:4px; cursor: pointer;"></i>
                             </div>
                             <div class="col-6">
-                                <select wire:model.defer="area" class="custom-select" name="" id=""
+                                <select wire:model="area" class="custom-select" name="" id=""
                                     style="position: relative">
                                     <option value="" disabled selected>Filtrar por área visitada</option>
                                     @foreach ($areas as $area_it)
@@ -145,7 +145,7 @@
                                     style="position:  absolute;top:0; right:4px; cursor: pointer;"></i>
                             </div>
                             <div class="col-12 mt-2 mb-2">
-                                <input style="position: relative" wire:model.defer="rangoFechas" class="form-control"
+                                <input style="position: relative" wire:model="rangoFechas" class="form-control"
                                     type="text" id="rangoFechas" placeholder="Filtrar por rango de fechas" readonly
                                     wire:ignore>
                                 <i title="Limpiar Filtro" class="fas fa-times-circle"
@@ -160,12 +160,12 @@
                                 <i class="fas fa-filter mr-2"></i> Opciones
                             </div>
                             <div class="col-12 mb-2">
-                                <button class="btn btn-success" wire:click.prevent="search">
+                                <button class="btn btn-primary" wire:click.prevent="search">
                                     <i class="fas fa-search"></i> Realizar Búsqueda
                                 </button>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-success" wire:click.prevent="default"
+                                <button class="btn btn-primary" wire:click.prevent="default"
                                     style="background: #a7a7a7 !important">
                                     <i class="fas fa-times"></i> Resetear Valores&nbsp;&nbsp;&nbsp;
                                 </button>
@@ -223,7 +223,7 @@
             <div class="row print-none">
                 <div class="col-3">
                     <label for="perPage">Por página</label>
-                    <select class="custom-select" name="" id="perPage" wire:model="perPage">
+                    <select class="custom-select" name="" id="perPage" wire:model.live="perPage">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -240,7 +240,7 @@
                 <div class="col-8"></div>
                 <div class="col-4" style="text-align: end">
                     <label for="search"><i class="fas fa-search"></i> Buscar</label>
-                    <input type="text" class="form-control" id="search" wire:model="search">
+                    <input type="text" class="form-control" id="search" wire:model.live="search">
                 </div>
             </div>
         </div>

@@ -343,7 +343,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ route('revisiones.approve') }}",
+                            url: "{{ route('admin.revisiones.approve') }}",
                             data: {
                                 _token: "{{ csrf_token() }}",
                                 revision,
@@ -397,7 +397,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "{{ route('revisiones.reject') }}",
+                                url: "{{ route('admin.revisiones.reject') }}",
                                 data: {
                                     _token: "{{ csrf_token() }}",
                                     revision,

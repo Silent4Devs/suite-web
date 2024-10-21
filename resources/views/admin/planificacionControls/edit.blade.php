@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-<style type="text/css">
-    sup {
-        color: red;
-    }
-</style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+    </style>
     {{ Breadcrumbs::render('admin.planificacion-controls.create') }}
     <h5 class="col-12 titulo_general_funcion">Editar: Planificación y Control</h5>
     <div class="mt-4 card">
@@ -17,8 +17,8 @@
 
                 <div class="form-group col-md-6 col-lg-6 col-sm-12">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>ID del cambio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number" min="0"
-                        name="folio_cambio" id="folio_cambio"
+                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}"
+                        type="number" min="0" name="folio_cambio" id="folio_cambio"
                         value="{{ old('folio_cambio', $planificacionControl->folio_cambio) }}">
                     @if ($errors->has('folio_cambio'))
                         <div class="invalid-feedback">
@@ -30,8 +30,8 @@
 
                 <div class="form-group col-md-6 col-lg-6 col-sm-12">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de registro del cambio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_registro" id="fecha_registro"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_registro" id="fecha_registro"
                         value="{{ old('fecha_registro', $planificacionControl->fecha_registro) }}">
                     @if ($errors->has('fecha_registro'))
                         <div class="invalid-feedback">
@@ -43,8 +43,8 @@
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Reporto cambio<sup>*</sup></label>
-                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
-                        id="id_reporta">
+                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
+                        name="id_reviso" id="id_reporta">
                         @foreach ($empleados as $id => $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                                 data-area="{{ $empleado->area->area }}"
@@ -70,15 +70,15 @@
                     <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="form-control" id="id_area" readonly></div>
                 </div>
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span style="font-size: 17px; font-weight: bold;">
                         Información general del cambio administrativo</span>
                 </div>
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_inicio" id="fecha_inicio"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_inicio" id="fecha_inicio"
                         value="{{ old('fecha_inicio', $planificacionControl->fecha_inicio) }}">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
@@ -90,8 +90,8 @@
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label class="required"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
-                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fecha_termino" id="fecha_termino"
+                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fecha_termino" id="fecha_termino"
                         value="{{ old('fecha_termino', $planificacionControl->fecha_termino) }}">
                     @if ($errors->has('fecha_termino'))
                         <div class="invalid-feedback">
@@ -115,9 +115,10 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del cambio<sup>*</sup></label>
-                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
-                        name="objetivo" id="objetivo">{{ old('objetivo', $planificacionControl->objetivo) }}</textarea>
+                    <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del
+                        cambio<sup>*</sup></label>
+                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo"
+                        id="objetivo">{{ old('objetivo', $planificacionControl->objetivo) }}</textarea>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -163,7 +164,8 @@
                         name="id_responsable_aprobar" id="id_responsable_aprobar">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($aprobadores as $aprobador)
-                            <option {{ old('id_responsable_aprobar', $planificacionControl->id_responsable_aprobar) == $aprobador->id ? ' selected="selected"' : '' }}
+                            <option
+                                {{ old('id_responsable_aprobar', $planificacionControl->id_responsable_aprobar) == $aprobador->id ? ' selected="selected"' : '' }}
                                 data-puesto="{{ $aprobador->puesto }}" value="{{ $aprobador->id }}"
                                 data-area="{{ $aprobador->area->area }}">
                                 {{ Str::limit($aprobador->name, 30, '...') }}
@@ -211,7 +213,7 @@
                     @endif
                 </div>
 
-                <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
+                <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
                         Participantes</span>
                 </div>
@@ -293,8 +295,9 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <a href="{{ route('admin.planificacion-controls.index') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
                 </div>

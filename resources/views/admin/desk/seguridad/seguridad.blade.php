@@ -1,45 +1,5 @@
 <style type="text/css">
-    .tarjetas_seguridad_indicadores {
-        width: 100%;
-        height: 80px;
-        color: #fff;
-        margin-bottom: 40px;
-        font-size: 12pt;
-        border-radius: 6px;
-    }
-
-    .tarjetas_seguridad_indicadores i {
-        position: relative;
-        font-size: 20pt;
-        margin-right: 10px;
-    }
-
-    .far.fa-circle:after {
-        content: "-";
-        position: absolute;
-        top: -18%;
-        left: 33%;
-        transform: scale(1.3);
-    }
-
-    .tarjetas_seguridad_indicadores div {
-        width: 100%;
-        text-align: center;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .numero {
-        font-size: 16pt;
-    }
-
-    .botones_tabla {
-        width: 100%;
-        display: flex;
-    }
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -87,40 +47,43 @@
 
 
 <div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
+    <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}">Crear reporte</a>
 </div>
 
-    @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
-        <table class="datatable tabla_incidentes_seguridad">
-            <thead>
-                <tr>
-                    {{-- <th>ID</th> --}}
-                    <th style="min-width: 250px;">Folio</th>
-                    <th style="min-width: 250px;">Título</th>
-                    <th style="min-width: 250px;">Sede</th>
-                    <th style="min-width: 250px;">Ubicación</th>
-                    <th style="min-width: 500px;">Descripción</th>
-                    <th style="min-width: 250px;">Areas Afectadas</th>
-                    <th style="min-width: 250px;">Procesos Afectados</th>
-                    <th style="min-width: 250px;">Activos Afectados</th>
-                    <th style="min-width: 150px;">Fecha</th>
-                    <th style="min-width: 250px;">Quién reportó</th>
-                    <th style="min-width: 250px;">Correo</th>
-                    <th style="min-width: 250px;">Teléfono</th>
-                    <th style="min-width: 90px;">Estatus</th>
-                    <th style="min-width: 150px;">Fecha de cierre</th>
-                    <th style="min-width: 250px;">Asignado a</th>
-                    <th style="min-width: 500px;">Comentarios</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_incidentes_seguridad">
+        <thead>
+            <tr>
+                {{-- <th>ID</th> --}}
+                <th style="min-width: 250px;">Folio</th>
+                <th style="min-width: 250px;">Título</th>
+                <th style="min-width: 250px;">Sede</th>
+                <th style="min-width: 250px;">Ubicación</th>
+                <th style="min-width: 500px;">Descripción</th>
+                <th style="min-width: 250px;">Areas Afectadas</th>
+                <th style="min-width: 250px;">Procesos Afectados</th>
+                <th style="min-width: 250px;">Activos Afectados</th>
+                <th style="min-width: 150px;">Fecha</th>
+                <th style="min-width: 250px;">Quién reportó</th>
+                <th style="min-width: 250px;">Correo</th>
+                <th style="min-width: 250px;">Teléfono</th>
+                <th style="min-width: 90px;">Estatus</th>
+                <th style="min-width: 150px;">Fecha de cierre</th>
+                <th style="min-width: 250px;">Asignado a</th>
+                <th style="min-width: 500px;">Comentarios</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -204,21 +167,35 @@
                 window.tabla_incidentes = $(".tabla_incidentes_seguridad").DataTable({
                     ajax: '/admin/desk/seguridad',
                     buttons: dtButtons,
-                    columns: [
-                        {
-                            data: 'folio'
+                    columns: [{
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'titulo'
+                            data: 'titulo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'sede'
+                            data: 'sede',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'ubicacion'
+                            data: 'ubicacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'areas_afectados',
@@ -239,7 +216,10 @@
                             }
                         },
                         {
-                            data: 'fecha_creacion'
+                            data: 'fecha_creacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'name',

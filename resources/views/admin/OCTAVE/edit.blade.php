@@ -489,7 +489,6 @@
             text-align: center;
             width: 1.6em;
         }
-
     </style>
 
     <style>
@@ -669,7 +668,6 @@
             border-radius: 100px;
             margin-top: 11px;
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -681,19 +679,20 @@
             <form method="POST" action="{{ route('admin.matriz-riesgos.octave.update', $matrizOctave) }}"
                 enctype="multipart/form-data">
                 @csrf
-                @method("PUT")
+                @method('PUT')
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
                 </div>
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="vp"><i class="fas fa-city iconos-crear"></i>VP</label><br>
-                        <input class="form-control {{ $errors->has('vp') ? 'is-invalid' : '' }}" type="text" name="vp"
-                            id="nombre_herramienta_puesto" value="{{ old('indicador', $matrizOctave->vp) }}">
+                        <input class="form-control {{ $errors->has('vp') ? 'is-invalid' : '' }}" type="text"
+                            name="vp" id="nombre_herramienta_puesto" value="{{ old('indicador', $matrizOctave->vp) }}">
                         @if ($errors->has('vp'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('vp') }}
@@ -763,14 +762,16 @@
                     </div>
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO
                 </div>
                 <div>
-                    @livewire('octave.select-impactos',["operacionalId"=>$matrizOctave->operacional,"cumplimientoId"=>$matrizOctave->cumplimiento,"legalId"=>$matrizOctave->legal,"reputacionalId"=>$matrizOctave->reputacional,"tecnologicoId"=>$matrizOctave->tecnologico])
+                    @livewire('octave.select-impactos', ['operacionalId' => $matrizOctave->operacional, 'cumplimientoId' => $matrizOctave->cumplimiento, 'legalId' => $matrizOctave->legal, 'reputacionalId' => $matrizOctave->reputacional, 'tecnologicoId' => $matrizOctave->tecnologico])
                 </div>
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
                 </div>
                 <div class="row">
@@ -782,7 +783,8 @@
                     </div> --}}
 
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del AI</label><br>
+                        <label for="nombre_ai_informacion"><i class="fas fa-project-diagram iconos-crear"></i>Nombre del
+                            AI</label><br>
                         <select class="procesoSelect form-control" name="nombre_ai_informacion" id="nombre_ai_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($nombreAis as $nombreAi)
@@ -836,7 +838,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_custodio"><i class="fas fa-user-tie iconos-crear"></i>Custodio del Activo</label><br>
+                        <label for="id_custodio"><i class="fas fa-user-tie iconos-crear"></i>Custodio del
+                            Activo</label><br>
                         <select class="responsableSelect form-control" name="id_custodio" id="custodio_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($custodios as $custodio)
@@ -888,12 +891,13 @@
                         <small class="text-danger errores amenaza_error"></small>
                     </div>
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="id_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
-                        <select class="procesoSelect form-control" name="id_vulnerabilidad" id="vulnerabilidad_informacion">
+                        <label for="id_vulnerabilidad"><i
+                                class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
+                        <select class="procesoSelect form-control" name="id_vulnerabilidad"
+                            id="vulnerabilidad_informacion">
                             <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option
-                                    {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
+                                <option {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
                                     value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
                                 </option>
                             @endforeach
@@ -904,18 +908,17 @@
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12">
                         <label><i class="fas fa-camera-retro iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}"
-                            type="text" name="escenario_riesgo"
-                            id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
+                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}" type="text"
+                            name="escenario_riesgo" id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
                     </div>
                     <small class="text-danger errores escenario_riesgo_error"></small>
                 </div>
                 {{-- COMPONENTE PARA EVALUACION DE RIESGOS --}}
-                @livewire('octave.select-evaluacion-riesgos',['impactoOb'=>$matrizOctave->valor])
+                @livewire('octave.select-evaluacion-riesgos', ['impactoOb' => $matrizOctave->valor])
                 {{-- FIN COMPONENTE PARA EVALUACION DE RIESGOS --}}
                 <div class="mb-3 ml-3 col-12 mt-4 text-right">
                     <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
-                        class="btn btn-success">Agregar</button>
+                        class="btn btn-primary">Agregar</button>
                 </div>
                 <div class="mt-3 mb-4 col-12 w-100 datatable-fix p-0">
                     <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
@@ -954,8 +957,8 @@
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.octaveIndex', ['id' => $id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

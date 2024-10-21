@@ -6,7 +6,8 @@
             <form method="POST" action="{{ route('admin.analisisdebrechas.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12"
+                    style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
@@ -63,12 +64,12 @@
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_elaboro" id="id_elaboro">
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
+                            id="id_elaboro">
                             <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option data-puesto="{{ $label->puesto }}" data-area="{{ $label->area->area}}"
+                                <option data-puesto="{{ $label->puesto }}" data-area="{{ $label->area->area }}"
                                     value="{{ $label->id }}">
                                     {{ $label->name }}
                                 </option>
@@ -85,31 +86,31 @@
                         <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="id_puesto" readonly></div>
                     </div>
-                        @if ($errors->has('id_puesto'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_puesto') }}
-                            </div>
-                        @endif
+                    @if ($errors->has('id_puesto'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_puesto') }}
+                        </div>
+                    @endif
 
 
                     <div class="form-group col-md-4 col-sm-12 col-lg-4">
                         <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
                         <div class="form-control" id="id_area" readonly></div>
                     </div>
-                        @if ($errors->has('id_area'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_area') }}
-                            </div>
-                        @endif
+                    @if ($errors->has('id_area'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_area') }}
+                        </div>
+                    @endif
 
                 </div>
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
+                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -158,8 +159,7 @@
                 document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
 
-            function recortarTexto(texto, length = 30)
-            {
+            function recortarTexto(texto, length = 30) {
                 let trimmedString = texto?.length > length ?
                     texto.substring(0, length - 3) + "..." :
                     texto;

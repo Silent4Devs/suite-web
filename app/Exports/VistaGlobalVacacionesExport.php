@@ -11,9 +11,7 @@ class VistaGlobalVacacionesExport implements FromCollection, WithHeadings
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function collection()
     {

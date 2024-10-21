@@ -98,7 +98,7 @@
 @endsection
 
 {{-- <script>
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:init', function() {
 
         Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
             // console.log(cuentas);

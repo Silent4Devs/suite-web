@@ -61,10 +61,10 @@
                             <div style="text-align: left;">{{ $data->correo }}</div>
                         </td>
                         <td style="min-width:40px;">
-                            <i class="fas fa-edit" wire:click.prevent="$emit('editarRecursos',{{ $data->id }})">
+                            <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos',{{ $data->id }})">
                             </i>
                             <i class="fas fa-trash-alt text-danger"
-                                wire:click.prevent="$emit('eliminarRecursos',{{ $data->id }})"> </i>
+                                wire:click.prevent="$dispatch('eliminarRecursos',{{ $data->id }})"> </i>
                         </td>
                     </tr>
                 @endforeach

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\TestMail;
+use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\Requsicion;
 use App\Models\PlanImplementacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Storage;
 
 class QueueCorreo extends Controller
 {
@@ -18,14 +20,33 @@ class QueueCorreo extends Controller
     public function index()
     {
         //Benchmark::dd(fn () => DB::query("plan_implementacions")->select("id","tasks")->where("id",15)->toArray());//find(15));
-        Benchmark::dd(fn () => PlanImplementacion::find(15));
+        // Benchmark::dd(fn () => PlanImplementacion::find(15));
         // Send welcome email
         // for ($i = 0; $i < 1; $i++) {
         //     //Benchmark::dd(fn () => Mail::to('luis.vargas@silent4business.com')->queue(new TestMail()));
         //     Mail::to('luis.vargas@silent4business.com')->queue(new TestMail());
         // }
         // Now, $data contains all the values from the Redis table
-        dd('al ready sent');
+        // dd('al ready sent');
+
+        $documentos = Contrato::select('id', 'no_contrato', 'file_contrato')->where('deleted_at', null)->get();
+        $tabla = '';
+        foreach ($documentos as $key => $documento) {
+            // code...
+            $validacion = Storage::exists('/public/contratos/'.$documento->id.'_contrato_'.$documento->no_contrato.'/'.$documento->file_contrato);
+
+            if (! $validacion) {
+                $contratos_faltantes[] = [
+                    'no_contrato' => $documento->no_contrato,
+                    'archivo' => $documento->file_contrato,
+                ];
+
+                $tabla = '<html><ul><li>'.$documento->id.'&nbsp;-&nbsp;'.$documento->no_contrato.'&nbsp;-&nbsp;'.$documento->file_contrato.'</li></ul></html>';
+            }
+            echo $tabla;
+        }
+        echo '<hr>';
+        echo $documentos->count();
     }
 
     public function insertarFirmadoresFinanzas()

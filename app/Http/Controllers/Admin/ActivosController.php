@@ -334,10 +334,6 @@ class ActivosController extends Controller
         } else {
             return false;
         }
-
-        // $path = storage_path('app/public/exportActivos/Responsiva.docx');
-
-        // return response()->download($path);
     }
 
     public function DescargaFormato()

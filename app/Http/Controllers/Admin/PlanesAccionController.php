@@ -47,7 +47,7 @@ class PlanesAccionController extends Controller
     {
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
 
         return view('admin.workPlan.create', compact('planImplementacion', 'modulo', 'referencia'));
     }
@@ -55,7 +55,7 @@ class PlanesAccionController extends Controller
     public function createPlanTrabajoBase($modulo, $referencia = null)
     {
         abort_if(Gate::denies('planes_de_accion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
 
         return view('admin.workPlan.createPlanTrabajoBase', compact('planImplementacion', 'modulo', 'referencia'));
     }
@@ -153,7 +153,7 @@ class PlanesAccionController extends Controller
 
             $assigs = [];
 
-            $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+            $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $planImplementacion->tasks = $tasks;
             $planImplementacion->canAdd = true;
             $planImplementacion->canWrite = true;
@@ -173,14 +173,18 @@ class PlanesAccionController extends Controller
 
     public function show($planImplementacion)
     {
-        $planImplementacion = PlanImplementacion::find($planImplementacion);
+        try {
+            $planImplementacion = PlanImplementacion::find($planImplementacion);
 
-        if (! $planImplementacion) {
-            // Si no existe, redirigir o mostrar un mensaje de error
+            if (! $planImplementacion) {
+                // Si no existe, redirigir o mostrar un mensaje de error
+                abort(404);
+            }
+
+            return view('admin.workPlan.show', compact('planImplementacion'));
+        } catch (\Throwable $th) {
             abort(404);
         }
-
-        return view('admin.workPlan.show', compact('planImplementacion'));
     }
 
     /**
@@ -195,7 +199,7 @@ class PlanesAccionController extends Controller
         try {
             abort_if(Gate::denies('planes_de_accion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $planImplementacion = PlanImplementacion::find($planImplementacion);
+            $planImplementacion = PlanImplementacion::findOrFail($planImplementacion);
 
             if (! $planImplementacion) {
                 abort(404);

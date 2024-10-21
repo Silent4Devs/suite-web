@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet/timesheet.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <style type="text/css">
@@ -39,7 +39,7 @@
     <form method="POST" id="form_id" style="position: relative; left: 10rem; "
         action="{{ route('admin.timesheet-cliente.pdf') }}">
         @csrf
-        <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
         </button>
     </form>
@@ -59,10 +59,9 @@
         <div class="row">
             <div class="col-12">
                 <h3 class="title-card-time">Clientes</h3>
-                <hr class="my-4">
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             @include('partials.flashMessages')
             <div class="datatable-fix w-100">
                 <table id="datatable_clientes" class="table w-100">
@@ -101,14 +100,14 @@
                     <tbody>
                         @foreach ($clientes as $cliente)
                             <tr>
-                            <td>
-                                @if ($cliente->identificador)
-                                    {{$cliente->identificador}}
-                                @else
-                                    No hay registro
-                                @endif
+                                <td>
+                                    @if ($cliente->identificador)
+                                        {{ $cliente->identificador }}
+                                    @else
+                                        No hay registro
+                                    @endif
 
-                            </td>
+                                </td>
                                 <td>{{ $cliente->razon_social }}</td>
                                 <td>{{ $cliente->nombre }}</td>
                                 <td>{{ $cliente->rfc }}</td>
@@ -157,7 +156,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <form action="{{ route('admin.timesheet-cliente-delete', $cliente->id) }}" method="POST">
@@ -197,11 +196,12 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
                         format: {
-                            body: function (data, row, column, node) {
+                            body: function(data, row, column, node) {
                                 // Trunca el texto si es necesario
-                                return typeof data === 'string' && data.length > 50 ? data.substr(0, 50) + '...' : data;
+                                return typeof data === 'string' && data.length > 50 ? data.substr(0, 50) +
+                                    '...' : data;
                             }
                         }
                     }

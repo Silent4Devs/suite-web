@@ -14,11 +14,10 @@
         <div class="card card-body caja-blue">
 
             <div>
-                <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                    style="width:150px; position: relative; top: 50px; right: 410px;">
+                <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; ">
             </div>
 
-            <div style="position: relative; top:-5rem; left: 50px;">
+            <div>
                 <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
                 <h5 style="font-size: 17px;">En esta sección podrás generar y procesar las Ordenes de Compra.</h5>
             </div>
@@ -34,105 +33,136 @@
                             <br>
                         </div> --}}
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Fecha solicitud <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" value="{{ date('d-m-Y', strtotime($requisicion->fecha)) }}"
-                            disabled>
+                        <div class="anima-focus">
+                            <input id="fecha_solicitud" class="form-control" placeholder=""
+                                value="{{ date('d-m-Y', strtotime($requisicion->fecha)) }}" disabled>
+                            <label for="fecha_solicitud">
+                                Fecha solicitud <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Razón Social <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" disabled value="{{ $requisicion->sucursal->descripcion }}">
+                        <div class="anima-focus">
+                            <input id="sucursal" class="form-control" placeholder="" disabled
+                                value="{{ $requisicion->sucursal->descripcion }}">
+                            <label for="sucursal">
+                                Razón Social <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Solicita <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" disabled value="{{ $requisicion->user }}">
+                        <div class="anima-focus">
+                            <input id="usuario" placeholder="" class="form-control" disabled
+                                value="{{ $requisicion->user }}">
+                            <label for="usuario">
+                                Solicita <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Área que solicita <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" disabled value="{{ $requisicion->area }}">
+                        <div class="anima-focus">
+                            <input id="area_sol" class="form-control" disabled placeholder=""
+                                value="{{ $requisicion->area }}">
+                            <label for="area_sol">
+                                Área que solicita <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col s12 l6 ">
-                        <label for="" class="txt-tamaño">
-                            Referencia (Título de la requisición) <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" value="{{ $requisicion->referencia }}" disabled>
+                        <div class="anima-focus">
+                            <input id="referencia" class="form-control" placeholder=""
+                                value="{{ $requisicion->referencia }}" disabled>
+                            <label for="referencia">
+                                Referencia (Título de la requisición) <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="col s12 l6 ">
-                        <label for="" class="txt-tamaño">
-                            Comprador <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" disabled value="{{ $requisicion->comprador->user->name }}">
+                        <div class="anima-focus">
+                            <input id="comprador" class="form-control" disabled placeholder=""
+                                value="{{ $requisicion->comprador->user->name }}">
+                            <label for="comprador">
+                                Comprador <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12 ">
-                        <label for="" class="txt-tamaño">
-                            Proyecto <font class="asterisco">*</font>
-                        </label>
-                        <input class="browser-default" disabled
-                            value="{{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}">
+                        <div class="anima-focus">
+                            <input class="form-control" disabled id="proyecto" placeholder=""
+                                value="{{ optional($requisicion->contrato)->no_proyecto }} / {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}">
+                            <label for="proyecto">
+                                Proyecto <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Fecha de entrega
-                        </label>
-                        <input type="date" name="fecha_entrega" class="browser-default"
-                            value="{{ $requisicion->fecha_entrega }}">
+                        <div class="anima-focus">
+                            <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-control"
+                                placeholder="" value="{{ $requisicion->fecha_entrega }}">
+                            <label for="fecha_entrega">
+                                Fecha de entrega
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Pago a <font class="asterisco">*</font>
-                        </label>
-                        <select name="pago" id="" class="browser-default" required>
-                            <option value=""></option>
-                            <option value="credito" {{ $requisicion->pago == 'credito' ? 'selected' : '' }}>Crédito
-                            </option>
-                            <option value="contado" {{ $requisicion->pago == 'contado' ? 'selected' : '' }}>Contado
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Días de crédito proveedor
-                        </label>
-                        <input type="text" required name="dias_credito" class="browser-default"
-                            value="{{ $requisicion->dias_credito }}">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Moneda: <font class="asterisco">*</font>
-                        </label>
-                        <select name="moneda" class="browser-default" required>
-                            <option disabled selected></option>
-                            @foreach ($monedas as $moneda)
-                                <option value="{{ $moneda->nombre }}"
-                                    {{ $moneda->nombre == $requisicion->moneda ? 'selected' : '' }}>
-                                    {{ $moneda->nombre }}
+                        <div class="anima-focus">
+                            <select name="pago" id="pago" class="form-control" required placeholder="">
+                                <option value="" disabled selected>Seleccione una forma de pago</option>
+                                <option value="credito" {{ $requisicion->pago == 'credito' ? 'selected' : '' }}>Crédito
                                 </option>
-                            @endforeach
-                        </select>
+                                <option value="contado" {{ $requisicion->pago == 'contado' ? 'selected' : '' }}>Contado
+                                </option>
+                            </select>
+                            <label for="pago">
+                                Pago a <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Tipo de cambio: <font class="asterisco"></font>
-                        </label>
-                        <input type="text" name="cambio" class="browser-default"
-                            value="{{ $requisicion->cambio }}">
+                        <div class="anima-focus">
+                            <input type="text" required name="dias_credito" id="dias_credito" class="form-control"
+                                placeholder="" value="{{ $requisicion->dias_credito }}">
+                            <label for="dias_credito">
+                                Días de crédito proveedor*
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 l3 ">
+                        <div class="anima-focus">
+                            <select name="moneda" id="moneda" class="form-control" required placeholder="">
+                                <option value="" disabled selected>
+                                    Seleccione un tipo de moneda
+                                </option>
+                                @foreach ($monedas as $moneda)
+                                    <option value="{{ $moneda->nombre }}"
+                                        {{ $moneda->nombre == $requisicion->moneda ? 'selected' : '' }}>
+                                        {{ $moneda->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="moneda">
+                                Moneda: <font class="asterisco">*</font>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col s12 l3 ">
+                        <div class="anima-focus">
+                            <input type="text" name="cambio" id="cambio" class="form-control" placeholder=""
+                                value="{{ $requisicion->cambio }}">
+                            <label for="cambio">
+                                Tipo de cambio: <font class="asterisco"></font>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,86 +177,102 @@
                 </div>
                 <div class="row">
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Proveedor <font class="asterisco">*</font>
-                        </label>
-                        <select name="proveedor_id" id="proveedor_id" class="browser-default" required>
-                            @if ($requisicion->proveedor_id)
-                                <option value="{{ $requisicion->proveedor_id }}" selected
-                                    data-nombre="{{ $requisicion->proveedor->nombre }}"
-                                    data-rfc="{{ $requisicion->proveedor->rfc }}"
-                                    data-contacto="{{ $requisicion->proveedor->contacto }}"
-                                    data-direccion="{{ $requisicion->proveedor->calle }}, {{ $requisicion->proveedor->colonia }}, {{ $requisicion->proveedor->ciudad }}"
-                                    data-razon="{{ $requisicion->proveedor->razon_social }}">
+                        <div class="anima-focus">
+                            <select name="proveedor_id" id="proveedor_id" class="form-control" required
+                                placeholder="">
+                                @if ($requisicion->proveedor_id)
+                                    <option value="{{ $requisicion->proveedor_id }}" selected
+                                        data-nombre="{{ $requisicion->proveedor->nombre }}"
+                                        data-rfc="{{ $requisicion->proveedor->rfc }}"
+                                        data-contacto="{{ $requisicion->proveedor->contacto }}"
+                                        data-direccion="{{ $requisicion->proveedor->calle }}, {{ $requisicion->proveedor->colonia }}, {{ $requisicion->proveedor->ciudad }}"
+                                        data-razon="{{ $requisicion->proveedor->razon_social }}">
+                                        {{ $requisicion->proveedor->razon_social }}
+                                    </option>
+                                @else
+                                    <option value="" selected disabled> Seleccione un Proveedor</option>
+                                @endif
+                                @foreach ($proveedores as $proveedor)
+                                    <option value="{{ $proveedor->id }}" data-nombre="{{ $proveedor->nombre }}"
+                                        data-rfc="{{ $proveedor->rfc }}" data-contacto="{{ $proveedor->contacto }}"
+                                        data-direccion="{{ $proveedor->calle }}, {{ $proveedor->colonia }}, {{ $proveedor->ciudad }}"
+                                        data-razon="{{ $proveedor->razon_social }}">
 
-                                    {{ $requisicion->proveedor->razon_social }}
-                                </option>
-                            @else
-                                <option value="" selected disabled></option>
-                            @endif
-                            @foreach ($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}" data-nombre="{{ $proveedor->nombre }}"
-                                    data-rfc="{{ $proveedor->rfc }}" data-contacto="{{ $proveedor->contacto }}"
-                                    data-direccion="{{ $proveedor->calle }}, {{ $proveedor->colonia }}, {{ $proveedor->ciudad }}"
-                                    data-razon="{{ $proveedor->razon_social }}">
-
-                                    {{ $proveedor->razon_social }}
-                                </option>
-                            @endforeach
-                        </select>
+                                        {{ $proveedor->razon_social }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="proveedor_id">
+                                Proveedor <font class="asterisco">*</font>
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Nombre Comercial
-                        </label>
-                        <input type="text" id="proveedor-nombre" name="nombre" value=""
-                            class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="proveedor-nombre" name="nombre" value=""
+                                placeholder="" class="form-control">
+                            <label for="proveedor-nombre">
+                                Nombre Comercial
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            RFC
-                        </label>
-                        <input type="text" id="proveedor-rfc" name="rfc" value=""
-                            class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="proveedor-rfc" name="rfc" value="" placeholder=""
+                                class="form-control">
+                            <label for="proveedor-rfc">
+                                RFC
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Nombre del contacto
-                        </label>
-                        <input type="text" id="proveedor-contacto" value="" name="contacto"
-                            class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="proveedor-contacto" value="" name="contacto"
+                                placeholder="" class="form-control">
+                            <label for="proveedor-contacto">
+                                Nombre del contacto
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l9 ">
-                        <label for="" class="txt-tamaño">
-                            Dirección
-                        </label>
-                        <input type="text" id="proveedor-direccion" value="{{ $proveedor->direccion }}"
-                            name="direccion" class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="proveedor-direccion" value="{{ $proveedor->direccion }}"
+                                placeholder="" name="direccion" class="form-control">
+                            <label for="proveedor-direccion">
+                                Dirección
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12 l6 ">
-                        <label for="" class="txt-tamaño">
-                            Envío a
-                        </label>
-                        <input type="text" name="direccion_envio" value="{{ $proveedor->envio }}"
-                            placeholder="Dirección" class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="envio" name="direccion_envio"
+                                value="{{ $proveedor->envio }}" placeholder="" class="form-control">
+                            <label for="envio">
+                                Envío a
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Facturación a
-                        </label>
-                        <input type="text" id="proveedor-razon" value="{{ $proveedor->facturacion }}"
-                            name="facturacion" class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" id="proveedor-razon" value="{{ $proveedor->facturacion }}"
+                                placeholder="" name="facturacion" class="form-control">
+                            <label for="proveedor-razon">
+                                Facturación a
+                            </label>
+                        </div>
                     </div>
                     <div class="col s12 l3 ">
-                        <label for="" class="txt-tamaño">
-                            Crédito disponible
-                        </label>
-                        <input type="text" value="{{ $proveedor->credito }}" name="credito_proveedor"
-                            class="browser-default">
+                        <div class="anima-focus">
+                            <input type="text" value="{{ $proveedor->credito }}" name="credito_proveedor"
+                                placeholder="" id="cred_prov" class="form-control">
+                            <label for="cred_prov">
+                                Crédito disponible
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,240 +295,271 @@
                         </div>
                         <div class="row">
                             <div class="col s12 l4 ">
-                                <label for="" class="txt-tamaño">
-                                    Cantidad <font class="asterisco">*</font>
-                                </label>
-                                <input type="text" name="cantidad{{ $count }}"
-                                    class="browser-default mod-cantidad" value="{{ $producto->cantidad }}">
+                                <div class="anima-focus">
+                                    <input type="text" id="cant_{{ $count }}" placeholder=""
+                                        name="cantidad{{ $count }}" class="form-control mod-cantidad"
+                                        value="{{ $producto->cantidad }}">
+                                    <label for="cant_{{ $count }}">
+                                        Cantidad <font class="asterisco">*</font>
+                                    </label>
+                                </div>
                             </div>
                             <div class="col s12 l8 ">
-                                <label for="" class="txt-tamaño">
-                                    Producto o servicio <font class="asterisco">*</font>
-                                </label>
-                                <select class="browser-default mod-producto" name="producto{{ $count }}"
-                                    required>
-                                    <option value="{{ $producto->producto->id }}" selected>
-                                        {{ $producto->producto->descripcion }}
-                                    </option>
-                                </select>
+                                <div class="anima-focus">
+                                    <select class="form-control mod-producto" id="prod_{{ $count }}"
+                                        placeholder="" name="producto{{ $count }}" required>
+                                        <option value="{{ $producto->producto->id }}" selected>
+                                            {{ $producto->producto->descripcion }}
+                                        </option>
+                                    </select>
+                                    <label for="prod_{{ $count }}">
+                                        Producto o servicio <font class="asterisco">*</font>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12 l12 ">
-                                <label for="" class="txt-tamaño">
-                                    Especificaciones del producto o servicio <font class="asterisco">*</font>
-                                </label>
-                                <textarea class="mod-especificaciones browser-default" name="especificaciones{{ $count }}">{{ $producto->espesificaciones }}</textarea>
+                                <div class="anima-focus">
+                                    <textarea class="mod-especificaciones form-control" id="espec_{{ $count }}" placeholder=""
+                                        name="especificaciones{{ $count }}">{{ $producto->espesificaciones }}</textarea>
+                                    <label for="espec_{{ $count }}">
+                                        Especificaciones del producto o servicio <font class="asterisco">*</font>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12 l4 ">
-                                <label for="" class="txt-tamaño">
-                                    Centro de costos <font class="asterisco">*</font>
-                                </label>
-                                <select name="centro_costo{{ $count }}"
-                                    class="browser-default mod-centro_costo" id="" required>
-                                    @if ($producto->centro_costo_id)
-                                        <option selected value="{{ $producto->centro_costo->id }}">
-                                            {{ $producto->centro_costo->clave }}</option>
-                                    @else
-                                        <option value="" selected disabled></option>
-                                    @endif
-                                    @foreach ($centro_costos as $costo)
-                                        <option value="{{ $costo->id }}">
-                                            {{ $costo->clave }}: {{ $costo->descripcion }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="anima-focus">
+                                    <select name="centro_costo{{ $count }}" id="cen_cos" placeholder=""
+                                        class="form-control mod-centro_costo" id="" required>
+                                        @if ($producto->centro_costo_id)
+                                            <option selected value="{{ $producto->centro_costo->id }}">
+                                                {{ $producto->centro_costo->clave }}</option>
+                                        @else
+                                            <option value="" selected disabled>Seleccione una opción de Centro de
+                                                Costos</option>
+                                        @endif
+                                        @foreach ($centro_costos as $costo)
+                                            <option value="{{ $costo->id }}">
+                                                {{ $costo->clave }}: {{ $costo->descripcion }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="cen_cos">
+                                        Centro de costos <font class="asterisco">*</font>
+                                    </label>
+                                </div>
                             </div>
                             <div class="col s12 l4 ">
-                                <label for="" class="txt-tamaño">
-                                    Proyecto <font class="asterisco">*</font>
-                                </label>
-                                <select required class="browser-default mod-contrato"
-                                    name="contrato{{ $count }}">
-                                    @isset($contrato)
-                                        <option value="{{ $contrato->id }}">
-                                            {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                            {{ $contrato->nombre_servicio }}
+                                <div class="anima-focus">
+                                    <select required class="form-control mod-contrato" id="cont_{{ $count }}"
+                                        placeholder="" name="contrato{{ $count }}">
+                                        @isset($contrato)
+                                            <option value="{{ $contrato->id }}">
+                                                {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                {{ $contrato->nombre_servicio }}
+                                            </option>
                                         @endisset
                                         @foreach ($contratos as $contrato)
-                                    <option value="{{ $contrato->id }}" data-no="{{ $contrato->no_contrato }}"
-                                        data-servicio="{{ $contrato->nombre_servicio }}"
-                                        {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
-                                        {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                        {{ $contrato->nombre_servicio }}
+                                            <option value="{{ $contrato->id }}"
+                                                data-no="{{ $contrato->no_contrato }}"
+                                                data-servicio="{{ $contrato->nombre_servicio }}"
+                                                {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
+                                                {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                {{ $contrato->nombre_servicio }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="cont_{{ $count }}">
+                                        Proyecto <font class="asterisco">*</font>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col s12 l4 ">
+                                <div class="anima-focus">
+                                    <input type="text" id="no_p_{{ $count }}" placeholder=""
+                                        name="no_personas{{ $count }}" class="form-control mod-no_personas"
+                                        value="{{ $producto->no_personas }}">
+                                    <label for="no_p_{{ $count }}">
+                                        No. de Personas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 l4 ">
+                                <div class="anima-focus">
+                                    <input type="text" id="porc_inv_{{ $count }}"
+                                        name="porcentaje_involucramiento{{ $count }}"
+                                        class="form-control mod-porcentaje_involucramiento"
+                                        value="{{ $producto->porcentaje_involucramiento }}" placeholder="">
+                                    <label for="porc_inv_{{ $count }}">
+                                        Porcentaje de involucramiento
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <h3 class="sub-titulo-form">Subtotales</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    Sub total <font class="asterisco">*</font>
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="sub_total{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-sub_total form-control" required
+                                        value="{{ $producto->sub_total }}">
+                                </div>
+                            </div>
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    IVA <font class="asterisco">*</font>
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="iva{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-iva form-control" required
+                                        value="{{ $producto->iva }}">
+                                </div>
+                            </div>
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    IVA retenido
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="iva_retenido{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-iva_retenido form-control"
+                                        value="{{ $producto->iva_retenido }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    Descuento
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="descuento{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-descuento form-control"
+                                        value="{{ $producto->descuento }}">
+                                </div>
+                            </div>
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    Otro impuesto
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="otro_impuesto{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-otro_impuesto form-control"
+                                        value="{{ $producto->otro_impuesto }}">
+                                </div>
+                            </div>
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    ISR retenido
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input type="text" name="isr_retenido{{ $count }}"
+                                        data-count="{{ $count }}" class="mod-isr_retenido form-control"
+                                        value="{{ $producto->isr_retenido }}">
+                                </div>
+                            </div>
+                            <div class="col s12 l3 ">
+                                <label for="">
+                                    Total <font class="asterisco">*</font>
+                                </label>
+                                <div class="caja-input-dinero">
+                                    <input id="input-total-serv{{ $count }}" type="text"
+                                        name="total{{ $count }}" data-count="{{ $count }}"
+                                        class="mod-total form-control" required value="{{ $producto->total }}">
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 30px;">
+                    </div>
+                </div>
             @endforeach
-            </select>
         </div>
-        <div class="col s12 l4 ">
-            <label for="" class="txt-tamaño">
-                No. de Personas
-            </label>
-            <input type="text" name="no_personas{{ $count }}" class="browser-default mod-no_personas"
-                value="{{ $producto->no_personas }}">
+        <input id="input-count-prod" type="hidden" name="count_productos" value="{{ $count }}">
+        <div>
+            <div class="btn btn-add-card" onclick="addCard('servicio')"><i class="fa-regular fa-square-plus"></i>
+                AGREGAR
+                SERVICIOS Y PRODUCTOS</div>
         </div>
-</div>
-<div class="row">
-    <div class="col s12 l4 ">
-        <label for="" class="txt-tamaño">
-            Porcentaje de involucramiento
-        </label>
-        <input type="text" name="porcentaje_involucramiento{{ $count }}"
-            class="browser-default mod-porcentaje_involucramiento"
-            value="{{ $producto->porcentaje_involucramiento }}">
-    </div>
-</div>
 
-<div class="row">
-    <div class="col s12">
-        <h3 class="sub-titulo-form">Subtotales</h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            Sub total <font class="asterisco">*</font>
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="sub_total{{ $count }}" data-count="{{ $count }}"
-                class="mod-sub_total browser-default" required value="{{ $producto->sub_total }}">
-        </div>
-    </div>
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            IVA <font class="asterisco">*</font>
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="iva{{ $count }}" data-count="{{ $count }}"
-                class="mod-iva browser-default" required value="{{ $producto->iva }}">
-        </div>
-    </div>
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            IVA retenido
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="iva_retenido{{ $count }}" data-count="{{ $count }}"
-                class="mod-iva_retenido browser-default" value="{{ $producto->iva_retenido }}">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            Descuento
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="descuento{{ $count }}" data-count="{{ $count }}"
-                class="mod-descuento browser-default" value="{{ $producto->descuento }}">
-        </div>
-    </div>
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            Otro impuesto
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="otro_impuesto{{ $count }}" data-count="{{ $count }}"
-                class="mod-otro_impuesto browser-default" value="{{ $producto->otro_impuesto }}">
-        </div>
-    </div>
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            ISR retenido
-        </label>
-        <div class="caja-input-dinero">
-            <input type="text" name="isr_retenido{{ $count }}" data-count="{{ $count }}"
-                class="mod-isr_retenido browser-default" value="{{ $producto->isr_retenido }}">
-        </div>
-    </div>
-    <div class="col s12 l3 ">
-        <label for="" class="txt-tamaño">
-            Total <font class="asterisco">*</font>
-        </label>
-        <div class="caja-input-dinero">
-            <input id="input-total-serv{{ $count }}" type="text" name="total{{ $count }}"
-                data-count="{{ $count }}" class="mod-total browser-default" required
-                value="{{ $producto->total }}">
-        </div>
-    </div>
-</div>
-<hr style="margin-bottom: 30px;">
-</div>
-</div>
-@endforeach
-</div>
-<input id="input-count-prod" type="hidden" name="count_productos" value="{{ $count }}">
-<div>
-    <div class="btn btn-add-card" onclick="addCard('servicio')"><i class="fa-regular fa-square-plus"></i> AGREGAR
-        SERVICIOS Y PRODUCTOS</div>
-</div>
-
-<div class="caja-totales flex" style="justify-content: flex-end">
-    <div class="card card-content" style="width: 280px;">
-        <div class="row">
-            <div class="col s12 l12 ">
-                <label for="" class="txt-tamaño">
-                    Sub total
-                </label>
-                <div class="caja-input-dinero">
-                    <input type="text" id="sub_total_calculado" name="sub_total" class="browser-default" required
-                        value="{{ $requisicion->sub_total }}" style="background: rgb(250, 249, 249);">
+        <div class="caja-totales flex" style="justify-content: flex-end">
+            <div class="card card-content" style="width: 280px;">
+                <div class="row">
+                    <div class="col s12 l12 ">
+                        <label for="">
+                            Sub total
+                        </label>
+                        <div class="caja-input-dinero">
+                            <input type="text" id="sub_total_calculado" name="sub_total" class="form-control"
+                                required value="{{ $requisicion->sub_total }}"
+                                style="background: rgb(250, 249, 249);">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 l12 ">
+                        <label for="">
+                            IVA
+                        </label>
+                        <div class="caja-input-dinero">
+                            <input type="text" id="iva_calculado" name="iva" class="form-control" required
+                                value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 l12 ">
+                        <label for="">
+                            IVA retenido
+                        </label>
+                        <div class="caja-input-dinero">
+                            <input type="text" id="iva_retenido_calculado" name="iva_retenido"
+                                class="form-control" required value="{{ $requisicion->iva_retenido }}"
+                                style="background: rgb(250, 249, 249);">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 l12 ">
+                        <label for="">
+                            ISR retenido
+                        </label>
+                        <div class="caja-input-dinero">
+                            <input type="text" id="isr_retenido_calculado" name="isr_retenido"
+                                class="form-control" required value="{{ $requisicion->isr_retenido }}"
+                                style="background: rgb(250, 249, 249);">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 l12 ">
+                        <label for="">
+                            Total
+                        </label>
+                        <div class="caja-input-dinero">
+                            <input type="text" id="total_calculado" name="total" class="form-control" required
+                                value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 l12 ">
-                <label for="" class="txt-tamaño">
-                    IVA
-                </label>
-                <div class="caja-input-dinero">
-                    <input type="text" id="iva_calculado" name="iva" class="browser-default" required
-                        value="{{ $requisicion->iva }}" style="background: rgb(250, 249, 249);">
-                </div>
-            </div>
+        <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
+            <a href="{{ route('contract_manager.orden-compra') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn tb-btn-primary">Guardar</button>
         </div>
-        <div class="row">
-            <div class="col s12 l12 ">
-                <label for="" class="txt-tamaño">
-                    IVA retenido
-                </label>
-                <div class="caja-input-dinero">
-                    <input type="text" id="iva_retenido_calculado" name="iva_retenido" class="browser-default"
-                        required value="{{ $requisicion->iva_retenido }}" style="background: rgb(250, 249, 249);">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 l12 ">
-                <label for="" class="txt-tamaño">
-                    ISR retenido
-                </label>
-                <div class="caja-input-dinero">
-                    <input type="text" id="isr_retenido_calculado" name="isr_retenido" class="browser-default"
-                        required value="{{ $requisicion->isr_retenido }}" style="background: rgb(250, 249, 249);">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 l12 ">
-                <label for="" class="txt-tamaño">
-                    Total
-                </label>
-                <div class="caja-input-dinero">
-                    <input type="text" id="total_calculado" name="total" class="browser-default" required
-                        value="{{ $requisicion->total }}" style="background: rgb(250, 249, 249);">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-    <a href="{{ route('contract_manager.orden-compra') }}"
-    class="btn_cancelar" >Regresar</a>
-    <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
-</div>
-</form>
+    </form>
 </div>
 @endsection
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -499,6 +576,31 @@
 </script>
 @section('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form'); // Selecciona el formulario
+        const requiredInputs = form.querySelectorAll(
+            'input[required], select[required]'); // Selecciona todos los inputs y selects requeridos
+
+        form.addEventListener('submit', function(event) {
+            let valid = true;
+
+            requiredInputs.forEach(input => {
+                if (!input.value) {
+                    input.style.borderColor = 'red'; // Cambia el borde a rojo si está vacío
+                    input.style.backgroundColor = '#ffe6e6'; // Fondo rojo claro
+                    valid = false;
+                } else {
+                    input.style.borderColor = ''; // Resetea el estilo si es válido
+                    input.style.backgroundColor = '';
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault(); // Evita que el formulario se envíe si hay campos vacíos
+            }
+        });
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
         $('select').select2('destroy');
 

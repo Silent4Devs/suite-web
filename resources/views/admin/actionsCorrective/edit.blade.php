@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('admin.accion-correctivas.create') }}
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
 
     <style type="text/css">
         sup {
@@ -159,7 +159,7 @@
 
 
                 {{-- <button id="acollapseExample" data-toggle="collapse" onclick="closetabcollap1()"
-                            data-target="#collapseExample" class="btn btn-danger">Acción Correctiva</button>
+                            data-target="#collapseExample" class="btn btn-primary">Acción Correctiva</button>
                         <button id="acollapseplan" data-toggle="collapse" onclick="closetabcollap2()"
                             data-target="#collapseplan" class="btn tb-btn-primary">Análisis de causa raíz</button>
                         <button id="acollapseactividad" data-toggle="collapse" onclick="" data-target="#"

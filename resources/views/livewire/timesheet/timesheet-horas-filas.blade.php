@@ -128,7 +128,8 @@
                                     <small class="d-mobile">Lunes </small>
                                     <input type="number" name="timesheet[{{ $i }}][lunes]" data-dia="lunes"
                                         data-i="{{ $i }}" id="ingresar_hora_lunes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                     <small class="timesheet_{{ $i }}_horas errores text-danger"
                                         style="position:absolute; margin-top:3px;"></small>
                                 </td>
@@ -137,42 +138,48 @@
                                     <input type="number" name="timesheet[{{ $i }}][martes]"
                                         data-dia="martes" data-i="{{ $i }}"
                                         id="ingresar_hora_martes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Miercoles </small>
                                     <input type="number" name="timesheet[{{ $i }}][miercoles]"
                                         data-dia="miercoles" data-i="{{ $i }}"
                                         id="ingresar_hora_miercoles_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Jueves </small>
                                     <input type="number" name="timesheet[{{ $i }}][jueves]"
                                         data-dia="jueves" data-i="{{ $i }}"
                                         id="ingresar_hora_jueves_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Viernes </small>
                                     <input type="number" name="timesheet[{{ $i }}][viernes]"
                                         data-dia="viernes" data-i="{{ $i }}"
                                         id="ingresar_hora_viernes_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Sabado </small>
                                     <input type="number" name="timesheet[{{ $i }}][sabado]"
                                         data-dia="sabado" data-i="{{ $i }}"
                                         id="ingresar_hora_sabado_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td class="td-date-time">
                                     <small class="d-mobile">Domingo </small>
                                     <input type="number" name="timesheet[{{ $i }}][domingo]"
                                         data-dia="domingo" data-i="{{ $i }}"
                                         id="ingresar_hora_domingo_{{ $i }}"
-                                        class="ingresar_horas  form-control" min="0" max="24">
+                                        class="ingresar_horas  form-control" min="0" max="24"
+                                        step=".1">
                                 </td>
                                 <td>
                                     <font class="d-mobile mt-1" style="font-weight: bold;">Descripción: </font>
@@ -185,7 +192,7 @@
                                     @endif
                                     @if ($i > 1)
                                         <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}"
-                                            wire:click="removerFila" style="color:#006DDB; font-size:20px;"
+                                            wire:click="removerFila" style="color:var(--color-tbj); font-size:20px;"
                                             title="Eliminar fila">
                                             <i class="fa-regular fa-trash-can"></i> <small
                                                 class="text-eliminar-actividad-mobile"
@@ -247,7 +254,7 @@
                     <font class="d-mobile"><i class="fa-solid fa-plus mr-2"></i> Agregar actividad</font>
                 </button>
                 <div class="caja-botones-time-forms">
-                    <button class="btn btn_cancelar btn_enviar_formulario btn-borrador-time"
+                    <button class="btn btn-outline-primary btn_enviar_formulario btn-borrador-time"
                         style="position:relative;">
                         <input id="estatus_papelera" type="radio" name="estatus" value="papelera"
                             style="opacity:0; position: absolute;">
@@ -259,7 +266,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </button>
 
-                    <div class="btn btn-success btn-regisrtar-time" style="position: relative;" data-toggle="modal"
+                    <div class="btn btn-primary btn-regisrtar-time" style="position: relative;" data-toggle="modal"
                         data-target="#modal_aprobar_">
                         <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente"
                             style="opacity:0; position: absolute;">
@@ -288,7 +295,7 @@
 
                                 <div class="mt-4">
                                     <div class="col-12 text-center">
-                                        <div title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Cancelar
                                         </div>
                                         <button data-dismiss="modal" onclick="event.preventDefault();"

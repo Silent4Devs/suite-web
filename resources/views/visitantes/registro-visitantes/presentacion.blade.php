@@ -15,7 +15,7 @@
             cursor: pointer;
         }
     </style>
-    <div class="box row w-100 p-0 m-0" style="background: #345183; align-items: center;position: relative;">
+    <div class="box row w-100 p-0 m-0" style="background: var(--color-tbj); align-items: center;position: relative;">
         <div x-data="{ show: false }">
             <div x-transition.duration.800ms x-show="show"
                 style="position: absolute;bottom: 0;right: 0;display: flex;justify-content: end;padding: 0;">

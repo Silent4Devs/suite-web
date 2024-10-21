@@ -14,4 +14,10 @@ class TopController extends Controller
         // dd($top_analisis);
         return view('admin.analisisdebrecha2022nv.top.index', compact('top_analisis'));
     }
+
+    public function topAnalisisRiegos()
+    {
+
+        return view('admin.analisis-riesgos.top-analisis-riesgos');
+    }
 }

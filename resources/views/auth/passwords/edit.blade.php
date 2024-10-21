@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
         .preview {
             overflow: hidden;
             width: 160px;
@@ -27,14 +22,6 @@
         .cropper-view-box {
             box-shadow: 0 0 0 1px #39f;
             outline: 0;
-        }
-
-        .form-group label {
-            color: #3086AF;
-        }
-
-        .card {
-            background-color: #FCFCFC;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -110,7 +97,7 @@
                                                     id="password_confirmation" required>
                                             </div>
                                             <div class="form-group" style="text-align: end">
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -198,7 +185,7 @@
                                                     style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en
                                                     directorio
                                                     organizacional</label>
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -220,7 +207,7 @@
                                                             class="fas fa-question-circle ml-2"
                                                             title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i>
                                                     </h6>
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
                                                 </form>
@@ -267,7 +254,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 col-12">
                         <div class="card">
-                            <div class="card-body" style="height:355px !important;">
+                            <div class="card-body" style="">
                                 <h6 style="font-size:18px;">Contactos de emergencia</h6>
                                 <hr style="opacity: 0;">
                                 <form action="{{ route('admin.empleado.update-related-info-profile') }}" method="POST">
@@ -276,7 +263,7 @@
                                         'empleado' => $empleado,
                                     ])
                                     <div class="form-group" style="text-align: end">
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-primary" type="submit">
                                             {{ trans('global.save') }}
                                         </button>
                                     </div>
@@ -295,7 +282,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class="" style="background-color:#006DDB; padding: 10px;">
+                                        <div class="" style="background-color:var(--color-tbj); padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
                                             permisos
                                         </div>
@@ -332,7 +319,7 @@
                                                 onsubmit="return prompt('{{ __('global.delete_account_warning') }}') == '{{ auth()->user()->email }}'">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ trans('global.delete') }}
                                                     </button>
                                                 </div>

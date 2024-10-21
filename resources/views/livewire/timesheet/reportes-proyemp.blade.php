@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-3 form-group" style="padding-left:0px !important;">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model.defer="emp_id">
+                <select class="form-control" wire:model="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-3 form-group" style="padding-left:0px !important;" wire:ignore>
                 <label class="form-label">Proyecto</label>
-                <select class="form-control" wire:model.defer="proy_id">
+                <select class="form-control" wire:model="proy_id">
                     <option selected value="0">Todos</option>
                     @foreach ($proy as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->identificador }} - {{ $pro->proyecto }}</option>
@@ -22,12 +22,11 @@
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de inicio</label>
-                <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model.defer="fecha_inicio">
+                <input class="form-control date_librery" type="date" name="fecha_inicio" wire:model="fecha_inicio">
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.defer="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
             </div>
         </div>
     </div>
@@ -40,7 +39,7 @@
             </div>
             <div class="d-flex align-items-center" style="gap: 20px;">
                 <label for="">Mostrar registros</label>
-                <select name="" id="" class="form-control" wire:model.lazy="perPage">
+                <select name="" id="" class="form-control" wire:model.blur="perPage">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -52,6 +51,10 @@
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                     Exportar&nbsp;Excel
                 </button>
+                {{-- <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
+                    wire:click="exportEmpleadosPuestosReport()">
+                    Reporte&nbsp;Empleados y puestos
+                </button> --}}
                 <button id="" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff"
                     wire:click="refreshComponent">
                     <i class="fas fa-search" style="font-size: 1.1rem;"></i>

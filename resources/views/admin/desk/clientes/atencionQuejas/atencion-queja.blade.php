@@ -27,7 +27,7 @@
         </div>
 
 
-        <h4 class="text-center" style="font-size: 16px; color:#3086AF;">{{ $quejasClientes->titulo }}
+        <h4 class="text-center" style="font-size: 16px; color:var(--color-tbj);">{{ $quejasClientes->titulo }}
         </h4>
 
         <div class="mt-4 form-group col-md-12 ml-2">
@@ -74,13 +74,13 @@
         </div>
 
         <div class="mt-1 form-group col-md-12">
-            <label class="form-label">2. ¿Qué acciones posteriores tomará para la resolución de la queja?<sup>*</sup></label>
+            <label class="form-label">2. ¿Qué acciones posteriores tomará para la resolución de la
+                queja?<sup>*</sup></label>
         </div>
 
 
         <div class="form-group col-12">
-            <textarea name="acciones_tomara_responsable"
-                class="form-control">{{ $quejasClientes->acciones_tomara_responsable }}</textarea>
+            <textarea name="acciones_tomara_responsable" class="form-control">{{ $quejasClientes->acciones_tomara_responsable }}</textarea>
             <span class="acciones_tomara_responsable_error text-danger errores"></span>
         </div>
 
@@ -92,7 +92,7 @@
         <div class="mt-2 form-group col-md-4">
 
             <input type="date" name="fecha_limite" class="form-control"
-                value="{{ old('fecha_limite',$quejasClientes->fecha_limite ? \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d') : '') }}">
+                value="{{ old('fecha_limite', $quejasClientes->fecha_limite ? \Carbon\Carbon::parse($quejasClientes->fecha_limite)->format('Y-m-d') : '') }}">
         </div>
 
         <div class="mt-4 form-group col-md-12">
@@ -111,8 +111,7 @@
                     <input type="file" name="cierre[]" class="form-control" multiple="multiple">
                 </div>
                 <div class="form-group col-md-4">
-                    <span type="button" class="mt-2 mr-5" data-toggle="modal"
-                        data-target="#evidenciaDeCierreAgregada">
+                    <span type="button" class="mt-2 mr-5" data-toggle="modal" data-target="#evidenciaDeCierreAgregada">
                         <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Ver
                         evidencia(s) de cierre
                     </span>
@@ -131,7 +130,8 @@
                             <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                 <ol class='carousel-indicators'>
                                     @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
-                                        <li data-target='#carouselExampleIndicators' data-slide-to='{{ $idx }}'
+                                        <li data-target='#carouselExampleIndicators'
+                                            data-slide-to='{{ $idx }}'
                                             class='{{ $idx == 0 ? 'active' : '' }}'></li>
                                     @endforeach
                                 </ol>
@@ -177,23 +177,22 @@
         </div>
 
         <div class="mt-3 form-group col-12">
-            <buttom type="submit" class="btn btn-success" id="cierra_queja_btn_correo">Enviar Solicitud</buttom>
+            <buttom type="submit" class="btn btn-primary" id="cierra_queja_btn_correo">Enviar Solicitud</buttom>
         </div>
 
 
 
         <div class="mt-4 form-group col-md-12">
             <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
-            <textarea type="text" name="comentarios_atencion"
-                class="form-control">{{ $quejasClientes->comentarios_atencion }}</textarea>
+            <textarea type="text" name="comentarios_atencion" class="form-control">{{ $quejasClientes->comentarios_atencion }}</textarea>
         </div>
 
         <div class="mt-4 text-right form-group col-12">
-            <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cerrar</a>
-            {{-- <input type="submit" class="btn btn-success" value="Guardar" id="siguiente_atencionQueja"> --}}
-            <button type="submit" class="btn btn-success" id="btn-guardar-atencion">Guardar</button>
+            <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cerrar</a>
+            {{-- <input type="submit" class="btn btn-primary" value="Guardar" id="siguiente_atencionQueja"> --}}
+            <button type="submit" class="btn btn-primary" id="btn-guardar-atencion">Guardar</button>
             @if ($quejasClientes->empleado_reporto_id == auth()->user()->empleado->id)
-                <button id="siguiente_atencion" type="submit" class="btn btn-success">Siguiente</button>
+                <button id="siguiente_atencion" type="submit" class="btn btn-primary">Siguiente</button>
             @endif
 
         </div>

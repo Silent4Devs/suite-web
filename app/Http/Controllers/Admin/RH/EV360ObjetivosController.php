@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\RH;
 
 use App\Http\Controllers\Controller;
-use App\Mail\SolicitudAprobacionObjetivo;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
@@ -19,7 +18,6 @@ use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -82,134 +80,145 @@ class EV360ObjetivosController extends Controller
 
     public function createByEmpleado(Request $request, $empleado)
     {
-        $user = User::getCurrentUser();
-        if ($user->empleado->id == $empleado) {
-            $objetivo = new Objetivo;
+        if (filter_var($empleado, FILTER_VALIDATE_INT) !== false && $empleado >= 0) {
+            try {
+                $user = User::getCurrentUser();
+                if ($user->empleado->id == $empleado) {
+                    $objetivo = new Objetivo;
 
-            $empleado = Empleado::getAllDataObjetivosEmpleado()
-                ->find(intval($empleado));
+                    $empleado = Empleado::getAllDataObjetivosEmpleado()
+                        ->find(intval($empleado));
 
-            if ($request->ajax()) {
-                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+                    if ($request->ajax()) {
+                        $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
-                return datatables()->of($objetivos)->toJson();
+                        return datatables()->of($objetivos)->toJson();
+                    }
+                    $tipo_seleccionado = null;
+                    $metrica_seleccionada = null;
+
+                    $empleados = Empleado::getAltaDataColumns();
+
+                    $permiso = $user->can('aprobacion_objetivos_estrategicos');
+
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                } else {
+                    abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+                    $objetivo = new Objetivo;
+
+                    $empleado = Empleado::getAllDataObjetivosEmpleado()
+                        ->find(intval($empleado));
+
+                    if ($request->ajax()) {
+                        $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+
+                        return datatables()->of($objetivos)->toJson();
+                    }
+                    $tipo_seleccionado = null;
+                    $metrica_seleccionada = null;
+
+                    $empleados = Empleado::getAltaDataColumns();
+                    $permiso = $user->can('aprobacion_objetivos_estrategicos');
+
+                    // dd($permiso);
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                }
+            } catch (\Throwable $th) {
+                abort(404);
             }
-            $tipo_seleccionado = null;
-            $metrica_seleccionada = null;
-
-            $empleados = Empleado::getAltaDataColumns();
-
-            $permiso = $user->can('aprobacion_objetivos_estrategicos');
-
-            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
         } else {
-            abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $objetivo = new Objetivo;
-
-            $empleado = Empleado::getAllDataObjetivosEmpleado()
-                ->find(intval($empleado));
-
-            if ($request->ajax()) {
-                $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
-
-                return datatables()->of($objetivos)->toJson();
-            }
-            $tipo_seleccionado = null;
-            $metrica_seleccionada = null;
-
-            $empleados = Empleado::getAltaDataColumns();
-            $permiso = $user->can('aprobacion_objetivos_estrategicos');
-
-            // dd($permiso);
-            return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+            // El valor no es válido, maneja el error
+            abort(404);
         }
     }
 
     public function storeByEmpleado(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer|min:0',
-            'descripcion_meta' => 'nullable|string|max:1500',
-            'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
-            'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
-        ]);
-        $empleado = Empleado::with('supervisor')->find(intval($empleado));
-
-        if ($request->ajax()) {
-            $usuario = User::getCurrentUser();
-            if ($empleado->id == $usuario->empleado->id || $usuario->empleado->id != $empleado->supervisor->id) {
-                //add esta_aprobado in $request
-                $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
-            }
-            $objetivo = Objetivo::create($request->all());
-
-            //send email if who add is not supervisor
-            // if ($empleado->id == $usuario->empleado->id) {
-            //     if (!is_null($empleado->supervisor)) {
-            //         Mail::to(removeUnicodeCharacters($empleado->email))->queue(new SolicitudAprobacionObjetivo($objetivo, $empleado));
-            //     }
-            // }
-            if ($request->hasFile('foto')) {
-                Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
-                $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
-                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
-
-                // Call the ImageService to consume the external API
-                $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
-
-                // Compress and save the image
-                if ($apiResponse['status'] == 200) {
-                    file_put_contents($route, $apiResponse['body']);
-                }
-
-                $objetivo->update([
-                    'imagen' => $nombre_imagen,
-                ]);
-            }
-            ObjetivoEmpleado::create([
-                'objetivo_id' => $objetivo->id,
-                'empleado_id' => $empleado->id,
+        try {
+            abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'KPI' => 'required|string|max:1500',
+                'meta' => 'required|integer|min:0',
+                'descripcion_meta' => 'nullable|string|max:1500',
+                'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
+                'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
             ]);
+            $empleado = Empleado::with('supervisor')->find(intval($empleado));
 
-            $ev = $this->evaluacionActiva();
+            if (! $empleado) {
+                abort(404);
+            }
 
-            if (isset($ev->id)) {
-                $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $ev->id)->get();
+            if ($request->ajax()) {
+                $usuario = User::getCurrentUser();
+                if ($empleado->id == $usuario->empleado->id || $usuario->empleado->id != $empleado->supervisor->id) {
+                    //add esta_aprobado in $request
+                    $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
+                }
+                $objetivo = Objetivo::create($request->all());
 
-                foreach ($evaluacion as $evalu) {
-                    $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                        ->where('empleado_id', '=', $evalu->evaluado_id)
-                        ->where('en_curso', '=', true)->get();
+                if ($request->hasFile('foto')) {
+                    Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
+                    $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                    $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
 
-                    foreach ($evaluado as $eva) {
-                        $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                            ->where('evaluacion_id', '=', $ev->id)
-                            ->whereIn('tipo', ['0', '1'])->get();
+                    // Call the ImageService to consume the external API
+                    $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
 
-                        foreach ($evaluador as $evldr) {
-                            ObjetivoRespuesta::create([
-                                'meta_alcanzada' => 'Sin evaluar',
-                                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                                'calificacion' => 0,
-                                'objetivo_id' => $objetivo->id,
-                                'evaluado_id' => $eva->empleado_id,
-                                'evaluador_id' => $evldr->evaluador_id,
-                                'evaluacion_id' => $ev->id,
-                            ]);
+                    // Compress and save the image
+                    if ($apiResponse['status'] == 200) {
+                        file_put_contents($route, $apiResponse['body']);
+                    }
+
+                    $objetivo->update([
+                        'imagen' => $nombre_imagen,
+                    ]);
+                }
+                ObjetivoEmpleado::create([
+                    'objetivo_id' => $objetivo->id,
+                    'empleado_id' => $empleado->id,
+                ]);
+
+                $ev = $this->evaluacionActiva();
+
+                if (isset($ev->id)) {
+                    $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $ev->id)->get();
+
+                    foreach ($evaluacion as $evalu) {
+                        $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
+                            ->where('empleado_id', '=', $evalu->evaluado_id)
+                            ->where('en_curso', '=', true)->get();
+
+                        foreach ($evaluado as $eva) {
+                            $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                                ->where('evaluacion_id', '=', $ev->id)
+                                ->whereIn('tipo', ['0', '1'])->get();
+
+                            foreach ($evaluador as $evldr) {
+                                ObjetivoRespuesta::create([
+                                    'meta_alcanzada' => 'Sin evaluar',
+                                    'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                                    'calificacion' => 0,
+                                    'objetivo_id' => $objetivo->id,
+                                    'evaluado_id' => $eva->empleado_id,
+                                    'evaluador_id' => $evldr->evaluador_id,
+                                    'evaluacion_id' => $ev->id,
+                                ]);
+                            }
                         }
                     }
                 }
-            }
 
-            if ($objetivo) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => true]);
+                if ($objetivo) {
+                    return response()->json(['success' => true]);
+                } else {
+                    return response()->json(['error' => true]);
+                }
             }
+        } catch (\Throwable $th) {
+            abort(404);
         }
     }
 

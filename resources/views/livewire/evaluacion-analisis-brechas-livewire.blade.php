@@ -3,7 +3,8 @@
         .card {
             border-radius: 16px;
         }
-        .card-dash-analisis{
+
+        .card-dash-analisis {
             width: 290px;
             height: 68px;
             /* box-shadow: 0px 1px 4px #0000000F; */
@@ -24,13 +25,13 @@
             margin-bottom: 0px;
         }
 
-        .seccion-valor{
+        .seccion-valor {
             font: medium 22px Roboto;
             color: #34ABB9;
             opacity: 1;
         }
 
-        .col-icon{
+        .col-icon {
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
             background: #34ABB9;
@@ -41,21 +42,22 @@
             border-radius: 29px;
         }
 
-        .p-analisis{
+        .p-analisis {
             text-align: left;
             font: italic normal normal 14px/17px Roboto;
             letter-spacing: 0px;
             color: #606060;
             opacity: 1;
         }
-        .porcentaje-progress{
+
+        .porcentaje-progress {
             color: #34ABB9;
             font-size: 22px;
             margin: 0px;
 
         }
 
-        .title-grafics{
+        .title-grafics {
             font: normal normal normal 20px/20px Roboto;
             letter-spacing: 0px;
             color: #747474;
@@ -67,22 +69,27 @@
             height: 43px;
         }
 
-        .parametros-title{
+        .parametros-title {
             font: normal normal 600 20px/27px Segoe UI;
             letter-spacing: 0px;
             color: #606060;
             opacity: 1;
         }
 
-        input,select,textarea {
-            border:none;
+        input,
+        select,
+        textarea {
+            border: none;
             color: #057BE2
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus,
+        select:focus,
+        textarea:focus {
             border: 1px solid #057BE2;
             outline: none !important;
         }
+
         .datatable-rds {
             box-shadow: none !important;
             padding: 0px !important;
@@ -98,6 +105,7 @@
             background-color: transparent;
             border: none;
         }
+
         .modal-dialog {
             max-width: var(--bs-modal-width);
             margin-right: 0px;
@@ -131,6 +139,7 @@
             color: #606060;
             opacity: 1;
         }
+
         .boton-transparentev2 {
             top: 214px;
             width: 135px;
@@ -144,52 +153,20 @@
         }
     </style>
 
-        <div class="row mb-3 print-none">
-            @if ($template_general->secciones->count() >= 1)
-                <div class="col-3 mt-4">
-                    <div class="card shadow-sm card-analisis card-dash-analisis">
-                        <div class="card-body" style="margin: 0px; padding:0px;">
-                            <div class="row m-0 p-0" style="height: 68px;" >
-                                <div class="col-3 d-flex justify-content-center align-items-center col-icon">
-                                    <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;" wire:click="changeSeccion({{ 0 }})">
-                                        visibility
-                                    </i>
-                                </div>
-                                <div class="col-6 d-flex align-items-center justify-content-center">
-                                    <h5 class="seccion-text">Total</h5>
-                                </div>
-                                <div class="col-3 d-flex align-items-center justify-content-center">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <p class="subtitle-valor">
-                                                Valor
-                                            </p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h5 class="seccion-valor">
-                                                {{round($totalAnalisis) }}%
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            @foreach ($template_general->secciones as $key => $seccion)
-                <div class="col-3 mt-4">
-                    <div class="card shadow-sm card-body card-analisis card-dash-analisis" style="margin: 0px; padding:0px; ">
+    <div class="row mb-3 print-none">
+        @if ($template_general->secciones->count() >= 1)
+            <div class="col-3 mt-4">
+                <div class="card shadow-sm card-analisis card-dash-analisis">
+                    <div class="card-body" style="margin: 0px; padding:0px;">
                         <div class="row m-0 p-0" style="height: 68px;">
                             <div class="col-3 d-flex justify-content-center align-items-center col-icon">
-                                <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;" wire:click="changeSeccion({{ $seccion->numero_seccion }})">
+                                <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;"
+                                    wire:click="changeSeccion({{ 0 }})">
                                     visibility
                                 </i>
                             </div>
                             <div class="col-6 d-flex align-items-center justify-content-center">
-                                <h5 class="seccion-text">
-                                    Sección {{ $seccion->numero_seccion }}
-                                </h5>
+                                <h5 class="seccion-text">Total</h5>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-center">
                                 <div class="row">
@@ -200,7 +177,7 @@
                                     </div>
                                     <div class="col-12">
                                         <h5 class="seccion-valor">
-                                            {{ round($seccion->porcentaje_seccion) }}%
+                                            {{ round($totalAnalisis) }}%
                                         </h5>
                                     </div>
                                 </div>
@@ -208,25 +185,60 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endif
+        @foreach ($template_general->secciones as $key => $seccion)
+            <div class="col-3 mt-4">
+                <div class="card shadow-sm card-body card-analisis card-dash-analisis"
+                    style="margin: 0px; padding:0px; ">
+                    <div class="row m-0 p-0" style="height: 68px;">
+                        <div class="col-3 d-flex justify-content-center align-items-center col-icon">
+                            <i class="material-icons-outlined" style="color: #FFFFFF; cursor: pointer;"
+                                wire:click="changeSeccion({{ $seccion->numero_seccion }})">
+                                visibility
+                            </i>
+                        </div>
+                        <div class="col-6 d-flex align-items-center justify-content-center">
+                            <h5 class="seccion-text">
+                                Sección {{ $seccion->numero_seccion }}
+                            </h5>
+                        </div>
+                        <div class="col-3 d-flex align-items-center justify-content-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="subtitle-valor">
+                                        Valor
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <h5 class="seccion-valor">
+                                        {{ round($seccion->porcentaje_seccion) }}%
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
     @if ($seccion_vista != 0)
         @foreach ($template->secciones as $key => $seccion)
             <div class="card shadow-sm card-body">
-                <div class="row m-0 p-0" >
+                <div class="row m-0 p-0">
                     <div class="col-2 d-flex justify-content-start align-items-center" style="padding-left: 0px;">
                         <p style="margin: 0px;">Avance del análisis</p>
                     </div>
                     <div class="col-9 d-flex align-items-center">
-                            <div class="progress" style="border-radius: 29px; width:900px;">
-                                <div class="progress-bar custom-progress" role="progressbar"
-                                    style="width: {{ (string) ($totalPorcentaje / $seccion->porcentaje_seccion) * 100 }}%;"
-                                    aria-valuenow="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}"
-                                    aria-valuemin="0"
-                                    aria-valuemax="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}">
-                                    {{ number_format($totalPorcentaje, 2) }}% de avance
-                                </div>
+                        <div class="progress" style="border-radius: 29px; width:900px;">
+                            <div class="progress-bar custom-progress" role="progressbar"
+                                style="width: {{ (string) ($totalPorcentaje / $seccion->porcentaje_seccion) * 100 }}%;"
+                                aria-valuenow="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}"
+                                aria-valuemin="0"
+                                aria-valuemax="{{ $sectionPercentages[$seccion->numero_seccion]['percentage'] }}">
+                                {{ number_format($totalPorcentaje, 2) }}% de avance
+                            </div>
                         </div>
                     </div>
                     <div class="col-1 d-flex justify-content-center align-items-center">
@@ -237,7 +249,8 @@
                 <div class="row">
                     <p class="p-analisis">
                         La evaluación tiene un peso total del 100%.<br>
-                        En el caso del registro de dos o más secciones en la plantilla: “La evaluación dividirá su valoración del porcentaje (Número registrado) % del 100% total”.
+                        En el caso del registro de dos o más secciones en la plantilla: “La evaluación dividirá su
+                        valoración del porcentaje (Número registrado) % del 100% total”.
                     </p>
                 </div>
             </div>
@@ -254,7 +267,7 @@
                         <div class="col-6">
                             <div class="datatable-fix datatable-rds">
                                 <table class="table w-100 table-borderless" style="width:100%">
-                                    <thead >
+                                    <thead>
                                         <tr style="background:#EBEBEB;">
                                             <th>
                                                 Estatus
@@ -315,10 +328,10 @@
                         </div>
                         <div class="row d-flex justify-content-start" style="margin-bottom: 53px; padding-left:37px;">
                             @foreach ($template->parametros as $parametro)
-                            <div class="col-12 parametros d-flex align-items-center" style="background-color: {{ $parametro->color }}; margin-top:23px;">
-                                <p style="margin-bottom: 0px;">{{ $parametro->estatus }}</p>
-                            </div>
-
+                                <div class="col-12 parametros d-flex align-items-center"
+                                    style="background-color: {{ $parametro->color }}; margin-top:23px;">
+                                    <p style="margin-bottom: 0px;">{{ $parametro->estatus }}</p>
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -330,10 +343,9 @@
                         </div>
                         <div class="row d-flex justify-content-start" style="margin-bottom: 53px; padding-left:37px;">
                             @foreach ($template->parametros as $parametro)
-                            <div class="col-12 d-flex align-items-center" style="margin-top:23px; min-height: 43px">
-                                <p style="margin-bottom: 0px;">{{ $parametro->descripcion }}</p>
-                            </div>
-
+                                <div class="col-12 d-flex align-items-center" style="margin-top:23px; min-height: 43px">
+                                    <p style="margin-bottom: 0px;">{{ $parametro->descripcion }}</p>
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -358,11 +370,11 @@
                                         <td>{{ $pregunta->pregunta }}</td>
                                         <td>
                                             <select class="link-like-select" style="border: none;"
-                                                wire:model="selectedValues.{{ $pregunta->id }}.option1"
+                                                wire:model.live="selectedValues.{{ $pregunta->id }}.option1"
                                                 wire:change="saveDataParametros('{{ $pregunta->id }}', $event.target.value)"
                                                 name="respuesta_pregunta_{{ $pregunta->id }}"
                                                 id="respuesta_pregunta_{{ $pregunta->id }}">
-                                               <option value="" selected >Seleciona una opción </option>
+                                                <option value="" selected>Seleciona una opción </option>
                                                 @foreach ($template->parametros as $parametro)
                                                     <option value="{{ $parametro->id }}">{{ $parametro->estatus }}
                                                     </option>
@@ -370,15 +382,15 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <textarea  wire:model.lazy="evidenciaValues.{{ $pregunta->id }}"
-                                                wire:change="saveEvidencia('{{ $pregunta->id }}')"
-                                                value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}" style="height:100%; width: 100%;"></textarea>
+                                            <textarea wire:model.blur="evidenciaValues.{{ $pregunta->id }}" wire:change="saveEvidencia('{{ $pregunta->id }}')"
+                                                value="{{ isset($oldEvidenciaValues[$pregunta->id]) ? $oldEvidenciaValues[$pregunta->id] : $pregunta->respuesta->evidencia ?? '' }}"
+                                                style="height:100%; width: 100%;"></textarea>
                                         </td>
                                         <td>
-                                            <textarea
-                                                wire:model.lazy="recomendacionValues.{{ $pregunta->id }}"
+                                            <textarea wire:model.blur="recomendacionValues.{{ $pregunta->id }}"
                                                 wire:change="saveRecomendacion('{{ $pregunta->id }}')"
-                                                value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}" style="height:100%; width: 100%;"></textarea>
+                                                value="{{ isset($oldRecomendacionValues[$pregunta->id]) ? $oldRecomendacionValues[$pregunta->id] : $pregunta->respuesta->recomendacion ?? '' }}"
+                                                style="height:100%; width: 100%;"></textarea>
                                         </td>
 
                                     </tr>
@@ -406,7 +418,7 @@
                     </div>
                 </div>
                 <div class="col-1 d-flex justify-content-start align-items-center">
-                    <p class="porcentaje-progress m-0"> {{round($totalAnalisis) }}%</p>
+                    <p class="porcentaje-progress m-0"> {{ round($totalAnalisis) }}%</p>
                 </div>
             </div>
         </div>
@@ -421,11 +433,12 @@
                                     Porcentaje Total del Análisis
                                 </h5>
                             </div>
-                        <div class="col-1">
-                            <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                {!!$imageImprimir!!}
-                            </button>
-                        </div>
+                            <div class="col-1">
+                                <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    {!! $imageImprimir !!}
+                                </button>
+                            </div>
                         </div>
                         <hr>
                     </div>
@@ -483,205 +496,220 @@
             </div>
         </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <button type="button" class="btn-close print-none" data-bs-dismiss="modal" aria-label="Close"
-                    style="margin:50px 0px 50px 1230px; background:none; border: none;"><i class="fa-solid fa-x fa-2xl"
-                        style="color: #ffffff;"></i>
-                </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <button type="button" class="btn-close print-none" data-bs-dismiss="modal" aria-label="Close"
+                style="margin:50px 0px 50px 1230px; background:none; border: none;"><i class="fa-solid fa-x fa-2xl"
+                    style="color: #ffffff;"></i>
+            </button>
 
-                <div class="modal-dialog" style="margin-top: 0px;">
-                    <div class="modal-content" >
-                        <div class="modal-body" >
-                            <div class="card col-sm-12 col-md-10"
-                                style="border-radius: 16px; box-shadow: none; border-color:white; width: auto;">
-                                <div class="card-body" style="">
-                                    <div class="print-none" style="text-align:right;">
+            <div class="modal-dialog" style="margin-top: 0px;">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="card col-sm-12 col-md-10"
+                            style="border-radius: 16px; box-shadow: none; border-color:white; width: auto;">
+                            <div class="card-body" style="">
+                                <div class="print-none" style="text-align:right;">
 
-                                            <button class="boton-transparentev2"  style="color: #306BA9;" onclick="window.print()">
-                                                IMPRIMIR {!!$imageImprimir!!}
-                                            </button>
+                                    <button class="boton-transparentev2" style="color: var(--color-tbj);"
+                                        onclick="window.print()">
+                                        IMPRIMIR {!! $imageImprimir !!}
+                                    </button>
 
-                                    </div>
-                                    <div class="card mt-5" style="width:100%;box-shadow:4px;">
-                                        <div class="row col-12 ml-0"
-                                            style="border-radius;
+                                </div>
+                                <div class="card mt-5" style="width:100%;box-shadow:4px;">
+                                    <div class="row col-12 ml-0"
+                                        style="border-radius;
                                             padding-left: 0px;padding-right: 0px;">
-                                            <div class="col-3" style="border-left: 25px solid #2395AA">
+                                        <div class="col-3" style="border-left: 25px solid #2395AA">
                                             <figure>
-                                                <img src="{{$logo_actual}}"  style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
+                                                <img src="{{ $logo_actual }}"
+                                                    style=" width:60%; position: relative; left: 1rem; top: 1.5rem;">
                                             </figure>
 
-                                            </div>
-                                            <div class="col-5 p-2 mt-3">
-                                                <br>
-                                                <span class=""
-                                                    style="color:black; position: relative; top: -1.5rem; right: 3rem;">
-                                                    {{ $empresa_actual }} <br>
-                                                    RFC: {{ $rfc }} <br>
-                                                    {{ $direccion }} <br>
-                                                </span>
-
-                                            </div>
-                                            <div class="col-4 pt-6 pl-6" style="background:#FFFFFF;">
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <span class="textopdf"> <strong> Reporte Análisis de Brechas</strong></span>
-                                            </div>
+                                        </div>
+                                        <div class="col-5 p-2 mt-3">
                                             <br>
-                                            <div class="col-12 " style="background: #FFFFFF; ">
-                                                <div class="row" style="margin-top:40px;">
-                                                    <div class="col-12">
-                                                        <div class="row m-0 p-0">
-                                                            <div class="col-11">
-                                                                <h5 class="title-grafics">
-                                                                    Porcentaje Total del Análisis
-                                                                </h5>
-                                                            </div>
+                                            <span class=""
+                                                style="color:black; position: relative; top: -1.5rem; right: 3rem;">
+                                                {{ $empresa_actual }} <br>
+                                                RFC: {{ $rfc }} <br>
+                                                {{ $direccion }} <br>
+                                            </span>
 
+                                        </div>
+                                        <div class="col-4 pt-6 pl-6" style="background:#FFFFFF;">
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <span class="textopdf"> <strong> Reporte Análisis de
+                                                    Brechas</strong></span>
+                                        </div>
+                                        <br>
+                                        <div class="col-12 " style="background: #FFFFFF; ">
+                                            <div class="row" style="margin-top:40px;">
+                                                <div class="col-12">
+                                                    <div class="row m-0 p-0">
+                                                        <div class="col-11">
+                                                            <h5 class="title-grafics">
+                                                                Porcentaje Total del Análisis
+                                                            </h5>
                                                         </div>
+
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="datatable-fix datatable-rds">
+                                                        <table class="table w-100 table-borderless">
+                                                            <thead>
+                                                                <tr class="impre-header"
+                                                                    style="background-color:#EBEBEB !important;">
+                                                                    <th>
+                                                                        Sección
+                                                                    </th>
+                                                                    <th>
+                                                                        Meta
+                                                                    </th>
+                                                                    <th>
+                                                                        Alcanzado
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($template->secciones as $key => $seccion)
+                                                                    <tr style="background: #FFFFFF;">
+                                                                        <td>
+                                                                            Sección{{ $seccion->numero_seccion }}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ round($seccion->porcentaje_seccion) }}%
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ round(number_format((float) $sectionPercentages[$seccion->numero_seccion]['total_porcentaje'], 2, '.')) ?? 0 }}%
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr class="impre-footer"
+                                                                    style="background: #EEFDFF !important;">
+                                                                    <td colspan="1">Total</td>
+                                                                    <td>100%</td>
+                                                                    <td>{{ number_format((float) $sectionPercentages[0]['percentage'], 2, '.') ?? 0 }}%
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 align-items-center"
+                                                    style="display: flex; align-items:center;">
+                                                    <!-- HTML structure to contain the bar chart -->
+                                                    <div id="contenedor-principal" style="height: 300px">
+                                                        <canvas id="graf-modal-5"></canvas>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @foreach ($template->secciones as $key => $seccion)
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h5 class="title-grafics">
+                                                            Sección {{ $seccion->numero_seccion }}:
+                                                            {{ $seccion->descripcion }}
+                                                        </h5>
                                                         <hr>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="datatable-fix datatable-rds">
-                                                            <table class="table w-100 table-borderless">
+                                                            <table class="table w-100 table-borderless"
+                                                                style="width:100%">
                                                                 <thead>
-                                                                    <tr class="impre-header" style="background-color:#EBEBEB !important;">
+                                                                    <tr class="impre-header"
+                                                                        style="background:#EBEBEB !important;">
                                                                         <th>
-                                                                            Sección
+                                                                            Estatus
                                                                         </th>
                                                                         <th>
-                                                                            Meta
+                                                                            Requisitos
                                                                         </th>
                                                                         <th>
-                                                                            Alcanzado
+                                                                            Peso
                                                                         </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($template->secciones as $key => $seccion)
+                                                                    @foreach ($template->parametros as $parametro)
                                                                         <tr style="background: #FFFFFF;">
                                                                             <td>
-                                                                                Sección{{ $seccion->numero_seccion }}
+                                                                                {{ $parametro->estatus }}
+                                                                            </td>
+                                                                            <td
+                                                                                style="background-color: {{ $parametro->color }} !important;">
+                                                                                {{-- {{ $cuentas[$parametro->id] ?? 0 }} --}}
+                                                                                {{ $results[$key]['counts'][$parametro->id] ?? 0 }}
                                                                             </td>
                                                                             <td>
-                                                                                {{ round($seccion->porcentaje_seccion) }}%
-                                                                            </td>
-                                                                            <td>
-                                                                                {{ round(number_format((float) $sectionPercentages[$seccion->numero_seccion]['total_porcentaje'], 2, '.')) ?? 0 }}%
+                                                                                {{ number_format((float) $results[$key]['porcentaje_parametros'][$parametro->id], 2, '.') ?? 0 }}%
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
 
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr class="impre-footer" style="background: #EEFDFF !important;">
-                                                                        <td colspan="1">Total</td>
-                                                                        <td>100%</td>
-                                                                        <td>{{ number_format((float) $sectionPercentages[0]['percentage'], 2, '.') ?? 0 }}%
+                                                                    <tr class="impre-footer"
+                                                                        style="background: #EEFDFF !important;">
+                                                                        <td>Total</td>
+                                                                        <td>{{ $results[$key]['totalCount'] ?? 0 }}
+                                                                        </td>
+                                                                        <td>{{ number_format((float) $results[$key]['total_porcentaje'], 2, '.') ?? 0 }}%
                                                                         </td>
                                                                     </tr>
                                                                 </tfoot>
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 align-items-center" style="display: flex; align-items:center;">
-                                                        <!-- HTML structure to contain the bar chart -->
+                                                    <style>
+                                                        #contenedor-principal,
+                                                        #contenedor-principal canvas {
+                                                            width: 100% !important;
+                                                        }
+                                                    </style>
+                                                    <div class="col-6" style="display: flex; align-items:center;">
                                                         <div id="contenedor-principal" style="height: 300px">
-                                                            <canvas id="graf-modal-5" ></canvas>
+                                                            <canvas id="graf-modal-{{ $key }}"></canvas>
                                                         </div>
+
+                                                        <!-- HTML structure to contain the bar chart -->
 
                                                     </div>
                                                 </div>
-
-                                                @foreach ($template->secciones as $key => $seccion)
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <h5 class="title-grafics">
-                                                                Sección {{ $seccion->numero_seccion }}: {{ $seccion->descripcion }}
-                                                            </h5>
-                                                            <hr>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <div class="datatable-fix datatable-rds">
-                                                                <table class="table w-100 table-borderless" style="width:100%">
-                                                                    <thead >
-                                                                        <tr class="impre-header" style="background:#EBEBEB !important;">
-                                                                            <th>
-                                                                                Estatus
-                                                                            </th>
-                                                                            <th>
-                                                                                Requisitos
-                                                                            </th>
-                                                                            <th>
-                                                                                Peso
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($template->parametros as $parametro)
-                                                                            <tr style="background: #FFFFFF;">
-                                                                                <td>
-                                                                                    {{ $parametro->estatus }}
-                                                                                </td>
-                                                                                <td style="background-color: {{ $parametro->color }} !important;">
-                                                                                    {{-- {{ $cuentas[$parametro->id] ?? 0 }} --}}
-                                                                                    {{$results[$key]['counts'][$parametro->id] ?? 0}}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{ number_format((float) $results[$key]['porcentaje_parametros'][$parametro->id], 2, '.') ?? 0 }}%
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-
-                                                                    </tbody>
-                                                                    <tfoot>
-                                                                        <tr class="impre-footer" style="background: #EEFDFF !important;">
-                                                                            <td>Total</td>
-                                                                            <td>{{ $results[$key]['totalCount'] ?? 0 }}</td>
-                                                                            <td>{{ number_format((float) $results[$key]['total_porcentaje'], 2, '.') ?? 0 }}%</td>
-                                                                        </tr>
-                                                                    </tfoot>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <style>
-                                                        #contenedor-principal, #contenedor-principal canvas {
-                                                            width: 100% !important;
-                                                        }
-                                                        </style>
-                                                        <div class="col-6" style="display: flex; align-items:center;">
-                                                            <div id="contenedor-principal" style="height: 300px">
-                                                                <canvas id="graf-modal-{{$key}}"></canvas>
-                                                            </div>
-
-                                                            <!-- HTML structure to contain the bar chart -->
-
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
+                                            @endforeach
                                         </div>
-
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
     @endif
 
     @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         {{-- grafica de total cuando cambia de seccion --}}
 
         <script>
-            document.addEventListener('livewire:load', function() {
+            document.addEventListener('livewire:init', function() {
                 console.log('cambio de seccion');
                 Livewire.on('renderAreas', (grafica_cuentas, grafica_colores) => {
                     // console.log(cuentas);
@@ -718,44 +746,44 @@
         {{-- script para graficas total y del modal cuando se carga la primera vez --}}
         <script>
             console.log("cargando");
-            document.addEventListener('livewire:load', function () {
+            document.addEventListener('livewire:init', function() {
 
-            const data = @json($grafica_cuentas2);
-            const colores = @json($grafica_colores2);
-            const values = Object.values(data);
-            const valuesColors = Object.values(colores);
-            const resultskeys = @json($resultskeys);
+                const data = @json($grafica_cuentas2);
+                const colores = @json($grafica_colores2);
+                const values = Object.values(data);
+                const valuesColors = Object.values(colores);
+                const resultskeys = @json($resultskeys);
 
-            var ctx = document.getElementById('graf-parametros').getContext('2d');
-            var barChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.entries(data),
-                    datasets: [{
-                        label: 'Preguntas que cumplen esta valoración',
-                        data: values,
-                        backgroundColor: valuesColors,
-                        borderWidth: 1,
-                    }],
-                },
-            });
+                var ctx = document.getElementById('graf-parametros').getContext('2d');
+                var barChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.entries(data),
+                        datasets: [{
+                            label: 'Preguntas que cumplen esta valoración',
+                            data: values,
+                            backgroundColor: valuesColors,
+                            borderWidth: 1,
+                        }],
+                    },
+                });
 
-            var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
-            var barChartGlobal = new Chart(ctxGlobal, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: [{
-                        label: 'Preguntas que cumplen esta valoración',
-                        data: values,
-                        backgroundColor: valuesColors,
-                        borderWidth: 1,
-                    }],
-                },
-            });
+                var ctxGlobal = document.getElementById('graf-modal-5').getContext('2d');
+                var barChartGlobal = new Chart(ctxGlobal, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            label: 'Preguntas que cumplen esta valoración',
+                            data: values,
+                            backgroundColor: valuesColors,
+                            borderWidth: 1,
+                        }],
+                    },
+                });
 
-            resultskeys.forEach(function(objeto, index) {
-                    console.log(Object.values(objeto),index);
+                resultskeys.forEach(function(objeto, index) {
+                    console.log(Object.values(objeto), index);
                     var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
                     var barChart = new Chart(ctx, {
                         type: 'bar',
@@ -776,8 +804,8 @@
 
         {{-- script para graficas del modal cuando se cambia de seccion --}}
         <script>
-             document.addEventListener('livewire:load', function() {
-                Livewire.on('renderGraficsModal', (data,resultskeys) => {
+            document.addEventListener('livewire:init', function() {
+                Livewire.on('renderGraficsModal', (data, resultskeys) => {
                     console.log(resultskeys);
                     const colores = @json($grafica_colores2);
                     const values = Object.values(data);
@@ -798,25 +826,23 @@
                     });
 
                     resultskeys.forEach(function(objeto, index) {
-                    console.log(Object.values(objeto),index);
-                    var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
-                    var barChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: Object.keys(data),
-                            datasets: [{
-                                label: 'Preguntas que cumplen esta valoración',
-                                data: Object.values(objeto),
-                                backgroundColor: valuesColors,
-                                borderWidth: 1,
-                            }],
-                        },
-                    });
+                        console.log(Object.values(objeto), index);
+                        var ctx = document.getElementById(`graf-modal-${index}`).getContext('2d');
+                        var barChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: Object.keys(data),
+                                datasets: [{
+                                    label: 'Preguntas que cumplen esta valoración',
+                                    data: Object.values(objeto),
+                                    backgroundColor: valuesColors,
+                                    borderWidth: 1,
+                                }],
+                            },
+                        });
                     });
                 });
             });
         </script>
-
     @endsection
 </div>
-

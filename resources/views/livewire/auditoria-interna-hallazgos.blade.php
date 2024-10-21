@@ -2,7 +2,7 @@
 
     <div class="row col-12 ml-5">
         <div class="mb-3 col-12 mt-4 " style="text-align: end">
-            <button type="button" wire:click.prevent="create" class="btn btn-success">Agregar</button>
+            <button type="button" wire:click.prevent="create" class="btn btn-primary">Agregar</button>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
                         {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Hallazgos</h5>
 
                     <input id="auditoria_internas_id" name="auditoria_internas_id" type="hidden"
-                        value=" {{ $auditoria_internas_id }}" wire:model.defer="auditoria_internas_id">
+                        value=" {{ $auditoria_internas_id }}" wire:model="auditoria_internas_id">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -25,10 +25,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label class="required" for="incumplimiento_requisito"><i class="fas fa-clipboard-list iconos-crear"></i>
+                            <label class="required" for="incumplimiento_requisito"><i
+                                    class="fas fa-clipboard-list iconos-crear"></i>
                                 Requisito</label>
                             <textarea class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
-                                name="incumplimiento_requisito" id="incumplimiento_requisito" wire:model.defer="incumplimiento_requisito">{{ old('incumplimiento_requisito') }}</textarea>
+                                name="incumplimiento_requisito" id="incumplimiento_requisito" wire:model="incumplimiento_requisito">{{ old('incumplimiento_requisito') }}</textarea>
                             @if ($errors->has('incumplimiento_requisito'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('incumplimiento_requisito') }}
@@ -39,10 +40,10 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label class="required"  for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>
+                            <label class="required" for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>
                                 Descripción</label>
                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
-                                wire:model.defer="descripcion">{{ old('descripcion') }}</textarea>
+                                wire:model="descripcion">{{ old('descripcion') }}</textarea>
                             @if ($errors->has('descripcion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('descripcion') }}
@@ -58,8 +59,7 @@
                                     class="fas fa-user-tie iconos-crear"></i>Clasificación del Hallazgo</label>
                             <input class="form-control {{ $errors->has('clasificacion_hallazgo') ? 'is-invalid' : '' }}"
                                 type="text" name="clasificacion_hallazgo" id="clasificacion_hallazgo"
-                                value="{{ old('clasificacion_hallazgo', '') }}"
-                                wire:model.defer="clasificacion_hallazgo">
+                                value="{{ old('clasificacion_hallazgo', '') }}" wire:model="clasificacion_hallazgo">
                             @if ($errors->has('clasificacion_hallazgo'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('clasificacion_hallazgo') }}
@@ -70,10 +70,9 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="proceso_id"><i
-                                    class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
+                            <label for="proceso_id"><i class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
                             <select class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
-                                name="proceso_id" id="proceso_id" wire:model.defer="proceso">
+                                name="proceso_id" id="proceso_id" wire:model="proceso">
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
                                     <option value="{{ $proceso->id }}">
@@ -89,10 +88,9 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6 col-md-12 col-lg-12">
-                            <label for="area_id"><i
-                                    class="fas fa-street-view iconos-crear"></i>Área</label>
+                            <label for="area_id"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                             <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" name="area_id"
-                                id="area_id" wire:model.defer="area">
+                                id="area_id" wire:model="area">
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">

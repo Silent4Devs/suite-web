@@ -28,7 +28,7 @@ class ConcientizacionSgiController extends Controller
         abort_if(Gate::denies('concientizacion_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ConcientizacionSgi::with(['arearesponsable', 'team', 'documentos_concientizacion'])->select(sprintf('%s.*', (new ConcientizacionSgi)->table))->orderByDesc('id');
+            $query = ConcientizacionSgi::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -196,7 +196,7 @@ class ConcientizacionSgiController extends Controller
     {
         abort_if(Gate::denies('concientizacion_sgsi_agregar') && Gate::denies('concientizacion_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new ConcientizacionSgi();
+        $model = new ConcientizacionSgi;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

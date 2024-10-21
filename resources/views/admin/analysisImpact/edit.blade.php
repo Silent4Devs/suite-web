@@ -67,10 +67,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.menu') !!}">Análisis de Impacto (BIA)</a>
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.index') !!}">Cuestionario</a>
+            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -78,7 +78,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             {!! Form::model($cuestionario, [
-                'route' => ['admin.analysisImpact.update', $cuestionario->id],
+                'route' => ['admin.analisis-impacto.update', $cuestionario->id],
                 'method' => 'patch',
             ]) !!}
 
@@ -87,7 +87,7 @@
             <!--  RESPONSABLES DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPONSABLES DEL PROCESO
                 </div>
             </div>
@@ -282,7 +282,7 @@
             <!-- FLUJO DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FLUJO DEL PROCESO
                 </div>
             </div>
@@ -519,7 +519,7 @@
             <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
@@ -532,7 +532,7 @@
             <!-- RECURSOS HUMANOS (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS HUMANOS
                 </div>
             </div>
@@ -546,7 +546,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RECURSOS MATERIALES
                 </div>
             </div>
@@ -559,7 +559,7 @@
             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PERÍODOS CRÍTICOS
                 </div>
             </div>
@@ -1291,7 +1291,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     TIEMPOS DE RECUPERACIÓN
                 </div>
             </div>
@@ -1539,7 +1539,7 @@
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESPALDOS DE INFORMACIÓN
                 </div>
             </div>
@@ -1611,7 +1611,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     PROBABILIDAD DE INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -1836,7 +1836,7 @@
             <!-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RIESGOS E INCIDENTES DISRUPTIVOS
                 </div>
             </div>
@@ -2036,7 +2036,7 @@
             {{-- Firmas --}}
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     FIRMAS
                 </div>
             </div>
@@ -2076,7 +2076,7 @@
 
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
-                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     Anexos
                 </div>
             </div>
@@ -2085,8 +2085,9 @@
 
                 <table class="table table-border" style="font-size: 12px">
                     <tr>
-                        <th class="col-sm-4" style="background-color:#345183; color: white;">Clasificación</th>
-                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de Contingencia
+                        <th class="col-sm-4" style="background-color:var(--color-tbj); color: white;">Clasificación</th>
+                        <th class="col-sm-8" style="background-color:var(--color-tbj); color: white;">Escenarios de
+                            Contingencia
                         </th>
                     </tr>
                     <tr>
@@ -2390,7 +2391,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1 día y hasta 2 días.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                        día y hasta 2 días.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2398,7 +2400,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4 horas y hasta 1 día.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4
+                                        horas y hasta 1 día.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2406,7 +2409,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1 horas y hasta 4 horas.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                        horas y hasta 4 horas.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2414,7 +2418,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos hasta 1 hora.</span>
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos hasta 1
+                                        hora.</span>
                                 </div>
                             </div>
 
@@ -2431,7 +2436,8 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto Regulatorio o Normativo</h5>
+                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto
+                                Regulatorio o Normativo</h5>
                         </div>
                         <div class="modal-body">
                             <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
@@ -2447,7 +2453,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación contra la empresa por faltas a normatividad Nacional o Constitucional.</span>
+                                    <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación
+                                        contra la empresa por faltas a normatividad Nacional o Constitucional.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2455,7 +2462,9 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Podrían generarse penalizaciones y/o investigación contra la empresa por faltas a los organismos reguladores (SAT, STPS, PROFECO, LFPDPPP, CONDUSEF, Etc.)</span>
+                                    <span style="justify-content;">Podrían generarse penalizaciones y/o investigación
+                                        contra la empresa por faltas a los organismos reguladores (SAT, STPS, PROFECO,
+                                        LFPDPPP, CONDUSEF, Etc.)</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2463,7 +2472,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Faltas a los procedimientos, políticas manuales y/o reglamentos organizacionales.</span>
+                                    <span style="justify-content;">Faltas a los procedimientos, políticas manuales y/o
+                                        reglamentos organizacionales.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2513,7 +2523,9 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática nacional y limitada a nivel internacional, pérdida seria de clientes, investigación formal del regulador, implicación de directivos.</span>
+                                    <span style="justify-content;">Cobertura mediática nacional y limitada a nivel
+                                        internacional, pérdida seria de clientes, investigación formal del regulador,
+                                        implicación de directivos.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2521,7 +2533,9 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en reclamaciones de clientes, pérdida de clientes, solicitud de información del regulador (informal).</span>
+                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en
+                                        reclamaciones de clientes, pérdida de clientes, solicitud de información del
+                                        regulador (informal).</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2529,7 +2543,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática local o del sector, reclamaciones de clientes, posible pérdida.</span>
+                                    <span style="justify-content;">Cobertura mediática local o del sector, reclamaciones
+                                        de clientes, posible pérdida.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2537,7 +2552,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin cobertura mediática, ligero incremento en reclamaciones de los clientes.</span>
+                                    <span style="justify-content;">Sin cobertura mediática, ligero incremento en
+                                        reclamaciones de los clientes.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2578,7 +2594,9 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes a toda la República Mexicana o incluso a niveles Internacionales.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía/clientes a toda la República Mexicana o incluso a niveles
+                                        Internacionales.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2586,7 +2604,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes a más de un estado de la República Mexicana.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía/clientes a más de un estado de la República Mexicana.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2594,7 +2613,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la ciudadanía/clientes de manera local.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía/clientes de manera local.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2602,7 +2622,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la de manera interna.</span>
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la de
+                                        manera interna.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2627,8 +2648,8 @@
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analysisImpact.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button type="submit" class="btn btn-danger">
+                    <a href="{{ route('admin.analisis-impacto.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -73,7 +73,6 @@ class Empleado extends Model implements Auditable
         'area_id' => 'int',
         'sede_id' => 'int',
         'mostrar_telefono' => 'boolean',
-
     ];
 
     public static $searchable = [
@@ -89,6 +88,7 @@ class Empleado extends Model implements Auditable
     protected $appends = [
         'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
+        // 'disposicion',
     ];
 
     protected $with = ['area', 'supervisor'];
@@ -227,7 +227,7 @@ class Empleado extends Model implements Auditable
 
     public static function getAltaEmpleados()
     {
-        return Cache::remember('Empleados:empleados_alta', 3600 * 8, function () {
+        return Cache::remember('Empleados:empleados_alta', 3600 * 4, function () {
             return self::alta()->select('id', 'area_id', 'name', 'puesto', 'foto', 'genero')
                 ->get();
         });
@@ -281,6 +281,11 @@ class Empleado extends Model implements Auditable
             return self::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
                 ->get();
         });
+    }
+
+    public function registrosHistorico()
+    {
+        return $this->hasMany(HistoricoEmpleados::class, 'empleado_id', 'id');
     }
 
     public static function getAllOrganigramaTree()
@@ -379,6 +384,21 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getaltaAllObjetivosGenerales()
+    {
+        return Cache::remember('Empleados:empleados_alta_all_objetivos_generales', 3600 * 6, function () {
+            return self::alta()->select(
+                'n_empleado',
+                'name',
+                'puesto_id',
+                'area_id',
+                'perfil_empleado_id',
+                'id',
+                'foto'
+            )->with(['objetivos', 'area', 'perfil', 'puestoRelacionado'])->get();
+        });
+    }
+
     public static function getaltaAllObjetivoSupervisorChildren()
     {
         return Cache::remember('Empleados:empleados_alta_all_evaluaciones', 3600 * 6, function () {
@@ -415,6 +435,25 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_all_data_columns_all', 3600 * 6, function () {
             return self::select('id', 'name', 'email', 'foto')->get();
+        });
+    }
+
+    public static function getCumpleanos()
+    {
+        $hoy = Carbon::now();
+
+        return Cache::remember('Empleados:portal_cumpleaños', 3600, function () use ($hoy) {
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        });
+
+    }
+
+    public static function getNuevos()
+    {
+        $hoy = Carbon::now();
+
+        return Cache::remember('Empleados:portal_nuevos', 3600, function () use ($hoy) {
+            return Empleado::alta()->select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         });
     }
 
@@ -647,6 +686,11 @@ class Empleado extends Model implements Auditable
         return $this->belongsTo(self::class, 'supervisor_id', 'id')->select('id', 'name', 'area_id');
     }
 
+    public function subordinados()
+    {
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->alta()->select('id', 'name', 'foto', 'area_id', 'puesto_id', 'n_empleado', 'perfil_empleado_id');
+    }
+
     public function onlyChildren()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')->select('id', 'name', 'foto');
@@ -772,7 +816,25 @@ class Empleado extends Model implements Auditable
 
     public function objetivos()
     {
-        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id');
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->where('ev360', true);
+    }
+
+    public function objetivosGenerales()
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->where('papelera', false)
+            ->get();
+    }
+
+    public function objetivosPeriodo($periodo)
+    {
+        return $this->hasMany('App\Models\RH\ObjetivoEmpleado', 'empleado_id', 'id')
+            ->with('objetivo.tipo', 'objetivo.metrica', 'objetivo.escalas')
+            ->where($periodo, true)
+            ->where('papelera', false)
+            ->get();
     }
 
     public function perfil()
@@ -934,4 +996,14 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasMany(TratamientoRiesgo::class, 'id_dueno', 'id')->alta()->with('area');
     }
+
+    public function disponibilidad()
+    {
+        return $this->hasOne(DisponibilidadEmpleados::class, 'empleado_id', 'id');
+    }
+
+    // public function getDisposicionAttribute()
+    // {
+    //     return $this->disponibilidad->disposicion;
+    // }
 }

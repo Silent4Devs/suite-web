@@ -12,13 +12,14 @@
 
     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
-        <button type="button" class="btn  tb-btn-primary"
-        id="filtrarBtn4" style="position: relative; left: 75rem;">Aprobadores</button>
+    <div class="text-right">
+        <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4">Aprobadores</button>
+    </div>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Requisiciones">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Requisiciones">
+                <thead class="">
                     <tr>
 
                         <th style="vertical-align: top">Folio</th>
@@ -26,9 +27,13 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
+                        <th style="vertical-align: top">No. Proyecto</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
+                        <th style="vertical-align: top">SUBTOTAL</th>
+                        <th style="vertical-align: top">IVA</th>
+                        <th style="vertical-align: top">Total</th>
                         <th style="vertical-align: top">Opciones</th>
 
                     </tr>
@@ -43,43 +48,43 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
                     }
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'landscape',
+                //     exportOptions: {
+                //         columns: [0, 1, 2, 3, 4, 6, 7, 8]
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [5, 20, 5, 20];
+                //         // doc.styles.tableHeader.fontSize = 6.5;
+                //         // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Ordenes_Compra ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -170,15 +175,16 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'proveedor_catalogo',
+                        data: 'proveedor_catalogo_oc',
                         render: function(data, type, row) {
                             // Verifica si 'data' es null o undefined
                             if (data === null || typeof data === 'undefined') {
                                 // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
-                                if (row.proveedores_requisiciones && row.proveedores_requisiciones.length > 0) {
+                                if (row.proveedores_requisiciones && row.proveedores_requisiciones
+                                    .length > 0) {
                                     return row.proveedores_requisiciones[0].contacto;
                                 } else {
-                                    return 'Indistinto'; // Puedes personalizar el mensaje
+                                    return 'Pendiente';
                                 }
                             } else {
                                 return data; // Valor no es null ni undefined
@@ -191,13 +197,30 @@
                             var firma_solicitante = row.firma_solicitante_orden;
                             var firma_comprador = row.firma_comprador_orden;
                             var firma_finanzas = row.firma_finanzas_orden;
+                            var estatus = row.estado_orden;
 
-                            if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
-                            } else if (firma_solicitante && firma_comprador && firma_finanzas) {
-                                return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                            if (estatus == "rechazado_oc") {
+                                return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
                             } else {
-                                return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                                } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                                } else {
+                                    return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                                }
+                            }
+                        }
+                    },
+                    {
+                        data: 'contrato.no_contrato',
+                        name: 'contrato.no_contrato',
+                        render: function(data, type, row) {
+                            // Verifica si 'data' es null o una cadena vacía
+                            if (data == null || data == "") {
+                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                            } else {
+                                return data; // Valor no es null ni vacío
                             }
                         }
                     },
@@ -222,10 +245,24 @@
                         name: 'user'
                     },
                     {
+                        data: 'sub_total',
+                        name: 'sub_total',
+                        visible: false
+                    },
+                    {
+                        data: 'iva',
+                        name: 'iva',
+                        visible: false
+                    },
+                    {
+                        data: 'total',
+                        name: 'total',
+                        visible: false
+                    },
+                    {
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
@@ -250,7 +287,12 @@
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
-                ]
+                ],
+                columnDefs: [{
+                    targets: [9, 10, 11], // Indexes of columns SUBTOTAL and IVA
+                    visible: false, // Hide the columns on the webpage
+                    searchable: false // Exclude the columns from searching
+                }]
             };
             let table = $('.datatable-Requisiciones').DataTable(dtOverrideGlobals);
 

@@ -31,8 +31,8 @@
                                     </span>
                                 </div>
                                 <input name="two_factor_code" type="text"
-                                    class="form-control{{ $errors->has('two_factor_code') ? ' is-invalid' : '' }}"
-                                    required autofocus placeholder="Código">
+                                    class="form-control{{ $errors->has('two_factor_code') ? ' is-invalid' : '' }}" required
+                                    autofocus placeholder="Código">
                                 @if ($errors->has('two_factor_code'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('two_factor_code') }}
@@ -42,13 +42,13 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <button type="submit" class="px-4 btn btn-success">
+                                    <button type="submit" class="px-4 btn btn-primary">
                                         Verificar
                                     </button>
                                 </div>
                                 <div class="text-right col-6">
                                     <a class="px-4 btn btn-secondary" href="{{ route('twoFactor.resend') }}">Reenviar</a>
-                                    <a class="px-4 btn btn-danger" href="#"
+                                    <a class="px-4 btn btn-primary" href="#"
                                         onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                         Cerrar Sesión
                                     </a>

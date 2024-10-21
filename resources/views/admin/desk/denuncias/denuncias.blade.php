@@ -1,6 +1,5 @@
-
 <style>
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -47,44 +46,45 @@
 
 
 @can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
-<div class="mb-3 text-right">
-    <a class="btn btn-danger" href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}">Crear reporte</a>
-</div>
+    <div class="mb-3 text-right">
+        <a class="btn btn-primary" href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}">Crear reporte</a>
+    </div>
 @endcan
 
-    @include('partials.flashMessages')
-    <div class="datatable-fix datatable-rds">
-        <table class="datatable tabla_denuncias">
-            <thead>
-                <tr>
-                    <th colspan="6"></th>
-                    <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denuncio</th>
-                    <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
-                </tr>
-                <tr>
-                    <th style="min-width:200px;">Folio</th>
-                    <th style="min-width:200px;">Anónimo</th>
-                    <th style="min-width:200px;">Estatus</th>
-                    <th style="min-width:200px;">Fecha de identificación</th>
-                    <th style="min-width:200px;">Fecha de recepción</th>
-                    <th style="min-width:200px;">Fecha de cierre</th>
-                    <th style="min-width:200px;">Nombre</th>
-                    <th style="min-width:200px;">Puesto</th>
-                    <th style="min-width:200px;">Área</th>
-                    <th style="min-width:200px;">Nombre</th>
-                    <th style="min-width:200px;">Puesto</th>
-                    <th style="min-width:200px;">Área</th>
-                    <th style="min-width:200px;">Descripción</th>
-                    <th style="min-width:200px;">Opciones</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_denuncias">
+        <thead>
+            <tr>
+                <th colspan="6"></th>
+                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denuncio</th>
+                <th colspan="3" style="text-align:center; border:1px solid #ccc;">Denunciado</th>
+            </tr>
+            <tr>
+                <th style="min-width:200px;">Folio</th>
+                <th style="min-width:200px;">Anónimo</th>
+                <th style="min-width:200px;">Estatus</th>
+                <th style="min-width:200px;">Fecha de identificación</th>
+                <th style="min-width:200px;">Fecha de recepción</th>
+                <th style="min-width:200px;">Fecha de cierre</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Nombre</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Área</th>
+                <th style="min-width:200px;">Descripción</th>
+                <th style="min-width:200px;">Opciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
 
 
 @section('scripts')
     @parent
-
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -181,24 +181,41 @@
                 window.tabla_denuncias_desk = $(".tabla_denuncias").DataTable({
                     ajax: '/admin/desk/denuncias',
                     buttons: dtButtons,
-                    columns: [
-                        {
-                            data: 'folio'
+                    columns: [{
+                            data: 'folio',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'anonimo'
+                            data: 'anonimo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_creacion'
+                            data: 'fecha_creacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_de_cierre'
+                            data: 'fecha_de_cierre',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'name',
@@ -273,7 +290,7 @@
                                 if ((row.estatus == 'cerrado') || (row.estatus == 'cancelado')) {
 
                                     html += `
-                                            <button class="btn archivar" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
+                                            <button class="btn" onclick='ArchivarDenuncia("/admin/desk/${data}/archivarDenuncias"); return false;' style="margin-top:-10px">
                                                 <i class="fas fa-archive" ></i></a>
                                             </button>
 				       					</div>`;
@@ -315,7 +332,7 @@
                             success: function(response) {
 
                                 if (response.success) {
-                                    tabla_denuncias_desk.ajax.reload();
+                                    tabla_denuncias_desk.ajax.reload(null, false);
                                     Swal.fire(
                                         'Denuncia Archivada',
                                         '',

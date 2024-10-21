@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/colores.css') }}{{ config('app.cssVersion') }}">
     <link rel="stylesheet" href="{{ asset('orgchart/orgchart.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0-canary.13/tailwind.min.css"
         integrity="sha512-0mXZvQboEKApqdohlHGMJ/OZ09yeQa6UgZRkgG+b3t3JlcyIqvDnUMgpUm5CvlHT9HNtRm9xbRAJPlKaFCXzdQ=="
@@ -52,7 +52,7 @@
         }
 
         .avatar {
-            border-color: #345183;
+            border-color: var(--color-tbj);
         }
 
         .orgchart.r2l .avatar {
@@ -70,7 +70,6 @@
         .orgchart .node {
             width: 200px;
         }
-
     </style>
     <style>
         /* width */
@@ -267,9 +266,8 @@
         }
 
         /* #shot_screen{
-                                                                                                                                                                                                                                                width:100% !important;
-                                                                                                                                                                                                                                            } */
-
+                                                                                                                                                                                                                                                                width:100% !important;
+                                                                                                                                                                                                                                                            } */
     </style>
     <style>
         .range-slider {
@@ -366,7 +364,6 @@
         input::-moz-focus-outer {
             border: 0;
         }
-
     </style>
     <style>
         .orgchart.l2r {
@@ -440,7 +437,6 @@
         .contenedor-jerarquia {
             position: relative;
         }
-
     </style>
     <style>
         .menulogin {
@@ -481,13 +477,13 @@
         .caja_btn_a a {
             padding: 15px;
             margin-top: 10px;
-            color: #345183;
+            color: var(--color-tbj);
             display: inline-block;
         }
 
         .caja_btn_a a:hover,
         .btn_a_seleccionado {
-            border-bottom: 2px solid #345183;
+            border-bottom: 2px solid var(--color-tbj);
             margin-bottom: -2px;
             margin-right: 10px;
         }
@@ -551,7 +547,6 @@
                 padding-bottom: 300px !important;
             }
         }
-
     </style>
 @endsection
 @section('content')
@@ -588,7 +583,8 @@
                         </span>
                         <div class="d-flex justify-content-center align-items-center"
                             style="height: 75%; width:100% !important;">
-                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10" max="200">
+                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
+                                max="200">
                             <span id="output" class="range-slider__value">30</span>
                         </div>
                     </div>

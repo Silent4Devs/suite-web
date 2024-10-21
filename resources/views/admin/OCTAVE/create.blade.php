@@ -7,7 +7,8 @@
                 <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
             </div>
             <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 DATOS GENERALES
             </div>
             <div class="row">
@@ -83,11 +84,12 @@
                 </div>
             </div>
             <hr>
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO
             </div>
             <div>
-                @livewire('octave.select-impactos',["operacionalId"=>1,"cumplimientoId"=>1,"legalId"=>1,"reputacionalId"=>1,"tecnologicoId"=>1])
+                @livewire('octave.select-impactos', ['operacionalId' => 1, 'cumplimientoId' => 1, 'legalId' => 1, 'reputacionalId' => 1, 'tecnologicoId' => 1])
             </div>
     </div>
     <div class="tab-content" id="nav-tabContent">

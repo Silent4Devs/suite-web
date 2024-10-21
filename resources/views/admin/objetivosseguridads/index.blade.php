@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-
-<style>
+    <style>
         .btn-outline-success {
             background: #788bac !important;
             color: white;
@@ -25,8 +24,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -37,20 +36,21 @@
             margin: 0 !important;
             margin-right: 10px !important;
         }
-</style>
+    </style>
 
     {{ Breadcrumbs::render('admin.objetivosseguridads.index') }}
 
     @can('objetivos_del_sistema_agregar')
-    <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
+        <h5 class="col-12 titulo_general_funcion">Objetivos</h5>
 
-    <div class="text-right">
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar Objetivo</a>
-              &nbsp; &nbsp;
-            <a class="btn btn-danger" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+        <div class="text-right">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.objetivosseguridads.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                    Objetivo</a>
+                &nbsp; &nbsp;
+                <a class="btn btn-primary" href="{{ asset('admin/objetivos/dashboard') }}">Dashboard</a>
+            </div>
         </div>
-    </div>
         <div class="mt-5 card">
         @endcan
         @include('partials.flashMessages')
@@ -214,29 +214,39 @@
             @can('objetivos_del_sistema_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.objetivosseguridads.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.objetivosseguridads.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -302,7 +312,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);       
+            let table = $('.datatable-Objetivosseguridad').DataTable(dtOverrideGlobals);
         });
     </script>
 @endsection

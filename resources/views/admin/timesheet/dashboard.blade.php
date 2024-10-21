@@ -56,7 +56,7 @@
     <div class="box-caja-cards-times d-flex justify-content-between mb-4" style="gap: 20px; width: 100%; margin:auto;">
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #DFF7FF;"></div>
-            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+            <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                 <strong style="font-size: 16px;">Todos</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $counters['totales'] }} </strong>
@@ -66,7 +66,7 @@
         </div>
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #DEDEDE;"></div>
-            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+            <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                 <strong style="font-size: 16px;">Borradores</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $counters['borrador_contador'] }} </strong>
@@ -76,7 +76,7 @@
         </div>
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #FFD7A4;"></div>
-            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+            <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                 <strong style="font-size: 16px;"> Pendientes</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $counters['pendientes_contador'] }} </strong>
@@ -86,7 +86,7 @@
         </div>
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #E2F6E1;"></div>
-            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+            <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                 <strong style="font-size: 16px;"> Aprobados</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $counters['aprobados_contador'] }} </strong>
@@ -96,7 +96,7 @@
         </div>
         <div class="card-complement">
             <div class="bg-objet" style="background-color: #F2ADAD;"></div>
-            <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+            <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                 <strong style="font-size: 16px;"> Rechazados</strong>
                 <span class="d-flex align-items-center" style="gap: 5px;">
                     <strong style="font-size: 22px"> {{ $counters['rechazos_contador'] }} </strong>

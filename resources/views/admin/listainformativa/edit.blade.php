@@ -21,24 +21,31 @@
 
     .anima-focus label {
         margin-top: -7px !important;
+    }
 
+    .img_empleado {
+        width: 40px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 5px;
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{config('app.cssVersion')}}" @endsection
-    @section('content')
+    <link rel="stylesheet" href="{{ asset('css/listainformativa.css') }}{{ config('app.cssVersion') }}">
+@endsection
+@section('content')
     @include('admin.listainformativa.estilos')
 
     <div class="card instrucciones">
         <div class="">
             <div class="row">
                 <div class="col-2">
-                    <img src="{{ asset('politicas.png') }}" class="imgdoc"  alt="">
+                    <img src="{{ asset('politicas.png') }}" class="imgdoc" alt="">
                 </div>
                 <div class="col-10" style="position: relative; top: 3rem;">
                     <h5>Crea tu propio grupo de distribución de correo</h6>
-                        <p>En esta sección puedes generar las listas informativas de correos, 
-                            en las cuales se informaran a los colaboradores 
+                        <p>En esta sección puedes generar las listas informativas de correos,
+                            en las cuales se informaran a los colaboradores
                             sobre los procesos en estos submodulos.</p>
                 </div>
             </div>
@@ -49,7 +56,7 @@
         @csrf
         <div class="card">
             <div class="card-body">
-                <h4 style="color:#057BE2; title-table-rds">Módulo asignado</h4>
+                <h4 style="color:#057BE2;" class="title-table-rds">Módulo asignado</h4>
                 <hr>
                 <br>
                 <div class="row">
@@ -57,14 +64,14 @@
                         <div class="anima-focus">
                             <input class="form-control" id="modulo" name="modulo" type="text"
                                 value="{{ $lista->modulo }}" placeholder="" disabled>
-                            <label  for="modulo">Módulo</label>
+                            <label for="modulo">Módulo</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="anima-focus">
                             <input class="form-control" id="submodulo" name="submodulo" type="text"
                                 value="{{ $lista->submodulo }}" placeholder="" disabled>
-                            <label  for="modulo">Submódulo</label>
+                            <label for="modulo">Submódulo</label>
                         </div>
                     </div>
                 </div>
@@ -72,7 +79,7 @@
         </div>
         <div class="card" style="height: 680px;">
             <div class="card-body">
-                <h4 style="color:#057BE2; title-table-rds">Configuración Listas de Aprobación</h4>
+                <h4 style="color:#057BE2;" class="title-table-rds">Configuración Listas de Aprobación</h4>
                 <hr>
                 <div class="row g-0">
                     <div class="col-12">
@@ -80,14 +87,17 @@
                             @error('nivel_null')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                                <div class="form-row nivel1Div"">
-                                    <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i> Informados <br>
-                                       &nbsp; &nbsp; Asigna a los colaboradores que seran informados de los procesos en el modulo.
-                                    </div>
-                                    <div class="anima-focus" style="width: 100rem;">
-                                        <select id="nivel1" name="nivel1[]"
-                                            class="form-control" multiple="multiple">
+                            <div class="nivel1Div">
+                                <div class="row mt-4 mb-1 custom-row">
+                                    <i class="fas fa-circle" style="color: #007bff;"></i>
+                                    <h4>Colaboradores Informados</h4>
+                                </div>
+                                <div class="row">
+                                    Asigna a los colaboradores que serán informados de los procesos en el módulo.
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="anima-focus" style="width: 70rem;">
+                                        <select id="nivel1" name="nivel1[]" class="form-control" multiple="multiple">
                                             @foreach ($empleados as $empleado)
                                                 <option value="{{ $empleado->id }}"
                                                     data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
@@ -96,42 +106,48 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel1" style="color:#057BE2;">Usuarios</label>
+                                        <label for="nivel1" style="color:#057BE2;">Colaboradores</label>
                                     </div>
                                 </div>
-                                <div class="form-row nivel2Div"">
-                                    <div class="mt-4 mb-1">
-                                        <i class="fas fa-circle" style="color: #007bff;"></i> Informados <br>
-                                       &nbsp; &nbsp; Asigna a los usuarios que seran informados de los procesos en el modulo.
-                                    </div>
-                                    <div class="anima-focus" style="width: 100rem;">
-                                        <select id="nivel2" name="nivel2[]"
-                                            class="form-control" multiple="multiple">
+                            </div>
+                            <div class="nivel2Div">
+                                <div class="row mt-4 mb-1 custom-row">
+                                    <i class="fas fa-circle" style="color: #007bff;"></i>
+                                    <h4>Usuarios Informados</h4>
+                                </div>
+                                <div class="row">
+                                    Asigna a los usuarios que serán informados de los procesos en el módulo.
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="anima-focus" style="width: 70rem;">
+                                        <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
                                             @foreach ($usuarios as $usuario)
                                                 <option value="{{ $usuario->id }}"
-                                                    data-avatar="{{ asset('storage/empleados/imagenes/' . $usuario->avatar) }}"
                                                     {{ in_array($usuario->id, $nivelData2 ?? []) ? 'selected' : '' }}>
                                                     {{ $usuario->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="nivel2" style="color:#057BE2;">Colaboradores</label>
+                                        <label for="nivel2" style="color:#057BE2;">Usuarios</label>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12">
-            <div  style="position: relative; text-align:end;">
-                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn tb-btn-primary" id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
+            <div style="position: relative; text-align:end;">
+                <a href="{{ route('admin.lista-informativa.index') }}" type="button" class="btn tb-btn-primary"
+                    id="btn_cancelar" style="color:#057BE2;">Cancelar</a>
                 <button type="submit" class="btn tb-btn-primary" style="width: 8rem;">Editar</button>
             </div>
         </div>
     </form>
 @endsection
-    @section('scripts') <script>
+@section('scripts')
+    <script>
         var participantesSeleccionados = {!! json_encode($participantes_seleccionados) !!};
 
         function populateSelects() {
@@ -188,22 +204,28 @@
 
     <script>
         $(document).ready(function() {
-            for (let i = 1; i < 3; i++) {
-                $('#nivel' + i).select2({
-                    templateResult: formatAvatar,
-                    templateSelection: formatAvatar,
-                    maximumSelectionLength: 5,
-                    language: {
-                        maximumSelected: function(maximumSelect) {
-                            return 'Solo pueden seleccionarse un maximo de 5 informadores por modulo.';
-                            // Customize the message according to your preference
-                        }
-                    },
-                    escapeMarkup: function(m) {
-                        return m;
+            $('#nivel1').select2({
+                templateResult: formatAvatar,
+                templateSelection: formatAvatar,
+                maximumSelectionLength: 5,
+                language: {
+                    maximumSelected: function(maximumSelect) {
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
                     }
-                });
-            }
+                },
+                escapeMarkup: function(m) {
+                    return m;
+                }
+            });
+
+            $('#nivel2').select2({
+                maximumSelectionLength: 5,
+                language: {
+                    maximumSelected: function(maximumSelect) {
+                        return 'Solo pueden seleccionarse un maximo de 5 informadores por módulo.';
+                    }
+                }
+            });
         });
 
         function formatAvatar(option) {
@@ -212,74 +234,60 @@
             }
 
             var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
-            var avatarText = option.text;
+            if (avatar) {
+                var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
+                var avatarText = option.text;
 
-            var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
-            return formattedResult;
+                var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');
+                return formattedResult;
+            }
+
+            return option.text;
         }
     </script>
 
     <script>
-        var selectedOptions = []; // Array to store selected options in order
-
+        var selectedOptions1 = []; // Array to store selected options in order
 
         $('#nivel1').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
+            if (!selectedOptions1.includes(selectedOptionId)) {
+                selectedOptions1.push(selectedOptionId);
             }
 
             $('#nivel1').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
+                return selectedOptions1.indexOf(a.value) - selectedOptions1.indexOf(b.value);
             }).appendTo('#nivel1');
         });
 
         $('#nivel1').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
+            // var index = selectedOptions1.indexOf(unselectedOptionId);
             if (index !== -1) {
-                selectedOptions.splice(index, 1);
+                selectedOptions1.splice(index, 1);
             }
         });
-    </script>
 
-    <script>
-        var selectedOptions = []; // Array to store selected options in order
-
+        var selectedOptions2 = []; // Array to store selected options in order
 
         $('#nivel2').on('select2:select', function(e) {
             var selectedOptionId = e.params.data.id;
 
-            // if (selectedOptions.length >= 5 && !selectedOptions.includes(selectedOptionId)) {
-            //     Swal.fire('Solo se permiten seleccionar un maximo de 5 aprobadores por nivel',
-            //         'Se reemplazara uno de los aprobadores ya seleccionados', 'info');
-            //     $('#nivel1').find(`option[value="${selectedOptions[0]}"]`).prop('selected', false);
-            //     selectedOptions.shift();
-            // }
-
-            if (!selectedOptions.includes(selectedOptionId)) {
-                selectedOptions.push(selectedOptionId);
+            if (!selectedOptions2.includes(selectedOptionId)) {
+                selectedOptions2.push(selectedOptionId);
             }
 
             $('#nivel2').find('option').sort(function(a, b) {
-                return selectedOptions.indexOf(a.value) - selectedOptions.indexOf(b.value);
+                return selectedOptions2.indexOf(a.value) - selectedOptions2.indexOf(b.value);
             }).appendTo('#nivel2');
         });
 
         $('#nivel2').on('select2:unselect', function(e) {
             var unselectedOptionId = e.params.data.id;
-            var index = selectedOptions.indexOf(unselectedOptionId);
+            // var index = selectedOptions2.indexOf(unselectedOptionId);
             if (index !== -1) {
-                selectedOptions.splice(index, 1);
+                selectedOptions2.splice(index, 1);
             }
         });
     </script>

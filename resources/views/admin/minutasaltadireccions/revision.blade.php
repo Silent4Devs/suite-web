@@ -43,7 +43,7 @@
                         <form method="POST"
                             action="{{ route('admin.minutasaltadireccions.pdf', ['id' => $minutas->id]) }}">
                             @csrf
-                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                            <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
                                 IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                             </button>
                         </form>
@@ -79,7 +79,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="6">
                                             <center>Minuta reunión</center>
                                         </th>
@@ -112,7 +112,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="4">
                                             <center>Participantes</center>
                                         </th>
@@ -138,7 +138,7 @@
                             <table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #306BA9; padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                        <th style="background-color: var(--color-tbj); padding: 8px; color: #EEFCFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
                                             colspan="2">
                                             <center style="color: white;">Temas tratados</center>
                                         </th>
@@ -180,7 +180,8 @@
         </div>
     </div>
 
-    <form method="POST" id="formularioRevision" enctype="multipart/form-data">
+    <form method="POST" id="formularioRevision" enctype="multipart/form-data"
+        class="{{ $minutas->firma_check ? (!$firmado ? 'd-none' : '') : '' }}">
         @csrf
         <div class="card card-body shadow-sm">
 
@@ -209,12 +210,241 @@
             </div>
         </div>
     </form>
+
+    <style>
+        #firma_requi {
+            border: 1px solid #535353;
+        }
+    </style>
+    @if ($minutas->firma_check)
+        @if ($userIsAuthorized)
+            <form method="POST" action="{{ route('admin.module_firmas.minutas', ['id' => $minutas->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
+                    <div class="" style="position: relative; left: 2rem;">
+                        <br>
+                        <h5><strong>Firma*</strong></h5>
+                        <p>
+                            Indispensable firmar antes de guardar y enviarla a aprobación.
+                        </p>
+                    </div>
+                    <div class="flex caja-firmar">
+                        <div class="flex-item"
+                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                            <div id="firma_content" class="caja-space-firma"
+                                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                <canvas id="firma_requi" width="500px" height="300px">
+                                    Navegador no compatible
+                                </canvas>
+                                <input type="hidden" name="firma" id="firma">
+                            </div>
+                            <div>
+                                <div class="btn"
+                                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                    id="clear">Limpiar</div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endif
+    @endif
+
+    @if ($firmado)
+        <div class="card card-body" style="margin-bottom: 30px">
+            <div class="caja-firmas-doc d-flex gap-5 justify-content-center flex-wrap">
+                @foreach ($firmas as $firma)
+                    <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
+                        @if ($firma->firma)
+                            @if (isset($firma->empleadoTable))
+                                <img src="{{ $firma->firma_ruta_minutas }}" class="img-firma" width="200"
+                                    height="100">
+                                <p> {{ $firma->created_at->format('d/m/Y') }}</p>
+                                <p> {{ $firma->empleadoTable->name }}</p>
+                            @endif
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 <script>
     document.getElementById('myTextarea').value = '{{ html_entity_decode(strip_tags($minutas->tema_tratado)) }}';
 </script>
 @section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            (function() {
+
+
+                window.requestAnimFrame = (function(callback) {
+                    return window.requestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame ||
+                        window.oRequestAnimationFrame ||
+                        window.msRequestAnimaitonFrame ||
+                        function(callback) {
+                            window.setTimeout(callback, 1000 / 60);
+                        };
+                })();
+
+                if (document.getElementById('firma_requi')) {
+                    renderCanvas("firma_requi", "clear");
+                }
+
+            })();
+
+            $('#firma_requi').mouseleave(function() {
+                var canvas = document.getElementById('firma_requi');
+                var dataUrl = canvas.toDataURL();
+                $('#firma').val(dataUrl);
+            });
+
+            function renderCanvas(contenedor, clearBtnCanvas) {
+
+                var canvas = document.getElementById(contenedor);
+                console.log(canvas);
+                var ctx = canvas.getContext("2d");
+                ctx.strokeStyle = "#222222";
+                ctx.lineWidth = 1;
+
+                var drawing = false;
+                var mousePos = {
+                    x: 0,
+                    y: 0
+                };
+                var lastPos = mousePos;
+
+                canvas.addEventListener("mousedown", function(e) {
+                    drawing = true;
+                    lastPos = getMousePos(canvas, e);
+                }, false);
+
+                canvas.addEventListener("mouseup", function(e) {
+                    drawing = false;
+                }, false);
+
+                canvas.addEventListener("mousemove", function(e) {
+                    mousePos = getMousePos(canvas, e);
+                }, false);
+
+                // Add touch event support for mobile
+                canvas.addEventListener("touchstart", function(e) {
+
+                }, false);
+
+                canvas.addEventListener("touchmove", function(e) {
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousemove", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchstart", function(e) {
+                    mousePos = getTouchPos(canvas, e);
+                    var touch = e.touches[0];
+                    var me = new MouseEvent("mousedown", {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                canvas.addEventListener("touchend", function(e) {
+                    var me = new MouseEvent("mouseup", {});
+                    canvas.dispatchEvent(me);
+                }, false);
+
+                function getMousePos(canvasDom, mouseEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: mouseEvent.clientX - rect.left,
+                        y: mouseEvent.clientY - rect.top
+                    }
+                }
+
+                function getTouchPos(canvasDom, touchEvent) {
+                    var rect = canvasDom.getBoundingClientRect();
+                    return {
+                        x: touchEvent.touches[0].clientX - rect.left,
+                        y: touchEvent.touches[0].clientY - rect.top
+                    }
+                }
+
+                function renderCanvas() {
+                    if (drawing) {
+                        ctx.moveTo(lastPos.x, lastPos.y);
+                        ctx.lineTo(mousePos.x, mousePos.y);
+                        ctx.stroke();
+                        lastPos = mousePos;
+                    }
+                }
+
+                // Prevent scrolling when touching the canvas
+                document.body.addEventListener("touchstart", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchend", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+                document.body.addEventListener("touchmove", function(e) {
+                    if (e.target == canvas) {
+                        e.preventDefault();
+                    }
+                }, false);
+
+                (function drawLoop() {
+                    requestAnimFrame(drawLoop);
+                    renderCanvas();
+                })();
+
+                function clearCanvas() {
+                    canvas.width = canvas.width;
+                }
+
+                function isCanvasBlank() {
+                    const context = canvas.getContext('2d');
+
+                    const pixelBuffer = new Uint32Array(
+                        context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                    );
+
+                    return !pixelBuffer.some(color => color !== 0);
+                }
+
+                var clearBtn = document.getElementById(clearBtnCanvas);
+                clearBtn.addEventListener("click", function(e) {
+                    clearCanvas();
+                }, false);
+
+            }
+
+            function isCanvasEmpty(canvas) {
+                const context = canvas.getContext('2d');
+
+                const pixelBuffer = new Uint32Array(
+                    context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                );
+
+                return !pixelBuffer.some(color => color !== 0);
+            }
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // var canvas = document.getElementById('signature-pad');

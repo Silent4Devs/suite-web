@@ -32,7 +32,7 @@
             @if ($component->searchIsEnabled() && $component->searchVisibilityIsEnabled())
                 <div class="flex rounded-md shadow-sm">
                     <input
-                        wire:model{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
+                        wire:model.live{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
                         placeholder="{{ __('Search') }}"
                         type="text"
                         class="block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-gray-700 dark:text-white dark:border-gray-600 @if ($component->hasSearch()) rounded-none rounded-l-md focus:ring-0 focus:border-gray-300 @else focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md @endif"
@@ -276,7 +276,7 @@
                                                 >
                                                     <input
                                                         class="text-indigo-600 rounded border-gray-300 shadow-sm transition duration-150 ease-in-out focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600 dark:focus:bg-gray-600 disabled:opacity-50 disabled:cursor-wait"
-                                                        wire:model="selectedColumns"
+                                                        wire:model.live="selectedColumns"
                                                         wire:target="selectedColumns"
                                                         wire:loading.attr="disabled"
                                                         type="checkbox"
@@ -297,7 +297,7 @@
             @if ($component->paginationIsEnabled() && $component->perPageVisibilityIsEnabled())
                 <div>
                     <select
-                        wire:model="perPage"
+                        wire:model.live="perPage"
                         id="perPage"
                         class="block w-full border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     >
@@ -367,7 +367,7 @@
             @if ($component->searchIsEnabled() && $component->searchVisibilityIsEnabled())
                 <div class="mb-3 mb-md-0 input-group">
                     <input
-                        wire:model{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
+                        wire:model.live{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
                         placeholder="{{ __('Search') }}"
                         type="text"
                         class="form-control"
@@ -546,7 +546,7 @@
                                             class="px-2 {{ $loop->last ? 'mb-0' : 'mb-1' }}"
                                         >
                                             <input
-                                                wire:model="selectedColumns"
+                                                wire:model.live="selectedColumns"
                                                 wire:target="selectedColumns"
                                                 wire:loading.attr="disabled"
                                                 type="checkbox"
@@ -565,7 +565,7 @@
             @if ($component->paginationIsEnabled() && $component->perPageVisibilityIsEnabled())
                 <div class="ml-0 ml-md-2">
                     <select
-                        wire:model="perPage"
+                        wire:model.live="perPage"
                         id="perPage"
                         class="form-control"
                     >
@@ -631,7 +631,7 @@
             @if ($component->searchIsEnabled() && $component->searchVisibilityIsEnabled())
                 <div class="mb-3 mb-md-0 input-group">
                     <input
-                        wire:model{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
+                        wire:model.live{{ $component->getSearchOptions() }}="{{ $component->getTableName() }}.search"
                         placeholder="{{ __('Search') }}"
                         type="text"
                         class="form-control"
@@ -808,7 +808,7 @@
                                             class="px-2 {{ $loop->last ? 'mb-0' : 'mb-1' }}"
                                         >
                                             <input
-                                                wire:model="selectedColumns"
+                                                wire:model.live="selectedColumns"
                                                 wire:target="selectedColumns"
                                                 wire:loading.attr="disabled"
                                                 type="checkbox"
@@ -827,7 +827,7 @@
             @if ($component->paginationIsEnabled() && $component->perPageVisibilityIsEnabled())
                 <div class="ms-0 ms-md-2">
                     <select
-                        wire:model="perPage"
+                        wire:model.live="perPage"
                         id="perPage"
                         class="form-control"
                     >

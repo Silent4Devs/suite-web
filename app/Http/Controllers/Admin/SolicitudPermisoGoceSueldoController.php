@@ -28,66 +28,66 @@ class SolicitudPermisoGoceSueldoController extends Controller
         abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
-            $table = datatables()::of($query);
+        $query = SolicitudPermisoGoceSueldo::getAllwithEmpleados()->where('empleado_id', '=', $data);
+        // if ($request->ajax()) {
+        //     $table = datatables()::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'no_permitido';
-                $deleteGate = 'amenazas_eliminar';
-                $crudRoutePart = 'solicitud-permiso-goce-sueldo';
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'amenazas_ver';
+        //         $editGate = 'no_permitido';
+        //         $deleteGate = 'amenazas_eliminar';
+        //         $crudRoutePart = 'solicitud-permiso-goce-sueldo';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            $table->editColumn('permiso', function ($row) {
-                return $row->permiso ? $row->permiso : '';
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
-            });
+        //     $table->editColumn('dias_solicitados', function ($row) {
+        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
+        //     });
+        //     $table->editColumn('fecha_inicio', function ($row) {
+        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
+        //     });
+        //     $table->editColumn('fecha_fin', function ($row) {
+        //         return $row->fecha_fin ? $row->fecha_fin : '';
+        //     });
+        //     $table->editColumn('descripcion', function ($row) {
+        //         return $row->descripcion ? $row->descripcion : '';
+        //     });
+        //     $table->editColumn('aprobacion', function ($row) {
+        //         return $row->aprobacion ? $row->aprobacion : '';
+        //     });
+        //     $table->editColumn('permiso', function ($row) {
+        //         return $row->permiso ? $row->permiso : '';
+        //     });
+        //     $table->editColumn('tipo', function ($row) {
+        //         return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
+        //     });
 
-            $table->rawColumns(['actions', 'placeholder']);
+        //     $table->rawColumns(['actions', 'placeholder']);
 
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.solicitudGoceSueldo.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.solicitudGoceSueldo.index', compact('logo_actual', 'empresa_actual', 'query'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new SolicitudPermisoGoceSueldo();
+        $vacacion = new SolicitudPermisoGoceSueldo;
         $autoriza = User::getCurrentUser()->empleado->supervisor_id;
         $permisos = PermisosGoceSueldo::get();
 
@@ -165,40 +165,45 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleado = User::getCurrentUser()->empleado;
 
-        $request->validate([
-            'aprobacion' => 'required|int',
-        ]);
-        $solicitud = SolicitudPermisoGoceSueldo::find($id);
-        $empleados = Empleado::getAll();
+        if ($empleado->es_supervisor || Gate::allows('solicitud_permiso_goce_aprobar')) {
 
-        $supervisor = $empleados->find($request->autoriza);
-        $solicitante = $empleados->find($request->empleado_id);
-        $solicitud->update($request->all());
+            $request->validate([
+                'aprobacion' => 'required|int',
+            ]);
+            $solicitud = SolicitudPermisoGoceSueldo::find($id);
+            $empleados = Empleado::getAll();
 
-        $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+            $supervisor = $empleados->find($request->autoriza);
+            $solicitante = $empleados->find($request->empleado_id);
+            $solicitud->update($request->all());
 
-        if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
 
-            if (isset($informados->participantes[0])) {
-                foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = $participante->empleado->email;
+                    }
                 }
-            }
 
-            if (isset($informados->usuarios[0])) {
-                foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = $usuario->usuario->email;
+                    }
                 }
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
+            } else {
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
             }
-            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
+            Alert::success('éxito', 'Información actualizada con éxito');
+
+            return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
         } else {
-            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
+            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
-        Alert::success('éxito', 'Información actualizada con éxito');
-
-        return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
     }
 
     public function destroy(Request $request)
@@ -217,48 +222,48 @@ class SolicitudPermisoGoceSueldoController extends Controller
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
-        if ($request->ajax()) {
-            $query = SolicitudPermisoGoceSueldo::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
-            $table = datatables()::of($query);
+        $query = SolicitudPermisoGoceSueldo::getAllwithEmpleados()->where('autoriza', '=', $data)->where('aprobacion', '=', 1);
+        // if ($request->ajax()) {
+        //     $table = datatables()::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('empleado', function ($row) {
-                return $row->empleado ? $row->empleado : '';
-            });
-            $table->editColumn('permiso', function ($row) {
-                return $row->permiso ? $row->permiso : '';
-            });
-            $table->editColumn('tipo', function ($row) {
-                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
-            });
-            $table->editColumn('dias_solicitados', function ($row) {
-                return $row->dias_solicitados ? $row->dias_solicitados : '';
-            });
-            $table->editColumn('fecha_inicio', function ($row) {
-                return $row->fecha_inicio ? $row->fecha_inicio : '';
-            });
-            $table->editColumn('fecha_fin', function ($row) {
-                return $row->fecha_fin ? $row->fecha_fin : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            // $table->editColumn('descripcion', function ($row) {
-            //     return $row->descripcion ? $row->descripcion : '';
-            // });
+        //     $table->editColumn('empleado', function ($row) {
+        //         return $row->empleado ? $row->empleado : '';
+        //     });
+        //     $table->editColumn('permiso', function ($row) {
+        //         return $row->permiso ? $row->permiso : '';
+        //     });
+        //     $table->editColumn('tipo', function ($row) {
+        //         return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
+        //     });
+        //     $table->editColumn('dias_solicitados', function ($row) {
+        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
+        //     });
+        //     $table->editColumn('fecha_inicio', function ($row) {
+        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
+        //     });
+        //     $table->editColumn('fecha_fin', function ($row) {
+        //         return $row->fecha_fin ? $row->fecha_fin : '';
+        //     });
+        //     $table->editColumn('aprobacion', function ($row) {
+        //         return $row->aprobacion ? $row->aprobacion : '';
+        //     });
+        //     // $table->editColumn('descripcion', function ($row) {
+        //     //     return $row->descripcion ? $row->descripcion : '';
+        //     // });
 
-            $table->rawColumns(['actions', 'placeholder']);
+        //     $table->rawColumns(['actions', 'placeholder']);
 
-            return $table->make(true);
-        }
+        //     return $table->make(true);
+        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.solicitudGoceSueldo.global-solicitudes', compact('logo_actual', 'empresa_actual'));
+        return view('admin.solicitudGoceSueldo.global-solicitudes', compact('logo_actual', 'empresa_actual', 'query'));
     }
 
     public function respuesta($id)

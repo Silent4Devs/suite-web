@@ -1,5 +1,5 @@
 <style>
-    table{
+    table {
         width: auto;
         height: auto;
     }
@@ -8,8 +8,8 @@
 
 <style>
     .textoCentroCard {
-            font-size: 12pt !important;
-        }
+        font-size: 12pt !important;
+    }
 </style>
 
 <div class="row">
@@ -53,41 +53,40 @@
 
 <div class=" mb-3 text-right">
     @can('centro_atencion_quejas_clientes_agregar')
-        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
+        <a class="btn btn-primary" href="{{ asset('admin/desk/quejas-clientes') }}">Crear reporte</a>
     @endcan
 
     @can('centro_atencion_quejas_cliente_dashboard')
-        <a class="btn btn-danger" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
+        <a class="btn btn-primary" href="{{ asset('admin/desk/quejas-clientes/dashboard') }}">Dashboard</a>
     @endcan
 </div>
 
-         @include('partials.flashMessages')
-            <div class="datatable-fix datatable-rds">
-                     <table class="datatable tabla_quejasclientes" id="tabla-procesos" style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
-                        <thead>
-                            <tr>
-                                <th style="min-width:60px;">Folio</th>
-                                <th style="min-width:200px;">Cliente</th>
-                                <th style="min-width:200px;">Proyecto</th>
-                                <th style="min-width:200px;">Nombre del Cliente</th>
-                                <th style="min-width:200px;">Puesto</th>
-                                <th style="min-width:200px;">Teléfono</th>
-                                <th style="min-width:200px;">Correo</th>
-                                <th style="min-width:200px;">Título de la Queja</th>
-                                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
-                                <th style="min-width:150px;">Fecha de Cierre</th>
-                                <th style="min-width:200px;">Proceso</th>
-                                <th style="min-width:200px;">Ubicación</th>
-                                <th style="min-width:200px;">Otros</th>
-                                <th style="min-width:500px;">Descripción</th>
-                                <th style="min-width:80px;">Estatus</th>
-                                <th>Prioridad</th>
-                                <th style="min-width:150px;">Acción Correctiva</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                </table>
-            </div>
+@include('partials.flashMessages')
+<div class="datatable-fix datatable-rds">
+    <table class="datatable tabla_quejasclientes" id="tabla-procesos"
+        style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
+        <thead>
+            <tr>
+                <th style="min-width:60px;">Folio</th>
+                <th style="min-width:200px;">Nombre del Cliente</th>
+                <th style="min-width:200px;">Puesto</th>
+                <th style="min-width:200px;">Teléfono</th>
+                <th style="min-width:200px;">Correo</th>
+                <th style="min-width:200px;">Título de la Queja</th>
+                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
+                <th style="min-width:150px;">Fecha de Cierre</th>
+                <th style="min-width:200px;">Proceso</th>
+                <th style="min-width:200px;">Ubicación</th>
+                <th style="min-width:200px;">Otros</th>
+                <th style="min-width:500px;">Descripción</th>
+                <th style="min-width:80px;">Estatus</th>
+                <th>Prioridad</th>
+                <th style="min-width:150px;">Acción Correctiva</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 
 
 
@@ -208,37 +207,41 @@
                     ajax: "{{ route('admin.desk.quejasClientes-index') }}",
                     buttons: dtButtons,
                     columnDefs: [{
-                        targets: [4, 5, 6, 10, 11, 12,13],
+                        targets: [4, 5, 6, 10, 11, 12, 13],
                         visible: false,
                     }],
                     columns: [
                         // {data: 'id'},
                         {
-                            data: 'folio'
-                        },
-                        {
-                            data: 'cliente',
+                            data: 'folio',
                             render: function(data, type, row, meta) {
-                                return row.cliente.nombre
+                                return data ? data : '';
                             }
                         },
                         {
-                            data: 'proyectos',
+                            data: 'nombre',
                             render: function(data, type, row, meta) {
-                                return row.proyectos.proyecto
+                                return data ? data : '';
+                            }
+
+                        },
+                        {
+                            data: 'puesto',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
                             }
                         },
                         {
-                            data: 'nombre'
+                            data: 'telefono',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'puesto'
-                        },
-                        {
-                            data: 'telefono'
-                        },
-                        {
-                            data: 'correo'
+                            data: 'correo',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'titulo',
@@ -247,42 +250,66 @@
                             }
                         },
                         {
-                            data: 'fecha_reporte'
+                            data: 'fecha_reporte',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'fecha_de_cierre'
+                            data: 'fecha_de_cierre',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'proceso_quejado'
+                            data: 'proceso_quejado',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'ubicacion'
+                            data: 'ubicacion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'otro_quejado'
+                            data: 'otro_quejado',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
-                            data: 'descripcion'
+                            data: 'descripcion',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'prioridad',
+                            render: function(data, type, row, meta) {
+                                return data ? data : '';
+                            }
                         },
                         {
                             data: 'desea_levantar_ac',
                             render: function(data, type, row, meta) {
                                 data = data == "" ? 0 : data
-                                let valor= "";
-                                if(data == true){
-                                    valor= "Solicitada";
+                                let valor = "";
+                                if (data == true) {
+                                    valor = "Solicitada";
                                 }
-                                if(data == false){
-                                    valor= "No aplica";
+                                if (data == false) {
+                                    valor = "No aplica";
                                 }
 
-                            return `
+                                return `
                                 <div>${valor}</div>
                             `
                             }
@@ -296,7 +323,8 @@
                 				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>
                                 <a onclick='EliminarQuejaCliente("/admin/desk/${data}/quejas-clientes-delete"); return false;'><i style="color:#000" class="ml-2 fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a>`;
 
-                                if ((row.estatus == 'Cerrado') || (row.estatus == 'No procedente')) {
+                                if ((row.estatus == 'Cerrado') || (row.estatus ==
+                                    'No procedente')) {
 
                                     html += `<button class="btn archivar" onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
 				       						<i class="fas fa-archive" ></i></a>
@@ -345,11 +373,11 @@
                             fondo = "#FF417B";
                             letras = "white";
                         }
-                        if(data.estatus !=null){
+                        if (data.estatus != null) {
                             $(cells[14]).css('background-color', fondo)
                             $(cells[14]).css('color', letras)
                         }
-                        if(data.prioridad !=null){
+                        if (data.prioridad != null) {
                             $(cells[15]).css('background-color', color)
                             $(cells[15]).css('color', texto)
 
@@ -431,12 +459,12 @@
 
                             success: function(response) {
 
-                                    tabla_quejasclientes_desk.ajax.reload();
-                                    Swal.fire(
-                                        'Queja Eliminada',
-                                        '',
-                                        'success'
-                                    )
+                                tabla_quejasclientes_desk.ajax.reload();
+                                Swal.fire(
+                                    'Queja Eliminada',
+                                    '',
+                                    'success'
+                                )
 
 
                             }

@@ -1,6 +1,6 @@
 <div>
     <div class="card card-body">
-        <form wire:submit.prevent="search(Object.fromEntries(new FormData($event.target)))">
+        <form wire:submit="search(Object.fromEntries(new FormData($event.target)))">
             <div class="row">
                 <div class="col-md-5 ">
                     <div class="form-group ">

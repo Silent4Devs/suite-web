@@ -15,7 +15,7 @@
 
             </form>
             {{-- Regresar al menu --}}
-            <a href="{{ route('admin.visitantes.menu') }}" class="mt-4 btn btn-success float-right">
+            <a href="{{ route('admin.visitantes.menu') }}" class="mt-4 btn btn-primary float-right">
                 Regresar
             </a>
         </div>

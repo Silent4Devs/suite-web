@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('AIA') }}
+    {{-- {{ Breadcrumbs::render('AIA') }} --}}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
+            border-top: 2px solid var(--color-tbj);
         }
 
         div.tab-pane ul {
@@ -43,7 +43,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #345183;
+            color: var(--color-tbj);
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -52,8 +52,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -61,7 +61,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -75,14 +74,13 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Análisis de Impacto AIA</h5>
-        {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
+        {{-- <a href="{{ route('admin.home') }}" class="btn btn-primary">
             <i class="fas fa-chart-pie mr-2"></i>
             Dashboard
         </a> --}}
@@ -105,7 +103,7 @@
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analysisAia.index') }}">
+                                <a href="{{ route('admin.analisis-aia.index') }}">
                                     <div>
                                         <i class="fas fa-clipboard-list"></i><br>
                                         Cuestionarios
@@ -115,7 +113,7 @@
                         @endcan
                         @can('matriz_bia_matriz')
                             <li>
-                                <a href="{{ route('admin.analysisAia.matriz') }}">
+                                <a href="{{ route('admin.analisis-aia.matriz') }}">
                                     <div>
                                         <i class="fas fa-border-none"></i><br>
                                         Matriz AIA
@@ -129,5 +127,3 @@
         </div>
     </div>
 @endsection
-
-

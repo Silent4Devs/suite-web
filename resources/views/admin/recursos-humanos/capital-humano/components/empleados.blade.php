@@ -117,6 +117,23 @@
                     </a>
                 </li>
             @endcan
+            <li><a href="{{ route('admin.empleados.baja') }}">
+                <div>
+                    <i class="bi bi-arrow-down"></i>
+                    <br>
+                    Baja Empleados
+                </div>
+            </a>
+            </li>
+
+            <li><a href="{{ route('admin.empleados.historial') }}">
+                <div>
+                    <i class="bi bi-clock-history"></i>
+                    <br>
+                    Historial Empleados
+                </div>
+            </a>
+           </li>
         </ul>
     </div>
 
@@ -131,13 +148,71 @@
         </li>
     @endcan
     @can('perfiles_profesionales_acceder')
-        <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
+        {{-- <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
+                <div>
+                    <i class="bi bi-person-rolodex"></i>
+                    <br>
+                    Perfiles Profesionales
+                </div>
+            </a></li> --}}
+            <li><a href="#" data-ventana="profesional" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
                     <i class="bi bi-person-rolodex"></i>
                     <br>
                     Perfiles Profesionales
                 </div>
             </a></li>
+            <div class="ventana_menu" id="profesional" style="color:#008186 !important">
+                <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
+                    style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+                <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
+                <ul>
+                    @can('admin_type_catalogue_training')
+                        <li><a href="{{ route('admin.type-catalogue-training.index') }}">
+                                <div>
+                                    <i class="bi bi-briefcase"></i>
+                                    <br>
+                                    Catálogo Tipo de Capacitaciones
+                                </div>
+                            </a></li>
+                    @endcan
+                    @can('admin_catalogue_training')
+                        <li><a href="{{ route('admin.catalogue-training.index') }}">
+                            <div>
+                                <i class="bi bi-briefcase"></i>
+                                <br>
+                                Catálogo de Capacitaciones
+                            </div>
+                        </a></li>
+                    @endcan
+                    <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
+                        <div>
+                            <i class="bi bi-person-rolodex"></i>
+                            <br>
+                            Perfiles Profesionales
+                        </div>
+                    </a></li>
+                    {{-- @can('competencias_por_puesto_acceder') --}}
+                        {{-- <li>
+                            <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
+                                <div>
+                                    <i class="bi bi-bookmark-star"></i><br>
+                                    Perfil Profesional
+                                </div>
+                            </a>
+                        </li> --}}
+                    {{-- @endcan --}}
+                    {{-- @can('consulta_perfiles_de_puesto_acceder')
+                        <li><a href="{{ route('admin.consulta-puestos') }}">
+                                <div>
+                                    <i class="bi bi-person-video2"></i>
+                                    <br>
+                                    Consulta de Perfiles de Puesto
+                                </div>
+                            </a></li>
+                    @endcan --}}
+                </ul>
+            </div>
     @endcan
     @can('organigrama_acceder')
         <li><a href="{{ route('admin.organigrama.index') }}">
@@ -149,15 +224,15 @@
             </a></li>
     @endcan
     @can('capacitaciones_categorias_acceder')
-    <li>
-        <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
-            <div>
-                <i class="bi bi-person-video3"></i>
-                <br>
-                Capacitaciones
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
+                <div>
+                    <i class="bi bi-person-video3"></i>
+                    <br>
+                    Capacitaciones
+                </div>
+            </a>
+        </li>
 
         <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
             <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
@@ -174,41 +249,51 @@
                         </a></li>
                 @endcan
 
-                    <li><a href="{{ route('admin.recursos.index') }}">
-                            <div>
-                                <i class="fas fa-graduation-cap"></i>
-                                <br>
-                                Capacitaciones
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.recursos.index') }}">
+                        <div>
+                            <i class="fas fa-graduation-cap"></i>
+                            <br>
+                            Capacitaciones
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.categories.index') }}">
-                            <div>
-                                <i class="fas fa-layer-group"></i>
-                                <br>
-                                Categorias Escuela
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.categories.index') }}">
+                        <div>
+                            <i class="fas fa-layer-group"></i>
+                            <br>
+                            Categorias Escuela
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.levels.index') }}">
-                            <div>
-                                <img src="{{ asset('assets/levels.svg') }}" width="60" height="70" style="margin-top: -10px;">
-                                <br>
-                                Niveles Escuela
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.levels.index') }}">
+                        <div>
+                            <img src="{{ asset('assets/levels.svg') }}" width="60" height="70"
+                                style="margin-top: -10px;">
+                            <br>
+                            Niveles Escuela
+                        </div>
+                    </a>
+                </li>
 
-                    <li><a href="{{ route('admin.dashboardescuela.index') }}">
-                            <div>
-                                <i class="fa-solid fa-chart-pie"></i>
-                                <br>
-                                Dashboard
-                            </div>
-                        </a>
-                    </li>
+                <li><a href="{{ route('admin.dashboardescuela.index') }}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <br>
+                            Dashboard
+                        </div>
+                    </a>
+                </li>
+
+                <li><a href="{{ route('admin.panel-cursos') }}">
+                        <div>
+                            <i class="fa-solid fa-sliders"></i>
+                            <br>
+                            Panel de Control
+                        </div>
+                    </a>
+                </li>
 
             </ul>
         </div>
@@ -225,24 +310,24 @@
     </li>
 
     @can('beneficios_acceder')
-    <li>
-        <a href="#">
-            <div>
-                <i class="bi bi-tag"></i>
-                <br>
-                Beneficios
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="#">
+                <div>
+                    <i class="bi bi-tag"></i>
+                    <br>
+                    Beneficios
+                </div>
+            </a>
+        </li>
     @endcan
     @can('timesheet_acceder')
-    <li>
-        <a href="{{ route('admin.timesheet-inicio') }}">
-            <div>
-                <i class="bi bi-file-spreadsheet"></i><br>
-                TimeSheet
-            </div>
-        </a>
-    </li>
+        <li>
+            <a href="{{ route('admin.timesheet-inicio') }}">
+                <div>
+                    <i class="bi bi-file-spreadsheet"></i><br>
+                    TimeSheet
+                </div>
+            </a>
+        </li>
     @endcan
 </ul>

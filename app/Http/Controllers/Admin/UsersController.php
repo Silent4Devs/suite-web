@@ -13,7 +13,6 @@ use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -30,7 +29,9 @@ class UsersController extends Controller
 
         $users = User::getUserWithRole();
 
-        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin'));
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
+
+        return view('users.tbUsersIndex', compact('users', 'existsVinculoEmpleadoAdmin', 'empleados'));
     }
 
     public function getUsersIndex(Request $request)
@@ -44,10 +45,12 @@ class UsersController extends Controller
         });
 
         return datatables()->of($query)->toJson();
+
     }
 
     public function create()
     {
+
         abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::getAll()->pluck('title', 'id');
@@ -65,94 +68,73 @@ class UsersController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        try {
-            abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $user = User::create($request->all());
-            $user->roles()->sync($request->input('roles', []));
-            Alert::success('éxito', 'Información añadida con éxito');
+        $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
+        Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
-        }
+        return redirect()->route('admin.users.index');
     }
 
     public function edit(User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $roles = Role::getAll()->pluck('title', 'id');
+        $roles = Role::getAll()->pluck('title', 'id');
 
-            $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacione::all()->pluck('organizacion', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $areas = Area::getAllPluck();
+        $areas = Area::getAllPluck();
 
-            $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestos = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
+        $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
 
-            return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
-        }
+        return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user->update($request->all());
-            $user->roles()->sync($request->roles);
-            Alert::success('éxito', 'Información añadida con éxito');
+        abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $user->update($request->all());
+        $user->roles()->sync($request->roles);
+        Alert::success('éxito', 'Información añadida con éxito');
 
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
-        }
+        return redirect()->route('admin.users.index');
     }
 
     public function show(User $user)
     {
-        try {
-            abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
+        $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
-            return view('users.tbUserShow', compact('user'));
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
-        }
+        return view('users.tbUserShow', compact('user'));
     }
 
     public function destroy($id)
     {
-        try {
-            abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuarios_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $registro = User::find($id);
 
-            $registro = User::find($id); // Donde $id es el ID del registro que deseas eliminar.
-
-            $registro->delete();
-            Alert::success('éxito', 'Información añadida con éxito');
-
-            return redirect()->route('admin.users.index');
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
+        if (! $registro) {
+            return response()->json(['status' => 'error', 'message' => 'Registro no encontrado.'], 404);
         }
+
+        $registro->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'El registro ha sido eliminado con éxito.']);
+
     }
 
     public function massDestroy(MassDestroyUserRequest $request)
     {
-        try {
-            User::whereIn('id', request('ids'))->delete();
+        User::whereIn('id', request('ids'))->delete();
 
-            return response(null, Response::HTTP_NO_CONTENT);
-        } catch (\Exception $e) {
-            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
-        }
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function getUsers(Request $request)
@@ -174,23 +156,13 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                // 'n_empleado' => ['required', new EmpleadoNoVinculado, 'exists:empleados,n_empleado'],
-                'n_empleado' => ['required'],
+                'id_empleado' => ['required'],
             ]);
             $usuario = User::find(intval($request->user_id));
-            $identificador = explode('-', $request->n_empleado);
-            $tipo = $identificador[0];
-            $numero = $identificador[1];
 
-            if ($tipo == 'NEMPLEADO') {
-                $usuario->update([
-                    'n_empleado' => $numero,
-                ]);
-            } else {
-                $usuario->update([
-                    'empleado_id' => $numero,
-                ]);
-            }
+            $usuario->update([
+                'empleado_id' => $request->id_empleado,
+            ]);
 
             return response()->json(['success' => true]);
         }

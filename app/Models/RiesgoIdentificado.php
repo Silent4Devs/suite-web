@@ -24,6 +24,20 @@ class RiesgoIdentificado extends Model implements Auditable
         'id',
     ];
 
+    protected $fillable = [
+        'titulo',
+        'fecha',
+        'estatus',
+        'fecha_cierre',
+        'sede',
+        'ubicacion',
+        'descripcion',
+        'areas_afectados',
+        'procesos_afectados',
+        'activos_afectados',
+        'comentarios',
+    ];
+
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte'];
 
     public static function getAll()

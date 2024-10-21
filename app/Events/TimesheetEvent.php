@@ -12,7 +12,7 @@ class TimesheetEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $timeshet;
+    public $timesheet;
 
     public $tipo_consulta;
 
@@ -20,9 +20,9 @@ class TimesheetEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($timeshet, $tipo_consulta, $tabla, $slug)
+    public function __construct($timesheet, $tipo_consulta, $tabla, $slug)
     {
-        $this->timeshet = $timeshet;
+        $this->timesheet = $timesheet;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;

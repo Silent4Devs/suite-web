@@ -1,108 +1,111 @@
 @extends('layouts.admin')
 @section('content')
+    <h5 class="col-12 titulo_general_funcion">Registrar: Datos Soporte</h5>
 
-<h5 class="col-12 titulo_general_funcion">Registrar: Datos Soporte</h5>
+    <div class="mt-4 card">
+        <div class="card-body">
+            <form method="POST" action="{{ route('admin.configurar-soporte.store') }}" enctype="multipart/form-data"
+                class="row">
+                @csrf
+                <div class="form-group col-md-4">
+                    <label class="required" for="rol"> <i class="fas fa-user-tie iconos-crear"></i>Rol</label>
+                    <select class="form-control" id="rol" name="rol">
+                        <option disabled selected>Selecciona una opción</option>
+                        <option value="Consultor">Consultor</option>
+                        <option value="Soporte técnico">Soporte técnico</option>
+                    </select>
+                </div>
 
-<div class="mt-4 card">
-    <div class="card-body">
-        <form method="POST" action="{{ route('admin.configurar-soporte.store') }}" enctype="multipart/form-data"
-            class="row">
-            @csrf
-            <div class="form-group col-md-4">
-                <label class="required" for="rol"> <i class="fas fa-user-tie iconos-crear"></i>Rol</label>
-                <select class="form-control" id="rol" name="rol">
-                    <option  disabled selected>Selecciona una opción</option>
-                    <option value="Consultor">Consultor</option>
-                    <option value="Soporte técnico">Soporte técnico</option>
-                </select>
-            </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Empleado</label>
+                    <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
+                        id="id_elaboro">
+                        <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach ($empleados as $key => $label)
+                            <option value="{{ $label->id }}">{{ $label->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('id_elaboro'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_elaboro') }}
+                        </div>
+                    @endif
+                </div>
 
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Empleado</label>
-                <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                    name="id_elaboro" id="id_elaboro">
-                    <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
-                        Selecciona una opción</option>
-                    @foreach ($empleados as $key => $label)
-                        <option value="{{ $label->id }}">{{ $label->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @if ($errors->has('id_elaboro'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_elaboro') }}
-                    </div>
-                @endif
-            </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
+                    <select class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" name="puesto"
+                        id="id_puesto"
+                        style="pointer-events: none; background-color: #e9ecef; opacity: 1; -webkit-appearance: none;">
+                        <option value {{ old('id_puesto', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach ($empleados as $key => $label)
+                            <option value="{{ $label->id }}">{{ $label->puesto }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('id_puesto'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_puesto') }}
+                        </div>
+                    @endif
+                </div>
 
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
-                <select class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}"
-                    name="puesto" id="id_puesto" style="pointer-events: none; background-color: #e9ecef; opacity: 1; -webkit-appearance: none;" >
-                    <option value {{ old('id_puesto', null) === null ? 'selected' : '' }}>
-                        Selecciona una opción</option>
-                    @foreach ($empleados as $key => $label)
-                        <option value="{{ $label->id }}">{{ $label->puesto }}
-                        </option>
-                    @endforeach
-                </select>
-                @if ($errors->has('id_puesto'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_puesto') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_telefono"><i class="fas fa-briefcase iconos-crear"></i>Telefono</label>
-                <input class="form-control {{ $errors->has('id_telefono') ? 'is-invalid' : '' }}" type="string" maxlength="10"
-                    id="id_telefono" name="telefono" value="" style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
-                @if ($errors->has('id_telefono'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_telefono') }}
-                    </div>
-                @endif
-            </div>
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_extension"><i class="fas fa-briefcase iconos-crear"></i>Extensión</label>
-                <input class="form-control {{ $errors->has('id_extension') ? 'is-invalid' : '' }}" type="string" maxlength="10"
-                    id="id_extension" name="extension" value="" style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
-                @if ($errors->has('id_extension'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_extension') }}
-                    </div>
-                @endif
-            </div>
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_telefono_movil"><i class="fas fa-briefcase iconos-crear"></i>Telefono Móvil</label>
-                <input class="form-control {{ $errors->has('id_telefono_movil') ? 'is-invalid' : '' }}" type="string" maxlength="10"
-                    id="id_telefono_movil" name="tel_celular" value="" style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
-                @if ($errors->has('id_telefono_movil'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_telefono_movil') }}
-                    </div>
-                @endif
-            </div>
-            <div class="form-group col-md-4 col-sm-4">
-                <label for="id_email"><i class="fas fa-briefcase iconos-crear"></i>Correo    </label>
-                <input class="form-control {{ $errors->has('id_email') ? 'is-invalid' : '' }}" type="string" maxlength="10"
-                    id="id_email" name="correo" value="" style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
-                @if ($errors->has('id_email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id_email') }}
-                    </div>
-                @endif
-            </div>
-            <div class="text-right form-group col-md-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_telefono"><i class="fas fa-briefcase iconos-crear"></i>Telefono</label>
+                    <input class="form-control {{ $errors->has('id_telefono') ? 'is-invalid' : '' }}" type="string"
+                        maxlength="10" id="id_telefono" name="telefono" value=""
+                        style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
+                    @if ($errors->has('id_telefono'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_telefono') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_extension"><i class="fas fa-briefcase iconos-crear"></i>Extensión</label>
+                    <input class="form-control {{ $errors->has('id_extension') ? 'is-invalid' : '' }}" type="string"
+                        maxlength="10" id="id_extension" name="extension" value=""
+                        style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
+                    @if ($errors->has('id_extension'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_extension') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_telefono_movil"><i class="fas fa-briefcase iconos-crear"></i>Telefono Móvil</label>
+                    <input class="form-control {{ $errors->has('id_telefono_movil') ? 'is-invalid' : '' }}" type="string"
+                        maxlength="10" id="id_telefono_movil" name="tel_celular" value=""
+                        style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
+                    @if ($errors->has('id_telefono_movil'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_telefono_movil') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="form-group col-md-4 col-sm-4">
+                    <label for="id_email"><i class="fas fa-briefcase iconos-crear"></i>Correo </label>
+                    <input class="form-control {{ $errors->has('id_email') ? 'is-invalid' : '' }}" type="string"
+                        maxlength="10" id="id_email" name="correo" value=""
+                        style="pointer-events: none; background-color: #e9ecef; opacity: 1;">
+                    @if ($errors->has('id_email'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_email') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="text-right form-group col-md-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
 @endsection
 @section('scripts')
     <script type=text/javascript>
@@ -120,7 +123,7 @@
 
                             console.log(res.id_puesto);
 
-                            $("#id_puesto option[value="+res.id_puesto+"]").prop('selected', true);
+                            $("#id_puesto option[value=" + res.id_puesto + "]").prop('selected', true);
                             $("#id_telefono").empty();
                             $("#id_telefono").attr("value", res.telefono);
                             $("#id_extension").empty();

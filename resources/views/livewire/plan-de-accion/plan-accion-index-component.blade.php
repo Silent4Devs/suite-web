@@ -1,189 +1,8 @@
-<style>
-    .datatable-rds table.dataTable thead,
-    .dataTables_scroll table.dataTable thead,
-    .datatable-fix table.dataTable thead,
-    .datatable-rds table.table thead,
-    .dataTables_scroll table.table thead,
-    .datatable-fix table.table thead {
-        background-color: #00000000 !important;
-        border: none !important;
-        color: #414141 !important;
-        border-bottom: 1px solid #CCCCCC !important;
-        border-top: 1px solid #CCCCCC !important;
-    }
-
-    .datatable-rds td,
-    .dataTables_scroll td,
-    .datatable-fix td {
-        font-size: 14px !important;
-        border-bottom: 1px solid #CCCCCC !important;
-        padding: 20px 10px !important;
-        vertical-align: middle !important;
-    }
-
-    .dataTables_length select {
-        width: auto !important;
-        padding: 4px !important;
-        border-radius: 4px !important;
-        border: 1px solid var(--unnamed-color-b5b5b5) !important;
-        border: 1px solid #B5B5B5 !important;
-        border-radius: 5px !important;
-        opacity: 1 !important;
-    }
-
-    /* Estilos personalizados para el paginado */
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding: 0px 1px !important;
-        margin: 0px !important;
-        background-color: none !important;
-        color: #AAAAAA !important;
-        border: none !important;
-        border-radius: 4px !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        background-color: #0056b3 !important;
-        color: #fff !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-        background-color: #0056b3 !important;
-        color: #fff !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .ellipsis {
-        display: none !important;
-    }
-
-    .planesTrabajoTitle {
-        justify-content: left;
-        color: #5A5A5A;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 30px 20px 15px;
-        font-size: 20px;
-        border-bottom: 1px solid #CCCCCC !important;
-    }
-
-    .rowMostrado {
-        display: flex;
-        flex-wrap: wrap;
-        margin-right: 15px;
-        margin-left: 15px;
-        padding-top: 20px;
-    }
-
-    .person {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .person-img {
-        border-radius: 50px;
-        width: 45px;
-        height: 45px;
-        object-fit: cover;
-        margin-right: 5px;
-    }
-
-    .bageDiv {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .danger {
-        background-color: #FFECAF;
-        color: #ECCE7D;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 60px;
-    }
-
-    .success {
-        background-color: #DEFFE6;
-        color: #42A500;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 60px;
-    }
-
-    .warning {
-        background-color: #FFDFDF;
-        color: #FF5C3A;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 60px;
-    }
-
-    .STATUS_UNDEFINED-estatusColor {
-        background-color: #FFECAF;
-        color: #ECCE7D;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 100px;
-    }
-
-    .STATUS_ACTIVE-estatusColor {
-        background-color: #DEEFFF;
-        color: #0080FF;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 100px;
-    }
-
-    .STATUS_DONE-estatusColor {
-        background-color: #DEFFE6;
-        color: #42A500;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 100px;
-    }
-
-    .STATUS_FAILED-estatusColor {
-        background-color: #FFDFDF;
-        color: #FF5C3A;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 100px;
-    }
-
-    .STATUS_SUSPENDED-estatusColor {
-        background-color: #EEEEEE;
-        color: #818181;
-        border-radius: 10px;
-        margin-top: 8px;
-        font-weight: 700;
-        text-align: center;
-        width: 100px;
-    }
-
-    .btn.btn-option,
-    {
-    background-color: #057BE2 !important;
-    color: #fff !important;
-    }
-</style>
 <div class="table-plan-acc-index">
     <div class="card-body datatable-fix" style="padding-top: 25px;">
         <div class="table-responsive">
-            <table class="table table-bordered w-100" id={{ $message }}>
-                <thead class="thead-dark">
+            <table class="table w-100" id={{ $message }}>
+                <thead class="">
                     <tr>
                         <th style="min-width:150px;">Nombre</th>
                         <th style="min-width:145px;">Módulo de Origen </th>
@@ -224,7 +43,7 @@
                                 <td>
                                     @if ($plan->elaboro_id)
                                         <div class="person">
-                                            <img class="person-img"
+                                            <img class="img-person"
                                                 title="{{ $plan->elaborador->name ?? 'No disponible' }}"
                                                 src="{{ asset('storage/empleados/imagenes') }}/{{ $plan->elaborador->foto ?? 'usuario_no_cargado.png' }}" />
                                         </div>
@@ -385,34 +204,34 @@
             </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        if (!$.fn.DataTable.isDataTable('#TbTableUsuario')) {
-            // Solo inicializa DataTables si no se ha inicializado previamente
-            $('#TbTableUsuario').DataTable({
-                "language": {
-                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
-                }
-            });
-        }
-        if (!$.fn.DataTable.isDataTable('#TbTableAsignado')) {
-            // Solo inicializa DataTables si no se ha inicializado previamente
-            $('#TbTableAsignado').DataTable({
-                "language": {
-                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
-                }
-            });
-        }
-        if (!$.fn.DataTable.isDataTable('#TbTableArea')) {
-            // Solo inicializa DataTables si no se ha inicializado previamente
-            $('#TbTableArea').DataTable({
-                "language": {
-                    "url": "{{ asset('js/dataTables/Spanish.json') }}"
-                }
-            });
-        }
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            if (!$.fn.DataTable.isDataTable('#TbTableUsuario')) {
+                // Solo inicializa DataTables si no se ha inicializado previamente
+                $('#TbTableUsuario').DataTable({
+                    "language": {
+                        "url": "{{ asset('js/dataTables/Spanish.json') }}"
+                    }
+                });
+            }
+            if (!$.fn.DataTable.isDataTable('#TbTableAsignado')) {
+                // Solo inicializa DataTables si no se ha inicializado previamente
+                $('#TbTableAsignado').DataTable({
+                    "language": {
+                        "url": "{{ asset('js/dataTables/Spanish.json') }}"
+                    }
+                });
+            }
+            if (!$.fn.DataTable.isDataTable('#TbTableArea')) {
+                // Solo inicializa DataTables si no se ha inicializado previamente
+                $('#TbTableArea').DataTable({
+                    "language": {
+                        "url": "{{ asset('js/dataTables/Spanish.json') }}"
+                    }
+                });
+            }
+        });
+    </script>
+</div>

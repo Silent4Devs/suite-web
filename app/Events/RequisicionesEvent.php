@@ -12,7 +12,7 @@ class RequisicionesEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $requisiciones;
+    public $requsicion;
 
     public $tipo_consulta;
 
@@ -20,9 +20,9 @@ class RequisicionesEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($requisiciones, $tipo_consulta, $tabla, $slug)
+    public function __construct($requsicion, $tipo_consulta, $tabla, $slug)
     {
-        $this->requisiciones = $requisiciones;
+        $this->requsicion = $requsicion;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;

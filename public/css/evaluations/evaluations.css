@@ -1,5 +1,5 @@
 .title-card-evaluacion {
-    color: #306BA9;
+    color: var(--color-tbj);
     font-size: 18px;
     margin: 0px;
 }
@@ -19,7 +19,7 @@
 }
 
 .info-first-config {
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .title-config {
@@ -39,12 +39,10 @@
 
 .anima-focus label,
 .anima-focus .form-control {
-    color: #006DDB;
-}
+    color: var(--color-tbj);}
 
 .anima-focus .form-control {
-    border: 1px solid #006DDB;
-}
+    border: 1px solid var(--color-tbj);}
 
 .item-config-cat i,
 .btn-delete-escala i {
@@ -92,8 +90,7 @@
     background-color: #ECFBFF;
     border: 1px solid #9EB4C9;
     border-radius: 100px;
-    color: #006DDB;
-    padding: 13px 40px;
+    color: var(--color-tbj);    padding: 13px 40px;
 
     display: flex;
     justify-content: center;
@@ -153,7 +150,7 @@
 .paso-create-ev span {
     width: 25px;
     height: 25px;
-    background-color: #306BA9;
+    background-color: var(--color-tbj);
     border-radius: 100px;
     color: #fff;
     display: flex;
@@ -167,8 +164,7 @@
     width: 60px;
     margin: 0;
     padding: 0;
-    border-top: 1px solid #006DDB;
-    transform: translateY(-10px);
+    border-top: 1px solid var(--color-tbj);    transform: translateY(-10px);
 }
 
 .nav-evaluaciones-card .nav.nav-tabs{

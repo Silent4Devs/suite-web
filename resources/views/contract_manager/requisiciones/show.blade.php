@@ -3,17 +3,17 @@
 @section('titulo', 'Ver Requisición')
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" href="{{asset('css/requisitions/requisitions.css')}}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 <style>
-    @media print{
-        .card.card-item{
+    @media print {
+        .card.card-item {
             background-color: #fff !important;
             box-shadow: none !important;
             margin: 0 !important;
         }
 
         .proveedores-doc,
-        .proveedores-doc:nth-child(2n+1){
+        .proveedores-doc:nth-child(2n+1) {
             background-color: #fff !important;
         }
 
@@ -21,81 +21,86 @@
     }
 </style>
 <div class="create-requisicion">
-    <div class="card card-content caja-blue">
+    <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="height: 200px;">
         </div>
 
-        <div style="position: relative; top:-5rem; left: 80px;">
+        <div>
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido</h3>
             <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes ver tu requisición</h5>
             <p style=" margin-top:10px;">
-                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br> optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
+                optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
             </p><br>
             <form method="POST" action="{{ route('contract_manager.requisiciones.pdf', ['id' => $requisicion->id]) }}">
                 @csrf
-                <button style="background-color: white; border-color: #fff; border-radius: 5px; padding:10px 24px; font-size:16px">
+                <button class="btn" style="background-color: #fff; color: var(--color-tbj) !important;">
                     <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir Requisición
                 </button>
-               </form>
+            </form>
         </div>
     </div>
-<div id="impresion">
-    <div id="paso-firma" class="tab-content">
+    <div id="impresion">
+        <div id="paso-firma" class="tab-content">
             <div class="card card-item doc-requisicion">
                 <div class="flex header-doc">
                     <div class="flex-item item-doc-img">
                         @if ($requisicion->sucursal->mylogo)
-                            <img src="{{ url('razon_social/'.$requisicion->sucursal->mylogo) }}" style="width:100%; max-width:150px;">
+                            <img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
+                                style="width:100%; max-width:150px;">
                         @else
-                            <img src="{{ asset('sinLogo.png') }}"  style="width:100%; max-width:150px;">
+                            <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                         @endif
                     </div>
                     <div class="flex-item">
-                         {{$requisicion->sucursal->empresa }} <br>
-                         {{$requisicion->sucursal->rfc }} <br>
-                         {{$requisicion->sucursal->direccion }} <br>
+                        {{ $requisicion->sucursal->empresa }} <br>
+                        {{ $requisicion->sucursal->rfc }} <br>
+                        {{ $requisicion->sucursal->direccion }} <br>
                     </div>
                     <div class="flex-item item-header-doc-info" style="">
                         <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
-                        <p>Folio: RQ-00-00{{ $requisicion->id}} </p>
-                        <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha))  }}</p>
+                        <p>Folio: RQ-00-00{{ $requisicion->id }} </p>
+                        <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha)) }}</p>
                     </div>
                 </div>
                 <div class="flex doc-blue">
                     <div class="flex-item">
                         <strong>Referencia:</strong><br>
-                        {{$requisicion->referencia }}
+                        {{ $requisicion->referencia }}
                         <br><br>
                         <strong>Proyecto:</strong><br>
-                        @if($requisicion->contrato === null)
-                        <strong>Contrato Eliminado!</strong>
+                        @if ($requisicion->contrato === null)
+                            <strong>Contrato Eliminado!</strong>
                         @else
-                        {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
+                            {{ optional($requisicion->contrato)->no_proyecto }} -
+                            {{ optional($requisicion->contrato)->no_contrato }} -
+                            {{ optional($requisicion->contrato)->nombre_servicio }}
                         @endif
                     </div>
                     <div class="flex-item">
                         <strong>Área que solicita:</strong><br>
-                        {{$requisicion->area }}
+                        {{ $requisicion->area }}
                         <br><br>
                         <strong>Comprador:</strong><br>
                         @isset($requisicion->comprador->user->name)
-                        {{$requisicion->comprador->user->name}}
+                            {{ $requisicion->comprador->user->name }}
                         @endisset
                     </div>
                     <div class="flex-item">
                         <strong>Solicita:</strong><br>
-                        {{$requisicion->user }}
+                        {{ $requisicion->user }}
                         <br><br>
                     </div>
                 </div>
-                @foreach ($requisicion->productos_requisiciones as $producto )
-                <div class="flex">
-                    <div class="flex-item">
-                        <strong> Producto o servicio:</strong>
+
+                @foreach ($requisicion->productos_requisiciones as $producto)
+                    <div class="row">
+                        <div class="col-12">
+                            <strong> Producto o servicio:</strong>
+                        </div>
                     </div>
-                </div>
                     <div class="row">
                         <div class="col s12 l4">
                             <strong> Cantidad:</strong><br><br>
@@ -103,204 +108,244 @@
                         </div>
                         <div class="col s12 l4">
                             <strong> Producto o servicio:</strong><br><br>
-                           {{ $producto->producto->descripcion }}
+                            {{ $producto->producto->descripcion }}
                         </div>
                         <div class="col s12 l4">
                             <strong> Especificaciones del producto o servicio: </strong><br><br>
-                           {{ $producto->espesificaciones }}
+                            {{ $producto->espesificaciones }}
                         </div>
                     </div>
                 @endforeach
-                @foreach ($requisicion->provedores_requisiciones as $provedores )
+
+                @foreach ($requisicion->provedores_requisiciones->take(1) as $provedores)
                     <div class="proveedores-doc" style="background-color: #EEEEEE;">
-                        <div class="flex header-proveedor-doc">
-                            <div class="flex-item">
+                        <div class="row header-proveedor-doc">
+                            <div class="col-12">
                                 <strong>Proveedor</strong>
                             </div>
                         </div>
-                        <div class="flex">
-                            <div class="flex-item">
-                                <small> -Provea contexto detallado de su necesidad de adquisición, es importante mencionar si es que la solicitud está ligada a algún proyecto en particular. <br> -En caso de que no se brinde detalle suficiente que sustente la compra, esto no procedera </small>
+                        <div class="row">
+                            <div class="col-12">
+                                <small> -Provea contexto detallado de su necesidad de adquisición, es importante
+                                    mencionar si es que la solicitud está ligada a algún proyecto en particular. <br>
+                                    -En caso de que no se brinde detalle suficiente que sustente la compra, esto no
+                                    procedera </small>
                             </div>
                         </div>
+
                         <div class="row">
-                            <div class="col s12 l4">
+                            <div class="col s12 l6">
                                 <strong>Proveedor:</strong><br><br>
-                                {{$provedores->proveedor}}
+                                {{ $provedores->proveedor }}
                             </div>
-                            <div class="col s12  l4">
-                                <strong>Detalle del producto:</strong><br><br>
-                                {{$provedores->detalles}}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Comentarios:</strong><br><br>
-                                {{ $provedores->comentarios }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12 l4">
-                                <strong>Nombre del contacto:</strong><br><br>
-                                {{$provedores->contacto}}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Fecha Inicio:</strong><br><br>
-                                {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
-                            </div>
-                            <div class="col s12 l4">
-                                <strong>Teléfono:</strong><br><br>
-                                {{$provedores->cel}}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>Correo Electrónico:</strong><br><br>
-                                {{$provedores->contacto_correo}}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>Fecha Fin:</strong><br><br>
-                                {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
-                            </div>
-                            <div class="col s12 l4">
-                                <br><br>
-                                <strong>URL:</strong><br><br>
-                                {{$provedores->url}}
-                            </div>
-                            <div class="col s12 14">
+                            <div class="row">
+                                <div class="col s12 l4">
+                                    <strong>Nombre del contacto:</strong><br><br>
+                                    {{ $provedores->contacto }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <strong>Fecha Inicio:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <strong>Teléfono:</strong><br><br>
+                                    {{ $provedores->cel }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <br><br>
+                                    <strong>Correo Electrónico:</strong><br><br>
+                                    {{ $provedores->contacto_correo }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <br><br>
+                                    <strong>Fecha Fin:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <br><br>
+                                    <strong>URL:</strong><br><br>
+                                    {{ $provedores->url }}
+                                </div>
+                                <div class="col s12 14">
                                     <label for="" class="txt-tamaño">
                                         Cotizaciones <font class="asterisco">*</font>
                                     </label>
-                                    <div class="flex" style="gap: 25px;">
+                                    <div class="row" style="gap: 25px;">
                                         <div style="min-width: 300px;">Cotizacion actual: <a
                                                 href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                                                 style="text-decoration: underline; color: deepskyblue;"
-                                                target="_blank">Descargar cotización <i class="fa-regular fa-circle-down"></i></a></div></div>
+                                                target="_blank">Descargar cotización <i
+                                                    class="fa-regular fa-circle-down"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>Comentarios:</strong><br><br>
+                                {{ $provedores->comentarios }}
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>Nombre del contacto:</strong><br><br>
+                                {{ $provedores->contacto }}
+                            </div>
+                            <div class="col s12 l6">
+                                Cotizacion actual: <a
+                                    href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
+                                    style="text-decoration: underline; color: deepskyblue;" target="_blank">Descargar
+                                    cotización <i class="fa-regular fa-circle-down"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12 l6">
+                                <strong>Fecha Inicio:</strong><br><br>
+                                {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>Teléfono:</strong><br><br>
+                                {{ $provedores->cel }}
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>Correo Electrónico:</strong><br><br>
+                                {{ $provedores->contacto_correo }}
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>Fecha Fin:</strong><br><br>
+                                {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                            </div>
+                            <div class="col s12 l6">
+                                <strong>URL:</strong><br><br>
+                                {{ $provedores->url }}
                             </div>
                         </div>
                     </div>
                 @endforeach
 
 
+
+
                 @if ($requisicion->proveedor_catalogo != null)
-                @foreach ($proveedores_catalogo as $provee )
-                <div class="proveedores-doc" style="">
-                    <div class="flex header-proveedor-doc">
-                        <div class="flex-item">
-                            <strong>Proveedor: </strong> {{ $provee->nombre }}
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="flex-item">
-                            <small> -Provea contexto detallado de su necesidad de adquisición, es importante
-                                mencionar si es que la solicitud está ligada a algún proyecto en particular. -En
-                                caso de que no se brinde detalle suficiente que sustente la compra, esto no
-                                procedera </small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 l4">
-                            <strong>Razón social:</strong><br><br>
-                            {{$provee->razon_social}}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong>RFC:</strong><br><br>
-                            {{$provee->rfc}}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong>Contacto:</strong><br><br>
-                            {{$provee->contacto}}
-                        </div>
+                    @foreach ($proveedores_catalogo as $provee)
+                        <div class="proveedores-doc" style="">
+                            <div class="row header-proveedor-doc">
+                                <div class="col-12">
+                                    <strong>Proveedor: </strong> {{ $provee->nombre }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <small> -Provea contexto detallado de su necesidad de adquisición, es importante
+                                        mencionar si es que la solicitud está ligada a algún proyecto en particular. -En
+                                        caso de que no se brinde detalle suficiente que sustente la compra, esto no
+                                        procedera </small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l4">
+                                    <strong>Razón social:</strong><br><br>
+                                    {{ $provee->razon_social }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <strong>RFC:</strong><br><br>
+                                    {{ $provee->rfc }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <strong>Contacto:</strong><br><br>
+                                    {{ $provee->contacto }}
+                                </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col s12 l4">
-                            <strong>Fecha Inicio:</strong><br><br>
-                            {{ date('d-m-Y', strtotime($provee->fecha_inicio)) }}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong>Fecha Fin:</strong><br><br>
-                            {{ date('d-m-Y', strtotime($provee->fecha_fin)) }}
-                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l4">
+                                    <strong>Fecha Inicio:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provee->fecha_inicio)) }}
+                                </div>
+                                <div class="col s12 l4">
+                                    <strong>Fecha Fin:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provee->fecha_fin)) }}
+                                </div>
 
-                    </div>
-                </div>
-                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 @endif
 
                 @if ($proveedor_indistinto)
-                <div class="proveedores-doc" style="">
-                    <div class="flex header-proveedor-doc">
-                        <div class="flex-item">
-                            <strong>Proveedor: </strong>  Indistinto
+                    <div class="proveedores-doc" style="">
+                        <div class="row header-proveedor-doc">
+                            <div class="col-12">
+                                <strong>Proveedor: </strong> Indistinto
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <small> -Provea contexto detallado de su necesidad de adquisición, es importante
+                                    mencionar si es que la solicitud está ligada a algún proyecto en particular. -En
+                                    caso de que no se brinde detalle suficiente que sustente la compra, esto no
+                                    procedera </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 l4">
+                                <strong> Fecha Inicio: </strong> <br> <br>
+                                @isset($proveedor_indistinto->fecha_inicio)
+                                    {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio)) }}
+                                @else
+                                    La fecha de inicio no está disponible.
+                                @endisset
+                            </div>
+
+                            <div class="col s12 l4">
+                                <strong> Fecha fin: </strong> <br> <br>
+                                @isset($proveedor_indistinto->fecha_fin)
+                                    {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
+                                @else
+                                    La fecha fin no está disponible.
+                                @endisset
+                            </div>
+
+
+
                         </div>
                     </div>
-                    <div class="flex">
-                        <div class="flex-item">
-                            <small> -Provea contexto detallado de su necesidad de adquisición, es importante
-                                mencionar si es que la solicitud está ligada a algún proyecto en particular. -En
-                                caso de que no se brinde detalle suficiente que sustente la compra, esto no
-                                procedera </small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 l4">
-                            <strong> Fecha Inicio: </strong> <br> <br>
-                            @isset($proveedor_indistinto->fecha_inicio)
-                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_inicio)) }}
-                            @else
-                                La fecha de inicio no está disponible.
-                            @endisset
-                        </div>
-
-                        <div class="col s12 l4">
-                            <strong> Fecha fin: </strong> <br> <br>
-                            @isset($proveedor_indistinto->fecha_fin)
-                                {{ date('d-m-Y', strtotime($proveedor_indistinto->fecha_fin)) }}
-                            @else
-                                La fecha fin no está disponible.
-                            @endisset
-                        </div>
-
-
-
-                    </div>
-                </div>
                 @endif
 
                 <div class="caja-firmas-doc">
                     <div class="flex" style="margin-top: 70px;">
                         <div class="flex-item">
                             @if ($requisicion->firma_solicitante)
-                                 <img src="{{$requisicion->firma_solicitante}}" class="img-firma">
-                                 <p>{{$requisicion->user}}</p>
-                                 <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
+                                <img src="{{ $requisicion->firma_solicitante }}" class="img-firma">
+                                <p>{{ $requisicion->user }}</p>
+                                <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
                             @endif
                             <hr>
                             <p>
-                            <small>FECHA, FIRMA Y NOMBRE  DEL SOLICITANTE </small>
+                                <small>FECHA, FIRMA Y NOMBRE DEL SOLICITANTE </small>
                             </p>
                         </div>
                         <div class="flex-item">
                             @if ($requisicion->firma_jefe)
-                                <img src="{{$requisicion->firma_jefe}}" class="img-firma">
-                                <p>@isset($supervisor)
-                                    {{$supervisor}}
-                                @endisset</p>
+                                <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
+                                <p>
+                                    @isset($supervisor)
+                                        {{ $supervisor }}
+                                    @endisset
+                                </p>
                                 <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
                             @endif
                             <hr>
                             <p>
-                            <small>FECHA, FIRMA Y NOMBRE  DEL JEFE INMEDIATO</small>
+                                <small>FECHA, FIRMA Y NOMBRE DEL JEFE INMEDIATO</small>
                             </p>
                         </div>
                     </div>
                     <div class="flex">
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas)
-                                <img src="{{$requisicion->firma_finanzas}}" class="img-firma">
+                                <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
                                 <p>{{ $firma_finanzas ?? '' }}</p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                             @else
@@ -308,50 +353,57 @@
                             @endif
                             <hr>
                             <p>
-                            <small> FECHA, FIRMA Y NOMBRE  DE FINANZAS</small>
+                                <small> FECHA, FIRMA Y NOMBRE DE FINANZAS</small>
                             </p>
                         </div>
                         <div class="flex-item">
                             @if ($requisicion->firma_compras)
-                                <img src="{{$requisicion->firma_compras}}" class="img-firma">
-                                <p>{{$requisicion->comprador->user->name}} </p>
+                                <img src="{{ $requisicion->firma_compras }}" class="img-firma">
+                                <p>{{ $requisicion->comprador->user->name }} </p>
                                 <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
-                             @endif
+                            @endif
                             <hr>
                             <p>
-                            <small> FECHA, FIRMA Y NOMBRE   DE COMPRADORES</small>
+                                <small> FECHA, FIRMA Y NOMBRE DE COMPRADORES</small>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="flex print-none" >
-                    <div class="flex-item">
-                        <small ><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info"  style="position: relative;   left:40%;"><a  href="{{route('contract_manager.requisiciones')}}" style="color: #EEEEEE">Regresar</a></button>
+
+                <div class="row print-none">
+                    <div class="col-12">
+                        <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
+                                bueno de Gestión de talento.</i></small>
+                        <button class="btn btn info" style="position: relative;   left:40%;"><a
+                                href="{{ route('contract_manager.requisiciones') }}"
+                                style="color: #EEEEEE">Regresar</a></button>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
 
     @section('scripts')
-    <script>
-        Livewire.on('render_firma', (id_tab) => {
-            var signaturePad = $('#firma_content').signature({syncField: '#firma', syncFormat: 'PNG'});
+        <script>
+            Livewire.on('render_firma', (id_tab) => {
+                var signaturePad = $('#firma_content').signature({
+                    syncField: '#firma',
+                    syncFormat: 'PNG'
+                });
 
-            $('#clear').click(function(e) {
-                e.preventDefault();
-                signaturePad.signature('clear');
-                $("#firma").val('');
+                $('#clear').click(function(e) {
+                    e.preventDefault();
+                    signaturePad.signature('clear');
+                    $("#firma").val('');
+                });
             });
-        });
-    </script>
-    <script>
-           $('select').select2('destroy');
+        </script>
+        <script>
+            $('select').select2('destroy');
         </script>
 
         <script>
@@ -359,13 +411,14 @@
 
             });
 
-            function printArea(){
+            function printArea() {
                 let area = $('#select_solicitante option:selected').attr("data-area");
                 document.querySelector('#area_print').value = area;
 
             }
-            function addCard(tipo_card){
-                if(tipo_card === 'servicio'){
+
+            function addCard(tipo_card) {
+                if (tipo_card === 'servicio') {
                     let card = document.querySelector('.card-product');
                     let nueva_card = document.createElement("div");
                     nueva_card.classList.add("card");
@@ -380,12 +433,15 @@
                     caja_cards.appendChild(nueva_card);
                     document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name', 'cantidad_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name', 'producto_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute('name', 'especificaciones_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name', 'cantidad_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name', 'producto_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute('name',
+                        'especificaciones_' + cards_count);
                 }
 
-                if(tipo_card === 'proveedor'){
+                if (tipo_card === 'proveedor') {
                     let card = document.querySelector('.card-proveedor');
                     let nueva_card = document.createElement("div");
                     nueva_card.classList.add("card");
@@ -406,26 +462,34 @@
                     //     let new_name = item.name.replace((cards_count - 1), (cards_count));
                     //     item.setAttribute('name', new_name);
                     // });
-                    document.querySelector('#' + id_nueva_card + ' .modal-proveedor').setAttribute('name', 'proveedor_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-detalles').setAttribute('name', 'detalles_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-proveedor').setAttribute('name', 'proveedor_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-detalles').setAttribute('name', 'detalles_' +
+                        cards_count);
                     document.querySelector('#' + id_nueva_card + ' .modal-tipo').setAttribute('name', 'tipo_' + cards_count);
                     document.querySelector('#' + id_nueva_card + ' .modal-tipo-2').setAttribute('name', 'tipo_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-comentario').setAttribute('name', 'comentarios_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-nombre').setAttribute('name', 'contacto_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-telefono').setAttribute('name', 'contacto_telefono_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-correo').setAttribute('name', 'contacto_correo_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-url').setAttribute('name', 'contacto_url_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-start').setAttribute('name', 'contacto_fecha_inicio_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-end').setAttribute('name', 'contacto_fecha_fin_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .modal-cotizacion').setAttribute('name', 'cotizacion_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-comentario').setAttribute('name', 'comentarios_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-nombre').setAttribute('name', 'contacto_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-telefono').setAttribute('name', 'contacto_telefono_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-correo').setAttribute('name', 'contacto_correo_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-url').setAttribute('name', 'contacto_url_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-start').setAttribute('name',
+                        'contacto_fecha_inicio_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-end').setAttribute('name', 'contacto_fecha_fin_' +
+                        cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .modal-cotizacion').setAttribute('name', 'cotizacion_' +
+                        cards_count);
 
                 }
             }
-
         </script>
 
     @endsection
 </div>
 
 @endsection
-

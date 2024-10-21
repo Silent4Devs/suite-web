@@ -15,7 +15,11 @@ class TimesheetObserver
      */
     public function created(Timesheet $timesheet)
     {
-        event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
+        try {
+            // event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -26,7 +30,11 @@ class TimesheetObserver
      */
     public function updated(Timesheet $timesheet)
     {
-        event(new TimesheetEvent($timesheet, 'update', 'timesheet', 'Timesheet'));
+        try {
+            // event(new TimesheetEvent($timesheet, 'update', 'timesheet', 'Timesheet'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -37,7 +45,11 @@ class TimesheetObserver
      */
     public function deleted(Timesheet $timesheet)
     {
-        event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
+        try {
+            // event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 

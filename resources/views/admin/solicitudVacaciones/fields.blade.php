@@ -1,20 +1,20 @@
 @php
-if ($dias_disponibles == null and $leyenda_sin_beneficio == true) {
-    $valor = 'no tienes dias disponibles';
-    $mostrar = false;
-} elseif ($dias_disponibles == 0 and $año >= 1) {
-    $valor = 'no tienes dias disponibles';
-    $mostrar = true;
-} else {
-    $valor = $dias_disponibles;
-    $mostrar = true;
-}
+    if ($dias_disponibles == null and $leyenda_sin_beneficio == true) {
+        $valor = 'no tienes dias disponibles';
+        $mostrar = false;
+    } elseif ($dias_disponibles == 0 and $año >= 1) {
+        $valor = 'no tienes dias disponibles';
+        $mostrar = true;
+    } else {
+        $valor = $dias_disponibles;
+        $mostrar = true;
+    }
 
-if ($dias_pendientes >= 1) {
-    $leyenda_dias_pendientes = true;
-} else {
-    $leyenda_dias_pendientes = false;
-}
+    if ($dias_pendientes >= 1) {
+        $leyenda_dias_pendientes = true;
+    } else {
+        $leyenda_dias_pendientes = false;
+    }
 @endphp
 
 
@@ -188,8 +188,8 @@ if ($dias_pendientes >= 1) {
         <input type="hidden" value="{{ $autoriza }}" name="autoriza">
         <!-- Submit Field -->
         <div class="text-right form-group col-12">
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" id="enviar" type="submit">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+            <button class="btn btn-primary" id="enviar" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -245,7 +245,7 @@ if ($dias_pendientes >= 1) {
         </div>
         <!-- Submit Field -->
         <div class="text-right form-group col-12">
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
         </div>
     </div>
 

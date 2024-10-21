@@ -7,7 +7,7 @@
         {{--  <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
         </div>
-        <form wire:submit.prevent="store()" class="w-100">
+        <form wire:submit="store()" class="w-100">
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
-                    <input type="date" name="fecha_inicio" wire:model="fecha_inicio" class="form-control">
+                    <input type="date" name="fecha_inicio" wire:model.live="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio') }}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
-                    <input type="date" name="fecha_fin" wire:model="fecha_fin" class="form-control">
+                    <input type="date" name="fecha_fin" wire:model.live="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin') }}
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="area_id" wire:model.defer="cliente_id" class="form-control">
+                    <select name="area_id" wire:model="cliente_id" class="form-control">
                         <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group col-md-3" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model.defer="areas_seleccionadas"
+                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model="areas_seleccionadas"
                         class="form-control select2" required multiple required>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id" wire:model.defer="sede_id">
+                    <select class="form-control" name="sede_id" wire:model="sede_id">
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -83,14 +83,14 @@
                 <div class="form-group col-md-3">
                     <label class="form-label"><i
                             class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo" wire:model.defer="tipo">
+                    <select class="form-control" name="tipo" wire:model="tipo">
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-12 text-right">
-                    <button class="btn btn-success"><i class="fas fa-plus"></i> Agregar</button>
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Agregar</button>
                 </div>
             </div>
         </form>  --}}
@@ -99,7 +99,7 @@
             <a href="#" id="btn_todos" wire:click="actualizarEstatus('todos')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #bdefff;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;">Todos</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $terminado_count + $proceso_count + $cancelado_count }}
@@ -111,7 +111,7 @@
             <a href="#" wire:click="actualizarEstatus('procesos')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #a4ffa7;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> En proceso</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $proceso_count }} </strong>
@@ -122,7 +122,7 @@
             <a href="#" id="btn_papelera" wire:click="actualizarEstatus('cancelados')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #F2ADAD;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> Cancelados</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $cancelado_count }} </strong>
@@ -133,7 +133,7 @@
             <a href="#" id="btn_pendiente" wire:click="actualizarEstatus('terminados')">
                 <div class="card-complement">
                     <div class="bg-objet" style="background-color: #d9d9d9;"></div>
-                    <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                    <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                         <strong style="font-size: 16px;"> Terminados</strong>
                         <span class="d-flex align-items-center" style="gap: 5px;">
                             <strong style="font-size: 22px"> {{ $terminado_count }} </strong>
@@ -224,7 +224,8 @@
                             <td>{{ $proyecto->proyecto }} </td>
                             <td>{{ $proyecto->fecha_inicio }} </td>
                             <td>{{ $proyecto->fecha_fin }} </td>
-                            <td>{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }} </td>
+                            <td>{{ $proyecto->cliente->nombre ?? ($proyecto->clienteConvergencia->nombre ?? '') }}
+                            </td>
                             <td>
                                 <ul style="padding-left:10px; ">
                                     @foreach ($proyecto->areas as $area)
@@ -348,7 +349,7 @@
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
-                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
@@ -472,8 +473,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12 text-right">
-                                    <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
-                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                    <div type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</div>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -481,7 +482,7 @@
                 </div>
             </div>
         </div> --}}
-        {{-- <div class="btn btn-danger" wire:click="click_e()">wire:click="click_e()"</div> --}}
+        {{-- <div class="btn btn-primary" wire:click="click_e()">wire:click="click_e()"</div> --}}
     @endforeach
     @section('scripts')
         @parent

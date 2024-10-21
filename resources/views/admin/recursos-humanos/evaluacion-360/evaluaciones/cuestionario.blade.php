@@ -96,7 +96,8 @@
         <div class="pt-0 card-body">
 
             <div>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     RESUMEN GENERAL
                 </div>
                 <div class="row">
@@ -158,7 +159,7 @@
                             <img class="img-fluid" src="{{ asset('img/mensaje2.png') }}">
                         </div>
                         <div class="col-12 text-center">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-success">Regresar</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-primary">Regresar</a>
                         </div>
                     </div>
                 @else
@@ -193,7 +194,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:#345183; border-radius: 100px; color: white;">
+                                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                         SECCIÓN DE COMPETENCIAS
                                     </div>
                                     <section id="sectionCompetencias" class="mt-2" x-data="{ show: true }">
@@ -223,7 +224,7 @@
                                         <div x-show="show" x-transition:enter.duration.500ms
                                             x-transition:leave.duration.400ms>
                                             @if ($preguntas->count() == 0)
-                                                <h6 class="text-center" style="color: #345183;">Sin Competencias
+                                                <h6 class="text-center" style="color: var(--color-tbj)">Sin Competencias
                                                     Asignadas</h6>
                                             @else
                                                 <div class="mt-2 progress">
@@ -328,7 +329,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="text-center form-group"
-                                        style="background-color:#345183; border-radius: 100px; color: white;">
+                                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                         SECCIÓN DE OBJETIVOS
                                     </div>
                                     <section class="mt-1" x-data="{ show: true }">
@@ -495,7 +496,7 @@
                                                 @endforeach
                                             </div>
                                         @else
-                                            <h6 class="text-center" style="color: #345183;">Sin Objetivos
+                                            <h6 class="text-center" style="color: var(--color-tbj)">Sin Objetivos
                                                 Asignados</h6>
                                         @endif
                                     </section>
@@ -506,7 +507,7 @@
                         <!-- Sección Firmas -->
                         <div class="mt-4">
                             <div class="text-center form-group"
-                                style="background-color:#345183; border-radius: 100px; color: white;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                                 SECCIÓN DE FIRMAS
                             </div>
                             <h5 class="mt-3 head"><i class="mr-1 fas fa-signature"></i> Firmas</h5>
@@ -599,10 +600,10 @@
                         </div>
 
                         <div class="mt-3 d-flex justify-content-end">
-                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn_cancelar">Salir</a>
+                            <a href="{{ route('admin.inicio-Usuario.index') }}" class="btn btn-outline-primary">Salir</a>
                             <button
                                 onclick="event.preventDefault();FinalizarEvaluacion('{{ route('admin.ev360-evaluaciones.finalizarEvaluacion', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado, 'evaluador' => $evaluador]) }}')"
-                                class="btn btn-danger">Finalizar</button>
+                                class="btn btn-primary">Finalizar</button>
                         </div>
                     @endif
 
@@ -633,7 +634,7 @@
                     <div id="competenciaInformacion"></div>
                 </div>
                 {{-- <div class="modal-footer">
-                    <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                 </div> --}}
             </div>
         </div>

@@ -111,7 +111,7 @@ Breadcrumbs::for('admin.comiteseguridads.create', function ($trail) {
     $trail->push('Formulario', route('admin.comiteseguridads.create'));
 });
 Breadcrumbs::for('admin.comiteseguridads.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Comité');
 });
 
@@ -146,7 +146,7 @@ Breadcrumbs::for('admin.politica-sgsis.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.politicaSgsis.visualizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Politicas');
 });
 
@@ -161,43 +161,43 @@ Breadcrumbs::for('admin.roles-responsabilidades.create', function ($trail) {
 });
 
 Breadcrumbs::for('admin.amenazas.index', function ($trail) {
-    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
     $trail->push('Amenazas', route('admin.amenazas.index'));
 });
 
 Breadcrumbs::for('admin.vulnerabilidads.index', function ($trail) {
-    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
     $trail->push('Vulnerabilidades', route('admin.vulnerabilidads.index'));
 });
-Breadcrumbs::for('admin.analysisRisk.menu', function ($trail) {
+Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
     $trail->push('Análisis de Riesgos');
     $trail->push('Menú');
 });
 
 Breadcrumbs::for('BIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('BIA');
 });
 
 Breadcrumbs::for('AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('AIA');
 });
 
-Breadcrumbs::for('admin.analysisRisk.index', function ($trail) {
+Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
     $trail->push('Planificación', route('admin.iso27001.guia').'#planificacion');
-    $trail->push('Análisis de Riesgos', route('admin.analysisRisk.menu'));
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
     $trail->push('Matriz de Riesgo');
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
-    $trail->push('AIA', route('admin.analysisImpact.menu-AIA'));
-    $trail->push('Cuestionario', route('admin.analysisImpact.index'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('AIA', route('admin.analisis-impacto.menu-AIA'));
+    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
 });
 
 Breadcrumbs::for('admin.BIA.Cuestionario.index', function ($trail) {
-    $trail->push('Análisis de ', route('admin.analysisRisk.menu'));
+    $trail->push('Análisis de ', route('admin.analisis-riesgos.menu'));
     $trail->push('Amenazas', route('admin.amenazas.index'));
 });
 
@@ -486,23 +486,23 @@ Breadcrumbs::for('admin.registromejoras.create', function ($trail) {
     $trail->push('Formulario', route('admin.registromejoras.create'));
 });
 
-Breadcrumbs::for('admin.portalCommunication.reportes', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+Breadcrumbs::for('admin.portal-comunicacion.reportes', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Reportes');
 });
 
-Breadcrumbs::for('admin.portalCommunication.sedes-organizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+Breadcrumbs::for('admin.portal-comunicacion.sedes-organizacion', function ($trail) {
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Sedes');
 });
 
 Breadcrumbs::for('admin.comunicacion-sgis.show', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Comunicados');
 });
 
 Breadcrumbs::for('admin.system-calendar', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Calendario');
 });
 
@@ -527,7 +527,7 @@ Breadcrumbs::for('consulta-puestos', function ($trail) {
     $trail->push('Consulta Perfiles de Puesto', route('admin.consulta-puestos'));
 });
 Breadcrumbs::for('areas-render', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Áreas', route('admin.areas.renderJerarquia'));
 });
 Breadcrumbs::for('perfil-puesto-create', function ($trail) {
@@ -870,12 +870,12 @@ Breadcrumbs::for('Editar-Curriculum', function ($trail, $empleado = null) {
 });
 
 Breadcrumbs::for('admin.mapa-procesos', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Mapa de Procesos');
 });
 
 Breadcrumbs::for('admin.visualizarorganizacion', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
     $trail->push('Organización');
 });
 
@@ -974,33 +974,33 @@ Breadcrumbs::for('Archivo-Dayoff', function ($trail) {
 });
 
 Breadcrumbs::for('seguridad-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Incidentes de Seguridad', route('admin.reportes-seguridad'));
 });
 Breadcrumbs::for('riesgos-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Riesgos Identificados', route('admin.reportes-riesgos'));
 });
 Breadcrumbs::for('quejas-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Quejas', route('admin.reportes-quejas'));
 });
 Breadcrumbs::for('denuncias-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Denuncias', route('admin.reportes-denuncias'));
 });
 Breadcrumbs::for('mejoras-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Mejoras', route('admin.reportes-mejoras'));
 });
 Breadcrumbs::for('sugerencias-create-portal', function ($trail) {
-    $trail->push('Portal de comunicación', route('admin.portalCommunication.index'));
-    $trail->push('Reportes', route('admin.portalCommunication.reportes'));
+    $trail->push('Portal de comunicación', route('admin.portal-comunicacion.index'));
+    $trail->push('Reportes', route('admin.portal-comunicacion.reportes'));
     $trail->push('Sugerencias', route('admin.reportes-sugerencias'));
 });
 

@@ -2,7 +2,7 @@
 @section('content')
 
     {{ Breadcrumbs::render('admin.material-sgsis.create') }}
-    <h5 class="col-12 titulo_general_funcion">Material SGSI  </h5>
+    <h5 class="col-12 titulo_general_funcion">Material SGSI </h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -10,7 +10,8 @@
                 <br>
                 <h4>¿Qué es Material SGSI?</h4>
                 <p>
-                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos de seguridad de la información establecidos por la norma.
+                    Recursos educativos diseñados para enseñar a los colaboradores sobre las prácticas y requisitos de
+                    seguridad de la información establecidos por la norma.
                 </p>
                 <p>
                     Útil para crear y mantener programas de formación y concientización en seguridad de la información.
@@ -21,14 +22,15 @@
 
     <div class="mt-4 card">
         <div class="card-body">
-            <form method="POST" class="row"
-                action="{{ route('admin.material-sgsis.update', [$materialSgsi->id]) }}" enctype="multipart/form-data">
+            <form method="POST" class="row" action="{{ route('admin.material-sgsis.update', [$materialSgsi->id]) }}"
+                enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="form-group col-12 anima-focus">
-                    <input  placeholder="" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre"
-                        id="nombre" value="{{ old('nombre', $materialSgsi->nombre) }}" required>
-                        {!! Form::label('nombre', 'Nombre del material de capacitación*', ['class' => 'asterisco']) !!}
+                    <input placeholder="" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                        type="text" name="nombre" id="nombre" value="{{ old('nombre', $materialSgsi->nombre) }}"
+                        required>
+                    {!! Form::label('nombre', 'Nombre del material de capacitación*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
@@ -37,9 +39,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-12 anima-focus">
-                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text"
-                        name="objetivo" id="objetivo" required>{{ old('objetivo', $materialSgsi->objetivo) }}</textarea>
-                        {!! Form::label('objetivo', 'Objetivo*', ['class' => 'asterisco']) !!}
+                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" type="text" name="objetivo"
+                        id="objetivo" required>{{ old('objetivo', $materialSgsi->objetivo) }}</textarea>
+                    {!! Form::label('objetivo', 'Objetivo*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -118,7 +120,7 @@
                         class="form-control date  {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}"
                         type="date" min="1945-01-01" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
                         value="{{ old('fechacreacion_actualizacion', \Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion))->format('Y-m-d') }}">
-                        {!! Form::label('fechacreacion_actualizacion', 'Fecha de creación*', ['class' => 'asterisco']) !!}
+                    {!! Form::label('fechacreacion_actualizacion', 'Fecha de creación*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('fechacreacion_actualizacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechacreacion_actualizacion') }}
@@ -142,9 +144,10 @@
 
                 <div class="mb-3 col-sm-12 anima-focus">
                     <div class="custom-file">
-                        <input placeholder="" type="file" class="form-control" {{ $errors->has('archivo') ? 'is-invalid' : '' }}"
-                            multiple id="archivo" name="files[]" {{ old('archivo', $materialSgsi->material_id) }}>
-                            {!! Form::label('archivo', 'Material(Archivo PDF)*', ['class' => 'asterisco']) !!}
+                        <input placeholder="" type="file" class="form-control"
+                            {{ $errors->has('archivo') ? 'is-invalid' : '' }}" multiple id="archivo" name="files[]"
+                            {{ old('archivo', $materialSgsi->material_id) }}>
+                        {!! Form::label('archivo', 'Material(Archivo PDF)*', ['class' => 'asterisco']) !!}
                         @if ($errors->has('archivo'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('archivo') }}
@@ -152,8 +155,8 @@
                         @endif
                     </div>
                 </div>
-<br>
-<br>
+                <br>
+                <br>
                 <div class="mb-3 col-10 d-flex justify-content-right">
                     <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
                         data-target="#largeModal">
@@ -162,8 +165,8 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.material-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.material-sgsis.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -173,14 +176,12 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 @if (count($materialSgsi->documentos_material))
-
                                     <!-- carousel -->
                                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                                         <ol class='carousel-indicators'>
                                             @foreach ($materialSgsi->documentos_material as $idx => $material_id)
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}></li>
-
                                             @endforeach
 
                                         </ol>

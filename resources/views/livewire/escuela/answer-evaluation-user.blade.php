@@ -11,7 +11,7 @@
             @foreach ($currentQuestion->answers as $answer)
                 <div class="px-3 py-3 m-3 text-sm text-gray-800 border-2 border-gray-300 rounded-lg max-w-auto form">
                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model.defer="answer">
+                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model="answer">
                     <label class="form-check-label" for="flexRadioDefault{{ $answer->id }}">
                         {{ $answer->answer }}
                     </label>
@@ -43,54 +43,55 @@
                                 href="{{ route('admin.courses.evaluation.quizdetails', [
                                     'course' => $course,
                                     'evaluation' => $evaluation,
-                                ])}}">Detalles de tu evaluación</a></p>
+                                ]) }}">Detalles
+                                de tu evaluación</a></p>
                         <progress class="mx-auto text-base leading-relaxed xl:w-2/4 lg:w-3/4"
                             id="quiz-{{ $userEvaluationId }}" value="{{ round($percentage) }}" max="100">
                             {{ round($percentage) }} </progress> <span> {{ round($percentage) }}% </span>
                     </div>
                     <div>
 
-                            <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
-                                <div class="col-3">
-                                    <span>Respuestas correctas</span>
-                                </div>
-                                <div class="col-3">
-                                    <span>{{ $correctQuestions }}</span>
-                                </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
+                                <span>Respuestas correctas</span>
                             </div>
+                            <div class="col-3">
+                                <span>{{ $correctQuestions }}</span>
+                            </div>
+                        </div>
 
 
-                            <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
-                                <div class="col-3">
-                                    <span >Total de preguntas</span>
-                                </div>
-                                <div class="col-3">
-                                    <span >{{ $totalQuizQuestions }}</span>
-                                </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
+                                <span>Total de preguntas</span>
                             </div>
+                            <div class="col-3">
+                                <span>{{ $totalQuizQuestions }}</span>
+                            </div>
+                        </div>
 
-                            <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
-                                <div class="col-3">
-                                    <span >Porcentaje</span>
-                                </div>
-                                <div class="col-3">
-                                    <span>{{ round($percentage) . '%' }}</span>
-                                </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
+                                <span>Porcentaje</span>
                             </div>
-                            <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
-                                <div class="col-3">
-                                    <span >Estado de la evaluación</span>
-                                </div>
-                                <div class="col-3">
-                                    <span>{{ round($percentage) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
-                                </div>
+                            <div class="col-3">
+                                <span>{{ round($percentage) . '%' }}</span>
                             </div>
+                        </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
+                                <span>Estado de la evaluación</span>
+                            </div>
+                            <div class="col-3">
+                                <span>{{ round($percentage) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="flex items-center justify-end mt-4">
 
                         <a href="{{ route('admin.curso-estudiante', ['course' => $course->id]) }}"
-                            class="inline-flex items-center px-4 py-2 m-4 btn cancel">
+                            class="inline-flex items-center px-4 py-2 m-4 btn btn-cancelar">
                             Regresar
                         </a>
 

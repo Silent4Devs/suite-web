@@ -54,7 +54,7 @@
                         <div class='btn-group'>
                             @can('katbol_contratos_agregar')
                                 @if ($areas->count() > 0)
-                                    <a class="btn btn-success"
+                                    <a class="btn btn-primary"
                                         style=" margin: 13px 12px 12px 10px; "href="{{ route('contract_manager.contratos-katbol.create') }}"
                                         type="submit" name="action">Agregar Contrato <sup>+</sup></a>
                                 @else
@@ -85,7 +85,7 @@
                         </div>
                     </nav>
 
-                    <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-content pb-4" id="nav-tabContent">
                         <div class="tab-pane mb-4 fade show active" id="nav-contarea" role="tabpanel"
                             aria-labelledby="nav-contarea-tab">
                             @include('contract_manager.contratos-katbol.table')

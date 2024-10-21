@@ -26,8 +26,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -89,8 +89,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -104,7 +104,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -121,28 +121,31 @@
         }
     </style>
 
-<h5 class="col-12 titulo_general_funcion">Partes Interesadas</h5>
-<div class="card card-body" style="background-color: #5397D5; color: #fff;">
-    <div class="d-flex" style="gap: 25px;">
-        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-        <div>
-            <br>
-            <h4>¿Qué es Partes Interesadas?</h4>
-            <p>
-                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización, Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
-            </p>
-            <p>
+    <h5 class="col-12 titulo_general_funcion">Partes Interesadas</h5>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Partes Interesadas?</h4>
+                <p>
+                    Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información
+                    de la organización, Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre
+                    otros.
+                </p>
+                <p>
 
-            </p>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="text-right">
-    <div class="d-flex justify-content-end">
-        <a href="{{ route('admin.partes-interesadas.create') }}" type="button" class="btn tb-btn-primary">Partes Interesadas</a>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.partes-interesadas.create') }}" type="button" class="btn tb-btn-primary">Partes
+                Interesadas</a>
+        </div>
     </div>
-</div>
     <div class="mt-5 card">
         <div style="margin-bottom: 10px; margin-left:10px;" class="row">
             <div class="col-lg-12">
@@ -192,9 +195,9 @@
     @parent
     <script>
         $('#btnImport').on('click', function(e) {
-        e.preventDefault();
-        $('#xlsxImportModal').modal('show');
-     });
+            e.preventDefault();
+            $('#xlsxImportModal').modal('show');
+        });
     </script>
     <script>
         $(function() {

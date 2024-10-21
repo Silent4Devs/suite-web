@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\MatrizRequisitosEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
@@ -196,12 +197,15 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function envioCorreos($proceso, $id_matriz)
     {
+        $matriz = MatrizRequisitoLegale::select('id', 'nombrerequisito', 'formacumple', 'fechaexpedicion')->where('id', $id_matriz)->first();
+
+        event(new MatrizRequisitosEvent($matriz, 'envioCorreos', 'matriz_requisito_legales', 'Matriz'));
+
         foreach ($proceso->participantes as $part) {
             $emailAprobador = $part->participante->empleado->email;
 
             Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($id_matriz));
         }
-        // dd("Se enviaron todos");
     }
 
     public function show(MatrizRequisitoLegale $matrizRequisitoLegale)
@@ -239,7 +243,7 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function createPlanAccion(MatrizRequisitoLegale $id)
     {
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
@@ -250,7 +254,6 @@ class MatrizRequisitoLegalesController extends Controller
 
     public function storePlanAccion(Request $request, MatrizRequisitoLegale $id)
     {
-        dd($request->all());
         $request->validate([
             'parent' => 'required|string',
             'norma' => 'required|string',
@@ -264,7 +267,7 @@ class MatrizRequisitoLegalesController extends Controller
         ]);
 
         $matrizRequisitoLegal = $id;
-        $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+        $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [
             [
                 'id' => '1',

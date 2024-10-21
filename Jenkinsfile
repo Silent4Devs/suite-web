@@ -1,33 +1,30 @@
 pipeline {
     agent any
 
-    environment {
-        SSH_USER = 'desarrollo'
-        SSH_PASSWORD = 'S3cur3.qa'
-        SERVER_IP = '192.168.9.78'
-    }
-
     stages {
         stage('Git Pull via SSH') {
             steps {
                 script {
-                    sh '''
-                       echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && sudo -S git pull"
-                    '''
+                    withCredentials([
+                        usernamePassword(credentialsId: 'TabantajQa', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD'),
+                        string(credentialsId: 'IpQaTabantaj', variable: 'SERVER_IP')
+                    ]) {
+                        sh '''
+                            # Elimina la clave antigua del archivo known_hosts
+                            ssh-keygen -f "/root/.ssh/known_hosts" -R $SERVER_IP || true
+
+                            # Crea un archivo de configuración SSH temporal
+                            echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
+
+                            # Realiza la conexión SSH y ejecuta el comando de git pull
+                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
+
+                            # Elimina el archivo de configuración SSH temporal
+                            rm /tmp/ssh_config
+                        '''
+                    }
                 }
             }
         }
-
-        // stage('Execute unit test docker') {
-        //     steps {
-        //         script {
-        //             echo 'Ejecutando pruebas unitarias'
-        //             sh '''
-        //                echo $SSH_PASSWORD | sshpass -p $SSH_PASSWORD ssh $SSH_USER@$SERVER_IP "cd /var/contenedor/unittest/unittest-suit && sudo -S git pull && sudo -S docker compose up"
-        //             '''
-        //             echo 'entro a carpeta y ejecuto pruebas unitarias'
-        //         }
-        //     }
-        // }
     }
 }

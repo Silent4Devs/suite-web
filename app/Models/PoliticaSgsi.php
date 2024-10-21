@@ -51,7 +51,7 @@ class PoliticaSgsi extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('politicas_sgsi_all', 3600 * 12, function () {
-            return self::with('reviso')->get();
+            return self::select('id', 'nombre_politica', 'politicasgsi', 'estatus', 'mostrar')->with('reviso:id,name,foto,email')->get();
         });
     }
 

@@ -75,7 +75,7 @@ class IncidentesVacacionesController extends Controller
     public function create()
     {
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new IncidentesVacaciones();
+        $vacacion = new IncidentesVacaciones;
         $empleados = Empleado::getAltaEmpleados();
         $puestos = Puesto::getAll();
         $areas = Area::getAll();
@@ -114,7 +114,7 @@ class IncidentesVacacionesController extends Controller
             $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('custom_error', $errorMessage);
 
             // Redirect back with the input data and errors
@@ -204,7 +204,7 @@ class IncidentesVacacionesController extends Controller
             $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('custom_error', $errorMessage);
 
             // Redirect back with the input data and errors

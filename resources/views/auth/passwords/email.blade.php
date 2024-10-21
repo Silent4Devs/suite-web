@@ -1,79 +1,55 @@
 @extends('layouts.app')
 @section('content')
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/auth/TBIconTabantaj.png') }}">
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/auth/TBlogin.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-@endsection
+    <form method="POST" action="{{ route('password.email') }}">
+        @csrf
 
-<div id="login" class="fondo">
-    <div class="caja_marca">
-        <div class="marca">
-            <img src="{{ asset('img/auth/TBLogoPolicromatico.png') }}"><br>
-            <p class="by">By <strong>Silent</strong>for<strong>Business</strong></p>
-            <p class="bienvenidos"><strong>Bienvenidos al</strong> Sistema Integral de Gestión Empresarial</p>
+        @php
+            use App\Models\Organizacion;
+            $organizacion = Organizacion::getLogo();
+            if (!is_null($organizacion)) {
+                $logotipo = $organizacion->logotipo;
+            } else {
+                $logotipo = 'silent4business.png';
+            }
+        @endphp
+
+        <div class="box-logo-org">
+            <img src="{{ asset($logotipo) }}" alt="Logo de la Organizacion">
         </div>
-    </div>
 
-    @if(session('message'))
-        <div class="alert alert-info" role="alert">
-            {{ session('message') }}
+        <div class="text-iniciar">
+            Recuperar Contraseña
         </div>
-    @endif
 
-    <div class="caja_form">
-        <form method="POST" action="{{ route('password.email') }}" style="height:591px;">
-            @csrf
+        <p class="text-instrucction-mail">
+            <small>
+                Introduce tu correo electrónico registrado y recibirás un correo con las instrucciones
+                para recuperar tu contraseña.
+            </small>
+        </p>
 
-            @php
-                use App\Models\Organizacion;
-                $organizacion = Organizacion::getLogo();
-                if (!is_null($organizacion)) {
-                    $logotipo = $organizacion->logotipo;
-                } else {
-                    $logotipo = 'silent4business.png';
-                }
-            @endphp
+        <div class="input-item">
+            <label for="email" class="icon icon-box">
+                <img src="{{ asset('img/auth/icon-person.svg') }}" alt="Icon person">
+            </label>
 
-            <img src="{{ asset($logotipo) }}" class="logo_silent">
-            <h3 class="mt-5" style="color: #345183; font-weight: normal; font-size:24px;">Recuperar Contraseña</h3>
+            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                name="email" required autocomplete="email" placeholder="{{ trans('global.login_email') }}"
+                value="{{ old('email') }}">
+        </div>
 
-            <p class="text-muted mt-4">Introduce tu correo electrónico registrado y recibirás un correo con las instrucciones para recuperar tu contraseña.</p>
-
-            <div class="input-group mt-5">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="background-color: #fff;"><i class="bi bi-person"></i></span>
-                </div>
-                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email') }}">
-
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
+        @if ($errors->has('email'))
+            <div class="invalid-feedback">
+                <small>
+                    {{ $errors->first('email') }}
+                </small>
             </div>
+        @endif
 
-            <div class="text-center" style="margin-top:20px;">
-                <button type="submit" class="btn_enviar" style="background-color: #3c4b64;">Recuperar contraseña</button>
-            </div>
+        <div class="button-item">
+            <button type="submit" class="btn_enviar">Recuperar contraseña</button>
+        </div>
+    </form>
 
-            <p class="mt-4">En caso de requerir asesoría, contactar a soporte técnico al siguiente correo:
-            <br><br>
-                <a href="mailto:contacto@silent4business.com">contacto@silent4business.com</a></p>
-        </form>
-
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script type="text/javascript">
-    $("#login").click(function(){
-        $("#login").removeClass("clase_animacion");
-    });
-</script>
-
-
-
-{{-- {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }} --}}
-
+    {{-- {{ \TawkTo::widgetCode('https://tawk.to/chat/5fa08d15520b4b7986a0a19b/default') }} --}}
 @endsection

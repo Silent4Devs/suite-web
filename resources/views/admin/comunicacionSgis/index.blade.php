@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
         .table tr th:nth-child(3) {
             text-align: center !important;
@@ -8,7 +7,7 @@
 
         .img-size {
             /*  padding: 0;
-                margin: 0; */
+                    margin: 0; */
             height: 400px;
             width: 100%;
             background-size: contain;
@@ -54,7 +53,6 @@
         .tamaño {
             width: 168px !important;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.comunicacion-sgis.index') }}
@@ -68,7 +66,8 @@
                 <br>
                 <h4>¿Qué es Comunicados Generales?</h4>
                 <p>
-                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
+                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar
+                    aspectos importantes.
                 </p>
                 <p>
                     Son fundamentales ya que contribuye a la concientización y comprensión general.
@@ -76,18 +75,19 @@
             </div>
         </div>
     </div>
-        <div class="text-right">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.comunicacion-sgis.create') }}" type="button" class="btn tb-btn-primary">Registrar Comunicado</a>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.comunicacion-sgis.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Comunicado</a>
         </div>
+    </div>
 
-        <div class="mt-5 card">
+    <div class="mt-5 card">
 
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            <table class="table table-bordered w-100 datatable-ComunicacionSgi">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-ComunicacionSgi">
+                <thead class="">
                     <tr>
                         <th>
                             {{ trans('cruds.comunicacionSgi.fields.id') }}
@@ -215,29 +215,39 @@
             @can('comunicados_generales_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.comunicacion-sgis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.comunicacion-sgis.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -250,20 +260,20 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.comunicacion-sgis.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'titulo',
-                        name: 'titulo'
-                    },
-                    {
-                        data: 'archivo',
-                        name: 'archivo',
-                        render: function(data, type, row, meta) {
-                            let archivo = "";
-                            let archivos = JSON.parse(data);
-                            archivo = ` <div class="container">
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'titulo',
+                            name: 'titulo'
+                        },
+                        {
+                            data: 'archivo',
+                            name: 'archivo',
+                            render: function(data, type, row, meta) {
+                                let archivo = "";
+                                let archivos = JSON.parse(data);
+                                archivo = ` <div class="container">
 
                                     <div class="mb-4 row">
                                     <div class="text-center col">
@@ -278,8 +288,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-body">`;
-                            if (archivos.length > 0) {
-                                archivo += `
+                                if (archivos.length > 0) {
+                                    archivo += `
                                             <!-- carousel -->
                                             <div
                                                 id='carouselExampleIndicators${row.id}'
@@ -289,10 +299,10 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                        <li
-                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                        data-slide-to='${idx}'
-                                                        ></li>`
+                                                            <li
+                                                            data-target='#carouselExampleIndicators${row.id}'
+                                                            data-slide-to='${idx}'
+                                                            ></li>`
                                                     })}
                                             </ol>
                                             <div class='carousel-inner'>
@@ -302,30 +312,39 @@
 
                                                         if(extension == 'pdf'){
                                                             return `
-                                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                                        <embed seamless class='img-size' src='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'></embed>
-                                                                    </div>`
+                                                                        <div class='carousel-item ${idx==0?"active":""}'>
+                                                                            <embed seamless class='img-size' src='{{ asset('storage/documento_comunicado_SGI') }}/${archivo.documento}'></embed>
+                                                                        </div>`
                                                         }else{
-                                                            return `
-                                                                    <div class='text-center my-5 carousel-item ${idx==0?"active":""}'>
-                                                                       <a href='{{ asset("storage/documento_comunicado_SGI") }}/${archivo.documento}'><i class="fas fa-file-download mr-2" style="font-size:18px"></i> ${archivo.documento}</a>
-                                                                    </div>`
-                                                        }
+                                                            return ` <
+                                        div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
+                                        <
+                                        a href =
+                                        '{{ asset('storage/documento_comunicado_SGI') }}/${archivo.documento}' >
+                                        < i class = "fas fa-file-download mr-2"
+                                    style = "font-size:18px" > < /i> ${archivo.documento}</a >
+                                        <
+                                        /div>`
+                            }
 
-                                                    })}
+                        })
+                }
 
-                                            </div>
+                <
+                /div>
 
-                                            </div>`;
-                            } else {
-                                archivo += `
+                <
+                /div>`;
+            }
+            else {
+                archivo += `
                                                 <div class="text-center">
                                                     <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
                                                     <img src="{{ asset('img/undrawn.png') }}" class="img-fluid " style="width:350px !important">
                                                     </div>
                                                 `
-                            }
-                            archivo += `</div>
+            }
+            archivo += `</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <a
@@ -356,33 +375,31 @@
                                     </div>
                                     </div>`
 
-                            return archivo;
-                        }
-                    },
-                    {
-                        data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
-                ],
-                orderCellsTop: true,
-                order: [
-                    [0, 'desc']
-                ]
-            };
+            return archivo;
+        }
+        }, {
+        data: 'actions',
+        name: '{{ trans('global.actions') }}'
+        }],
+        orderCellsTop: true,
+            order: [
+                [0, 'desc']
+            ]
+        };
 
-            let table = $('.datatable-ComunicacionSgi').DataTable(dtOverrideGlobals);
-            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-            //     $($.fn.dataTable.tables(true)).DataTable()
-            //         .columns.adjust();
-            // });
-            // $('.datatable thead').on('input', '.search', function() {
-            //     let strict = $(this).attr('strict') || false
-            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-            //     table
-            //         .column($(this).parent().index())
-            //         .search(value, strict)
-            //         .draw()
-            // });
+        let table = $('.datatable-ComunicacionSgi').DataTable(dtOverrideGlobals);
+        // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+        //     $($.fn.dataTable.tables(true)).DataTable()
+        //         .columns.adjust();
+        // });
+        // $('.datatable thead').on('input', '.search', function() {
+        //     let strict = $(this).attr('strict') || false
+        //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+        //     table
+        //         .column($(this).parent().index())
+        //         .search(value, strict)
+        //         .draw()
+        // });
         });
     </script>
 @endsection

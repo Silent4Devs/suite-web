@@ -67,6 +67,7 @@ class Minutasaltadireccion extends Model implements Auditable, HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'firma_check',
     ];
 
     public static function getAllMinutasAltaDireccion()

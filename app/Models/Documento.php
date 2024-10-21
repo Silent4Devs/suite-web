@@ -36,7 +36,8 @@ class Documento extends Model implements Auditable
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [
-        'nombre', 'codigo',
+        'nombre',
+        'codigo',
     ];
 
     protected $dates = ['fecha'];
@@ -70,6 +71,7 @@ class Documento extends Model implements Auditable
     }
 
     //Redis methods
+
     public static function getAll()
     {
         return Cache::remember('Documentos:Documentos_all', 3600 * 4, function () {
@@ -219,7 +221,7 @@ class Documento extends Model implements Auditable
 
     public function elaborador()
     {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'elaboro_id', 'id')->alta()->select('id', 'name', 'email', 'puesto_id', 'area_id', 'estatus');
     }
 
     public function aprobador()

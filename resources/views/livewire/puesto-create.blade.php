@@ -15,8 +15,8 @@
                         <div class="form-group">
                             <label for="puesto">Puesto: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
-                                id="puesto" aria-describedby="puesto" wire:model.defer="puesto"
-                                value="{{ old('puesto') }}" autocomplete="off">
+                                id="puesto" aria-describedby="puesto" wire:model="puesto" value="{{ old('puesto') }}"
+                                autocomplete="off">
                             <small>Ingresa el puesto del puesto</small>
                             @if ($errors->has('puesto'))
                                 <span class="invalid-feedback">{{ $errors->first('puesto') }}</span>
@@ -29,7 +29,7 @@
                             <label for="descripcion">Descripción: </label>
                             <input type="text"
                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                id="descripcion" aria-describedby="descripcion" wire:model.defer="descripcion"
+                                id="descripcion" aria-describedby="descripcion" wire:model="descripcion"
                                 value="{{ old('descripcion') }}" autocomplete="off">
                             <small>Ingresa el descripción del puesto</small>
                             @if ($errors->has('descripcion'))
@@ -42,8 +42,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
             </div>
         </div>
     </div>

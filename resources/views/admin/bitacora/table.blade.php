@@ -92,6 +92,19 @@
         }
 
     }
+
+    div.recuadro-instruccion {
+        width: 688px;
+        height: 46px;
+        background: #FFFBEE;
+        border: 1px solid #FFA200;
+        border-radius: 9px;
+        opacity: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FF8000;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
 
@@ -108,14 +121,14 @@
 </style>
 
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
-    <div class="card card-content">
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+    <div class="card card-body">
+        <div class="row">
 
             <div class="col m12" style="margin-top: 30px;">
                 <h3 class="titulo-form">INSTRUCCIONES</h3>
@@ -123,22 +136,57 @@
             </div>
 
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="">
+                    <label>
+                        {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                        <input type="checkbox" name="aprobadores_firma" id="aprobadores_firma" value="1"
+                            style="width: 20px; height: 20px; vertical-align:middle;" />
+                        <span>Activar flujo de aprobación</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row d-none" id="aprobadores-firma-box">
+            <div class="col-md-12 form-group">
+                <label for="">Asignar Aprobadores</label>
+                <select name="aprobadores_firma[]" id="aprobadores" multiple class="form-control">
+                    @if ($firma)
+                        @foreach ($firma->aprobadores as $aprobador)
+                            <option value="{{ $aprobador->id }}">
+                                {{ $aprobador->name }}
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="">No aprobadores available</option>
+                    @endif
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
             <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="col s12 m12 distancia">
-                <label>
-                    {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
-                    <input type="checkbox" name="identificador_privado" id="check" value="1"
-                        onchange="javascript:showContent()" />
-                    <span>Contrato Privado</span>
-                </label>
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <div class="distancia">
+                        <label>
+                            {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
+                            <input type="checkbox" name="identificador_privado" id="check" value="1"
+                                onchange="javascript:showContent()"
+                                style="width: 20px; height: 20px; vertical-align:middle;" />
+                            <span>Contrato Privado</span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <input type="text" name="contrato_privado" style="visibility:hidden">
         </div>
 
-        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="row">
             @if ($contratos->no_contrato == null)
                 <div class="distancia
             form-group col-md-6">
@@ -209,7 +257,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="row">
             <div class="distancia form-group col-md-12">
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
@@ -225,8 +273,8 @@
         </div>
 
 
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
+        <div class="row">
+            <div class="distancia form-group col-md-6">
                 <label for="proveedor_id" class="txt-tamaño">&nbsp;Nombre
                     del
                     cliente<font class="asterisco">*</font></label>
@@ -247,34 +295,9 @@
                     </div>
                 @endif
             </div>
-            <div class="distancia form-group col-md-4">
-                <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
-                    de
-                    proyecto</label>
-                <input class="form-control" type="text" name="no_proyecto" id="no_proyecto" maxlength="250">
-                @if ($errors->has('no_proyecto'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_proyecto') }}
-                    </div>
-                @endif
-            </div>
-            {{-- <div class="col s12 m4 distancia">
-                <label for="area_id" class="txt-tamaño">Área a la que pertenece el contrato</label>
-                <select class="" name="area_id" id="area_id" required>
-                    <option value="" selected disabled>Seleccione área</option>
-                    @foreach ($areas as $area)
-                        <option value="{{ $area->id }}">{{ $area->area }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('area_id'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('area_id') }}
-                    </div>
-                @endif
-            </div> --}}
 
 
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-6">
                 <label for="area_id" class="txt-tamaño"> Área a la
                     que
                     pertenece el contrato:</label>
@@ -293,8 +316,11 @@
             </div>
         </div>
 
+        <div style="margin-left: 10px;">
+            @livewire('contratos-identificador-proyectos-int-ext')
+        </div>
 
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="fase" class="txt-tamaño">
                     &nbsp;Fase<font class="asterisco">*
@@ -304,7 +330,7 @@
                     <option>Solicitud de contrato</option>
                     <option>Autorización</option>
                     <option>Negociación</option>
-                    <option>Aprobacíon</option>
+                    <option>Aprobación</option>
                     <option>Ejecución</option>
                     <option>Gestión de obligaciónes</option>
                     <option>Modificación de contrato</option>
@@ -343,7 +369,7 @@
             </div>
 
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-12">
                 <label for="objetivo" class="txt-tamaño">
                     Objetivo del servicio<font class="asterisco">*</font></label>
@@ -358,7 +384,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="estatus" class="txt-tamaño">Adjuntar
                     Contrato<font class="asterisco">*</font></label><br>
@@ -410,7 +436,7 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
@@ -453,12 +479,12 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
 
-                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!}
+                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => '1']) !!}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
@@ -512,7 +538,7 @@
                     <div class="card hoverable">
                         <div class="card-content center-align">
 
-                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="no_contrato" class="txt-tamaño">
                                         Valor del Dolar
@@ -561,7 +587,7 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="row">
                                 @php
                                     $contrato_importe_total = $contratos->monto_pago;
                                 @endphp
@@ -661,10 +687,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 1<font class="asterisco">*
@@ -696,12 +722,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre
                         del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control','maxlength' => '250']) !!}
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}
@@ -742,7 +768,7 @@
                     <div id="signaturePad" >
                         <textarea id="signature64" name="signed" style="display:none; text-align:center;"></textarea>
                     </div>
-                    <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
+                    <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
                 <br/>
                     @if ($errors->has('signed'))
                     <div class="invalid-feedback red-text">
@@ -750,11 +776,12 @@
                     </div>
             @endif
             </div> --}}
-            <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+
+            <div class="form-group col-12 text-right mt-4">
                 <div class="col s12 m12 right-align btn-grd distancia">
                     <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
-                        class="btn btn_cancelar">Cancelar</a>
-                    {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'id' => 'btnGuardar']) !!}
+                        class="btn btn-outline-primary">Cancelar</a>
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-primary', 'id' => 'btnGuardar']) !!}
                 </div>
             </div>
         </div>
@@ -1176,6 +1203,24 @@
             $('.td_fianza').fadeIn(0);
         } else {
             $('.td_fianza').fadeOut(0);
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aprobadores").select2({
+            theme: "bootstrap4",
+        });
+    });
+
+    document.getElementById('aprobadores_firma').addEventListener('change', (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked) {
+            document.getElementById('aprobadores-firma-box').classList.remove('d-none');
+        } else {
+            document.getElementById('aprobadores-firma-box').classList.add('d-none');
         }
     });
 </script>

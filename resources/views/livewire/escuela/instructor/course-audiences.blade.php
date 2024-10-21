@@ -5,18 +5,18 @@
     @foreach ($course->audiences as $item)
         @if ($audience->id == $item->id)
             <div class="registro rounded p-2">
-                <form wire:submit.prevent='update'>
-                    <input wire:model.debounce.800ms="audience.name" class="form-control">
-                    @error('audience.name')
+                <form wire:submit='update'>
+                    <input wire:model.live="formName" class="form-control">
+                    @error('formName')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </form>
             </div>
         @else
-            <div class="registro rounded pt-2 pl-4 pr-4">
+            <div class="registro py-2 pl-4 pr-4" style="border-radius:12px;">
                 <div class="row justify-content-start">
                     <div class="col-9">
-                        <h4 style="color:#3086AF;">{{ $item->name }}</h4>
+                        <p style="color:var(--color-tbj); margin:0px;">{{ $item->name }}</p>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <i wire:click="edit({{ $item }})"
@@ -28,18 +28,18 @@
         @endif
     @endforeach
 
-    <article class="card shadow-none">
-        <div class="card-body">
-            <form wire:submit.prevent="store" class="form-group">
-                <div class="mt-2 row justify-content-start align-items-baseline">
-                    <div class="form-group col-9 pl-0 anima-focus">
+    <div class="card shadow-none">
+        <div class="card-body" style="padding-bottom: 17px; padding-top:17px;">
+            <form wire:submit="store" class="form-group mb-0">
+                <div class="row justify-content-start align-items-baseline">
+                    <div class="form-group col-9 pl-0 anima-focus mb-0">
                         {{-- {!! Form::label('title', 'Agregar el nombre del requisito*', [
                             'class' => 'pl-0',
                         ]) !!} --}}
-                        <input wire:model.debounce.800ms="name" class="form-control" placeholder="">
+                        <input wire:model.live="name" class="form-control" placeholder="">
                         <label for="name">Agregar el nombre del requisito*</label>
                         @error('name')
-                                <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-3 col-3 d-flex justify-content-end">
@@ -49,5 +49,5 @@
                 </div>
             </form>
         </div>
-    </article>
+    </div>
 </section>

@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Category::get();
+            $query = Category::getAll();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,7 +51,7 @@ class CategoryController extends Controller
             return $table->make(true);
         }
 
-        $categories = Category::get();
+        $categories = Category::getAll();
 
         return view('admin.escuela.admin.categories.index', compact('categories'));
     }

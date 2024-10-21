@@ -16,7 +16,7 @@
                             <label for="definicion">Definición: <span class="text-danger">*</span></label>
                             <input type="text"
                                 class="form-control {{ $errors->has('definicion') ? 'is-invalid' : '' }}"
-                                id="definicion" aria-describedby="definicion" wire:model.defer="definicion"
+                                id="definicion" aria-describedby="definicion" wire:model="definicion"
                                 value="{{ old('definicion') }}" autocomplete="off">
                             <small>Ingresa la definición de la metrica del objetivo</small>
                             @if ($errors->has('definicion'))
@@ -29,8 +29,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
             </div>
         </div>
     </div>

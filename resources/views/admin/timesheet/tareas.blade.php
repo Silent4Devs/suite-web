@@ -16,6 +16,7 @@
             @livewire('timesheet.tabla-tareas-timesheet', ['proyecto_id' => null, 'origen' => 'tareas'])
         </div>
     </div>
+
 @endsection
 
 @section('scripts')

@@ -21,11 +21,11 @@
         }
 
         .btn {
-            border: 1px solid #345183;
+            border: 1px solid var(--color-tbj);
             display: inline-block;
             padding: 15px 15px;
             border-radius: 5px;
-            color: #345183;
+            color: var(--color-tbj);
             margin-bottom: 60px;
             text-decoration: none;
             transition: all 0.3s ease 0s;
@@ -33,10 +33,9 @@
 
         .btn:hover {
             transition: 0.5s;
-            background-color: #345183;
+            background-color: var(--color-tbj);
             color: white;
         }
-
     </style>
 </head>
 

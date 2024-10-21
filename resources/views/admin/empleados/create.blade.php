@@ -172,14 +172,14 @@
             font-size: 10pt;
         }
 
-        #btn_cancelar{
+        #btn_cancelar {
 
-        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-        border: 1px solid var(--unnamed-color-057be2);
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        border: 1px solid #057BE2;
-        border-radius: 4px;
-        opacity: 1;
+            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+            border: 1px solid var(--unnamed-color-057be2);
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #057BE2;
+            border-radius: 4px;
+            opacity: 1;
         }
     </style>
     <h5 class="col-12 titulo_general_funcion">Registrar: Empleado</h5>
@@ -242,7 +242,8 @@
                     </div>
                 @endcan
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="btn" id="btn_cancelar" style="color:#057BE2; height: 3rem;">Cancelar</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary"
+                        id="btn_cancelar" style="color:#057BE2; height: 3rem;">Cancelar</a>
                     <button class="btn tb-btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
@@ -365,16 +366,16 @@
                             })
                         })
                         .then(data => {
-                            if (data.errors) {
-                                document.getElementById('loaderComponent').style.display = 'none';
-                                $.each(data.errors, function(indexInArray, valueOfElement) {
-                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
-                                        valueOfElement[0]);
-                                });
-                                toastr.error(
-                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                                );
-                            }
+                            // if (data.errors) {
+                            //     document.getElementById('loaderComponent').style.display = 'none';
+                            //     $.each(data.errors, function(indexInArray, valueOfElement) {
+                            //         $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                            //             valueOfElement[0]);
+                            //     });
+                            //     toastr.error(
+                            //         'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                            //     );
+                            // }
 
                             if (data.status) {
                                 document.getElementById('loaderComponent').style.display = 'none';
@@ -410,16 +411,16 @@
                                 })
                             }
 
-                            if (error.message == 'The given data was invalid.') {
-                                document.getElementById('loaderComponent').style.display = 'none';
-                                $.each(error.errors, function(indexInArray, valueOfElement) {
-                                    $(`#error_${indexInArray.replaceAll('.','_')}`).text(
-                                        valueOfElement[0]);
-                                });
-                                toastr.error(
-                                    'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
-                                );
-                            }
+                            // if (error.message == 'The given data was invalid.') {
+                            //     document.getElementById('loaderComponent').style.display = 'none';
+                            //     $.each(error.errors, function(indexInArray, valueOfElement) {
+                            //         $(`#error_${indexInArray.replaceAll('.','_')}`).text(
+                            //             valueOfElement[0]);
+                            //     });
+                            //     toastr.error(
+                            //         'Tu resgitro contiene errores de validación, revisa los inputs por favor.'
+                            //     );
+                            // }
                         })
                 })
             })

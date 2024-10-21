@@ -1,6 +1,6 @@
 .caja-cards-mis-cursos {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
 }
@@ -48,8 +48,7 @@
 
 .indicador-progreso-barra {
     position: absolute;
-    background-color: #006DDB;
-    border-radius: 100px;
+    background-color: var(--color-tbj);    border-radius: 100px;
     height: 100%;
 }
 
@@ -111,13 +110,8 @@
 }
 
 .btn-mi-course {
-    background: #E9F1FF 0% 0% no-repeat padding-box;
-    border: 1px solid #25A0E2;
-    border-radius: 4px;
-    opacity: 1;
-    width: 365px;
-    height: 44px;
-    margin-top: 39px;
+    margin-top: 50px;
+    width: 100%;
 }
 
 .curso-progreso-barra {
@@ -141,8 +135,7 @@
     text-align: left;
     font: normal normal normal 14px/17px Roboto;
     letter-spacing: 0px;
-    color: #006DDB;
-    opacity: 1;
+    color: var(--color-tbj);    opacity: 1;
 }
 
 .caja-info-card-advance {
@@ -181,6 +174,39 @@ iframe {
     margin-top: 41px !important;
 }
 
+.option-fixed-admin {
+    width: 90px;
+    height: 150px;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    margin-top: -80px;
+    z-index: 10;
+    background-color: var(--color-tbj);
+    border: 1px solid #bdbdbd;
+    color: #fff;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+    transform: translateX(calc(-100% + 25px));
+}
+
+.option-fixed-admin:hover {
+    transform: translateX(0px);
+    border: 1px solid #25ACC1;
+    background-color: #fff;
+    color: #656565;
+}
+
+.option-fixed-admin img {
+    width: 30px;
+    transition: 0.07s;
+}
+
 .option-fixed-admin a {
     display: flex;
     flex-direction: column;
@@ -196,6 +222,18 @@ iframe {
 .option-fixed-admin:hover a {
     transition: 0.3s;
     opacity: 1;
+}
+
+.option-fixed-admin img:hover {
+    transform: scale(1.1);
+}
+
+.option-fixed-admin i {
+    font-size: 20px;
+}
+
+.option-fixed-admin:hover i {
+    opacity: 0;
 }
 
 .last-course {
@@ -215,4 +253,17 @@ iframe {
     letter-spacing: 0px;
     color: #FFFFFF;
     opacity: 1;
+}
+
+
+.content-img {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.content-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

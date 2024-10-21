@@ -490,17 +490,14 @@
 /* Estilos para el input subtasks */
 #task-input {
     border: 1px solid transparent;
-    color: #006DDB;
-}
+    color: var(--color-tbj);}
 
 #task-input::placeholder {
-    color: #006DDB;
-    /* Cambia el color según tus preferencias */
+    color: var(--color-tbj);    /* Cambia el color según tus preferencias */
 }
 
 #task-input:focus {
-    color: #006DDB;
-    outline: none;
+    color: var(--color-tbj);    outline: none;
     border: 0px solid transparent;
     background-color: transparent;
 }
@@ -529,8 +526,7 @@
 .edit-task-input {
     display: flex;
     align-items: center;
-    color: #006DDB;
-    padding: 5px;
+    color: var(--color-tbj);    padding: 5px;
     outline: none;
     border: 0px solid transparent;
     background-color: transparent;

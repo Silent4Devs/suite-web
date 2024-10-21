@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 <style>
-    #card{
+    #card {
         /* UI Properties */
         height: 11rem;
         background: #306BA9 0% 0% no-repeat padding-box;
@@ -8,7 +8,8 @@
         opacity: 1;
         margin: 0 auto;
     }
-    .h2doc{
+
+    .h2doc {
         position: relative;
         top: -129px;
         left: 8%;
@@ -22,7 +23,8 @@
         color: #FFFFFF;
         opacity: 1;
     }
-    .pdoc{
+
+    .pdoc {
         position: relative;
         top: -129px;
         left: 8%;
@@ -36,19 +38,22 @@
         color: #FFFFFF;
         opacity: 1;
     }
-    .imgdoc{
+
+    .imgdoc {
         width: 140px;
         height: 140px;
         /* UI Properties */
         background: transparent url('img/icono_onboarding.png') 0% 0% no-repeat padding-box;
         opacity: 1;
     }
-    .small {
-          width: 80%;
-          margin: 0 auto; /* Esto centra el div horizontalmente en la página */
-        }
 
-    #btn_cancelar{
+    .small {
+        width: 80%;
+        margin: 0 auto;
+        /* Esto centra el div horizontalmente en la página */
+    }
+
+    #btn_cancelar {
         background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
         border: 1px solid var(--unnamed-color-057be2);
         background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -56,7 +61,6 @@
         opacity: 1;
         color: #057BE2;
     }
-
 </style>
 @section('content')
     {{ Breadcrumbs::render('admin.comiteseguridads.create') }}
@@ -68,10 +72,13 @@
                 <br>
                 <h4>¿Qué es Conformación del Comité?</h4>
                 <p>
-                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
+                    Refiere al proceso de establecer un grupo de individuos con roles y responsabilidades definidos para
+                    abordar un tema o llevar a cabo una tarea específica en una organización o proyecto.
                 </p>
                 <p>
-                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de problemas  la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre otros.
+                    Los comités se crean para abordar una variedad de asuntos, como la toma de decisiones, la resolución de
+                    problemas la supervisión de proyectos, la formulación de políticas, la revisión de procesos, entre
+                    otros.
                 </p>
             </div>
         </div>
@@ -83,9 +90,9 @@
                 @csrf
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12  anima-focus">
-                    <input class="form-control" maxlength="255" type="text"
-                        name="nombre_comite" id="nombre_comite" placeholder=" " required>
-                        {!! Form::label('nombre_comite', 'Nombre del Comité*', ['class' => 'asterisco']) !!}
+                    <input class="form-control" maxlength="255" type="text" name="nombre_comite" id="nombre_comite"
+                        placeholder=" " required>
+                    {!! Form::label('nombre_comite', 'Nombre del Comité*', ['class' => 'asterisco']) !!}
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 anima-focus">
@@ -96,8 +103,9 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar" style="text-decoration: none;">Cancelar</a>
-                    <button class="btn tb-btn-primary"  type="submit" style="width: 13%;">
+                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn btn-outline-primary"
+                        style="text-decoration: none;">Cancelar</a>
+                    <button class="btn tb-btn-primary" type="submit" style="width: 13%;">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -127,8 +135,7 @@
                 document.getElementById('area_asignada').innerHTML = recortarTexto(area);
             })
 
-            function recortarTexto(texto, length = 40)
-            {
+            function recortarTexto(texto, length = 40) {
                 let trimmedString = texto?.length > length ?
                     texto.substring(0, length - 3) + "..." :
                     texto;

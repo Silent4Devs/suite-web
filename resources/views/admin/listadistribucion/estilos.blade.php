@@ -8,7 +8,7 @@
 
 <style>
     .card-btns-distribucion {
-        background-color: #F0F2FF91;
+        background-color: #ff000091;
         height: 300px;
         width: 100%;
         border-radius: 14px;
@@ -64,11 +64,11 @@
     }
 
     .card h5 {
-        color: #306BA9;
+        color: var(--color-tbj);
     }
 
     .instrucciones {
-        background-color:#306BA9;
+        background-color: var(--color-tbj);
         border-radius: 8px;
         color: #fff;
         padding: 20px;
@@ -84,5 +84,55 @@
         border-radius: 4px;
         opacity: 1;
         color: #fff;
+    }
+
+    .imgdoc {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        top: 5px;
+        left: 15px;
+        /* UI Properties */
+        background: transparent url('img/icono_onboarding.png') 0% 0% no-repeat padding-box;
+        opacity: 1;
+    }
+
+    #btn_cancelar {
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        border: 1px solid var(--unnamed-color-057be2);
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #057BE2;
+        opacity: 1;
+    }
+
+    .anima-focus label {
+        margin-top: -7px !important;
+
+    }
+
+    .select2{
+        max-width: 100%;
+    }
+
+    .select2.select2-container.select2-container--default.select2-container--below{
+        max-width: 100%;
+    }
+
+    .select2-container {
+    min-width: 100%; /* Establece el tamaño mínimo */
+    max-width: 100%;  /* O usa un tamaño fijo, si prefieres */
+}
+
+
+    .select2.select2-container.select2-container--default{
+        max-width: 100%;
+    }
+
+    .select2.select2-container.select2-container--default.select2-container--focus.select2-container--below.select2-container--open{
+        max-width: 100%;
+    }
+
+    .select2-selection.select2-selection--multiple{
+        max-width: 100%;
     }
 </style>

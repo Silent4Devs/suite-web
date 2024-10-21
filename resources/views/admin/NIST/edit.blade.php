@@ -489,7 +489,6 @@
             text-align: center;
             width: 1.6em;
         }
-
     </style>
 
     <style>
@@ -614,7 +613,6 @@
 
 
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -634,7 +632,8 @@
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
 
 
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     Evaluacion del Riesgo
                 </div>
 
@@ -694,11 +693,11 @@
                             name="tipo" id="tipo" value="{{ old('tipo', $matrizNist->tipo) }}">
                     </div>
                 </div>
-                @livewire('n-i-s-t.select-impacto',['severidad'=>$matrizNist->severidad,'probabilidad'=>$matrizNist->probabilidad,'impacto'=>$matrizNist->impacto_num])
+                @livewire('n-i-s-t.select-impacto', ['severidad' => $matrizNist->severidad, 'probabilidad' => $matrizNist->probabilidad, 'impacto' => $matrizNist->impacto_num])
 
                 <div class="row">
                     <div class="col-12" style="text-align: right">
-                        <button type="submit" class="btn btn-danger">Editar</button>
+                        <button type="submit" class="btn btn-primary">Editar</button>
                     </div>
                 </div>
             </form>

@@ -88,7 +88,7 @@ class VacacionesController extends Controller
     {
         abort_if(Gate::denies('reglas_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $areas = Area::getAll();
-        $vacacion = new Vacaciones();
+        $vacacion = new Vacaciones;
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
         return view('admin.vacaciones.create', compact('vacacion', 'areas', 'areas_seleccionadas'));
@@ -112,7 +112,7 @@ class VacacionesController extends Controller
                 $errorMessage = 'Debe seleccionar un area.';
 
                 // Manually add error message to $errors bag
-                $errors = new \Illuminate\Support\MessageBag();
+                $errors = new \Illuminate\Support\MessageBag;
                 $errors->add('custom_areas', $errorMessage);
 
                 // Redirect back with the input data and errors
@@ -176,7 +176,7 @@ class VacacionesController extends Controller
                 $errorMessage = 'Debe seleccionar un area.';
 
                 // Manually add error message to $errors bag
-                $errors = new \Illuminate\Support\MessageBag();
+                $errors = new \Illuminate\Support\MessageBag;
                 $errors->add('custom_areas', $errorMessage);
 
                 // Redirect back with the input data and errors
@@ -213,39 +213,6 @@ class VacacionesController extends Controller
         $data = User::getCurrentUser()->empleado->id;
 
         $solVac = SolicitudVacaciones::getAllwithEmpleados();
-        // dd($solVac);
-
-        // if ($request->ajax()) {
-        //     $query = SolicitudVacaciones::getAllwithEmpleados();
-        //     $table = datatables()::of($query);
-
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('empleado', function ($row) {
-        //         return $row->empleado ? $row->empleado : '';
-        //     });
-
-        //     $table->editColumn('dias_solicitados', function ($row) {
-        //         return $row->dias_solicitados ? $row->dias_solicitados : '';
-        //     });
-        //     $table->editColumn('fecha_inicio', function ($row) {
-        //         return $row->fecha_inicio ? $row->fecha_inicio : '';
-        //     });
-        //     $table->editColumn('fecha_fin', function ($row) {
-        //         return $row->fecha_fin ? $row->fecha_fin : '';
-        //     });
-        //     $table->editColumn('aprobacion', function ($row) {
-        //         return $row->aprobacion ? $row->aprobacion : '';
-        //     });
-        //     $table->editColumn('descripcion', function ($row) {
-        //         return $row->descripcion ? $row->descripcion : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $query;
-        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -257,7 +224,7 @@ class VacacionesController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new VistaGlobalVacacionesExport();
+        $export = new VistaGlobalVacacionesExport;
 
         return Excel::download($export, 'Control_Ausencias_Vacaciones.xlsx');
     }

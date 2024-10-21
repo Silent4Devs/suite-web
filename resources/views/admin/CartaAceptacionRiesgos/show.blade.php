@@ -76,7 +76,7 @@
                                 @livewire('body-carta-aceptacion', ['proceso' => $cartaAceptacion->proceso_id, 'tipo' => 'show', 'cartaAceptacion' => $cartaAceptacion, 'aprobadores' => $aprobadores])
 
                                 <div class="row col-12 mt-2 pl-0 ml-2">
-                                    <div class="col-4" style="color:#345183;background-color: rgb(220, 255, 255);">
+                                    <div class="col-4" style="color:var(--color-tbj)background-color: rgb(220, 255, 255);">
                                         <strong style="font-size:12px;">Razón del negocio por la que se debe aceptar el
                                             Riesgo</strong>
                                     </div>
@@ -88,7 +88,7 @@
 
                                 <div class="row col-12 mt-4 pl-0 ml-2">
                                     <div class="col-4"
-                                        style="font-size:12px; color:#345183;background-color: rgb(220, 255, 255);">
+                                        style="font-size:12px; color:var(--color-tbj)background-color: rgb(220, 255, 255);">
                                         <strong>Controles compensatorios</strong>
                                     </div>
                                     <div class="col-8" style="font-size:12px; background-color:#cccccc;">
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:#345183; background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">3.Politicas/Control asociados al Riesgo</strong>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12">
@@ -112,17 +112,19 @@
                                     <hr>
                                 </div>
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:#345183; background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">4. Hallazgos asociados al Riesgo</strong>
                                 </div>
                                 <div class="row col-12">
-                                    <div class="col-4 p-4" style="color:#345183;background-color: rgb(220, 255, 255);">
-                                        <strong style="font-size:12px; width:100%;color:#345183;">Hallazgos de auditoría
+                                    <div class="col-4 p-4"
+                                        style="color:var(--color-tbj)background-color: rgb(220, 255, 255);">
+                                        <strong style="font-size:12px; width:100%;color:var(--color-tbj)">Hallazgos de
+                                            auditoría
                                             interna / externa</strong>
                                     </div>
                                     <div class="col-5 p-4">
                                         <span
-                                            style="font-size:12px; width:100%;color:#345183;">{!! $cartaAceptacion->hallazgos_auditoria !!}</span>
+                                            style="font-size:12px; width:100%;color:var(--color-tbj)">{!! $cartaAceptacion->hallazgos_auditoria !!}</span>
                                     </div>
 
                                 </div>
@@ -132,7 +134,7 @@
                                             <thead>
                                                 <tr class="negras">
                                                     <th class="text-center"
-                                                        style="font-size:12px; color:#345183; background-color:#cccccc;"
+                                                        style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                                                         colspan="5">
                                                         <div>
                                                             5. Autorización de Aceptación de Riesgo
@@ -145,13 +147,13 @@
                                                 @foreach ($aprobadores as $aprobador)
                                                     <tr>
                                                         <td rowspan="{{ $aprobador->empleado->id == auth()->user()->empleado->id ? 2 : 1 }}"
-                                                            style="min-width:200px; color:#345183;background-color: rgb(220, 255, 255);">
+                                                            style="min-width:200px; color:var(--color-tbj)background-color: rgb(220, 255, 255);">
                                                             <strong
-                                                                style="font-size:12px; color:#345183;">{{ $aprobador->autoridad }}</strong>
+                                                                style="font-size:12px; color:var(--color-tbj)">{{ $aprobador->autoridad }}</strong>
                                                         </td>
                                                         <td style="min-width:200px;">
                                                             <span
-                                                                style="font-size:12px; width:100%;color:#345183;">{{ $aprobador->empleado ? $aprobador->empleado->name : 'Sin registrar' }}</span>
+                                                                style="font-size:12px; width:100%;color:var(--color-tbj)">{{ $aprobador->empleado ? $aprobador->empleado->name : 'Sin registrar' }}</span>
                                                         </td>
                                                         <td style="min-width:250px;">
                                                             <textarea {{ $aprobador->empleado->id == auth()->user()->empleado->id ? '' : 'disabled' }}
@@ -159,7 +161,7 @@
                                                                 class="form-control">{{ $aprobador->comentarios }}</textarea>
                                                         </td>
                                                         <td style="min-width:90px;">
-                                                            <span style="font-size:12px; width:100%;color:#345183;">
+                                                            <span style="font-size:12px; width:100%;color:var(--color-tbj)">
                                                                 @if (!is_null($cartaAceptacion->fecha_aprobacion))
                                                                     {{ \Carbon\Carbon::parse($cartaAceptacion->fecha_aprobacion)->format('d-m-Y') }}
                                                                 @endif
@@ -214,7 +216,7 @@
 
 
                                 <div class="mt-5 text-center p-3"
-                                    style="width:100%;color:#345183; background-color:#cccccc;">
+                                    style="width:100%;color:var(--color-tbj); background-color:#cccccc;">
                                     <strong style="font-size:12px;">6. Recomendaciones mandatorias de seguridad</strong>
                                 </div>
                                 <div style="font-size:12px;" class="col-md-12 col-lg-12 col-sm-12">
@@ -236,18 +238,18 @@
                         <thead>
                             <tr>
 
-                                <th class="text-center" style="color:#345183; background-color:#cccccc;" colspan="2">Tipo de impacto del riesgo</th>
+                                <th class="text-center" style="color:var(--color-tbj); background-color:#cccccc;" colspan="2">Tipo de impacto del riesgo</th>
                             </tr>
 
                         </thead>
 
                         <tbody>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Legal
                                 </td>
 
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                 @switch ($cartaAceptacion->legal)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
@@ -272,11 +274,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Cumplimiento
                                 </td>
 
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     @switch ($cartaAceptacion->cumplimiento)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
@@ -301,11 +303,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Operacional
                                 </td>
 
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     @switch ($cartaAceptacion->operacional)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
@@ -331,11 +333,11 @@
 
                             </tr>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Reputacional
                                 </td>
 
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     @switch ($cartaAceptacion->reputacional)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
@@ -360,10 +362,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Financiero
                                 </td>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     @switch ($cartaAceptacion->financiero)
                                     @case(1)
                                     <div class="cuadro_verdelimon"></div>
@@ -388,10 +390,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
                                     Impacto Tecnológico
                                 </td>
-                                <td  style="color:#345183;">
+                                <td  style="color:var(--color-tbj)">
 
                                     @switch ($cartaAceptacion->tecnologico)
                                         @case(1)

@@ -9,7 +9,7 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::where('status', 2)->paginate();
+        $courses = Course::where('status', 2)->orderByDesc('id')->cursorPaginate();
 
         return view('admin.courses.index', compact('courses'));
     }

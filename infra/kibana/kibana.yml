@@ -1,0 +1,28 @@
+server.host: "0.0.0.0"
+elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+#elasticsearch.username: "kibana"  # If authentication is enabled
+#elasticsearch.password: "123"  # If authentication is enabled
+
+# Logging settings
+# logging.dest: stdout
+# logging.verbose: true
+
+# Advanced settings
+#server.basePath: "/kibana"  # Optional setting to proxy Kibana through a different path
+
+xpack.security.enabled: false
+# Optional settings for SSL/TLS
+# server.ssl.enabled: true
+# server.ssl.key: /path/to/your/server.key
+# server.ssl.certificate: /path/to/your/server.crt
+# elasticsearch.ssl.certificateAuthorities: [ "/path/to/your/ca.crt" ]
+
+# Example of using a proxy server for outbound connections (uncomment and adjust if needed)
+# server.proxyConfig:
+#   proxyUrl: "http://proxy.example.com:3128"
+
+# Example of configuring CORS (Cross-Origin Resource Sharing)
+# server.cors: true
+# server.cors.origin: ["https://example.com"]
+
+# Additional configurations as needed

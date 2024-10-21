@@ -14,15 +14,15 @@
     <div>
         <div class="text-right">
             @can('timesheet_administrador_configuracion_access')
-                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-success">Pagina Principal de Proyectos</a>
+                <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-primary">Pagina Principal de Proyectos</a>
             @endcan
             @can('asignar_empleados')
-                <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar
+                <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-primary">Asignar
                     Empleados</a>
             @endcan
             @can('asignar_externos')
                 @if ($proyecto->tipo === 'Externo')
-                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar
+                    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-primary">Asignar
                         Proveedores/Consultores</a>
                 @endif
             @endcan
@@ -37,32 +37,22 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="title-card-time">Editar Proyecto: {{ $proyecto->proyecto }}</h4>
-                    <hr class="my-4">
                 </div>
             </div>
 
             <form method="POST" action="{{ route('admin.timesheet-proyectos-update', $proyecto->id) }}">
                 @csrf
                 <div class="row mt-4">
-                    <div class="form-group col-md-2 anima-focus">
-                        <input id="identificador_proyect" placeholder="" name="identificador"
-                            title="Por favor, no incluyas comas en el nombre de la tarea." pattern="[^\.,]*"
-                            class="form-control" required value="{{ old('identificador', $proyecto->identificador, '') }}">
-                        {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
-                        @if ($errors->has('identificador'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('identificador') }}
-                            </div>
-                        @endif
-                        @error('identificador')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-8" style="padding-left: 0px !important; padding-right: 0px !important">
+                        @livewire('edit-identificador-proyectos-int-ext', ['id_proyecto' => $proyecto->id])
                     </div>
-                    <div class="form-group col-md-6 anima-focus">
+                    <div class="form-group col-md-4 anima-focus">
                         <input id="name_proyect" name="proyecto_name" placeholder="" class="form-control" required
                             value="{{ old('proyecto_name', $proyecto->proyecto, '') }}">
                         {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-4 anima-focus">
                         <select name="cliente_id" id="cliente_id" class="form-control" required>
                             <option selected value="{{ old('cliente_id', $proyecto->cliente_id, '') }}">
@@ -75,8 +65,6 @@
                         </select>
                         {!! Form::label('cliente_id', 'Cliente*', ['class' => 'asterisco']) !!}
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
                         id="caja_areas_seleccionadas_create">
                         <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
@@ -98,6 +86,18 @@
                             <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                         </div>
                     </div>
+                    <div class="form-group col-md-4 anima-focus">
+                        <select class="form-control" name="sede_id" id="sede_id">
+                            <option selected value="{{ old('sede_id', $proyecto->sede_id, null) }}">
+                                {{ $proyecto->sede->sede ?? '' }}</option>
+                            @foreach ($sedes as $sede)
+                                <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                            @endforeach
+                        </select>
+                        {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-4 anima-focus">
                         <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"
                             value="{{ old('fecha_inicio', $proyecto->fecha_inicio, '') }}">
@@ -124,28 +124,6 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="sede_id" id="sede_id">
-                            <option selected value="{{ old('sede_id', $proyecto->sede_id, null) }}">
-                                {{ $proyecto->sede->sede ?? '' }}</option>
-                            @foreach ($sedes as $sede)
-                                <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
-                            @endforeach
-                        </select>
-                        {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
-                    </div>
-                    <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="tipo" id="tipo" required>
-                            <option selected value="{{ old('tipo', $proyecto->tipo, '') }}">{{ $proyecto->tipo ?? '' }}
-                            </option>
-                            @foreach ($tipos as $tipo_it)
-                                <option value="{{ $tipo_it }}">{{ $tipo_it }}</option>
-                            @endforeach
-                        </select>
-                        {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
-                    </div>
                     <div class="form-group col-md-4 anima-focus">
                         <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
                             name="horas_proyecto" placeholder="" id="horas_asignadas" class="form-control"
@@ -155,8 +133,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn_cancelar">Cancelar</a>
-                        <button class="btn btn-success" type="submit"> Guardar</button>
+                        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit"> Guardar</button>
                     </div>
                 </div>
             </form>

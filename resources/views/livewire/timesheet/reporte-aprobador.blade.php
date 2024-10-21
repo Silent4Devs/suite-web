@@ -130,13 +130,13 @@
         <x-loading-indicator />
         <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
             <button class="btn btn-sm mr-2"
-                style="{{ !$habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                style="{{ !$habilitarTodos ? 'background-color: var(--color-tbj)color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                 id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo"
                 wire:click="$set('habilitarTodos',false)">
                 Directos
             </button>
             <button class="btn btn-sm"
-                style="{{ $habilitarTodos ? 'background-color: #345183;color:white;' : '' }} border:none !important; position: relative;padding:10px;"
+                style="{{ $habilitarTodos ? 'background-color: var(--color-tbj)color:white;' : '' }} border:none !important; position: relative;padding:10px;"
                 id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder"
                 wire:click="$set('habilitarTodos',true)">
                 Todos
@@ -145,12 +145,12 @@
         <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de inicio</label>
             <input id="fecha_dia_registros_inicio_empleados" class="form-control date_librery" type="date"
-                name="fecha_inicio" wire:model="fecha_inicio">
+                name="fecha_inicio" wire:model.live="fecha_inicio">
         </div>
         <div class="col-md-4 form-group" wire:ignore>
             <label class="form-label">Fecha de fin</label>
             <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                name="fecha_fin" wire:model="fecha_fin">
+                name="fecha_fin" wire:model.live="fecha_fin">
         </div>
         <div class="col-md-2 form-group">
             <label class="form-label">Horas totales</label>
@@ -161,7 +161,7 @@
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
         <div class="col-12 form-group text-right">
-            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
+            <button class="btn btn-primary" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
                 correo a colaboradores con horas faltantes de registrar</button>
         </div>
 
@@ -360,8 +360,9 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-outline-primary"
+                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary"
                                 wire:click="correoRetraso({{ $empleado_md['id'] }})" data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>
                         </div>
@@ -445,12 +446,12 @@
                 <div class="form-group col-6">
                     <label class="form-label">Rango inicial</label>
                     <input id="fecha_dia_registros_inicio_empleado_reporte" type="date" name="rango_inicial"
-                        class="form-control" wire:model="fecha_inicio_empleado">
+                        class="form-control" wire:model.live="fecha_inicio_empleado">
                 </div>
                 <div class="form-group col-6">
                     <label class="form-label">Rango final</label>
                     <input id="fecha_dia_registros_fin_empleado_reporte" type="date" name="rango_final"
-                        class="form-control" wire:model="fecha_fin_empleado">
+                        class="form-control" wire:model.live="fecha_fin_empleado">
                 </div>
             </div>
             <div class="row mt-5">
@@ -651,7 +652,7 @@
             <div class="row mt-5">
                 <div class="form-group col-md-4">
                     <label class="form-label">Área</label>
-                    <select class="form-control" wire:model="area_id">
+                    <select class="form-control" wire:model.live="area_id">
                         <option selected value="0">- -</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -661,11 +662,12 @@
                 <div class="form-group col-md-4">
                     <label class="form-label">Fecha inicial</label>
                     <input type="date" name="rango_inicial" class="form-control"
-                        wire:model="fecha_inicio_general">
+                        wire:model.live="fecha_inicio_general">
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label">Fecha final</label>
-                    <input type="date" name="rango_final" class="form-control" wire:model="fecha_fin_general">
+                    <input type="date" name="rango_final" class="form-control"
+                        wire:model.live="fecha_fin_general">
                 </div>
             </div>
             <div class="row mt-5">

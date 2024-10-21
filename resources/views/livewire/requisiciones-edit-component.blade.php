@@ -1,18 +1,17 @@
 @if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
+    <div class="alert alert-danger">
+        {{ session('mensajeError') }}
+    </div>
 @endif
 
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-                style="width:150px; position: relative; top: 60px; right: 410px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px;">
         </div>
 
-        <div style="position: relative; top:-5rem; left: 80px;">
+        <div style="">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
             <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
             <p>
@@ -47,7 +46,7 @@
         <div class="tab-pane fade show  {{ $active }}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div id="home" class="tab-content">
                 <form method="PUT"
-                    wire:submit.prevent="servicioUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
+                    wire:submit="servicioUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
                     enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -94,8 +93,8 @@
                                 <label for="" class="txt-tamaño">
                                     Referencia (Título de la requisición) <font class="asterisco">*</font>
                                 </label>
-                                <input class="browser-default" type="text" name="descripcion" maxlength="255" required
-                                    value="{{ old('descripcion', $editrequisicion->referencia) }}">
+                                <input class="browser-default" type="text" name="descripcion" maxlength="255"
+                                    required value="{{ old('descripcion', $editrequisicion->referencia) }}">
                             </div>
 
                             <div class="col s12 l3 ">
@@ -179,7 +178,8 @@
                                         <label for="" class="txt-tamaño">
                                             Especificaciones del producto o servicio <font class="asterisco">*</font>
                                         </label>
-                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}" required>{{ $edtprod->espesificaciones }}</textarea>
+                                        <textarea class="model-especificaciones browser-default" maxlength="500" name="especificaciones_{{ $count }}"
+                                            required>{{ $edtprod->espesificaciones }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +201,7 @@
         <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores"
-                    wire:submit.prevent="proveedoresUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
+                    wire:submit="proveedoresUpdate(Object.fromEntries(new FormData($event.target)), {{ $editrequisicion->id }})"
                     action="PUT" enctype="multipart/form-data">
                     <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -350,7 +350,7 @@
                                                 <input type="file" class="modal-cotizacion form-control-file"
                                                     value="{{ $edtprov->cotizacion }}"
                                                     name="cotizacion_{{ $count }}"
-                                                    wire:model.lazy="cotizaciones.{{ $count }}"
+                                                    wire:model.blur="cotizaciones.{{ $count }}"
                                                     data-count="{{ $count }}"
                                                     accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png">
                                             </div>
@@ -490,7 +490,7 @@
                                             </label>
                                             <input type="file" class="modal-cotizacion form-control-file"
                                                 name="cotizacion_{{ $i }}"
-                                                wire:model.lazy="cotizaciones.{{ $i }}"
+                                                wire:model.blur="cotizaciones.{{ $i }}"
                                                 data-count="{{ $i }}"
                                                 accept=".pdf, .docx, .power .point, .xml, .jpeg, .jpg, .png" required>
                                         </div>
@@ -522,7 +522,7 @@
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $count }}'
+                                                wire:model.blur='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
                                                 <option selected>Indistinto</option>
                                                 @foreach ($proveedores as $proveedor)
@@ -577,7 +577,7 @@
                                             <div class="row">
                                                 <div class="col s12 l12">
                                                     <select class="model-producto browser-default not-select2"
-                                                        wire:model.lazy='selectOption.{{ $count }}'
+                                                        wire:model.blur='selectOption.{{ $count }}'
                                                         name="proveedor_otro{{ $count }}" required>
                                                         <option selected value="indistinto">Indistinto</option>
                                                         <option value="sugerido">Sugerido</option>
@@ -673,7 +673,7 @@
                                                             <input type="file" required
                                                                 class="modal-cotizacion form-control-file"
                                                                 name="cotizacion_{{ $count }}"
-                                                                wire:model="cotizaciones.{{ $count }}"
+                                                                wire:model.live="cotizaciones.{{ $count }}"
                                                                 data-count="{{ $count }}"
                                                                 accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                         </div>
@@ -700,7 +700,7 @@
                                                 {{-- <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor" title="Eliminar proveedor" onclick="deleteProveedor()"></i> --}}
                                             </div>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $i }}'
+                                                wire:model.blur='selectedInput.{{ $i }}'
                                                 name="proveedor_{{ $i }}" required>
                                                 <option selected>Indistinto</option>
                                                 @foreach ($proveedores as $proveedor)
@@ -753,7 +753,7 @@
                                                     <div class="row">
                                                         <div class="col s12 l12">
                                                             <select class="model-producto browser-default not-select2"
-                                                                wire:model.lazy='selectOption.{{ $count }}'
+                                                                wire:model.blur='selectOption.{{ $count }}'
                                                                 name="proveedor_otro{{ $count }}" required>
                                                                 <option selected value="indistinto">Indistinto</option>
                                                                 <option value="sugerido">Sugerido</option>
@@ -854,7 +854,7 @@
                                                                     <input type="file" required
                                                                         class="modal-cotizacion form-control-file"
                                                                         name="cotizacion_{{ $count }}"
-                                                                        wire:model="cotizaciones.{{ $count }}"
+                                                                        wire:model.live="cotizaciones.{{ $count }}"
                                                                         data-count="{{ $count }}"
                                                                         accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                                 </div>
@@ -893,7 +893,7 @@
                                                 Proveedor <font class="asterisco">*</font>
                                             </label>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model.lazy='selectedInput.{{ $count }}'
+                                                wire:model.blur='selectedInput.{{ $count }}'
                                                 name="proveedor_{{ $count }}" required>
                                                 @isset($edtprov->provedores)
                                                     <option value="{{ $edtprov->provedores->id }}" selected> Actual:
@@ -951,7 +951,7 @@
                                             <div class="row">
                                                 <div class="col s12 l12">
                                                     <select class="model-producto browser-default not-select2"
-                                                        wire:model.lazy='selectOption.{{ $count }}'
+                                                        wire:model.blur='selectOption.{{ $count }}'
                                                         name="proveedor_otro{{ $count }}" required>
                                                         <option selected value="indistinto">Indistinto</option>
                                                         <option value="sugerido">Sugerido</option>
@@ -1047,7 +1047,7 @@
                                                             <input type="file" required
                                                                 class="modal-cotizacion form-control-file"
                                                                 name="cotizacion_{{ $count }}"
-                                                                wire:model="cotizaciones.{{ $count }}"
+                                                                wire:model.live="cotizaciones.{{ $count }}"
                                                                 data-count="{{ $count }}"
                                                                 accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                         </div>
@@ -1075,7 +1075,7 @@
                                                 {{-- <i class="fa-regular fa-trash-can btn-deleted-card btn-deletd-proveedor" title="Eliminar proveedor" onclick="deleteProveedor()"></i> --}}
                                             </div>
                                             <select class="model-producto browser-default not-select2"
-                                                wire:model='selectedInput.{{ $i }}'
+                                                wire:model.live='selectedInput.{{ $i }}'
                                                 name="proveedor_{{ $i }}" required>
                                                 <option value="{{ $editrequisicion->proveedoroc_id }}" selected>
                                                     Actual1: {{ $editrequisicion->proveedor_catalogo }}</option>
@@ -1129,7 +1129,7 @@
                                                     <div class="row">
                                                         <div class="col s12 l12">
                                                             <select class="model-producto browser-default not-select2"
-                                                                wire:model.lazy='selectOption.{{ $count }}'
+                                                                wire:model.blur='selectOption.{{ $count }}'
                                                                 name="proveedor_otro{{ $count }}" required>
                                                                 <option selected value="indistinto">Indistinto</option>
                                                                 <option value="sugerido">Sugerido</option>
@@ -1230,7 +1230,7 @@
                                                                     <input type="file" required
                                                                         class="modal-cotizacion form-control-file"
                                                                         name="cotizacion_{{ $count }}"
-                                                                        wire:model="cotizaciones.{{ $count }}"
+                                                                        wire:model.live="cotizaciones.{{ $count }}"
                                                                         data-count="{{ $count }}"
                                                                         accept=".pdf, .docx, .pptx .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                                 </div>
@@ -1271,7 +1271,7 @@
                                 {{ $requi_firmar->sucursal->direccion }} <br>
                             </div>
                             <div class="flex-item item-header-doc-info" style="">
-                                <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
+                                <h4 style="font-size: 18px; color:var(--color-tbj);">REQUISICIÓN DE ADQUISICIONES</h4>
                                 <p>Folio: 00-00000{{ $requi_firmar->id }}</p>
                                 <p>Fecha de solicitud:{{ date('d-m-Y', strtotime($requi_firmar->fecha)) }} </p>
                             </div>
@@ -1539,7 +1539,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
+                    <form method="POST" wire:submit="Firmar(Object.fromEntries(new FormData($event.target)))"
                         enctype="multipart/form-data">
                         <div class="card card-body">
                             <div class="">
@@ -1567,7 +1567,8 @@
                                 </div>
                             </div>
                             <div class="flex my-4" style="justify-content: end; gap:10px;">
-                                <button onclick="validar()" class="btn tb-btn-primary" type="submit">Firmar</button>
+                                <button onclick="validar()" class="btn tb-btn-primary"
+                                    type="submit">Firmar</button>
                             </div>
                         </div>
                     </form>

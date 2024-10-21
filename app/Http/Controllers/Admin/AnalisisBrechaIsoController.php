@@ -63,7 +63,7 @@ class AnalisisBrechaIsoController extends Controller
                 $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', $row->id)->count();
                 $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', $row->id)->count();
                 $gap1nocumple = GapUnoConcentratoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', $row->id)->count();
-                $gapunoPorc = new Porcentaje2022();
+                $gapunoPorc = new Porcentaje2022;
                 $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje);
                 // dd($porcentajeGap1);
                 // dd($gap1porcentaje, $gap1satisfactorios, $gap1parcialmente, $gap1nocumple);
@@ -150,7 +150,7 @@ class AnalisisBrechaIsoController extends Controller
         ]);
         $analisisBrechaIso = AnalisisBrechasIso::create($request->all());
 
-        $dataCieContIso = new GenerateAnalisisBIso();
+        $dataCieContIso = new GenerateAnalisisBIso;
         $datosgapunoIso = $dataCieContIso->TraerDatos($analisisBrechaIso->id);
         // dd($cie);
         GapUnoConcentratoIso::insert($datosgapunoIso);
@@ -162,9 +162,7 @@ class AnalisisBrechaIsoController extends Controller
         return redirect()->route('admin.analisisdebrechas-2022.index');
     }
 
-    public function show(AnalisisBrechaIso $analisisBrecha)
-    {
-    }
+    public function show(AnalisisBrechaIso $analisisBrecha) {}
 
     public function edit($id)
     {
@@ -182,7 +180,7 @@ class AnalisisBrechaIsoController extends Controller
         $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', $id)->count();
         $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', $id)->count();
         $gap1nocumple = GapUnoConcentratoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', $id)->count();
-        $gapunoPorc = new Porcentaje2022();
+        $gapunoPorc = new Porcentaje2022;
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje);
         // dd($porcentajeGap1);
         // dd($gap1porcentaje, $gap1satisfactorios, $gap1parcialmente, $gap1nocumple);

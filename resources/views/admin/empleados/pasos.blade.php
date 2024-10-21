@@ -236,7 +236,6 @@
         width: 100%;
         object-fit: cover
     }
-
 </style>
 
 <h5 class="col-12 titulo_general_funcion">Empleado</h5>
@@ -269,7 +268,8 @@
                                     <label class="required" for="name"><i
                                             class="fas fa-street-view iconos-crear"></i>Nombre</label>
                                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                                        type="text" name="name" id="name" value="{{ old('name', '') }}"
+                                        required>
                                     @if ($errors->has('name'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('name') }}
@@ -306,13 +306,15 @@
                                 </div>
                                 @if ($ceo_exists)
                                     <div class="form-group col-sm-6">
-                                        <label class="required" for="jefe"><i class="fas fa-user iconos-crear"></i>Jefe
+                                        <label class="required" for="jefe"><i
+                                                class="fas fa-user iconos-crear"></i>Jefe
                                             Inmediato</label>
                                         <div class="mb-3 input-group">
 
                                             <select class="custom-select supervisor" id="inputGroupSelect01"
                                                 name="supervisor_id">
-                                                <option selected value="" disabled>-- Selecciona supervisor --</option>
+                                                <option selected value="" disabled>-- Selecciona supervisor --
+                                                </option>
                                                 @forelse ($empleados as $empleado)
                                                     <option value="{{ $empleado->id }}">{{ $empleado->name }}
                                                     </option>
@@ -399,7 +401,8 @@
                                             class="far fa-envelope iconos-crear"></i>Correo
                                         electrónico</label>
                                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        type="text" name="email" id="email" value="{{ old('email', '') }}" required>
+                                        type="text" name="email" id="email" value="{{ old('email', '') }}"
+                                        required>
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('email') }}
@@ -410,7 +413,8 @@
                                     <label for="telefono"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
                                         móvil</label>
                                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                        type="text" name="telefono" id="telefono" value="{{ old('telefono', '') }}">
+                                        type="text" name="telefono" id="telefono"
+                                        value="{{ old('telefono', '') }}">
                                     @if ($errors->has('telefono'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('telefono') }}
@@ -421,7 +425,8 @@
                                     <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
                                         oficina</label>
                                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                        type="text" name="telefono" id="telefono" value="{{ old('telefono', '') }}">
+                                        type="text" name="telefono" id="telefono"
+                                        value="{{ old('telefono', '') }}">
                                     @if ($errors->has('telefono'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('telefono') }}
@@ -431,7 +436,8 @@
                                 <div class="form-group col-sm-2">
                                     <label for="telefono"><i class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
                                     <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}"
-                                        type="text" name="telefono" id="telefono" value="{{ old('telefono', '') }}">
+                                        type="text" name="telefono" id="telefono"
+                                        value="{{ old('telefono', '') }}">
                                     @if ($errors->has('telefono'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('telefono') }}
@@ -470,7 +476,8 @@
                                                                     style="font-size: 20pt;position: relative;top: 4px;"></i>
                                                                 <span id="texto-imagen" class="pl-2">
                                                                     Subir imágen
-                                                                    <small class="text-danger" style="font-size: 10px">
+                                                                    <small class="text-danger"
+                                                                        style="font-size: 10px">
                                                                         (Opcional)</small>
                                                                 </span>
                                                             </h5>
@@ -489,7 +496,8 @@
                                                                     style="font-size: 20pt;position: relative;top: 4px;"></i>
                                                                 <span id="texto-imagen-avatar" class="pl-2">
                                                                     Tomar Foto
-                                                                    <small class="text-danger" style="font-size: 10px">
+                                                                    <small class="text-danger"
+                                                                        style="font-size: 10px">
                                                                         (Opcional)</small>
                                                                 </span>
                                                             </h5>
@@ -518,11 +526,11 @@
                                     <img class="screenshot-image d-none" alt="">
 
                                     <div class="controls">
-                                        <button class="btn btn-danger play" title="Iniciar"><i
+                                        <button class="btn btn-primary play" title="Iniciar"><i
                                                 class="fas fa-play-circle"></i></button>
                                         <button class="btn btn-info pause d-none" title="Pausar"><i
                                                 class="fas fa-pause-circle"></i></button>
-                                        <button class="btn btn-danger stop d-none" title="Detener"><i
+                                        <button class="btn btn-primary stop d-none" title="Detener"><i
                                                 class="fas fa-stop"></i></button>
                                         <button class="btn btn-outline-success screenshot d-none" title="Capturar"><i
                                                 class="fas fa-image"></i></button>
@@ -547,7 +555,7 @@
                                         placeholder="Alternate Contact No." />
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Certificaciones</span>
                     </div>
@@ -555,8 +563,9 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre</label>
-                            <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                                name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
+                            <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                                type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}"
+                                required>
                             @if ($errors->has('nombre'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('nombre') }}
@@ -570,7 +579,8 @@
                         <div class="form-group col-sm-6">
                             <label for="vigencia"><i class="far fa-calendar-alt iconos-crear"></i>Vigencia</label>
                             <input class="form-control {{ $errors->has('vigencia') ? 'is-invalid' : '' }}"
-                                type="text" name="vigencia" id="vigencia" value="{{ old('vigencia', '') }}" required>
+                                type="text" name="vigencia" id="vigencia" value="{{ old('vigencia', '') }}"
+                                required>
                             @if ($errors->has('vigencia'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('vigencia') }}
@@ -579,8 +589,9 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="estatus"><i class="fas fa-street-view iconos-crear"></i>Estatus</label>
-                            <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" type="text"
-                                name="estatus" id="estatus" value="{{ old('estatus', '') }}" required>
+                            <input class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}"
+                                type="text" name="estatus" id="estatus" value="{{ old('estatus', '') }}"
+                                required>
                             @if ($errors->has('estatus'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('estatus') }}
@@ -624,7 +635,8 @@
                         </table>
                     </div>
 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Regresar" />
+                    <input type="button" name="previous" class="previous action-button-previous"
+                        value="Regresar" />
                     <input type="button" name="next" class="next action-button" value="Siguiente" />
                 </fieldset>
                 <fieldset>
@@ -667,14 +679,15 @@
                                     </div>
                                 </div> --}}
 
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Cursos / Diplomados</span>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre del curso
+                            <label for="curso_diplomado"><i class="fas fa-street-view iconos-crear"></i>Nombre del
+                                curso
                                 /
                                 diplomado</label>
                             <input class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
@@ -693,8 +706,8 @@
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <label for="tipo"><i class="fas fa-street-view iconos-crear"></i>Tipo</label>
-                            <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo"
-                                id="tipo">
+                            <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                                name="tipo" id="tipo">
                                 <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\CursosDiplomasEmpleados::TipoSelect as $key => $label)
@@ -762,11 +775,12 @@
                         </table>
                     </div>
 
-                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    <input type="button" name="previous" class="previous action-button-previous"
+                        value="Previous" />
                     <input type="button" name="make_payment" class="next action-button" value="Confirm" />
                 </fieldset>
                 <fieldset>
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Experiencia Profesional</span>
                     </div>
@@ -775,8 +789,8 @@
 
                         <div class="form-group col-sm-6">
                             <label for="empresa"><i class="fas fa-building iconos-crear"></i>Empresa</label>
-                            <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
-                                name="empresa" id="empresa" value="{{ old('empresa', '') }}">
+                            <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}"
+                                type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
                             @if ($errors->has('empresa'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('empresa') }}
@@ -786,8 +800,8 @@
 
                         <div class="form-group col-sm-6">
                             <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                            <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text"
-                                name="puesto" id="puesto_trabajo" value="{{ old('puesto', '') }}">
+                            <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}"
+                                type="text" name="puesto" id="puesto_trabajo" value="{{ old('puesto', '') }}">
                             @if ($errors->has('puesto'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('puesto') }}
@@ -806,7 +820,8 @@
                         <div class="form-group col-sm-6">
                             <label for="inicio_mes"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
                             <input class="form-control {{ $errors->has('inicio_mes') ? 'is-invalid' : '' }}"
-                                type="month" name="inicio_mes" id="inicio_mes" value="{{ old('inicio_mes', '') }}">
+                                type="month" name="inicio_mes" id="inicio_mes"
+                                value="{{ old('inicio_mes', '') }}">
                             @if ($errors->has('inicio_mes'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('inicio_mes') }}
@@ -833,9 +848,8 @@
                         <div class="form-group col-sm-12">
                             <label for="descripcion"><i
                                     class="fas fa-clipboard-list iconos-crear"></i>Descripción</label>
-                            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                                type="text" name="descripcion"
-                                id="descripcion"> {{ old('descripcion', '') }}</textarea>
+                            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text"
+                                name="descripcion" id="descripcion"> {{ old('descripcion', '') }}</textarea>
                             @if ($errors->has('descripcion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('descripcion') }}
@@ -847,8 +861,8 @@
 
 
                     <div class="mb-5 col-12">
-                        <button id="btn-agregar-experiencia" type="submit" class="mr-3 btn btn-sm btn-outline-success"
-                            style="float: right; position: relative;">
+                        <button id="btn-agregar-experiencia" type="submit"
+                            class="mr-3 btn btn-sm btn-outline-success" style="float: right; position: relative;">
                             <i class="mr-1 fas fa-plus-circle"></i>
                             Agregar Experiencia
                             {{-- <i id="suscribiendo" class="fas fa-cog fa-spin text-muted"
@@ -880,7 +894,7 @@
                                         <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png"
                                                 class="fit-image"> </div>
                                     </div> --}}
-                    <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
+                    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">
                             Educación</span>
                     </div>
@@ -889,7 +903,8 @@
                         <div class="form-group col-sm-6">
                             <label for="institucion"><i class="fas fa-school iconos-crear"></i>Institución</label>
                             <input class="form-control {{ $errors->has('institucion') ? 'is-invalid' : '' }}"
-                                type="text" name="institucion" id="institucion" value="{{ old('institucion', '') }}">
+                                type="text" name="institucion" id="institucion"
+                                value="{{ old('institucion', '') }}">
                             @if ($errors->has('institucion'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('institucion') }}
@@ -899,9 +914,10 @@
 
 
                         <div class="form-group col-sm-6">
-                            <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de estudios</label>
-                            <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}" name="nivel"
-                                id="nivel">
+                            <label for="nivel"><i class="fas fa-street-view iconos-crear"></i>Nivel de
+                                estudios</label>
+                            <select class="form-control {{ $errors->has('nivel') ? 'is-invalid' : '' }}"
+                                name="nivel" id="nivel">
                                 <option value disabled {{ old('nivel', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\EducacionEmpleados::NivelSelect as $key => $label)
@@ -924,7 +940,8 @@
                         <div class="form-group col-sm-6">
                             <label for="año_inicio"><i class="far fa-calendar-alt iconos-crear"></i>De</label>
                             <input class="form-control {{ $errors->has('año_inicio') ? 'is-invalid' : '' }}"
-                                type="month" name="año_inicio" id="año_inicio" value="{{ old('año_inicio', '') }}">
+                                type="month" name="año_inicio" id="año_inicio"
+                                value="{{ old('año_inicio', '') }}">
                             @if ($errors->has('año_inicio'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('año_inicio') }}
@@ -980,14 +997,14 @@
                     </div>
         </div>
         </fieldset>
-        <div class="mb-3 w-100" style="border-bottom: solid 2px #345183;">
+        <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
             <span style="font-size: 17px; font-weight: bold;">
                 Documentos</span>
         </div>
 
         <div class="mt-3 col-sm-12 form-group">
-            <label for="documentos"><i
-                    class="fas fa-folder-open iconos-crear"></i>Documentos</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
+            <label for="documentos"><i class="fas fa-folder-open iconos-crear"></i>Documentos</label><i
+                class="fas fa-info-circle" style="font-size:12pt; float: right;" title=""></i>
             <div class="custom-file">
                 <input type="file" name="files[]" multiple class="form-control" id="documentos">
 
@@ -1007,75 +1024,81 @@
 
 
 <script>
+    $(document).ready(function() {
 
-$(document).ready(function(){
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
 
-var current_fs, next_fs, previous_fs; //fieldsets
-var opacity;
+        $(".next").click(function() {
 
-$(".next").click(function(){
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
 
-current_fs = $(this).parent();
-next_fs = $(this).parent().next();
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-//Add Class Active
-$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function(now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
 
-//show the next fieldset
-next_fs.show();
-//hide the current fieldset with style
-current_fs.animate({opacity: 0}, {
-step: function(now) {
-// for making fielset appear animation
-opacity = 1 - now;
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'opacity': opacity
+                    });
+                },
+                duration: 600
+            });
+        });
 
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
-next_fs.css({'opacity': opacity});
-},
-duration: 600
-});
-});
+        $(".previous").click(function() {
 
-$(".previous").click(function(){
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
 
-current_fs = $(this).parent();
-previous_fs = $(this).parent().prev();
+            //Remove class active
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-//Remove class active
-$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+            //show the previous fieldset
+            previous_fs.show();
 
-//show the previous fieldset
-previous_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function(now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
 
-//hide the current fieldset with style
-current_fs.animate({opacity: 0}, {
-step: function(now) {
-// for making fielset appear animation
-opacity = 1 - now;
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
 
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
+                    previous_fs.css({
+                        'opacity': opacity
+                    });
+                },
+                duration: 600
+            });
+        });
 
-previous_fs.css({'opacity': opacity});
-},
-duration: 600
-});
-});
+        $('.radio-group .radio').click(function() {
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+        });
 
-$('.radio-group .radio').click(function(){
-$(this).parent().find('.radio').removeClass('selected');
-$(this).addClass('selected');
-});
+        $(".submit").click(function() {
+            return false;
+        })
 
-$(".submit").click(function(){
-return false;
-})
-
-});
-
+    });
 </script>

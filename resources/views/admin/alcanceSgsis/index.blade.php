@@ -2,7 +2,7 @@
 @section('content')
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{ config('app.cssVersion') }}">
     <style>
         @media print {
             .print-none {
@@ -44,8 +44,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -207,7 +207,7 @@
             text-align: left;
             font: normal normal medium 20px/20px Roboto;
             letter-spacing: 0px;
-            color: #306BA9;
+            color: var(--color-tbj);
             opacity: 1;
             position: relative;
             left: 2.5rem;
@@ -257,9 +257,9 @@
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            style="margin:50px 0px 50px 1230px; background:none; border: none;">
-        <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-       </button>
+                    style="margin:50px 0px 50px 1230px; background:none; border: none;">
+                    <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+                </button>
                 <div class="modal-dialog" style="margin-top: 0px;">
                     <div class="modal-content" style="width:1000px;">
                         <div class="modal-body" style="border-radius: 0px;">
@@ -272,7 +272,8 @@
                                         <form method="POST" style="position: relative; left: 10rem; "
                                             action="{{ route('admin.alcance-sgsis.pdf') }}">
                                             @csrf
-                                            <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
+                                            <button class="boton-transparentev2" type="submit"
+                                                style="color: var(--color-tbj);">
                                                 IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
                                             </button>
                                         </form>
@@ -287,8 +288,7 @@
                                             </div>
                                             <div class="col-5 p-2 mt-3">
                                                 <br>
-                                                <span class=""
-                                                    style="position: relative; top: -1.5rem; right: 3rem;">
+                                                <span class="" style="position: relative; top: -1.5rem; right: 3rem;">
                                                     {{ $empresa_actual }} <br>
                                                     RFC: {{ $rfc }} <br>
                                                     {{ $direccion }} <br>
@@ -305,14 +305,14 @@
                                             <br>
                                             <div class="col-12 " style="background:#EEFCFF; border-right: 25px solid #2395AA;">
                                                 <div style="position: relative; right:1rem;  margin: 5%"><br>
-                                                    <h6 style="color:#306BA9;">Nombre del alcance</h6>
+                                                    <h6 style="color:var(--color-tbj);">Nombre del alcance</h6>
                                                     <p>Alcance Del Sistema De Gestión De Continuidad Del Negocio</p>
                                                 </div>
                                             </div>
                                         </div>
                                         @foreach ($alcanceSgsi as $alcanceSgs)
                                             <div style="margin: 4%;">
-                                                <h5 style="color:#306BA9;">{{ $alcanceSgs->nombre }}</h5>
+                                                <h5 style="color:var(--color-tbj);">{{ $alcanceSgs->nombre }}</h5>
                                                 <p>Fecha de publicación: {{ $alcanceSgs->fecha_publicacion }}
                                                     &nbsp;&nbsp;&nbsp;
                                                     Fecha de revision: {{ $alcanceSgs->fecha_revision }}</p>

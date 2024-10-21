@@ -17,6 +17,7 @@ use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\Organizacion;
 use App\Models\RH\Competencia;
+use App\Models\TBUserTrainingModel;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -185,7 +186,7 @@ class CompetenciasController extends Controller
     {
         //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new Competencium();
+        $model = new Competencium;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
@@ -210,20 +211,43 @@ class CompetenciasController extends Controller
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
-        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleado->load('idiomas');
-        $lista_docs = ListaDocumentoEmpleado::getAll();
+        $usuario = User::getCurrentUser();
 
-        return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
+        if ($usuario->empleado->id == $empleado->id) {
+
+            $empleado->load('idiomas');
+            $lista_docs = ListaDocumentoEmpleado::getAll();
+            $empleadosCV = 1;
+            $documents = TBUserTrainingModel::where('empleado_id', $empleado->id)->get();
+
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs', 'documents', 'empleadosCV'));
+        } else {
+            abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $empleado->load('idiomas');
+            $lista_docs = ListaDocumentoEmpleado::getAll();
+
+            return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
+        }
     }
 
     public function editarCompetencias(Empleado $empleado)
     {
-        abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $isEditAdmin = false;
-        $idiomas = Language::get();
+        $usuario = User::getCurrentUser();
 
-        return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        if ($usuario->empleado->id == $empleado->id) {
+
+            $isEditAdmin = false;
+            $idiomas = Language::get();
+
+            return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        } else {
+            abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $isEditAdmin = false;
+            $idiomas = Language::get();
+
+            return view('admin.empleados.edit', compact('isEditAdmin', 'empleado', 'idiomas'));
+        }
     }
 
     public function cargarDocumentos(Request $request, Empleado $empleado)

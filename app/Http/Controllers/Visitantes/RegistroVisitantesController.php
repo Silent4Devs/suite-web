@@ -41,7 +41,7 @@ class RegistroVisitantesController extends Controller
         if (AvisoPrivacidadVisitante::count() > 0) {
             $aviso_privacidad = AvisoPrivacidadVisitante::first();
         } else {
-            $aviso_privacidad = new AvisoPrivacidadVisitante();
+            $aviso_privacidad = new AvisoPrivacidadVisitante;
         }
         if (Organizacion::getAll()->count() > 0) {
             $organizacionLogo = Organizacion::getFirst()->logotipo;

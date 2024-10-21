@@ -14,7 +14,7 @@
             margin-top: 20px;
             margin-bottom: 30px;
             height: 30px;
-            background: #345183;
+            background: var(--color-tbj);
             border-bottom-right-radius: 100px;
             border-top-right-radius: 100px;
             border-bottom-left-radius: 100px;
@@ -39,11 +39,6 @@
         <div class="col s12 m12">
             <div class="" style="margin-top:-20px; margin-left:10px; margin-right:10px;">
                 <div class="">
-                    <!--  <section class="content-header">
-                                                                                                                                                                                                                        <h1>
-                                                                                                                                                                                                                            Contrato
-                                                                                                                                                                                                                        </h1>
-                                                                                                                                                                                                                    </section>-->
 
                     <div class="col s12">
                         <div class="form-group diseño-titulo">
@@ -182,25 +177,24 @@
             </div>
         </div>
     </div>
-    <ul class="collapsible popout">
-        <li>
-            <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>Facturación</div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    <table class="table" align="center">
+
+    <div>
+        <div class="col s12 m12">
+            <div class="card card-body">
+                <h5 class="mb-0 d-inline-block">Facturación</h5>
+                <hr class="hr-custom-title">
+                <div class="table-responsive">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">
-                                        No. pagos</p>
+                                    <p class="grey-text tablaparra">No. pagos</p>
                                 </th>
                                 <th>
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">
-                                        Tipo</p>
+                                    <p class="grey-text tablaparra">Tipo</p>
                                 </th>
                                 <th>
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">
-                                        Nombre servicio</p>
+                                    <p class="grey-text tablaparra">Nombre servicio</p>
                                 </th>
                             </tr>
                         </thead>
@@ -215,66 +209,71 @@
                     </table>
                 </div>
             </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => true, 'contrato_total' => $contratos->monto_pago])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">multiline_chart</i>Niveles de servicio
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">event</i>Entregables mensuales
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">assignment_turned_in</i>Cierre contrato
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">add_task</i>Ampliación de contrato
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
-                </div>
-            </div>
-        </li>
-        <li>
+        </div>
+    </div>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => true, 'contrato_total' => $contratos->monto_pago])
+        </div>
+    </div>
 
-            <div class="collapsible-header"><i class="material-icons">done_all</i> Cédula de cumplimiento
-            </div>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Niveles de servicio</h5>
+            <hr class="hr-custom-title">
+            @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+        </div>
+    </div>
 
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Entregables mensuales</h5>
+            <hr class="hr-custom-title">
+            @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+        </div>
+    </div>
 
-                </div>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cierre proyecto</h5>
+            <hr class="hr-custom-title">
+            @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+        </div>
+    </div>
 
-            </div>
-        </li>
-    </ul>
+    <div class="col s12 m12" id="ampliacion_contrato_lista"
+        style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Ampliación de contrato</h5>
+            <hr class="hr-custom-title">
+            @livewire('ampliacion-contratos.ampliacion-component', [
+                'contrato_id' => $contratos->id,
+                'show_contrato' => true,
+                'fecha_fin_contrato' => $contratos->fecha_fin,
+            ])
+        </div>
+    </div>
+
+    <div class="col s12 m12" id="convenio_contrato_lista"
+        style="display: {{ $contratos->convenio_modificatorio ? 'block' : 'none' }}">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Convenios Modificatorios</h5>
+            <hr class="hr-custom-title">
+            @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cédula de cumplimiento</h5>
+            <hr class="hr-custom-title">
+            @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
+        </div>
+    </div>
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-success'>Salir</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-primary'>Salir</a>
         </div>
     </div>
 

@@ -8,14 +8,16 @@
             </div>
             <div class="modal-body">
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="question">
+                    <input class="form-control" type="text" value="" id="title" placeholder=""
+                        wire:model="question">
                     <label>Pregunta*</label>
                     @error('question')
                         <p class="text-xs text-red-700">El campo pregunta es obligatorio.</p>
                     @enderror
                 </div>
                 <div class="form-group anima-focus">
-                    <input class="form-control" type="text" value="" id="title" placeholder="" wire:model.defer="explanation">
+                    <input class="form-control" type="text" value="" id="title" placeholder=""
+                        wire:model="explanation">
                     <label>Descripción</label>
                     @error('explanation')
                         <p class="text-xs text-red-700">El campo descripción es obligatorio.</p>
@@ -25,16 +27,16 @@
                     @foreach ($answers as $key => $answer)
                         <div class="grid grid-cols-2 gap-4 m-2 row justify-content-start ">
                             <div class="col-2 pt-2">
-                                <input wire:model.defer="answers.{{ $key }}.is_correct" type="hidden"
+                                <input wire:model="answers.{{ $key }}.is_correct" type="hidden"
                                     value="0" name="answers[1][is_checked]">
-                                <input wire:model.defer="answers.{{ $key }}.is_correct" type="checkbox"
+                                <input wire:model="answers.{{ $key }}.is_correct" type="checkbox"
                                     value="1" name="answers[1][is_checked]">
                                 @error('answers.' . $key . '.is_correct')
                                     <small class="text-xs text-red-700">El campo correcta es obligatorio</small>
                                 @enderror
                             </div>
                             <div class="col-9 pl-0">
-                                <input wire:model.defer="answers.{{ $key }}.answer" name="answers[1][answer]"
+                                <input wire:model="answers.{{ $key }}.answer" name="answers[1][answer]"
                                     value="{{ old('answers.1.answer') }}" type="text" class="form-control"
                                     style="border: none; background-color:#CDD7E1;" />
                                 @error('answers.' . $key . '.answer')
@@ -58,7 +60,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn cancel" data-dismiss="modal"
+                <button type="button" class="btn btn-cancelar" data-dismiss="modal"
                     wire:click.prevent="default()">Cerrar</button>
                 <button wire:click.prevent="save({{ $evaluation_id }})" class="btn tb-btn-primary close-modal"
                     style="background-color: #345183">

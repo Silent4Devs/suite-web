@@ -10,10 +10,13 @@
                 <br>
                 <h4>¿Qué es Evidencia de Asignación de Recursos al SGSI?</h4>
                 <p>
-                    Registro de información y documentación que le permita a la organización mostrar que ha   destinado los recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información (SGI).
+                    Registro de información y documentación que le permita a la organización mostrar que ha destinado los
+                    recursos necesarios para implementar y mantener su Sistema de Gestión de la Seguridad de la Información
+                    (SGI).
                 </p>
                 <p>
-                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la seguridad de la información.
+                    La evidencia de esta asignación es fundamental para demostrar el compromiso de la organización con la
+                    seguridad de la información.
                 </p>
             </div>
         </div>
@@ -22,36 +25,32 @@
     <div class="mt-4 card">
 
         <div class="card-body">
-            <form method="POST" class="row"
-                action="{{ route('admin.evidencias-sgsis.update', [$evidenciasSgsi->id]) }}"
+            <form method="POST" class="row" action="{{ route('admin.evidencias-sgsis.update', [$evidenciasSgsi->id]) }}"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="form-group col-md-12 anima-focus">
-                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" placeholder="" type="text"
-                        name="nombredocumento" id="nombredocumento"
+                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" placeholder=""
+                        type="text" name="nombredocumento" id="nombredocumento"
                         value="{{ old('nombredocumento', $evidenciasSgsi->nombredocumento) }}" required>
-                        {!! Form::label('nombredocumento', 'Nombre del documento*', ['class' => 'asterisco']) !!}
+                    {!! Form::label('nombredocumento', 'Nombre del documento*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('nombredocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombredocumento') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
                 <div class="form-group col-md-12 anima-focus">
                     <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" placeholder="" type="text"
-                        name="objetivodocumento"
-                        id="objetivodocumento" required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
-                        {!! Form::label('objetivodocumento', 'Objetivo del documento*', ['class' => 'asterisco']) !!}
+                        name="objetivodocumento" id="objetivodocumento" required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
+                    {!! Form::label('objetivodocumento', 'Objetivo del documento*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('objetivodocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivodocumento') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
 
 
@@ -121,16 +120,16 @@
 
                 <div class="form-group col-sm-6 anima-focus">
 
-                        <select class="form-control areas" id="inputGroupSelect01" name="area_id" required>
-                            <option selected disabled value="null">-- Seleccion un área --</option>
-                            @forelse ($areas as $area)
-                                <option value="{{ $area->id }}"
-                                    {{ old('arearesponsable', $area->id) == $area->id ? 'selected active' : '' }}>
-                                    {{ $area->area }}</option>
-                            @empty
-                                <option value="" disabled>Sin Datos</option>
-                            @endforelse
-                        </select>
+                    <select class="form-control areas" id="inputGroupSelect01" name="area_id" required>
+                        <option selected disabled value="null">-- Seleccion un área --</option>
+                        @forelse ($areas as $area)
+                            <option value="{{ $area->id }}"
+                                {{ old('arearesponsable', $area->id) == $area->id ? 'selected active' : '' }}>
+                                {{ $area->area }}</option>
+                        @empty
+                            <option value="" disabled>Sin Datos</option>
+                        @endforelse
+                    </select>
                     {!! Form::label('area_id', 'Área reponsable del documento*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('area'))
                         <div class="invalid-feedback">
@@ -144,10 +143,10 @@
 
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6 anima-focus">
-                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" placeholder="" type="date"
-                        name="fechadocumento" id="fechadocumento" min="1945-01-01"
+                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
+                        placeholder="" type="date" name="fechadocumento" id="fechadocumento" min="1945-01-01"
                         value="{{ old('fechadocumento', \Carbon\Carbon::parse($evidenciasSgsi->fechadocumento))->format('Y-m-d') }}">
-                        {!! Form::label('fechadocumento', 'Fecha de emisión del documento*', ['class' => 'asterisco']) !!}
+                    {!! Form::label('fechadocumento', 'Fecha de emisión del documento*', ['class' => 'asterisco']) !!}
                     @if ($errors->has('fechadocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechadocumento') }}
@@ -182,8 +181,8 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
                 <div class="text-right form-group col-12">
-                    <a href="{{ route("admin.evidencias-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.evidencias-sgsis.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -200,7 +199,6 @@
                                             @foreach ($evidenciasSgsi->evidencia_sgsi as $idx => $evidencia)
                                                 <li data-target=#carouselExampleIndicators
                                                     data-slide-to={{ $idx }}></li>
-
                                             @endforeach
 
                                         </ol>
@@ -212,8 +210,12 @@
                                                             src="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"></embed>
                                                     </div>
                                                 @else
-                                                    <div class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                        <a href="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"><i class="fas fa-file-download mr-2" style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
+                                                    <div
+                                                        class='text-center my-5 carousel-item {{ $idx == 0 ? 'active' : '' }}'>
+                                                        <a
+                                                            href="{{ asset('storage/evidencias_sgsi') }}/{{ $evidencia->evidencia }}"><i
+                                                                class="fas fa-file-download mr-2"
+                                                                style="font-size:18px"></i>{{ $evidencia->evidencia }}</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -335,11 +337,10 @@
         });
 
         function recortarTexto(texto, length = 30) {
-        let trimmedString = texto?.length > length ?
-            texto.substring(0, length - 3) + "..." :
-            texto;
-        return trimmedString;
-    }
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
     </script>
-
 @endsection

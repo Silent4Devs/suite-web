@@ -301,7 +301,7 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicados_generales_agregar') && Gate::denies('comunicacion_sgi_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new ComunicacionSgi();
+        $model = new ComunicacionSgi;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

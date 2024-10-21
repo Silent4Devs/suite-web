@@ -91,8 +91,8 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn_cancelar">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn btn-outline-primary">Regresar</a>
+                    <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
@@ -111,14 +111,14 @@
                         </div>
                         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                             <span
-                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                                style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                             <br>
-                            <span style="color:#345183; font-size:15px;"><strong>Control de Cambios
+                            <span style="color:var(--color-tbj); font-size:15px;"><strong>Control de Cambios
                                     Administrativos:</strong></span>
 
                         </div>
                         <div class="col-3 p-2">
-                            <span style="color:#345183;">Fecha:
+                            <span style="color:var(--color-tbj)">Fecha:
                                 {{ \Carbon\Carbon::parse($planificacionControl->created_at)->format('d-m-Y') }}
                             </span>
                         </div>
@@ -161,7 +161,7 @@
                     </div>
 
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Información General del cambio</span>
 
                     </div>

@@ -27,7 +27,7 @@ class MaterialSgsiController extends Controller
         abort_if(Gate::denies('material_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd(MaterialSgsi::with('arearesponsable', 'team','documentos_material')->get());
         if ($request->ajax()) {
-            $query = MaterialSgsi::with(['arearesponsable', 'team', 'documentos_material'])->select(sprintf('%s.*', (new MaterialSgsi)->table))->orderByDesc('id');
+            $query = MaterialSgsi::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -212,7 +212,7 @@ class MaterialSgsiController extends Controller
     {
         abort_if(Gate::denies('material_sgsi_agregar') && Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new MaterialSgsi();
+        $model = new MaterialSgsi;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

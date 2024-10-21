@@ -3,10 +3,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisImpact.menu-AIA') !!}">AIA</a>
+            <a href="{!! route('admin.analisis-impacto.menu-AIA') !!}">AIA</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analysisAia.index') !!}">Cuestionario</a>
+            <a href="{!! route('admin.analisis-aia.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Crear</li>
     </ol>
@@ -16,15 +16,15 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.analysisAia.store']) !!}
+            {!! Form::open(['route' => 'admin.analisis-aia.store']) !!}
 
             @include('admin.analysisAia.fields')
 
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analysisAia.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.analisis-aia.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

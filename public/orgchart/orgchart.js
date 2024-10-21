@@ -685,7 +685,7 @@ export default class OrgChart {
         </p>
         ` : `
         <div class="text-center">
-          <button class="btn btn-danger" onclick="event.preventDefault();deleteVacant('${dataSourceJSON.id
+          <button class="btn btn-primary" onclick="event.preventDefault();deleteVacant('${dataSourceJSON.id
     }')"><i class="fas fa-trash-alt mr-2"></i>Remover Vacante</button>
         </div>
         `;

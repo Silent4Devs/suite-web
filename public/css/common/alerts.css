@@ -1,0 +1,84 @@
+.title{
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+    text-align: left;
+    font: normal normal medium 20px/26px Roboto;
+    letter-spacing: 0px;
+    color: #4870B2;
+    opacity: 1;
+    text-align: center;
+
+}
+
+.text{
+    text-align: left;
+    font: normal normal normal 16px/21px Roboto;
+    letter-spacing: 0px;
+    color: #575757;
+    opacity: 1;
+    text-align: center;
+}
+
+#swal2-content{
+    margin-top: 0px;
+}
+
+.swal2-popup{
+    border-radius: 16px;
+}
+
+.btn-primary{
+    background-color: #006DDB !important;
+    border-radius: 6px !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    margin-left: 50px;
+    margin-bottom: 52px;
+}
+
+.btn-secondary{
+    background-color: #FFFFFF !important;
+    border: 1px solid #057BE2 !important;
+    border-radius: 6px !important;
+    opacity: 1 !important;
+    color: #006DDB !important;
+    margin-bottom: 52px;
+}
+
+.fondo-icon-delete{
+    width: 126px;
+    height: 126px;
+    background-color: #ffdddd !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    margin-top: 52px;
+    margin-bottom: 24px;
+}
+
+.fondo-icon-succeed{
+    width: 126px;
+    height: 126px;
+    background-color: #C6FFC3 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    margin-top: 52px;
+    margin-bottom: 24px;
+}
+
+.custom-icon-delete{
+    font-size: 60px;
+    color: #FF0000;
+}
+
+.custom-icon-succeed{
+    font-size: 60px;
+    color: #78BB50;
+}
+
+
+
+

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\DenunciasEvent;
 use App\Models\Denuncias;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,12 @@ class DenunciasObserver
      */
     public function created(Denuncias $denuncias)
     {
+
+        try {
+            event(new DenunciasEvent($denuncias, 'create', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -24,6 +31,12 @@ class DenunciasObserver
      */
     public function updated(Denuncias $denuncias)
     {
+
+        try {
+            event(new DenunciasEvent($denuncias, 'update', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 
@@ -34,26 +47,12 @@ class DenunciasObserver
      */
     public function deleted(Denuncias $denuncias)
     {
-        $this->forgetCache();
-    }
 
-    /**
-     * Handle the Denuncias "restored" event.
-     *
-     * @return void
-     */
-    public function restored(Denuncias $denuncias)
-    {
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Denuncias "force deleted" event.
-     *
-     * @return void
-     */
-    public function forceDeleted(Denuncias $denuncias)
-    {
+        try {
+            event(new DenunciasEvent($denuncias, 'delete', 'denuncias', 'Denuncia'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $this->forgetCache();
     }
 

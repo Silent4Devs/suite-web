@@ -60,3 +60,12 @@ public/mix-manifest.json
 storage/app/katbol-contratos-tmp/
 dump.sql
 preload.php
+package-lock.json
+
+/caddy
+frankenphp
+frankenphp-worker.php
+
+.vscode/PythonImportHelper-v2-Completion.json
+rr
+.rr.yaml

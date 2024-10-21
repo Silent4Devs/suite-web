@@ -17,7 +17,7 @@
 <div class="card shadow-sm">
     <div class="card-body row">
         <div class="col-12">
-            <span style="font-size: 17px; color:#306BA9;">
+            <span style="font-size: 17px; color:var(--color-tbj);">
                 @if ($isEdit)
                     Editar el análisis FODA
                 @else
@@ -27,7 +27,7 @@
             <hr>
         </div>
         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
-            <input required  maxlength="255" class="form-control" type="text" name="analisis" id="analisis"
+            <input required maxlength="255" class="form-control" type="text" name="analisis" id="analisis"
                 value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}" placeholder="">
             @if ($errors->has('analisis'))
                 <div class="invalid-feedback  d-block">
@@ -76,7 +76,7 @@
 <div class="card shadow-sm">
     <div class="card-body row">
         <div class="col-12">
-            <span style="font-size: 17px; color:#306BA9;">
+            <span style="font-size: 17px; color:var(--color-tbj);">
                 Participantes
             </span>
             <hr>
@@ -122,7 +122,7 @@
 <div class="card shadow-sm">
     <div class="card-body row">
         <div class="col-12">
-            <span style="font-size: 17px; color:#306BA9;">
+            <span style="font-size: 17px; color:var(--color-tbj);">
                 Participantes
             </span>
             <hr>
@@ -133,8 +133,8 @@
                 <thead>
                     <tr>
                         <th style="width: 35%;">ID</th>
-                        <th  style="width: 35%;">Nombre</th>
-                        <th  style="width: 35%;">Puesto</th>
+                        <th style="width: 35%;">Nombre</th>
+                        <th style="width: 35%;">Puesto</th>
                         {{-- <th scope="col">Área</th> --}}
                         <th>Correo</th>
                     </tr>
@@ -169,8 +169,8 @@
 
 <div class="row">
     <div class="text-right form-group col-12"><br>
-        <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn_cancelar">Cancelar</a>
-        <button id="btnGuardar" class="btn btn-danger" type="submit">
+        <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn btn-outline-primary">Cancelar</a>
+        <button id="btnGuardar" class="btn btn-primary" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
@@ -178,9 +178,9 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Captura el evento de cambio en el select
-            $('#id_elabora').change(function () {
+            $('#id_elabora').change(function() {
                 // Obtiene el valor seleccionado y el atributo de datos asociados
                 var selectedOption = $(this).find(':selected');
                 var puesto = selectedOption.data('puesto');
@@ -248,7 +248,7 @@
                             "name":"${usuario.name}",
                             "email":"${usuario.email}",
                             "puesto":"${usuario.puesto}",
-                            "area":"${usuario.area.area}"
+                            "area":"${usuario.area}"
                             }`;
                             lista +=
                                 "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +

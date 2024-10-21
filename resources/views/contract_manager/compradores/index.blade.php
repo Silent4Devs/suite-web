@@ -8,6 +8,7 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
+
         #form_id {
             display: none;
         }
@@ -16,18 +17,20 @@
     @include('partials.flashMessages')
 
     <form method="POST" id="form_id" style="position: relative; left: 10rem; "
-    action="{{ route('contract_manager.compradores.pdf') }}">
-    @csrf
-    <button class="boton-transparentev2" type="submit" style="color: #306BA9;">
-        IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
-    </button>
+        action="{{ route('contract_manager.compradores.pdf') }}">
+        @csrf
+        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
     </form>
     <h5 class="col-12 titulo_general_funcion">Compradores</h5>
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('contract_manager.compradores.create') }}" type="button" class="btn tb-btn-primary">Registrar Comprador</a> &nbsp; &nbsp;
-            <a href="{{ route('contract_manager.compradores.view_archivados') }}" type="button" class="btn tb-btn-primary">Archivados</a>
+            <a href="{{ route('contract_manager.compradores.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Comprador</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.compradores.view_archivados') }}" type="button"
+                class="btn tb-btn-primary">Archivados</a>
         </div>
     </div>
 
@@ -35,8 +38,8 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Comprador">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Comprador">
+                <thead class="">
                     <tr>
 
                         <th style="vertical-align: top">

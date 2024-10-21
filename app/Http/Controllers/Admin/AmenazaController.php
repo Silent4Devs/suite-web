@@ -89,7 +89,7 @@ class AmenazaController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $amenaza = new Amenaza();
+        $amenaza = new Amenaza;
 
         return view('admin.amenazas.create', compact('amenaza'));
     }
@@ -112,11 +112,18 @@ class AmenazaController extends AppBaseController
         return redirect(route('admin.amenazas.index'));
     }
 
-    public function show(Amenaza $amenaza)
+    public function show($id)
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.amenazas.show')->with('amenaza', $amenaza);
+            // Busca el Amenaza por el ID
+            $amenaza = Amenaza::findOrFail($id);
+
+            return view('admin.amenazas.show')->with('amenaza', $amenaza);
+        } catch (\Throwable $th) {
+            abort(404);
+        }
     }
 
     public function edit($id)
