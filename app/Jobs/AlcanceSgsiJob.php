@@ -36,7 +36,7 @@ class AlcanceSgsiJob implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle()
     {
         try {
             // Cargar la lista de distribución
