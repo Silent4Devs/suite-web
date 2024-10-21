@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Jobs\AlcancesJob;
+use App\Jobs\AlcanceSgsiJob;
 use App\Models\AlcanceSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -30,7 +30,7 @@ class AlcancesEvent implements ShouldBroadcast
         $this->tabla = $tabla;
         $this->slug = $slug;
 
-        AlcancesJob::dispatch($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug);
+        AlcanceSgsiJob::dispatch($this->alcances, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**
