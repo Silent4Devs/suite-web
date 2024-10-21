@@ -26,9 +26,9 @@ class AlcancesJob implements ShouldQueue
 
     protected $slug;
 
-    public function __construct($politicas, $tipo_consulta, $tabla, $slug)
+    public function __construct($alcances, $tipo_consulta, $tabla, $slug)
     {
-        $this->alcances = $politicas;
+        $this->alcances = $alcances;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
