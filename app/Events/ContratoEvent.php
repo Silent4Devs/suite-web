@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Jobs\ContratosJob;
 use App\Models\ContractManager\Contrato;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
