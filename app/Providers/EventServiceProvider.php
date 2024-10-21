@@ -303,9 +303,9 @@ class EventServiceProvider extends ServiceProvider
         // PoliticasSgiEvent::class => [
         //     PoliticasSgiListener::class,
         // ],
-        AlcancesEvent::class => [
-            AlcancesListener::class,
-        ],
+        // AlcancesEvent::class => [
+        //     AlcancesListener::class,
+        // ],
         MatrizRequisitosEvent::class => [
             MatrizRequisitosListener::class,
         ],
