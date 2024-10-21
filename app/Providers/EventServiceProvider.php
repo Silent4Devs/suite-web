@@ -345,9 +345,9 @@ class EventServiceProvider extends ServiceProvider
         EvaluacionEvent::class => [
             EvaluacionListener::class,
         ],
-        ContratoEvent::class => [
-            ContratosListener::class,
-        ],
+        // ContratoEvent::class => [
+        //     ContratosListener::class,
+        // ],
         MinutasEvent::class => [
             MinutasListener::class,
         ],
