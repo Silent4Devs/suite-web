@@ -32,7 +32,10 @@ class RegisterTenantController extends Controller
 
         $tenant = (new CreateTenantAction)($data, $domain);
 
+
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Inquilino Generado');
+
         // We impersonate user with id 1. This user will be created by the CreateTenantAdmin job.
-        return redirect($tenant->impersonationUrl(1));
+        // return redirect($tenant->impersonationUrl(1));
     }
 }
