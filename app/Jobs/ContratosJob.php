@@ -62,7 +62,7 @@ class ContratosJob implements ShouldQueue
             // Enviar la notificación a cada usuario
             Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
         } catch (\Throwable $th) {
-            dd($th);
+            return view('errors.alerta_error', compact('th'));
         }
     }
 }
