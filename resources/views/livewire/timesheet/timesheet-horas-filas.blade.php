@@ -298,7 +298,7 @@
                                         <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Cancelar
                                         </div>
-                                        <button data-dismiss="modal" onclick="event.preventDefault();"
+                                        <button data-dismiss="modal" onclick="this.disabled = true;"
                                             id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info"
                                             style="border:none; background-color:#2F96EB;">
                                             Enviar a Aprobación

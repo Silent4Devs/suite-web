@@ -128,7 +128,7 @@ class PuestosController extends Controller
 
         $lenguajes = (json_decode($json));
         $areas = Area::getAll();
-        $reportas = Empleado::getaltaAll();
+        $empleados = $reportas = Empleado::getAltaEmpleados();
         $idis = Language::all();
         $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -136,7 +136,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::getAll();
-        $empleados = Empleado::getaltaAll();
+
         $perfiles = PerfilEmpleado::getAll();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
