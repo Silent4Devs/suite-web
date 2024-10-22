@@ -36,7 +36,7 @@ class RegisterTenantController extends Controller
 
 
         // Construir la URL completa con el subdominio
-        $fullUrl = sprintf('%s://%s.%s', request()->getScheme(), $domain, 'suite-web.test');
+        $fullUrl = sprintf('%s://%s.%s', request()->getScheme(), $domain, 'localhost');
 
         // Obtener la URL de la ruta sin el dominio
         $routeUrl = route($route);
