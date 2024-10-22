@@ -62,7 +62,7 @@ class AlcanceSgsiJob implements ShouldQueue
                 }
             }
         } catch (\Exception $e) {
-            dd('Error processing notifications: '.$e->getMessage());
+            return view('errors.alerta_error', compact('e'));
         }
     }
 }

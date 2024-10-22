@@ -63,7 +63,9 @@ class UsersController extends Controller
 
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams'));
+        $empleados = Empleado::getIdNameAll()->sortBy('name');
+
+        return view('users.tbUsersCreate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'empleados'));
     }
 
     public function store(StoreUserRequest $request)
@@ -93,7 +95,9 @@ class UsersController extends Controller
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team');
 
-        return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user'));
+        $empleados = Empleado::getIdNameAll()->sortBy('name');
+
+        return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user', 'empleados'));
     }
 
     public function update(UpdateUserRequest $request, User $user)

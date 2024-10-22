@@ -13,6 +13,7 @@ use App\Mail\AprobadorFirmaContratoMail;
 use App\Models\AprobadorFirmaContrato;
 use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Area;
+use App\Events\ContratoEvent;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
@@ -424,7 +425,8 @@ class ContratosController extends AppBaseController
             'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
-        //return redirect(route('contratos.index'));
+        event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
+
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
@@ -892,11 +894,12 @@ class ContratosController extends AppBaseController
             'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
+        event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
+
         return response()->json([
             'status' => 'success',
             'message' => '¡Contrato actualizado correctamente!',
         ]);
-        // return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**
@@ -910,16 +913,17 @@ class ContratosController extends AppBaseController
     public function destroy($id)
     {
         abort_if(Gate::denies('katbol_contratos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $contrato = $this->contratoRepository->find($id);
 
         if (empty($contrato)) {
-            // notify()->error('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
             return redirect(route('contract_manager.contratos-katbol.index'));
         }
 
         $this->contratoRepository->delete($id);
-        // notify()->success('¡Se ha eliminado la información del contrato satisfactoriamente.!');
+
+        event(new ContratoEvent($contrato, 'delete', 'contratos', 'Contratos'));
 
         return redirect(route('contract_manager.contratos-katbol.index'));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs;
 
 use App\Models\FirmaModule;
 use App\Models\User;
@@ -45,7 +45,7 @@ class ContratosJob implements ShouldQueue
      */
     public function handle()
     {
-        try {
+        try{
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
             // Decodifica el campo participantes
@@ -60,9 +60,10 @@ class ContratosJob implements ShouldQueue
             $usuarios = User::whereIn('id', $participantes)->get();
 
             // Enviar la notificación a cada usuario
-            Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
-        } catch (\Throwable $th) {
-            dd($th);
+            Notification::send($usuarios, new ContratoNotification($this->contratos, $this->tipo_consulta, $this->tabla, $this->slug));
+
+        } catch (\Exception $e) {
+            return view('errors.alerta_error', compact('e'));
         }
     }
 }
