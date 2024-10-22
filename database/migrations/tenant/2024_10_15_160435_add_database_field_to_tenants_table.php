@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('tenants', function (Blueprint $table) {
 
 
-            $table->string('pm_type')->nullable();
-            $table->string('pm_last_four', 4)->nullable();
+            // $table->string('pm_type')->nullable();
+            // $table->string('pm_last_four', 4)->nullable();
         });
     }
 
