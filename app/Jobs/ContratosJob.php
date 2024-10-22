@@ -43,7 +43,7 @@ class ContratosJob implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle()
     {
         try {
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
