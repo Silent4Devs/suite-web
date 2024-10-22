@@ -95,6 +95,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
     // Route::get('solicitud-permisos-vistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'vistaGlobal']);
 
     Route::prefix('timesheet')->group(function () {
+        Route::get('/tbcreate', [TbTimesheetApiMobileController::class, 'tbFunctionCreate']);
+        Route::post('/tbstore', [TbTimesheetApiMobileController::class, 'tbFunctionStore']);
         Route::get('/tbshow/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionShow']);
         Route::get('/tbaprobaciones', [TbTimesheetApiMobileController::class, 'tbFunctionAprobaciones']);
         Route::post('/tbaprobar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionAprobar']);
