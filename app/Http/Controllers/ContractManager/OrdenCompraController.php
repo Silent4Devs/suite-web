@@ -573,9 +573,8 @@ class OrdenCompraController extends Controller
 
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
-            // $user = 'lourdes.abadia@silent4business.com';
             Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-            // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -772,14 +771,18 @@ class OrdenCompraController extends Controller
         $user = User::getCurrentUser();
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
         $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+
+        $responsableComprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+
+        $comprador = $this->obtenerComprador($responsableComprador);
+
         $solicitante = User::find($requisicion->id_user);
 
         if ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
+            if (removeUnicodeCharacters($comprador->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->name . '</strong>');
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
@@ -794,10 +797,10 @@ class OrdenCompraController extends Controller
                 return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del finanzas');
             }
         } elseif ($requisicion->firma_comprador_orden === null) {
-            if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
+            if (removeUnicodeCharacters($comprador->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
@@ -814,6 +817,30 @@ class OrdenCompraController extends Controller
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
         return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
+    }
+
+    public function obtenerComprador($comprador)
+    {
+        $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+        $listaPart = $listaReq->participantes;
+
+        $responsableOG = $listaPart->where('numero_orden', 1)->where('empleado_id', $comprador->user->id)->first();
+        $n_part_nivel = $listaPart->where('nivel', $responsableOG->nivel)->count();
+
+        for ($i = 1; $i <= $n_part_nivel; $i++) {
+            $responsableNivel = $listaPart->where('nivel', $responsableOG->nivel)->where('numero_orden', $i)->first();
+
+            if ($responsableNivel) {
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+
+                    break;
+                }
+            }
+        }
+
+        return $responsable;
     }
 
     public function cancelarOrdenCompra(Request $request)
