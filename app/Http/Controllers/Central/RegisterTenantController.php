@@ -30,10 +30,25 @@ class RegisterTenantController extends Controller
         $domain = $data['domain'];
         unset($data['domain']);
 
-        $tenant = (new CreateTenantAction)($data, $domain);
+        // $tenant = (new CreateTenantAction)($data, $domain);
+
+        $route = 'admin.inicio-Usuario.index'; // La ruta que quieres usar
 
 
-        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Inquilino Generado');
+        // Construir la URL completa con el subdominio
+        $fullUrl = sprintf('%s://%s.%s', request()->getScheme(), $domain, 'suite-web.test');
+
+        // Obtener la URL de la ruta sin el dominio
+        $routeUrl = route($route);
+
+        // Asegurarse de que la URL de la ruta no contenga el esquema completo
+        $routeUrlPath = parse_url($routeUrl, PHP_URL_PATH);
+
+        // Concatenar la URL final
+        $finalUrl = $fullUrl . $routeUrlPath;
+
+        // Redirigir a la URL final
+        return redirect($finalUrl)->with('success', 'Inquilino Generado');
 
         // We impersonate user with id 1. This user will be created by the CreateTenantAdmin job.
         // return redirect($tenant->impersonationUrl(1));
