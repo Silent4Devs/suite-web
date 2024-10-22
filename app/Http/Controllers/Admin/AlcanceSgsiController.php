@@ -130,7 +130,7 @@ class AlcanceSgsiController extends Controller
             $listavacia = 'cumple';
         }
 
-        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc', 'exit'));
+        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
