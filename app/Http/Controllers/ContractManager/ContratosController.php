@@ -424,7 +424,8 @@ class ContratosController extends AppBaseController
             'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
-        //return redirect(route('contratos.index'));
+        event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
+
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
@@ -892,11 +893,12 @@ class ContratosController extends AppBaseController
             'firma_check' => isset($request->firma_check) ? true : false,
         ]);
 
+        event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
+
         return response()->json([
             'status' => 'success',
             'message' => '¡Contrato actualizado correctamente!',
         ]);
-        // return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**
