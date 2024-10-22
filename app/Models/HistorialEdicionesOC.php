@@ -14,7 +14,6 @@ class HistorialEdicionesOC extends Model
     protected $fillable =
         [
             'requisicion_id', // ID del registro modificado
-            'numero_edicion',
             'registro_tipo', // Tipo de modelo (por ejemplo, App\Models\Registro)
             'id_empleado', // ID del empleado que hizo el cambio
             'campo', // Campo modificado
