@@ -311,41 +311,43 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-chalkboard-teacher iconos-crear"></i>{!! Form::label('categoriacapacitacion', 'Conocimientos') !!}
+                    <i class="fas fa-chalkboard-teacher iconos-crear"></i>
+                    <label for="categoriacapacitacion">Conocimientos</label>
                     <div class="caja_btn_input">
-                        {!! Form::open([
-                            'route' => 'carga-categoriacapacitacion',
-                            'method' => 'post',
-                            'enctype' => 'multipart/form-data',
-                        ]) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="categoriacapacitacion" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open([
-                            'route' => 'descarga-categoriacapacitacion',
-                            'method' => 'get',
-                            'enctype' => 'multipart/form-data',
-                        ]) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-categoriacapacitacion') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="categoriacapacitacion" name="categoriacapacitacion" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-categoriacapacitacion') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-chess-knight iconos-crear"></i>{!! Form::label('revisiondireccion', 'Revisión por Dirección') !!}
+                    <i class="fas fa-chess-knight iconos-crear"></i>
+                    <label for="revisiondireccion">Revisión por Dirección</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-revisiondireccion', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="revisiondireccion" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-revisiondireccion', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-revisiondireccion') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="revisiondireccion" name="revisiondireccion" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-revisiondireccion') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -354,10 +356,6 @@
                         {{-- <span class="mb-1 text-center text-">Evaluaciones</span> --}}
                     </div>
                 </div>
-
-
-
-
 
                 {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">Activos</div> --}}
 
@@ -397,20 +395,24 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-user-md iconos-crear"></i>{!! Form::label('puesto', 'Puesto') !!}
+                    <i class="fa-fw fas fa-user-md iconos-crear"></i>
+                    <label for="puesto">Puesto</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-puesto', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="puesto" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-puesto', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-puesto') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="puesto" name="puesto" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-puesto') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
-
 
                 {{-- <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
@@ -450,21 +452,24 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-briefcase iconos-crear"></i>{!! Form::label('roles', 'Roles') !!}
+                    <i class="fa-fw fas fa-briefcase iconos-crear"></i>
+                    <label for="role">Roles</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-roles', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="role" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-roles', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-roles') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="role" name="role" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-roles') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-
 
                 {{-- <div class="py-1 form-group col-12" 12yle="border-bottom:2px solid var(--color-tbj); color: var(--color-tbj); font-weight: bold; margin-top: 25px;">Preguntas Frecuentes</div> --}}
 
@@ -501,19 +506,25 @@
 
                 <!-- Categoria Field -->
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-puzzle-piece iconos_menu iconos-crear"></i>{!! Form::label('grupo_area', 'Áreas/Crear grupo') !!}
+                    <i class="fas fa-puzzle-piece iconos_menu iconos-crear"></i>
+                    <label for="grupo_area">Áreas/Crear grupo</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-grupo_area', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="grupo_area" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-grupo_area', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-grupo_area') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="grupo_area" name="grupo_area" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-grupo_area') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
+
                 {{-- <div class="form-group col-sm-6">
                     <i class="fa-fw fas fa-question iconos-crear"></i>{!! Form::label('documentos', 'Documentos/Crear documetos') !!}
                     <div class="caja_btn_input">
@@ -535,33 +546,45 @@
                     </div>
                 </div> --}}
                 <div class="form-group col-sm-6">
-                    <i class="fas fa-user-tie iconos-crear"></i>{!! Form::label('empleado', 'Empleado') !!}
+                    <i class="fas fa-user-tie iconos-crear"></i>
+                    <label for="empleado">Empleado</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-empleado', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="empleado" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-empleado', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-empleado') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="empleado" name="empleado" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-empleado') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
+
                 <div class="form-group col-sm-6">
-                    <i class="fa-fw fas fa-laptop iconos-crear"></i>{!! Form::label('activo_inventario', 'Activos/Inventario') !!}
+                    <i class="fa-fw fas fa-laptop iconos-crear"></i>
+                    <label for="activo_inventario">Activos/Inventario</label>
                     <div class="caja_btn_input">
-                        {!! Form::open(['route' => 'carga-activo_inventario', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-                        <input class="btn btn-sm" type="file" id="csv_file" name="activo_inventario" required>
-                        <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento"><i
-                                class="fas fa-file-upload"></i></button>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => 'descarga-activo_inventario', 'method' => 'get', 'enctype' => 'multipart/form-data']) !!}
-                        <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento"><i
-                                class="fas fa-download"></i></button>
-                        {!! Form::close() !!}
+                        <form action="{{ route('carga-activo_inventario') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input class="btn btn-sm" type="file" id="activo_inventario" name="activo_inventario" required>
+                            <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                        </form>
+                        <form action="{{ route('descarga-activo_inventario') }}" method="get" enctype="multipart/form-data">
+                            @csrf
+                            <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

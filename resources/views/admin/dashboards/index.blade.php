@@ -344,8 +344,11 @@
                 </select>
             </div>
             <div class="col s2">
-                {!! Form::submit('Buscar', ['class' => 'btn tb-btn-primary', 'id' => 'buscar_proveedor', 'onclick' => "buscarproveedor($('#proveedor').val());return false;", 'style' => '']) !!}
+                <button class="btn tb-btn-primary" id="buscar_proveedor" onclick="buscarproveedor($('#proveedor').val()); return false;">
+                    Buscar
+                </button>
             </div>
+
         </div>
         <div id="resultado_proveedor" class="col s12"></div>
         <div id="resultado_contrato" class="col s12"></div>

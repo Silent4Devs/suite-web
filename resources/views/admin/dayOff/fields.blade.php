@@ -4,15 +4,12 @@
         {{-- <i class="fas fa-id-card iconos-crear"></i><i
         class="fas fa-info-circle" style="font-size:12pt; float: right;"
         title="Nombre del lineamiento"></i> --}}
-        {!! Form::text('nombre', null, [
-            'class' => 'form-control',
-            'minlength' => 1,
-            'maxlength' => 255,
-            'placeholder' => '',
-            'required',
-        ]) !!}
-        {!! Form::label('nombre', 'Nombre del lineamiento de DayOff:', ['class' => 'asterisco']) !!}
+        <label for="nombre" class="asterisco">Nombre del lineamiento de DayOff:</label>
+        <input type="text" name="nombre" id="nombre" class="form-control"
+            minlength="1" maxlength="255" placeholder="" required
+            value="{{ old('nombre', $vacacion->nombre) }}">
     </div>
+
     <div class="form-group col-sm-6 anima-focus">
         {{-- <i class="fa-solid fa-calendar-days iconos-crear"></i> --}}
         {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
@@ -35,30 +32,27 @@
 <div class="row">
     <!-- Descripcion Field -->
     <div class="form-group col-sm-12 anima-focus">
-        {{-- <i
-                class="fas fa-file-alt iconos-crear"></i> --}}
-        <textarea class="form-control" id="descripcion" name="descripcion" rows="2" placeholder=" ">
-                {{ old('descripcion', $vacacion->descripcion) }}
-            </textarea>
-        {!! Form::label('descripcion', 'Descripción:') !!}
+        {{-- <i class="fas fa-file-alt iconos-crear"></i> --}}
+        <label for="descripcion">Descripción:</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="2" placeholder=" ">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
     </div>
 </div>
 
 <div class="row" x-data="{ otro: {{ old('inicio_conteo', $vacacion->inicio_conteo) == 2 ? 'true' : 'false' }} }">
     <div class="form-group col-sm-3">
-        {!! Form::label('inicio_conteo', 'Inicio del beneficio', ['class' => 'required']) !!}
+        <label for="inicio_conteo" class="required">Inicio del beneficio</label>
         <div class="form-check col-12">
-            <input class="form-check-input" type="radio" name="inicio_conteo" value="1" x-on:click="otro = false"
+            <input class="form-check-input" type="radio" name="inicio_conteo" id="inicio_conteo_1" value="1" x-on:click="otro = false"
                 {{ old('inicio_conteo', $vacacion->inicio_conteo) == 1 ? 'checked' : '' }}>
-            <label class="form-check-label" for="exampleRadios1">
+            <label class="form-check-label" for="inicio_conteo_1">
                 Al ingreso
             </label>
         </div>
 
         <div class="form-check col-12 mt-2">
-            <input class="form-check-input" type="radio" name="inicio_conteo" value="2" x-on:click="otro = true"
+            <input class="form-check-input" type="radio" name="inicio_conteo" id="inicio_conteo_2" value="2" x-on:click="otro = true"
                 {{ old('inicio_conteo', $vacacion->inicio_conteo) == 2 ? 'checked' : '' }}>
-            <label class="form-check-label" for="exampleRadios2">
+            <label class="form-check-label" for="inicio_conteo_2">
                 Otro
             </label>
         </div>
@@ -68,8 +62,7 @@
         <div class="form-group col-sm-3 mt-4" x-show="otro">
             <div class="form-floating">
                 <input type="number" class="form-control" id="meses" name="meses"
-                    value="{{ old('meses', $vacacion->meses) }}" placeholder="Ingrese numero de meses..."
-                    x-bind:disabled="!otro" required>
+                    value="{{ old('meses', $vacacion->meses) }}" placeholder="Ingrese número de meses..." x-bind:disabled="!otro" required>
                 <label for="meses">Inicio del beneficio en meses:</label>
             </div>
         </div>
