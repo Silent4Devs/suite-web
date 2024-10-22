@@ -648,78 +648,67 @@
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="distancia form-group col-md-4">
             <label class="txt-tamaño">
-                Nombre del
-                Supervisor 1<font class="asterisco">*
-                </font></label>
+                Nombre del Supervisor 1<font class="asterisco">*</font>
+            </label>
             <div>
-                {!! Form::text('pmp_asignado', $contratos->pmp_asignado, [
-                    'maxlength' => '250',
-                    'class' => 'form-control',
-                    $show_contrato ? 'readonly' : '',
-                    'required',
-                ]) !!}
+                <input type="text" name="pmp_asignado" id="pmp_asignado"
+                    value="{{ old('pmp_asignado', $contratos->pmp_asignado) }}" maxlength="250" class="form-control"
+                    {{ $show_contrato ? 'readonly' : '' }} required>
             </div>
         </div>
+
         <div class="distancia form-group col-md-4">
             <label class="txt-tamaño">Puesto</label>
             <div>
-                {!! Form::text('puesto', $contratos->puesto, [
-                    'class' => 'form-control',
-                    'maxlength' => '250',
-                    $show_contrato ? 'readonly' : '',
-                ]) !!}
+                <input type="text" name="puesto" id="puesto" value="{{ old('puesto', $contratos->puesto) }}"
+                    maxlength="250" class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
             </div>
         </div>
+
         <div class="distancia form-group col-md-4">
             <label class="txt-tamaño">Área</label>
-            {!! Form::text('area', $contratos->area, [
-                'maxlength' => '250',
-                'class' => 'form-control',
-                'maxlength' => '250',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
-            @if ($errors->has('area'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('area') }}
-                </div>
-            @endif
+            <div>
+                <input type="text" name="area" id="area" value="{{ old('area', $contratos->area) }}"
+                    maxlength="250" class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('area'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('area') }}
+                    </div>
+                @endif
+            </div>
         </div>
+
     </div>
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Nombre del
-                Supervisor 2</label>
-            {!! Form::text('administrador_contrato', $contratos->administrador_contrato, [
-                'maxlength' => '250',
-                'class' => 'form-control',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
+            <label class="txt-tamaño">Nombre del Supervisor 2</label>
+            <input type="text" name="administrador_contrato" id="administrador_contrato"
+                value="{{ old('administrador_contrato', $contratos->administrador_contrato) }}" maxlength="250"
+                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
             @if ($errors->has('administrador_contrato'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('administrador_contrato') }}
                 </div>
             @endif
         </div>
+
         <div class="distancia form-group col-md-4">
             <label class="txt-tamaño">Puesto</label>
-            {!! Form::text('cargo_administrador', $contratos->cargo_administrador, [
-                'class' => 'form-control',
-                'maxlength' => '250',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
+            <input type="text" name="cargo_administrador" id="cargo_administrador"
+                value="{{ old('cargo_administrador', $contratos->cargo_administrador) }}" maxlength="250"
+                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
             @if ($errors->has('cargo_administrador'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('cargo_administrador') }}
                 </div>
             @endif
         </div>
+
         <div class="distancia form-group col-md-4">
             <label class="txt-tamaño">Área</label>
-            {!! Form::text('area_administrador', $contratos->area_administrador, [
-                'class' => 'form-control',
-                'maxlength' => '250',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
+            <input type="text" name="area_administrador" id="area_administrador"
+                value="{{ old('area_administrador', $contratos->area_administrador) }}" maxlength="250"
+                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
             @if ($errors->has('area_administrador'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('area_administrador') }}
@@ -758,10 +747,11 @@
             @if (!$show_contrato)
                 <a href="{{ route('contract_manager.contratos-katbol.index') }}"
                     class="btn btn-outline-primary">Cancelar</a>
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+                <button type="submit" class="btn btn-primary">Guardar</button>
             @endif
         </div>
     </div>
+
     </div>
     </div>
     <!-- Submit Field -->
