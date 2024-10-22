@@ -8,10 +8,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+use Illuminate\Support\Facades\DB;
+
 class LoginTenantController extends Controller
 {
     public function show(): View
     {
+        // $currentDatabase = DB::connection('tenant')->getDatabaseName();
+        // dd($currentDatabase);
         return view('central.tenants.login');
     }
 

@@ -65,7 +65,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         if (count($parts) === 1) { // If subdomain
             $domain = Domain::domainFromSubdomain($domain);
         }
-
+        //dd($domain, $route, $parameters, $absolute);
         return tenant_route($domain, $route, $parameters, $absolute);
     }
 
