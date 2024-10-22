@@ -13,6 +13,7 @@ use App\Mail\AprobadorFirmaContratoMail;
 use App\Models\AprobadorFirmaContrato;
 use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Area;
+use App\Events\ContratoEvent;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
