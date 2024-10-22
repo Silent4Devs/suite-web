@@ -18,8 +18,11 @@ class AlcanceSgsiJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $alcances;
+
     protected $tipo_consulta;
+
     protected $tabla;
+
     protected $slug;
 
     public function __construct($alcances, $tipo_consulta, $tabla, $slug)
@@ -59,7 +62,7 @@ class AlcanceSgsiJob implements ShouldQueue
                 }
             }
         } catch (\Exception $e) {
-            dd('Error processing notifications: ' . $e->getMessage());
+            dd('Error processing notifications: '.$e->getMessage());
         }
     }
 }
