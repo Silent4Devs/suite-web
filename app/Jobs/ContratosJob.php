@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs;
 
 use App\Models\FirmaModule;
 use App\Models\User;
