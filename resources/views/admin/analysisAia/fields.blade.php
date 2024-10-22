@@ -9,104 +9,74 @@
 <div class="row">
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('fecha_entrevista', 'Fecha de la entrevista:', ['class' => 'required']) !!}
+        <label for="fecha_entrevista" class="required">Fecha de la entrevista:</label>
         @error('fecha_entrevista')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::date('fecha_entrevista', null, [
-            'class' => 'form-control',
-            'required',
-            'min="1945-01-01"',
-        ]) !!}
+        <input type="date" name="fecha_entrevista" id="fecha_entrevista" class="form-control" required
+            min="1945-01-01" value="{{ old('fecha_entrevista') }}">
     </div>
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('entrevistado', 'Entrevistado:', ['class' => 'required']) !!}
+        <label for="entrevistado" class="required">Entrevistado:</label>
         @error('entrevistado')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('entrevistado', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="entrevistado" id="entrevistado" class="form-control" maxlength="255"
+            placeholder="..." required value="{{ old('entrevistado') }}">
     </div>
 
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('puesto', 'Puesto:', ['class' => 'required']) !!}
+        <label for="puesto" class="required">Puesto:</label>
         @error('puesto')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('puesto', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="puesto" id="puesto" class="form-control" maxlength="255" placeholder="..."
+            required value="{{ old('puesto') }}">
     </div>
 
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('area', 'Área:', ['class' => 'required']) !!}
+        <label for="area" class="required">Área:</label>
         @error('area')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('area', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //           'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="area" id="area" class="form-control" maxlength="255" placeholder="..."
+            required value="{{ old('area') }}">
     </div>
 
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('extencion', 'Extensión:') !!}
+        <label for="extencion">Extensión:</label>
         @error('extencion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::number('extencion', null, [
-            'class' => 'form-control',
-            'placeholder' => '...',
-            'min=0',
-            'max=9999',
-        ]) !!}
+        <input type="number" name="extencion" id="extencion" class="form-control" placeholder="..." min="0"
+            max="9999" value="{{ old('extencion') }}">
     </div>
 
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('correo', 'Correo:', ['class' => 'required']) !!}
+        <label for="correo" class="required">Correo:</label>
         @error('correo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::email('correo', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="email" name="correo" id="correo" class="form-control" maxlength="255" placeholder="..."
+            required value="{{ old('correo') }}">
     </div>
 
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('aplicaciones_a_cargo', 'Aplicaciones a su cargo::', ['class' => 'required']) !!}
+        <label for="aplicaciones_a_cargo" class="required">Aplicaciones a su cargo:</label>
         @error('aplicaciones_a_cargo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('aplicaciones_a_cargo', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="aplicaciones_a_cargo" id="aplicaciones_a_cargo" class="form-control" maxlength="255"
+            placeholder="..." required value="{{ old('aplicaciones_a_cargo') }}">
     </div>
 </div>
+
 <!-- DATOS DE IDENTIFICACIÓN DEL PROCESO  -->
 <div class="row">
     <div class="text-center form-group col-12"
@@ -119,56 +89,41 @@
 
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('nombre_aplicacion', 'Nombre de la Aplicación:', ['class' => 'required']) !!}
+        <label for="nombre_aplicacion" class="required">Nombre de la Aplicación:</label>
         @error('nombre_aplicacion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('nombre_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="nombre_aplicacion" id="nombre_aplicacion" class="form-control" maxlength="255"
+            placeholder="..." required value="{{ old('nombre_aplicacion') }}">
     </div>
+
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('id_aplicacion', 'ID de la Aplicación:', ['class' => 'required']) !!}
+        <label for="id_aplicacion" class="required">ID de la Aplicación:</label>
         @error('id_aplicacion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('id_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="id_aplicacion" id="id_aplicacion" class="form-control" maxlength="255"
+            placeholder="..." required value="{{ old('id_aplicacion') }}">
     </div>
 
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('version', 'Versión:', ['class' => 'required']) !!}
-        {!! Form::text('version', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <label for="version" class="required">Versión:</label>
+        <input type="text" name="version" id="version" class="form-control" maxlength="255" placeholder="..."
+            required value="{{ old('version') }}">
     </div>
-
-
 
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('productivo_desarrollo', 'Estatus:', ['class' => 'required']) !!}
+        <label for="productivo_desarrollo" class="required">Estatus:</label>
         @error('productivo_desarrollo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        <select class="form-control" name="productivo_desarrollo" required>
-            <option value disabled {{ old('productivo_desarrollo', null) === null ? 'selected' : '' }}>
-                Selecciona una opción</option>
+        <select class="form-control" name="productivo_desarrollo" id="productivo_desarrollo" required>
+            <option value disabled {{ old('productivo_desarrollo') === null ? 'selected' : '' }}>
+                Selecciona una opción
+            </option>
             @foreach (App\Models\AnalisisAIA::AmbienteSelect as $key => $label)
                 <option value="{{ $key }}"
                     {{ old('productivo_desarrollo', $cuestionario->productivo_desarrollo) === (int) $key ? 'selected' : '' }}>
@@ -180,13 +135,14 @@
 
     <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('interno_externo', 'Publicación:', ['class' => 'required']) !!}
+        <label for="interno_externo" class="required">Publicación:</label>
         @error('interno_externo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        <select class="form-control" name="interno_externo" required>
-            <option value disabled {{ old('interno_externo', null) === null ? 'selected' : '' }}>
-                Selecciona una opción</option>
+        <select class="form-control" name="interno_externo" id="interno_externo" required>
+            <option value disabled {{ old('interno_externo') === null ? 'selected' : '' }}>
+                Selecciona una opción
+            </option>
             @foreach (App\Models\AnalisisAIA::PublicacionSelect as $key => $label)
                 <option value="{{ $key }}"
                     {{ old('interno_externo', $cuestionario->interno_externo) === (int) $key ? 'selected' : '' }}>
@@ -196,27 +152,19 @@
         </select>
     </div>
 
-
-
-
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('objetivo_aplicacion', 'Objetivo de la Aplicación:', ['class' => 'required']) !!}
+        <label for="objetivo_aplicacion" class="required">Objetivo de la Aplicación:</label>
         @error('objetivo_aplicacion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('objetivo_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="objetivo_aplicacion" id="objetivo_aplicacion" class="form-control"
+            maxlength="255" placeholder="..." required value="{{ old('objetivo_aplicacion') }}">
     </div>
 
-
     <div class="form-group col-sm-12">
-        <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Periodicidad con
+        <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Periodicidad
+            con
             que se genera:</label>
         @error('periodicidad')
             <small style="color: red">{{ $message }}</small>
@@ -256,32 +204,23 @@
 
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>
-        {!! Form::label('area_pertenece_aplicacion', 'Área a la que pertenece la Aplicación:', ['class' => 'required']) !!}
+        <label for="area_pertenece_aplicacion" class="required">Área a la que pertenece la Aplicación:</label>
         @error('area_pertenece_aplicacion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('area_pertenece_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="area_pertenece_aplicacion" id="area_pertenece_aplicacion" class="form-control"
+            maxlength="255" placeholder="..." required value="{{ old('area_pertenece_aplicacion') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('area_responsable_aplicacion', 'Área responsable del uso de la Aplicación:', [
-            'class' => 'required',
-        ]) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="area_responsable_aplicacion" class="required">Área responsable del uso de la Aplicación:</label>
         @error('area_responsable_aplicacion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('area_responsable_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '...',
-            'required',
-        ]) !!}
+        <input type="text" name="area_responsable_aplicacion" id="area_responsable_aplicacion"
+            class="form-control" maxlength="255" placeholder="..." required
+            value="{{ old('area_responsable_aplicacion') }}">
     </div>
+
 </div>

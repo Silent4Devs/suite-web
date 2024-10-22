@@ -65,7 +65,7 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
+                    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
                 </div>
 
                 <div class="row">

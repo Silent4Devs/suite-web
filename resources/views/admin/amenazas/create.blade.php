@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{!! route('admin.amenazas.index') !!}">Amenaza</a>
@@ -15,11 +13,13 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.amenazas.store']) !!}
+            <form method="POST" action="{{ route('admin.amenazas.store') }}">
+                @csrf
 
-            @include('admin.amenazas.fields')
+                @include('admin.amenazas.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

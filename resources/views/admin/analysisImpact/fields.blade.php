@@ -8,110 +8,85 @@
 
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('fecha_entrevista', 'Fecha de la entrevista:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="fecha_entrevista" class="required">Fecha de la entrevista:</label>
         @error('fecha_entrevista')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::date('fecha_entrevista', null, [
-            'class' => 'form-control',
-            'required',
-            'min="1945-01-01"',
-        ]) !!}
+        <input type="date" name="fecha_entrevista" id="fecha_entrevista" class="form-control" required
+            min="1945-01-01" value="{{ old('fecha_entrevista') }}">
     </div>
+
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('entrevistado', 'Entrevistado:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="entrevistado" class="required">Entrevistado:</label>
         @error('entrevistado')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('entrevistado', null, [
-            'class' => 'form-control ',
-            'maxlength' => 120,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="entrevistado" id="entrevistado" class="form-control" maxlength="120" placeholder="0"
+            required value="{{ old('entrevistado') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('puesto', 'Puesto:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="puesto" class="required">Puesto:</label>
         @error('puesto')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('puesto', null, [
-            'class' => 'form-control',
-            'maxlength' => 200,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="puesto" id="puesto" class="form-control" maxlength="200" placeholder="0"
+            required value="{{ old('puesto') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('area', 'Área:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="area" class="required">Área:</label>
         @error('area')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('area', null, [
-            'class' => 'form-control',
-            'maxlength' => 150,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="area" id="area" class="form-control" maxlength="150" placeholder="0"
+            required value="{{ old('area') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('direccion', 'Dirección:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="direccion" class="required">Dirección:</label>
         @error('direccion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('direccion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="direccion" id="direccion" class="form-control" maxlength="255" placeholder="0"
+            required value="{{ old('direccion') }}">
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('extencion', 'Extensión:') !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="extencion">Extensión:</label>
         @error('extencion')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::number('extencion', null, [
-            'class' => 'form-control',
-            'maxlength' => 4,
-            'min=0',
-            'max=9999',
-            'placeholder' => '0',
-        ]) !!}
+        <input type="number" name="extencion" id="extencion" class="form-control" maxlength="4" min="0"
+            max="9999" placeholder="0" value="{{ old('extencion') }}">
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('correo', 'Correo:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="correo" class="required">Correo:</label>
         @error('correo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::email('correo', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="email" name="correo" id="correo" class="form-control" maxlength="255" placeholder="0"
+            required value="{{ old('correo') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('procesos_a_cargo', 'Procesos a su cargo:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="procesos_a_cargo" class="required">Procesos a su cargo:</label>
         @error('procesos_a_cargo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('procesos_a_cargo', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="procesos_a_cargo" id="procesos_a_cargo" class="form-control" maxlength="255"
+            placeholder="0" required value="{{ old('procesos_a_cargo') }}">
     </div>
+
 </div>
 <!-- DATOS DE IDENTIFICACIÓN DEL PROCESO  -->
 <div class="row">
@@ -123,106 +98,78 @@
 
 <div class="row" x-data="{ periodicidad: false }">
     <div class="form-group col-sm-8">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('id_proceso', 'ID del Proceso:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="id_proceso" class="required">ID del Proceso:</label>
         @error('id_proceso')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('id_proceso', null, [
-            'class' => 'form-control',
-            'maxlength' => 20,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="id_proceso" id="id_proceso" class="form-control" maxlength="20"
+            placeholder="0" required value="{{ old('id_proceso') }}">
     </div>
 
     <div class="form-group col-sm-4">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('version', 'Versión:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="version" class="required">Versión:</label>
         @error('version')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('version', null, [
-            'class' => 'form-control',
-            'maxlength' => 50,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="version" id="version" class="form-control" maxlength="50" placeholder="0"
+            required value="{{ old('version') }}">
     </div>
 
     <div class="form-group col-sm-8">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre_proceso', 'Nombre del Proceso:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="nombre_proceso" class="required">Nombre del Proceso:</label>
         @error('nombre_proceso')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('nombre_proceso', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="nombre_proceso" id="nombre_proceso" class="form-control" maxlength="255"
+            placeholder="0" required value="{{ old('nombre_proceso') }}">
     </div>
 
     <div class="form-group col-sm-4">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('tipo', 'Tipo:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="tipo" class="required">Tipo:</label>
         @error('tipo')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('tipo', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="tipo" id="tipo" class="form-control" maxlength="255" placeholder="0"
+            required value="{{ old('tipo') }}">
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('macroproceso', 'Macroproceso:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="macroproceso" class="required">Macroproceso:</label>
         @error('macroproceso')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('macroproceso', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="macroproceso" id="macroproceso" class="form-control" maxlength="255"
+            placeholder="0" required value="{{ old('macroproceso') }}">
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('subproceso', 'Subproceso:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="subproceso" class="required">Subproceso:</label>
         @error('subproceso')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('subproceso', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="subproceso" id="subproceso" class="form-control" maxlength="255"
+            placeholder="0" required value="{{ old('subproceso') }}">
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('objetivo_proceso', 'Objetivo del Proceso:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>
+        <label for="objetivo_proceso" class="required">Objetivo del Proceso:</label>
         @error('objetivo_proceso')
             <small style="color: red">{{ $message }}</small>
         @enderror
-        {!! Form::text('objetivo_proceso', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            //            'maxlength' => 255,
-            'placeholder' => '0',
-            'required',
-        ]) !!}
+        <input type="text" name="objetivo_proceso" id="objetivo_proceso" class="form-control" maxlength="255"
+            placeholder="0" required value="{{ old('objetivo_proceso') }}">
     </div>
 
-
     <div class="form-group col-sm-12">
-        <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Periodicidad con
+        <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Periodicidad
+            con
             que se genera:</label>
         @error('periodicidad')
             <small style="color: red">{{ $message }}</small>
