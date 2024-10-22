@@ -325,7 +325,8 @@
                                 `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
                             let htmlBotones = '<div class="btn-group">';
 
-                            if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada') {
+                            if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada' &&
+                                row.contador_version_orden_compra == 3) {
                                 // Si el campo es null, se muestra el botón de edición
                                 htmlBotones += `@can('katbol_ordenes_compra_modificar')
                                                 <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
