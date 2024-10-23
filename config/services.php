@@ -30,8 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'elasticsearch' => [
-        'host' => env('ELASTICSEARCH_HOST', 'http://localhost:9200'),
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
     ],
 
 ];

@@ -1,0 +1,255 @@
+.c-wrapper {
+    max-width: 100% !important;
+}
+
+input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0px 4px;
+}
+
+.btn-regresar-pasarela{
+    color: #3086AF;
+    border-bottom: 1px solid;
+}
+.box-btn-regresar-pasarela{
+    margin-bottom: 30px;
+}
+
+.card-meotos-pago-pasarela{
+    width: 100%;
+    background-color: #fff;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px dashed #b4b4b4;
+}
+.card-meotos-pago-pasarela img{
+    height: 20px;
+}
+
+.menu-pasarela {
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    overflow: auto;
+}
+
+.menu-pasarela li {
+    list-style: none;
+    margin-bottom: 26px;
+    font-size: 16px;
+}
+
+.menu-pasarela li i {
+    width: 30px;
+}
+
+.content-pasarela {
+    margin-left: 340px;
+}
+
+.portada-pasarela {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #34375d;
+    justify-content: center;
+    height: 200px;
+    margin-bottom: 50px;
+}
+
+.portada-pasarela img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.portada-pasarela-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.portada-pasarela p {
+    margin: 0px ;
+}
+
+.instaladas .card {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-background {
+    color: #5A5A5A;
+    padding: 18px;
+    border-radius: 15px;
+    font-size: 38px !important;
+    border: 1px solid #AAAAAA;
+    margin-right: 20px;
+}
+
+.instaladas .card h5,
+.tu-plan .card strong {
+    font-size: 18px;
+}
+
+.tu-plan .card p {
+    margin-top: 20px;
+}
+
+.instaladas .card .btn {
+    border: 1px solid #AAAAAA;
+    border-radius: 10px;
+    padding: 6px 20px;
+    color: #787878;
+}
+
+.modal-apps .modal-dialog {
+    min-width: 1000px;
+}
+
+.modal-apps .modal-content {
+    padding: 30px !important;
+    border-radius: 30px !important;
+}
+
+/* precios planes ---------------- */
+.cards-planes-precios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.options-pago-periodo {
+    border-bottom: 1px solid #AEAEAE;
+}
+
+.options-pago-periodo img {
+    height: 20px;
+}
+
+.options-pago-periodo .btn {
+    border-radius: 0px;
+    color: #5A5A5A;
+    padding: 10px 50px !important;
+    font-size: 20px;
+    outline: 1px solid #AEAEAE !important;
+    background-color: #fff;
+}
+
+.options-pago-periodo .btn.active {
+    background-color: #d7fff9;
+}
+
+.options-pago-periodo .btn:first-child{
+    border-top-left-radius: 8px;
+}
+.options-pago-periodo .btn:last-child{
+    border-top-right-radius: 8px;
+}
+
+.link {
+    color: #3086AF;
+    border-bottom: 1px solid;
+}
+
+.cards-planes-precios .card-header {
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+    color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    font-weight: bolder;
+}
+
+
+/* pre pago ---------------- */
+.btn-comprar {
+    background-color: #09C96A;
+    color: #fff;
+}
+
+.all-aplicaciones-pre .card {
+    min-width: 500px;
+}
+
+.all-aplicaciones-pre .card strong {
+    font-size: 18px;
+}
+
+.flex-direction-row {
+    flex-direction: row;
+}
+
+.box-apps-pre-pago{
+    display: grid;
+    gap: 20px;
+}
+.card-app-pre-pago{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+}
+.card-app-pre-pago span{
+    font-size: 18px;
+}
+
+/* apps ------------ */
+.icon-background.icon-lg {
+    padding: 40px;
+    font-size: 70px !important;
+    border-radius: 25px;
+}
+
+.box-apps-stars i {
+    font-size: 35px !important;
+    color: #c99a00;
+}
+
+.blue-box-estadisticas {
+    background-color: #F8FAFF;
+    border: 1px solid #A8D4E6;
+}
+
+/* pago confirmado ----------- */
+.card-pago-confirmado {
+    font-size: 18px;
+}
+
+.color-badge{
+    background-color: var(--color-peach-light) !important;
+}
+.color-folder_managed{
+    background-color: var(--color-yellow-light) !important;
+}
+.color-demography{
+    background-color: var(--color-purpule-light) !important;
+}
+.color-emoji_people{
+    background-color: var(--color-gray-light) !important;
+}
+.color-overview{
+    background-color: var(--color-blue-light-steel) !important;
+}
+.color-school{
+    background-color: var(--color-blue-light) !important;
+}
+.color-groups{
+    background-color: var(--color-pink) !important;
+}
+.color-gpp_maybe{
+    background-color: var(--color-pink-light) !important;
+}
+
