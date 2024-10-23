@@ -136,7 +136,8 @@ class EntendimientoOrganizacionController extends Controller
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
-        // dd($foda);
+        event(new EntendimientoOrganizacionEvent($foda, 'create', 'entendimiento_organizacions', 'Entendimiento'));
+
         return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
 

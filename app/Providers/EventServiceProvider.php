@@ -312,9 +312,9 @@ class EventServiceProvider extends ServiceProvider
         RequisicionesEvent::class => [
             RequisicionesListener::class,
         ],
-        EntendimientoOrganizacionEvent::class => [
-            EntendimientoOrganizacionListener::class,
-        ],
+        // EntendimientoOrganizacionEvent::class => [
+        //     EntendimientoOrganizacionListener::class,
+        // ],
         DocumentoEvent::class => [
             DocumentoListener::class,
         ],
@@ -324,9 +324,9 @@ class EventServiceProvider extends ServiceProvider
         TimesheetProyectoEvent::class => [
             TimesheetProyectoListener::class,
         ],
-        CoursesEvent::class => [
-            CoursesListener::class,
-        ],
+        // CoursesEvent::class => [
+        //     CoursesListener::class,
+        // ],
         SolicitudVacacionesEvent::class => [
             SolicitudVacacionesListener::class,
         ],
