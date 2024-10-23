@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
+use Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
@@ -34,14 +35,24 @@ class SolicitudPermisoListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $lista = ListaInformativa::with('participantes')->where('modelo', 'SolicitudPermisoGoceSueldo')->first();
+        try {
+            $user = Auth::user();
 
-        foreach ($lista->participantes as $participantes) {
-            $empleados = Empleado::where('id', $participantes->empleado_id)->first();
+            if ($user) {
+                // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario
+                $supervisor = $user->empleado->supervisor ?? null;
 
-            $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->get();
+                if ($supervisor) {
+                    $supervisorEmail = trim(removeUnicodeCharacters($supervisor->email));
+                    $supervisor = User::where('email', $supervisorEmail)->first();
 
-            Notification::send($user, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
+                    if ($supervisor) {
+                        Notification::send($supervisor, new SolicitudPermisoNotification($event->permiso, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
