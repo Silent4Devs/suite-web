@@ -1,16 +1,10 @@
 <div class="row">
     <!-- Nombre Field -->
     <div class="form-group col-sm-6 anima-focus">
-        {!! Form::text('nombre', null, [
-            'class' => 'form-control',
-            'minlength' => 1,
-            'maxlength' => 255,
-            'placeholder' => '',
-            'required',
-        ]) !!}
+        <input type="text" name="nombre" class="form-control" minlength="1" maxlength="255" placeholder="" required value="{{ old('nombre') }}">
         <label for="nombre" class="required">Nombre del lineamiento de Vacaciones:</label>
-        {{-- {!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!} --}}
     </div>
+
     <div class="form-group col-sm-6 anima-focus">
         {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
             title="Tipo de discriminación de días;
@@ -56,43 +50,24 @@
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-3 anima-focus">
-        {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-            title="Año en el que empezara a aplicar las vacaciones"></i> --}}
-        {!! Form::number('inicio_conteo', null, [
-            'class' => 'form-control',
-            'min' => 1,
-            'placeholder' => ' ',
-            'required',
-        ]) !!}
-        <label for="inicio_conteo"> Año de inicio del beneficio <sup class="asterisco">*</sup></label>
-        {{-- {!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!} --}}
+        <input type="number" name="inicio_conteo" class="form-control" min="1" placeholder=" " required value="{{ old('inicio_conteo') }}">
+        <label for="inicio_conteo">Año de inicio del beneficio <sup class="asterisco">*</sup></label>
     </div>
+
     <!-- Categoria Field -->
     <div class="form-group col-sm-3 anima-focus">
-        {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-            title="Año en el que empezara a aplicar las vacaciones"></i> --}}
-        {!! Form::number('fin_conteo', null, [
-            'class' => 'form-control',
-            'min' => 1,
-            'placeholder' => ' ',
-            'required',
-        ]) !!}
-        <label for="fin_conteo"> Año fin del beneficio <sup class="asterisco">*</sup></label>
-        {{-- {!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!} --}}
+        <input type="number" name="fin_conteo" class="form-control" min="1" placeholder=" " required value="{{ old('fin_conteo') }}">
+        <label for="fin_conteo">Año fin del beneficio <sup class="asterisco">*</sup></label>
     </div>
+
 </div>
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-3 anima-focus">
         {{-- <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
         title="Días otorgados en el lapso de años seleccionados anteriormente"></i> --}}
-        {!! Form::number('dias', null, [
-            'class' => 'form-control',
-            'min' => 1,
-            'max' => 24,
-            'placeholder' => ' ',
-            'required',
-        ]) !!}
+        <input type="number" name="dias" class="form-control" min="1" max="24" placeholder=" " required value="{{ old('dias') }}">
+
         <label for="dias">Días a gozar:<sup class="asterisco">*</sup></label>
     </div>
 

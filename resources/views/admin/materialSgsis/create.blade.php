@@ -25,9 +25,14 @@
                 class="row">
                 @csrf
                 <div class="form-group col-12 anima-focus">
-                    <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" placeholder=""
-                        type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
-                    {!! Form::label('nombre', 'Nombre del material de capacitación*', ['class' => 'asterisco']) !!}
+                    <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                           type="text"
+                           name="nombre"
+                           id="nombre"
+                           value="{{ old('nombre', '') }}"
+                           required
+                           placeholder="">
+                    <label for="nombre" class="asterisco">Nombre del material de capacitación*</label>
                     @if ($errors->has('nombre'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre') }}
@@ -35,10 +40,13 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
                 </div>
+
                 <div class="form-group col-12 anima-focus">
-                    <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo"
-                        value="{{ old('objetivo', '') }}" required></textarea>
-                    {!! Form::label('objetivo', 'Objetivo*', ['class' => 'asterisco']) !!}
+                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                              name="objetivo"
+                              id="objetivo"
+                              required>{{ old('objetivo', '') }}</textarea>
+                    <label for="objetivo" class="asterisco">Objetivo*</label>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -46,18 +54,20 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-6 anima-focus">
                     <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
-                        name="personalobjetivo" id="personalobjetivo">
-                        <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>
+                            name="personalobjetivo"
+                            id="personalobjetivo">
+                        <option value="" disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
                         @foreach (App\Models\MaterialSgsi::PERSONALOBJETIVO_SELECT as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                            <option value="{{ $key }}" {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>
+                                {{ $label }}
                             </option>
                         @endforeach
                     </select>
-                    {!! Form::label('personalobjetivo', 'Personal*', ['class' => 'asterisco']) !!}
+                    <label for="personalobjetivo" class="asterisco">Personal*</label>
                     @if ($errors->has('personalobjetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('personalobjetivo') }}
@@ -65,15 +75,17 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-6 anima-focus">
                     <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
-                        name="arearesponsable_id" id="arearesponsable_id">
+                            name="arearesponsable_id"
+                            id="arearesponsable_id">
                         @foreach ($arearesponsables as $id => $arearesponsable)
                             <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>
                                 {{ $arearesponsable }}</option>
                         @endforeach
                     </select>
-                    {!! Form::label('arearesponsable_id', 'Área*', ['class' => 'asterisco']) !!}
+                    <label for="arearesponsable_id" class="asterisco">Área*</label>
                     @if ($errors->has('arearesponsable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('arearesponsable') }}
@@ -81,18 +93,20 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-6 anima-focus">
                     <select required class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
-                        name="tipoimparticion" id="tipoimparticion">
-                        <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>
+                            name="tipoimparticion"
+                            id="tipoimparticion">
+                        <option value="" disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
                         @foreach (App\Models\MaterialSgsi::TIPOIMPARTICION_SELECT as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>{{ $label }}
+                            <option value="{{ $key }}" {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>
+                                {{ $label }}
                             </option>
                         @endforeach
                     </select>
-                    {!! Form::label('tipoimparticion', 'Impartición*', ['class' => 'asterisco']) !!}
+                    <label for="tipoimparticion" class="asterisco">Impartición*</label>
                     @if ($errors->has('tipoimparticion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('tipoimparticion') }}
@@ -100,27 +114,41 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-6 anima-focus">
                     <input placeholder=""
-                        class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}"
-                        type="date" min="1945-01-01" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
-                        value="{{ old('fechacreacion_actualizacion') }}" required>
-                    {!! Form::label('fechacreacion_actualizacion', 'Fecha de creación*', ['class' => 'asterisco']) !!}
+                           class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}"
+                           type="date"
+                           min="1945-01-01"
+                           name="fechacreacion_actualizacion"
+                           id="fechacreacion_actualizacion"
+                           value="{{ old('fechacreacion_actualizacion') }}"
+                           required>
+                    <label for="fechacreacion_actualizacion" class="asterisco">Fecha de creación*</label>
                     @if ($errors->has('fechacreacion_actualizacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechacreacion_actualizacion') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.materialSgsi.fields.fechacreacion_actualizacion_helper') }}</span>
                 </div>
-
 
                 <div class="form-group col-12 anima-focus">
-                    <input type="file" name="files[]" multiple class="form-control" id="documento"
-                        accept="application/pdf" value="{{ old('files[]') }}">
-                    {!! Form::label('documento', 'Material(Archivo PDF)*', ['class' => 'asterisco']) !!}
+                    <input type="file"
+                           name="files[]"
+                           multiple
+                           class="form-control {{ $errors->has('files') ? 'is-invalid' : '' }}"
+                           id="documento"
+                           accept="application/pdf"
+                           value="{{ old('files[]') }}">
+                    <label for="documento" class="asterisco">Material (Archivo PDF)*</label>
+                    @if ($errors->has('files'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('files') }}
+                        </div>
+                    @endif
                 </div>
+
 
                 {{-- <div class="form-group col-12">
                 <label for="archivo"><i class="far fa-file iconos-crear"></i>Material(Archivo PDF)</label>

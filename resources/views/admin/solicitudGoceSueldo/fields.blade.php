@@ -15,64 +15,74 @@
         @enderror
     </div>
     <div class="form-group col-sm-6">
-        <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('tipo_permiso', 'Tipo de permiso:') !!}
-        {!! Form::text('tipo_permiso', null, [
-            'class' => 'form-control',
-            'readonly',
-            'id' => 'tipo_permiso',
-            'style' => 'text-align:center',
-        ]) !!}
-
+        <i class="bi bi-calendar-week-fill iconos-crear"></i>
+        <label for="tipo_permiso">Tipo de permiso:</label>
+        <input type="text"
+               name="tipo_permiso"
+               id="tipo_permiso"
+               class="form-control"
+               readonly
+               style="text-align:center"
+               value="{{ old('tipo_permiso') }}">
     </div>
 </div>
 
 <div class="row">
     <div class="form-group col-sm-12">
-        <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('dias_solicitados', 'Días Otorgados:') !!}
-        {!! Form::number('dias_solicitados', null, [
-            'class' => 'form-control',
-            'placeholder' => '0',
-            'readonly',
-            'id' => 'dias_solicitados',
-            'style' => 'text-align:center',
-        ]) !!}
-
+        <i class="bi bi-calendar-week-fill iconos-crear"></i>
+        <label for="dias_solicitados">Días Otorgados:</label>
+        <input type="number"
+               name="dias_solicitados"
+               id="dias_solicitados"
+               class="form-control"
+               placeholder="0"
+               readonly
+               style="text-align:center"
+               value="{{ old('dias_solicitados') }}"
+        >
     </div>
 </div>
 
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Fecha de inicio:', ['class' => 'required']) !!}
-        {!! Form::date('fecha_inicio', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...',
-            'id' => 'fecha_inicio',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+        <label for="fecha_inicio" class="required">Fecha de inicio:</label>
+        <input type="date"
+               name="fecha_inicio"
+               id="fecha_inicio"
+               class="form-control"
+               placeholder="Ingrese el la fecha en que inican su vacaciones..."
+               value="{{ old('fecha_inicio') }}"
+        >
         @error('fecha_inicio')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Fecha de fin:', ['class' => 'required']) !!}
-        {!! Form::date('fecha_fin', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
-            'id' => 'fecha_fin',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="fecha_fin" class="required">Fecha de fin:</label>
+        <input type="date"
+               name="fecha_fin"
+               id="fecha_fin"
+               class="form-control"
+               placeholder="Ingrese el la fecha en que terminan su vacaciones..."
+               value="{{ old('fecha_fin') }}"
+        >
         @error('fecha_fin')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
-
 </div>
+
 <x-loading-indicator />
 
 
 <!-- Descripcion Field -->
 <div class="row">
     <div class="form-group col-sm-12">
-        <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios para el aprobador:') !!}</label>
+        <label for="edescripcion">
+            <i class="fas fa-file-alt iconos-crear"></i> Comentarios para el aprobador:
+        </label>
         <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
     </div>
 </div>

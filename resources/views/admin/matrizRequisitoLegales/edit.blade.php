@@ -98,91 +98,112 @@
                     <hr>
                 </div>
                 <div class="form-group col-12 anima-focus">
-                    <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form"
-                        type="text" maxlength="255" name="nombrerequisito" id="nombrerequisito" placeholder=""
-                        value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
+                    <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}"
+                           type="text"
+                           maxlength="255"
+                           name="nombrerequisito"
+                           id="nombrerequisito"
+                           placeholder=""
+                           value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}"
+                           required>
+
                     @if ($errors->has('nombrerequisito'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombrerequisito') }}
                         </div>
                     @endif
-                    {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', [
-                        'class' => 'asterisco',
-                    ]) !!}
+
+                    <label for="nombrerequisito" class="asterisco">
+                        Nombre del requisito legal, regulatorio, contractual o estatutario*
+                    </label>
+
                     <span id="alertaGenerica" style="color: red; display: none;"></span>
                 </div>
+
                 <br>
                 <br>
                 <br>
                 <br>
                 <div class="form-group col-md-12 anima-focus">
-                    <input class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form" type="text"
-                        name="formacumple" id="formacumple"
-                        value="{{ old('formacumple', $matrizRequisitoLegale->formacumple) }}" placeholder="" required>
+                    <input class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }}"
+                           type="text"
+                           name="formacumple"
+                           id="formacumple"
+                           value="{{ old('formacumple', $matrizRequisitoLegale->formacumple) }}"
+                           placeholder=""
+                           required>
+
                     @if ($errors->has('formacumple'))
                         <div class="invalid-feedback">
                             {{ $errors->first('formacumple') }}
                         </div>
                     @endif
-                    {!! Form::label(
-                        'formacumple',
-                        'Cláusula, sección o
-                                                                                                                                                                    apartado
-                                                                                                                                                                    aplicable*',
-                        ['class' => 'asterisco'],
-                    ) !!}
+
+                    <label for="formacumple" class="asterisco">
+                        Cláusula, sección o apartado aplicable*
+                    </label>
                 </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <div class="row" style="padding-right:0px;">
+
+                <div class="row" style="padding-right: 0;">
                     <div class="form-group col-md-6 anima-focus">
-                        <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
-                            type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
-                            value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d') : null) }}"
-                            placeholder="" required>
+                        <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
+                               type="date"
+                               name="fechaexpedicion"
+                               id="fechaexpedicion"
+                               min="1945-01-01"
+                               value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d') : null) }}"
+                               placeholder=""
+                               required>
+
                         @if ($errors->has('fechaexpedicion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fechaexpedicion') }}
                             </div>
                         @endif
-                        {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
+
+                        <label for="fechaexpedicion" class="asterisco">Fecha de expedición*</label>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+
                     <div class="form-group col-md-6 anima-focus">
-                        <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
-                            type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
-                            value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d') : null) }}"
-                            placeholder="" style="" required>
+                        <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}"
+                               type="date"
+                               name="fechavigor"
+                               id="fechavigor"
+                               min="1945-01-01"
+                               value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d') : null) }}"
+                               placeholder=""
+                               required>
+
                         @if ($errors->has('fechavigor'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fechavigor') }}
                             </div>
                         @endif
-                        {!! Form::label('fechavigor', 'Fecha de entrada en vigor*', ['class' => 'asterisco']) !!}
-                    </div>
 
+                        <label for="fechavigor" class="asterisco">Fecha de entrada en vigor*</label>
+                    </div>
                 </div>
+
                 <br>
                 <br>
                 <br>
                 <br>
                 <div class="form-group col-sm-12 anima-focus">
-                    <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form" type="text"
-                        style="height: 225px !important;" name="requisitoacumplir" id="requisitoacumplir" placeholder=" " required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
+                    <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
+                              style="height: 225px !important;"
+                              name="requisitoacumplir"
+                              id="requisitoacumplir"
+                              placeholder=" "
+                              required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
+
                     @if ($errors->has('requisitoacumplir'))
                         <div class="invalid-feedback">
                             {{ $errors->first('requisitoacumplir') }}
                         </div>
                     @endif
-                    {!! Form::label('requisitoacumplir', 'Requisitos a cumplir*', ['class' => 'asterisco']) !!}
+
+                    <label for="requisitoacumplir" class="asterisco">Requisitos a cumplir*</label>
                 </div>
-
-
 
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn btn-outline-primary"
@@ -191,8 +212,6 @@
                         {{ trans('global.save') }}
                     </button>
                 </div>
-
-
 
                 <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
                     aria-hidden="true">

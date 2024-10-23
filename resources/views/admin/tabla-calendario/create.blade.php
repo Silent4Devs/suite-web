@@ -57,11 +57,13 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Evento</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.tabla-calendario.store']) !!}
+            <form action="{{ route('admin.tabla-calendario.store') }}" method="POST">
+                @csrf
 
-            @include('admin.tabla-calendario.fields')
+                @include('admin.tabla-calendario.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

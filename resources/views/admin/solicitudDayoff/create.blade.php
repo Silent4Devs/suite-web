@@ -15,11 +15,14 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.solicitud-dayoff.store']) !!}
+            <form action="{{ route('admin.solicitud-dayoff.store') }}" method="POST">
+                @csrf
 
-            @include('admin.solicitudDayoff.fields')
+                @include('admin.solicitudDayoff.fields')
 
-            {!! Form::close() !!}
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
         </div>
     </div>
+
 @endsection

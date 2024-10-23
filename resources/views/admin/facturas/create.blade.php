@@ -2,33 +2,28 @@
 <div class="row mb-4">
     <div class="input-field col s12 m4">
         <small>No. factura:</small>
-        {!! Form::number('no_factura', null, ['class' => 'form-control', 'required']) !!}
+        <input type="number" name="no_factura" class="form-control" required>
     </div>
 
-    <!-- Nombre Proveedor Field -->
     <div class="input-field col s12 m4">
         <small>Periodo:</small>
-        {!! Form::text('periodo', null, ['class' => 'form-control', 'required']) !!}
+        <input type="text" name="periodo" class="form-control" required>
     </div>
 
-    <!-- Area Field -->
     <div class="input-field col s12 m4">
         <small>Fecha de recepción:</small>
-        {!! Form::text('fecha_recepcion', null, ['class' => 'datepicker', 'required']) !!}
+        <input type="text" name="fecha_recepcion" class="datepicker" required>
     </div>
 
-    <!-- Nombre Servicio Field -->
     <div class="input-field col s12 m4">
-        <small>No. revisiones</small>
-
-        {!! Form::text('no_revisiones', null, ['class' => 'form-control', 'required']) !!}
+        <small>No. revisiones:</small>
+        <input type="text" name="no_revisiones" class="form-control" required>
     </div>
 
-    <!-- Clasificacion Field -->
     <div class="input-field col s12 m4">
-        <small>Cumple/ No Cumple</small>
+        <small>Cumple/ No Cumple:</small>
         <div class="display-flex ml-4">
-            <select class="validate" required="" aria-required="true" name="cumple">
+            <select class="validate" name="cumple" required>
                 <option value="" disabled selected>Escoga una opción</option>
                 <option value="1">Cumple</option>
                 <option value="0">No cumple</option>
@@ -36,31 +31,28 @@
         </div>
     </div>
 
-    <!-- Administrador Field -->
     <div class="input-field col s12 m4">
-        <small>Fecha de liberación</small>
-        {!! Form::text('fecha_liberacion', null,['class' => 'datepicker' , 'required']) !!}
+        <small>Fecha de liberación:</small>
+        <input type="text" name="fecha_liberacion" class="datepicker" required>
     </div>
 
-    <!-- Fase Field -->
     <div class="input-field col s12 m4">
-        <small>Monto factura</small>
-        {!! Form::number('monto_factura', null, ['class' => 'form-control', 'required']) !!}
+        <small>Monto factura:</small>
+        <input type="number" name="monto_factura" class="form-control" required>
     </div>
 
-    <!-- Estatus Field -->
     <div class="col s12 m4">
         <div class="file-field input-field">
             <div class="btn">
                 <span>PDF</span>
-                <input class="input_file_validar" type="file" name="pdf" accept="{{$organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt'}}">
+                <input type="file" name="pdf" accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Elegir factura pdf" required>
             </div>
         </div>
         <div class="display-flex ml-4">
-            <label class="red-text">{{ $errors->first('Type') }}</label>
+            <label class="red-text">{{ $errors->first('pdf') }}</label>
         </div>
     </div>
 
@@ -75,21 +67,19 @@
             </div>
         </div>
         <div class="display-flex ml-4">
-            <label class="red-text">{{ $errors->first('Type') }}</label>
+            <label class="red-text">{{ $errors->first('xml') }}</label>
         </div>
     </div>
 
-    <!-- Vigencia Contrato Field -->
     <div class="input-field col s12 m4">
-        <small>Numero de pagos</small>
-        {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required']) !!}
+        <small>Número de pagos:</small>
+        <input type="number" name="no_pagos" class="form-control" required>
     </div>
 
-    <!-- Pmp Asignado Field -->
     <div class="input-field col s12 m4">
-        <small>Perioricidad de pago</small>
+        <small>Periodicidad de pago:</small>
         <div class="display-flex ml-4">
-            <select class="validate" required="" aria-required="true" name="perioricidad_pago" required>
+            <select class="validate" name="perioricidad_pago" required>
                 <option value="" disabled selected>Escoga una opción</option>
                 <option value="1">Mensual</option>
                 <option value="2">Bimestral</option>
@@ -102,16 +92,16 @@
     </div>
 
     <div class="input-field col s12 m4">
-        <small>Fecha de inicio de pago</small>
+        <small>Fecha de inicio de pago:</small>
         <div class="display-flex ml-4">
-            {!! Form::text('fecha_inicio_pago', null,['class' => 'datepicker', 'required']); !!}
+            <input type="text" name="fecha_inicio_pago" class="datepicker" required>
         </div>
     </div>
-    <!-- Submit Field -->
+
     <div class="row mb-3">
         <div class="col s12">
             <div class="form-group col-sm-12 right">
-                {!! Form::submit('Guardar', ['class' => 'btn tb-btn-primary']) !!}
+                <button type="submit" class="btn tb-btn-primary">Guardar</button>
                 <a href="{{ route('contratos.index') }}" class="btn btn-default">Cancelar</a>
             </div>
         </div>

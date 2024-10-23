@@ -32,9 +32,15 @@
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
         <br>
         <div class="form-group anima-focus">
-            <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" id="nombre"
-                aria-describedby="nombreHelp" placeholder="" name="nombre" value="{{ old('nombre', $competencia->nombre) }}">
-            {!! Form::label('nombre', 'Nombre de la competencia*', ['class' => 'asterisco']) !!}
+            <input type="text"
+                   class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                   id="nombre"
+                   aria-describedby="nombreHelp"
+                   placeholder=""
+                   name="nombre"
+                   value="{{ old('nombre', $competencia->nombre) }}"
+                   required>
+            <label for="nombre" class="asterisco">Nombre de la competencia*</label>
             @if ($errors->has('nombre'))
                 <div class="invalid-feedback">
                     {{ $errors->first('nombre') }}
@@ -43,32 +49,46 @@
             <span class="errors nombre_error text-danger"></span>
         </div>
     </div>
+
     <div class="col-sm-12 col-lg-6 col-md-6 col-12">
         <div class="form-group anima-focus">
             {{-- Modulo para tipo de competencia --}}
             <div class="row align-items-center">
-                <div class="col-9" style=" margin-top:-9px">
-                    {!! Form::label('descripcion', 'Tipo de competencia*', ['class' => 'asterisco']) !!}
-                    @livewire('tipo-competencia-select',['tipo_seleccionado'=>$tipo_seleccionado])
+                <div class="col-9" style="margin-top: -9px">
+                    <label for="tipo_competencia" class="asterisco">Tipo de competencia*</label>
+                    @livewire('tipo-competencia-select', ['tipo_seleccionado' => $tipo_seleccionado])
                 </div>
-                <div class="pl-0 col" style="text-align: center;
-                margin-top: -22px;
-                margin-left: inherit">
-                    <button id="btnAgregarTipo" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-                        data-toggle="modal" data-target="#tipoCompetenciaModal" title="Agregar Tipo"><i
-                            class="fas fa-plus"></i></button>
-                            <a href="{{ route('admin.Tipo.index')}}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i class="fas fa-edit"></i></a>
+                <div class="pl-0 col" style="text-align: center; margin-top: -22px; margin-left: inherit">
+                    <button id="btnAgregarTipo"
+                            class="text-white btn btn-sm"
+                            style="background: #3eb2ad; height: 34px;"
+                            data-toggle="modal"
+                            data-target="#tipoCompetenciaModal"
+                            title="Agregar Tipo">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <a href="{{ route('admin.Tipo.index') }}"
+                       class="text-white btn btn-sm"
+                       style="background: #3eb2ad; height: 32px;">
+                        <i class="fas fa-edit"></i>
+                    </a>
                 </div>
             </div>
             @livewire('tipo-competencia-create')
             {{-- Fin Modulo para tipo de competencia --}}
         </div>
     </div>
+
     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
         <div class="form-group anima-focus">
-            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                id="" cols="30" placeholder="" rows="10">{{ old('descripcion', $competencia->descripcion) }}</textarea>
-                {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+            <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                      name="descripcion"
+                      id="descripcion"
+                      cols="30"
+                      placeholder=""
+                      rows="10"
+                      required>{{ old('descripcion', $competencia->descripcion) }}</textarea>
+            <label for="descripcion" class="asterisco">Descripción*</label>
             @if ($errors->has('descripcion'))
                 <div class="invalid-feedback">
                     {{ $errors->first('descripcion') }}
@@ -77,6 +97,7 @@
             <span class="errors descripcion_error text-danger"></span>
         </div>
     </div>
+
     <div class="col-sm-12 col-lg-12 col-md-12 col-12">
 
         <div class="input-group is-invalid">
