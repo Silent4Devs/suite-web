@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Timesheet;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TimesheetHorasSobrepasadas;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
@@ -12,6 +13,7 @@ use App\Models\Sede;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetProyectoEmpleado;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
@@ -20,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class TbTimesheetApiMobileController extends Controller
@@ -42,11 +45,8 @@ class TbTimesheetApiMobileController extends Controller
         return $url;
     }
 
-    public function tbFunctionCreate()
-    {
-        $empleado = User::getCurrentUser()->empleado;
-
-        $proyectos = TimesheetProyectoArea::with(['proyecto.tareas' => function ($query) {
+    public function proyectosArea($empleado){
+        $proyects = TimesheetProyectoArea::with(['proyecto.tareas' => function ($query) {
             $query->select('id', 'proyecto_id', 'tarea');
         }])
             ->whereHas('proyecto', function ($query) {
@@ -70,38 +70,54 @@ class TbTimesheetApiMobileController extends Controller
                 ];
             });
 
+        return $proyects;
+    }
+
+    public function tbFunctionCreate()
+    {
+        $empleado = User::getCurrentUser()->empleado;
+
+        $proyectos = $this->proyectosArea($empleado);
+
         return response()->json(['proyectos' => $proyectos], 200);
     }
 
 
     public function tbFunctionStore(Request $request)
     {
-        $validatedData = $request->validate([
-            // Validaciones para timesheet
+        // Define las reglas de validación
+        $validator = Validator::make($request->all(), [
             'timesheet.fecha_dia' => ['required', 'date'],
-            'timesheet.estatus' => ['required', 'in:pendiente,papelera'], // Ajusta los estatus permitidos
-
-            // Validaciones para registros (arreglo de registros)
+            'timesheet.estatus' => ['required', 'in:pendiente,papelera'],
             'registros' => ['required', 'array'],
             'registros.*.proyecto_id' => ['required', 'integer'],
             'registros.*.tarea_id' => ['required', 'integer'],
             'registros.*.facturable' => ['required', 'boolean'],
             'registros.*.descripcion' => ['required', 'string'],
-
-            // Validaciones para horas (0 a 24)
-            'registros.*.horas_lunes' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_martes' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_miercoles' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_jueves' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_viernes' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_sabado' => ['nullable', 'integer', 'between:0,24'],
-            'registros.*.horas_domingo' => ['nullable', 'integer', 'between:0,24'],
+    
+            // Validaciones para horas decimales con hasta 2 decimales
+            'registros.*.horas_lunes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_martes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_miercoles' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_jueves' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_viernes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_sabado' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_domingo' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
         ], [
             'required' => 'El campo :attribute es obligatorio.',
-            'integer' => 'El campo :attribute debe ser un número entero.',
+            'numeric' => 'El campo :attribute debe ser un número.',
+            'regex' => 'El campo :attribute debe ser un número con hasta 2 decimales.',
             'between' => 'El valor de :attribute debe estar entre 0 y 24.',
-            'exists' => 'El :attribute seleccionado no existe.',
         ]);
+
+        // Si hay errores de validación, retornamos un JSON con el error
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Errores de validación',
+                'errors' => $validator->errors(),
+            ], 422); // Código HTTP 422 Unprocessable Entity
+        }
 
         // Validación personalizada para verificar que al menos una hora esté definida
         $errors = [];
@@ -144,19 +160,19 @@ class TbTimesheetApiMobileController extends Controller
         $firstDayFormatted = $firstDay->format('Y/m/d');
         $endDayFormatted = $endDay->format('Y/m/d');
 
-        $fechaTimeSheetFormatted = Carbon::parse($request->fecha_dia)->format('Y/m/d');
+        $fechaTimeSheetFormatted = Carbon::parse($request->timesheet["fecha_dia"])->format('Y/m/d');
 
         if ($request->timesheet["estatus"] === 'pendiente' || $request->timesheet["estatus"] === 'papelera') {
             if (($fechaTimeSheetFormatted >= $firstDayFormatted && $fechaTimeSheetFormatted <= $endDayFormatted) || ($fechaTimeSheetFormatted >= $firstDayFormatted && $endDayFormatted <= $fechaTimeSheetFormatted)) {
                 try {
                     $timesheet_nuevo = Timesheet::create([
-                        'fecha_dia' => $request->fecha_dia,
+                        'fecha_dia' => $request->timesheet["fecha_dia"],
                         'dia_semana' => $organizacion_semana->dia_timesheet,
                         'inicio_semana' => $organizacion_semana->inicio_timesheet,
                         'fin_semana' => $organizacion_semana->fin_timesheet,
                         'empleado_id' => $usuario->empleado->id,
                         'aprobador_id' => $usuario->empleado->supervisor_id,
-                        'estatus' => $request->estatus,
+                        'estatus' => $request->timesheet["estatus"],
                     ]);
 
                     foreach ($request->registros as $index => $registro) {
@@ -191,7 +207,10 @@ class TbTimesheetApiMobileController extends Controller
                         } catch (Throwable $e) {
                             report($e);
 
-                            return response()->json(['status' => 520]);
+                            return response()->json([
+                                'success' => true,
+                                'message' => 'Datos guardados correctamente. Error al enviar el correo',
+                            ], 501);
                         }
                     }
 
@@ -200,229 +219,30 @@ class TbTimesheetApiMobileController extends Controller
                     // Your database operations here
                     DB::commit();
 
-                    return response()->json(['status' => 200]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Datos guardados correctamente.',
+                    ], 201);
                 } catch (Throwable $th) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Error al registrar timesheet por favor vuelva a intentar mas tarde.',
+                    ], 400);
                 }
             }
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Datos guardados correctamente.',
-        ], 201); // Código de estado HTTP 201 Created
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Datos guardados correctamente.',
+        // ], 201); // Código de estado HTTP 201 Created
     }
-
-    // public function store(Request $request)
-    // {
-    //     abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-    //     DB::beginTransaction();
-
-    //     $organizacion_semana = Organizacion::getFirst();
-
-    //     $request->validate(
-    //         [
-    //             'timesheet.1.proyecto' => 'required',
-    //             'timesheet.1.tarea' => 'required',
-    //             'fecha_dia' => 'required',
-    //         ],
-    //         [
-    //             'timesheet.*.proyecto.required' => 'Seleccionar proyecto',
-    //             'timesheet.*.tarea.required' => 'Seleccionar tarea',
-    //             'fecha_dia.required' => 'Seleccione fecha',
-    //         ],
-    //     );
-    //     if (
-    //         $request->timesheet[1]['lunes'] == null &&
-    //         $request->timesheet[1]['martes'] == null &&
-    //         $request->timesheet[1]['miercoles'] == null &&
-    //         $request->timesheet[1]['jueves'] == null &&
-    //         $request->timesheet[1]['viernes'] == null &&
-    //         $request->timesheet[1]['sabado'] == null &&
-    //         $request->timesheet[1]['domingo'] == null
-    //     ) {
-    //         $request->validate(
-    //             [
-    //                 'timesheet.1.horas' => 'required',
-    //             ],
-    //             [
-    //                 'timesheet.1.horas.required' => 'Registre horas de la semana',
-    //             ]
-    //         );
-    //     }
-
-    //     foreach ($request->timesheet as $index => $hora) {
-    //         if ($index > 1) {
-    //             if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
-    //                 $request->validate(
-    //                     [
-    //                         "timesheet.{$index}.proyecto" => 'required',
-    //                         "timesheet.{$index}.tarea" => 'required',
-    //                     ],
-    //                     [
-    //                         "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
-    //                         "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
-    //                     ],
-    //                 );
-
-    //                 if (
-    //                     $hora['lunes'] == null &&
-    //                     $hora['martes'] == null &&
-    //                     $hora['miercoles'] == null &&
-    //                     $hora['jueves'] == null &&
-    //                     $hora['viernes'] == null &&
-    //                     $hora['sabado'] == null &&
-    //                     $hora['domingo'] == null
-    //                 ) {
-    //                     $request->validate(
-    //                         [
-    //                             "timesheet.{$index}.horas" => 'required',
-    //                         ],
-    //                         [
-    //                             "timesheet.{$index}.horas.required" => 'Registre horas de la semana',
-    //                         ],
-    //                     );
-    //                 }
-    //             } else {
-    //                 if (
-    //                     $hora['lunes'] != null ||
-    //                     $hora['martes'] != null ||
-    //                     $hora['miercoles'] != null ||
-    //                     $hora['jueves'] != null ||
-    //                     $hora['viernes'] != null ||
-    //                     $hora['sabado'] != null ||
-    //                     $hora['domingo'] != null
-    //                 ) {
-    //                     $request->validate(
-    //                         [
-    //                             "timesheet.{$index}.proyecto" => 'required',
-    //                             "timesheet.{$index}.tarea" => 'required',
-    //                         ],
-    //                         [
-    //                             "timesheet.{$index}.proyecto.required" => 'Seleccionar proyecto',
-    //                             "timesheet.{$index}.tarea.required" => 'Seleccionar tarea',
-    //                         ],
-    //                     );
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     $usuario = User::getCurrentUser();
-    //     $organizacion = Organizacion::getFirst();
-
-    //     $semanasAtras = $usuario->empleado->semanas_min_timesheet ? $usuario->empleado->semanas_min_timesheet : 4;
-
-    //     $today = Carbon::now();
-
-    //     $firstDay = $today->copy()->subWeeks($semanasAtras);
-    //     $endDay = $today->copy()->addWeeks($organizacion->semanas_adicionales);
-    //     $firstDayFormatted = $firstDay->format('Y/m/d');
-    //     $endDayFormatted = $endDay->format('Y/m/d');
-
-    //     $fechaTimeSheetFormatted = Carbon::parse($request->fecha_dia)->format('Y/m/d');
-    //     if ($request->estatus === 'pendiente' || $request->estatus === 'papelera') {
-    //         if (($fechaTimeSheetFormatted >= $firstDayFormatted && $fechaTimeSheetFormatted <= $endDayFormatted) || ($fechaTimeSheetFormatted >= $firstDayFormatted && $endDayFormatted <= $fechaTimeSheetFormatted)) {
-    //             try {
-    //                 $timesheet_nuevo = Timesheet::create([
-    //                     'fecha_dia' => $request->fecha_dia,
-    //                     'dia_semana' => $organizacion_semana->dia_timesheet,
-    //                     'inicio_semana' => $organizacion_semana->inicio_timesheet,
-    //                     'fin_semana' => $organizacion_semana->fin_timesheet,
-    //                     'empleado_id' => $usuario->empleado->id,
-    //                     'aprobador_id' => $usuario->empleado->supervisor_id,
-    //                     'estatus' => $request->estatus,
-    //                 ]);
-
-    //                 foreach ($request->timesheet as $index => $hora) {
-    //                     if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
-
-    //                         foreach ($hora as $key => $value) {
-    //                             if ($value === '') {
-    //                                 $hora[$key] = null;
-    //                             }
-    //                         }
-
-    //                         $horas_nuevas = TimesheetHoras::create([
-    //                             'timesheet_id' => $timesheet_nuevo->id,
-    //                             'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
-    //                             'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-    //                             'facturable' => array_key_exists('facturable', $hora) ? true : false,
-    //                             'horas_lunes' => $hora['lunes'],
-    //                             'horas_martes' => $hora['martes'],
-    //                             'horas_miercoles' => $hora['miercoles'],
-    //                             'horas_jueves' => $hora['jueves'],
-    //                             'horas_viernes' => $hora['viernes'],
-    //                             'horas_sabado' => $hora['sabado'],
-    //                             'horas_domingo' => $hora['domingo'],
-    //                             'descripcion' => $hora['descripcion'],
-    //                             'empleado_id' => $usuario->empleado->id,
-    //                         ]);
-    //                     }
-    //                 }
-
-    //                 if ($timesheet_nuevo->estatus === 'pendiente') {
-    //                     $aprobador = Empleado::find($usuario->empleado->supervisor_id);
-
-    //                     $solicitante = Empleado::find($usuario->empleado->id);
-
-    //                     try {
-    //                         // Enviar correo
-    //                         Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
-    //                     } catch (Throwable $e) {
-    //                         report($e);
-
-    //                         return response()->json(['status' => 520]);
-    //                     }
-    //                 }
-
-    //                 $this->notificacionhorassobrepasadas($usuario->empleado->id);
-
-    //                 // Your database operations here
-    //                 DB::commit();
-
-    //                 return response()->json(['status' => 200]);
-    //             }
-    //             // catch exception and rollback transaction
-    //             catch (Throwable $e) {
-    //                 //Regresa la Base de datos a la normalidad
-    //                 DB::rollback();
-    //                 //Limpia la cache para que no muestre registros que no existen en la base
-    //                 $this->forgetCache();
-
-    //                 // throw $e;
-    //                 return response()->json(['status' => 400]);
-    //             }
-    //         }
-    //     }
-    // }
 
     public function tbFunctionEdit($id)
     {
         $empleado = User::getCurrentUser()->empleado;
 
-        $proyectos = TimesheetProyectoArea::with(['proyecto.tareas' => function ($query) {
-            $query->select('id', 'proyecto_id', 'tarea');
-        }])
-            ->whereHas('proyecto', function ($query) {
-                $query->where('estatus', '=', 'proceso');
-            })
-            ->where('area_id', $empleado->area_id)
-            ->orderByDesc('id')
-            ->get()
-            ->map(function ($proyectoArea) {
-                return [
-                    "id" => $proyectoArea->proyecto->id,
-                    "proyecto" => $proyectoArea->proyecto->proyecto,
-                    "identificador" => $proyectoArea->proyecto->identificador,
-                    "selector" => "{$proyectoArea->proyecto->identificador} - {$proyectoArea->proyecto->proyecto}",
-                    "tareas" => $proyectoArea->proyecto->tareas->map(function ($tarea) {
-                        return [
-                            "id" => $tarea->id,
-                            'tarea' => $tarea->tarea,
-                        ];
-                    })
-                ];
-            });
+        $proyectos = $this->proyectosArea($empleado);
 
         $timesheet = Timesheet::findOrFail($id)->makeHidden(['created_at', 'updated_at', 'proyectos']);
 
@@ -486,6 +306,170 @@ class TbTimesheetApiMobileController extends Controller
             200,
         )->header('Content-Type', 'application/json');
 
+    }
+
+    public function tbFunctionUpdate(Request $request)
+    {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            // Validaciones para timesheet
+            'timesheet.id_timesheet' => ['required', 'integer'],
+            'timesheet.fecha_dia' => ['required', 'date'],
+            'timesheet.estatus' => ['required', 'string', 'min:1', 'in:pendiente,papelera'], // Ajusta los estatus permitidos
+
+            // Validaciones para registros (arreglo de registros)
+            'registros' => ['required', 'array'],
+            'registros.*.id_registro' => ['nullable', 'integer'],
+            'registros.*.proyecto_id' => ['required', 'integer'],
+            'registros.*.tarea_id' => ['required', 'integer'],
+            'registros.*.facturable' => ['required', 'boolean'],
+            'registros.*.descripcion' => ['required', 'string'],
+
+            // Validaciones para horas decimales con hasta 2 decimales
+            'registros.*.horas_lunes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_martes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_miercoles' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_jueves' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_viernes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_sabado' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+            'registros.*.horas_domingo' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
+        ], [
+            'required' => 'El campo :attribute es obligatorio.',
+            'numeric' => 'El campo :attribute debe ser un número.',
+            'regex' => 'El campo :attribute debe ser un número con hasta 2 decimales.',
+            'between' => 'El valor de :attribute debe estar entre 0 y 24.',
+        ]);
+
+        // Si hay errores de validación, retornamos un JSON con el error
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Errores de validación',
+                'errors' => $validator->errors(),
+            ], 422); // Código HTTP 422 Unprocessable Entity
+        }
+
+        // Validación personalizada para verificar que al menos una hora esté definida
+        $errors = [];
+        foreach ($request->input('registros') as $key => $registro) {
+            if (
+                ($registro['horas_lunes'] == 0 || is_null($registro['horas_lunes'])) &&
+                ($registro['horas_martes'] == 0 || is_null($registro['horas_martes'])) &&
+                ($registro['horas_miercoles'] == 0 || is_null($registro['horas_miercoles'])) &&
+                ($registro['horas_jueves'] == 0 || is_null($registro['horas_jueves'])) &&
+                ($registro['horas_viernes'] == 0 || is_null($registro['horas_viernes'])) &&
+                ($registro['horas_sabado'] == 0 || is_null($registro['horas_sabado'])) &&
+                ($registro['horas_domingo'] == 0 || is_null($registro['horas_domingo']))
+            ) {
+                $errors["registros.$key"] = 'Al menos una hora debe ser mayor que 0.';
+            }
+        }
+
+        // Si hay errores de validación personalizada
+        if (!empty($errors)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Errores de validación',
+                'errors' => $errors,
+            ], 422); // Código de estado HTTP 422 Unprocessable Entity
+        }
+
+        // Guardar los datos después de validar
+        // Aquí va tu lógica para guardar los datos
+        DB::beginTransaction();
+
+        $usuario = User::getCurrentUser();
+        $organizacion_semana = Organizacion::getFirst();
+
+        $semanasAtras = $usuario->empleado->semanas_min_timesheet ? $usuario->empleado->semanas_min_timesheet : 4;
+
+        $today = Carbon::now();
+
+        $firstDay = $today->copy()->subWeeks($semanasAtras);
+        $endDay = $today->copy()->addWeeks($organizacion_semana->semanas_adicionales);
+        $firstDayFormatted = $firstDay->format('Y/m/d');
+        $endDayFormatted = $endDay->format('Y/m/d');
+
+        $fechaTimeSheetFormatted = Carbon::parse($request->timesheet["fecha_dia"])->format('Y/m/d');
+
+        if ($request->timesheet["estatus"] === 'pendiente' || $request->timesheet["estatus"] === 'papelera') {
+            if (($fechaTimeSheetFormatted >= $firstDayFormatted && $fechaTimeSheetFormatted <= $endDayFormatted) || ($fechaTimeSheetFormatted >= $firstDayFormatted && $endDayFormatted <= $fechaTimeSheetFormatted)) {
+                try {
+                    $timesheet_editado = Timesheet::where('id', $request->timesheet["id_timesheet"])->first();
+
+                    $timesheet_editado->update([
+                        'fecha_dia' => $request->timesheet["fecha_dia"],
+                        'dia_semana' => $organizacion_semana->dia_timesheet,
+                        'inicio_semana' => $organizacion_semana->inicio_timesheet,
+                        'fin_semana' => $organizacion_semana->fin_timesheet,
+                        'empleado_id' => $usuario->empleado->id,
+                        'aprobador_id' => $usuario->empleado->supervisor_id,
+                        'estatus' => $request->timesheet["estatus"],
+                    ]);
+
+                    foreach ($request->registros as $index => $registro) {
+
+                        TimesheetHoras::updateOrCreate([
+                            'id' => $registro["id_registro"],
+                            'timesheet_id' => $timesheet_editado->id,
+                        ],
+                        [
+                            'proyecto_id' => $registro['proyecto_id'],
+                            'tarea_id' => $registro['tarea_id'],
+                            'facturable' => $registro['facturable'],
+                            'horas_lunes' => $registro['horas_lunes'],
+                            'horas_martes' => $registro['horas_martes'],
+                            'horas_miercoles' => $registro['horas_miercoles'],
+                            'horas_jueves' => $registro['horas_jueves'],
+                            'horas_viernes' => $registro['horas_viernes'],
+                            'horas_sabado' => $registro['horas_sabado'],
+                            'horas_domingo' => $registro['horas_domingo'],
+                            'descripcion' => $registro['descripcion'],
+                            'empleado_id' => $usuario->empleado->id,
+                        ]);
+                    }
+
+                    if ($timesheet_editado->estatus === 'pendiente') {
+                        $aprobador = Empleado::find($usuario->empleado->supervisor_id);
+
+                        $solicitante = Empleado::find($usuario->empleado->id);
+
+                        try {
+                            // Enviar correo
+                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_editado, $solicitante));
+                        } catch (Throwable $e) {
+                            report($e);
+                            dd($e);
+                            return response()->json([
+                                'success' => true,
+                                'message' => 'Datos guardados correctamente. Error al enviar el correo',
+                            ], 501);
+                        }
+                    }
+
+                    $this->notificacionhorassobrepasadas($usuario->empleado->id);
+
+                    // Your database operations here
+                    DB::commit();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Datos guardados correctamente.',
+                    ], 201);
+                } catch (Throwable $th) {
+                    dd($th);
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Error al registrar timesheet por favor vuelva a intentar mas tarde.',
+                    ], 400);
+                }
+            }
+        }
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Datos guardados correctamente.',
+        // ], 201); // Código de estado HTTP 201 Created
     }
 
     public function tbFunctionShow($id)
@@ -728,5 +712,71 @@ class TbTimesheetApiMobileController extends Controller
             ]),
             200,
         )->header('Content-Type', 'application/json');
+    }
+
+    public function notificacionhorassobrepasadas($id)
+    {
+        $verificacion_proyectos = TimesheetProyectoEmpleado::select('id', 'empleado_id')->where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
+
+        if ($verificacion_proyectos) {
+            $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
+        } else {
+            return null;
+        }
+
+        foreach ($emp_proyectos as $ep) {
+            $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
+                ->where('empleado_id', '=', $ep->empleado_id)
+                ->get();
+
+            if ($ep->proyecto->tipo === 'Externo') {
+
+                $tot_horas_proyecto = 0;
+
+                $sumalun = 0;
+                $sumamar = 0;
+                $sumamie = 0;
+                $sumajue = 0;
+                $sumavie = 0;
+                $sumasab = 0;
+                $sumadom = 0;
+
+                foreach ($times as $time) {
+                    $sumalun += floatval($time->horas_lunes);
+                    $sumamar += floatval($time->horas_martes);
+                    $sumamie += floatval($time->horas_miercoles);
+                    $sumajue += floatval($time->horas_jueves);
+                    $sumavie += floatval($time->horas_viernes);
+                    $sumasab += floatval($time->horas_sabado);
+                    $sumadom += floatval($time->horas_domingo);
+                }
+
+                $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
+                if ($tot_horas_proyecto > $ep->horas_asignadas) {
+                    // if($ep->correo_enviado == false){
+                    $empleado_query = Empleado::getDataColumns();
+
+                    $aprobador = $empleado_query->find(User::getCurrentUser()->empleado->supervisor_id);
+
+                    $empleado = $empleado_query->find(User::getCurrentUser()->empleado->id);
+                    //Se comentaron los correos a quienes se les enviara al final
+                    try {
+                        // Enviar correo
+                        Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
+                            ->queue(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                    } catch (Throwable $e) {
+                        report($e);
+
+                        return false;
+                    }
+
+                    //     $ep->update([
+                    //         'correo_enviado' => true,
+                    //     ]);
+                    // }
+                }
+            }
+        }
     }
 }
