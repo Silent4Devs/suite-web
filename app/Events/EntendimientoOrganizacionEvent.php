@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Jobs\EntendimientoOrganizacionJob;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -26,6 +27,8 @@ class EntendimientoOrganizacionEvent implements ShouldBroadcast
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
+
+        EntendimientoOrganizacionJob::dispatch($this->entendimiento, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**
