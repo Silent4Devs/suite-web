@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Services\SentimentService;
 
 class QuejasController extends Controller
 {
@@ -63,6 +64,8 @@ class QuejasController extends Controller
             'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => User::getCurrentUser()->empleado->id,
@@ -78,6 +81,7 @@ class QuejasController extends Controller
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

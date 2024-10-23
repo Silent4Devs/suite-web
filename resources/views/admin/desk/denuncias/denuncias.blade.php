@@ -47,35 +47,35 @@
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
-            <strong>{{$denuncias_sentiment_1}}</strong>
+            <strong>{{ $denuncias_sentiment_1 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Bajo</span><br>
-            <strong>{{$denuncias_sentiment_2}}</strong>
+            <strong>{{ $denuncias_sentiment_2 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Medio</span><br>
-            <strong>{{$denuncias_sentiment_3}}</strong>
+            <strong>{{ $denuncias_sentiment_3 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Alto</span><br>
-            <strong>{{$denuncias_sentiment_4}}</strong>
+            <strong>{{ $denuncias_sentiment_4 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Urgente</span><br>
-            <strong>{{$denuncias_sentiment_5}}</strong>
+            <strong>{{ $denuncias_sentiment_5 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
@@ -158,7 +158,7 @@
 
 @foreach ($denuncias as $item)
     @php
-        $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+        $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
     @endphp
     <div class="modal fade" id="sentimiento-modal-denuncias-{{ $item->id }}" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,7 +178,7 @@
                             <div class="mb-2">
                                 <strong>Palabras clave:</strong>
                                 <span>
-                                    @foreach ($item->sentimiento['palabras_clave'][0] as $palabra)
+                                    @foreach ($item->sentimientos_array['palabras_clave'][0] as $palabra)
                                         {{ $palabra }},
                                     @endforeach
                                 </span>
@@ -186,12 +186,12 @@
                             <div class="mb-2">
                                 <strong>Categoría de la queja:</strong>
 
-                                @if ($item->sentimiento['sentimientos_textblob'][0]['polarity'] >= 0.6)
+                                @if ($item->sentimientos_array['sentimientos_textblob'][0]['polarity'] >= 0.6)
                                     Polarizada,
                                 @else
                                     Equilibrada,
                                 @endif
-                                @if ($item->sentimiento['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
+                                @if ($item->sentimientos_array['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
                                     subjetiva
                                 @else
                                     objetiva
@@ -251,7 +251,7 @@
                     <div>
                         <h5>Frases nominales</h5>
                         <ul class="mt-3">
-                            @foreach ($item->sentimiento['frases_nominales_spacy'][0] as $frase)
+                            @foreach ($item->sentimientos_array['frases_nominales_spacy'][0] as $frase)
                                 <li>
                                     {{ $frase }}
                                 </li>
@@ -259,7 +259,7 @@
                         </ul>
 
                         <h5 class="mt-5">Resumen</h5>
-                        @if ($item->sentimiento['sentimientos_textblob'][0]['polarity'] >= 0.6)
+                        @if ($item->sentimientos_array['sentimientos_textblob'][0]['polarity'] >= 0.6)
                             <p class="mt-3">
                                 El mensaje tiene un tono cargado de crítica, frustración o resentimiento. Esto puede
                                 reflejar un nivel significativo de malestar acumulado y una percepción de que sus
@@ -292,7 +292,7 @@
                             </ul>
                         @endif
 
-                        @if ($item->sentimiento['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
+                        @if ($item->sentimientos_array['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
                             <p class="mt-3">
                                 Refleja las percepciones, emociones y opiniones personales del colaborador. En lugar de
                                 centrarse únicamente en hechos, esta queja expresa cómo la situación es vivida y

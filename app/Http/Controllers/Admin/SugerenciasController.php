@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Services\SentimentService;
 
 class SugerenciasController extends Controller
 {
@@ -55,6 +56,8 @@ class SugerenciasController extends Controller
             'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
 
@@ -64,6 +67,7 @@ class SugerenciasController extends Controller
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

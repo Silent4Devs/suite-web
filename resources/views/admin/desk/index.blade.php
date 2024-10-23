@@ -19,8 +19,7 @@
     @include('partials.flashMessages')
     <div class="">
 
-        <!-- Tabs -->
-        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
             @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes" role="tab"
@@ -84,9 +83,8 @@
                     </a>
                 </li>
             @endcan
-        </ul> --}}
+        </ul>
 
-        <!-- Tabs Content -->
         <div class="tab-content" id="myTabContent">
             @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <div class="tab-pane fade show active" id="incidentes" role="tabpanel" aria-labelledby="incidentes-tab">
