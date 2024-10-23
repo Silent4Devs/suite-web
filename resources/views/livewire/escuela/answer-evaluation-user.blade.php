@@ -88,7 +88,15 @@
                         </div>
 
                     </div>
-                    <div class="flex items-center justify-end mt-4">
+                    @if ($showRetry)
+                    <div class="items-center justify-center mt-2">
+                        <button type="button" wire:click="retryEvaluation"
+                            class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
+                            Volver a intentar Evaluación
+                        </a>
+                    </div>
+                    @endif
+                    <div class="flex items-center justify-end mt-2">
 
                         <a href="{{ route('admin.curso-estudiante', ['course' => $course->id]) }}"
                             class="inline-flex items-center px-4 py-2 m-4 btn btn-cancelar">

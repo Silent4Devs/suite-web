@@ -8,6 +8,7 @@ use App\Models\Escuela\Instructor\Answer;
 use App\Models\Escuela\Instructor\Question;
 use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\UserEvaluation;
+use App\Models\User;
 use Livewire\Component;
 
 class AnswerEvaluationUser extends Component
@@ -56,6 +57,9 @@ class AnswerEvaluationUser extends Component
 
     public $evaluacion_id;
 
+    public $showRetry = false;
+    public $attempt_count = null;
+
     protected $rules = [
         'answer' => 'required',
     ];
@@ -77,7 +81,7 @@ class AnswerEvaluationUser extends Component
         // disabled because having issues with shuffle, it works but in a wierd way.
         // dd("aqui");
 
-        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
+        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
 
         $question = Question::where('evaluation_id', $this->evaluation->id)
             ->whereNotIn('id', $this->answeredQuestions)
@@ -91,6 +95,8 @@ class AnswerEvaluationUser extends Component
             //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
             $this->userEvaluationId->quiz_size = $this->count - 1;
             $this->userEvaluationId->completed = true;
+            $this->userEvaluationId->score = $this->percentage;
+            $this->userEvaluationId->quiz_size = $this->totalQuizQuestions;
             $this->userEvaluationId->save();
 
             return $this->showResults();
@@ -102,24 +108,32 @@ class AnswerEvaluationUser extends Component
         return $question;
     }
 
-    public function startQuiz()
+    public function startQuiz($retry = false)
     {
         // dd($this->evaluation);
         // Create a new quiz header in quiz_headers table and populate initial quiz information
         // Keep the instance in $this->quizid veriable for later updates to quiz.
         // $this->validate();
-        $userEvaluationExist = UserEvaluation::where('user_id', auth()->id())->where('evaluation_id', $this->evaluation->id)->exists();
+        $userEvaluationExist = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->exists();
         if (! $userEvaluationExist) {
             $this->userEvaluationId = UserEvaluation::create([
-                'user_id' => auth()->id(),
+                'user_id' => User::getCurrentUser()->id,
                 'quiz_size' => $this->totalQuizQuestions,
                 'evaluation_id' => $this->evaluation->id,
 
             ]);
             $this->count = 1;
-        } else {
-            $this->userEvaluationId = UserEvaluation::where('user_id', auth()->id())->where('evaluation_id', $this->evaluation->id)->first();
+            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
+        }elseif($retry){
+            $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
             $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
+            dd(1, $this->count, UserAnswer::Questions($this->evaluation->id)->count());
+        }
+         else {
+            $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
+            $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
+            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
+            // dd($this->userEvaluationId->number_of_attempts, $this->attempt_count);
             if ($this->userEvaluationId->completed) {
                 $this->showResults();
             }
@@ -138,6 +152,10 @@ class AnswerEvaluationUser extends Component
         $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
         $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
+
+        if($this->percentage < 100){
+            $this->showRetry = true;
+        }
     }
 
     public function nextQuestion()
@@ -150,7 +168,7 @@ class AnswerEvaluationUser extends Component
         // dd($isChoiceCorrect);
         // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
         UserAnswer::create([
-            'user_id' => auth()->id(),
+            'user_id' => User::getCurrentUser()->id,
             'user_evaluation_id' => $this->userEvaluationId->id,
             'answer_id' => $this->answer,
             'is_correct' => $isChoiceCorrect,
@@ -182,6 +200,15 @@ class AnswerEvaluationUser extends Component
         $this->evaluation = $evaluation;
     }
 
+    public function retryEvaluation(){
+        if($this->attempt_count > 0){
+            // dd("reintento");
+            $this->startQuiz(true);
+        }else{
+            dd("mensaje error");
+        }
+    }
+
     public function render()
     {
         $this->course = Course::getAll()->find($this->course_id);
@@ -189,7 +216,7 @@ class AnswerEvaluationUser extends Component
         $this->getEvaluation($evaluation);
         $this->totalQuizQuestions = count($this->evaluation->questions);
         $this->startQuiz();
-        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
+        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
         $this->count = count($this->answeredQuestions) + 1;
 
         return view('livewire.escuela.answer-evaluation-user');
