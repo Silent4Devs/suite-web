@@ -560,20 +560,26 @@ class OrdenCompraController extends Controller
                         $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
                         foreach ($cN as $key => $c) {
-                            $copiasNivel[] = $c->empleado->email;
+                            $copiasNivel[] = $this->removeUnicodeCharacters($c->empleado->email);
                         }
 
                         break;
                     } else {
                         // Si el responsable está ausente, lo añadimos a la lista de ausentes
-                        $responsablesAusentes[] = $responsableNivel->empleado->email;
+                        $responsablesAusentes[] = $this->removeUnicodeCharacters($responsableNivel->empleado->email);
                     }
                 }
             }
 
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            try{
+
+            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
+            } catch (\Throwable $th) {
+                return view('errors.alerta_error', compact('th'));
+            }
 
         }
         if ($tipo_firma == 'firma_comprador_orden') {
@@ -584,7 +590,7 @@ class OrdenCompraController extends Controller
             // correo de finanzas
             $userEmail = $requisicion->email;
             $organizacion = Organizacion::getFirst();
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
 
         if ($tipo_firma == 'firma_finanzas_orden') {
@@ -617,18 +623,18 @@ class OrdenCompraController extends Controller
 
             $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
             foreach ($listaInformativa->participantes as $key => $informado) {
-                $correos_informados[] = $informado->empleado->email;
+                $correos_informados[] = $this->removeUnicodeCharacters($informado->empleado->email);
             }
 
             foreach ($listaInformativa->usuarios as $key => $informado) {
-                $correos_informados[] = $informado->usuario->email;
+                $correos_informados[] = $this->removeUnicodeCharacters($informado->usuario->email);
             }
 
             $organizacionInformado = Organizacion::getFirst();
             Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado, $orden_correo));
         }
 
-        Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
