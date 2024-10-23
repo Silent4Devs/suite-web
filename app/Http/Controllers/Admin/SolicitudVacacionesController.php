@@ -270,13 +270,13 @@ class SolicitudVacacionesController extends Controller
 
             if (isset($informados->participantes[0])) {
                 foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+                    $correos[] = $this->removeUnicodeCharacters($participante->empleado->email);
                 }
             }
 
             if (isset($informados->usuarios[0])) {
                 foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
+                    $correos[] = $this->removeUnicodeCharacters($usuario->usuario->email);
                 }
             }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud, $correos));
@@ -335,13 +335,13 @@ class SolicitudVacacionesController extends Controller
 
                 if (isset($informados->participantes[0])) {
                     foreach ($informados->participantes as $participante) {
-                        $correos[] = $participante->empleado->email;
+                        $correos[] = $this->removeUnicodeCharacters($participante->empleado->email);
                     }
                 }
 
                 if (isset($informados->usuarios[0])) {
                     foreach ($informados->usuarios as $usuario) {
-                        $correos[] = $usuario->usuario->email;
+                        $correos[] = $this->removeUnicodeCharacters($usuario->usuario->email);
                     }
                 }
                 Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->queue(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud, $correos));
