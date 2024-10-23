@@ -6,86 +6,76 @@
         <div class="row mb-4">
             <div class="input-field col s12 m4">
                 <small>No. de Contrato:</small>
-                {!! Form::number('no_contrato', null, ['class' => 'form-control']) !!}
+                <input type="number" name="no_contrato" class="form-control" value="{{ old('no_contrato') }}">
             </div>
 
-            <!-- Nombre Proveedor Field -->
             <div class="input-field col s12 m4">
                 <small>Nombre del Proveedor:</small>
-                {!! Form::text('nombre_proveedor', null, ['class' => 'form-control']) !!}
+                <input type="text" name="nombre_proveedor" class="form-control" value="{{ old('nombre_proveedor') }}">
             </div>
 
-            <!-- Area Field -->
             <div class="input-field col s12 m4">
                 <small>Área</small>
-                {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                <input type="text" name="area" class="form-control" value="{{ old('area') }}">
             </div>
 
-            <!-- Nombre Servicio Field -->
             <div class="input-field col s12 m4">
                 <small>Nombre del Servicio</small>
-
-                {!! Form::text('nombre_servicio', null, ['class' => 'form-control']) !!}
+                <input type="text" name="nombre_servicio" class="form-control" value="{{ old('nombre_servicio') }}">
             </div>
 
-            <!-- Clasificacion Field -->
             <div class="input-field col s12 m4">
-                <small>Clasificacion</small>
-                {!! Form::text('clasificacion', null, ['class' => 'form-control']) !!}
+                <small>Clasificación</small>
+                <input type="text" name="clasificacion" class="form-control" value="{{ old('clasificacion') }}">
             </div>
 
-            <!-- Administrador Field -->
             <div class="input-field col s12 m4">
                 <small>Administrador</small>
-
-                {!! Form::text('administrador', null, ['class' => 'form-control']) !!}
+                <input type="text" name="administrador" class="form-control" value="{{ old('administrador') }}">
             </div>
 
-            <!-- Fase Field -->
             <div class="input-field col s12 m4">
                 <small>Fase</small>
-                {!! Form::text('fase', null, ['class' => 'form-control']) !!}
+                <input type="text" name="fase" class="form-control" value="{{ old('fase') }}">
             </div>
 
-            <!-- Estatus Field -->
             <div class="input-field col s12 m4">
                 <small class="active">Estatus*</small>
                 <div class="display-flex ml-4">
-                    <select class="validate" required="" aria-required="true" name="estatus">
+                    <select class="validate" name="estatus" required>
                         <option value="" disabled selected>Escoga una opción</option>
-                        <option value="Inicio">Inicio</option>
-                        <option value="Ejecución">Ejecución</option>
-                        <option value="Conclusión">Conclusión</option>
+                        <option value="Inicio" {{ old('estatus') == 'Inicio' ? 'selected' : '' }}>Inicio</option>
+                        <option value="Ejecución" {{ old('estatus') == 'Ejecución' ? 'selected' : '' }}>Ejecución</option>
+                        <option value="Conclusión" {{ old('estatus') == 'Conclusión' ? 'selected' : '' }}>Conclusión</option>
                     </select>
                 </div>
-                <div class="display-flex ml-4">
-                    <label class="red-text">{{ $errors->first('Type') }}</label>
-                </div>
-
+                @if ($errors->has('estatus'))
+                    <div class="display-flex ml-4">
+                        <label class="red-text">{{ $errors->first('estatus') }}</label>
+                    </div>
+                @endif
             </div>
 
-            <!-- Vigencia Contrato Field -->
             <div class="input-field col s12 m4">
                 <small>Vigencia del Contrato</small>
-                {!! Form::text('vigencia_contrato', null, ['class' => 'form-control']) !!}
+                <input type="text" name="vigencia_contrato" class="form-control" value="{{ old('vigencia_contrato') }}">
             </div>
 
-            <!-- Pmp Asignado Field -->
             <div class="input-field col s12 m4">
                 <small>PMP Asignado</small>
-                {!! Form::text('pmp_asignado', null, ['class' => 'form-control']) !!}
+                <input type="text" name="pmp_asignado" class="form-control" value="{{ old('pmp_asignado') }}">
             </div>
 
-            <!-- Submit Field -->
             <div class="row mb-3">
                 <div class="col s12">
                     <div class="form-group col-sm-12 right">
-                        {!! Form::submit('Guardar', ['class' => 'btn tb-btn-primary']) !!}
+                        <button type="submit" class="btn tb-btn-primary">Guardar</button>
                         <a href="{{ route('contratos.index') }}" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </div>

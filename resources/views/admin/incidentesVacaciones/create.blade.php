@@ -23,19 +23,19 @@
         </div>
     </div>
 
-    {!! Form::open(['route' => 'admin.incidentes-vacaciones.store']) !!}
-    <div class="mt-4 card card-body">
-        <span class="sub-title-vac">Creación de excepciones</span>
+    <form action="{{ route('admin.incidentes-vacaciones.store') }}" method="POST">
+        @csrf
+        <div class="mt-4 card card-body">
+            <span class="sub-title-vac">Creación de excepciones</span>
+            <hr>
+            @include('admin.incidentesVacaciones.fields')
+        </div>
+        <div class="text-right">
+            <a href="{{ route('admin.incidentes-vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-primary" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
 
-        <hr>
-
-        @include('admin.incidentesVacaciones.fields')
-    </div>
-    <div class="text-right">
-        <a href="{{ route('admin.incidentes-vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-primary" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
 @endsection

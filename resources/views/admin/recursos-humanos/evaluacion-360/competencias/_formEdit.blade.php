@@ -12,12 +12,10 @@
                     {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }} name="toda_la_empresa"
                     type="checkbox" id="toda_la_empresa">
                 <span class="checkmark"></span>
-                {!! Form::label(
-                    'nombre_comite',
-                    'Asignar esta competencia a todos los
-                                                empleados de la organización*',
-                    ['class' => 'asterisco'],
-                ) !!}
+                <label for="nombre_comite" class="asterisco">
+                    Asignar esta competencia a todos los empleados de la organización*
+                </label>
+
                 {{-- <label class="form-check-label" for="toda_la_empresa"></label> --}}
             </div>
             <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>

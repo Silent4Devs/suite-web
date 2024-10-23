@@ -10,14 +10,14 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Solicitud de Mensajería</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($solicitud, [
-                'route' => ['admin.envio-documentos.update', $solicitud->id],
-                'method' => 'put',
-            ]) !!}
+            <form action="{{ route('admin.envio-documentos.update', $solicitud->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            @include('admin.envio-documentos.fields')
+                @include('admin.envio-documentos.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

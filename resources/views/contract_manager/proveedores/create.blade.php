@@ -7,10 +7,11 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" placeholder=""
-                            maxlength="250" type="number" name="clave" id="clave" value="{{ old('clave') }}"
-                            required>
-                        {!! Form::label('clave', 'Clave del Registro*', ['class' => 'asterisco']) !!}
+                        <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}"
+                               placeholder="" maxlength="250"
+                               type="number" name="clave" id="clave"
+                               value="{{ old('clave') }}" required>
+                        <label for="clave" class="asterisco">Clave del Registro*</label>
                         @if ($errors->has('clave'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('clave') }}
@@ -18,11 +19,13 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" maxlength="250"
-                            placeholder="" type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
-                            required>
-                        {!! Form::label('nombre', 'Nombre*', ['class' => 'asterisco']) !!}
+                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
+                               maxlength="250" placeholder=""
+                               type="text" name="nombre" id="nombre"
+                               value="{{ old('nombre') }}" required>
+                        <label for="nombre" class="asterisco">Nombre*</label>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -30,10 +33,12 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}" maxlength="250"
-                            placeholder="" type="text" name="razon_social" id="razon_social" required>
-                        {!! Form::label('razon_social', 'Razón Social*', ['class' => 'asterisco']) !!}
+                        <input class="form-control {{ $errors->has('razon_social') ? 'is-invalid' : '' }}"
+                               maxlength="250" placeholder=""
+                               type="text" name="razon_social" id="razon_social" required>
+                        <label for="razon_social" class="asterisco">Razón Social*</label>
                         @if ($errors->has('razon_social'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('razon_social') }}
@@ -41,10 +46,12 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" maxlength="250"
-                            placeholder="" type="text" name="rfc" id="rfc" required>
-                        {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
+                        <input class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}"
+                               maxlength="250" placeholder=""
+                               type="text" name="rfc" id="rfc" required>
+                        <label for="rfc" class="asterisco">RFC*</label>
                         @if ($errors->has('rfc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('rfc') }}
@@ -52,14 +59,18 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control" id="fechaInicio" type="date" name="fecha_inicio" required>
-                        {!! Form::label('fechaInicio', 'Fecha Inicio*', ['class' => 'asterisco']) !!}
+                        <input class="form-control" id="fechaInicio"
+                               type="date" name="fecha_inicio" required>
+                        <label for="fechaInicio" class="asterisco">Fecha Inicio*</label>
                         <small class="errores error_fecha_inicio text-danger"></small>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 anima-focus">
-                        <input class="form-control" type="date" id="fechaFin" name="fechaFin" required>
-                        {!! Form::label('fechaFin', 'Fecha Fin*', ['class' => 'asterisco']) !!}
+                        <input class="form-control" type="date" id="fechaFin"
+                               name="fechaFin" required>
+                        <label for="fechaFin" class="asterisco">Fecha Fin*</label>
                         <small class="errores error_fecha_inicio text-danger"></small>
                     </div>
                 </div>

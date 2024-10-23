@@ -15,11 +15,10 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.solicitud-permiso-goce-sueldo.store']) !!}
-
-            @include('admin.solicitudGoceSueldo.fields')
-
-            {!! Form::close() !!}
+            <form action="{{ route('admin.solicitud-permiso-goce-sueldo.store') }}" method="POST">
+                @csrf
+                @include('admin.solicitudGoceSueldo.fields')
+            </form>
         </div>
     </div>
 @endsection

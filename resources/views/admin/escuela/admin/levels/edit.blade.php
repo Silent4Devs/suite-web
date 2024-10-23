@@ -14,28 +14,27 @@
         <div class="card-body">
             <h5>Nivel</h5>
             <div>
-
-                {!! Form::model($level, ['route' => ['admin.levels.update', $level], 'method' => 'put']) !!}
-                <span style="color: var(--color-tbj);">Nombre</span><span style="color: #AF3041;">*</span>
-                <div class="row align-items-start">
-                    <div class="col-9">
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el nombre del nivel']) !!}
+                <form action="{{ route('admin.levels.update', $level) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <span style="color: var(--color-tbj);">Nombre</span><span style="color: #AF3041;">*</span>
+                    <div class="row align-items-start">
+                        <div class="col-9">
+                            <input type="text" name="name" class="form-control" placeholder="Ingrese el nombre del nivel" value="{{ old('name', $level->name) }}">
+                        </div>
+                        @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-
-
-                    @error('name')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
-            </div>
-            <div>
-                <div class="mt-4 text-right">
-                    {!! Form::submit('ACTUALIZAR NIVEL', [
-                        'class' => 'btn btn-primary',
-                    ]) !!}
+                <div>
+                    <div class="mt-4 text-right">
+                        <button type="submit" class="btn btn-primary">ACTUALIZAR NIVEL</button>
+                    </div>
                 </div>
+                </form>
             </div>
-            {!! Form::close() !!}
         </div>
     </div>
+
 @endsection

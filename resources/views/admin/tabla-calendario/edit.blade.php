@@ -17,12 +17,14 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Evento</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::open(['route' =>array('admin.tabla-calendario.update',$calendario),"method"=>"PUT"]) !!}
-            @method("PUT")
+            <form action="{{ route('admin.tabla-calendario.update', $calendario) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            @include('admin.tabla-calendario.fields')
+                @include('admin.tabla-calendario.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
     </div>
+
 @endsection

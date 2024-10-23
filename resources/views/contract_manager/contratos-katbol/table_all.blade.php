@@ -127,28 +127,30 @@
                         @endif
                     </td>
                     <td class="botones_accion" style="min-width: 100px;">
-                        {!! Form::open(['route' => ['contract_manager.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
-                        <div class='btn-group'>
-                            <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
-                                style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
-                            </a>
-                            &nbsp;&nbsp;&nbsp;
-                            @can('katbol_contratos_modificar')
-                                @if ($areas->count() > 0)
-                                    <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
-                                        style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
-                                @endif
-                            @endcan
-                            &nbsp;&nbsp;&nbsp;
-                            @can('katbol_contratos_eliminar')
-                            <a href="#"
-                                onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.delete', [$contrato->id]) }}')"
-                                style="color:#e5760e;">
-                                <i class="fas fa-trash" title="Eliminar"></i>
-                            </a>
-                        @endcan
-                        </div>
-                        {!! Form::close() !!}
+                        <form action="{{ route('contract_manager.contratos-katbol.destroy', $contrato->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <div class='btn-group'>
+                                <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}" style="color:#2395AA;">
+                                    <i class="fa-solid fa-eye" title="Mostrar"></i>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;
+                                @can('katbol_contratos_modificar')
+                                    @if ($areas->count() > 0)
+                                        <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}" style="color:#2395AA;">
+                                            <i class="fas fa-edit" title="Editar"></i>
+                                        </a>
+                                    @endif
+                                @endcan
+                                &nbsp;&nbsp;&nbsp;
+                                @can('katbol_contratos_eliminar')
+                                    <a href="#" onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.destroy', [$contrato->id]) }}')" style="color:#e5760e;">
+                                        <i class="fas fa-trash" title="Eliminar"></i>
+                                    </a>
+                                @endcan
+                            </div>
+                        </form>
+
                     </td>
                 </tr>
             @endforeach

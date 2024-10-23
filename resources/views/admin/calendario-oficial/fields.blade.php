@@ -1,13 +1,12 @@
 <div class="row">
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-file-signature iconos-crear"></i>{!! Form::label('nombre', 'Nombre:') !!}
-        {!! Form::text('nombre', old('nombre', $calendario->nombre), [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-        ]) !!}
+        <i class="fas fa-file-signature iconos-crear"></i>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $calendario->nombre) }}"
+            class="form-control" maxlength="255">
     </div>
+
     <!-- Fecha inicio Field -->
     @php
         if ($calendario->fecha) {
@@ -32,23 +31,20 @@
 
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-th-list iconos-crear"></i>{!! Form::label('categoria', 'Categoría:') !!}
-        {!! Form::text('categoria', old('nombre', $calendario->categoria), [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-        ]) !!}
+        <i class="fas fa-th-list iconos-crear"></i>
+        <label for="categoria">Categoría:</label>
+        <input type="text" name="categoria" id="categoria" value="{{ old('categoria', $calendario->categoria) }}"
+            class="form-control" maxlength="255">
     </div>
 
-    <!-- Descripcion Field -->
+    <!-- Descripción Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}
-        {!! Form::text('descripcion', old('nombre', $calendario->descripcion), [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-        ]) !!}
+        <i class="fas fa-file-alt iconos-crear"></i>
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" id="descripcion"
+            value="{{ old('descripcion', $calendario->descripcion) }}" class="form-control" maxlength="255">
     </div>
+
 
     <!-- Submit Field -->
     <div class="text-right form-group col-12">
