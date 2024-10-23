@@ -327,12 +327,12 @@ class RequisicionesController extends Controller
                     $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
                     foreach ($cN as $key => $c) {
-                        $copiasNivel[] = $c->empleado->email;
+                        $copiasNivel[] = $this->removeUnicodeCharacters($c->empleado->email);
                     }
 
                     break;
                 } else {
-                    $responsablesAusentes[] = $responsableNivel->empleado->email;
+                    $responsablesAusentes[] = $this->removeUnicodeCharacters($responsableNivel->empleado->email);
                 }
             }
 
