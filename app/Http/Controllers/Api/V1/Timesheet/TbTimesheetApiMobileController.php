@@ -457,7 +457,6 @@ class TbTimesheetApiMobileController extends Controller
                         'message' => 'Datos guardados correctamente.',
                     ], 201);
                 } catch (Throwable $th) {
-                    dd($th);
                     return response()->json([
                         'success' => false,
                         'message' => 'Error al registrar timesheet por favor vuelva a intentar mas tarde.',
@@ -543,6 +542,48 @@ class TbTimesheetApiMobileController extends Controller
             200,
         )->header('Content-Type', 'application/json');
 
+    }
+
+    public function tbFunctionEliminarTimesheet($id_registro)
+    {
+        // dd($id_registro);
+        try {
+            //code...
+            $eliminarRegistro = Timesheet::where('id', $id_registro)->first();
+            $eliminarRegistro->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro Eliminado Correctamente.',
+            ], 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al eliminar el registro, intente mas tarde.',
+            ], 400);
+        }
+    }
+
+    public function tbFunctionEliminarRegistroHoras($id_registro)
+    {
+        // dd($id_registro);
+        try {
+            //code...
+            $eliminarRegistro = TimesheetHoras::where('id', $id_registro)->first();
+            $eliminarRegistro->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro Eliminado Correctamente.',
+            ], 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al eliminar el registro, intente mas tarde.',
+            ], 400);
+        }
     }
 
     public function tbFunctionObtenerEquipo($childrens)

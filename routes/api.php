@@ -99,6 +99,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::post('/tbstore', [TbTimesheetApiMobileController::class, 'tbFunctionStore']);
         Route::get('/tbedit/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionEdit']);
         Route::post('/tbupdate/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionUpdate']);
+        Route::delete('/tbdeletetimesheet/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionEliminarTimesheet']);
+        Route::delete('/tbdeleterecord/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionEliminarRegistroHoras']);
         Route::get('/tbshow/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionShow']);
         Route::get('/tbaprobaciones', [TbTimesheetApiMobileController::class, 'tbFunctionAprobaciones']);
         Route::post('/tbaprobar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionAprobar']);
