@@ -10,9 +10,8 @@
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
                         <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}"
-                            value="{{ old('clave', $centros->clave) }}" type="number" name="clave" id="clave"
-                            value="{{ old('clave') }}" required>
-                        {!! Form::label('clave', 'Clave*', ['class' => 'asterisco']) !!}
+                            value="{{ old('clave', $centros->clave) }}" type="number" name="clave" id="clave" required>
+                        <label for="clave" class="asterisco">Clave*</label>
                         @if ($errors->has('clave'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('clave') }}
@@ -20,11 +19,11 @@
                         @endif
                         <span class="help-block"></span>
                     </div>
+
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
                         <input class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
-                            value="{{ old('descripcion', $centros->descripcion) }}" type="text" name="descripcion"
-                            id="descripcion" required>
-                        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+                            value="{{ old('descripcion', $centros->descripcion) }}" type="text" name="descripcion" id="descripcion" required>
+                        <label for="descripcion" class="asterisco">Descripción*</label>
                         @if ($errors->has('descripcion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('descripcion') }}
