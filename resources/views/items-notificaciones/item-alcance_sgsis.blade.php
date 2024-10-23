@@ -3,20 +3,6 @@
         <a class="dropdown-item text-secondary"
             href="{{ route('admin.alcance-sgsis.revision', $last_unread_notification->data['id']) }}">
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
-                @case(' create')
-                    <div class="d-flex align-items-center justify-content-start">
-                        @if (!empty($last_unread_notification->data['avatar_ruta']))
-                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
-                                class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}:
-                        @else
-                            <i class="pr-2 fas fa-tasks text-success"></i>
-                        @endif
-                        &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nuevo {{ $last_unread_notification->data['slug'] }} creado</p>
-                    </div>
-                @break
-
                 @case(' update')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
