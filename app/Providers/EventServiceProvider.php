@@ -306,9 +306,9 @@ class EventServiceProvider extends ServiceProvider
         // AlcancesEvent::class => [
         //     AlcancesListener::class,
         // ],
-        MatrizRequisitosEvent::class => [
-            MatrizRequisitosListener::class,
-        ],
+        // MatrizRequisitosEvent::class => [
+        //     MatrizRequisitosListener::class,
+        // ],
         RequisicionesEvent::class => [
             RequisicionesListener::class,
         ],

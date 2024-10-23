@@ -223,6 +223,8 @@ class EntendimientoOrganizacionController extends Controller
 
         $entendimientoOrganizacion->delete();
 
+        event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
