@@ -74,15 +74,10 @@
     <div class="form-group col-sm-3 anima-focus">
         {{-- <i class="fa-solid fa-calendar-day iconos-crear"></i><i class="fas fa-info-circle"
             style="font-size:12pt; float: right;" title="Días otorgados por la organización"></i> --}}
-        {!! Form::number('dias', null, [
-            'class' => 'form-control',
-            'min' => 1,
-            'max' => 365,
-            'placeholder' => '',
-            'required',
-        ]) !!}
-        {!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
+        <input type="number" name="dias" class="form-control" min="1" max="365" placeholder="" required>
+        <label for="dias" class="required">Días a gozar:</label>
     </div>
+
     {{-- <div class="form-group col-sm-6">
         <i class="fa-solid fa-arrow-up-9-1 iconos-crear"></i>{!! Form::label('incremento_dias', 'Incremento de días:', ['class' => 'required']) !!}
         {!! Form::number('incremento_dias', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255,'placeholder' =>'Ingrese numero de días a incrementar...']) !!}
@@ -104,7 +99,8 @@
             <option disabled {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>
                 Seleccione...</option>
         </select>
-        {!! Form::label('periodo_corte', 'Periodo de corte', ['class' => 'required']) !!}
+        <label for="periodo_corte" class="required">Periodo de corte</label>
+
     </div>
 </div>
 <div class="row">

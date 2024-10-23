@@ -41,22 +41,18 @@
 </div>
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('destinatario', 'Nombre de quien recibe:', ['class' => 'required']) !!}
-        {!! Form::text('destinatario', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese nombre del destinatario',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+        <label for="destinatario" class="required">Nombre de quien recibe:</label>
+        <input type="text" name="destinatario" class="form-control" placeholder="Ingrese nombre del destinatario" value="{{ old('destinatario') }}">
         @error('destinatario')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
+
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('telefono', 'Teléfono de quien recibe:', ['class' => 'required']) !!}
-        {!! Form::text('telefono', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese numero telefonico del destinatario',
-            'id' => 'fecha_fin',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="telefono" class="required">Teléfono de quien recibe:</label>
+        <input type="text" name="telefono" class="form-control" placeholder="Ingrese numero telefonico del destinatario" id="fecha_fin" value="{{ old('telefono') }}">
         @error('telefono')
             <small class="text-danger">{{ $message }}</small>
         @enderror
@@ -65,22 +61,19 @@
 </div>
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('lugar', 'Lugar:', ['class' => 'required']) !!}
-        {!! Form::text('lugar', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese lugar de referencia',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+        <label for="lugar" class="required">Lugar:</label>
+        <input type="text" name="lugar" class="form-control" placeholder="Ingrese lugar de referencia" value="{{ old('lugar') }}">
         @error('lugar')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
+
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('descripcion', 'Dirección:', ['class' => 'required']) !!}
-        {!! Form::text('descripcion', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese direccion exacta',
-        ]) !!}
-        @error('direccion')
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="descripcion" class="required">Dirección:</label>
+        <input type="text" name="descripcion" class="form-control" placeholder="Ingrese direccion exacta" value="{{ old('descripcion') }}">
+        @error('descripcion')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
@@ -89,14 +82,12 @@
 
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_limite', 'Fecha limite:', ['class' => 'required']) !!}
-        {!! Form::date('fecha_limite', null, [
-            'class' => 'form-control',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="fecha_limite" class="required">Fecha limite:</label>
+        <input type="date" name="fecha_limite" class="form-control" value="{{ old('fecha_limite') }}">
         @error('fecha_limite')
             <small class="text-danger">{{ $message }}</small>
         @enderror
-
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Horario desde:</label>
@@ -120,10 +111,12 @@
 <!-- Descripcion Field -->
 <div class="row">
     <div class="form-group col-sm-12">
-        <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('notas', 'Notas:') !!}</label>
+        <label for="notas">
+            <i class="fas fa-file-alt iconos-crear"></i>Notas:
+        </label>
         <textarea class="form-control" name="notas" rows="2">{{ old('notas', $solicitud->notas) }}</textarea>
     </div>
+
 </div>
 
 <input type="hidden" value="{{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->id)[0] : '' }}"

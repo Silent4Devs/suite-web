@@ -23,8 +23,7 @@
             <form method="POST" action="{{ route('admin.plan-auditoria.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
-                {{ Form::hidden('pdf-value', 'planAuditoria') }}
-
+                <input type="hidden" name="pdf-value" value="planAuditoria" id="pdf-value">
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>Id</label>
                     <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text"
