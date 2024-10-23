@@ -6,8 +6,8 @@
                 <input type="text" id="identificador_proyect" placeholder=""
                     wire:model.live.debounce.1000ms="identificador_proyect"
                     title="Por favor, no incluyas comas en el nombre de la tarea." name="identificador" pattern="[^\.,]*"
-                    class="form-control" maxlength="254" required>
-                {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
+                    class="form-control {{ $errors->has('identificador') ? 'is-invalid' : '' }}" maxlength="254" required>
+                <label for="identificador" class="asterisco">ID*</label>
                 @if ($errors->has('identificador'))
                     <div class="invalid-feedback">
                         {{ $errors->first('identificador') }}
@@ -26,15 +26,22 @@
 
         <div class="col-md-6">
             <div class="form-group anima-focus">
-                <select class="form-control" name="tipo" id="tipo" wire:model.live="tipo" required>
+                <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" wire:model.live="tipo" required>
+                    <option value="" disabled selected>Seleccione un tipo</option>
                     @foreach ($select_tipos as $tipo_it)
                         <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
                             {{ $tipo_it }}
                         </option>
                     @endforeach
                 </select>
-                {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
+                <label for="tipo" class="asterisco">Tipo*</label>
+                @if ($errors->has('tipo'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('tipo') }}
+                    </div>
+                @endif
             </div>
         </div>
+
     </div>
 </div>
