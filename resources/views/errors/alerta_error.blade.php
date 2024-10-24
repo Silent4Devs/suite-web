@@ -128,7 +128,9 @@
 		</div>
 		<div class="derecha">
 			<div class="caja codigo">
-				@yield('code')
+				{{-- @section('code')
+				    {{ $code ?? 'Error' }} <!-- Código de error pasado desde Handler.php -->
+				@show --}}
 			</div>
 			<div class="caja mensaje">
                 <span style="position: relative; top: -2rem;">¡Vaya! No podemos procesar la petición. Si persiste, contacte a Desarrollo.</span>
