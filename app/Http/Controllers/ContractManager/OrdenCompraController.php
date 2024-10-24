@@ -497,29 +497,6 @@ class OrdenCompraController extends Controller
         return redirect(route('contract_manager.orden-compra'));
     }
 
-    // public function firmar($tipo_firma, $id)
-    // {
-    //     try {
-    //         $requisicion = KatbolRequsicion::find($id);
-    //         $organizacion = Organizacion::getFirst();
-    //         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-    //         $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->get();
-    //         $user = User::find($requisicion->id_finanzas_oc);
-
-    //         if ($user) {
-    //             $firma_finanzas_name = $user->name;
-    //         } else {
-    //             $firma_finanzas_name = null;
-    //         }
-    //         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-    //         $proveedores_catalogo = KatbolProveedorOC::where('id', $requisicion->proveedor_catalogo_id)->first();
-
-    //         return view('contract_manager.ordenes-compra.firmar', compact('requisicion', 'proveedores', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'proveedores_catalogo'));
-    //     } catch (\Exception $e) {
-    //         return view('contract_manager.ordenes-compra.error');
-    //     }
-    // }
-
     public function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
