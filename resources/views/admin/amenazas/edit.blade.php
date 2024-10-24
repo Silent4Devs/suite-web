@@ -10,11 +10,14 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Amenaza</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($amenaza, ['route' => ['admin.amenazas.update', $amenaza->id], 'method' => 'patch']) !!}
+            <form method="POST" action="{{ route('admin.amenazas.update', $amenaza->id) }}">
+                @csrf
+                @method('PATCH')
 
-            @include('admin.amenazas.fields')
+                @include('admin.amenazas.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

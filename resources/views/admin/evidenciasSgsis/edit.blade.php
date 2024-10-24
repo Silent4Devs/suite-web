@@ -30,10 +30,14 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group col-md-12 anima-focus">
-                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" placeholder=""
-                        type="text" name="nombredocumento" id="nombredocumento"
-                        value="{{ old('nombredocumento', $evidenciasSgsi->nombredocumento) }}" required>
-                    {!! Form::label('nombredocumento', 'Nombre del documento*', ['class' => 'asterisco']) !!}
+                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}"
+                           placeholder=""
+                           type="text"
+                           name="nombredocumento"
+                           id="nombredocumento"
+                           value="{{ old('nombredocumento', $evidenciasSgsi->nombredocumento) }}"
+                           required>
+                    <label for="nombredocumento" class="asterisco">Nombre del documento*</label>
                     @if ($errors->has('nombredocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombredocumento') }}
@@ -41,10 +45,14 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" placeholder="" type="text"
-                        name="objetivodocumento" id="objetivodocumento" required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
-                    {!! Form::label('objetivodocumento', 'Objetivo del documento*', ['class' => 'asterisco']) !!}
+                    <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}"
+                              placeholder=""
+                              name="objetivodocumento"
+                              id="objetivodocumento"
+                              required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
+                    <label for="objetivodocumento" class="asterisco">Objetivo del documento*</label>
                     @if ($errors->has('objetivodocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivodocumento') }}
@@ -53,39 +61,38 @@
                     <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
 
-
-
                 <div class="form-group col-md-4 anima-focus">
-                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
-                        name="responsable_evidencia_id" id="responsable_evidencia_id">
+                    <select required class="form-control {{ $errors->has('responsable_evidencia_id') ? 'is-invalid' : '' }}"
+                            name="responsable_evidencia_id"
+                            id="responsable_evidencia_id">
                         <option value="">Seleccione una opción</option>
-                        @foreach ($empleados as $id => $empleado)
-                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                                data-area="{{ $empleado->area->area }}"
-                                {{ old('id_reviso', $evidenciasSgsi->responsable_evidencia_id) == $empleado->id ? 'selected' : '' }}>
-
+                        @foreach ($empleados as $empleado)
+                            <option data-puesto="{{ $empleado->puesto }}"
+                                    value="{{ $empleado->id }}"
+                                    {{ old('responsable_evidencia_id', $evidenciasSgsi->responsable_evidencia_id) == $empleado->id ? 'selected' : '' }}>
                                 {{ $empleado->name }}
                             </option>
                         @endforeach
                     </select>
-                    {!! Form::label('responsable_evidencia_id', 'Responsable del documento*', ['class' => 'asterisco']) !!}
-                    @if ($errors->has('empleados'))
+                    <label for="responsable_evidencia_id" class="asterisco">Responsable del documento*</label>
+                    @if ($errors->has('responsable_evidencia_id'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('empleados') }}
+                            {{ $errors->first('responsable_evidencia_id') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
                 </div>
 
-
                 <div class="form-group col-md-4 anima-focus">
                     <div class="form-control" id="puesto_reviso" readonly></div>
-                    {!! Form::label('puesto_reviso', 'Puesto*', ['class' => 'asterisco']) !!}
+                    <label for="puesto_reviso" class="asterisco">Puesto*</label>
                 </div>
-                <div class="form-group col-md-4  anima-focus">
+
+                <div class="form-group col-md-4 anima-focus">
                     <div class="form-control" id="area_reviso" readonly></div>
-                    {!! Form::label('id_area_reviso', 'Área*', ['class' => 'asterisco']) !!}
+                    <label for="id_area_reviso" class="asterisco">Área*</label>
                 </div>
+
                 {{-- <div class="form-group col-md-6">
                 <label for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
                 <input class="form-control {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', $evidenciasSgsi->arearesponsable) }}">
@@ -118,49 +125,43 @@
             </div> --}}
 
 
-                <div class="form-group col-sm-6 anima-focus">
-
-                    <select class="form-control areas" id="inputGroupSelect01" name="area_id" required>
-                        <option selected disabled value="null">-- Seleccion un área --</option>
-                        @forelse ($areas as $area)
-                            <option value="{{ $area->id }}"
-                                {{ old('arearesponsable', $area->id) == $area->id ? 'selected active' : '' }}>
-                                {{ $area->area }}</option>
-                        @empty
-                            <option value="" disabled>Sin Datos</option>
-                        @endforelse
-                    </select>
-                    {!! Form::label('area_id', 'Área reponsable del documento*', ['class' => 'asterisco']) !!}
-                    @if ($errors->has('area'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('area') }}
-                        </div>
-                    @endif
-                </div>
-
-
-
-
-
-                <div class="form-group col-sm-12 col-md-6 col-lg-6 anima-focus">
-                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
-                        placeholder="" type="date" name="fechadocumento" id="fechadocumento" min="1945-01-01"
-                        value="{{ old('fechadocumento', \Carbon\Carbon::parse($evidenciasSgsi->fechadocumento))->format('Y-m-d') }}">
-                    {!! Form::label('fechadocumento', 'Fecha de emisión del documento*', ['class' => 'asterisco']) !!}
-                    @if ($errors->has('fechadocumento'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fechadocumento') }}
-                        </div>
-                    @endif
-                </div>
-
-
-                <div class="col-sm-12 form-group anima-focus">
-                    <div class="custom-file">
-                        <input type="file" name="files[]" multiple placeholder="" class="form-control" id="evidencia">
+            <div class="form-group col-sm-6 anima-focus">
+                <select class="form-control areas" id="inputGroupSelect01" name="area_id" required>
+                    <option selected disabled value="">-- Selecciona un área --</option>
+                    @forelse ($areas as $area)
+                        <option value="{{ $area->id }}"
+                            {{ old('area_id', $evidenciasSgsi->area_id) == $area->id ? 'selected' : '' }}>
+                            {{ $area->area }}</option>
+                    @empty
+                        <option value="" disabled>Sin Datos</option>
+                    @endforelse
+                </select>
+                <label for="area_id" class="asterisco">Área responsable del documento*</label>
+                @if ($errors->has('area_id'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('area_id') }}
                     </div>
-                    {!! Form::label('evidencia', 'Documento*', ['class' => 'asterisco']) !!}
+                @endif
+            </div>
+
+            <div class="form-group col-sm-12 col-md-6 col-lg-6 anima-focus">
+                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
+                       placeholder="" type="date" name="fechadocumento" id="fechadocumento" min="1945-01-01"
+                       value="{{ old('fechadocumento', \Carbon\Carbon::parse($evidenciasSgsi->fechadocumento)->format('Y-m-d')) }}">
+                <label for="fechadocumento" class="asterisco">Fecha de emisión del documento*</label>
+                @if ($errors->has('fechadocumento'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechadocumento') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="col-sm-12 form-group anima-focus">
+                <div class="custom-file">
+                    <input type="file" name="files[]" multiple class="form-control" id="evidencia">
+                    <label for="evidencia" class="asterisco">Documento*</label>
                 </div>
+            </div>
 
                 <div class="mb-3 col-10 d-flex justify-content-right">
                     <span class="float-right" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"

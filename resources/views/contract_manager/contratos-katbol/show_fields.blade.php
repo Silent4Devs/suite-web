@@ -13,20 +13,20 @@
                 <tbody>
                     <tr>
                         <td>
-                            {!! Form::label('no_contrato') !!}
+                            <label for="no_contrato">No. de Contrato:</label>
                             <span>{{ $contrato->no_contrato }}</span>
                         </td>
                         <td>
-                            {!! Form::label('tipo_contrato') !!}
+                            <label for="tipo_contrato">Tipo de Contrato:</label>
                             <span>{{ $contrato->tipo_contrato }}</span>
-
                         </td>
                         <td>
-                            {!! Form::label('nombre_servicio') !!}
+                            <label for="nombre_servicio">Nombre del Servicio:</label>
                             <span>{{ $contrato->nombre_servicio }}</span>
                         </td>
                     </tr>
                 </tbody>
+
             </table>
 
         </div>
@@ -46,11 +46,12 @@
                 <tbody>
                     <tr>
                         <td>
-                            {!! Form::label('nombre_proveedor') !!}
+                            <label for="nombre_proveedor">Nombre del Proveedor:</label>
                             <span>{{ $contrato->nombre_proveedor }}</span>
                         </td>
                     </tr>
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -69,11 +70,12 @@
                 <tbody>
                     <tr>
                         <td>
-                            {!! Form::label('objetivo') !!}
+                            <label for="objetivo">Objetivo:</label>
                             <span>{{ $contrato->objetivo }}</span>
                         </td>
                     </tr>
                 </tbody>
+
             </table>
 
         </div>
@@ -93,11 +95,12 @@
                 <tbody>
                     <tr>
                         <td>
-                            {!! Form::label('administrador_contrato') !!}
+                            <label for="administrador_contrato">Administrador del Contrato:</label>
                             <span>{{ $contrato->administrador_contrato }}</span>
                         </td>
                     </tr>
                 </tbody>
+
             </table>
         </div>
     </div>

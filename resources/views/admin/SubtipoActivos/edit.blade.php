@@ -10,20 +10,20 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <i class="fas fa-layer-group iconos-crear"></i>{!! Form::label('categoria_id', 'Categoria:') !!}
+                        <i class="fas fa-layer-group iconos-crear"></i>
+                        <label for="categoria_id">Categoria:</label>
                         <select class="custom-select" id="categoria_id" name="categoria_id">
                             <option selected value="" disabled>Seleccione una opción</option>
                             @forelse ($categorias as $categoria)
-                                <option value="{{ $categoria->id }}"
-                                    {{ $subcategoria->categoria_id == $categoria->id ? 'selected' : '' }}>
+                                <option value="{{ $categoria->id }}" {{ $subcategoria->categoria_id == $categoria->id ? 'selected' : '' }}>
                                     {{ $categoria->tipo }}
                                 </option>
                             @empty
                                 <option value="" disabled>Sin Datos</option>
                             @endforelse
-
                         </select>
                     </div>
+
 
                     <div class="form-group col-sm-6">
                         <label class="required" for="subcategoria"><i

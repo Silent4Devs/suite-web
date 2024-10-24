@@ -399,13 +399,19 @@
                 <label for="estatus" class="txt-tamaño">&nbsp;
                     Estatus<font class="asterisco">*</font>
                 </label><br>
-                {{ Form::select('estatus', ['vigentes' => 'Vigente', 'Cerrado' => 'Cerrado', 'renovaciones' => 'Renovación'], null, ['class' => 'form-control']) }}
+                <select name="estatus" id="estatus" class="form-control" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="vigentes">Vigente</option>
+                    <option value="Cerrado">Cerrado</option>
+                    <option value="renovaciones">Renovación</option>
+                </select>
                 @if ($errors->has('estatus'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('estatus') }}
                     </div>
                 @endif
             </div>
+
 
         </div>
         <div class="row">
@@ -464,16 +470,18 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label for="no_contrato" class="txt-tamaño">Vigencia
+                <label for="vigencia_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
-                {!! Form::text('vigencia_contrato', null, ['class' => 'form-control', 'required', 'maxlength' => '150']) !!}
+                <input type="text" name="vigencia_contrato" id="vigencia_contrato" class="form-control" required
+                    maxlength="150">
                 @if ($errors->has('vigencia_contrato'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('vigencia_contrato') }}
                     </div>
                 @endif
             </div>
+
         </div>
         <div class="row">
             <div class="form-group col-md-4">
@@ -522,10 +530,10 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">
-                    &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
-
-                {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => '1']) !!}
+                <label for="no_pagos" class="txt-tamaño">
+                    &nbsp;No. Pagos<font class="asterisco">*</font>
+                </label><br>
+                <input type="number" name="no_pagos" id="no_pagos" class="form-control" required min="1">
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
@@ -533,7 +541,6 @@
                 @endif
             </div>
         </div>
-
         @livewire('moneda-ext-contratos-create')
 
         <div class="col s12">
@@ -561,9 +568,10 @@
                 <div class="form-group col-md-12 distancia">
                     <div class="td_fianza">
                         <label class="txt-tamaño">Folio</label>
-                        {!! Form::text('folio', null, ['class' => 'form-control']) !!}
+                        <input type="text" name="folio" class="form-control" />
                     </div>
                 </div>
+
                 <div class="form-group col-md-12 distancia">
                     <div class="td_fianza">
                         <label class="txt-tamaño ">Documento</label>
@@ -591,11 +599,9 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label class="txt-tamaño">&nbsp;Nombre
-                        del Supervisor 1<font class="asterisco">*
-                        </font></label>
+                    <label class="txt-tamaño">&nbsp;Nombre del Supervisor 1<font class="asterisco">*</font></label>
                     <div>
-                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required', 'maxlength' => '250']) !!}
+                        <input type="text" name="pmp_asignado" class="form-control" required maxlength="250" />
                         @if ($errors->has('pmp_asignado'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('pmp_asignado') }}
@@ -603,16 +609,18 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('puesto', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
+                        <input type="text" name="puesto" class="form-control" maxlength="250" />
                     </div>
                 </div>
+
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
+                        <input type="text" name="area" class="form-control" maxlength="250" />
                         @if ($errors->has('area'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area') }}
@@ -620,13 +628,13 @@
                         @endif
                     </div>
                 </div>
+
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label class="txt-tamaño">&nbsp;Nombre
-                        del Supervisor 2</label>
+                    <label class="txt-tamaño">&nbsp;Nombre del Supervisor 2</label>
                     <div>
-                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
+                        <input type="text" name="administrador_contrato" class="form-control" maxlength="250" />
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}
@@ -634,10 +642,11 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
+                        <input type="text" name="cargo_administrador" class="form-control" maxlength="150" />
                         @if ($errors->has('cargo_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('cargo_administrador') }}
@@ -645,10 +654,11 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
+                        <input type="text" name="area_administrador" class="form-control" maxlength="150" />
                         @if ($errors->has('area_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area_administrador') }}
@@ -656,6 +666,7 @@
                         @endif
                     </div>
                 </div>
+
             </div>
             {{-- <div class="row"></div>
             <div class="row">
@@ -680,18 +691,13 @@
                 <div class="col s12 m12 right-align btn-grd distancia">
                     <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
                         class="btn btn-outline-primary">Cancelar</a>
-                    {!! Form::submit('Guardar', ['class' => 'btn btn-primary', 'id' => 'btnGuardar']) !!}
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
                 </div>
+
             </div>
         </div>
     </div>
 </form>
-
-
-
-
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>

@@ -13,11 +13,7 @@ class ContratoObserver
      */
     public function created(Contrato $contrato): void
     {
-        try {
-            event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        // event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
 
         $this->forgetCache();
     }
@@ -27,11 +23,7 @@ class ContratoObserver
      */
     public function updated(Contrato $contrato): void
     {
-        try {
-            event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        // event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
 
         $this->forgetCache();
     }
@@ -41,11 +33,7 @@ class ContratoObserver
      */
     public function deleted(Contrato $contrato): void
     {
-        try {
-            event(new ContratoEvent($contrato, 'delete', 'contratos', 'Contratos'));
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        // event(new ContratoEvent($contrato, 'delete', 'contratos', 'Contratos'));
 
         $this->forgetCache();
     }

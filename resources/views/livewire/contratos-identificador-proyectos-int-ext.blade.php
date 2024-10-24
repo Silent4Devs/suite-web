@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        {!! Form::label('identificador_proyect', 'ID*', ['class' => 'asterisco']) !!}
+                        <label for="identificador_proyect" class="asterisco">ID*</label>
                         <input type="text" id="identificador_proyect" placeholder=""
                             value="{{ old('identificador', '') }}"
                             wire:model.live.debounce.1000ms="identificador_proyect" wire:ignore
@@ -60,29 +60,28 @@
                         @enderror
                         <div>
                             @if ($mensaje != null)
-                                <span class="{{ $class }}"
-                                    style="color: {{ $colorTexto }}">{{ $mensaje }}</span>
+                                <span class="{{ $class }}" style="color: {{ $colorTexto }}">{{ $mensaje }}</span>
                             @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <div class="form-group ">
-                        {!! Form::label('tipo', 'Categoria del Proyecto*', ['class' => 'asterisco']) !!}
+                    <div class="form-group">
+                        <label for="tipo" class="asterisco">Categoría del Proyecto*</label>
                         <select class="form-control" name="tipo" id="tipo" wire:model.live="tipo" required>
                             <option value="" selected>Seleccione una opción</option>
                             @foreach ($select_tipos as $tipo_it)
-                                <option {{ old('tipo') == $tipo_it ? 'selected' : '' }} value="{{ $tipo_it }}"
-                                    {{ $tipo == $tipo_it ? 'selected' : '' }}>
+                                <option value="{{ $tipo_it }}" {{ (old('tipo') == $tipo_it || $tipo == $tipo_it) ? 'selected' : '' }}>
                                     {{ $tipo_it }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                <div class="form-group col-md-4 ">
-                    {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
+
+                <div class="form-group col-md-4">
+                    <label for="name_proyect" class="asterisco">Nombre del proyecto*</label>
                     <input value="{{ old('proyecto_name', '') }}" type="text" id="name_proyect" placeholder=""
                         name="proyecto_name" class="form-control" maxlength="254" required>
                     <span id="alertaGenerica" style="color: red; display: none;"></span>
@@ -90,21 +89,22 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-4 ">
-                    {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
-                    <select class="form-control" name="sede_id" id="sede_id">
+                <div class="form-group col-md-4">
+                    <label for="sede_id" class="asterisco">Sede</label>
+                    <select class="form-control" name="sede_id" id="sede_id" required>
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
-                            <option {{ old('sede_id') == $sede->id ? 'selected' : '' }} value="{{ $sede->id }}">
-                                {{ $sede->sede }}</option>
+                            <option value="{{ $sede->id }}" {{ old('sede_id') == $sede->id ? 'selected' : '' }}>
+                                {{ $sede->sede }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="form-group col-md-4 ">
-                    {!! Form::label('fecha_inicio_proyecto', 'Fecha de inicio', ['class' => 'asterisco']) !!}
-                    <input type="date" name="fecha_inicio_proyecto" placeholder="" id="fecha_inicio_proyecto"
-                        class="form-control" value="{{ old('fecha_inicio_proyecto', '') }}">
+                <div class="form-group col-md-4">
+                    <label for="fecha_inicio_proyecto" class="asterisco">Fecha de inicio</label>
+                    <input type="date" name="fecha_inicio_proyecto" id="fecha_inicio_proyecto" class="form-control"
+                        value="{{ old('fecha_inicio_proyecto', '') }}" required>
                     @if ($errors->has('fecha_inicio_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio_proyecto') }}
@@ -114,10 +114,11 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-4 ">
-                    {!! Form::label('fecha_fin_proyecto', 'Fecha de fin', ['class' => 'asterisco']) !!}
+
+                <div class="form-group col-md-4">
+                    <label for="fecha_fin_proyecto" class="asterisco">Fecha de fin</label>
                     <input type="date" name="fecha_fin_proyecto" id="fecha_fin_proyecto" class="form-control"
-                        value="{{ old('fecha_fin_proyecto', '') }}">
+                        value="{{ old('fecha_fin_proyecto', '') }}" required>
                     @if ($errors->has('fecha_fin_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin_proyecto') }}
@@ -129,11 +130,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-4 ">
-                    {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
-                    <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
-                        placeholder="" name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control"
-                        value="{{ old('horas_proyecto', '') }}">
+                <div class="form-group col-md-4">
+                    <label for="horas_asignadas" class="asterisco">Horas Asignadas al proyecto</label>
+                    <input type="text" name="horas_proyecto" id="horas_asignadas" class="form-control"
+                        placeholder="" maxlength="250" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
+                        value="{{ old('horas_proyecto', '') }}" required>
                     @if ($errors->has('horas_proyecto'))
                         <div class="invalid-feedback">
                             {{ $errors->first('horas_proyecto') }}

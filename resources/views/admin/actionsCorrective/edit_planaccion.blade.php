@@ -3,16 +3,13 @@
 
     <div class="form-group col-12">
 
-        {!! Html::decode(Form::label('id', '<i class="fas fa-file iconos-crear"></i>No. Acción Correctiva:')) !!}
-        {!! Html::decode(
-            Form::text(
-                'accioncorrectiva_id',
-                $id,
-                ['id' => 'accioncorrectivaid', 'disabled'],
-                ['class' => 'form-control mx-auto'],
-            ),
-        ) !!}
-        {{ Form::hidden('accioncorrectiva_id', $id, ['id' => 'accioncorrectiva_id']) }}
+        <label for="accioncorrectivaid">
+            <i class="fas fa-file iconos-crear"></i>No. Acción Correctiva:
+        </label>
+        <input type="text" name="accioncorrectiva_id" id="accioncorrectivaid" value="{{ $id }}"
+            class="form-control mx-auto" disabled>
+        <input type="hidden" name="accioncorrectiva_id" id="accioncorrectiva_id" value="{{ $id }}">
+
     </div>
     <div class="form-group col-md-8">
         <label for="actividad"><i

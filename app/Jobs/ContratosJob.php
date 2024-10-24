@@ -1,28 +1,40 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs;
 
 use App\Models\FirmaModule;
 use App\Models\User;
 use App\Notifications\ContratoNotification;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 
-class ContratosListener implements ShouldQueue
+class ContratosJob implements ShouldQueue
 {
-    use InteractsWithQueue;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 5;
+    protected $contratos;
+
+    protected $tipo_consulta;
+
+    protected $tabla;
+
+    protected $slug;
 
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($contratos, $tipo_consulta, $tabla, $slug)
     {
-        //
+        $this->contratos = $contratos;
+        $this->tipo_consulta = $tipo_consulta;
+        $this->tabla = $tabla;
+        $this->slug = $slug;
     }
 
     /**
@@ -31,9 +43,9 @@ class ContratosListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle()
     {
-        try {
+        try{
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
             // Decodifica el campo participantes
@@ -48,9 +60,10 @@ class ContratosListener implements ShouldQueue
             $usuarios = User::whereIn('id', $participantes)->get();
 
             // Enviar la notificación a cada usuario
-            Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
-        } catch (\Throwable $th) {
-            //throw $th;
+            Notification::send($usuarios, new ContratoNotification($this->contratos, $this->tipo_consulta, $this->tabla, $this->slug));
+
+        } catch (\Exception $e) {
+            return view('errors.alerta_error', compact('e'));
         }
     }
 }

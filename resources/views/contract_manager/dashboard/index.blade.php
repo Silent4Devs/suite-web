@@ -383,12 +383,10 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                 </div>
                 <div class="col s2">
-                    {!! Form::submit('Buscar', [
-                        'class' => 'btn tb-btn-primary',
-                        'id' => 'buscar_proveedor',
-                        'onclick' => "buscarproveedor($('#proveedor').val());return false;",
-                        'style' => '',
-                    ]) !!}
+                    <button type="submit" class="btn tb-btn-primary" id="buscar_proveedor" onclick="buscarproveedor($('#proveedor').val()); return false;" style="">
+                        Buscar
+                    </button>
+
                 </div>
             </div>
             <div id="resultado_proveedor" class="col-12"></div>

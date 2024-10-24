@@ -11,12 +11,15 @@
     <div class="mt-4 card">
         <div class="card-body">
             <div class="card-body">
-                {!! Form::open(['route' => 'admin.vulnerabilidads.store']) !!}
+                <form action="{{ route('admin.vulnerabilidads.store') }}" method="POST">
+                    @csrf
 
-                @include('admin.vulnerabilidads.fields')
+                    @include('admin.vulnerabilidads.fields')
 
-                {!! Form::close() !!}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
             </div>
+
         </div>
     </div>
 @endsection

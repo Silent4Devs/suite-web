@@ -10,10 +10,9 @@
     <h5 class="col-12 titulo_general_funcion">Ajustes: Envios</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($ajustes, [
-                'route' => ['admin.ajustes-envio-documentos-update', $ajustes->id],
-                'method' => 'put',
-            ]) !!}
+            <form action="{{ route('admin.ajustes-envio-documentos-update', $ajustes->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
             <div class="row">
                 <div class="form-group col-sm-6">
@@ -58,7 +57,7 @@
                 </button>
             </div>
 
-            {!! Form::close() !!}
+            </form>
         </div>
     </div>
 @endsection

@@ -300,21 +300,21 @@ class EventServiceProvider extends ServiceProvider
         TaskRecursosEvent::class => [
             TaskRecursosListener::class,
         ],
-        PoliticasSgiEvent::class => [
-            PoliticasSgiListener::class,
-        ],
-        AlcancesEvent::class => [
-            AlcancesListener::class,
-        ],
-        MatrizRequisitosEvent::class => [
-            MatrizRequisitosListener::class,
-        ],
+        // PoliticasSgiEvent::class => [
+        //     PoliticasSgiListener::class,
+        // ],
+        // AlcancesEvent::class => [
+        //     AlcancesListener::class,
+        // ],
+        // MatrizRequisitosEvent::class => [
+        //     MatrizRequisitosListener::class,
+        // ],
         RequisicionesEvent::class => [
             RequisicionesListener::class,
         ],
-        EntendimientoOrganizacionEvent::class => [
-            EntendimientoOrganizacionListener::class,
-        ],
+        // EntendimientoOrganizacionEvent::class => [
+        //     EntendimientoOrganizacionListener::class,
+        // ],
         DocumentoEvent::class => [
             DocumentoListener::class,
         ],
@@ -324,9 +324,9 @@ class EventServiceProvider extends ServiceProvider
         TimesheetProyectoEvent::class => [
             TimesheetProyectoListener::class,
         ],
-        CoursesEvent::class => [
-            CoursesListener::class,
-        ],
+        // CoursesEvent::class => [
+        //     CoursesListener::class,
+        // ],
         SolicitudVacacionesEvent::class => [
             SolicitudVacacionesListener::class,
         ],
@@ -345,9 +345,9 @@ class EventServiceProvider extends ServiceProvider
         EvaluacionEvent::class => [
             EvaluacionListener::class,
         ],
-        ContratoEvent::class => [
-            ContratosListener::class,
-        ],
+        // ContratoEvent::class => [
+        //     ContratosListener::class,
+        // ],
         MinutasEvent::class => [
             MinutasListener::class,
         ],

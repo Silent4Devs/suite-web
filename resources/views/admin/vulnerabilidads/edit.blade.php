@@ -10,11 +10,15 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Vulnerabilidad</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($vulnerabilidad, ['route' => ['admin.vulnerabilidads.update', $vulnerabilidad->id], 'method' => 'patch']) !!}
+            <form action="{{ route('admin.vulnerabilidads.update', $vulnerabilidad->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
 
-            @include('admin.vulnerabilidads.editfields')
+                @include('admin.vulnerabilidads.editfields')
 
-            {!! Form::close() !!}
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
         </div>
+
     </div>
 @endsection

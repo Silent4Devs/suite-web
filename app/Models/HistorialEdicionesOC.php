@@ -14,7 +14,6 @@ class HistorialEdicionesOC extends Model
     protected $fillable =
         [
             'requisicion_id', // ID del registro modificado
-            'numero_edicion',
             'registro_tipo', // Tipo de modelo (por ejemplo, App\Models\Registro)
             'id_empleado', // ID del empleado que hizo el cambio
             'campo', // Campo modificado
@@ -28,5 +27,10 @@ class HistorialEdicionesOC extends Model
     public function version()
     {
         return $this->belongsTo(VersionesOrdenesCompra::class, 'version_id'); // Asegúrate de que 'version_id' sea la clave foránea correcta
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado')->select('id', 'name'); // Asegúrate de que 'version_id' sea la clave foránea correcta
     }
 }

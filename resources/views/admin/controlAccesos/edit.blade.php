@@ -40,16 +40,16 @@
 
                 <div class="form-group col-sm-4 mt-3 anima-focus">
                     <select class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                        onchange="printarea();" name='responsable_id' id='responsable_id' required>
+                            onchange="printarea();" name='responsable_id' id='responsable_id' required>
                         <option value="">Seleccione un responsable</option>
                         @foreach ($responsables as $responsable)
                             <option value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}"
-                                data-puesto="{{ $responsable->puesto }}"
-                                {{ old('responsable_id', $controlAcceso->responsable_id) == $responsable->id ? 'selected' : '' }}>
+                                    data-puesto="{{ $responsable->puesto }}"
+                                    {{ old('responsable_id', $controlAcceso->responsable_id) == $responsable->id ? 'selected' : '' }}>
                                 {{ $responsable->name }}</option>
                         @endforeach
                     </select>
-                    {!! Form::label('responsable_id', 'Responsable*', ['class' => 'asterisco']) !!}
+                    <label for="responsable_id" class="asterisco">Responsable*</label>
                     @if ($errors->has('responsable_id'))
                         <div class="invalid-feedback">
                             {{ $errors->first('responsable_id') }}
@@ -57,17 +57,14 @@
                     @endif
                 </div>
 
-
-
                 <div class="form-group col-md-4 mt-3 anima-focus">
                     <div class="form-control" id="responsable_puesto"></div>
-                    {!! Form::label('responsable_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
+                    <label for="responsable_puesto" class="asterisco">Puesto*</label>
                 </div>
-
 
                 <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3 anima-focus">
                     <div class="form-control" id="responsable_area"></div>
-                    {!! Form::label('responsable_area', 'Área*', ['class' => 'asterisco']) !!}
+                    <label for="responsable_area" class="asterisco">Área*</label>
                 </div>
 
                 <div class=" mb-4 ml-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
@@ -77,8 +74,8 @@
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
                     <input required placeholder="" class="form-control" type="date" min="1945-01-01" id="fecha_inicio"
-                        name="fecha_inicio" value="{{ old('fecha_inicio', $controlAcceso->fecha_inicio) }}">
-                    {!! Form::label('fecha_inicio', 'Fecha Inicio*', ['class' => 'asterisco']) !!}
+                           name="fecha_inicio" value="{{ old('fecha_inicio', $controlAcceso->fecha_inicio) }}">
+                    <label for="fecha_inicio" class="asterisco">Fecha Inicio*</label>
                     <span class="fecha_inicio_error text-danger errores"></span>
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
@@ -87,10 +84,10 @@
                     @endif
                 </div>
 
-                <div class="form-group col-sm-12 col-md-12 col-lg-6  anima-focus">
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
                     <input required placeholder="" class="form-control" type="date" min="1945-01-01" id="fecha_fin"
-                        name="fecha_fin" value="{{ old('fecha_fin', $controlAcceso->fecha_fin) }}">
-                    {!! Form::label('fecha_fin', 'Fecha Fin*', ['class' => 'asterisco']) !!}
+                           name="fecha_fin" value="{{ old('fecha_fin', $controlAcceso->fecha_fin) }}">
+                    <label for="fecha_fin" class="asterisco">Fecha Fin*</label>
                     <span class="fecha_fin_error text-danger errores"></span>
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
@@ -98,10 +95,11 @@
                         </div>
                     @endif
                 </div>
+
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" name="justificacion"
-                        id="justificacion">{{ old('justificacion', $controlAcceso->justificacion) }}</textarea>
-                    {!! Form::label('justificacion', 'Justificación*', ['class' => 'asterisco']) !!}
+                    <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
+                              name="justificacion" id="justificacion">{{ old('justificacion', $controlAcceso->justificacion) }}</textarea>
+                    <label for="justificacion" class="asterisco">Justificación*</label>
                     @if ($errors->has('justificacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('justificacion') }}
