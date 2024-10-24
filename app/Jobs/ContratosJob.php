@@ -45,7 +45,7 @@ class ContratosJob implements ShouldQueue
      */
     public function handle()
     {
-        try{
+        try {
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
 
             // Decodifica el campo participantes

@@ -573,9 +573,9 @@ class OrdenCompraController extends Controller
 
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
-            try{
+            try {
 
-            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+                Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
             } catch (\Throwable $th) {
                 return view('errors.alerta_error', compact('th'));

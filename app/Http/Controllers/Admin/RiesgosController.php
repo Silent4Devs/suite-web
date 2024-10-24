@@ -18,6 +18,7 @@ use App\Models\Proceso;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,6 +50,8 @@ class RiesgosController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $riesgos = RiesgoIdentificado::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -60,6 +63,7 @@ class RiesgosController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

@@ -37,100 +37,100 @@ class AlcanceSgsiController extends Controller
     {
 
         try {
-        abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
+            abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
 
-        if ($request->ajax()) {
-            $query = AlcanceSgsi::orderByDesc('id')->get();
-            $table = Datatables::of($query);
+            if ($request->ajax()) {
+                $query = AlcanceSgsi::orderByDesc('id')->get();
+                $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+                $table->addColumn('placeholder', '&nbsp;');
+                $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'determinacion_alcance_ver';
-                $editGate = 'determinacion_alcance_editar';
-                $deleteGate = 'determinacion_alcance_eliminar';
-                $crudRoutePart = 'alcance-sgsis';
+                $table->editColumn('actions', function ($row) {
+                    $viewGate = 'determinacion_alcance_ver';
+                    $editGate = 'determinacion_alcance_editar';
+                    $deleteGate = 'determinacion_alcance_eliminar';
+                    $crudRoutePart = 'alcance-sgsis';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+                    return view('partials.datatablesActions', compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    ));
+                });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? strip_tags($row->nombre) : '';
-            });
-            $table->editColumn('alcancesgsi', function ($row) {
-                return $row->alcancesgsi ? html_entity_decode(strip_tags($row->alcancesgsi), ENT_QUOTES, 'UTF-8') : '';
-            });
+                $table->editColumn('id', function ($row) {
+                    return $row->id ? $row->id : '';
+                });
+                $table->editColumn('nombre', function ($row) {
+                    return $row->nombre ? strip_tags($row->nombre) : '';
+                });
+                $table->editColumn('alcancesgsi', function ($row) {
+                    return $row->alcancesgsi ? html_entity_decode(strip_tags($row->alcancesgsi), ENT_QUOTES, 'UTF-8') : '';
+                });
 
-            $table->editColumn('norma', function ($row) {
-                return $row->normas ? $row->normas : '';
-            });
+                $table->editColumn('norma', function ($row) {
+                    return $row->normas ? $row->normas : '';
+                });
 
-            $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : '';
-            });
+                $table->editColumn('estatus', function ($row) {
+                    return $row->estatus ? $row->estatus : '';
+                });
 
-            $table->editColumn('fecha_publicacion', function ($row) {
-                return $row->fecha_publicacion ? $row->fecha_publicacion : '';
-            });
-            $table->editColumn('fecha_entrada', function ($row) {
-                return $row->fecha_entrada ? $row->fecha_entrada : '';
-            });
-            $table->editColumn('reviso_alcance', function ($row) {
-                return $row->empleado ? $row->empleado->name : '';
-            });
-            $table->editColumn('puesto_reviso', function ($row) {
-                return $row->empleado ? $row->empleado->puesto : '';
-            });
-            $table->editColumn('area_reviso', function ($row) {
-                return $row->empleado ? $row->empleado->area->area : '';
-            });
-            $table->editColumn('fecha_revision', function ($row) {
-                return $row->fecha_revision ? $row->fecha_revision : '';
-            });
+                $table->editColumn('fecha_publicacion', function ($row) {
+                    return $row->fecha_publicacion ? $row->fecha_publicacion : '';
+                });
+                $table->editColumn('fecha_entrada', function ($row) {
+                    return $row->fecha_entrada ? $row->fecha_entrada : '';
+                });
+                $table->editColumn('reviso_alcance', function ($row) {
+                    return $row->empleado ? $row->empleado->name : '';
+                });
+                $table->editColumn('puesto_reviso', function ($row) {
+                    return $row->empleado ? $row->empleado->puesto : '';
+                });
+                $table->editColumn('area_reviso', function ($row) {
+                    return $row->empleado ? $row->empleado->area->area : '';
+                });
+                $table->editColumn('fecha_revision', function ($row) {
+                    return $row->fecha_revision ? $row->fecha_revision : '';
+                });
 
-            $table->rawColumns(['actions', 'placeholder']);
+                $table->rawColumns(['actions', 'placeholder']);
 
-            return $table->make(true);
-        }
-
-        $teams = Team::get();
-        $empleados = Empleado::getAltaEmpleadosWithArea();
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-        $direccion = $organizacion_actual->direccion;
-        $rfc = $organizacion_actual->rfc;
-        $normas = Norma::get();
-
-        $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
-
-        if (! isset($modulo)) {
-            $listavacia = 'vacia';
-        } elseif ($modulo->participantes->isEmpty()) {
-            $listavacia = 'vacia';
-        } else {
-            foreach ($modulo->participantes as $participante) {
-                if ($participante->empleado->estatus != 'alta') {
-                    $listavacia = 'baja';
-
-                    return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
-                }
+                return $table->make(true);
             }
-            $listavacia = 'cumple';
-        }
 
-        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+            $teams = Team::get();
+            $empleados = Empleado::getAltaEmpleadosWithArea();
+            $organizacion_actual = $this->obtenerOrganizacion();
+            $logo_actual = $organizacion_actual->logo;
+            $empresa_actual = $organizacion_actual->empresa;
+            $direccion = $organizacion_actual->direccion;
+            $rfc = $organizacion_actual->rfc;
+            $normas = Norma::get();
+
+            $modulo = ListaDistribucion::with('participantes.empleado')->where('modelo', '=', $this->modelo)->first();
+
+            if (! isset($modulo)) {
+                $listavacia = 'vacia';
+            } elseif ($modulo->participantes->isEmpty()) {
+                $listavacia = 'vacia';
+            } else {
+                foreach ($modulo->participantes as $participante) {
+                    if ($participante->empleado->estatus != 'alta') {
+                        $listavacia = 'baja';
+
+                        return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+                    }
+                }
+                $listavacia = 'cumple';
+            }
+
+            return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -139,14 +139,14 @@ class AlcanceSgsiController extends Controller
 
     public function create()
     {
-        try{
+        try {
 
-        abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::with('area')->get();
-        $normas = Norma::get();
+            $empleados = Empleado::with('area')->get();
+            $normas = Norma::get();
 
-        return view('admin.alcanceSgsis.create', compact('empleados', 'normas'));
+            return view('admin.alcanceSgsis.create', compact('empleados', 'normas'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -155,29 +155,29 @@ class AlcanceSgsiController extends Controller
 
     public function store(Request $request)
     {
-        try{
+        try {
 
-        abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'alcancesgsi' => 'required|string|max:255',
-            'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date',
-        ]);
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'alcancesgsi' => 'required|string|max:255',
+                'fecha_publicacion' => 'required|date',
+                'fecha_revision' => 'required|date',
+            ]);
 
-        $alcanceSgsi = AlcanceSgsi::create([
-            'nombre' => $request->input('nombre'),
-            'alcancesgsi' => $request->input('alcancesgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'Pendiente',
-            'id_reviso_alcance' => User::getCurrentUser()->empleado->id, //Para saber quien lo elaboro/responsable
-        ]);
+            $alcanceSgsi = AlcanceSgsi::create([
+                'nombre' => $request->input('nombre'),
+                'alcancesgsi' => $request->input('alcancesgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+                'id_reviso_alcance' => User::getCurrentUser()->empleado->id, //Para saber quien lo elaboro/responsable
+            ]);
 
-        $this->solicitudAprobacion($alcanceSgsi->id);
+            $this->solicitudAprobacion($alcanceSgsi->id);
 
-        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
+            return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -203,17 +203,17 @@ class AlcanceSgsiController extends Controller
 
     public function aprove(AlcanceSgsi $alcanceSgsi)
     {
-        try{
+        try {
 
-        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->load('normas');
-        $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
+            $alcanceSgsi->load('normas');
+            $normas_seleccionadas = $alcanceSgsi->normas->pluck('id')->toArray();
 
-        $normas = Norma::get();
-        $empleados = Empleado::alta()->with('area')->get();
+            $normas = Norma::get();
+            $empleados = Empleado::alta()->with('area')->get();
 
-        return view('admin.alcanceSgsis.aprove', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
+            return view('admin.alcanceSgsis.aprove', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -222,27 +222,27 @@ class AlcanceSgsiController extends Controller
 
     public function update(Request $request, AlcanceSgsi $alcanceSgsi)
     {
-        try{
+        try {
 
-        abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'alcancesgsi' => 'required|string|max:255',
-            'fecha_publicacion' => 'required|date',
-            'fecha_revision' => 'required|date',
-        ]);
+            abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'alcancesgsi' => 'required|string|max:255',
+                'fecha_publicacion' => 'required|date',
+                'fecha_revision' => 'required|date',
+            ]);
 
-        $alcanceSgsi->update([
-            'nombre' => $request->input('nombre'),
-            'alcancesgsi' => $request->input('alcancesgsi'),
-            'fecha_publicacion' => $request->input('fecha_publicacion'),
-            'fecha_revision' => $request->input('fecha_revision'),
-            'estatus' => 'Pendiente',
-        ]);
+            $alcanceSgsi->update([
+                'nombre' => $request->input('nombre'),
+                'alcancesgsi' => $request->input('alcancesgsi'),
+                'fecha_publicacion' => $request->input('fecha_publicacion'),
+                'fecha_revision' => $request->input('fecha_revision'),
+                'estatus' => 'Pendiente',
+            ]);
 
-        $this->solicitudAprobacion($alcanceSgsi->id);
+            $this->solicitudAprobacion($alcanceSgsi->id);
 
-        return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
+            return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -275,12 +275,12 @@ class AlcanceSgsiController extends Controller
 
     public function destroy(AlcanceSgsi $alcanceSgsi)
     {
-        try{
-        abort_if(Gate::denies('determinacion_alcance_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('determinacion_alcance_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi->delete();
+            $alcanceSgsi->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+            return back()->with('deleted', 'Registro eliminado con éxito');
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -289,31 +289,31 @@ class AlcanceSgsiController extends Controller
 
     public function massDestroy(MassDestroyAlcanceSgsiRequest $request)
     {
-    try{
-        AlcanceSgsi::whereIn('id', request('ids'))->delete();
+        try {
+            AlcanceSgsi::whereIn('id', request('ids'))->delete();
 
-        return response(null, Response::HTTP_NO_CONTENT);
+            return response(null, Response::HTTP_NO_CONTENT);
 
-    } catch (\Throwable $th) {
-        return view('errors.alerta_error', compact('th'));
-    }
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function pdf()
     {
-    try{
-        $alcances = AlcanceSgsi::get();
-        $organizacions = Organizacion::getFirst();
-        $logo_actual = $organizacions->logo;
+        try {
+            $alcances = AlcanceSgsi::get();
+            $organizacions = Organizacion::getFirst();
+            $logo_actual = $organizacions->logo;
 
-        $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions', 'logo_actual'));
-        $pdf->setPaper('A4', 'portrait');
+            $pdf = PDF::loadView('alcances', compact('alcances', 'organizacions', 'logo_actual'));
+            $pdf->setPaper('A4', 'portrait');
 
-        return $pdf->download('alcances.pdf');
+            return $pdf->download('alcances.pdf');
 
-    } catch (\Throwable $th) {
-        return view('errors.alerta_error', compact('th'));
-    }
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function pdfShow($id)
@@ -338,59 +338,59 @@ class AlcanceSgsiController extends Controller
 
     public function solicitudAprobacion($id_alcance)
     {
-        try{
+        try {
 
-        $alcance = AlcanceSgsi::find($id_alcance);
+            $alcance = AlcanceSgsi::find($id_alcance);
 
-        $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
+            $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
-        event(new AlcancesEvent($alcance, 'solicitudAprobacion', 'alcance_sgsis', 'Alcance'));
+            event(new AlcancesEvent($alcance, 'solicitudAprobacion', 'alcance_sgsis', 'Alcance'));
 
-        $proceso = ProcesosListaDistribucion::updateOrCreate(
-            [
-                'modulo_id' => $lista->id,
-                'proceso_id' => $id_alcance, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
-            ],
-            [
-                'estatus' => 'Pendiente',
-            ]
-        );
-
-        foreach ($lista->participantes as $participante) {
-            $participantes = ControlListaDistribucion::updateOrCreate(
+            $proceso = ProcesosListaDistribucion::updateOrCreate(
                 [
-                    'proceso_id' => $proceso->id,
-                    'participante_id' => $participante->id,
+                    'modulo_id' => $lista->id,
+                    'proceso_id' => $id_alcance, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
                 ],
                 [
                     'estatus' => 'Pendiente',
                 ]
             );
-        }
 
-        //Superaprobadores
-        foreach ($proceso->participantes as $part) {
-            if ($part->participante->nivel == 0) {
-                $emailSuperAprobador = $part->participante->empleado->email;
-                Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
-                // dd('primer usuario', $part->participante);
+            foreach ($lista->participantes as $participante) {
+                $participantes = ControlListaDistribucion::updateOrCreate(
+                    [
+                        'proceso_id' => $proceso->id,
+                        'participante_id' => $participante->id,
+                    ],
+                    [
+                        'estatus' => 'Pendiente',
+                    ]
+                );
             }
-        }
 
-        //Aprobadores normales
-        foreach ($proceso->participantes as $part) {
-            if ($part->participante->nivel == 1) {
-                // for ($j = 1; $j <= 5; $j++) {
+            //Superaprobadores
+            foreach ($proceso->participantes as $part) {
+                if ($part->participante->nivel == 0) {
+                    $emailSuperAprobador = $part->participante->empleado->email;
+                    Mail::to(removeUnicodeCharacters($emailSuperAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                    // dd('primer usuario', $part->participante);
+                }
+            }
 
-                if ($part->participante->numero_orden == 1) {
-                    $emailAprobador = $part->participante->empleado->email;
-                    Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
-                    break;
+            //Aprobadores normales
+            foreach ($proceso->participantes as $part) {
+                if ($part->participante->nivel == 1) {
+                    // for ($j = 1; $j <= 5; $j++) {
+
+                    if ($part->participante->numero_orden == 1) {
+                        $emailAprobador = $part->participante->empleado->email;
+                        Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new NotificacionSolicitudAprobacionAlcance($alcance->id, $alcance->nombre));
+                        break;
+                    }
+                    // }
                 }
                 // }
             }
-            // }
-        }
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -400,68 +400,68 @@ class AlcanceSgsiController extends Controller
 
     public function revision($id)
     {
-        try{
-        abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $alcanceSgsi = AlcanceSgsi::find($id);
+            $alcanceSgsi = AlcanceSgsi::find($id);
 
-        $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+            $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
-        $alcanceSgsi->load('team');
-        $normas = Norma::get();
+            $alcanceSgsi->load('team');
+            $normas = Norma::get();
 
-        $proceso = ProcesosListaDistribucion::with('participantes')
-            ->where('modulo_id', '=', $modulo->id)
-            ->where('proceso_id', '=', $alcanceSgsi->id)
-            ->first();
+            $proceso = ProcesosListaDistribucion::with('participantes')
+                ->where('modulo_id', '=', $modulo->id)
+                ->where('proceso_id', '=', $alcanceSgsi->id)
+                ->first();
 
-        $no_niveles = $modulo->niveles;
+            $no_niveles = $modulo->niveles;
 
-        $acceso_restringido = 'correcto';
+            $acceso_restringido = 'correcto';
 
-        if ($proceso->estatus == 'Pendiente') {
-            for ($i = 1; $i <= $no_niveles; $i++) {
-                foreach ($proceso->participantes as $part) {
-                    // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
-                    if (
-                        $part->participante->nivel == $i && $part->estatus == 'Pendiente'
-                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
-                    ) {
+            if ($proceso->estatus == 'Pendiente') {
+                for ($i = 1; $i <= $no_niveles; $i++) {
+                    foreach ($proceso->participantes as $part) {
+                        // dd($part, $part->participante, $part->participante->control($proceso->id), $part->estatus);
+                        if (
+                            $part->participante->nivel == $i && $part->estatus == 'Pendiente'
+                            && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                        ) {
 
-                        for ($j = 1; $j <= 5; $j++) {
-                            if (
-                                $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
-                                && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
-                            ) {
-                                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
-                                break;
-                            } elseif (
-                                ! ($part->estatus == 'Pendiente')
-                                && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
-                            ) {
-                                $acceso_restringido = 'turno';
+                            for ($j = 1; $j <= 5; $j++) {
+                                if (
+                                    $part->participante->numero_orden == $j && $part->estatus == 'Pendiente'
+                                    && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                                ) {
+                                    return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
+                                    break;
+                                } elseif (
+                                    ! ($part->estatus == 'Pendiente')
+                                    && ! ($part->participante->empleado_id == User::getCurrentUser()->empleado->id)
+                                ) {
+                                    $acceso_restringido = 'turno';
 
-                                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
+                                    return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
+                                }
                             }
-                        }
-                    } elseif (
-                        $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
-                        && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
-                    ) {
+                        } elseif (
+                            $part->participante->nivel == 0 && $part->estatus == 'Pendiente'
+                            && $part->participante->empleado_id == User::getCurrentUser()->empleado->id
+                        ) {
 
-                        return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
-                        break;
+                            return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
+                            break;
+                        }
                     }
                 }
+                $acceso_restringido = 'denegado';
+
+                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
+            } else {
+                $acceso_restringido = 'aprobado';
+
+                return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
             }
-            $acceso_restringido = 'denegado';
-
-            return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
-        } else {
-            $acceso_restringido = 'aprobado';
-
-            return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
-        }
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -470,75 +470,75 @@ class AlcanceSgsiController extends Controller
 
     public function aprobado($id, Request $request)
     {
-        try{
+        try {
 
-        $aprobador = User::getCurrentUser()->empleado->id;
+            $aprobador = User::getCurrentUser()->empleado->id;
 
-        $alcance = AlcanceSgsi::find($id);
+            $alcance = AlcanceSgsi::find($id);
 
-        $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+            $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
-        event(new AlcancesEvent($alcance, 'aprobado', 'alcance_sgsis', 'Alcance'));
+            event(new AlcancesEvent($alcance, 'aprobado', 'alcance_sgsis', 'Alcance'));
 
-        $proceso_general = ProcesosListaDistribucion::with('participantes')
-            ->where('modulo_id', '=', $modulo->id)
-            ->where('proceso_id', '=', $id)
-            ->with([
+            $proceso_general = ProcesosListaDistribucion::with('participantes')
+                ->where('modulo_id', '=', $modulo->id)
+                ->where('proceso_id', '=', $id)
+                ->with([
+                    'modulo' => function ($query) {
+                        $query->where('modelo', '=', $this->modelo);
+                    },
+                ])
+                ->first();
+
+            $proceso = ProcesosListaDistribucion::with([
                 'modulo' => function ($query) {
                     $query->where('modelo', '=', $this->modelo);
                 },
-            ])
-            ->first();
+                'participantes' => function ($query) use ($aprobador) {
+                    $query->whereHas('participante', function ($subQuery) use ($aprobador) {
+                        $subQuery->where('empleado_id', '=', $aprobador);
+                    });
+                },
+            ])->where('modulo_id', '=', $modulo->id)
+                ->where('proceso_id', '=', $id)
+                ->first();
 
-        $proceso = ProcesosListaDistribucion::with([
-            'modulo' => function ($query) {
-                $query->where('modelo', '=', $this->modelo);
-            },
-            'participantes' => function ($query) use ($aprobador) {
-                $query->whereHas('participante', function ($subQuery) use ($aprobador) {
-                    $subQuery->where('empleado_id', '=', $aprobador);
-                });
-            },
-        ])->where('modulo_id', '=', $modulo->id)
-            ->where('proceso_id', '=', $id)
-            ->first();
-
-        $comentario = ComentariosProcesosListaDistribucion::create([
-            'comentario' => $request->comentario,
-            'proceso_id' => $proceso->id,
-        ]);
-        // dd($proceso);
-        $participante_control = $proceso->participantes[0];
-        $participante = $proceso->participantes[0]->participante;
-
-        // dd($id, $request->all(), $aprobador, $proceso, $participante);
-        //SuperAprobador
-        if ($participante->nivel == 0) {
-            // dd("superaprobador");
-            $proceso->update([
-                'estatus' => 'Aprobado',
+            $comentario = ComentariosProcesosListaDistribucion::create([
+                'comentario' => $request->comentario,
+                'proceso_id' => $proceso->id,
             ]);
+            // dd($proceso);
+            $participante_control = $proceso->participantes[0];
+            $participante = $proceso->participantes[0]->participante;
 
-            foreach ($proceso_general->participantes as $p) {
-                $p->update([
+            // dd($id, $request->all(), $aprobador, $proceso, $participante);
+            //SuperAprobador
+            if ($participante->nivel == 0) {
+                // dd("superaprobador");
+                $proceso->update([
                     'estatus' => 'Aprobado',
                 ]);
+
+                foreach ($proceso_general->participantes as $p) {
+                    $p->update([
+                        'estatus' => 'Aprobado',
+                    ]);
+                }
+
+                $alcance->update([
+                    'estatus' => 'Aprobado',
+                ]);
+
+                $this->correosAprobacion($proceso, $alcance);
+            } else {
+                // dd($participante_control);
+                $participante_control->update([
+                    'estatus' => 'Aprobado',
+                ]);
+                $this->confirmacionAprobacion($proceso_general, $alcance);
             }
 
-            $alcance->update([
-                'estatus' => 'Aprobado',
-            ]);
-
-            $this->correosAprobacion($proceso, $alcance);
-        } else {
-            // dd($participante_control);
-            $participante_control->update([
-                'estatus' => 'Aprobado',
-            ]);
-            $this->confirmacionAprobacion($proceso_general, $alcance);
-        }
-
-        return redirect(route('admin.alcance-sgsis.index'));
+            return redirect(route('admin.alcance-sgsis.index'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -547,14 +547,14 @@ class AlcanceSgsiController extends Controller
 
     public function correosAprobacion($proceso, $alcance)
     {
-        try{
+        try {
 
-        $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+            $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
 
-        foreach ($procesoAprobado->participantes as $part) {
-            $emailAprobado = $part->participante->empleado->email;
-            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));
-        }
+            foreach ($procesoAprobado->participantes as $part) {
+                $emailAprobado = $part->participante->empleado->email;
+                Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));
+            }
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));
@@ -566,41 +566,41 @@ class AlcanceSgsiController extends Controller
 
         try {
 
-        $alcance = AlcanceSgsi::with('empleado')->find($id);
-        $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
-        $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
+            $alcance = AlcanceSgsi::with('empleado')->find($id);
+            $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
+            $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
-        event(new AlcancesEvent($alcance, 'rechazado', 'alcance_sgsis', 'Alcance'));
+            event(new AlcancesEvent($alcance, 'rechazado', 'alcance_sgsis', 'Alcance'));
 
-        $comentario = ComentariosProcesosListaDistribucion::create([
-            'comentario' => $request->comentario,
-            'proceso_id' => $aprobacion->id,
-        ]);
+            $comentario = ComentariosProcesosListaDistribucion::create([
+                'comentario' => $request->comentario,
+                'proceso_id' => $aprobacion->id,
+            ]);
 
-        $alcance->update([
-            'estatus' => 'Rechazado',
-        ]);
-
-        $aprobacion->update([
-            'estatus' => 'Rechazado',
-        ]);
-
-        foreach ($aprobacion->participantes as $p) {
-            $p->update([
+            $alcance->update([
                 'estatus' => 'Rechazado',
             ]);
-        }
-        // $responsable = $minuta->responsable->name;
-        $emailresponsable = $alcance->empleado->email;
-        $alcance_nombre = $alcance->nombre;
-        // dd($emailresponsable, $alcance_nombre);
-        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
 
-        foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoAlcance($alcance_nombre));
-        }
+            $aprobacion->update([
+                'estatus' => 'Rechazado',
+            ]);
 
-        return redirect(route('admin.alcance-sgsis.index'));
+            foreach ($aprobacion->participantes as $p) {
+                $p->update([
+                    'estatus' => 'Rechazado',
+                ]);
+            }
+            // $responsable = $minuta->responsable->name;
+            $emailresponsable = $alcance->empleado->email;
+            $alcance_nombre = $alcance->nombre;
+            // dd($emailresponsable, $alcance_nombre);
+            Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new NotificacionRechazoAlcanceLider($alcance->id, $alcance_nombre));
+
+            foreach ($aprobacion->participantes as $participante) {
+                Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new NotificacionRechazoAlcance($alcance_nombre));
+            }
+
+            return redirect(route('admin.alcance-sgsis.index'));
 
         } catch (\Throwable $th) {
             return view('errors.alerta_error', compact('th'));

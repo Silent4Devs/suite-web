@@ -187,7 +187,7 @@
 
                     @can('centro_atencion_incidentes_de_seguridad_acceder')
                         <div class="item-ms nav-item" role="presentation" role="presentation">
-                            <a class="nav-link" title="Incidentes de seguridad" data-toggle="tooltip"
+                            <a class="nav-link active" title="Incidentes de seguridad" data-toggle="tooltip"
                                 data-placement="bottom" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes"
                                 role="tab" aria-controls="incidentes" aria-selected="true">
                                 <i class="fas fa-exclamation-triangle"></i>
