@@ -520,6 +520,11 @@ class OrdenCompraController extends Controller
     //     }
     // }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function FirmarUpdate(Request $request, $tipo_firma, $id)
     {
         $request->validate([
