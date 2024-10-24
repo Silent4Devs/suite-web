@@ -78,149 +78,79 @@ class DeskController extends Controller
         $sugerencias_sentiment_1 = 0;
 
         foreach ($incidentes_seguridad as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $seguridad_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $seguridad_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $seguridad_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $seguridad_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $seguridad_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $seguridad_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $seguridad_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $seguridad_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $seguridad_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $seguridad_sentiment_1 += 1; }
             }
         }
 
         foreach ($riesgos_identificados as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $riesgos_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $riesgos_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $riesgos_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $riesgos_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $riesgos_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $riesgos_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $riesgos_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $riesgos_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $riesgos_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $riesgos_sentiment_1 += 1; }
             }
         }
 
         foreach ($quejas as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $quejas_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $quejas_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $quejas_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $quejas_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $quejas_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $quejas_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $quejas_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $quejas_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $quejas_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $quejas_sentiment_1 += 1; }
             }
         }
 
         foreach ($quejasClientes as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $clientes_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $clientes_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $clientes_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $clientes_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $clientes_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $clientes_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $clientes_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $clientes_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $clientes_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $clientes_sentiment_1 += 1; }
             }
         }
 
         foreach ($denuncias as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $denuncias_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $denuncias_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $denuncias_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $denuncias_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $denuncias_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $denuncias_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $denuncias_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $denuncias_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $denuncias_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $denuncias_sentiment_1 += 1; }
             }
         }
 
         foreach ($mejoras as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $mejoras_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $mejoras_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $mejoras_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $mejoras_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $mejoras_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $mejoras_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $mejoras_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $mejoras_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $mejoras_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $mejoras_sentiment_1 += 1; }
             }
         }
 
         foreach ($sugerencias as $item) {
-            $item->sentimiento = SentimentService::analyzeSentiment($item->descripcion);
-
-            $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
-            if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
-                $sugerencias_sentiment_5 += 1;
-            }
-            if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
-                $sugerencias_sentiment_4 += 1;
-            }
-            if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
-                $sugerencias_sentiment_3 += 1;
-            }
-            if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
-                $sugerencias_sentiment_2 += 1;
-            }
-            if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
-                $sugerencias_sentiment_1 += 1;
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4){ $sugerencias_sentiment_5 += 1; }
+                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8){ $sugerencias_sentiment_4 += 1; }
+                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2){ $sugerencias_sentiment_3 += 1; }
+                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6){ $sugerencias_sentiment_2 += 1; }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1){ $sugerencias_sentiment_1 += 1; }
             }
         }
 

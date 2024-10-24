@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Services\SentimentService;
 
 class SeguridadController extends Controller
 {
@@ -64,6 +65,8 @@ class SeguridadController extends Controller
             'procedente' => 'required',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -76,6 +79,7 @@ class SeguridadController extends Controller
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'procedente' => $incidente_procedente,
             'justificacion' => $request->justificacion,
+            'sentimientos' => $sentimientos,
         ]);
 
         if ($incidente_procedente) {

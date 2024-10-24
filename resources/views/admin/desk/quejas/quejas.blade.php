@@ -47,35 +47,35 @@
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
-            <strong>{{$quejas_sentiment_1}}</strong>
+            <strong>{{ $quejas_sentiment_1 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Bajo</span><br>
-            <strong>{{$quejas_sentiment_2}}</strong>
+            <strong>{{ $quejas_sentiment_2 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Medio</span><br>
-            <strong>{{$quejas_sentiment_3}}</strong>
+            <strong>{{ $quejas_sentiment_3 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Alto</span><br>
-            <strong>{{$quejas_sentiment_4}}</strong>
+            <strong>{{ $quejas_sentiment_4 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji">
     </div>
     <div class="card-sentimiento">
         <div>
             <span>Urgente</span><br>
-            <strong>{{$quejas_sentiment_5}}</strong>
+            <strong>{{ $quejas_sentiment_5 }}</strong>
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
@@ -160,219 +160,220 @@
 
 @foreach ($quejas as $item)
     @php
-        $sentimentLevel = $item->sentimiento['analisis_de_sentimientos'][0]['compound'];
+        $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
     @endphp
     <div class="modal fade" id="sentimiento-modal-quejas-{{ $item->id }}" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        div class="modal-dialog" style="max-width: 800px;">
-        <div class="modal-content">
-            <div class="modal-body p-4">
-                <div class="text-end">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <div class="mb-2">
-                            <strong>Ticket:</strong>
-                            <span>{{ $item->folio }}</span>
-                        </div>
-                        <div class="mb-2">
-                            <strong>Palabras clave:</strong>
-                            <span>
-                                @foreach ($item->sentimiento['palabras_clave'][0] as $palabra)
-                                    {{ $palabra }},
-                                @endforeach
-                            </span>
-                        </div>
-                        <div class="mb-2">
-                            <strong>Categoría de la queja:</strong>
-
-                            @if ($item->sentimiento['sentimientos_textblob'][0]['polarity'] >= 0.6)
-                                Polarizada,
-                            @else
-                                Equilibrada,
-                            @endif
-                            @if ($item->sentimiento['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
-                                subjetiva
-                            @else
-                                objetiva
-                            @endif
-                        </div>
+        <div class="modal-dialog" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                    <div class="col-6">
-                        <div class="card card-body">
-                            <div class="d-flex gap-3 align-items-center">
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <strong>Ticket:</strong>
+                                <span>{{ $item->folio }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Palabras clave:</strong>
+                                <span>
+                                    @foreach ($item->sentimientos_array['palabras_clave'][0] as $palabra)
+                                        {{ $palabra }},
+                                    @endforeach
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Categoría de la queja:</strong>
 
-                                @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
-                                    <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
-                                        style="width: 60px;">
+                                @if ($item->sentimientos_array['sentimientos_textblob'][0]['polarity'] >= 0.6)
+                                    Polarizada,
+                                @else
+                                    Equilibrada,
                                 @endif
-                                @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
-                                    <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji"
-                                        style="width: 60px;">
+                                @if ($item->sentimientos_array['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
+                                    subjetiva
+                                @else
+                                    objetiva
                                 @endif
-                                @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
-                                    <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji"
-                                        style="width: 60px;">
-                                @endif
-                                @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
-                                    <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji"
-                                        style="width: 60px;">
-                                @endif
-                                @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
-                                    <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji"
-                                        style="width: 60px;">
-                                @endif
-
-                                <div>
-                                    <strong style="font-size: 16px;">{{ $item->titulo }}</strong><br>
-                                    <span>Prioridad de atención:</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card card-body">
+                                <div class="d-flex gap-3 align-items-center">
 
                                     @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
-                                        <span class="span-sentiment-5">5</span>
+                                        <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
+                                            style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
-                                        <span class="span-sentiment-4">4</span>
+                                        <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji"
+                                            style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
-                                        <span class="span-sentiment-3">3</span>
+                                        <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji"
+                                            style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
-                                        <span class="span-sentiment-2">2</span>
+                                        <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji"
+                                            style="width: 60px;">
                                     @endif
                                     @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
-                                        <span class="span-sentiment-1">1</span>
+                                        <img src="{{ asset('img/centroAtencion/emoji1.png') }}" alt="Emoji"
+                                            style="width: 60px;">
                                     @endif
+
+                                    <div>
+                                        <strong style="font-size: 16px;">{{ $item->titulo }}</strong><br>
+                                        <span>Prioridad de atención:</span>
+
+                                        @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
+                                            <span class="span-sentiment-5">Muy Alta</span>
+                                        @endif
+                                        @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
+                                            <span class="span-sentiment-4">Alta</span>
+                                        @endif
+                                        @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
+                                            <span class="span-sentiment-3">Media</span>
+                                        @endif
+                                        @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
+                                            <span class="span-sentiment-2">Baja</span>
+                                        @endif
+                                        @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
+                                            <span class="span-sentiment-1">Muy Baja</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <hr class="my-4">
-                <div>
-                    <h5>Frases nominales</h5>
-                    <ul class="mt-3">
-                        @foreach ($item->sentimiento['frases_nominales_spacy'][0] as $frase)
-                            <li>
-                                {{ $frase }}
-                            </li>
-                        @endforeach
-                    </ul>
-
-                    <h5 class="mt-5">Resumen</h5>
-                    @if ($item->sentimiento['sentimientos_textblob'][0]['polarity'] >= 0.6)
-                        <p class="mt-3">
-                            El mensaje tiene un tono cargado de crítica, frustración o resentimiento. Esto puede
-                            reflejar un nivel significativo de malestar acumulado y una percepción de que sus
-                            necesidades o preocupaciones han sido ignoradas. La polaridad negativa suele ir
-                            acompañada de emociones intensas como enojo, estrés o decepción, y podría indicar un
-                            riesgo de escalamiento del conflicto si no se gestiona adecuadamente. Las acciones
-                            recomendadas son:
-                        </p>
-                        <ul>
-                            <li>Responder con empatía y profesionalismo.</li>
-                            <li>Abordar la causa del malestar rápidamente</li>
-                            <li>Priorizar la resolución del conflicto para reducir tensiones y restaurar la
-                                confianza.</li>
+                    <hr class="my-4">
+                    <div>
+                        <h5>Frases nominales</h5>
+                        <ul class="mt-3">
+                            @foreach ($item->sentimientos_array['frases_nominales_spacy'][0] as $frase)
+                                <li>
+                                    {{ $frase }}
+                                </li>
+                            @endforeach
                         </ul>
-                    @else
-                        <p class="mt-3">
-                            El mensaje carece de carga emocional evidente, enfocándose únicamente en los hechos.
-                            Esta neutralidad puede interpretarse de dos maneras. Por un lado, puede ser un intento
-                            del empleado de mantener objetividad y profesionalismo. Por otro lado, también podría
-                            ser una señal de desconexión emocional, lo que implica que el colaborador ya no se
-                            siente comprometido con el entorno o no tiene expectativas de que sus quejas generen un
-                            cambio significativo. Las acciones recomendadas son:
-                        </p>
-                        <ul>
-                            <li>Asegurar que el colaborador se sienta escuchado y comprendido</li>
-                            <li>Indagar si la neutralidad refleja una preferencia personal por mantener objetividad
-                                o si hay señales de apatía y desconexión emocional.</li>
-                            <li>Promover espacios de diálogo abierto para restablecer el compromiso del colaborador
-                                con la organización.</li>
-                        </ul>
-                    @endif
 
-                    @if ($item->sentimiento['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
-                        <p class="mt-3">
-                            Refleja las percepciones, emociones y opiniones personales del colaborador. En lugar de
-                            centrarse únicamente en hechos, esta queja expresa cómo la situación es vivida y
-                            experimentada por la persona, lo que puede incluir interpretaciones, suposiciones o
-                            juicios.
-                        </p>
-                    @else
-                        <p class="mt-3">
-                            Se enfoca hechos concretos y verificables sin involucrar juicios personales o emociones.
-                            El colaborador describe la situación tal como ocurrió, con información específica que
-                            puede ser corroborada por datos, procedimientos o testimonios.
-                        </p>
-                    @endif
+                        <h5 class="mt-5">Resumen</h5>
+                        @if ($item->sentimientos_array['sentimientos_textblob'][0]['polarity'] >= 0.6)
+                            <p class="mt-3">
+                                El mensaje tiene un tono cargado de crítica, frustración o resentimiento. Esto puede
+                                reflejar un nivel significativo de malestar acumulado y una percepción de que sus
+                                necesidades o preocupaciones han sido ignoradas. La polaridad negativa suele ir
+                                acompañada de emociones intensas como enojo, estrés o decepción, y podría indicar un
+                                riesgo de escalamiento del conflicto si no se gestiona adecuadamente. Las acciones
+                                recomendadas son:
+                            </p>
+                            <ul>
+                                <li>Responder con empatía y profesionalismo.</li>
+                                <li>Abordar la causa del malestar rápidamente</li>
+                                <li>Priorizar la resolución del conflicto para reducir tensiones y restaurar la
+                                    confianza.</li>
+                            </ul>
+                        @else
+                            <p class="mt-3">
+                                El mensaje carece de carga emocional evidente, enfocándose únicamente en los hechos.
+                                Esta neutralidad puede interpretarse de dos maneras. Por un lado, puede ser un intento
+                                del empleado de mantener objetividad y profesionalismo. Por otro lado, también podría
+                                ser una señal de desconexión emocional, lo que implica que el colaborador ya no se
+                                siente comprometido con el entorno o no tiene expectativas de que sus quejas generen un
+                                cambio significativo. Las acciones recomendadas son:
+                            </p>
+                            <ul>
+                                <li>Asegurar que el colaborador se sienta escuchado y comprendido</li>
+                                <li>Indagar si la neutralidad refleja una preferencia personal por mantener objetividad
+                                    o si hay señales de apatía y desconexión emocional.</li>
+                                <li>Promover espacios de diálogo abierto para restablecer el compromiso del colaborador
+                                    con la organización.</li>
+                            </ul>
+                        @endif
 
-                    <h5 class="mt-5">Interpretación de Sentimientos</h5>
-                    @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
-                        <p class="mt-3">
-                            El colaborador expresa satisfacción a pesar de la situación que describe. Su sugerencia
-                            o queja tiene un tono positivo y constructivo, mostrando confianza en la capacidad de la
-                            organización para mejorar.
-                        </p>
-                        <p class="mt-3">
-                            <strong>Reacción ideal:</strong>
-                            Agradecer y motivar la participación, reforzando su actitud colaborativa.
-                        </p>
-                    @endif
-                    @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
-                        <p class="mt-3">
-                            La queja refleja una incomodidad ligera; el colaborador muestra cierta preocupación o
-                            frustración, pero mantiene un tono respetuoso. No hay señales de enojo profundo, y aún
-                            prevalece la intención de encontrar soluciones.
-                        </p>
-                        <p class="mt-3">
-                            <strong>Reacción ideal:</strong>
-                            Escuchar activamente y ofrecer alternativas rápidas para evitar que el malestar crezca.
-                        </p>
-                    @endif
-                    @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
-                        <p class="mt-3">
-                            La queja muestra frustración leve. El tono es crítico y puede incluir comentarios sobre
-                            la insatisfacción con la situación o gestión del problema. En esta fase, la persona
-                            siente que algo ha salido mal y requiere atención inmediata.
-                        </p>
-                        <p class="mt-3">
-                            <strong>Reacción ideal:</strong>
-                            Responder con empatía y compromiso, proponiendo soluciones concretas rápidamente para
-                            evitar escalamiento.
-                        </p>
-                    @endif
-                    @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
-                        <p class="mt-3">
-                            El colaborador expresa un alto grado de disgusto o enojo, acompañado de comentarios más
-                            duros o críticas dirigidas hacia procedimientos, personas o decisiones. Aunque la
-                            comunicación aún es manejable, el riesgo de que la queja evolucione a conflicto es alto.
-                        </p>
-                        <p class="mt-3">
-                            <strong>Reacción ideal:</strong>
-                            Priorizar la respuesta, ofreciendo disculpas si corresponde, y demostrar disposición
-                            inmediata para corregir la situación.
-                        </p>
-                    @endif
-                    @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
-                        <p class="mt-3">
-                            El tono de la queja es intenso, directo e incluso agresivo. Refleja que el colaborador
-                            ha perdido la paciencia y siente que sus necesidades no fueron atendidas de manera
-                            oportuna o justa. En este punto, el malestar es profundo y la percepción de la
-                            organización está seriamente dañada.
-                        </p>
-                        <p class="mt-3">
-                            <strong>Reacción ideal:</strong>
-                            Responder con calma y empatía, buscar resolver la situación de manera urgente, e
-                            involucrar a líderes si es necesario para reconstruir la confianza.
-                        </p>
-                    @endif
+                        @if ($item->sentimientos_array['sentimientos_textblob'][0]['subjectivity'] >= 0.6)
+                            <p class="mt-3">
+                                Refleja las percepciones, emociones y opiniones personales del colaborador. En lugar de
+                                centrarse únicamente en hechos, esta queja expresa cómo la situación es vivida y
+                                experimentada por la persona, lo que puede incluir interpretaciones, suposiciones o
+                                juicios.
+                            </p>
+                        @else
+                            <p class="mt-3">
+                                Se enfoca hechos concretos y verificables sin involucrar juicios personales o emociones.
+                                El colaborador describe la situación tal como ocurrió, con información específica que
+                                puede ser corroborada por datos, procedimientos o testimonios.
+                            </p>
+                        @endif
 
+                        <h5 class="mt-5">Interpretación de Sentimientos</h5>
+                        @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
+                            <p class="mt-3">
+                                El colaborador expresa satisfacción a pesar de la situación que describe. Su sugerencia
+                                o queja tiene un tono positivo y constructivo, mostrando confianza en la capacidad de la
+                                organización para mejorar.
+                            </p>
+                            <p class="mt-3">
+                                <strong>Reacción ideal:</strong>
+                                Agradecer y motivar la participación, reforzando su actitud colaborativa.
+                            </p>
+                        @endif
+                        @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
+                            <p class="mt-3">
+                                La queja refleja una incomodidad ligera; el colaborador muestra cierta preocupación o
+                                frustración, pero mantiene un tono respetuoso. No hay señales de enojo profundo, y aún
+                                prevalece la intención de encontrar soluciones.
+                            </p>
+                            <p class="mt-3">
+                                <strong>Reacción ideal:</strong>
+                                Escuchar activamente y ofrecer alternativas rápidas para evitar que el malestar crezca.
+                            </p>
+                        @endif
+                        @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
+                            <p class="mt-3">
+                                La queja muestra frustración leve. El tono es crítico y puede incluir comentarios sobre
+                                la insatisfacción con la situación o gestión del problema. En esta fase, la persona
+                                siente que algo ha salido mal y requiere atención inmediata.
+                            </p>
+                            <p class="mt-3">
+                                <strong>Reacción ideal:</strong>
+                                Responder con empatía y compromiso, proponiendo soluciones concretas rápidamente para
+                                evitar escalamiento.
+                            </p>
+                        @endif
+                        @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
+                            <p class="mt-3">
+                                El colaborador expresa un alto grado de disgusto o enojo, acompañado de comentarios más
+                                duros o críticas dirigidas hacia procedimientos, personas o decisiones. Aunque la
+                                comunicación aún es manejable, el riesgo de que la queja evolucione a conflicto es alto.
+                            </p>
+                            <p class="mt-3">
+                                <strong>Reacción ideal:</strong>
+                                Priorizar la respuesta, ofreciendo disculpas si corresponde, y demostrar disposición
+                                inmediata para corregir la situación.
+                            </p>
+                        @endif
+                        @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)
+                            <p class="mt-3">
+                                El tono de la queja es intenso, directo e incluso agresivo. Refleja que el colaborador
+                                ha perdido la paciencia y siente que sus necesidades no fueron atendidas de manera
+                                oportuna o justa. En este punto, el malestar es profundo y la percepción de la
+                                organización está seriamente dañada.
+                            </p>
+                            <p class="mt-3">
+                                <strong>Reacción ideal:</strong>
+                                Responder con calma y empatía, buscar resolver la situación de manera urgente, e
+                                involucrar a líderes si es necesario para reconstruir la confianza.
+                            </p>
+                        @endif
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endforeach
 

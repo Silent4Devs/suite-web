@@ -129,12 +129,6 @@
     </div>
 @endsection
 
-
-
-
-
-
-
 @section('scripts')
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {

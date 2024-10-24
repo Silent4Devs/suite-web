@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Services\SentimentService;
 
 // CENTRO DE ATENCION: MejorasController
 class MejorasController extends Controller
@@ -49,6 +50,8 @@ class MejorasController extends Controller
             'beneficios' => 'required',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $mejoras = Mejoras::create([
             'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
             'descripcion' => $request->descripcion,
@@ -59,6 +62,7 @@ class MejorasController extends Controller
             'tipo' => $request->tipo,
             'otro' => $request->otro,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

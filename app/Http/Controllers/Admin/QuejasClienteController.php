@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Services\SentimentService;
 
 class QuejasClienteController extends Controller
 {
@@ -83,6 +84,8 @@ class QuejasClienteController extends Controller
         //     ]);
         // }
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejasClientes = QuejasCliente::create([
             'cliente_id' => $request->cliente_id,
             'proyectos_id' => $request->proyectos_id,
@@ -105,7 +108,7 @@ class QuejasClienteController extends Controller
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
-
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisQuejasClientes::create([
