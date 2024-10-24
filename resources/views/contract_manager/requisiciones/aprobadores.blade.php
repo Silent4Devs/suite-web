@@ -29,22 +29,22 @@
         <!-- Botón 1 -->
         <button type="button"
             class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn2">Filtrar Requisiciones pendientes solicitantes</button>
+            id="filtrarBtn2">Filtrar Requisiciones Pendientes Solicitantes</button>
 
         <!-- Botón 2 -->
         <button type="button"
             class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn1">Filtrar Requisiciones pendientes jefes</button>
+            id="filtrarBtn1">Filtrar Requisiciones Pendientes Jefes</button>
 
         <!-- Botón 3 -->
         <button type="button"
             class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn">Filtrar Requisiciones pendientes finanzas</button>
+            id="filtrarBtn">Filtrar Requisiciones Pendientes Finanzas</button>
 
         <!-- Botón 4 -->
         <button type="button"
             class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn3">Filtrar Requisiciones pendientes compradores</button>
+            id="filtrarBtn3">Filtrar Requisiciones Pendientes Compradores</button>
     </div>
 
     <div class="mt-5 card">
