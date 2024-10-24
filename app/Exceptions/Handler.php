@@ -4,8 +4,6 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,7 +43,11 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        // Manejo de errores de validación con respuesta JSON
+        // if ($exception instanceof MethodNotAllowedHttpException) {
+        //     // Puedes devolver una vista personalizada o un mensaje de error
+        //     return response()->json(['error' => 'Método HTTP no permitido para esta ruta'], 405);
+        // }
+
         if ($e instanceof ValidationException) {
             if ($request->expectsJson()) {
                 $errors = $e->errors();
@@ -57,20 +59,6 @@ class Handler extends ExceptionHandler
             }
         }
 
-        // Determinamos el código de estado según el tipo de error
-        $statusCode = 500;  // Código por defecto para errores internos
-
-        if ($e instanceof NotFoundHttpException) {
-            $statusCode = 404;
-        } elseif ($e instanceof MethodNotAllowedHttpException) {
-            $statusCode = 405;
-        }
-
-        // Renderizamos la vista alerta_error.blade.php con el código y el mensaje del error
-        return response()->view('errors.alerta_error', [
-            'code' => $statusCode,
-            'message' => $e->getMessage(),  // Si quieres un mensaje personalizado, puedes modificar esto
-        ], $statusCode);
+        return parent::render($request, $e);
     }
-
 }
