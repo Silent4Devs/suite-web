@@ -223,10 +223,6 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if (Timesheet::where('fecha_dia', $request->fecha_dia)) {
-            return;
-        }
-
         DB::beginTransaction();
 
         $organizacion_semana = Organizacion::getFirst();
