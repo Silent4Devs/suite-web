@@ -34,6 +34,10 @@ class OrdenCompraController extends Controller
 
     public $modelo = 'OrdenCompra';
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -184,21 +188,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad'.$i],
-                'producto_id' => $data['producto'.$i],
-                'centro_costo_id' => $data['centro_costo'.$i],
-                'espesificaciones' => $data['especificaciones'.$i],
-                'contrato_id' => $data['contrato'.$i],
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas'.$i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
-                'sub_total' => $data['sub_total'.$i],
-                'iva' => $data['iva'.$i],
-                'iva_retenido' => $data['iva_retenido'.$i],
-                'descuento' => $data['descuento'.$i],
-                'otro_impuesto' => $data['otro_impuesto'.$i],
-                'isr_retenido' => $data['isr_retenido'.$i],
-                'total' => $data['total'.$i],
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
             ]);
         }
 
@@ -296,27 +300,25 @@ class OrdenCompraController extends Controller
                         $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
                         foreach ($cN as $key => $c) {
-                            $copiasNivel[] = $this->removeUnicodeCharacters($c->empleado->email);
+                            $copiasNivel[] = removeUnicodeCharacters($c->empleado->email);
                         }
 
                         break;
                     } else {
                         // Si el responsable está ausente, lo añadimos a la lista de ausentes
-                        $responsablesAusentes[] = $this->removeUnicodeCharacters($responsableNivel->empleado->email);
+                        $responsablesAusentes[] = removeUnicodeCharacters($responsableNivel->empleado->email);
                     }
                 }
             }
 
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
-            try{
+            try {
 
-            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-
+                Mail::to(removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
             } catch (\Throwable $th) {
                 return view('errors.alerta_error', compact('th'));
             }
-
         }
         if ($tipo_firma == 'firma_comprador_orden') {
             $fecha = date('d-m-Y');
@@ -326,7 +328,7 @@ class OrdenCompraController extends Controller
             // correo de finanzas
             $userEmail = $requisicion->email;
             $organizacion = Organizacion::getFirst();
-            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to(removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
 
         if ($tipo_firma == 'firma_finanzas_orden') {
@@ -359,18 +361,18 @@ class OrdenCompraController extends Controller
 
             $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
             foreach ($listaInformativa->participantes as $key => $informado) {
-                $correos_informados[] = $this->removeUnicodeCharacters($informado->empleado->email);
+                $correos_informados[] = removeUnicodeCharacters($informado->empleado->email);
             }
 
             foreach ($listaInformativa->usuarios as $key => $informado) {
-                $correos_informados[] = $this->removeUnicodeCharacters($informado->usuario->email);
+                $correos_informados[] = removeUnicodeCharacters($informado->usuario->email);
             }
 
             $organizacionInformado = Organizacion::getFirst();
             Mail::to($correos_informados)->queue(new OrdenCompraAprobada($requisicion, $organizacionInformado, $orden_correo));
         }
 
-        Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to(removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
         return redirect(route('contract_manager.orden-compra'));
     }
@@ -520,13 +522,13 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador directo: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                 $tipo_firma = 'firma_solicitante_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$solicitante->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $solicitante->name . '</strong>');
             }
         } elseif ($requisicion->firma_finanzas_orden === null) {
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
@@ -538,7 +540,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                 $tipo_firma = 'firma_comprador_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>');
             }
         } else {
             $tipo_firma = 'firma_final_aprobadores';
