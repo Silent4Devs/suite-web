@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Denuncias;
 use App\Models\IncidentesSeguridad;
-use App\Models\RiesgoIdentificado;
+use App\Models\Mejoras;
 use App\Models\Quejas;
 use App\Models\QuejasCliente;
-use App\Models\Denuncias;
-use App\Models\Mejoras;
+use App\Models\RiesgoIdentificado;
 use App\Models\Sugerencias;
 use App\Services\SentimentService;
+use Illuminate\Database\Seeder;
 
 class SentimentSeeder extends Seeder
 {

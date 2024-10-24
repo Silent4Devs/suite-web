@@ -16,13 +16,13 @@ use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Sugerencias;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Services\SentimentService;
 
 class SugerenciasController extends Controller
 {

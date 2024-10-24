@@ -15,12 +15,12 @@ use App\Models\FirmaModule;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Services\SentimentService;
 
 class DenunciasController extends Controller
 {

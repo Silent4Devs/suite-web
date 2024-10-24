@@ -47,13 +47,13 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\User;
 use App\Models\VersionesIso;
+use App\Services\SentimentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use App\Services\SentimentService;
 use VXM\Async\AsyncFacade as Async;
 
 class InicioUsuarioController extends Controller
@@ -841,7 +841,6 @@ class InicioUsuarioController extends Controller
         ]);
 
         $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
-
 
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,

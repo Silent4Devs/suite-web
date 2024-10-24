@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\EntendimientoOrganizacionEvent;
 use App\Models\EntendimientoOrganizacion;
 use Illuminate\Support\Facades\Cache;
 

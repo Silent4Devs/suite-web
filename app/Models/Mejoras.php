@@ -101,26 +101,26 @@ class Mejoras extends Model implements Auditable
 
         $array_null =
         [
-            "analisis_de_sentimientos" => [
+            'analisis_de_sentimientos' => [
                 [
-                    "neg" => 0.0,
-                    "neu" => 0.0,
-                    "pos" => 0.0,
-                    "compound" => 0.0
-                ]
+                    'neg' => 0.0,
+                    'neu' => 0.0,
+                    'pos' => 0.0,
+                    'compound' => 0.0,
+                ],
             ],
-            "sentimientos_textblob" => [
+            'sentimientos_textblob' => [
                 [
-                    "polarity" => 0.0,
-                    "subjectivity" => 0.0
-                ]
+                    'polarity' => 0.0,
+                    'subjectivity' => 0.0,
+                ],
             ],
-            "frases_nominales_spacy" => [
-                []
+            'frases_nominales_spacy' => [
+                [],
             ],
-            "palabras_clave" => [
-                []
-            ]
+            'palabras_clave' => [
+                [],
+            ],
         ];
 
         return json_decode($sentimientos, true) ?? $array_null;
