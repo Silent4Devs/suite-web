@@ -19,7 +19,7 @@
     @include('partials.flashMessages')
     <div class="">
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
             @can('centro_atencion_incidentes_de_seguridad_acceder')
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes" role="tab"
@@ -83,7 +83,7 @@
                     </a>
                 </li>
             @endcan
-        </ul>
+        </ul> --}}
 
         <div class="tab-content" id="myTabContent">
             @can('centro_atencion_incidentes_de_seguridad_acceder')

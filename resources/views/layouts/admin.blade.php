@@ -104,7 +104,7 @@
 
     @include('partials.header')
 
-    {{-- @include('partials.menu-slider') --}}
+    @include('partials.menu-slider')
 
     @include('partials.custom-design')
 
