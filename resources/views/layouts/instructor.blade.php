@@ -73,21 +73,21 @@
                 <div class="card-body">
                     @livewire('escuela.instructor.publicar-course', ['course' => $course])
 
-                    {!! Form::model($course, [
-                        'route' => ['admin.courses.update', $course],
-                        'method' => 'put',
-                        'files' => true,
-                        'enctype' => 'multipart/form-data',
-                    ]) !!}
-                    @include('admin.escuela.instructor.courses.partials.form')
-                    <div class="flex justify-end">
-                        {!! Form::submit('Actualizar información', [
-                            'class' => 'inline-flex items-center px-4 py-2 m-4 text-xs font-semibold
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25',
-                        ]) !!}
-                    </div>
-                    {!! Form::close() !!}
+                    <form action="{{ route('admin.courses.update', $course) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        @include('admin.escuela.instructor.courses.partials.form')
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold
+                                    tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700
+                                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">
+                                Actualizar información
+                            </button>
+                        </div>
+                    </form>
+
                     @section('scripts')
                         <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
                         <script>

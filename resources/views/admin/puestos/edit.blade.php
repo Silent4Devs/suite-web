@@ -14,17 +14,13 @@
                             @if (!$firmado)
                                 <div class="col-12">
                                     <label for="">Activar flujo de aprobación </label>
-                                    {!! Form::checkbox(
-                                        'firma_check',
-                                        1,
-                                        isset($aprobacionFirmaPuestoHisotricoLast->firma_check) ? $aprobacionFirmaPuestoHisotricoLast->firma_check : false,
-                                        [
-                                            'id' => 'aprobadores_firma',
-                                            'style' => 'width: 20px; height: 20px; vertical-align: middle;',
-                                            'data-target' => '#modalConfirmAprob',
-                                            'data-toggle' => 'modal',
-                                        ],
-                                    ) !!}
+                                    <input type="checkbox" name="firma_check" id="aprobadores_firma"
+                                    value="1"
+                                    {{ isset($aprobacionFirmaPuestoHisotricoLast->firma_check) && $aprobacionFirmaPuestoHisotricoLast->firma_check ? 'checked' : '' }}
+                                    style="width: 20px; height: 20px; vertical-align: middle;"
+                                    data-target="#modalConfirmAprob"
+                                    data-toggle="modal">
+
                                 </div>
                             @endif
                             @if (!$firmado)

@@ -96,6 +96,7 @@ class SolicitudDayOffController extends Controller
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
+
     public function create()
     {
         abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
