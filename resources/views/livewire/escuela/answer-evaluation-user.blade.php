@@ -82,6 +82,10 @@
                     </div>
                     @if ($showRetry)
                         <div class="items-center justify-center text-center mt-2">
+                            <p>Tienes un total de <strong>{{ $userEvaluationId->number_of_attempts }}</strong>
+                                intentos para alcanzar el 100% en la evaluación. Independientemente de si apruebas o
+                                repruebas, si no logras el 100% después de utilizar todos tus intentos, deberás esperar
+                                8 horas antes de poder intentarlo de nuevo.</p>
                             <button type="button" wire:click="retryEvaluation"
                                 class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
                                 Volver a intentar Evaluación
