@@ -5,8 +5,8 @@
             @switch(" ".$last_unread_notification->data['type']) {{-- Se concatena un espacio porque el autoformateado lo agrega en el case --}}
                 @case(' create')
                     <div class="d-flex align-items-center justify-content-start">
-                        @if (!empty($last_unread_notification->data['avatar_ruta']))
-                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                        @if (!empty(Illuminate\Support\Facades\Auth::user()->empleado->avatar_ruta))
+                            <img src="{{ asset(Auth::user()->empleado->avatar_ruta) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
                             {{ $last_unread_notification->data['name'] }}:
                         @else

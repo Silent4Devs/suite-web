@@ -35,6 +35,8 @@ class AlcanceSgsiController extends Controller
 
     public function index(Request $request)
     {
+
+        try {
         abort_if(Gate::denies('determinacion_alcance_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $alcanceSgsi = AlcanceSgsi::get(); // Puedes ajustar esto según tu lógica
 
@@ -129,20 +131,32 @@ class AlcanceSgsiController extends Controller
         }
 
         return view('admin.alcanceSgsis.index', compact('alcanceSgsi', 'listavacia', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'direccion', 'rfc'));
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function create()
     {
+        try{
+
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $empleados = Empleado::with('area')->get();
         $normas = Norma::get();
 
         return view('admin.alcanceSgsis.create', compact('empleados', 'normas'));
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
@@ -164,6 +178,10 @@ class AlcanceSgsiController extends Controller
         $this->solicitudAprobacion($alcanceSgsi->id);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Guardado con éxito');
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function edit(AlcanceSgsi $alcanceSgsi)
@@ -179,12 +197,14 @@ class AlcanceSgsiController extends Controller
 
             return view('admin.alcanceSgsis.edit', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
         } catch (\Throwable $th) {
-            abort(404);
+            return view('errors.alerta_error', compact('th'));
         }
     }
 
     public function aprove(AlcanceSgsi $alcanceSgsi)
     {
+        try{
+
         abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->load('normas');
@@ -194,10 +214,16 @@ class AlcanceSgsiController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.alcanceSgsis.aprove', compact('alcanceSgsi', 'empleados', 'normas', 'normas_seleccionadas'));
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function update(Request $request, AlcanceSgsi $alcanceSgsi)
     {
+        try{
+
         abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -217,6 +243,10 @@ class AlcanceSgsiController extends Controller
         $this->solicitudAprobacion($alcanceSgsi->id);
 
         return redirect()->route('admin.alcance-sgsis.index')->with('success', 'Editado con éxito');
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function show($id)
@@ -239,30 +269,39 @@ class AlcanceSgsiController extends Controller
             // Devolver la vista con los datos
             return view('admin.alcanceSgsis.show', compact('alcanceSgsi', 'normas'));
         } catch (\Throwable $th) {
-            // Capturar cualquier excepción y devolver un error 404
-            abort(404);
+            return view('errors.alerta_error', compact('th'));
         }
     }
 
     public function destroy(AlcanceSgsi $alcanceSgsi)
     {
+        try{
         abort_if(Gate::denies('determinacion_alcance_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $alcanceSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function massDestroy(MassDestroyAlcanceSgsiRequest $request)
     {
+    try{
         AlcanceSgsi::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
+    } catch (\Throwable $th) {
+        return view('errors.alerta_error', compact('th'));
+    }
     }
 
     public function pdf()
     {
-
+    try{
         $alcances = AlcanceSgsi::get();
         $organizacions = Organizacion::getFirst();
         $logo_actual = $organizacions->logo;
@@ -271,6 +310,10 @@ class AlcanceSgsiController extends Controller
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('alcances.pdf');
+
+    } catch (\Throwable $th) {
+        return view('errors.alerta_error', compact('th'));
+    }
     }
 
     public function pdfShow($id)
@@ -289,15 +332,16 @@ class AlcanceSgsiController extends Controller
 
             return $pdf->download('alcances.pdf');
         } catch (\Throwable $th) {
-            abort(404);
+            return view('errors.alerta_error', compact('th'));
         }
     }
 
     public function solicitudAprobacion($id_alcance)
     {
-        // $modelo = 'AlcanceSgsi';
+        try{
+
         $alcance = AlcanceSgsi::find($id_alcance);
-        // dd($alcance);
+
         $lista = ListaDistribucion::with('participantes')->where('modelo', '=', $this->modelo)->first();
 
         event(new AlcancesEvent($alcance, 'solicitudAprobacion', 'alcance_sgsis', 'Alcance'));
@@ -311,7 +355,6 @@ class AlcanceSgsiController extends Controller
                 'estatus' => 'Pendiente',
             ]
         );
-        // dd($lista, $id_alcance, $this->modelo, $proceso);
 
         foreach ($lista->participantes as $participante) {
             $participantes = ControlListaDistribucion::updateOrCreate(
@@ -335,7 +378,6 @@ class AlcanceSgsiController extends Controller
         }
 
         //Aprobadores normales
-        // for ($i = 1; $i <= $no_niveles; $i++) {
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 1) {
                 // for ($j = 1; $j <= 5; $j++) {
@@ -350,17 +392,19 @@ class AlcanceSgsiController extends Controller
             // }
         }
 
-        // $control_participantes = ControlListaDistribucion::where('proceso_id', '=', $proceso->id)->get();
-        // dd($proceso, $control_participantes);
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
+
     }
 
     public function revision($id)
     {
+        try{
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd('Llega', $alcanceSgsi);
 
         $alcanceSgsi = AlcanceSgsi::find($id);
-        // dd($alcanceSgsi);
+
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
 
         $alcanceSgsi->load('team');
@@ -418,10 +462,15 @@ class AlcanceSgsiController extends Controller
 
             return view('admin.alcanceSgsis.revision', compact('alcanceSgsi', 'normas', 'acceso_restringido'));
         }
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function aprobado($id, Request $request)
     {
+        try{
 
         $aprobador = User::getCurrentUser()->empleado->id;
 
@@ -490,20 +539,32 @@ class AlcanceSgsiController extends Controller
         }
 
         return redirect(route('admin.alcance-sgsis.index'));
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function correosAprobacion($proceso, $alcance)
     {
+        try{
+
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
+
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
             Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionAprobacionAlcance($alcance->nombre));
-            // dd('primer usuario', $part->participante);
+        }
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
         }
     }
 
     public function rechazado($id, Request $request)
     {
+
+        try {
 
         $alcance = AlcanceSgsi::with('empleado')->find($id);
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
@@ -540,6 +601,10 @@ class AlcanceSgsiController extends Controller
         }
 
         return redirect(route('admin.alcance-sgsis.index'));
+
+        } catch (\Throwable $th) {
+            return view('errors.alerta_error', compact('th'));
+        }
     }
 
     public function confirmacionAprobacion($proceso, $alcance)
@@ -577,7 +642,7 @@ class AlcanceSgsiController extends Controller
 
             return view('admin.alcanceSgsis.visualizacion', compact('alcances', 'organizacions'));
         } catch (\Throwable $th) {
-            abort(404);
+            return view('errors.alerta_error', compact('th'));
         }
     }
 

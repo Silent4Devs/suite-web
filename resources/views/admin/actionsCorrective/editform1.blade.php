@@ -20,15 +20,15 @@
             </div>
         </div>
     </div>
-    <div class=" form-group col-lg-2 col-md-2 col-sm-12 anima-focus">
+    <div class="form-group col-lg-2 col-md-2 col-sm-12 anima-focus">
         <div class="form-control mt-2" readonly>{{ $accionCorrectiva->folio }}</div>
-        {!! Form::label('tema', 'Folio*', ['class' => 'asterisco']) !!}
+        <label for="folio" class="asterisco">Folio*</label>
     </div>
 
     <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
         <input class="form-control mt-2 {{ $errors->has('tema') ? 'is-invalid' : '' }}" placeholder="" name="tema"
             id="tema" maxlength="255" value="{{ old('tema', $accionCorrectiva->tema) }}" required>
-        {!! Form::label('tema', 'Título corto de la acción correctiva*', ['class' => 'asterisco']) !!}
+        <label for="tema" class="asterisco">Título corto de la acción correctiva*</label>
         @if ($errors->has('tema'))
             <div class="invalid-feedback">
                 {{ $errors->first('tema') }}
@@ -37,57 +37,68 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.tema_helper') }}</span>
     </div>
 
-
-
     @if ($accionCorrectiva->es_externo)
         <div class="form-group col-4 anima-focus">
             <select name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }}
-                    value="Sin atender">
+                <option value="Sin atender"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }}>
                     Sin atender
                 </option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}
-                    value="En curso">
-                    En curso</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}
-                    value="En espera">En espera</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }} value="Cerrado">
-                    Cerrado</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
-                    value="No procedente">No procedente</option>
+                <option value="En curso"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}>
+                    En curso
+                </option>
+                <option value="En espera"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}>
+                    En espera
+                </option>
+                <option value="Cerrado" {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }}>
+                    Cerrado
+                </option>
+                <option value="No procedente"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}>
+                    No procedente
+                </option>
             </select>
-            {!! Form::label('estatus', 'Estatus*', ['class' => 'asterisco']) !!}
+            <label for="estatus" class="asterisco">Estatus*</label>
         </div>
     @endif
+
 
     @if (!$accionCorrectiva->es_externo)
         <div class="form-group col-4 anima-focus">
             <select required name="estatus" class="form-control select2" id="opciones" onchange='cambioOpciones();'>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }}
-                    value="Sin atender">
+                <option value="Sin atender"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'Sin atender' ? 'selected' : '' }}>
                     Sin atender
                 </option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}
-                    value="En curso">
-                    En curso</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}
-                    value="En espera">En espera</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }}
-                    value="Cerrado">
-                    Cerrado</option>
-                <option {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}
-                    value="No procedente">Cancelado</option>
+                <option value="En curso"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'En curso' ? 'selected' : '' }}>
+                    En curso
+                </option>
+                <option value="En espera"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'En espera' ? 'selected' : '' }}>
+                    En espera
+                </option>
+                <option value="Cerrado"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'Cerrado' ? 'selected' : '' }}>
+                    Cerrado
+                </option>
+                <option value="No procedente"
+                    {{ old('estatus', $accionCorrectiva->estatus) == 'No procedente' ? 'selected' : '' }}>
+                    No procedente
+                </option>
             </select>
-            {!! Form::label('estatus', 'Estatus*', ['class' => 'asterisco']) !!}
+            <label for="estatus" class="asterisco">Estatus*</label>
         </div>
     @endif
 
-    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus ">
+    <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <input placeholder="" required
             class="form-control date {{ $errors->has('fecharegistro') ? 'is-invalid' : '' }}" type="datetime-local"
             min="1945-01-01T00:00" disabled name="fecharegistro" id="fecharegistro"
             value="{{ old('fecharegistro', \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('Y-m-d\TH:i')) }}">
-        {!! Form::label('fecharegistro', 'Fecha y hora de registro de la AC*', ['class' => 'asterisco']) !!}
+        <label for="fecharegistro" class="asterisco">Fecha y hora de registro de la AC*</label>
         @if ($errors->has('fecharegistro'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecharegistro') }}
@@ -95,12 +106,11 @@
         @endif
     </div>
 
-
     <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
         <input placeholder="" class="form-control date {{ $errors->has('fecha_verificacion') ? 'is-invalid' : '' }}"
             type="datetime-local" name="fecha_verificacion" id="fecha_verificacion"
             value="{{ old('fecha_verificacion', \Carbon\Carbon::parse($accionCorrectiva->fecha_verificacion)->format('Y-m-d\TH:i')) }}">
-        {!! Form::label('fecha_verificacion', 'Fecha y hora de registro de la VE*', ['class' => 'asterisco']) !!}
+        <label for="fecha_verificacion" class="asterisco">Fecha y hora de registro de la VE*</label>
         @if ($errors->has('fecha_verificacion'))
             <div class="invalid-feedback">
                 {{ $errors->first('fecha_verificacion') }}
@@ -111,10 +121,8 @@
     <div class="form-group col-4 anima-focus">
         <input class="form-control" name="fecha_cierre" readonly value="{{ $accionCorrectiva->fecha_cierre }}"
             id="solucion" type="datetime">
-        {!! Form::label('fecha_cierre', 'Fecha y hora de cierre del ticket*', ['class' => 'asterisco']) !!}
+        <label for="fecha_cierre" class="asterisco">Fecha y hora de cierre del ticket*</label>
     </div>
-
-
 
     @if (!$accionCorrectiva->es_externo)
 
@@ -125,16 +133,15 @@
         <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
             <select class="form-control {{ $errors->has('id_reporto') ? 'is-invalid' : '' }}" name="id_reporto"
                 id="id_reporto" required>
-                @foreach ($empleados as $id => $empleado)
+                @foreach ($empleados as $empleado)
                     <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
                         data-area="{{ $empleado->area->area }}"
                         {{ old('id_reporto', $accionCorrectiva->id_reporto) == $empleado->id ? 'selected' : '' }}>
-
                         {{ $empleado->name }}
                     </option>
                 @endforeach
             </select>
-            {!! Form::label('id_reporto', 'Nombre*', ['class' => 'asterisco']) !!}
+            <label for="id_reporto" class="asterisco">Nombre*</label>
             @if ($errors->has('id_reporto'))
                 <div class="invalid-feedback">
                     {{ $errors->first('id_reporto') }}
@@ -144,13 +151,12 @@
 
         <div class="form-group col-md-4 anima-focus">
             <div class="form-control" id="reporto_puesto"></div>
-            {!! Form::label('id_reporto_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
+            <label for="id_reporto_puesto" class="asterisco">Puesto*</label>
         </div>
-
 
         <div class="form-group col-sm-12 col-md-4 col-lg-4 anima-focus">
             <div class="form-control" id="reporto_area"></div>
-            {!! Form::label('reporto_area', 'Área*', ['class' => 'asterisco']) !!}
+            <label for="reporto_area" class="asterisco">Área*</label>
         </div>
 
     @endif

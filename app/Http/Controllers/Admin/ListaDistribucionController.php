@@ -151,7 +151,7 @@ class ListaDistribucionController extends Controller
 
     public function syncLideres($lista)
     {
-        // Obtener los compradores actuales del modelo 'Comprador'
+        // Obtener los supervisores actuales del modelo 'Empleado'
         $supervisores = Empleado::listaSupervisores();
         $count_supervisores = $supervisores->count();
 
@@ -162,43 +162,39 @@ class ListaDistribucionController extends Controller
         $supervisorIds = $supervisores->toArray();
         $participanteIds = $participantes->pluck('empleado_id')->toArray();
 
-        // Crear registros en participantes si existen en compradores pero no en participantes
+        // Crear registros en participantes si existen en supervisores pero no en participantes
         $idsParaAgregar = array_diff($supervisorIds, $participanteIds);
 
-        // Obtener el máximo nivel actual en participantes con numero_orden = 1
-        $nivelMaximo = $participantes->max('nivel');
-        // Comenzamos a agregar desde el nivel máximo + 1
-        $nivelActual = $nivelMaximo + 1;
-
-        // Agregar nuevos participantes
+        // Agregar nuevos participantes con un nivel temporal (0) para no interferir con los existentes
         foreach ($idsParaAgregar as $id) {
             ParticipantesListaDistribucion::create([
                 'modulo_id' => $lista->id,
-                'nivel' => $nivelActual,
-                'numero_orden' => 1, // Puedes ajustar este valor según tu lógica de negocio
+                'nivel' => 0, // Nivel temporal
+                'numero_orden' => 1,
                 'empleado_id' => $id,
             ]);
-            $nivelActual++;
         }
 
-        // Eliminar registros en participantes si existen en participantes pero no en compradores
-        // También eliminar los participantes que pertenecen al nivel de los que se eliminan
+        // Eliminar registros en participantes si existen en participantes pero no en supervisores
         $idsParaEliminar = array_diff($participanteIds, $supervisorIds);
+        ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
+            ->where('modulo_id', $lista->id)
+            ->delete();
 
-        // Obtenemos los niveles de los participantes a eliminar
-        $nivelesParaEliminar = ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
-            ->pluck('nivel')
-            ->unique();
+        // Ahora reasignamos los niveles desde 1 en adelante para asegurar la secuencia
+        $participantesOrdenados = ParticipantesListaDistribucion::where('modulo_id', $lista->id)
+            ->where('numero_orden', 1)
+            ->orderBy('id')
+            ->get();
 
-        // Eliminar los participantes correspondientes a esos niveles
-        foreach ($nivelesParaEliminar as $nivel) {
-            ParticipantesListaDistribucion::where('modulo_id', $lista->id)
-                ->where('nivel', $nivel)
-                ->delete();
+        $nuevoNivel = 1;
+        foreach ($participantesOrdenados as $participante) {
+            $participante->update(['nivel' => $nuevoNivel]);
+            $nuevoNivel++;
         }
 
         // Actualizar el valor de 'niveles' en la lista con el nuevo nivel máximo
-        $lista->update(['niveles' => $count_supervisores]);
+        $lista->update(['niveles' => $nuevoNivel - 1]);
     }
 
     public function syncCompradores($lista)
@@ -217,40 +213,36 @@ class ListaDistribucionController extends Controller
         // Crear registros en participantes si existen en compradores pero no en participantes
         $idsParaAgregar = array_diff($compradorIds, $participanteIds);
 
-        // Obtener el máximo nivel actual en participantes con numero_orden = 1
-        $nivelMaximo = $participantes->max('nivel');
-        // Comenzamos a agregar desde el nivel máximo + 1
-        $nivelActual = $nivelMaximo + 1;
-
-        // Agregar nuevos participantes
+        // Agregar nuevos participantes con un nivel temporal (0) para no interferir con los existentes
         foreach ($idsParaAgregar as $id) {
             ParticipantesListaDistribucion::create([
                 'modulo_id' => $lista->id,
-                'nivel' => $nivelActual,
-                'numero_orden' => 1, // Puedes ajustar este valor según tu lógica de negocio
+                'nivel' => 0, // Nivel temporal
+                'numero_orden' => 1,
                 'empleado_id' => $id,
             ]);
-            $nivelActual++;
         }
 
         // Eliminar registros en participantes si existen en participantes pero no en compradores
-        // También eliminar los participantes que pertenecen al nivel de los que se eliminan
         $idsParaEliminar = array_diff($participanteIds, $compradorIds);
+        ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
+            ->where('modulo_id', $lista->id)
+            ->delete();
 
-        // Obtenemos los niveles de los participantes a eliminar
-        $nivelesParaEliminar = ParticipantesListaDistribucion::whereIn('empleado_id', $idsParaEliminar)
-            ->pluck('nivel')
-            ->unique();
+        // Ahora reasignamos los niveles desde 1 en adelante para asegurar la secuencia
+        $participantesOrdenados = ParticipantesListaDistribucion::where('modulo_id', $lista->id)
+            ->where('numero_orden', 1)
+            ->orderBy('id')
+            ->get();
 
-        // Eliminar los participantes correspondientes a esos niveles
-        foreach ($nivelesParaEliminar as $nivel) {
-            ParticipantesListaDistribucion::where('modulo_id', $lista->id)
-                ->where('nivel', $nivel)
-                ->delete();
+        $nuevoNivel = 1;
+        foreach ($participantesOrdenados as $participante) {
+            $participante->update(['nivel' => $nuevoNivel]);
+            $nuevoNivel++;
         }
 
         // Actualizar el valor de 'niveles' en la lista con el nuevo nivel máximo
-        $lista->update(['niveles' => $count_compradores]);
+        $lista->update(['niveles' => $nuevoNivel - 1]);
     }
 
     /**

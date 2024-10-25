@@ -34,7 +34,7 @@ class Kernel extends HttpKernel
             //laravel-page-speed
             // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
             // //\RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            //\RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Jobs\MatrizRequisitosJob;
 use App\Models\MatrizRequisitoLegale;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -27,6 +28,8 @@ class MatrizRequisitosEvent implements ShouldBroadcast
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
+
+        MatrizRequisitosJob::dispatch($this->matriz, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**

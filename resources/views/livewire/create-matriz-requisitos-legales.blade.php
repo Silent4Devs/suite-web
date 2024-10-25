@@ -136,35 +136,22 @@
                     </div>
                     <div class="form-group col-12 anima-focus">
                         <input required
-                            class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
+                            class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form"
                             type="text" name="nombrerequisito" id="nombrerequisito"
                             value="{{ old('nombrerequisito', '') }}" placeholder="" wire:model='alcance.nombrerequisito'
                             maxlength="255">
-                        {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', [
-                            'class' => 'asterisco',
-                        ]) !!}
+                        <label for="nombrerequisito" class="asterisco">Nombre del requisito legal, regulatorio, contractual o estatutario*</label>
                     </div>
-                    <br>
-                    <br>
-                    <br>
+                    <br><br><br>
                     <div class="form-group col-sm-6 anima-focus">
                         <input type="text"
                             class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                             name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
                             aria-describedby="textExample1" placeholder="" wire:model='alcance.formacumple' required
                             maxlength="255" />
-                        {!! Form::label(
-                            'formacumple',
-                            'Cláusula,
-                                                                                                                                                                                                                                                                                                                                                        sección o
-                                                                                                                                                                                                                                                                                                                                                        apartado
-                                                                                                                                                                                                                                                                                                                                                        aplicable*',
-                            ['class' => 'asterisco'],
-                        ) !!}
+                        <label for="formacumple" class="asterisco">Cláusula, sección o apartado aplicable*</label>
                     </div>
-                    <br>
-                    <br>
-                    <br>
+                    <br><br><br>
                     <div class="col-12">
                         <div class="row">
                             <div class="form-group col-sm-6 anima-focus">
@@ -172,29 +159,24 @@
                                     class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }} form"
                                     type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                     value="{{ old('fechaexpedicion') }}" wire:model='alcance.fechaexpedicion' required>
-                                {!! Form::label('fechaexpedicion', 'Fecha de expedición*', ['class' => 'asterisco']) !!}
+                                <label for="fechaexpedicion" class="asterisco">Fecha de expedición*</label>
                             </div>
-                            <br>
-                            <br>
-                            <br>
+                            <br><br><br>
                             <div class="form-group col-sm-6 anima-focus">
                                 <input
                                     class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
                                     type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                     value="{{ old('fechavigor') }}" wire:model='alcance.fechavigor' required>
-                                {!! Form::label('fechavigor', 'Fecha de entrada en vigor*', ['class' => 'asterisco']) !!}
+                                <label for="fechavigor" class="asterisco">Fecha de entrada en vigor*</label>
                             </div>
                         </div>
-
                     </div>
-                    <br>
-                    <br>
-                    <br>
+                    <br><br><br>
                     <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                         <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
                             style="height: 225px !important; width: 100%;" name="requisitoacumplir" placeholder="" id="requisitoacumplir"
                             wire:model='alcance.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
-                        {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
+                        <label for="requisitoacumplir" class="asterisco">Descripción del requisito a cumplir*</label>
                     </div>
 
                     @if ($bandera)
@@ -233,36 +215,23 @@
                         </div>
                         <div class="form-group col-12 anima-focus">
                             <input required
-                                class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form "
+                                class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }} form"
                                 type="text" name="nombrerequisito.{{ $key }}"
                                 id="nombrerequisito.{{ $key }}" value="{{ old('nombrerequisito', '') }}"
                                 placeholder=" " wire:model='alcance_s1.{{ $key }}.nombrerequisito'
                                 maxlength="255">
-                            {!! Form::label('nombrerequisito', 'Nombre del requisito legal, regulatorio, contractual o estatutario*', [
-                                'class' => 'asterisco',
-                            ]) !!}
+                            <label for="nombrerequisito.{{ $key }}" class="asterisco">Nombre del requisito legal, regulatorio, contractual o estatutario*</label>
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                        <br><br><br>
                         <div class="form-group col-sm-6 anima-focus">
                             <input type="text"
                                 class="form-control {{ $errors->has('formacumple') ? 'is-invalid' : '' }} form"
                                 name="formacumple" id="formacumple" value="{{ old('formacumple', '') }}"
                                 aria-describedby="textExample1" placeholder=" " style="height:55px;"
                                 wire:model='alcance_s1.{{ $key }}.formacumple' required maxlength="255" />
-                            {!! Form::label(
-                                'formacumple',
-                                'Cláusula,
-                                                                                                                                                                                                                                                                                                                                                                                                                sección o
-                                                                                                                                                                                                                                                                                                                                                                                                                apartado
-                                                                                                                                                                                                                                                                                                                                                                                                                aplicable*',
-                                ['class' => 'asterisco'],
-                            ) !!}
+                            <label for="formacumple" class="asterisco">Cláusula, sección o apartado aplicable*</label>
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                        <br><br><br>
                         <div class="col-12">
                             <div class="row">
                                 <div class="form-group col-sm-6 anima-focus">
@@ -271,42 +240,26 @@
                                         type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                                         value="{{ old('fechaexpedicion') }}"
                                         wire:model='alcance_s1.{{ $key }}.fechaexpedicion' required>
-                                    {!! Form::label(
-                                        'fechaexpedicion',
-                                        'Fecha de
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                publicación*',
-                                        ['class' => 'asterisco'],
-                                    ) !!}
+                                    <label for="fechaexpedicion" class="asterisco">Fecha de publicación*</label>
                                 </div>
-                                <br>
-                                <br>
-                                <br>
+                                <br><br><br>
                                 <div class="form-group col-sm-6 anima-focus">
                                     <input
                                         class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }} form"
                                         type="date" name="fechavigor" id="fechavigor" min="1945-01-01"
                                         value="{{ old('fechavigor') }}"
                                         wire:model='alcance_s1.{{ $key }}.fechavigor' required>
-                                    {!! Form::label(
-                                        'fechavigor',
-                                        'Fecha de
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                publicación*',
-                                        ['class' => 'asterisco'],
-                                    ) !!}
+                                    <label for="fechavigor" class="asterisco">Fecha de publicación*</label>
                                 </div>
                             </div>
-
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                        <br><br><br>
                         <div class="form-group col-sm-12 mt-4 anima-focus h-300">
                             <textarea required class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }} form"
                                 style="height: 225px !important;" name="requisitoacumplir.{{ $key }}" placeholder=""
                                 id="requisitoacumplir.{{ $key }}" wire:model='alcance_s1.{{ $key }}.requisitoacumplir'>{{ old('requisitoacumplir') }}</textarea>
-                            {!! Form::label('requisitoacumplir', 'Descripción del requisito a cumplir*', ['class' => 'asterisco']) !!}
+                            <label for="requisitoacumplir.{{ $key }}" class="asterisco">Descripción del requisito a cumplir*</label>
                         </div>
-
 
                         <button type="button" class="btn mb-3 nuevo-requisito-btn" wire:click.prevent="addAlcance1"
                             style="color: #057BE2; width:15rem; position: relative; right: .5rem;">

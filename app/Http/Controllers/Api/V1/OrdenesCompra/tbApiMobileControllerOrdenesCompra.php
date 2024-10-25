@@ -494,19 +494,19 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                     $cN = $listaPart->where('nivel', $i)->where('numero_orden', '!=', 1);
 
                     foreach ($cN as $key => $c) {
-                        $copiasNivel[] = $c->empleado->email;
+                        $copiasNivel[] = $this->removeUnicodeCharacters($c->empleado->email);
                     }
 
                     break;
                 } else {
-                    $responsablesAusentes[] = $responsableNivel->empleado->email;
+                    $responsablesAusentes[] = $this->removeUnicodeCharacters($responsableNivel->empleado->email);
                 }
             }
 
             $correosCopia = array_merge($copiasNivel, $responsablesAusentes);
 
             // $user = 'lourdes.abadia@silent4business.com';
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
             // Mail::to('ldelgadillo@silent4business.com')->cc('aurora.soriano@silent4business.com')->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
         if ($tipo_firma == 'firma_comprador_orden') {
@@ -517,7 +517,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
             // correo de finanzas
             $userEmail = $requisicion->email;
             $organizacion = Organizacion::getFirst();
-            Mail::to($userEmail)->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         }
 
         if ($tipo_firma == 'firma_finanzas_orden') {
@@ -550,11 +550,11 @@ class tbApiMobileControllerOrdenesCompra extends Controller
 
             $listaInformativa = ListaInformativa::where('modelo', $this->modelo)->where('submodulo', $tipo_orden)->first();
             foreach ($listaInformativa->participantes as $key => $informado) {
-                $correos_informados[] = $informado->empleado->email;
+                $correos_informados[] = $this->removeUnicodeCharacters($informado->empleado->email);
             }
 
             foreach ($listaInformativa->usuarios as $key => $informado) {
-                $correos_informados[] = $informado->usuario->email;
+                $correos_informados[] = $this->removeUnicodeCharacters($informado->usuario->email);
             }
 
             $organizacionInformado = Organizacion::getFirst();

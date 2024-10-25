@@ -80,6 +80,7 @@ class Requsicion extends Model implements Auditable
 
     protected $appends = [
         'folio',
+        'contador_version_orden_compra',
     ];
 
     public $table = 'requisiciones';
@@ -1180,8 +1181,33 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
+    }
+
+    public function getContadorVersionOrdenCompraAttribute()
+    {
+        // En el controlador para órdenes de compra
+        $historialesOrdenCompra = HistorialEdicionesOC::with('version', 'empleado')->where('requisicion_id', $this->id)->get();
+
+        // Agrupando los historiales de órdenes de compra por versión
+        $agrupadosPorVersionOrdenesCompra = $historialesOrdenCompra->groupBy(function ($item) {
+            return $item->version->version; // Suponiendo que la columna es 'version'
+        });
+
+        $resultadoOrdenesCompra = [];
+        foreach ($agrupadosPorVersionOrdenesCompra as $version => $cambios) {
+            $resultadoOrdenesCompra[] = [
+                'version' => $version,
+                'cambios' => $cambios,
+            ];
+        }
+
+        $maximaVersion = collect($resultadoOrdenesCompra)->max('version');
+
+        $contadorEdit = 3 - $maximaVersion;
+
+        return $contadorEdit;
     }
 }
