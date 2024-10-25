@@ -91,6 +91,12 @@ class SolicitudDayOffController extends Controller
         return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual', 'dias_disponibles', 'query'));
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
+
     public function create()
     {
         abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -158,13 +164,13 @@ class SolicitudDayOffController extends Controller
 
             if (isset($informados->participantes[0])) {
                 foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+                    $correos[] = removeUnicodeCharacters($participante->empleado->email);
                 }
             }
 
             if (isset($informados->usuarios[0])) {
                 foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
+                    $correos[] = removeUnicodeCharacters($usuario->usuario->email);
                 }
             }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud, $correos));
@@ -227,13 +233,13 @@ class SolicitudDayOffController extends Controller
 
                 if (isset($informados->participantes[0])) {
                     foreach ($informados->participantes as $participante) {
-                        $correos[] = $participante->empleado->email;
+                        $correos[] = removeUnicodeCharacters($participante->empleado->email);
                     }
                 }
 
                 if (isset($informados->usuarios[0])) {
                     foreach ($informados->usuarios as $usuario) {
-                        $correos[] = $usuario->usuario->email;
+                        $correos[] = removeUnicodeCharacters($usuario->usuario->email);
                     }
                 }
                 Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));

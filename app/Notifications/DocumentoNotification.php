@@ -73,8 +73,8 @@ class DocumentoNotification extends Notification
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
-            'name' => Auth::user()->name,
-            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
+            // 'name' => Auth::user()->name,
+            // 'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }
