@@ -229,7 +229,7 @@ class AuditoriasSGI extends Component
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('livewire.dashboard.auditorias-sgi', [
+        return view('livewire.dashboard.auditorias-s-g-i', [
             'plan_base' => $plan_base,
             'auditorias_anual' => $auditorias_anual,
             'recursos' => $recursos,
