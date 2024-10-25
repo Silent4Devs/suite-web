@@ -57,7 +57,6 @@
         </div>
     </div>
 
-
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
