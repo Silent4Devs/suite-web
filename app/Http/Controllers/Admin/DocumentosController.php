@@ -428,11 +428,11 @@ class DocumentosController extends Controller
 
             // Manejo del archivo del documento
             $path_documento = $this->getPathDocumento($documento, 'public');
-            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
-            $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-obsoleto.' . $extension;
+            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
+            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto.'.$extension;
 
-            $ruta_documento = $path_documento . '/' . $documento->archivo;
-            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
+            $ruta_documento = $path_documento.'/'.$documento->archivo;
+            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento).'/'.$nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
                 if (Storage::exists($ruta_obsoleto)) {
@@ -452,12 +452,11 @@ class DocumentosController extends Controller
                 return response()->json(['error' => 'Este registro contiene relación con diversas tablas, eliminarlo traería problemas de estabilidad en el sistema.']);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error inesperado: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Error inesperado: '.$e->getMessage()], 500);
         }
 
         return response()->json(['error' => 'No se pudo eliminar el documento'], 500);
     }
-
 
     public function doDocumentObsolete(Documento $documento) {}
 
