@@ -64,6 +64,10 @@ class AnswerEvaluationUser extends Component
     public $answeredQuestionsretry = [];
     public $last_score = null;
 
+    public $tiempoRestante;
+
+    protected $listeners = ['contadorReintentos'];
+
     protected $rules = [
         'answer' => 'required',
     ];
@@ -183,7 +187,7 @@ class AnswerEvaluationUser extends Component
         } elseif ($this->retry && ($this->attempt_count > 0)) {
             $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
             $this->userEvaluationId->update(['completed' => false]);
-
+            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
             $this->count = 1;
 
             $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
@@ -203,12 +207,12 @@ class AnswerEvaluationUser extends Component
             $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
             $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
             $this->attempt_count = $this->userEvaluationId->number_of_attempts;
-            // dd($this->userEvaluationId->number_of_attempts, $this->attempt_count);
+            // dd($this->userEvaluationId->completed, ($this->userEvaluationId->score != 0), $this->attempt_count > 0);
             if ($this->userEvaluationId->completed && $this->attempt_count > 0) {
                 $this->showRetry = false;
                 $this->retry = false;
                 $this->showResults();
-            } elseif (!$this->userEvaluationId->completed && $this->userEvaluationId->score != 0 && ($this->attemp_count > 0)) {
+            } elseif (!$this->userEvaluationId->completed && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
                 $this->retry = true;
                 $this->startQuiz();
             } else {
@@ -222,9 +226,11 @@ class AnswerEvaluationUser extends Component
         $this->showResults = true;
         $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
-        $this->percentage = $this->userEvaluationId->score ?? ($this->correctQuestions * 100) / $totalQuestions;
+        $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
         if ($this->percentage < 100 && !$this->retry && ($this->attempt_count > 0)) {
             $this->showRetry = true;
+        } else {
+            $this->showRetry = false;
         }
     }
 
@@ -255,11 +261,6 @@ class AnswerEvaluationUser extends Component
             $this->reset('userAnswered');
             //   $this->isDisabled = true;
 
-            // Finish the quiz when user has successfully taken all question in the quiz.
-            if ($this->count == $this->totalQuizQuestions + 1) {
-                //   $this->showResults();
-            }
-
             $this->answeredQuestionsretry = array_diff($this->answeredQuestionsretry, [$this->currentQuestion->id]);
 
             // Get a random question
@@ -270,7 +271,6 @@ class AnswerEvaluationUser extends Component
             $this->questionsTaken = UserAnswer::Questions($this->evaluation->id)->get();
             $choicesCorrect = Answer::where('question_id', $this->currentQuestion->id)->where('is_correct', true)->pluck('id')->toArray();
             $isChoiceCorrect = in_array($this->answer, $choicesCorrect);
-            // dd($isChoiceCorrect);
             // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
             UserAnswer::create([
                 'user_id' => User::getCurrentUser()->id,
@@ -308,7 +308,7 @@ class AnswerEvaluationUser extends Component
 
     public function retryEvaluation()
     {
-        if ($this->attempt_count > 0) {
+        if ($this->attempt_count >= 0) {
             // dd("reintento");
             $this->retry = true;
 
@@ -319,6 +319,36 @@ class AnswerEvaluationUser extends Component
             $this->startQuiz();
         } else {
             dd("mensaje error");
+        }
+    }
+
+    public function updateContador()
+    {
+        $time_now = Carbon::now()->toDateTimeString();
+
+        // $this->userEvaluationId
+        $lastAttempt = Carbon::parse($this->userEvaluationId->last_attempt);
+        $now = Carbon::now();
+
+        // Calcular el tiempo restante para el próximo intento
+        $diferencia = $now->diffInSeconds($lastAttempt->addHours(8), false);
+
+        // $retry->number_of_attempts = 3;
+        // $retry->save();
+
+        if ($diferencia < 0) {
+            // Si ha pasado el tiempo, restablecer los intentos
+            $this->userEvaluationId->number_of_attempts = 3;
+            $this->userEvaluationId->save();
+            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
+            $this->tiempoRestante = 'Intentos restablecidos.';
+        } else {
+            // Formatear el tiempo restante
+            $horas = floor($diferencia / 3600);
+            $minutos = floor(($diferencia % 3600) / 60);
+            $segundos = $diferencia % 60;
+
+            $this->tiempoRestante = sprintf('%02d:%02d:%02d', $horas, $minutos, $segundos);
         }
     }
 

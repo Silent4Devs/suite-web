@@ -80,8 +80,21 @@
                             id="quiz-{{ $userEvaluationId }}" value="{{ round($percentage) }}" max="100">
                             {{ round($percentage) }} </progress> <span> {{ round($percentage) }}% </span>
                     </div>
+                    @if ($showRetry)
+                        <div class="items-center justify-center text-center mt-2">
+                            <button type="button" wire:click="retryEvaluation"
+                                class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
+                                Volver a intentar Evaluación
+                                </a>
+                        </div>
+                    @elseif($percentage < 100)
+                        <div class="items-center justify-center text-center mt-2">
+                            <div wire:poll.1s="updateContador">
+                                <h3>Tiempo hasta el siguiente intento: {{ $tiempoRestante }}</h3>
+                            </div>
+                        </div>
+                    @endif
                     <div>
-
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
                             <div class="col-3">
                                 <span>Respuestas correctas</span>
@@ -100,13 +113,20 @@
                                 <span>{{ $totalQuizQuestions }}</span>
                             </div>
                         </div>
-
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
                             <div class="col-3">
                                 <span>Porcentaje</span>
                             </div>
                             <div class="col-3">
                                 <span>{{ round($percentage) . '%' }}</span>
+                            </div>
+                        </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
+                                <span>Porcentaje mas alto</span>
+                            </div>
+                            <div class="col-3">
+                                <span>{{ round($this->userEvaluationId->score) . '%' }}</span>
                             </div>
                         </div>
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
@@ -119,14 +139,6 @@
                         </div>
 
                     </div>
-                    @if ($showRetry)
-                        <div class="items-center justify-center mt-2">
-                            <button type="button" wire:click="retryEvaluation"
-                                class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
-                                Volver a intentar Evaluación
-                                </a>
-                        </div>
-                    @endif
                     <div class="flex items-center justify-end mt-2">
 
                         <a href="{{ route('admin.curso-estudiante', ['course' => $course->id]) }}"
