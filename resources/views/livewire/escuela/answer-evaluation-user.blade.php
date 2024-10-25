@@ -1,5 +1,36 @@
 <div>
-    @if (!$showResults)
+    @if (!$showResults && !$showRetry && $retry)
+        <div class="p-5 mx-2 mt-4 bg-white rounded-lg shadow-lg md:p-20">
+            <strong>Descripción</strong>
+            <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluation->description !!}</div>
+            <div class="text-right pt-8">
+                <span class="p-1 font-extrabold text-gray-400">Progreso
+                    {{ $count }}/{{ $totalQuizQuestions }}</span>
+            </div>
+            <p>{{ $count }}. {{ $currentQuestion->question }}</p>
+            @foreach ($currentQuestion->answers as $answer)
+                <div class="px-3 py-3 m-3 text-sm text-gray-800 border-2 border-gray-300 rounded-lg max-w-auto form">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model="answer">
+                    <label class="form-check-label" for="flexRadioDefault{{ $answer->id }}">
+                        {{ $answer->answer }}
+                    </label>
+                </div>
+            @endforeach
+            @error('answer')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+
+
+            <div class="flex items-center justify-end mt-4">
+
+                <button wire:click="nextQuestion" type="submit"
+                    class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">
+                    {{ __('SIGUIENTE') }}
+                </button>
+            </div>
+        </div>
+    @elseif ($retry && $this->attempt_count > 0)
         <div class="p-5 mx-2 mt-4 bg-white rounded-lg shadow-lg md:p-20">
             <strong>Descripción</strong>
             <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluation->description !!}</div>
@@ -89,12 +120,12 @@
 
                     </div>
                     @if ($showRetry)
-                    <div class="items-center justify-center mt-2">
-                        <button type="button" wire:click="retryEvaluation"
-                            class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
-                            Volver a intentar Evaluación
-                        </a>
-                    </div>
+                        <div class="items-center justify-center mt-2">
+                            <button type="button" wire:click="retryEvaluation"
+                                class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
+                                Volver a intentar Evaluación
+                                </a>
+                        </div>
                     @endif
                     <div class="flex items-center justify-end mt-2">
 
