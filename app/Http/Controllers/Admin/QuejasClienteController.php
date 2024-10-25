@@ -22,6 +22,7 @@ use App\Models\QuejasCliente;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
+use App\Services\SentimentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -83,6 +84,8 @@ class QuejasClienteController extends Controller
         //     ]);
         // }
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejasClientes = QuejasCliente::create([
             'cliente_id' => $request->cliente_id,
             'proyectos_id' => $request->proyectos_id,
@@ -105,7 +108,7 @@ class QuejasClienteController extends Controller
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
-
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisQuejasClientes::create([

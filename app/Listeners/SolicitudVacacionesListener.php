@@ -2,8 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Models\Empleado;
-use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
 use Auth;

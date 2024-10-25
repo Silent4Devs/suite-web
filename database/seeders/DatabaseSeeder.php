@@ -151,6 +151,8 @@ class DatabaseSeeder extends Seeder
 
                 //Lista Distribucion Compradores
                 ListaDistribucionCompradoresSeeder::class,
+
+                SentimentSeeder::class,
             ]
         );
     }

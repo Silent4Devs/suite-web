@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Events\ContratoEvent;
 use App\Exports\ReporteClienteExport;
 use App\Functions\CierreContratoData;
 use App\Functions\EntregablesData;
@@ -13,7 +14,6 @@ use App\Mail\AprobadorFirmaContratoMail;
 use App\Models\AprobadorFirmaContrato;
 use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Area;
-use App\Events\ContratoEvent;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;

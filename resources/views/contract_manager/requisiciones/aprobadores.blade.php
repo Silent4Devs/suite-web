@@ -25,28 +25,37 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
-    <div class="d-flex flex-wrap gap-4">
-        <!-- Botón 1 -->
-        <button type="button"
-            class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar Requisiciones pendientes solicitantes</button>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Botón 1 -->
+            <button type="button"
+                class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn2" style="width: 100%;">Filtrar Requisiciones pendientes
+                solicitantes</button>
+        </div>
 
-        <!-- Botón 2 -->
-        <button type="button"
-            class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn1" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes jefes</button>
-
-        <!-- Botón 3 -->
-        <button type="button"
-            class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes finanzas</button>
-
-        <!-- Botón 4 -->
-        <button type="button"
-            class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn3" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes compradores</button>
+        <div class="col-md-6">
+            <!-- Botón 2 -->
+            <button type="button"
+                class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn1" style="width: 100%;">Filtrar requisiciones pendientes jefes</button>
+        </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Botón 3 -->
+            <button type="button"
+                class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn" style="width: 100%;">Filtrar requisiciones pendientes finanzas</button>
+        </div>
+        <div class="col-md-6">
+            <!-- Botón 4 -->
+            <button type="button"
+                class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn3" style="width: 100%;">Filtrar requisiciones pendientes
+                compradores</button>
+        </div>
+    </div>
 
     <div class="mt-5 card">
         <div class="card-body datatable-fix">

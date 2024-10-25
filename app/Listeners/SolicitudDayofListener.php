@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Models\Empleado;
-use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\SolicitudDayofNotification;
-use App\Notifications\TimesheetNotification;
 use Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
