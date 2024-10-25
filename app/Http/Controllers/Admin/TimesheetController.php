@@ -956,11 +956,8 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', User::getCurrentUser()->empleado->id)->get();
 
-        // try {
-        //     event(new TimesheetEvent($papelera, 'papelera', 'timesheet', 'Timesheet Papelera'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+
+        event(new TimesheetEvent($papelera, 'papelera', 'timesheet', 'Timesheet Papelera'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1007,11 +1004,9 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        // try {
-        //     event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+
+        event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
+
 
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
@@ -1035,11 +1030,8 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        // try {
-        //     event(new TimesheetEvent($aprobados, 'aprobados', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+
+        event(new TimesheetEvent($aprobados, 'aprobados', 'timesheet', 'Timesheet Aprobado'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1067,11 +1059,7 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        // try {
-        //     event(new TimesheetEvent($rechazos, 'rechazos', 'timesheet', 'Timesheet Rechazado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        event(new TimesheetEvent($rechazos, 'rechazos', 'timesheet', 'Timesheet Rechazado'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1085,11 +1073,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::where('id', $id)->first();
 
-        // try {
-        //     event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
 
         $aprobar->update([
             'estatus' => 'aprobado',
@@ -1117,11 +1101,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rechazar = Timesheet::where('id', $id)->first();
 
-        // try {
-        //     event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
 
         $rechazar->update([
             'estatus' => 'rechazado',
