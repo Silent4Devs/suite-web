@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.28.1.
+ * Generated for Laravel 11.29.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7642,6 +7642,16 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Http\Client\Factory $instance */
                         return $instance->preventStrayRequests($prevent);
+        }
+                    /**
+         * Determine if stray requests are being prevented.
+         *
+         * @return bool 
+         * @static 
+         */        public static function preventingStrayRequests()
+        {
+                        /** @var \Illuminate\Http\Client\Factory $instance */
+                        return $instance->preventingStrayRequests();
         }
                     /**
          * Indicate that an exception should not be thrown if any request is not faked.
