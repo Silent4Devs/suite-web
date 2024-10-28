@@ -29,33 +29,6 @@ RUN apk add --no-cache \
     unzip \
     libsodium-dev
 
-# Instala php
-    RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
-    @composer \
-    redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
-    bcmath \
-    calendar \
-    exif \
-    gd \
-    intl \
-    #pdo_mysql \
-    pdo_pgsql \
-    pcntl \
-    soap \
-    zip \
-    apcu \
-    opcache \
-    sockets \
-    sodium \
-    excimer \
-    pcntl \
-    posix \
-    amqp \
-    ftp
-
 # Clona FrankenPHP
 RUN git clone https://github.com/dunglas/frankenphp.git /frankenphp
 
