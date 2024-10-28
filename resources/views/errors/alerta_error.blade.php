@@ -147,6 +147,8 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        console.log("Error {{ $code }}: {{ $message }}");
+    </script>
 </body>
 </html>
