@@ -30,16 +30,9 @@ RUN apk add --no-cache \
     libsodium-dev
 
 # Clona FrankenPHP
-RUN git clone https://github.com/dunglas/frankenphp.git /frankenphp
-
-# Verifica que el Makefile existe
-RUN ls /frankenphp  # Esto mostrará el contenido del directorio
-
-# Establece el directorio de trabajo
-WORKDIR /frankenphp
-
-# Compila FrankenPHP
-RUN make || echo "No Makefile found, continuing without make"
+RUN git clone https://github.com/dunglas/frankenphp.git /frankenphp && \
+    cd /frankenphp && \
+    make
 
 # Establece el directorio de trabajo para la aplicación
 WORKDIR /app
