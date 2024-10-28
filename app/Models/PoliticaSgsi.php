@@ -44,7 +44,6 @@ class PoliticaSgsi extends Model implements Auditable
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
         'mostrar',
     ];
 
@@ -73,11 +72,6 @@ class PoliticaSgsi extends Model implements Auditable
     public function getFechaRevisionAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function reviso()

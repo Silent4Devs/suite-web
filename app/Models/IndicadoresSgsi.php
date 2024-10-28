@@ -24,8 +24,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $responsable_id
- * @property int|null $team_id
  * @property int|null $id_proceso
  * @property int|null $id_empleado
  * @property string|null $verde_uno
@@ -48,8 +46,6 @@ class IndicadoresSgsi extends Model implements Auditable
     protected $table = 'indicadores_sgsis';
 
     protected $casts = [
-        'responsable_id' => 'int',
-        'team_id' => 'int',
         'id_proceso' => 'int',
     ];
 
@@ -63,7 +59,6 @@ class IndicadoresSgsi extends Model implements Auditable
         'meta',
         'no_revisiones',
         'resultado',
-        'team_id',
         'id_proceso',
         'id_empleado',
         'verde',

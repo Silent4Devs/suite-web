@@ -38,14 +38,12 @@ class EvidenciasSgsi extends Model implements Auditable, HasMedia
         'nombredocumento',
         'objetivodocumento',
         'responsable_id',
-        'arearesponsable',
         'area_id',
         'fechadocumento',
         'evidencia',
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -77,11 +75,6 @@ class EvidenciasSgsi extends Model implements Auditable, HasMedia
     public function getArchivopdfAttribute()
     {
         return $this->getMedia('archivopdf')->last();
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function getFechaDocumentoAttribute($value)

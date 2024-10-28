@@ -35,18 +35,12 @@ class PlanificacionControl extends Model implements Auditable
         'aprobado',
         'id_responsable_aprobar',
         'es_aprobado',
-        'comentarios',
 
     ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function empleado()
