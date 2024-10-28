@@ -19,17 +19,18 @@ services:
       - redis-tabantaj
     env_file:
       - .env
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "30m"
-        max-file: "1"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
+    networks:
+      - tabantajnetwork
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: php-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/var/www/html
     networks:
       - tabantajnetwork
 
@@ -48,56 +49,6 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    container_name: php-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/var/www/html
-    ports:
-      - 9000:80
-    networks:
-      - tabantajnetwork
-
-  queue-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    volumes:
-      - .:/var/www/html
-    command: php artisan queue:work --tries=6
-    depends_on:
-      - php
-    container_name: queue-worker-tabantaj
-    restart: unless-stopped
-    tty: true
-    environment:
-      CONTAINER_ROLE: queue
-    networks:
-      - tabantajnetwork
-    mem_limit: 2g
-
-  schedule-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    depends_on:
-      - php
-    restart: unless-stopped
-    tty: true
-    container_name: schedule-worker-tabantaj
-    volumes:
-      - .:/var/www/html
-    command: php artisan schedule:work
-    environment:
-      CONTAINER_ROLE: scheduler
-    networks:
-      - tabantajnetwork
-    mem_limit: 2g
-
   redis-tabantaj:
     image: redis:alpine
     container_name: redis-tabantaj
@@ -108,6 +59,38 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 3g
+
+  queue-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: queue-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/var/www/html
+    command: php /var/www/html/artisan queue:work --tries=6
+    depends_on:
+      - php
+    networks:
+      - tabantajnetwork
+    mem_limit: 2g
+
+  schedule-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: schedule-worker-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/var/www/html
+    command: php /var/www/html/artisan schedule:work
+    depends_on:
+      - php
+    networks:
+      - tabantajnetwork
+    mem_limit: 2g
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
