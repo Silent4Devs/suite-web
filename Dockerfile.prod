@@ -1,6 +1,5 @@
 # Accepted values: 8.3 - 8.2
 ARG PHP_VERSION=8.3
-
 ARG COMPOSER_VERSION=latest
 
 ###########################################
@@ -54,7 +53,7 @@ WORKDIR ${ROOT}
 SHELL ["/bin/bash", "-eou", "pipefail", "-c"]
 
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
-  && echo ${TZ} > /etc/timezone
+    && echo ${TZ} > /etc/timezone
 
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
@@ -91,12 +90,14 @@ RUN apt-get update; \
     memcached \
     igbinary \
     ldap \
+    ftp \  # Aquí se agrega la extensión FTP
     && apt-get -y autoremove \
     && apt-get clean \
     && docker-php-source delete \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && rm /var/log/lastlog /var/log/faillog
 
+# Instalar supercronic
 RUN arch="$(uname -m)" \
     && case "$arch" in \
     armhf) _cronic_fname='supercronic-linux-arm' ;; \
@@ -111,6 +112,7 @@ RUN arch="$(uname -m)" \
     && mkdir -p /etc/supercronic \
     && echo "*/1 * * * * php ${ROOT}/artisan schedule:run --no-interaction" > /etc/supercronic/laravel
 
+# Configuración del usuario
 RUN userdel --remove --force www-data \
     && groupadd --force -g ${WWWGROUP} ${USER} \
     && useradd -ms /bin/bash --no-log-init --no-user-group -g ${WWWGROUP} -u ${WWWUSER} ${USER}
@@ -141,11 +143,10 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache && chmod -R a+rw storage
 
-
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
-# Install npm
+# Instalar npm
 RUN npm install -g npm@latest
 
 # Healthcheck
