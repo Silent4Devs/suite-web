@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -61,7 +59,7 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     ports:
-      - 9000:80
+      - 9000:80  # Asegúrate de que Nginx esté configurado para usar este puerto
     networks:
       - tabantajnetwork
 
