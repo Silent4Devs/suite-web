@@ -90,7 +90,7 @@ RUN apt-get update; \
     memcached \
     igbinary \
     ldap \
-    ftp \  # Aquí se agrega la extensión FTP
+    ftp \
     && apt-get -y autoremove \
     && apt-get clean \
     && docker-php-source delete \
