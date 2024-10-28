@@ -1,36 +1,35 @@
-# Usa la imagen base de Frank PHP
-FROM dunglas/frankenphp:latest
-
-# Add docker-php-extension-installer script
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions
+FROM dunglas/frankenphp
 
 # Install dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     curl \
-    freetype-dev \
+    libfreetype6-dev \
     g++ \
     gcc \
     git \
-    icu-dev \
-    libc-dev \
+    libicu-dev \
+    libc6-dev \
     libzip-dev \
     libpq-dev \
     make \
     nodejs \
     npm \
-    oniguruma-dev \
+    libonig-dev \
     yarn \
     openssh-client \
-    postgresql-libs \
-    postgresql-client \
+    libpq-dev \
     rsync \
-    zlib-dev \
+    zlib1g-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev
+    libsodium-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add docker-php-extension-installer script
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
 
 # Install php extensions
 RUN install-php-extensions \
@@ -54,16 +53,20 @@ RUN install-php-extensions \
     amqp \
     ftp
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www && \
-    chmod 755 -R /var/www
+# Be sure to replace "your-domain-name.example.com" by your domain name
+ENV SERVER_NAME=192.168.9.78
 
-# Install latest npm
+# Create a new php.ini file
+RUN echo "memory_limit=256M" > /usr/local/etc/php/php.ini && \
+    echo "error_reporting=E_ALL" >> /usr/local/etc/php/php.ini && \
+    echo "display_errors=On" >> /usr/local/etc/php/php.ini && \
+    echo "date.timezone=UTC" >> /usr/local/etc/php/php.ini
+
+RUN chown -R www-data:www-data /var/www && chmod 755 -R /var/www
+
+# Install npm latest version
 RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
-
-# Comando para ejecutar tu aplicación
-CMD ["frankenphp", "start"]
