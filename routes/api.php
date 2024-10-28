@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\V1\Capacitaciones\tbApiMobileControllerCapacitaciones;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
 use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
@@ -106,6 +107,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::post('/tbaprobar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionAprobar']);
         Route::post('/tbrechazar/{id}', [TbTimesheetApiMobileController::class, 'tbFunctionRechazar']);
         Route::get('/tbcontadorRegistrosPendientes', [TbTimesheetApiMobileController::class, 'tbFunctionContadorPendientesTimesheetAprobador']);
+    });
+
+    Route::prefix('capacitaciones')->group(function () {
+        Route::get('/tblastcourse', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionUltimoCurso']);
+        Route::get('/tbinscribedcourses', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursosInscrito']);
+        Route::get('/tbcoursecatalogue', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCatalogoCursos']);
+        Route::get('/tbstudentcourse/{id}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursoEstudiante']);
     });
 });
 
