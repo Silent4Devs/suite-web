@@ -2,14 +2,13 @@ version: '3.8'
 
 services:
   nginx-tabantaj:
-    image: dunglas/frankenphp
+    image: nginx:stable-alpine
     container_name: nginx-tabantaj
     restart: unless-stopped
     tty: true
     ports:
       - 80:80
       - 443:443
-      # - 8080:8080
     volumes:
       - .:/var/www/html
       - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -34,6 +33,21 @@ services:
     networks:
       - tabantajnetwork
 
+  postgres-tabantaj:
+    image: postgres:16-alpine
+    container_name: postgres-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - tabantaj-database:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    networks:
+      - tabantajnetwork
+    mem_limit: 6g
+
   php:
     build:
       context: .
@@ -48,23 +62,44 @@ services:
     networks:
       - tabantajnetwork
 
-  postgres-tabantaj:
-    image: dunglas/frankenphp
-    container_name: postgres-tabantaj
+  queue-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work --tries=6
+    depends_on:
+      - php
+    container_name: queue-worker-tabantaj
     restart: unless-stopped
     tty: true
-    volumes:
-      - tabantaj-database:/var/lib/postgresql/data
-    env_file:
-      - .env
-    ports:
-      - "5432:5432"
+    environment:
+      CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
-    mem_limit: 6g
+    mem_limit: 2g
+
+  schedule-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - php
+    restart: unless-stopped
+    tty: true
+    container_name: schedule-worker-tabantaj
+    volumes:
+      - .:/var/www/html
+    command: php artisan schedule:work
+    environment:
+      CONTAINER_ROLE: scheduler
+    networks:
+      - tabantajnetwork
+    mem_limit: 2g
 
   redis-tabantaj:
-    image: dunglas/frankenphp
+    image: redis:alpine
     container_name: redis-tabantaj
     restart: unless-stopped
     tty: true
@@ -74,44 +109,8 @@ services:
       - tabantajnetwork
     mem_limit: 3g
 
-  queue-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    container_name: queue-worker-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/var/www/html
-      - caddy_data:/data
-      - caddy_config:/config
-    command: php /var/www/html/artisan queue:work --tries=6
-    depends_on:
-      - php
-    networks:
-      - tabantajnetwork
-    mem_limit: 2g
-
-  schedule-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    container_name: schedule-worker-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/var/www/html
-      - caddy_data:/data
-      - caddy_config:/config
-    command: php /var/www/html/artisan schedule:work
-    depends_on:
-      - php
-    networks:
-      - tabantajnetwork
-    mem_limit: 2g
-
   rdadmin-tabantaj:
-    image: dunglas/frankenphp
+    image: erikdubbelboer/phpredisadmin:latest
     container_name: rdadmin-tabantaj
     restart: unless-stopped
     tty: true
@@ -123,7 +122,7 @@ services:
       - tabantajnetwork
 
   rabbitmq-tabantaj:
-    image: dunglas/frankenphp
+    image: rabbitmq:3-management-alpine
     container_name: rabbitmq-tabantaj
     env_file:
       - .env
@@ -136,11 +135,9 @@ services:
       - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-      - caddy_data:/data
-      - caddy_config:/config
 
   goservices:
-    image: dunglas/frankenphp
+    image: ghcr.io/silent4devs/goservices:latest
     container_name: goservices
     restart: unless-stopped
     tty: true
@@ -152,7 +149,7 @@ services:
       - tabantajnetwork
 
   reportservice:
-    image: dunglas/frankenphp
+    image: ghcr.io/silent4devs/reportservice:latest
     container_name: reportservice
     restart: unless-stopped
     tty: true
@@ -186,10 +183,6 @@ volumes:
   reportservice_data:
     driver: local
   mailhog_data:
-    driver: local
-  caddy_data:
-    driver: local
-  caddy_config:
     driver: local
 
 networks:
