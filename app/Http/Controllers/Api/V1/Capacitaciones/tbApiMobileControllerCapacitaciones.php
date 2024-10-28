@@ -123,8 +123,20 @@ class tbApiMobileControllerCapacitaciones extends Controller
             // ->level($this->level_id)
             ->get();
 
-        foreach ($courses as $course) {
-            dd($course);
+        $json_courses = [];
+
+        foreach ($courses as $keyCourse => $course) {
+            $json_courses['cursos'][$keyCourse] = [
+                'id_course' => $course->id,
+                'title' => $course->title,
+                'subtitle' => $course->subtitle,
+                'description' => $course->description,
+                'nombre_instructor' => $course->instructor->name,
+                'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+                // 'course_progress' => $course->advance, //No util, no esta inscrito a estos.
+                'colaboradores_inscritos' => $course->students_count,
+            ];
+
             $courses_lessons = $course->lessons;
             $lesson_introduction = $courses_lessons->first();
 
@@ -137,6 +149,10 @@ class tbApiMobileControllerCapacitaciones extends Controller
             } else {
                 $course->lesson_introduction = null;
             }
+
+            // $json_courses['cursos'][$keyCourse] = [];
+
+            dd($course, $json_courses, $courses_lessons);
         }
 
         return response(json_encode(
