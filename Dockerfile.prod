@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp
+FROM php:8.2-fpm-alpine
 
 # Agrega el script de instalación de extensiones PHP
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
