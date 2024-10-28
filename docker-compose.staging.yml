@@ -1,6 +1,5 @@
 services:
   nginx-tabantaj:
-    image: nginx:stable-alpine
     container_name: nginx-tabantaj
     restart: unless-stopped
     tty: true
