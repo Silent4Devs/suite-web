@@ -3,6 +3,7 @@ FROM dunglas/frankenphp:latest
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
 
 # Install dependencies
 RUN apk add --no-cache \
@@ -13,12 +14,10 @@ RUN apk add --no-cache \
     gcc \
     git \
     icu-dev \
-    icu-libs \
     libc-dev \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -34,18 +33,14 @@ RUN apk add --no-cache \
     libsodium-dev
 
 # Install php extensions
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
+RUN install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -55,18 +50,15 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sockets \
     sodium \
     excimer \
-    pcntl \
     posix \
     amqp \
     ftp
 
-# Enable phpredis extension
-#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+# Set permissions
+RUN chown -R www-data:www-data /var/www && \
+    chmod 755 -R /var/www
 
-RUN chown -R www-data:www-data /var/www \
-    && chmod 755 -R /var/www
-
-# Install npm
+# Install latest npm
 RUN npm install -g npm@latest
 
 # Healthcheck
