@@ -55,7 +55,7 @@ services:
     #uncomment this if you will use only docker compose
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
     #     # - BUILD_ENV=production  # Pass any necessary build arguments
@@ -75,7 +75,7 @@ services:
   queue-worker:
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -93,7 +93,7 @@ services:
   schedule-worker:
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
