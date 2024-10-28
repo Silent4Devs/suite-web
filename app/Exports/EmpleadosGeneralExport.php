@@ -14,7 +14,7 @@ class EmpleadosGeneralExport implements FromCollection, ShouldAutoSize, WithColu
 {
     public function collection()
     {
-        return Empleado::getAllwithDeleted();
+        return Empleado::getaltaAll();
     }
 
     public function map($empleado): array
