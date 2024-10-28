@@ -1,43 +1,50 @@
 FROM php:8.2-fpm-alpine
 
-# Agrega el script de instalación de extensiones PHP
+# Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# Cambia los permisos del script para hacerlo ejecutable
-RUN chmod +x /usr/local/bin/install-php-extensions
-
-# Instalar dependencias y extensiones PHP
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install dependencies
+RUN apk add --no-cache \
     bash \
     curl \
-    libfreetype6-dev \
+    freetype-dev \
     g++ \
     gcc \
     git \
-    libicu-dev \
-    libc6-dev \
+    icu-dev \
+    icu-libs \
+    libc-dev \
     libzip-dev \
     libpq-dev \
     make \
+    #mysql-client \
     nodejs \
     npm \
-    libonig-dev \
+    oniguruma-dev \
     yarn \
     openssh-client \
+    postgresql-libs \
+    postgresql-client \
     rsync \
-    zlib1g-dev \
+    zlib-dev \
     sudo \
     zip \
     unzip \
-    libsodium-dev \
-    && install-php-extensions \
+    libsodium-dev
+
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions \
     @composer \
     redis-stable \
+    #imagick-stable \
+    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -47,13 +54,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sockets \
     sodium \
     excimer \
+    pcntl \
     posix \
     amqp \
-    ftp \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    ftp
 
-# Establecer permisos
-RUN chown -R www-data:www-data /var/www && chmod 755 -R /var/www
+# Enable phpredis extension
+#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
-# Instalar la última versión de npm
+RUN chown -R www-data:www-data /var/www \
+    && chmod 755 -R /var/www
+
+# Install npm
 RUN npm install -g npm@latest
+
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1
