@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   nginx-tabantaj:
-    image: nginx:stable-alpine
+    image: dunglas/frankenphp
     container_name: nginx-tabantaj
     restart: unless-stopped
     tty: true
@@ -49,7 +49,7 @@ services:
       - tabantajnetwork
 
   postgres-tabantaj:
-    image: postgres:16-alpine
+    image: dunglas/frankenphp
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
@@ -64,7 +64,7 @@ services:
     mem_limit: 6g
 
   redis-tabantaj:
-    image: redis:alpine
+    image: dunglas/frankenphp
     container_name: redis-tabantaj
     restart: unless-stopped
     tty: true
@@ -83,6 +83,8 @@ services:
     tty: true
     volumes:
       - .:/var/www/html
+      - caddy_data:/data
+      - caddy_config:/config
     command: php /var/www/html/artisan queue:work --tries=6
     depends_on:
       - php
@@ -99,6 +101,8 @@ services:
     tty: true
     volumes:
       - .:/var/www/html
+      - caddy_data:/data
+      - caddy_config:/config
     command: php /var/www/html/artisan schedule:work
     depends_on:
       - php
@@ -107,7 +111,7 @@ services:
     mem_limit: 2g
 
   rdadmin-tabantaj:
-    image: erikdubbelboer/phpredisadmin:latest
+    image: dunglas/frankenphp
     container_name: rdadmin-tabantaj
     restart: unless-stopped
     tty: true
@@ -119,7 +123,7 @@ services:
       - tabantajnetwork
 
   rabbitmq-tabantaj:
-    image: rabbitmq:3-management-alpine
+    image: dunglas/frankenphp
     container_name: rabbitmq-tabantaj
     env_file:
       - .env
@@ -132,9 +136,11 @@ services:
       - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+      - caddy_data:/data
+      - caddy_config:/config
 
   goservices:
-    image: ghcr.io/silent4devs/goservices:latest
+    image: dunglas/frankenphp
     container_name: goservices
     restart: unless-stopped
     tty: true
@@ -146,7 +152,7 @@ services:
       - tabantajnetwork
 
   reportservice:
-    image: ghcr.io/silent4devs/reportservice:latest
+    image: dunglas/frankenphp
     container_name: reportservice
     restart: unless-stopped
     tty: true
@@ -180,6 +186,10 @@ volumes:
   reportservice_data:
     driver: local
   mailhog_data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
 
 networks:
