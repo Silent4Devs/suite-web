@@ -141,33 +141,13 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache && chmod -R a+rw storage
 
-# COPY --link --chown=${USER}:${USER} deployment/supervisord.conf /etc/supervisor/
-# COPY --link --chown=${USER}:${USER} deployment/octane/RoadRunner/supervisord.roadrunner.conf /etc/supervisor/conf.d
-# COPY --link --chown=${USER}:${USER} deployment/supervisord.*.conf /etc/supervisor/conf.d/
-# COPY --link --chown=${USER}:${USER} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
-# COPY --link --chown=${USER}:${USER} deployment/octane/RoadRunner/.rr.prod.yaml ./.rr.yaml
-# COPY --link --chown=${USER}:${USER} deployment/start-container /usr/local/bin/start-container
-# COPY --link --chown=${USER}:${USER} deployment/healthcheck /usr/local/bin/healthcheck
 
-RUN composer install \
-    --classmap-authoritative \
-    --no-interaction \
-    --no-ansi \
-    --no-dev \
-    && composer clear-cache
+RUN chown -R www-data:www-data /var/www \
+    && chmod 755 -R /var/www
 
-RUN if composer show | grep spiral/roadrunner-cli >/dev/null; then \
-    ./vendor/bin/rr get-binary --quiet; else \
-    echo "`spiral/roadrunner-cli` package is not installed. Exiting..."; exit 1; \
-    fi
+# Install npm
+RUN npm install -g npm@latest
 
-RUN chmod +x rr /usr/local/bin/start-container /usr/local/bin/healthcheck
-
-RUN cat deployment/utilities.sh >> ~/.bashrc
-
-EXPOSE 8000
-EXPOSE 6001
-
-ENTRYPOINT ["start-container"]
-
-HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD healthcheck || exit 1
+# Healthcheck
+HEALTHCHECK --interval=15m --timeout=3s \
+    CMD curl --fail http://localhost/ || exit 1
