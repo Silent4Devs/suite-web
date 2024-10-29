@@ -518,6 +518,7 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
+                                        <li><a href="{{ route('admin.module_firmas') }}">Modulo Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan
