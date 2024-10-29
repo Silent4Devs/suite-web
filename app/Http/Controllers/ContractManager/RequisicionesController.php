@@ -505,7 +505,7 @@ class RequisicionesController extends Controller
         $buttonCompras = false;
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
-            $requisiciones = KatbolRequsicion::getArchivoFalseAll();
+            $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
         }
