@@ -47,11 +47,11 @@ class RequisicionesController extends Controller
         $user = User::getCurrentUser();
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
-            $requisiciones = KatbolRequsicion::getArchivoFalseAll();
+            $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
 
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
-            $requisiciones_solicitante = KatbolRequsicion::getArchivoFalseAll()->where('id_user', $user->id);
+            $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
 
             return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
         }
