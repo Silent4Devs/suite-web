@@ -1324,8 +1324,9 @@ class EmpleadoController extends Controller
             $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
-        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $usuario = User::where('empleado_id', $empleado->id)->first();
         $usuario->update([
+            'email' => removeUnicodeCharacters($request->email),
             'n_empleado' => $request->n_empleado,
         ]);
         $this->assignDependenciesModel($request, $empleado);
