@@ -4,13 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Access\AuthorizationException;
-
 use Throwable;
-
 
 class Handler extends ExceptionHandler
 {
@@ -49,29 +43,17 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        // 1. Errores menores que no afectan el flujo crítico de TABANTAJ
-        // Los dejamos a Laravel para su manejo estándar.
-        if ($e instanceof ValidationException ||
-            $e instanceof AuthenticationException ||
-            $e instanceof AuthorizationException) {
-            return parent::render($request, $e);
+        if ($e instanceof ValidationException) {
+            if ($request->expectsJson()) {
+                $errors = $e->errors();
+
+                return response()->json([
+                    'message' => reset($errors),
+                    'errors' => $errors,
+                ]);
+            }
         }
 
-        // Errores de rutas comunes (404) o métodos no permitidos (405):
-        // También que Laravel maneje estos errores normalmente,
-        // ya que no son críticos para la funcionalidad del sistema.
-        if ($e instanceof NotFoundHttpException) {
-            return parent::render($request, $e);
-        }
-
-        if ($e instanceof MethodNotAllowedHttpException) {
-            return parent::render($request, $e);
-        }
-
-        return response()->view('errors.alerta_error', [
-            'code' => 500,
-            'message' => $e->getMessage(),  // Pasamos el mensaje del error
-        ], 500);
+        return parent::render($request, $e);
     }
-
 }
