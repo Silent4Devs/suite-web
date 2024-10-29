@@ -65,11 +65,23 @@ class OrdenCompraController extends Controller
         $user = User::getCurrentUser();
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
-            $requisiciones = KatbolRequsicion::getOCAll();
+            $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+                ['firma_solicitante', '!=', null],
+                ['firma_jefe', '!=', null],
+                ['firma_finanzas', '!=', null],
+                ['firma_compras', '!=', null],
+            ])->where('archivo', false)->orderByDesc('id')
+                ->get();
 
             return datatables()->of($requisiciones)->toJson();
         } else {
-            $requisiciones = KatbolRequsicion::getOCAll()->where('id_user', $user->id);
+            $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+                ['firma_solicitante', '!=', null],
+                ['firma_jefe', '!=', null],
+                ['firma_finanzas', '!=', null],
+                ['firma_compras', '!=', null],
+            ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
+                ->get();
 
             return datatables()->of($requisiciones)->toJson();
         }
@@ -741,7 +753,13 @@ class OrdenCompraController extends Controller
         $empleadoActual = $user->empleado;
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
-            $requisiciones = KatbolRequsicion::getOCAll();
+            $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+                ['firma_solicitante', '!=', null],
+                ['firma_jefe', '!=', null],
+                ['firma_finanzas', '!=', null],
+                ['firma_compras', '!=', null],
+            ])->where('archivo', false)->orderByDesc('id')
+                ->get();
         } else {
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'general');
         }
