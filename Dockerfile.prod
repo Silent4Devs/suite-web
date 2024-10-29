@@ -1,62 +1,34 @@
-FROM dunglas/frankenphp
+FROM php:8.0.11-fpm-alpine
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    bash \
-    curl \
-    libfreetype6-dev \
-    build-essential \
-    git \
-    libicu-dev \
-    libzip-dev \
-    libpq-dev \
-    make \
-    nodejs \
-    npm \
-    libonig-dev \
-    yarn \
-    openssh-client \
-    libpq5 \
-    rsync \
-    zlib1g-dev \
-    sudo \
-    zip \
-    unzip \
-    libsodium-dev
 
-# Add docker-php-extension-installer script
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN apk --no-cache upgrade && \
+    apk --no-cache add bash git sudo openssh  libxml2-dev oniguruma-dev autoconf gcc g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
 
-# Install PHP extensions
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
-    @composer \
-    redis-stable \
-    bcmath \
-    calendar \
-    exif \
-    gd \
-    intl \
-    pdo_pgsql \
-    pcntl \
-    soap \
-    zip \
-    apcu \
-    opcache \
-    sockets \
-    sodium \
-    excimer \
-    pcntl \
-    posix \
-    amqp \
-    ftp
+# PHP: Install php extensions
+RUN pecl channel-update pecl.php.net
+RUN pecl install pcov ssh2 swoole
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install mbstring xml iconv pcntl gd zip sockets pdo  pdo_mysql bcmath soap
+RUN docker-php-ext-enable mbstring xml gd iconv zip pcov pcntl sockets bcmath pdo  pdo_mysql soap swoole
 
-RUN chown -R www-data:www-data /var/www \
-    && chmod 755 -R /var/www
 
-# Install npm
-RUN npm install -g npm@latest
+RUN docker-php-ext-install pdo pdo_mysql sockets
+RUN curl -sS https://getcomposer.org/installer​ | php -- \
+     --install-dir=/usr/local/bin --filename=composer
 
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=spiralscout/roadrunner:2.4.2 /usr/bin/rr /usr/bin/rr
+
+WORKDIR /app
+COPY . .
+
+RUN composer install
+RUN composer require laravel/octane spiral/roadrunner
+
+COPY .env.example .env
+
+RUN php artisan key:generate
+RUN php artisan octane:install --server="swoole"
+
+CMD php artisan octane:start --server="swoole" --host="0.0.0.0"
+EXPOSE 8000
