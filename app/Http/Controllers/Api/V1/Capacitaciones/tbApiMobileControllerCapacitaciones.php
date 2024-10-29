@@ -179,30 +179,57 @@ class tbApiMobileControllerCapacitaciones extends Controller
 
         $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
-        $json_progreso_curso = [];
+        $json_informacion_curso = [];
 
-        $json_progreso_curso['course'] = [
+        $json_informacion_curso['course'] = [
             'id_course' => $course->id,
             'title' => $course->title,
-            'nombre_instructor' => $course->instructor->name,
+            'subtitle' => $course->subtitle,
+            'description' => $course->description,
+            'course_rating' => $course->rating,
+            'colaboradores_inscritos' => $course->students_count,
+            'nombre_instructor' => $course->instructor->name ?? $course->teacher->empleado->name,
             'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+            // 'course_progress' => $course->advance, //No util, no esta inscrito a estos.
         ];
 
+        $courses_lessons = $course->lessons;
+        $lesson_introduction = $courses_lessons->first();
+
+        if (! is_null($lesson_introduction)) {
+            if (is_null($lesson_introduction->url)) {
+
+                $json_informacion_curso['course']['video_introduction'] = null;
+            } else {
+                $json_informacion_curso['course']['video_introduction'] = $lesson_introduction->url;
+            }
+        } else {
+            $json_informacion_curso['course']['video_introduction'] = null;
+        }
+
+        if ($course->goals->isNotEmpty()) {
+            foreach ($course->goals as $keyGoal => $goal) {
+                $json_informacion_curso['course']['goals'][$keyGoal] = [
+                    'id_goal' => $goal->id,
+                    'name_goal' => $goal->name,
+                ];
+            }
+        }
+
         foreach ($course->sections_order as $keySections => $section) {
-            $json_progreso_curso['course']['section'][$keySections] = [
+            $json_informacion_curso['course']['section'][$keySections] = [
                 'id_section' => $section->id,
                 'name_section' => $section->name
             ];
 
             foreach ($section->lessons as $keyLesson => $lesson) {
-                $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
+                $json_informacion_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
                     'id_lesson' => $lesson->id,
                     'name_lesson' => $lesson->name,
                     'url_evaluation' => $lesson->url,
                     'lesson_completed' => $lesson->completed,
                 ];
             }
-
 
             foreach ($section->evaluations as $keyEvaluation => $evaluation) {
 
@@ -215,7 +242,7 @@ class tbApiMobileControllerCapacitaciones extends Controller
                     ->count();
 
                 if ($totalLectionSection != $completedLessonsCount) {
-                    $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
+                    $json_informacion_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
                         'id_evaluation' => $evaluation->id,
                         'name_evaluation' => $evaluation->name,
                         'evaluation_blocked' => true,
@@ -224,7 +251,7 @@ class tbApiMobileControllerCapacitaciones extends Controller
                     if ($evaluation->questions->count() > 0) {
                         $completed = in_array($evaluation->id, $evaluationsUser);
 
-                        $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
+                        $json_informacion_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
                             'id_evaluation' => $evaluation->id,
                             'name_evaluation' => $evaluation->name,
                             'evaluation_completed' => $completed,
@@ -235,7 +262,11 @@ class tbApiMobileControllerCapacitaciones extends Controller
             }
         }
 
-        dd($json_progreso_curso, $course, $evaluacionesLeccion);
+        return response(json_encode(
+            [
+                'informacionCurso' => $json_informacion_curso,
+            ],
+        ), 200)->header('Content-Type', 'application/json');
     }
 
     public function tbFunctionCursoEstudiante($curso_id)
@@ -245,6 +276,12 @@ class tbApiMobileControllerCapacitaciones extends Controller
         $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
 
         $course = Course::getAll()->where('id', $curso_id)->first();
+
+        $current = $course->last_finished_lesson;
+
+        if (! $current) {
+            $current = $course->lessons->last();
+        }
 
         $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
@@ -264,12 +301,23 @@ class tbApiMobileControllerCapacitaciones extends Controller
             ];
 
             foreach ($section->lessons as $keyLesson => $lesson) {
-                $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
-                    'id_lesson' => $lesson->id,
-                    'name_lesson' => $lesson->name,
-                    'url_evaluation' => $lesson->url,
-                    'lesson_completed' => $lesson->completed,
-                ];
+                if ($current->id == $lesson->id) {
+                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
+                        'id_lesson' => $lesson->id,
+                        'name_lesson' => $lesson->name,
+                        'url_evaluation' => $lesson->url,
+                        'lesson_completed' => $lesson->completed,
+                        'current_lesson' => true,
+                    ];
+                } else {
+                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
+                        'id_lesson' => $lesson->id,
+                        'name_lesson' => $lesson->name,
+                        'url_evaluation' => $lesson->url,
+                        'lesson_completed' => $lesson->completed,
+                        'current_lesson' => false,
+                    ];
+                }
             }
 
 
@@ -304,7 +352,103 @@ class tbApiMobileControllerCapacitaciones extends Controller
             }
         }
 
-        dd($json_progreso_curso, $course, $evaluacionesLeccion);
+        return response(json_encode(
+            [
+                'cursoEstudiante' => $json_progreso_curso,
+            ],
+        ), 200)->header('Content-Type', 'application/json');
+        // dd($json_progreso_curso, $course, $evaluacionesLeccion);
+    }
+
+    public function tbFunctionCursoEvaluacion($curso_id, $evaluation_id)
+    {
+        $usuario = User::getCurrentUser();
+
+        $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+
+        $course = Course::getAll()->where('id', $curso_id)->first();
+
+        $current = $course->last_finished_lesson;
+
+        if (! $current) {
+            $current = $course->lessons->last();
+        }
+
+        $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+
+        $json_progreso_curso = [];
+
+        $json_progreso_curso['course'] = [
+            'id_course' => $course->id,
+            'title' => $course->title,
+            'nombre_instructor' => $course->instructor->name,
+            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+        ];
+
+        foreach ($course->sections_order as $keySections => $section) {
+            $json_progreso_curso['course']['section'][$keySections] = [
+                'id_section' => $section->id,
+                'name_section' => $section->name
+            ];
+
+            foreach ($section->lessons as $keyLesson => $lesson) {
+                if ($current->id == $lesson->id) {
+                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
+                        'id_lesson' => $lesson->id,
+                        'name_lesson' => $lesson->name,
+                        'url_evaluation' => $lesson->url,
+                        'lesson_completed' => $lesson->completed,
+                        'current_lesson' => true,
+                    ];
+                } else {
+                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
+                        'id_lesson' => $lesson->id,
+                        'name_lesson' => $lesson->name,
+                        'url_evaluation' => $lesson->url,
+                        'lesson_completed' => $lesson->completed,
+                        'current_lesson' => false,
+                    ];
+                }
+            }
+
+
+            foreach ($section->evaluations as $keyEvaluation => $evaluation) {
+
+                $totalLectionSection = $section->lessons->count();
+                $completedLectionSection = $section->lessons;
+                $completedLessonsCount = $section->lessons
+                    ->filter(function ($lesson) {
+                        return $lesson->completed;
+                    })
+                    ->count();
+
+                if ($totalLectionSection != $completedLessonsCount) {
+                    $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
+                        'id_evaluation' => $evaluation->id,
+                        'name_evaluation' => $evaluation->name,
+                        'evaluation_blocked' => true,
+                    ];
+                } else {
+                    if ($evaluation->questions->count() > 0) {
+                        $completed = in_array($evaluation->id, $evaluationsUser);
+
+                        $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
+                            'id_evaluation' => $evaluation->id,
+                            'name_evaluation' => $evaluation->name,
+                            'evaluation_completed' => $completed,
+                            'evaluation_blocked' => false,
+                        ];
+                    }
+                }
+            }
+        }
+
+        return response(json_encode(
+            [
+                'cursoEstudiante' => $json_progreso_curso,
+            ],
+        ), 200)->header('Content-Type', 'application/json');
+        // dd($json_progreso_curso, $course, $evaluacionesLeccion);
     }
 
     /**

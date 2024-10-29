@@ -114,6 +114,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::get('/tbinscribedcourses', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursosInscrito']);
         Route::get('/tbcoursecatalogue', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCatalogoCursos']);
         Route::get('/tbcourseinfo/{id}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionInformacionCurso']);
+        Route::get('tbstudentcourse/{course}/evaluation/{evaluation}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursoEvaluacion']);
         Route::get('/tbstudentcourse/{id}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursoEstudiante']);
     });
 });
