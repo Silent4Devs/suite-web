@@ -1,50 +1,42 @@
-FROM php:8.2-fpm-alpine
-
-# Add docker-php-extension-installer script
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+FROM dunglas/frankenphp
 
 # Install dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     bash \
     curl \
-    freetype-dev \
-    g++ \
-    gcc \
+    libfreetype6-dev \
+    build-essential \
     git \
-    icu-dev \
-    icu-libs \
-    libc-dev \
+    libicu-dev \
     libzip-dev \
     libpq-dev \
     make \
-    #mysql-client \
     nodejs \
     npm \
-    oniguruma-dev \
+    libonig-dev \
     yarn \
     openssh-client \
-    postgresql-libs \
-    postgresql-client \
+    libpq5 \
     rsync \
-    zlib-dev \
+    zlib1g-dev \
     sudo \
     zip \
     unzip \
     libsodium-dev
 
-# Install php extensions
+# Add docker-php-extension-installer script
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+# Install PHP extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
-    #imagick-stable \
-    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
-    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -58,9 +50,6 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     posix \
     amqp \
     ftp
-
-# Enable phpredis extension
-#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
