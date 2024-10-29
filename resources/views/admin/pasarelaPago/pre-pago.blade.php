@@ -111,7 +111,7 @@
                                 @csrf
                                 <div class="mt-5">
                                     <input type="hidden" name="arrayData" id="arrayData">
-                                    <button id="buy-now-button" class="btn btn-comprar w-100 py-3 text-white" disabled
+                                    <button id="buy-now-button" class="btn-comprar w-100 py-3 text-white" disabled
                                         type="submit">Comprar ahora</button>
                                 </div>
                             </form>
@@ -214,7 +214,6 @@
                     }
                 });
                 updatePlans(selectedPlans);
-                // console.log(selectedPlans);
             }
 
             function updatePlans(plans) {
