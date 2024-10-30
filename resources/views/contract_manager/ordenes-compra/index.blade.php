@@ -96,6 +96,7 @@
     </script>
 
     <script>
+        console.log('Entra funcion');
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
@@ -200,6 +201,7 @@
                 }
             }
 
+            console.log('antes de la tabla');
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
