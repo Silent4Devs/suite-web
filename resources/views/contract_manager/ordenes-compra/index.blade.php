@@ -208,10 +208,10 @@
                 aaSorting: [],
                 ajax: {
                     url: "{{ route('contract_manager.orden-compra.getRequisicionIndex') }}",
-                    type: 'GET',
-                    // data: {
-                    //     _token: _token
-                    // }
+                    type: 'POST',
+                    data: {
+                        _token: _token
+                    }
                 },
                 columns: [{
                         data: 'folio',
