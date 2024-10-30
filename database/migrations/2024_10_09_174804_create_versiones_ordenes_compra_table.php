@@ -22,13 +22,6 @@ return new class extends Migration
             // Relaciones
             $table->foreign('orden_compra_id')->references('id')->on('requisiciones')->onDelete('cascade');
         });
-
-        // Schema::table('historial_ediciones_o_c_s', function (Blueprint $table) {
-        //     $table->unsignedBigInteger('version_id')->nullable();
-
-        //     // Relación con la tabla de versiones
-        //     $table->foreign('version_id')->references('id')->on('versiones_orden_compra')->onDelete('cascade');
-        // });
     }
 
     /**
@@ -37,12 +30,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('versiones_orden_compra');
-
-        // Schema::table('historial_ediciones_o_c_s', function (Blueprint $table) {
-        //     $table->dropColumn('version_id');
-
-        //     // Relación con la tabla de versiones
-        //     $table->foreign('version_id')->references('id')->on('versiones_orden_compra')->onDelete('cascade');
-        // });
     }
 };
