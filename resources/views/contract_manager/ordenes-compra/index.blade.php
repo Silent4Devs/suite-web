@@ -207,7 +207,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('contract_manager.orden-compra.getOCIndex') }}",
+                    url: "{{ route('contract_manager.orden-compra.get-oc-index') }}",
                     type: 'POST',
                     data: {
                         _token: _token
