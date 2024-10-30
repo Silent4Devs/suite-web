@@ -23,7 +23,7 @@
                     <tr>
 
                         <th style="vertical-align: top">Folio</th>
-                        <th style="vertical-align: top">Fecha De Solicitud</th>
+                        {{-- <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
@@ -34,7 +34,7 @@
                         <th style="vertical-align: top">SUBTOTAL</th>
                         <th style="vertical-align: top">IVA</th>
                         <th style="vertical-align: top">Total</th>
-                        <th style="vertical-align: top">Opciones</th>
+                        <th style="vertical-align: top">Opciones</th> --}}
 
                     </tr>
                 </thead>
@@ -104,7 +104,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
+                        columns: [0] // Include indexes of all columns
+                        // columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
                     }
                 },
                 {
@@ -114,7 +115,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
+                        columns: [0] // Include indexes of all columns
+                        // columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
                     }
                 },
                 // {
@@ -217,149 +219,149 @@
                         data: 'folio',
                         name: 'folio'
                     },
-                    {
-                        data: 'fecha',
-                        name: 'fecha'
-                    },
-                    {
-                        data: 'referencia',
-                        name: 'referencia'
-                    },
-                    {
-                        data: 'proveedor_catalogo_oc',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o undefined
-                            if (data === null || typeof data === 'undefined') {
-                                // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
-                                if (row.proveedores_requisiciones && row.proveedores_requisiciones
-                                    .length > 0) {
-                                    return row.proveedores_requisiciones[0].contacto;
-                                } else {
-                                    return 'Pendiente';
-                                }
-                            } else {
-                                return data; // Valor no es null ni undefined
-                            }
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            var firma_solicitante = row.firma_solicitante_orden;
-                            var firma_comprador = row.firma_comprador_orden;
-                            var firma_finanzas = row.firma_finanzas_orden;
-                            var estatus = row.estado_orden;
+                    // {
+                    //     data: 'fecha',
+                    //     name: 'fecha'
+                    // },
+                    // {
+                    //     data: 'referencia',
+                    //     name: 'referencia'
+                    // },
+                    // {
+                    //     data: 'proveedor_catalogo_oc',
+                    //     render: function(data, type, row) {
+                    //         // Verifica si 'data' es null o undefined
+                    //         if (data === null || typeof data === 'undefined') {
+                    //             // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
+                    //             if (row.proveedores_requisiciones && row.proveedores_requisiciones
+                    //                 .length > 0) {
+                    //                 return row.proveedores_requisiciones[0].contacto;
+                    //             } else {
+                    //                 return 'Pendiente';
+                    //             }
+                    //         } else {
+                    //             return data; // Valor no es null ni undefined
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     data: null,
+                    //     render: function(data, type, row) {
+                    //         var firma_solicitante = row.firma_solicitante_orden;
+                    //         var firma_comprador = row.firma_comprador_orden;
+                    //         var firma_finanzas = row.firma_finanzas_orden;
+                    //         var estatus = row.estado_orden;
 
-                            if (row.estado_orden == 'cancelada') {
-                                return '<h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>';
-                            } else if (estatus == "rechazado_oc") {
-                                return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
-                            } else {
-                                if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
-                                    return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
-                                } else if (firma_solicitante && firma_comprador && firma_finanzas) {
-                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
-                                } else {
-                                    return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
-                                }
-                            }
-                        }
-                    },
-                    {
-                        data: 'contrato.no_contrato',
-                        name: 'contrato.no_contrato',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o una cadena vacía
-                            if (data == null || data == "") {
-                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
-                            } else {
-                                return data; // Valor no es null ni vacío
-                            }
-                        }
-                    },
-                    {
-                        data: 'contrato.nombre_servicio',
-                        name: 'contrato.nombre_servicio',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o una cadena vacía
-                            if (data == null || data == "") {
-                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
-                            } else {
-                                return data; // Valor no es null ni vacío
-                            }
-                        }
-                    },
-                    {
-                        data: 'area',
-                        name: 'area'
-                    },
-                    {
-                        data: 'user',
-                        name: 'user'
-                    },
-                    {
-                        data: 'sub_total',
-                        name: 'sub_total',
-                        visible: false
-                    },
-                    {
-                        data: 'iva',
-                        name: 'iva',
-                        visible: false
-                    },
-                    {
-                        data: 'total',
-                        name: 'total',
-                        visible: false
-                    },
-                    {
-                        data: 'id',
-                        name: 'actions',
-                        render: function(data, type, row, meta) {
-                            let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
-                            let urlButtonRellenar = `/contract_manager/orden-compra/${data}/edit`;
-                            let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
-                            let urlButtonEditar =
-                                `/contract_manager/orden-compra/${data}/editar-orden-compra`;
-                            let urlButtonCancelar =
-                                `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
-                            let htmlBotones = '<div class="btn-group">';
+                    //         if (row.estado_orden == 'cancelada') {
+                    //             return '<h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>';
+                    //         } else if (estatus == "rechazado_oc") {
+                    //             return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
+                    //         } else {
+                    //             if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                    //                 return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                    //             } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                    //                 return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                    //             } else {
+                    //                 return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                    //             }
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     data: 'contrato.no_contrato',
+                    //     name: 'contrato.no_contrato',
+                    //     render: function(data, type, row) {
+                    //         // Verifica si 'data' es null o una cadena vacía
+                    //         if (data == null || data == "") {
+                    //             return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                    //         } else {
+                    //             return data; // Valor no es null ni vacío
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     data: 'contrato.nombre_servicio',
+                    //     name: 'contrato.nombre_servicio',
+                    //     render: function(data, type, row) {
+                    //         // Verifica si 'data' es null o una cadena vacía
+                    //         if (data == null || data == "") {
+                    //             return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                    //         } else {
+                    //             return data; // Valor no es null ni vacío
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     data: 'area',
+                    //     name: 'area'
+                    // },
+                    // {
+                    //     data: 'user',
+                    //     name: 'user'
+                    // },
+                    // {
+                    //     data: 'sub_total',
+                    //     name: 'sub_total',
+                    //     visible: false
+                    // },
+                    // {
+                    //     data: 'iva',
+                    //     name: 'iva',
+                    //     visible: false
+                    // },
+                    // {
+                    //     data: 'total',
+                    //     name: 'total',
+                    //     visible: false
+                    // },
+                    // {
+                    //     data: 'id',
+                    //     name: 'actions',
+                    //     render: function(data, type, row, meta) {
+                    //         let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
+                    //         let urlButtonRellenar = `/contract_manager/orden-compra/${data}/edit`;
+                    //         let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
+                    //         let urlButtonEditar =
+                    //             `/contract_manager/orden-compra/${data}/editar-orden-compra`;
+                    //         let urlButtonCancelar =
+                    //             `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
+                    //         let htmlBotones = '<div class="btn-group">';
 
-                            if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada' &&
-                                row.contador_version_orden_compra == 3) {
-                                // Si el campo es null, se muestra el botón de edición
-                                htmlBotones += `@can('katbol_ordenes_compra_modificar')
-                                                <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
-                                                @endcan`;
-                            }
+                    //         if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada' &&
+                    //             row.contador_version_orden_compra == 3) {
+                    //             // Si el campo es null, se muestra el botón de edición
+                    //             htmlBotones += `@can('katbol_ordenes_compra_modificar')
+                //                             <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
+                //                             @endcan`;
+                    //         }
 
-                            if (row.estado_orden == 'cancelada') {
-                                htmlBotones += `<a href="${urlButtonEditar}" >
-                                <i class = "fas fa-pen" ></i></a >`;
-                            }
+                    //         if (row.estado_orden == 'cancelada') {
+                    //             htmlBotones += `<a href="${urlButtonEditar}" >
+                //             <i class = "fas fa-pen" ></i></a >`;
+                    //         }
 
-                            if (row.estado_orden == 'curso') {
-                                htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
-                                <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
-                            }
+                    //         if (row.estado_orden == 'curso') {
+                    //             htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
+                //             <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
+                    //         }
 
-                            // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
-                            htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
-                                            </div>`;
+                    //         // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
+                    //         htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
+                //                         </div>`;
 
-                            return htmlBotones;
+                    //         return htmlBotones;
 
-                        }
-                    }
+                    //     }
+                    // }
                 ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
                 columnDefs: [{
-                    targets: [9, 10, 11], // Indexes of columns SUBTOTAL and IVA
-                    visible: false, // Hide the columns on the webpage
-                    searchable: false // Exclude the columns from searching
+                    // targets: [9, 10, 11], // Indexes of columns SUBTOTAL and IVA
+                    // visible: false, // Hide the columns on the webpage
+                    // searchable: false // Exclude the columns from searching
                 }]
             };
             let table = $('.datatable-Requisiciones').DataTable(dtOverrideGlobals);
