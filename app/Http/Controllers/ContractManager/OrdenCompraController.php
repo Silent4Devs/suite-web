@@ -75,7 +75,7 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->orderByDesc('id')
                 ->get();
-            Log::info('Antes del return if');
+            Log::info('Antes del return if', ['requisiciones' => $requisiciones]);
             return datatables()->of($requisiciones)->toJson();
             Log::info('Despues del return if');
         } else {
@@ -87,7 +87,7 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
                 ->get();
-            Log::info('Antes del return else');
+            Log::info('Antes del return else', ['requisiciones' => $requisiciones]);
             return datatables()->of($requisiciones)->toJson();
             Log::info('Despues del return else');
         }
