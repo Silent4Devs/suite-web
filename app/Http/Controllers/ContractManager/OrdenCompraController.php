@@ -23,6 +23,7 @@ use App\Traits\ObtenerOrganizacion;
 use DB;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use NumberFormatter;
 use PDF;
@@ -62,9 +63,11 @@ class OrdenCompraController extends Controller
 
     public function getOCIndex(Request $request)
     {
+        Log::info("Entra funcion");
         $user = User::getCurrentUser();
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+            Log::info("Entra if");
             $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
                 ['firma_solicitante', '!=', null],
                 ['firma_jefe', '!=', null],
@@ -72,9 +75,11 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->orderByDesc('id')
                 ->get();
-
+            Log::info('Antes del return if');
             return datatables()->of($requisiciones)->toJson();
+            Log::info('Despues del return if');
         } else {
+            Log::info("Entra else");
             $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
                 ['firma_solicitante', '!=', null],
                 ['firma_jefe', '!=', null],
@@ -82,9 +87,11 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
                 ->get();
-
+            Log::info('Antes del return else');
             return datatables()->of($requisiciones)->toJson();
+            Log::info('Despues del return else');
         }
+        Log::info("No entra en if-else");
     }
 
     /**
