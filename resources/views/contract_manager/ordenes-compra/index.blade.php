@@ -16,9 +16,9 @@
         <button type="button" class="btn  tb-btn-primary" id="filtrarBtn4">Aprobadores</button>
     </div>
     <div class="mt-5 card">
-        <div class="card-body datatable-fix">
-
-            <table class="table w-100 datatable-Requisiciones">
+        <div class="card-body">
+            <div class="datatable-rds w-100">
+            <table class="table datatable-Requisiciones w-100 tblCSV" id="datatable-Requisiciones">
                 <thead class="">
                     <tr>
 
@@ -31,14 +31,127 @@
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
-                        <th style="vertical-align: top">SUBTOTAL</th>
-                        <th style="vertical-align: top">IVA</th>
-                        <th style="vertical-align: top">Total</th>
+                        <th style="display:none">SUBTOTAL</th>
+                        <th style="display:none">IVA</th>
+                        <th style="display:none">Total</th>
                         <th style="vertical-align: top">Opciones</th>
 
                     </tr>
                 </thead>
+                <tbody>
+                     @foreach ($requisiciones as $keyReq => $req)
+                     <tr>
+                        <td>{{ $req->folio }}</td>
+                        <td>{{ $req->fecha }}</td>
+                        <td>{{ $req->referencia }}</td>
+                        <td>
+                            @php
+                                $dataProv = $req->proveedor_catalogo_oc;
+                            @endphp
+
+                            @if (is_null($dataProv)) <!-- Blade usa `is_null` para verificar null -->
+                                {{-- Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto --}}
+                                @if (!empty($req->proveedores_requisiciones) && count($req->proveedores_requisiciones) > 0)
+                                    {{ $req->proveedores_requisiciones[0]->contacto }}
+                                @else
+                                    <p>Pendiente</p>
+                                @endif
+                            @else
+                                {{ $dataProv }} {{-- Valor no es null --}}
+                            @endif
+                        </td>
+                        <td>
+                            @php
+                                $firma_solicitante = $req->firma_solicitante_orden;
+                                $firma_comprador = $req->firma_comprador_orden;
+                                $firma_finanzas = $req->firma_finanzas_orden;
+                                $estatus = $req->estado_orden;
+                            @endphp
+
+                            @if ($estatus == 'cancelada')
+                                <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                            @elseif ($estatus == 'rechazado_oc')
+                                <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                            @else
+                                @if (!$firma_solicitante && !$firma_comprador && !$firma_finanzas)
+                                    <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
+                                @elseif ($firma_solicitante && $firma_comprador && $firma_finanzas)
+                                    <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                @else
+                                    <h5><span class="badge badge-pill badge-info">En curso</span></h5>
+                                @endif
+                            @endif
+
+                        </td>
+                        <td>
+                            @php
+                                $n_contrato = $req->contrato->no_contrato ?? null;
+                            @endphp
+
+                            @if (empty($n_contrato))
+                                <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
+                            @else
+                                {{ $n_contrato }} <!-- Muestra el valor cuando no es vacío -->
+                            @endif
+                        </td>
+                        <td>
+                            @php
+                                $nombre_servicio = $req->contrato->nombre_servicio ?? null;
+                            @endphp
+
+                            @if (empty($nombre_servicio))
+                                <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
+                            @else
+                                {{ $nombre_servicio }} <!-- Muestra el valor cuando no es vacío -->
+                            @endif
+                        </td>
+                        <td>{{ $req->area }}</td>
+                        <td>{{ $req->user }}</td>
+                        <td style="display: none">{{ $req->sub_total }}</td>
+                        <td style="display: none">{{ $req->iva }}</td>
+                        <td style="display: none">{{ $req->total }}</td>
+                        @php
+                            $data = $req->id;
+                            $urlButtonArchivar = url("/contract_manager/orden-compra/archivar/{$data}");
+                            $urlButtonRellenar = url("/contract_manager/orden-compra/{$data}/edit");
+                            $urlButtonShow = url("/contract_manager/orden-compra/show/{$data}");
+                            $urlButtonEditar = url("/contract_manager/orden-compra/{$data}/editar-orden-compra");
+                            $urlButtonCancelar = url("/contract_manager/orden-compra/{$data}/cancelarOrdenCompra");
+                        @endphp
+
+                        <td>
+                            <div class="btn-group">
+                                @if (is_null($req->firma_comprador_orden) && $req->estado_orden != 'cancelada' && $req->contador_version_orden_compra == 3)
+                                    @can('katbol_ordenes_compra_modificar')
+                                        <a href="{{ $urlButtonRellenar }}" class="btn btn-sm" title="Ingresar Información">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endcan
+                                @endif
+
+                                @if ($req->estado_orden == 'cancelada')
+                                    <a href="{{ $urlButtonEditar }}" title="Editar Orden Cancelada">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                @endif
+
+                                @if ($req->estado_orden == 'curso')
+                                    <a href="#" onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})" title="Cancelar Orden">
+                                        <i class="fa-regular fa-rectangle-xmark"></i>
+                                    </a>
+                                @endif
+
+                                <a href="{{ $urlButtonShow }}" title="Ver/Imprimir" class="btn btn-sm">
+                                    <i class="fa-solid fa-print"></i>
+                                </a>
+                            </div>
+                        </td>
+
+                     </tr>
+                     @endforeach
+                </tbody>
             </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -205,155 +318,155 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                ajax: {
-                    url: "{{ route('contract_manager.orden-compra.get-oc-index') }}",
-                    type: 'POST',
-                    data: {
-                        _token: _token
-                    }
-                },
-                columns: [{
-                        data: 'folio',
-                        name: 'folio'
-                    },
-                    {
-                        data: 'fecha',
-                        name: 'fecha'
-                    },
-                    {
-                        data: 'referencia',
-                        name: 'referencia'
-                    },
-                    {
-                        data: 'proveedor_catalogo_oc',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o undefined
-                            if (data === null || typeof data === 'undefined') {
-                                // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
-                                if (row.proveedores_requisiciones && row.proveedores_requisiciones
-                                    .length > 0) {
-                                    return row.proveedores_requisiciones[0].contacto;
-                                } else {
-                                    return 'Pendiente';
-                                }
-                            } else {
-                                return data; // Valor no es null ni undefined
-                            }
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            var firma_solicitante = row.firma_solicitante_orden;
-                            var firma_comprador = row.firma_comprador_orden;
-                            var firma_finanzas = row.firma_finanzas_orden;
-                            var estatus = row.estado_orden;
+                // ajax: {
+                //     url: "{{ route('contract_manager.orden-compra.get-oc-index') }}",
+                //     type: 'POST',
+                //     data: {
+                //         _token: _token
+                //     }
+                // },
+                // columns: [{
+                //         data: 'folio',
+                //         name: 'folio'
+                //     },
+                //     {
+                //         data: 'fecha',
+                //         name: 'fecha'
+                //     },
+                //     {
+                //         data: 'referencia',
+                //         name: 'referencia'
+                //     },
+                //     {
+                //         data: 'proveedor_catalogo_oc',
+                //         render: function(data, type, row) {
+                //             // Verifica si 'data' es null o undefined
+                //             if (data === null || typeof data === 'undefined') {
+                //                 // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
+                //                 if (row.proveedores_requisiciones && row.proveedores_requisiciones
+                //                     .length > 0) {
+                //                     return row.proveedores_requisiciones[0].contacto;
+                //                 } else {
+                //                     return 'Pendiente';
+                //                 }
+                //             } else {
+                //                 return data; // Valor no es null ni undefined
+                //             }
+                //         }
+                //     },
+                //     {
+                //         data: null,
+                //         render: function(data, type, row) {
+                //             var firma_solicitante = row.firma_solicitante_orden;
+                //             var firma_comprador = row.firma_comprador_orden;
+                //             var firma_finanzas = row.firma_finanzas_orden;
+                //             var estatus = row.estado_orden;
 
-                            if (row.estado_orden == 'cancelada') {
-                                return '<h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>';
-                            } else if (estatus == "rechazado_oc") {
-                                return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
-                            } else {
-                                if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
-                                    return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
-                                } else if (firma_solicitante && firma_comprador && firma_finanzas) {
-                                    return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
-                                } else {
-                                    return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
-                                }
-                            }
-                        }
-                    },
-                    {
-                        data: 'contrato.no_contrato',
-                        name: 'contrato.no_contrato',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o una cadena vacía
-                            if (data == null || data == "") {
-                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
-                            } else {
-                                return data; // Valor no es null ni vacío
-                            }
-                        }
-                    },
-                    {
-                        data: 'contrato.nombre_servicio',
-                        name: 'contrato.nombre_servicio',
-                        render: function(data, type, row) {
-                            // Verifica si 'data' es null o una cadena vacía
-                            if (data == null || data == "") {
-                                return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
-                            } else {
-                                return data; // Valor no es null ni vacío
-                            }
-                        }
-                    },
-                    {
-                        data: 'area',
-                        name: 'area'
-                    },
-                    {
-                        data: 'user',
-                        name: 'user'
-                    },
-                    {
-                        data: 'sub_total',
-                        name: 'sub_total',
-                        visible: false
-                    },
-                    {
-                        data: 'iva',
-                        name: 'iva',
-                        visible: false
-                    },
-                    {
-                        data: 'total',
-                        name: 'total',
-                        visible: false
-                    },
-                    {
-                        data: 'id',
-                        name: 'actions',
-                        render: function(data, type, row, meta) {
-                            let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
-                            let urlButtonRellenar = `/contract_manager/orden-compra/${data}/edit`;
-                            let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
-                            let urlButtonEditar =
-                                `/contract_manager/orden-compra/${data}/editar-orden-compra`;
-                            let urlButtonCancelar =
-                                `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
-                            let htmlBotones = '<div class="btn-group">';
+                //             if (row.estado_orden == 'cancelada') {
+                //                 return '<h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>';
+                //             } else if (estatus == "rechazado_oc") {
+                //                 return '<h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>';
+                //             } else {
+                //                 if (!firma_solicitante && !firma_comprador && !firma_finanzas) {
+                //                     return '<h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>';
+                //                 } else if (firma_solicitante && firma_comprador && firma_finanzas) {
+                //                     return '<h5><span class="badge badge-pill badge-success">Firmada</span></h5>';
+                //                 } else {
+                //                     return '<h5><span class="badge badge-pill badge-info">En curso</span></h5>';
+                //                 }
+                //             }
+                //         }
+                //     },
+                //     {
+                //         data: 'contrato.no_contrato',
+                //         name: 'contrato.no_contrato',
+                //         render: function(data, type, row) {
+                //             // Verifica si 'data' es null o una cadena vacía
+                //             if (data == null || data == "") {
+                //                 return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                //             } else {
+                //                 return data; // Valor no es null ni vacío
+                //             }
+                //         }
+                //     },
+                //     {
+                //         data: 'contrato.nombre_servicio',
+                //         name: 'contrato.nombre_servicio',
+                //         render: function(data, type, row) {
+                //             // Verifica si 'data' es null o una cadena vacía
+                //             if (data == null || data == "") {
+                //                 return '<span class="error">Campo Vacío</span>'; // Mensaje de error o cómo deseas mostrar la validación
+                //             } else {
+                //                 return data; // Valor no es null ni vacío
+                //             }
+                //         }
+                //     },
+                //     {
+                //         data: 'area',
+                //         name: 'area'
+                //     },
+                //     {
+                //         data: 'user',
+                //         name: 'user'
+                //     },
+                //     {
+                //         data: 'sub_total',
+                //         name: 'sub_total',
+                //         visible: false
+                //     },
+                //     {
+                //         data: 'iva',
+                //         name: 'iva',
+                //         visible: false
+                //     },
+                //     {
+                //         data: 'total',
+                //         name: 'total',
+                //         visible: false
+                //     },
+                //     {
+                //         data: 'id',
+                //         name: 'actions',
+                //         render: function(data, type, row, meta) {
+                //             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
+                //             let urlButtonRellenar = `/contract_manager/orden-compra/${data}/edit`;
+                //             let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
+                //             let urlButtonEditar =
+                //                 `/contract_manager/orden-compra/${data}/editar-orden-compra`;
+                //             let urlButtonCancelar =
+                //                 `/contract_manager/orden-compra/${data}/cancelarOrdenCompra`;
+                //             let htmlBotones = '<div class="btn-group">';
 
-                            if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada' &&
-                                row.contador_version_orden_compra == 3) {
-                                // Si el campo es null, se muestra el botón de edición
-                                htmlBotones += `@can('katbol_ordenes_compra_modificar')
-                                                <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
-                                                @endcan`;
-                            }
+                //             if (row.firma_comprador_orden === null && row.estado_orden != 'cancelada' &&
+                //                 row.contador_version_orden_compra == 3) {
+                //                 // Si el campo es null, se muestra el botón de edición
+                //                 htmlBotones += `@can('katbol_ordenes_compra_modificar')
+                //                                 <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
+                //                                 @endcan`;
+                //             }
 
-                            if (row.estado_orden == 'cancelada') {
-                                htmlBotones += `<a href="${urlButtonEditar}" >
-                                <i class = "fas fa-pen" ></i></a >`;
-                            }
+                //             if (row.estado_orden == 'cancelada') {
+                //                 htmlBotones += `<a href="${urlButtonEditar}" >
+                //                 <i class = "fas fa-pen" ></i></a >`;
+                //             }
 
-                            if (row.estado_orden == 'curso') {
-                                htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
-                                <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
-                            }
+                //             if (row.estado_orden == 'curso') {
+                //                 htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
+                //                 <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
+                //             }
 
-                            // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
-                            htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
-                                            </div>`;
+                //             // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
+                //             htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
+                //                             </div>`;
 
-                            return htmlBotones;
+                //             return htmlBotones;
 
-                        }
-                    }
-                ],
+                //         }
+                //     }
+                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
