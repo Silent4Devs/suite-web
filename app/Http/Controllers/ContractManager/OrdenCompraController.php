@@ -60,7 +60,7 @@ class OrdenCompraController extends Controller
         return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
     }
 
-    public function getRequisicionIndex(Request $request)
+    public function getOCIndex(Request $request)
     {
         $user = User::getCurrentUser();
 
