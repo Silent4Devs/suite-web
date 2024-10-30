@@ -113,39 +113,41 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}" class="dropdown-item">
+                                            <i class="fa-solid fa-print"></i> Ver/Imprimir
+                                        </a>
 
-                                {{-- @if ($requisicion->estado === 'rechazado')
-                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                @endif --}}
+                                        <a onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')" class="dropdown-item">
+                                            <i class="fa-solid fa-box-archive"></i> Archivar
+                                        </a>
 
-                                <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
-                                        class="fa-solid fa-print"></i></a>
+                                        <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')" class="dropdown-item text-danger">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
 
+                                        @if ($requisicion->estado == 'cancelada')
+                                            <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}" class="dropdown-item">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </a>
+                                        @endif
 
-                                <a
-                                    onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i
-                                        class="fa-solid fa-box-archive"></i></a>
-
-                                <a
-                                    onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i
-                                        class="fas fa-trash text-danger"></i></a>
-
-                                @if ($requisicion->estado == 'cancelada')
-                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
-                                            class="fas fa-pen"></i></a>
-                                @endif
-
-                                @if ($requisicion->estado == 'curso')
-                                    <a
-                                        onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 1, {{ $requisicion->id }})"><i
-                                            class="fa-regular fa-rectangle-xmark"></i></a>
-                                @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
-                                    <a
-                                        onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})"><i
-                                            class="fa-regular fa-rectangle-xmark"></i></a>
-                                @endif
-
+                                        @if ($requisicion->estado == 'curso')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 1, {{ $requisicion->id }})" class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})" class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

@@ -120,32 +120,39 @@
                         @endphp
 
                         <td>
-                            <div class="btn-group">
-                                @if (is_null($req->firma_comprador_orden) && $req->estado_orden != 'cancelada' && $req->contador_version_orden_compra == 3)
-                                    @can('katbol_ordenes_compra_modificar')
-                                        <a href="{{ $urlButtonRellenar }}" class="btn btn-sm" title="Ingresar Información">
-                                            <i class="fas fa-edit"></i>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                    @if (is_null($req->firma_comprador_orden) && $req->estado_orden != 'cancelada' && $req->contador_version_orden_compra == 3)
+                                        @can('katbol_ordenes_compra_modificar')
+                                            <a href="{{ $urlButtonRellenar }}" class="dropdown-item" title="Ingresar Información">
+                                                <i class="fas fa-edit"></i> Ingresar Información
+                                            </a>
+                                        @endcan
+                                    @endif
+
+                                    @if ($req->estado_orden == 'cancelada')
+                                        <a href="{{ $urlButtonEditar }}" class="dropdown-item" title="Editar Orden Cancelada">
+                                            <i class="fas fa-pen"></i> Editar Orden Cancelada
                                         </a>
-                                    @endcan
-                                @endif
+                                    @endif
 
-                                @if ($req->estado_orden == 'cancelada')
-                                    <a href="{{ $urlButtonEditar }}" title="Editar Orden Cancelada">
-                                        <i class="fas fa-pen"></i>
+                                    @if ($req->estado_orden == 'curso')
+                                        <a href="#" onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})" class="dropdown-item" title="Cancelar Orden">
+                                            <span class="material-symbols-outlined">cancel</span> Cancelar Orden
+                                        </a>
+                                    @endif
+
+                                    <a href="{{ $urlButtonShow }}" title="Ver/Imprimir" class="dropdown-item">
+                                        <i class="fa-solid fa-print"></i> Ver/Imprimir
                                     </a>
-                                @endif
-
-                                @if ($req->estado_orden == 'curso')
-                                    <a href="#" onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})" title="Cancelar Orden">
-                                        <i class="fa-regular fa-rectangle-xmark"></i>
-                                    </a>
-                                @endif
-
-                                <a href="{{ $urlButtonShow }}" title="Ver/Imprimir" class="btn btn-sm">
-                                    <i class="fa-solid fa-print"></i>
-                                </a>
+                                </div>
                             </div>
                         </td>
+
 
                      </tr>
                      @endforeach
