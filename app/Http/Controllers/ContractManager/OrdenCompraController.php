@@ -788,7 +788,8 @@ class OrdenCompraController extends Controller
     public function firmarAprobadores($id)
     {
         $bandera = true;
-        $requisicion = KatbolRequsicion::getOCAll()->where('id', $id)->first();
+        // $requisicion = KatbolRequsicion::getOCAll()->where('id', $id)->first();
+        $requisicion = KatbolRequsicion::where('id', $id)->first();
 
         $user = User::getCurrentUser();
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
