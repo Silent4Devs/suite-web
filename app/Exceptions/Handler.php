@@ -2,15 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Access\AuthorizationException;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
-
 
 class Handler extends ExceptionHandler
 {
@@ -73,5 +71,4 @@ class Handler extends ExceptionHandler
             'message' => $e->getMessage(),  // Pasamos el mensaje del error
         ], 500);
     }
-
 }

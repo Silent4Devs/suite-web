@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\AnalisisRiesgo;
 
-
 use App\Http\Controllers\Controller;
 use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
 use App\Models\TBQuestionTemplateAnalisisRiesgoModel;
