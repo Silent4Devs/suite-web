@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Jobs\SendPoliticasSgiNotificationJob;
+
 use App\Models\PoliticaSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -29,7 +29,6 @@ class PoliticasSgiEvent implements ShouldBroadcast
         $this->tabla = $tabla;
         $this->slug = $slug;
 
-        SendPoliticasSgiNotificationJob::dispatch($this->politicas, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     /**
