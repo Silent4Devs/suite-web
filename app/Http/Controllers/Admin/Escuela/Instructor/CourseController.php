@@ -107,6 +107,8 @@ class CourseController extends Controller
     {
         // $this->authorize('dicatated', $course);
 
+        // dd($course);
+
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
