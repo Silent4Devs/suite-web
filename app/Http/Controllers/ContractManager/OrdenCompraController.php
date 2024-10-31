@@ -183,7 +183,8 @@ class OrdenCompraController extends Controller
     {
         try {
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            // $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::where('id', $id)->first();
             if (! $requisicion) {
                 abort(404);
             }
