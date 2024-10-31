@@ -51,23 +51,7 @@ class OrdenCompraController extends Controller
     {
         $user = User::getCurrentUser();
 
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-        $buttonSolicitante = false;
-        $buttonFinanzas = false;
-        $buttonCompras = false;
-
-        return view('contract_manager.ordenes-compra.index', compact('buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
-    }
-
-    public function getOCIndex(Request $request)
-    {
-        Log::info("Entra funcion");
-        $user = User::getCurrentUser();
-
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
-            Log::info("Entra if");
             $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
                 ['firma_solicitante', '!=', null],
                 ['firma_jefe', '!=', null],
@@ -75,11 +59,7 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->orderByDesc('id')
                 ->get();
-            Log::info('Antes del return if', ['requisiciones' => $requisiciones]);
-            return datatables()->of($requisiciones)->toJson();
-            Log::info('Despues del return if');
         } else {
-            Log::info("Entra else");
             $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
                 ['firma_solicitante', '!=', null],
                 ['firma_jefe', '!=', null],
@@ -87,12 +67,42 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
                 ->get();
-            Log::info('Antes del return else', ['requisiciones' => $requisiciones]);
-            return datatables()->of($requisiciones)->toJson();
-            Log::info('Despues del return else');
         }
-        Log::info("No entra en if-else");
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+        $buttonSolicitante = false;
+        $buttonFinanzas = false;
+        $buttonCompras = false;
+
+        return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
     }
+
+    // public function getOCIndex(Request $request)
+    // {
+    //     $user = User::getCurrentUser();
+
+    //     if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+    //         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+    //             ['firma_solicitante', '!=', null],
+    //             ['firma_jefe', '!=', null],
+    //             ['firma_finanzas', '!=', null],
+    //             ['firma_compras', '!=', null],
+    //         ])->where('archivo', false)->orderByDesc('id')
+    //             ->get();
+    //         return datatables()->of($requisiciones)->toJson();
+    //     } else {
+    //         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+    //             ['firma_solicitante', '!=', null],
+    //             ['firma_jefe', '!=', null],
+    //             ['firma_finanzas', '!=', null],
+    //             ['firma_compras', '!=', null],
+    //         ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
+    //             ->get();
+    //         return datatables()->of($requisiciones)->toJson();
+    //     }
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -265,8 +275,8 @@ class OrdenCompraController extends Controller
     {
         try {
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
-            // dd($requisicion, $requisicion->proveedoroc_id, $requisicion->proveedor);
+            // $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::where('id', $id)->first();
             if (! $requisicion) {
                 abort(404);
             }

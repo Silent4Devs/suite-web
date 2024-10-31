@@ -1,9 +1,10 @@
+# Usa la imagen oficial de PHP
 FROM php:8.2-fpm-alpine
 
-# Añadir el script para instalar extensiones de PHP
+# Añadir script de instalador de extensiones PHP
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# Instalar dependencias y extensiones PHP
+# Install dependencies
 RUN apk add --no-cache \
     bash \
     curl \
@@ -12,10 +13,12 @@ RUN apk add --no-cache \
     gcc \
     git \
     icu-dev \
+    icu-libs \
     libc-dev \
     libzip-dev \
     libpq-dev \
     make \
+    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -28,16 +31,21 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev && \
-    chmod +x /usr/local/bin/install-php-extensions && \
+    libsodium-dev
+
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
+    #imagick-stable \
+    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -47,37 +55,32 @@ RUN apk add --no-cache \
     sockets \
     sodium \
     excimer \
+    pcntl \
     posix \
     amqp \
-    ftp && \
-    rm -rf /var/cache/apk/*
+    ftp
 
-# Copiar el código de la aplicación
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Copiar el proyecto al contenedor
 COPY . /var/www
+
+# Establecer el directorio de trabajo
 WORKDIR /var/www
 
-# Establecer permisos
-RUN chown -R www-data:www-data /var/www && \
-    chmod 755 -R /var/www
-
-# Crear carpetas necesarias
-RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
+# Crear directorios de caché y establecer permisos
+RUN mkdir -p storage/framework/cache bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
-# Instalar npm
-RUN npm install -g npm@latest
+# Instalar dependencias de Laravel y Laravel Octane
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs || true && \
+    composer require laravel/octane --ignore-platform-reqs || true && \
+    composer require spiral/roadrunner --ignore-platform-reqs || true
 
-# Generar la clave de la aplicación y configurar Octane
-RUN php artisan key:generate && \
-    php artisan octane:install --server="swoole"
+# Exponer el puerto que usará Octane
+EXPOSE 9000
 
-# Comando para iniciar el servidor
-CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0"]
-
-# Exponer el puerto
-EXPOSE 8000
-
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+# Comando para ejecutar Octane con RoadRunner
+CMD ["php", "artisan", "octane:start", "--host=0.0.0.0", "--server=roadrunner"]
