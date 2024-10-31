@@ -76,7 +76,7 @@ class OrdenCompraController extends Controller
         $buttonFinanzas = false;
         $buttonCompras = false;
 
-        return view('contract_manager.ordenes-compra.index', compact('requisiciones','buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
+        return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
     }
 
     // public function getOCIndex(Request $request)
@@ -275,8 +275,8 @@ class OrdenCompraController extends Controller
     {
         try {
             abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
-            // dd($requisicion, $requisicion->proveedoroc_id, $requisicion->proveedor);
+            // $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::where('id', $id)->first();
             if (! $requisicion) {
                 abort(404);
             }
