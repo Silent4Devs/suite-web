@@ -1,35 +1,86 @@
-FROM php:8.0.11-fpm-alpine
+# Usa la imagen oficial de PHP
+FROM php:8.2-fpm-alpine
 
+# Añadir script de instalador de extensiones PHP
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-RUN apk --no-cache upgrade && \
-    apk --no-cache add bash git sudo openssh  libxml2-dev oniguruma-dev autoconf gcc g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
+# Install dependencies
+RUN apk add --no-cache \
+    bash \
+    curl \
+    freetype-dev \
+    g++ \
+    gcc \
+    git \
+    icu-dev \
+    icu-libs \
+    libc-dev \
+    libzip-dev \
+    libpq-dev \
+    make \
+    #mysql-client \
+    nodejs \
+    npm \
+    oniguruma-dev \
+    yarn \
+    openssh-client \
+    postgresql-libs \
+    postgresql-client \
+    rsync \
+    zlib-dev \
+    sudo \
+    zip \
+    unzip \
+    libsodium-dev
 
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions \
+    @composer \
+    redis-stable \
+    #imagick-stable \
+    #xdebug-stable \
+    bcmath \
+    calendar \
+    exif \
+    gd \
+    intl \
+    #pdo_mysql \
+    pdo_pgsql \
+    pcntl \
+    soap \
+    zip \
+    apcu \
+    opcache \
+    sockets \
+    sodium \
+    excimer \
+    pcntl \
+    posix \
+    amqp \
+    ftp
 
-# PHP: Install php extensions
-RUN pecl channel-update pecl.php.net
-RUN pecl install pcov ssh2 swoole
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install mbstring xml iconv pcntl gd zip sockets pdo  pdo_mysql bcmath soap
-RUN docker-php-ext-enable mbstring xml gd iconv zip pcov pcntl sockets bcmath pdo  pdo_mysql soap swoole
-
-
-RUN docker-php-ext-install pdo pdo_mysql sockets
-RUN curl -sS https://getcomposer.org/installer​ | php -- \
-     --install-dir=/usr/local/bin --filename=composer
-
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY --from=spiralscout/roadrunner:2.4.2 /usr/bin/rr /usr/bin/rr
 
-WORKDIR /app
-COPY . .
+# Copiar el proyecto al contenedor
+COPY . /var/www
 
-RUN composer install
-RUN composer require laravel/octane spiral/roadrunner
+# Establecer el directorio de trabajo
+WORKDIR /var/www
 
-COPY .env.example .env
+# Crear directorios de caché y establecer permisos
+RUN mkdir -p storage/framework/cache bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 
-RUN php artisan key:generate
-RUN php artisan octane:install --server="swoole"
+# Instalar dependencias de Laravel y Laravel Octane
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs || true && \
+    composer require laravel/octane --ignore-platform-reqs || true && \
+    composer require spiral/roadrunner --ignore-platform-reqs || true
 
-CMD php artisan octane:start --server="swoole" --host="0.0.0.0"
-EXPOSE 8000
+# Exponer el puerto que usará Octane
+EXPOSE 9000
+
+# Comando para ejecutar Octane con RoadRunner
+CMD ["php", "artisan", "octane:start", "--host=0.0.0.0", "--server=roadrunner"]
