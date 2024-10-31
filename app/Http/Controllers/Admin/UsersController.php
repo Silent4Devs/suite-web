@@ -150,10 +150,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::getAll()->where('name', 'LIKE', '%' . $nombre . '%')->take(5);
+            $usuarios = User::getAll()->where('name', 'LIKE', '%'.$nombre.'%')->take(5);
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
             $lista .= '</ul>';
 
