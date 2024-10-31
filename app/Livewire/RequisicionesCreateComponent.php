@@ -594,7 +594,7 @@ class RequisicionesCreateComponent extends Component
 
             $jefe = $this->user->empleado->supervisor;
             //Buscamos al supervisor por su id
-            $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+            $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
             //Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
