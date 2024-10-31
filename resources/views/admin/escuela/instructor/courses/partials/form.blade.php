@@ -1,21 +1,27 @@
 <div class="form-group">
     <div class="mt-2 row justify-content-start">
         <div class="form-group col-6 anima-focus">
-            <input type="text" name="title" id="title" class="form-control {{ $errors->has('title') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('title', $course->title) }}">
+            <input type="text" name="title" id="title"
+                class="form-control {{ $errors->has('title') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('title', $course->title) }}">
             <label for="title">Título del curso*:</label>
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-6 anima-focus">
-            <input type="text" name="slug" id="slug" class="form-control {{ $errors->has('slug') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('slug', $course->slug) }}">
+            <input type="text" name="slug" id="slug"
+                class="form-control {{ $errors->has('slug') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('slug', $course->slug) }}">
             <label for="slug">Slug del curso*:</label>
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            <input type="text" name="subtitle" class="form-control {{ $errors->has('subtitle') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('subtitle', $course->subtitle) }}">
+            <input type="text" name="subtitle"
+                class="form-control {{ $errors->has('subtitle') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('subtitle', $course->subtitle) }}">
             <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
             @error('subtitle')
                 <p class="text-danger">{{ $message }}</p>
@@ -42,7 +48,8 @@
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            <textarea name="description" id="description" class="form-control {{ $errors->has('description') ? 'border-red-600' : '' }}" placeholder="">{{ old('description', $course->description) }}</textarea>
+            <textarea name="description" id="description"
+                class="form-control {{ $errors->has('description') ? 'border-red-600' : '' }}" placeholder="">{{ old('description', $course->description) }}</textarea>
             <label for="description">Descripción del curso:</label>
             @error('description')
                 <p class="text-danger">{{ $message }}</p>
@@ -65,8 +72,9 @@
         <div class="form-group col-6 anima-focus">
             <select name="category_id" id="category_id" class="form-control">
                 <option value="">Seleccione una opción</option>
-                @foreach($categories as $key => $value)
-                    <option value="{{ $key }}" {{ old('category_id', $selectedCategory) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @foreach ($categories as $key => $value)
+                    <option value="{{ $key }}" {{ old('category_id', $value) == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
                 @endforeach
             </select>
             <label for="category_id">Categoría*</label>
@@ -77,8 +85,9 @@
         <div class="form-group col-6 anima-focus">
             <select name="level_id" id="level_id" class="form-control">
                 <option value="">Seleccione una opción</option>
-                @foreach($levels as $key => $value)
-                    <option value="{{ $key }}" {{ old('level_id', $selectedLevel) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @foreach ($levels as $key => $value)
+                    <option value="{{ $key }}" {{ old('level_id', $value) == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
                 @endforeach
             </select>
             <label for="level_id">Niveles*</label>
@@ -108,9 +117,8 @@
                 <p class="mb-4">{{ $course->description }}</p>
             @endisset --}}
             <input type="file" name="file"
-                   class="form-input w-full {{ $errors->has('file') ? 'border-red-600' : '' }}"
-                   id="file"
-                   accept="image/*">
+                class="form-input w-full {{ $errors->has('file') ? 'border-red-600' : '' }}" id="file"
+                accept="image/*">
             @error('file')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
