@@ -63,16 +63,18 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Crear directorios de caché y establecer permisos
+RUN mkdir -p storage/framework/cache bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
+
+
 # Copiar el proyecto al contenedor
 COPY . /var/www
 
 # Establecer el directorio de trabajo
 WORKDIR /var/www
 
-# Crear directorios de caché y establecer permisos
-RUN mkdir -p storage/framework/cache bootstrap/cache && \
-    chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache
 
 # Instalar dependencias de Laravel y Laravel Octane
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs || true && \
