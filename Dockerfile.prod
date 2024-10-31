@@ -1,83 +1,35 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.0.11-fpm-alpine
 
-# Añadir el script para instalar extensiones de PHP
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# Instalar dependencias y extensiones PHP
-RUN apk add --no-cache \
-    bash \
-    curl \
-    freetype-dev \
-    g++ \
-    gcc \
-    git \
-    icu-dev \
-    libc-dev \
-    libzip-dev \
-    libpq-dev \
-    make \
-    nodejs \
-    npm \
-    oniguruma-dev \
-    yarn \
-    openssh-client \
-    postgresql-libs \
-    postgresql-client \
-    rsync \
-    zlib-dev \
-    sudo \
-    zip \
-    unzip \
-    libsodium-dev && \
-    chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
-    @composer \
-    redis-stable \
-    bcmath \
-    calendar \
-    exif \
-    gd \
-    intl \
-    pdo_pgsql \
-    pcntl \
-    soap \
-    zip \
-    apcu \
-    opcache \
-    sockets \
-    sodium \
-    excimer \
-    posix \
-    amqp \
-    ftp && \
-    rm -rf /var/cache/apk/*
+RUN apk --no-cache upgrade && \
+    apk --no-cache add bash git sudo openssh  libxml2-dev oniguruma-dev autoconf gcc g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
 
-# Copiar el código de la aplicación
-COPY . /var/www
-WORKDIR /var/www
 
-# Establecer permisos
-RUN chown -R www-data:www-data /var/www && \
-    chmod 755 -R /var/www
+# PHP: Install php extensions
+RUN pecl channel-update pecl.php.net
+RUN pecl install pcov ssh2 swoole
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install mbstring xml iconv pcntl gd zip sockets pdo  pdo_mysql bcmath soap
+RUN docker-php-ext-enable mbstring xml gd iconv zip pcov pcntl sockets bcmath pdo  pdo_mysql soap swoole
 
-# Crear carpetas necesarias
-RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
-    chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache
 
-# Instalar npm
-RUN npm install -g npm@latest
+RUN docker-php-ext-install pdo pdo_mysql sockets
+RUN curl -sS https://getcomposer.org/installer​ | php -- \
+     --install-dir=/usr/local/bin --filename=composer
 
-# Generar la clave de la aplicación y configurar Octane
-RUN php artisan key:generate && \
-    php artisan octane:install --server="swoole"
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=spiralscout/roadrunner:2.4.2 /usr/bin/rr /usr/bin/rr
 
-# Comando para iniciar el servidor
-CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0"]
+WORKDIR /app
+COPY . .
 
-# Exponer el puerto
+RUN composer install
+RUN composer require laravel/octane spiral/roadrunner
+
+COPY .env.example .env
+
+RUN php artisan key:generate
+RUN php artisan octane:install --server="swoole"
+
+CMD php artisan octane:start --server="swoole" --host="0.0.0.0"
 EXPOSE 8000
-
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
