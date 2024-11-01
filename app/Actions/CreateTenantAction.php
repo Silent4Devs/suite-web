@@ -59,10 +59,16 @@ class CreateTenantAction
 
     protected function runMigrations()
     {
-        Artisan::call('migrate', [
-            '--database' => 'tenant',
-            '--path' => 'database/migrations/tabantaj',
-            '--force' => true,
-        ]);
+        if (!DB::connection('tenant')->getPdo()) {
+            dd("No se pudo conectar a la base de datos del inquilino.");
+        } else {
+            $pdo = DB::connection('tenant')->getPdo();
+            $databaseName = DB::connection('tenant')->getDatabaseName();
+            Artisan::call('migrate', [
+                '--database' => 'tenant',
+                '--path' => 'database/migrations/tabantaj',
+                '--force' => true,
+            ]);
+        }
     }
 }
