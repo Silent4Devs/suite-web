@@ -798,8 +798,11 @@ class RequisicionesController extends Controller
      */
     public function rechazada($id)
     {
-        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('id', $id)->first();
+        $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'registroFirmas', 'productos_requisiciones.producto')
+            ->where('id', $id)
+            ->first();
 
+        // Actualizar los campos en la tabla requisiciones
         $requisicion->update([
             'estado' => 'rechazado',
             'firma_solicitante' => null,
@@ -808,6 +811,16 @@ class RequisicionesController extends Controller
             'firma_compras' => null,
         ]);
 
+        // Actualizar los campos en la tabla registroFirmas, si existe la relación
+        if ($requisicion->registroFirmas) {
+            $requisicion->registroFirmas->update([
+                'jefe_id' => null,
+                'responsable_finanzas_id' => null,
+                'comprador_id' => null,
+            ]);
+        }
+
+        // Enviar el correo
         $userEmail = User::where('id', $requisicion->id_user)->first();
         $organizacion = Organizacion::getFirst();
         $tipo_firma = 'rechazado_requisicion';
@@ -816,6 +829,7 @@ class RequisicionesController extends Controller
 
         return redirect(route('contract_manager.requisiciones'));
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -1150,6 +1164,15 @@ class RequisicionesController extends Controller
                 'firma_finanzas_orden' => null,
                 'firma_comprador_orden' => null,
             ]);
+
+            // Actualizar los campos en la tabla registroFirmas, si existe la relación
+            if ($requisicion->registroFirmas) {
+                $requisicion->registroFirmas->update([
+                    'jefe_id' => null,
+                    'responsable_finanzas_id' => null,
+                    'comprador_id' => null,
+                ]);
+            }
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
