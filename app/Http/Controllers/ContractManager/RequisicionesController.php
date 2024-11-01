@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
+use App\Mail\RequisicionOrdenCompraCancelada;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
@@ -556,7 +557,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -578,7 +579,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -616,7 +617,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_finanzas';
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -647,7 +648,7 @@ class RequisicionesController extends Controller
                 if ($user->empleado->id == $firma_siguiente->comprador_id) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -674,7 +675,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1072,7 +1073,71 @@ class RequisicionesController extends Controller
     public function cancelarRequisicion(Request $request)
     {
         try {
+            $organizacion = $this->obtenerOrganizacion();
+
             $requisicion = KatbolRequsicion::findOrFail($request->id);
+
+            $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
+
+            $tipo = 'RQ';
+
+            $user = User::where('id', $requisicion->id_user)->first();
+
+            $correosFirmas = [];
+
+            // requisiciones
+            if ($requisicion->firma_solicitante !== null) {
+                $correosFirmas[] = removeUnicodeCharacters($firmas->solicitante->email);
+            }
+            if ($requisicion->firma_jefe !== null) {
+                $correosFirmas[] = removeUnicodeCharacters($firmas->jefe->email);
+            }
+            if ($requisicion->firma_finanzas !== null) {
+                $correosFirmas[] = removeUnicodeCharacters($firmas->responsableFinanzas->email);
+            }
+            if ($requisicion->firma_compras !== null) {
+                $correosFirmas[] = removeUnicodeCharacters($firmas->comprador->email);
+            }
+
+            // ordenes de compra
+            if ($requisicion->firma_comprador_orden !== null) {
+                $tipo = 'RQ-OC';
+
+                $responsableComprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                $comprador = $this->obtenerComprador($responsableComprador);
+
+                $correosFirmas[] = removeUnicodeCharacters($comprador->email);
+                // $this->tipo_firma_siguiente = 'firma_solicitante_orden';
+            }
+            if ($requisicion->firma_solicitante_orden !== null) {
+                $solicitante_email = User::find($requisicion->id_user)->empleado->email;
+                $correosFirmas[] = removeUnicodeCharacters($solicitante_email);
+                // $this->tipo_firma_siguiente = 'firma_finanzas_orden';
+            }
+
+            if ($requisicion->firma_finanzas_orden !== null) {
+
+                $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+                $listaPart = $listaReq->participantes;
+
+                for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                    $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                    if ($responsableNivel) {
+                        if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                            $responsable = $responsableNivel->empleado;
+                            $userEmail = removeUnicodeCharacters($responsable->email);
+                        }
+                    }
+                }
+
+                $correosFirmas[] = removeUnicodeCharacters($userEmail);
+            }
+
+            if (!empty($correosFirmas)) {
+                Mail::to($correosFirmas)->queue(new RequisicionOrdenCompraCancelada($requisicion, $organizacion, $tipo));
+            }
 
             $requisicion->update([
                 'estado' => 'cancelada',
@@ -1088,6 +1153,7 @@ class RequisicionesController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
+            dd($th);
             return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
         }
     }
