@@ -6,6 +6,8 @@ use App\Models\Tenant;
 use App\Services\TenantManager;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Stancl\JobPipeline\JobPipeline;
+use Stancl\Tenancy\Jobs\{CreateDatabase, MigrateDatabase, SeedDatabase};
 
 /**
  * Create a tenant with the necessary information for the application.
