@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Events\RequisicionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionOrdenCompraCancelada;
@@ -225,6 +226,30 @@ class RequisicionesController extends Controller
         } else {
             return redirect()->route('contract_manager.requisiciones')->with('error', 'Requisición no encontrada');
         }
+    }
+
+    public function obtenerComprador($comprador)
+    {
+        $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+        $listaPart = $listaReq->participantes;
+
+        $responsableOG = $listaPart->where('numero_orden', 1)->where('empleado_id', $comprador->user->id)->first();
+        $n_part_nivel = $listaPart->where('nivel', $responsableOG->nivel)->count();
+
+        for ($i = 1; $i <= $n_part_nivel; $i++) {
+            $responsableNivel = $listaPart->where('nivel', $responsableOG->nivel)->where('numero_orden', $i)->first();
+
+            if ($responsableNivel) {
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+
+                    break;
+                }
+            }
+        }
+
+        return $responsable;
     }
 
     /**
@@ -1153,13 +1178,21 @@ class RequisicionesController extends Controller
                 Mail::to($correosFirmas)->queue(new RequisicionOrdenCompraCancelada($requisicion, $organizacion, $tipo));
             }
 
+            try {
+                //code...
+                event(new RequisicionesEvent($requisicion, 'cancelada', 'requisiciones', 'Requisicion'));
+            } catch (\Throwable $th) {
+                //throw $th;
+                dd($th);
+            };
+
             $requisicion->update([
                 'estado' => 'cancelada',
                 'firma_solicitante' => null,
                 'firma_finanzas' => null,
                 'firma_jefe' => null,
                 'firma_compras' => null,
-                'estado_orden' => 'cancelada',
+                'estado_orden' => null,
                 'firma_solicitante_orden' => null,
                 'firma_finanzas_orden' => null,
                 'firma_comprador_orden' => null,
