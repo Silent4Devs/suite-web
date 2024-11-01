@@ -37,12 +37,12 @@ class PoliticaSgsiObserver
      *
      * @return void
      */
-    public function deleted(PoliticaSgsi $politicaSgsi)
-    {
-        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
+    // public function deleted(PoliticaSgsi $politicaSgsi)
+    // {
+    //     event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
 
-        $this->forgetCache();
-    }
+    //     $this->forgetCache();
+    // }
 
     private function forgetCache()
     {
