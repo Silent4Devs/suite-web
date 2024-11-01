@@ -8,9 +8,9 @@
 
             <div>
                 <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
-                <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
+                <h5 style="font-size: 17px;">En esta sección puedes modificar tu requisición</h5>
                 <p>
-                    Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
+                    Aquí podrás editar, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br>
                     optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las
                     transacciones.&nbsp;
                 </p>
@@ -311,18 +311,27 @@
                                 AGREGAR SERVICIOS Y PRODUCTOS
                             </div>
 
-                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
-                                <!-- Button content when not loading -->
-                                <span wire:loading.remove>
-                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
-                                </span>
+                            <div>
+                                <a href="{{ route('contract_manager.requisiciones') }}">
+                                    <button type="button" class="btn btn-primary">
+                                        <!-- Button content when not loading -->
+                                        <span>
+                                            Cancelar
+                                        </span>
+                                    </button>
+                                </a>
+                                <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                    <!-- Button content when not loading -->
+                                    <span wire:loading.remove>
+                                        Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                    </span>
 
-                                <!-- Loading spinner when loading -->
-                                <span wire:loading>
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
-                                </span>
-                            </button>
-
+                                    <!-- Loading spinner when loading -->
+                                    <span wire:loading>
+                                        <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -582,17 +591,28 @@
                                 <i class="fa-regular fa-square-plus icon-prior"></i>
                                 AGREGAR PROVEEDOR
                             </button>
-                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
-                                <!-- Button content when not loading -->
-                                <span wire:loading.remove>
-                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
-                                </span>
 
-                                <!-- Loading spinner when loading -->
-                                <span wire:loading>
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
-                                </span>
-                            </button>
+                            <div>
+                                <a href="{{ route('contract_manager.requisiciones') }}">
+                                    <button type="button" class="btn btn-primary">
+                                        <!-- Button content when not loading -->
+                                        <span>
+                                            Cancelar
+                                        </span>
+                                    </button>
+                                </a>
+                                <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                    <!-- Button content when not loading -->
+                                    <span wire:loading.remove>
+                                        Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                    </span>
+
+                                    <!-- Loading spinner when loading -->
+                                    <span wire:loading>
+                                        <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
