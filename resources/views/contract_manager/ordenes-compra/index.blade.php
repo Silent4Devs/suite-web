@@ -18,146 +18,158 @@
     <div class="mt-5 card">
         <div class="card-body">
             <div class="datatable-rds w-100">
-            <table class="table datatable-Requisiciones w-100 tblCSV" id="datatable-Requisiciones">
-                <thead class="">
-                    <tr>
+                <table class="table datatable-Requisiciones w-100 tblCSV" id="datatable-Requisiciones">
+                    <thead class="">
+                        <tr>
 
-                        <th style="vertical-align: top">Folio</th>
-                        <th style="vertical-align: top">Fecha De Solicitud</th>
-                        <th style="vertical-align: top">Referencia</th>
-                        <th style="vertical-align: top">Proveedor</th>
-                        <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">No. Proyecto</th>
-                        <th style="vertical-align: top">Proyecto</th>
-                        <th style="vertical-align: top">Área que Solicita</th>
-                        <th style="vertical-align: top">Solicitante</th>
-                        <th style="display:none">SUBTOTAL</th>
-                        <th style="display:none">IVA</th>
-                        <th style="display:none">Total</th>
-                        <th style="vertical-align: top">Opciones</th>
+                            <th style="vertical-align: top">Folio</th>
+                            <th style="vertical-align: top">Fecha De Solicitud</th>
+                            <th style="vertical-align: top">Referencia</th>
+                            <th style="vertical-align: top">Proveedor</th>
+                            <th style="vertical-align: top">Estatus</th>
+                            <th style="vertical-align: top">No. Proyecto</th>
+                            <th style="vertical-align: top">Proyecto</th>
+                            <th style="vertical-align: top">Área que Solicita</th>
+                            <th style="vertical-align: top">Solicitante</th>
+                            <th style="display:none">SUBTOTAL</th>
+                            <th style="display:none">IVA</th>
+                            <th style="display:none">Total</th>
+                            <th style="vertical-align: top">Opciones</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                     @foreach ($requisiciones as $keyReq => $req)
-                     <tr>
-                        <td>{{ $req->folio }}</td>
-                        <td>{{ $req->fecha }}</td>
-                        <td>{{ $req->referencia }}</td>
-                        <td>
-                            @php
-                                $dataProv = $req->proveedor_catalogo_oc;
-                            @endphp
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($requisiciones as $keyReq => $req)
+                            <tr>
+                                <td>{{ $req->folio }}</td>
+                                <td>{{ $req->fecha }}</td>
+                                <td>{{ $req->referencia }}</td>
+                                <td>
+                                    @php
+                                        $dataProv = $req->proveedor_catalogo_oc;
+                                    @endphp
 
-                            @if (is_null($dataProv)) <!-- Blade usa `is_null` para verificar null -->
-                                {{-- Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto --}}
-                                @if (!empty($req->proveedores_requisiciones) && count($req->proveedores_requisiciones) > 0)
-                                    {{ $req->proveedores_requisiciones[0]->contacto }}
-                                @else
-                                    <p>Pendiente</p>
-                                @endif
-                            @else
-                                {{ $dataProv }} {{-- Valor no es null --}}
-                            @endif
-                        </td>
-                        <td>
-                            @php
-                                $firma_solicitante = $req->firma_solicitante_orden;
-                                $firma_comprador = $req->firma_comprador_orden;
-                                $firma_finanzas = $req->firma_finanzas_orden;
-                                $estatus = $req->estado_orden;
-                            @endphp
+                                    @if (is_null($dataProv))
+                                        <!-- Blade usa `is_null` para verificar null -->
+                                        {{-- Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto --}}
+                                        @if (!empty($req->proveedores_requisiciones) && count($req->proveedores_requisiciones) > 0)
+                                            {{ $req->proveedores_requisiciones[0]->contacto }}
+                                        @else
+                                            <p>Pendiente</p>
+                                        @endif
+                                    @else
+                                        {{ $dataProv }} {{-- Valor no es null --}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @php
+                                        $firma_solicitante = $req->firma_solicitante_orden;
+                                        $firma_comprador = $req->firma_comprador_orden;
+                                        $firma_finanzas = $req->firma_finanzas_orden;
+                                        $estatus = $req->estado_orden;
+                                    @endphp
 
-                            @if ($estatus == 'cancelada')
-                                <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
-                            @elseif ($estatus == 'rechazado_oc')
-                                <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
-                            @else
-                                @if (!$firma_solicitante && !$firma_comprador && !$firma_finanzas)
-                                    <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
-                                @elseif ($firma_solicitante && $firma_comprador && $firma_finanzas)
-                                    <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
-                                @else
-                                    <h5><span class="badge badge-pill badge-info">En curso</span></h5>
-                                @endif
-                            @endif
+                                    @if ($estatus == 'cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @elseif ($estatus == 'rechazado_oc')
+                                        <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
+                                    @else
+                                        @if (!$firma_solicitante && !$firma_comprador && !$firma_finanzas)
+                                            <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
+                                        @elseif ($firma_solicitante && $firma_comprador && $firma_finanzas)
+                                            <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                        @else
+                                            <h5><span class="badge badge-pill badge-info">En curso</span></h5>
+                                        @endif
+                                    @endif
 
-                        </td>
-                        <td>
-                            @php
-                                $n_contrato = $req->contrato->no_contrato ?? null;
-                            @endphp
+                                </td>
+                                <td>
+                                    @php
+                                        $n_contrato = $req->contrato->no_contrato ?? null;
+                                    @endphp
 
-                            @if (empty($n_contrato))
-                                <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
-                            @else
-                                {{ $n_contrato }} <!-- Muestra el valor cuando no es vacío -->
-                            @endif
-                        </td>
-                        <td>
-                            @php
-                                $nombre_servicio = $req->contrato->nombre_servicio ?? null;
-                            @endphp
+                                    @if (empty($n_contrato))
+                                        <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
+                                    @else
+                                        {{ $n_contrato }} <!-- Muestra el valor cuando no es vacío -->
+                                    @endif
+                                </td>
+                                <td>
+                                    @php
+                                        $nombre_servicio = $req->contrato->nombre_servicio ?? null;
+                                    @endphp
 
-                            @if (empty($nombre_servicio))
-                                <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
-                            @else
-                                {{ $nombre_servicio }} <!-- Muestra el valor cuando no es vacío -->
-                            @endif
-                        </td>
-                        <td>{{ $req->area }}</td>
-                        <td>{{ $req->user }}</td>
-                        <td style="display: none">{{ $req->sub_total }}</td>
-                        <td style="display: none">{{ $req->iva }}</td>
-                        <td style="display: none">{{ $req->total }}</td>
-                        @php
-                            $data = $req->id;
-                            $urlButtonArchivar = url("/contract_manager/orden-compra/archivar/{$data}");
-                            $urlButtonRellenar = url("/contract_manager/orden-compra/{$data}/edit");
-                            $urlButtonShow = url("/contract_manager/orden-compra/show/{$data}");
-                            $urlButtonEditar = url("/contract_manager/orden-compra/{$data}/editar-orden-compra");
-                            $urlButtonCancelar = url("/contract_manager/orden-compra/{$data}/cancelarOrdenCompra");
-                        @endphp
+                                    @if (empty($nombre_servicio))
+                                        <span class="error">Campo Vacío</span> <!-- Mensaje cuando no hay datos -->
+                                    @else
+                                        {{ $nombre_servicio }} <!-- Muestra el valor cuando no es vacío -->
+                                    @endif
+                                </td>
+                                <td>{{ $req->area }}</td>
+                                <td>{{ $req->user }}</td>
+                                <td style="display: none">{{ $req->sub_total }}</td>
+                                <td style="display: none">{{ $req->iva }}</td>
+                                <td style="display: none">{{ $req->total }}</td>
+                                @php
+                                    $data = $req->id;
+                                    $urlButtonArchivar = url("/contract_manager/orden-compra/archivar/{$data}");
+                                    $urlButtonRellenar = url("/contract_manager/orden-compra/{$data}/edit");
+                                    $urlButtonShow = url("/contract_manager/orden-compra/show/{$data}");
+                                    $urlButtonEditar = url(
+                                        "/contract_manager/orden-compra/{$data}/editar-orden-compra",
+                                    );
+                                    $urlButtonCancelar = url(
+                                        "/contract_manager/orden-compra/{$data}/cancelarOrdenCompra",
+                                    );
+                                @endphp
 
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                    @if (is_null($req->firma_comprador_orden) && $req->estado_orden != 'cancelada' && $req->contador_version_orden_compra == 3)
-                                        @can('katbol_ordenes_compra_modificar')
-                                            <a href="{{ $urlButtonRellenar }}" class="dropdown-item" title="Ingresar Información">
-                                                <i class="fas fa-edit"></i> Ingresar Información
+                                            @if (is_null($req->firma_comprador_orden) &&
+                                                    $req->estado_orden != 'cancelada' &&
+                                                    $req->contador_version_orden_compra == 3)
+                                                @can('katbol_ordenes_compra_modificar')
+                                                    <a href="{{ $urlButtonRellenar }}" class="dropdown-item"
+                                                        title="Ingresar Información">
+                                                        <i class="fas fa-edit"></i> Ingresar Información
+                                                    </a>
+                                                @endcan
+                                            @endif
+
+                                            @if ($req->estado_orden == 'cancelada' || $req->estado_orden == 'rechazado')
+                                                <a href="{{ $urlButtonEditar }}" class="dropdown-item"
+                                                    title="Editar Orden Cancelada">
+                                                    <i class="fas fa-pen"></i> Editar Orden Cancelada
+                                                </a>
+                                            @endif
+
+                                            @if ($req->estado_orden == 'curso')
+                                                <a href="#"
+                                                    onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})"
+                                                    class="dropdown-item" title="Cancelar Orden">
+                                                    <span class="material-symbols-outlined">cancel</span> Cancelar Orden
+                                                </a>
+                                            @endif
+
+                                            <a href="{{ $urlButtonShow }}" title="Ver/Imprimir" class="dropdown-item">
+                                                <i class="fa-solid fa-print"></i> Ver/Imprimir
                                             </a>
-                                        @endcan
-                                    @endif
-
-                                    @if ($req->estado_orden == 'cancelada')
-                                        <a href="{{ $urlButtonEditar }}" class="dropdown-item" title="Editar Orden Cancelada">
-                                            <i class="fas fa-pen"></i> Editar Orden Cancelada
-                                        </a>
-                                    @endif
-
-                                    @if ($req->estado_orden == 'curso')
-                                        <a href="#" onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})" class="dropdown-item" title="Cancelar Orden">
-                                            <span class="material-symbols-outlined">cancel</span> Cancelar Orden
-                                        </a>
-                                    @endif
-
-                                    <a href="{{ $urlButtonShow }}" title="Ver/Imprimir" class="dropdown-item">
-                                        <i class="fa-solid fa-print"></i> Ver/Imprimir
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
+                                        </div>
+                                    </div>
+                                </td>
 
 
-                     </tr>
-                     @endforeach
-                </tbody>
-            </table>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -451,23 +463,23 @@
                 //                 row.contador_version_orden_compra == 3) {
                 //                 // Si el campo es null, se muestra el botón de edición
                 //                 htmlBotones += `@can('katbol_ordenes_compra_modificar')
-                //                                 <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
-                //                                 @endcan`;
+            //                                 <a href="${urlButtonRellenar}" class="btn btn-sm" title="Ingresar Información"><i class="fas fa-edit"></i></a>
+            //                                 @endcan`;
                 //             }
 
                 //             if (row.estado_orden == 'cancelada') {
                 //                 htmlBotones += `<a href="${urlButtonEditar}" >
-                //                 <i class = "fas fa-pen" ></i></a >`;
+            //                 <i class = "fas fa-pen" ></i></a >`;
                 //             }
 
                 //             if (row.estado_orden == 'curso') {
                 //                 htmlBotones += `<a onclick="mostrarAlerta3('${urlButtonCancelar}', ${data})" >
-                //                 <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
+            //                 <i class = "fa-regular fa-rectangle-xmark" > </i></a >`;
                 //             }
 
                 //             // Agrega el botón para ver/imprimir independientemente del estado del campo 'firma_comprador_orden'
                 //             htmlBotones += `<a href="${urlButtonShow}" title="Ver/Imprimir" class="btn btn-sm"><i class="fa-solid fa-print"></i></a>
-                //                             </div>`;
+            //                             </div>`;
 
                 //             return htmlBotones;
 

@@ -3,51 +3,7 @@
 @section('content')
 @section('titulo', 'Actualizar Requisicion')
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
-<style>
-    /* body {
-        margin: 0;
-        padding: 0;
-        background-color: rgb(232, 234, 239);
-        font-family: Helvetica;
-        text-align: center;
-    } */
-
-    img {
-        width: 90%;
-        margin-bottom: 35px;
-    }
-
-    p {
-        color: #747474;
-    }
-
-    .card-error {
-        font-family: Helvetica;
-        text-align: center;
-        /* position: absolute; */
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #fff;
-        width: 350px;
-        height: 500px;
-        margin: auto;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .btn {
-        background-color: #6e749e;
-        color: #fff;
-        margin: auto;
-        padding: 10px 30px;
-        text-decoration: none;
-        border-radius: 6px;
-        margin-top: 35px;
-        display: inline-block;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/requisitions/jquery.signature.css') }}{{ config('app.cssVersion') }}">
 
 <div class="card card-body">
     <h4>Tienes
