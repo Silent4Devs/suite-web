@@ -232,15 +232,22 @@ class PoliticaSgsiController extends Controller
         return view('admin.politicaSgsis.show', compact('politicaSgsi'));
     }
 
-    public function destroy(PoliticaSgsi $politicaSgsi)
+    public function destroy(PoliticaSgsi $id)
     {
 
+        // Verifica si el usuario tiene permiso para eliminar
         abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Obtiene el modelo por ID, lanzará una excepción si no se encuentra
+        $politicaSgsi = PoliticaSgsi::findOrFail($id);
+
+        // Elimina el modelo
         $politicaSgsi->delete();
 
+        // Dispara el evento de eliminación
         event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
 
+        // Redirige con un mensaje de éxito
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Eliminado con éxito');
 
     }
