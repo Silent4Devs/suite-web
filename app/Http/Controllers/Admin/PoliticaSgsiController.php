@@ -448,7 +448,7 @@ class PoliticaSgsiController extends Controller
 
         $aprobador = User::getCurrentUser()->empleado->id;
 
-        $politica = PoliticaSgsi::find($id);
+        $politica = PoliticaSgsi::where('id', $id)->first();
 
         event(new PoliticasSgiEvent($politica, 'aprobado', 'politica_sgsis', 'Politica'));
 
