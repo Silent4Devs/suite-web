@@ -4,8 +4,10 @@ namespace App\Actions;
 
 use App\Models\Tenant;
 use App\Services\TenantManager;
+use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Log;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Jobs\{CreateDatabase, MigrateDatabase, SeedDatabase};
 
@@ -66,9 +68,10 @@ class CreateTenantAction
         } else {
             $pdo = DB::connection('tenant')->getPdo();
             $databaseName = DB::connection('tenant')->getDatabaseName();
+
             Artisan::call('migrate', [
                 '--database' => 'tenant',
-                '--path' => 'database/migrations/tabantaj',
+                '--path' => 'database/migrations/tabantaj2',
                 '--force' => true,
             ]);
         }
