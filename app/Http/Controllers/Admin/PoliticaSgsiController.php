@@ -239,6 +239,8 @@ class PoliticaSgsiController extends Controller
 
         $politicaSgsi->delete();
 
+        event(new PoliticasSgiEvent($politicaSgsi, 'delete', 'politica_sgsis', 'Politica'));
+
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Eliminado con éxito');
 
     }
