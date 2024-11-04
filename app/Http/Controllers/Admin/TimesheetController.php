@@ -340,8 +340,6 @@ class TimesheetController extends Controller
                         'estatus' => $request->estatus,
                     ]);
 
-                    event(new TimesheetEvent($timesheet_nuevo, 'create', 'timesheet', 'Timesheet'));
-
                     foreach ($request->timesheet as $index => $hora) {
                         if (array_key_exists('proyecto', $hora) && array_key_exists('tarea', $hora)) {
 
