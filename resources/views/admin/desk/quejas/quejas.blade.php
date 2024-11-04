@@ -204,19 +204,19 @@
                             <div class="card card-body">
                                 <div class="d-flex gap-3 align-items-center">
 
-                                    @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
+                                    @if ($sentimentLevel >= -1 && $sentimentLevel < -0.6)
                                         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
-                                    @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
+                                    @if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05)
                                         <img src="{{ asset('img/centroAtencion/emoji4.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
-                                    @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
+                                    @if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05)
                                         <img src="{{ asset('img/centroAtencion/emoji3.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
-                                    @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
+                                    @if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6)
                                         <img src="{{ asset('img/centroAtencion/emoji2.png') }}" alt="Emoji"
                                             style="width: 60px;">
                                     @endif
