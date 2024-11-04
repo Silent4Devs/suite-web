@@ -920,7 +920,7 @@ class OrdenCompraController extends Controller
 
             $correosFirmas = array_unique($correosFirmas);
 
-            if (!empty($correosFirmas)) {
+            if (! empty($correosFirmas)) {
                 Mail::to($correosFirmas)->queue(new RequisicionOrdenCompraCancelada($requisicion, $organizacion, $tipo));
             }
 
@@ -934,6 +934,7 @@ class OrdenCompraController extends Controller
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             dd($th);
+
             return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
         }
     }
