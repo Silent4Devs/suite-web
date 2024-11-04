@@ -1474,52 +1474,11 @@ class EmpleadoController extends Controller
 
     public function updateImageProfile(Request $request)
     {
+        // dd($request->all());
         $empleado = User::getCurrentUser()->empleado;
-        $base64Image = $request->input('image');     // Verificar si es una imagen Base64
-        if (preg_match('/^data:image\/(\w+);base64,([A-Za-z0-9+\/=]*)$/', $base64Image)) {
-            // $base64Image = preg_replace('/^data:image\/(\w+);base64,/', '', $base64Image);
-            // $base64Image = str_replace(' ', '+',  $base64Image);
-            // Asegurarse de que los espacios estén correctamente formateados// Decodificar la imagen
-            $image = base64_decode($base64Image);
-            // Generar un nombre único para el archivo
-            $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
-
-            $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
-            // Cambia la extensión según el tipo de imagen// Guardar el archivo en el sistema de archivos
-            Storage::put('public/empleados/imagenes/' . $new_name_image, $image);
-            // dd($route);
-
-            if (Storage::disk('public')->exists($new_name_image)) {
-                // Obtener el contenido del archivo
-                $ruta_carpeta = storage_path('app/public/empleados/'.$new_name_image);
-                $filePath = $ruta_carpeta .$new_name_image;
-                $fileContent =file_get_contents($filePath);
-                dd($fileContent);
-                $apiResponse = ImageService::consumeImageCompresorApi($route);
-                // Compress and save the image
-                if ($apiResponse['status'] == 200) {
-                    file_put_contents($route, $apiResponse['body']);
-                }
-                $empleado->update([
-                    'foto' => $new_name_image,
-                ]);
-                // Retornar la ruta del archivo guardado
-                return response()->json(['success' => 'Imágen actualizada']);
-                // Eliminar el encabezado de la cadena Base64
-                // Retornar el contenido o procesarlo como necesites
-                return response()->make($fileContent, 200, [
-                    'Content-Type' => 'image/png',
-                    // Cambia el tipo según el archivo
-                    'Content-Disposition' => 'inline; filename="' . $new_name_image . '"',
-                ]);
-            } else {
-                return response()->json(['error' => 'Archivo no encontrado'], 404);
-            }
-        }
-
-        if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
-            $request->input('image');
-            $value = substr($request->image, strpos($request->image, ',') + 1);
+        // dd($request->file('foto'));
+        if (!(preg_match('/^data:image\/(\w+);base64,/',$request->file('foto')))) {
+            $value = substr($request->file('foto'), strpos($request->file('foto'), ',') + 1);
             $value = base64_decode($value);
             $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
 
@@ -1540,6 +1499,7 @@ class EmpleadoController extends Controller
             return response()->json(['success' => 'Imágen actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
+
         }
         // $folderPath = public_path('upload/');
         // $image_parts = explode(";base64,", $request->image);
