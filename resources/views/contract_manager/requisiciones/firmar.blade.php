@@ -602,4 +602,25 @@
         }
     });
 </script>
+
+<script>
+    const firmaCanvas = document.getElementById('firma_requi');
+
+    function disableScroll() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function enableScroll() {
+        document.body.style.overflow = '';
+    }
+
+    firmaCanvas.addEventListener('mousedown', disableScroll);
+    firmaCanvas.addEventListener('touchstart', disableScroll);
+
+    firmaCanvas.addEventListener('mouseup', enableScroll);
+    firmaCanvas.addEventListener('touchend', enableScroll);
+
+    document.addEventListener('mouseup', enableScroll);
+    document.addEventListener('touchend', enableScroll);
+</script>
 @endsection
