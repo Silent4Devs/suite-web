@@ -30,7 +30,7 @@
                     </font>
                 </label>
                 <input min="0" required class="form-control" type="number" step=".01" name="valor_dolar"
-                    id="valor_dolar" value="{{ old('valor_dolar', $valor_dolar) }}" {{-- wire:model="valor_dolar" --}}
+                    id="valor_dolar" value="{{ old('valor_dolar', $valor_dolar) }}" wire:model.blur="valor_dolar"
                     wire:change="valorManual($event.target.value)" @if (!$edit_moneda) readonly @endif>
             </div>
             <div class="form-group col-md-4 d-flex align-items-center">
@@ -55,10 +55,9 @@
                         pago ({{ $tipo_cambio }})
                         <font class="asterisco">*</font>
                     </label>
-                    <input min="0" required type="number" name="monto_dolares" {{-- wire:model="monto_dolares" --}}
-                        value="{{ old('monto_dolares', $monto_dolares) }}"
-                        wire:change="convertirME($event.target.value,'monto')" id="monto_dolares" class="form-control"
-                        step=".01">
+                    <input min="0" required type="number" name="monto_dolares" id="monto_dolares"
+                        {{-- wire:model="monto_dolares" --}} value="{{ old('monto_dolares', $monto_dolares) }}"
+                        wire:change="convertirME($event.target.value,'monto')" class="form-control" step=".01">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="maximo_dolares" class="txt-tamaño">
@@ -116,6 +115,16 @@
                 document.getElementById('monto_pago').value = monto_pago;
                 document.getElementById('maximo').value = maximo;
                 document.getElementById('minimo').value = minimo;
+            });
+        </script>
+
+        <script>
+            Livewire.on('actualizarDolares', ({
+                valor_dolar
+            }) => {
+                const campoValorDolar = document.getElementById('valor_dolar');
+                campoValorDolar.value = valor_dolar;
+                campoValorDolar.dispatchEvent(new Event('input')); // Esto puede forzar la actualización
             });
         </script>
 

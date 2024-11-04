@@ -36,7 +36,7 @@
                     </div>
                 @break
 
-                @case('cancelada')
+                @case('cancelada_RQ')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
