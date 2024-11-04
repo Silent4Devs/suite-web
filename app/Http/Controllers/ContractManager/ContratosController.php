@@ -109,7 +109,6 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
-        dd($request->all());
         session()->put('tipo_cambio', request('tipo_cambio'));
 
         $validatedData = $request->validate([
@@ -625,6 +624,8 @@ class ContratosController extends AppBaseController
      */
     public function update($id, Request $request)
     {
+        session()->put('tipo_cambio', request('tipo_cambio'));
+
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
             'no_proyecto' => 'required',
