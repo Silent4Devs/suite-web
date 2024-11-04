@@ -42,7 +42,7 @@ class RequisicionesListener implements ShouldQueue
         $user = User::getCurrentUser(); //Solicitante
         // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
 
-        if ($event->tipo_consulta == 'cancelada') {
+        if ($event->tipo_consulta == 'cancelada_RQ') {
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
 
