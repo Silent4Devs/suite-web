@@ -17,7 +17,7 @@ class TimesheetObserver
     {
 
         $this->forgetCache();
-        // event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
+        event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
     }
 
     /**
@@ -39,7 +39,7 @@ class TimesheetObserver
     public function deleted(Timesheet $timesheet)
     {
         $this->forgetCache();
-        // event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
+        event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
     }
 
     private function forgetCache()
