@@ -956,8 +956,6 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', User::getCurrentUser()->empleado->id)->get();
 
-        // event(new TimesheetEvent($papelera, 'papelera', 'timesheet', 'Timesheet Papelera'));
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1003,8 +1001,6 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        // event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
-
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
 
@@ -1026,8 +1022,6 @@ class TimesheetController extends Controller
                 ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
-
-        // event(new TimesheetEvent($aprobados, 'aprobados', 'timesheet', 'Timesheet Aprobado'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1054,8 +1048,6 @@ class TimesheetController extends Controller
                 ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
-
-        // event(new TimesheetEvent($rechazos, 'rechazos', 'timesheet', 'Timesheet Rechazado'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1097,7 +1089,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rechazar = Timesheet::where('id', $id)->first();
 
-        // event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
+        event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
 
         $rechazar->update([
             'estatus' => 'rechazado',
