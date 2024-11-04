@@ -400,10 +400,11 @@
                     Estatus<font class="asterisco">*</font>
                 </label><br>
                 <select name="estatus" id="estatus" class="form-control" required>
-                    <option value="">Seleccionar...</option>
-                    <option value="vigentes">Vigente</option>
-                    <option value="Cerrado">Cerrado</option>
-                    <option value="renovaciones">Renovación</option>
+                    <option value="" disabled selected>Seleccionar...</option>
+                    <option value="vigentes" {{ old('estatus') == 'vigentes' ? 'selected' : '' }}>Vigente</option>
+                    <option value="Cerrado" {{ old('estatus') == 'Cerrado' ? 'selected' : '' }}>Cerrado</option>
+                    <option value="renovaciones" {{ old('estatus') == 'renovaciones' ? 'selected' : '' }}>Renovación
+                    </option>
                 </select>
                 @if ($errors->has('estatus'))
                     <div class="invalid-feedback red-text">
@@ -473,8 +474,8 @@
                 <label for="vigencia_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
-                <input type="text" name="vigencia_contrato" id="vigencia_contrato" class="form-control" required
-                    maxlength="150">
+                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
+                    value="{{ old('vigencia_contrato', '') }}" class="form-control" required maxlength="150">
                 @if ($errors->has('vigencia_contrato'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('vigencia_contrato') }}
@@ -533,7 +534,8 @@
                 <label for="no_pagos" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font>
                 </label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control" required min="1">
+                <input type="number" name="no_pagos" id="no_pagos" value="{{ old('no_pagos', '') }}"
+                    class="form-control" required min="1">
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_pagos') }}
@@ -601,7 +603,8 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre del Supervisor 1<font class="asterisco">*</font></label>
                     <div>
-                        <input type="text" name="pmp_asignado" class="form-control" required maxlength="250" />
+                        <input type="text" name="pmp_asignado" value="{{ old('pmp_asignado', '') }}"
+                            class="form-control" required maxlength="250" />
                         @if ($errors->has('pmp_asignado'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('pmp_asignado') }}
@@ -613,14 +616,16 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        <input type="text" name="puesto" class="form-control" maxlength="250" />
+                        <input type="text" name="puesto" value="{{ old('puesto', '') }}" class="form-control"
+                            maxlength="250" />
                     </div>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        <input type="text" name="area" class="form-control" maxlength="250" />
+                        <input type="text" name="area" value="{{ old('area', '') }}" class="form-control"
+                            maxlength="250" />
                         @if ($errors->has('area'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area') }}
@@ -634,7 +639,8 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Nombre del Supervisor 2</label>
                     <div>
-                        <input type="text" name="administrador_contrato" class="form-control" maxlength="250" />
+                        <input type="text" name="administrador_contrato"
+                            value="{{ old('administrador_contrato', '') }}" class="form-control" maxlength="250" />
                         @if ($errors->has('administrador_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('administrador_contrato') }}
@@ -646,7 +652,8 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        <input type="text" name="cargo_administrador" class="form-control" maxlength="150" />
+                        <input type="text" name="cargo_administrador"
+                            value="{{ old('cargo_administrador', '') }}" class="form-control" maxlength="150" />
                         @if ($errors->has('cargo_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('cargo_administrador') }}
@@ -658,7 +665,8 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        <input type="text" name="area_administrador" class="form-control" maxlength="150" />
+                        <input type="text" name="area_administrador" value="{{ old('area_administrador', '') }}"
+                            class="form-control" maxlength="150" />
                         @if ($errors->has('area_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area_administrador') }}
