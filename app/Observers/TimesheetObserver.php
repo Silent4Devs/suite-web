@@ -15,9 +15,8 @@ class TimesheetObserver
      */
     public function created(Timesheet $timesheet)
     {
-
-        $this->forgetCache();
         event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
+        $this->forgetCache();
     }
 
     /**
