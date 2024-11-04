@@ -44,11 +44,17 @@
                                                     style="height: 140px;clip-path: circle(70px at 50% 50%); position: relative; display:initial"
                                                     src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                                     alt="{{ auth()->user()->empleado->name }}">
-                                                <label for="imgProfile"
+                                                {{-- <label for="imgProfile"
                                                     style="position: relative;bottom: -73px;right: 53px;font-size: 18px;"><i
-                                                        class="fas fa-camera"></i></label>
-                                                <input id="imgProfile" type="file" name="image" class="image"
-                                                    style="display:none">
+                                                        class="fas fa-camera"></i></label> --}}
+                                                {{-- <input id="imgProfile" type="file" name="image" class="image"
+                                                    style="display:none"> --}}
+                                                    <form action="{{ route('admin.empleado.update-image-profile') }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                    <label for="foto">Selecciona una imagen:</label>
+                                                    <input id="imgProfile" type="file" name="foto"  required>
+                                                    <button type="submit">Subir Imagen</button>
+                                                    </form>
                                             </div>
                                             <div class="mt-1">
                                                 <h6 style="color: #fff; font-size: 20px !important; margin-top: 31px;">
@@ -336,7 +342,7 @@
 
             </div>
         </div>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        {{-- <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -368,7 +374,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 @section('scripts')
@@ -386,7 +392,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         var $modal = $('#modal');
         var image = document.getElementById('image');
         var cropper;
@@ -484,5 +490,5 @@
             context.fill();
             return canvas;
         }
-    </script>
+    </script> --}}
 @endsection
