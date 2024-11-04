@@ -335,7 +335,7 @@ class RequisicionesController extends Controller
             $listaPart = $listaReq->participantes;
 
             //Buscamos al supervisor por su id
-            $supList = $listaPart->where('empleado_id', $supervisor->id)->first();
+            $supList = $listaPart->where('empleado_id', $supervisor->id)->where('numero_orden', 1)->first();
 
             //Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
@@ -700,7 +700,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }

@@ -7,7 +7,7 @@
         <a href="{{ route('admin.timesheet-create') }}">
             <i class="material-symbols-outlined">calendar_month</i>
         </a>
-        <a href="{{ route('admin.timesheet-papelera') }}" class="line">
+        <a href="{{ route('admin.timesheet-mis-registros', 'papelera') }}" class="line">
             <i class="material-symbols-outlined">edit_calendar</i>
             Horas en borrador
         </a>
