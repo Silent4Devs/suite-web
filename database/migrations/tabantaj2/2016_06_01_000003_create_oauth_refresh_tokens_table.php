@@ -28,33 +28,19 @@ class CreateOauthRefreshTokensTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        $this->schema->create('oauth_refresh_tokens', function (Blueprint $table) {
-            $table->string('id', 100)->primary();
-            $table->string('access_token_id', 100)->index();
-            $table->boolean('revoked');
-            $table->dateTime('expires_at')->nullable();
-        });
-    }
+    public function up() {}
 
     /**
      * Reverse the migrations.
      *
      * @return void
      */
-    public function down()
-    {
-        $this->schema->dropIfExists('oauth_refresh_tokens');
-    }
+    public function down() {}
 
     /**
      * Get the migration connection name.
      *
      * @return string|null
      */
-    public function getConnection()
-    {
-        return config('passport.storage.database.connection');
-    }
+    public function getConnection() {}
 }

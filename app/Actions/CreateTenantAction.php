@@ -66,12 +66,17 @@ class CreateTenantAction
         if (!DB::connection('tenant')->getPdo()) {
             dd("No se pudo conectar a la base de datos del inquilino.");
         } else {
-            $pdo = DB::connection('tenant')->getPdo();
-            $databaseName = DB::connection('tenant')->getDatabaseName();
+            DB::connection('tenant')->getPdo();
+            DB::connection('tenant')->getDatabaseName();
 
             Artisan::call('migrate', [
                 '--database' => 'tenant',
                 '--path' => 'database/migrations/tabantaj2',
+                '--force' => true,
+            ]);
+
+            Artisan::call('db:seed', [
+                '--database' => 'tenant',
                 '--force' => true,
             ]);
         }

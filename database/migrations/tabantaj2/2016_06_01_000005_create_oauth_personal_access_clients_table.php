@@ -18,42 +18,26 @@ class CreateOauthPersonalAccessClientsTable extends Migration
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->schema = Schema::connection($this->getConnection());
-    }
+    public function __construct() {}
 
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        $this->schema->create('oauth_personal_access_clients', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('client_id');
-            $table->timestamps();
-        });
-    }
+    public function up() {}
 
     /**
      * Reverse the migrations.
      *
      * @return void
      */
-    public function down()
-    {
-        $this->schema->dropIfExists('oauth_personal_access_clients');
-    }
+    public function down() {}
 
     /**
      * Get the migration connection name.
      *
      * @return string|null
      */
-    public function getConnection()
-    {
-        return config('passport.storage.database.connection');
-    }
+    public function getConnection() {}
 }
