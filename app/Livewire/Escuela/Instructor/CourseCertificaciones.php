@@ -4,10 +4,10 @@ namespace App\Livewire\Escuela\Instructor;
 
 use Livewire\Component;
 
-class Certificaciones extends Component
+class CourseCertificaciones extends Component
 {
     public function render()
     {
-        return view('livewire.escuela.instructor.certificaciones');
+        return view('livewire.escuela.instructor.course-certificaciones');
     }
 }
