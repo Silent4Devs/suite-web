@@ -60,10 +60,12 @@
                         <td style="min-width:50px;">
                             <div style="text-align: left;">{{ $data->correo }}</div>
                         </td>
-                        @dd("adsa")
                         <td style="min-width:40px;">
                             <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos',{{ $data->id }})">
                             </i>
+                            @php
+                                print_r($data->id);
+                            @endphp
                             <i class="fas fa-trash-alt text-danger"
                                 wire:click.prevent="$dispatch('eliminarRecursos',{{ $data->id }})"> </i>
                         </td>
