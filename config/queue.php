@@ -1,7 +1,7 @@
 <?php
-
+ 
 return [
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Default Queue Connection Name
@@ -12,9 +12,9 @@ return [
     | syntax for every one. Here you may define a default connection.
     |
     */
-
+ 
     'default' => env('QUEUE_CONNECTION', 'rabbitmq'),
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Queue Connections
@@ -27,42 +27,20 @@ return [
     | Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
     |
     */
-
+ 
     'connections' => [
-
-        // RabbitMQ Connection
-        'rabbitmq' => [
-            'driver' => 'rabbitmq',
-            'queue' => env('RABBITMQ_QUEUE', 'default'),
-            'connection' => [
-                'host' => env('RABBITMQ_HOST', 'rabbitmq-tabantaj'),
-                'port' => env('RABBITMQ_PORT', 5672),
-                'user' => env('RABBITMQ_USER', 'desarrollo'),
-                'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
-                'vhost' => env('RABBITMQ_VHOST', 'desarrollo'),
-            ],
-            'options' => [
-                'exchange' => [
-                    'name' => env('RABBITMQ_EXCHANGE', 'default_exchange'),
-                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'direct'), // e.g., direct, topic, fanout
-                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
-                ],
-                'queue' => [
-                    'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
-                ],
-                // Additional options can be added here
-            ],
-            'retry_after' => 90,
-            'block_for' => null,
+ 
+        'sync' => [
+            'driver' => 'sync',
         ],
-
+ 
         'database' => [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
             'retry_after' => 90,
         ],
-
+ 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
             'host' => 'localhost',
@@ -70,7 +48,7 @@ return [
             'retry_after' => 90,
             'block_for' => 0,
         ],
-
+ 
         'sqs' => [
             'driver' => 'sqs',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -80,7 +58,7 @@ return [
             'suffix' => env('SQS_SUFFIX'),
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
         ],
-
+ 
         'redis' => [
             'driver' => 'redis',
             'connection' => 'queues',
@@ -88,14 +66,26 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
-
-        // Synchronous Queue Connection
-        'sync' => [
-            'driver' => 'sync',
+ 
+        'rabbitmq' => [
+ 
+            'driver' => 'rabbitmq',
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', 'rabbitmq-tabantaj'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'desarrollo'),
+                    'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
+                    'vhost' => env('RABBITMQ_VHOST', 'desarrollo'),
+                ],
+                // ...
+            ],
+ 
+            // ...
         ],
-
+ 
     ],
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Failed Queue Jobs
@@ -106,11 +96,11 @@ return [
     | have failed. You may change them to any database / table you wish.
     |
     */
-
+ 
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
         'database' => env('DB_CONNECTION', 'mysql'),
         'table' => 'failed_jobs',
     ],
-
+ 
 ];
