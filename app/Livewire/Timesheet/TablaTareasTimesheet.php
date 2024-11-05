@@ -4,6 +4,7 @@ namespace App\Livewire\Timesheet;
 
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -59,10 +60,23 @@ class TablaTareasTimesheet extends Component
 
     public function render()
     {
-
         if ($this->origen == 'tareas') {
             // Eager load projects with their tasks
-            $this->proyectos = TimesheetProyecto::getAllWithData();
+            $this->proyectos = DB::table('timesheet_proyectos as p')
+            ->join('timesheet_tareas as t', 'p.id', '=', 't.proyecto_id')
+            ->select(
+                'p.id',
+                'p.proyecto',
+                'p.identificador',
+                't.id as tarea_id',
+                't.tarea',
+                't.proyecto_id',
+                't.area_id',
+                't.todos'
+            )
+            ->orderBy('p.identificador', 'ASC')
+            ->get();
+
             $this->proyectos = $this->proyectos->sortByDesc('is_num');
 
             if ($this->proyecto_filtro) {
@@ -70,14 +84,26 @@ class TablaTareasTimesheet extends Component
                 $this->tareas = $this->proyectos->firstWhere('id', $this->proyecto_filtro)->tareas;
             } else {
                 // Otherwise, fetch all tasks
-                $this->tareas = TimesheetTarea::getIdTareasAll();
+
+            // Inicializa la propiedad $this->tareas como un array vacío
+            $this->tareas = [];
+
+            // Realiza la paginación inicial y obtiene solo los campos necesarios
+            $perPage = 2500;  // Aumenta el número de elementos por página conforme avanza
+            $paginatedTareas = TimesheetTarea::select('id', 'tarea', 'proyecto_id', 'area_id', 'todos')
+                ->orderByDesc('id')
+                ->paginate($perPage);  // Paginación con el número dinámico de elementos por página
+
+            // Asigna directamente la colección de tareas a la propiedad
+            $this->tareas = $paginatedTareas->items();
+
             }
         }
 
         if ($this->origen == 'tareas-proyectos') {
             // Fetch the selected project along with its tasks
             $this->proyecto_seleccionado = TimesheetProyecto::with('tareas:id,tarea,proyecto_id,area_id,todos')
-                ->find($this->proyecto_id);
+                ->where('id',$this->proyecto_id)->first();
             // Assign tasks directly
             $this->tareas = $this->proyecto_seleccionado->tareas;
             // Assign selected area
@@ -139,7 +165,7 @@ class TablaTareasTimesheet extends Component
             'proyecto_id',
             'area_id',
             'todos'
-        )->find($id);
+        )->where('id',$id)->first();
 
         $tarea_actualizada->update([
             'tarea' => $value,
@@ -157,7 +183,7 @@ class TablaTareasTimesheet extends Component
             'proyecto_id',
             'area_id',
             'todos',
-        )->find($id);
+        )->where('id',$id)->first();
 
         if ($value == 0) {
             $area_id = null;
@@ -178,7 +204,7 @@ class TablaTareasTimesheet extends Component
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::where('id',$id)->first();
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];

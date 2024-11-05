@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     @if ($origen == 'tareas')
-                        <select id="proyectos_select" class="mr-4 form-control" wire:model.blur="proyecto_id" required>
+                        <select id="proyectos_select" class="mr-4 form-control" wire:model.debouce="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
                                 <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group w-100 mr-4" style="position:relative;">
                     <label>Área</label>
-                    <select wire:model="input_area" id="areas_select" class="form-control"
+                    <select wire:model.debouce="input_area" id="areas_select" class="form-control"
                         {{ $area_seleccionar ? '' : 'disabled' }} required>
                         <option disabled selected value=""> - - </option>
                         <option value="0">Todas</option>
