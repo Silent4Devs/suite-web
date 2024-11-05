@@ -876,7 +876,7 @@
                                 <div class="flex">
                                     <div class="flex-item">
                                         <hr>
-                                        <small>FECHA, FIRMA Y NOMBRE DEL FINANZAS</small>
+                                        <small>FECHA, FIRMA Y NOMBRE DE FINANZAS</small>
                                     </div>
                                     <div class="flex-item">
                                         <hr>
