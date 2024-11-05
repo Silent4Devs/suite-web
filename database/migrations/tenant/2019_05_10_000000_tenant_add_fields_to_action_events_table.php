@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('domains', function (Blueprint $table) {
-
-
-            $table->unsignedTinyInteger('is_primary')->default(false);
-            $table->unsignedTinyInteger('is_fallback')->default(false);
-            $table->string('certificate_status', 64)->nullable();
+        Schema::table('action_events', function (Blueprint $table) {
+            $table->text('original')->nullable();
+            $table->text('changes')->nullable();
         });
     }
 
@@ -25,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('domains', function (Blueprint $table) {
-            //
+        Schema::table('action_events', function (Blueprint $table) {
+            $table->dropColumn('original', 'changes');
         });
     }
 };

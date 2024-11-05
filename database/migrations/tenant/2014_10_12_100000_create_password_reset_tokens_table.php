@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('domains', function (Blueprint $table) {
-
-
-            $table->unsignedTinyInteger('is_primary')->default(false);
-            $table->unsignedTinyInteger('is_fallback')->default(false);
-            $table->string('certificate_status', 64)->nullable();
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -25,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('domains', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('password_resets');
     }
 };

@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-
-
-            // $table->string('pm_type')->nullable();
-            // $table->string('pm_last_four', 4)->nullable();
+        Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
         });
     }
 
@@ -24,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('failed_jobs');
     }
 };

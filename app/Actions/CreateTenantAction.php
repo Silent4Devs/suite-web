@@ -4,8 +4,12 @@ namespace App\Actions;
 
 use App\Models\Tenant;
 use App\Services\TenantManager;
+use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Log;
+use Stancl\JobPipeline\JobPipeline;
+use Stancl\Tenancy\Jobs\{CreateDatabase, MigrateDatabase, SeedDatabase};
 
 /**
  * Create a tenant with the necessary information for the application.
@@ -59,10 +63,22 @@ class CreateTenantAction
 
     protected function runMigrations()
     {
-        Artisan::call('migrate', [
-            '--database' => 'tenant',
-            '--path' => 'database/migrations/tabantaj',
-            '--force' => true,
-        ]);
+        if (!DB::connection('tenant')->getPdo()) {
+            dd("No se pudo conectar a la base de datos del inquilino.");
+        } else {
+            DB::connection('tenant')->getPdo();
+            DB::connection('tenant')->getDatabaseName();
+
+            Artisan::call('migrate', [
+                '--database' => 'tenant',
+                '--path' => 'database/migrations/tabantaj2',
+                '--force' => true,
+            ]);
+
+            Artisan::call('db:seed', [
+                '--database' => 'tenant',
+                '--force' => true,
+            ]);
+        }
     }
 }

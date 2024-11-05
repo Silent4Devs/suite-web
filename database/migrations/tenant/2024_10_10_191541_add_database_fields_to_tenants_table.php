@@ -9,13 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
             $table->string('db_name')->after('name')->nullable();
             $table->string('db_host')->default('127.0.0.1')->after('db_name');
             $table->string('db_username')->after('db_host')->nullable();
             $table->string('db_password')->after('db_username')->nullable();
+            $table->integer('migrate')->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropColumn('db_host');
             $table->dropColumn('db_username');
             $table->dropColumn('db_password');
+            $table->dropColumn('migrate');
         });
     }
 };
