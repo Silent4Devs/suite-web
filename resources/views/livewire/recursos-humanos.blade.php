@@ -6,7 +6,7 @@
     <div class="row">
         @livewire('create-recursos-humanos', ['cuestionario_id' => $cuestionario_id])
     </div>
-    
+
     <div class="row">
         <table class="table table-responsive" width="100%">
             <thead class="head-light">
@@ -60,6 +60,7 @@
                         <td style="min-width:50px;">
                             <div style="text-align: left;">{{ $data->correo }}</div>
                         </td>
+                        @dd("adsa")
                         <td style="min-width:40px;">
                             <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos',{{ $data->id }})">
                             </i>
