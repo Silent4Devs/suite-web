@@ -77,7 +77,6 @@ class CreateRecursosHumanos extends Component
 
     public function edit($id)
     {
-        dd($id);
         $this->view = 'editRecursos';
         $model = CuestionarioRecursosHumanos::find($id);
 
@@ -133,7 +132,6 @@ class CreateRecursosHumanos extends Component
 
     public function destroy($id)
     {
-        dd($id);
         $model = CuestionarioRecursosHumanos::find($id);
         $model->delete();
         $this->dispatch('render');
