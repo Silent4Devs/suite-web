@@ -33,8 +33,12 @@ class TimesheetListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $user = User::getCurrentUser();
-        $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
-        Notification::send($supervisor, new TimesheetNotification($event->timesheet, $event->tipo_consulta, $event->tabla, $event->slug));
+        try {
+            $user = User::getCurrentUser();
+            $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
+            Notification::send($supervisor, new TimesheetNotification($event->timesheet, $event->tipo_consulta, $event->tabla, $event->slug));
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }
