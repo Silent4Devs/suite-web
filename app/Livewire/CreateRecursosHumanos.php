@@ -140,7 +140,6 @@ class CreateRecursosHumanos extends Component
 
     public function render()
     {
-        dd("test");
         return view('livewire.create-recursos-humanos');
     }
 }
