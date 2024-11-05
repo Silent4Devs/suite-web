@@ -354,10 +354,16 @@
                                     <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                         Cancelar
                                     </div>
-                                    <button id="enviar_aprobacion_time" title="Rechazar"
+                                    {{-- <button id="enviar_aprobacion_time" title="Rechazar"
                                         class="btn btn-info btn_enviar_formulario"
                                         style="border:none; background-color:#2F96EB;" data-dismiss="modal">
                                         Enviar a Aprobación
+                                    </button> --}}
+                                    <!-- Botón con spinner para indicar carga -->
+                                    <button id="enviar_aprobacion_time" title="Enviar a Aprobación"
+                                        class="btn btn-info btn_enviar_formulario" style="border:none; background-color:#2F96EB;" data-dismiss="modal">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+                                        <span class="button-text">Enviar a Aprobación</span>
                                     </button>
                                 </div>
                             </div>
@@ -471,6 +477,13 @@
             function procesarInformacionTimesheet(e) {
                 e.preventDefault();
                 limpiarErrores();
+
+                // Mostrar el spinner y cambiar el texto del botón
+                const submitButton = document.getElementById('enviar_aprobacion_time');
+                submitButton.querySelector('.spinner-border').style.display = 'inline-block';
+                submitButton.querySelector('.button-text').textContent = 'Enviando...';
+                submitButton.disabled = true;
+
                 let formulario = document.getElementById('form_timesheet');
                 let formData = new FormData(formulario);
                 formData.forEach(item => {
@@ -492,6 +505,10 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
+                        // Ocultar el spinner y restaurar el botón
+                        submitButton.querySelector('.spinner-border').style.display = 'none';
+                        submitButton.querySelector('.button-text').textContent = 'Enviar a Aprobación';
+                        submitButton.disabled = false;
                         document.getElementById('loaderComponent').style.display = 'none';
                         if (response.status == 200) {
                             Swal.fire(
@@ -520,6 +537,9 @@
                         }
                     },
                     error: function(request, status, error) {
+                        submitButton.querySelector('.spinner-border').style.display = 'none';
+                        submitButton.querySelector('.button-text').textContent = 'Enviar a Aprobación';
+                        submitButton.disabled = false;
                         document.getElementById('loaderComponent').style.display = 'none';
                         console.log(error);
                         $('#modal_aprobar_').modal('hide');
