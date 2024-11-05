@@ -1179,7 +1179,7 @@ class RequisicionesController extends Controller
 
             try {
                 //code...
-                event(new RequisicionesEvent($requisicion, 'cancelada_RQ', 'requisiciones', 'Requisicion'));
+                event(new RequisicionesEvent($requisicion, 'cancelarRequisicion', 'requisiciones', 'Requisicion'));
             } catch (\Throwable $th) {
                 //throw $th;
                 dd($th);
