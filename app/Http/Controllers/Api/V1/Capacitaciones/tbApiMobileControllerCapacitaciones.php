@@ -8,6 +8,8 @@ use App\Models\Empleado;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Instructor\Question;
+use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
@@ -362,93 +364,91 @@ class tbApiMobileControllerCapacitaciones extends Controller
 
     public function tbFunctionCursoEvaluacion($curso_id, $evaluation_id)
     {
-        $usuario = User::getCurrentUser();
+        $user = User::getCurrentUser();
 
-        $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+        $course = Course::getAll()->find($curso_id);
+        $evaluation = Evaluation::find($evaluation_id);
 
-        $course = Course::getAll()->where('id', $curso_id)->first();
+        $json_preguntas_curso = [];
 
-        $current = $course->last_finished_lesson;
-
-        if (! $current) {
-            $current = $course->lessons->last();
-        }
-
-        $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
-
-        $json_progreso_curso = [];
-
-        $json_progreso_curso['course'] = [
+        $json_preguntas_curso['course'] = [
             'id_course' => $course->id,
             'title' => $course->title,
             'nombre_instructor' => $course->instructor->name,
             'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
         ];
 
-        foreach ($course->sections_order as $keySections => $section) {
-            $json_progreso_curso['course']['section'][$keySections] = [
-                'id_section' => $section->id,
-                'name_section' => $section->name
-            ];
+        $totalQuizQuestions = count($evaluation->questions);
 
-            foreach ($section->lessons as $keyLesson => $lesson) {
-                if ($current->id == $lesson->id) {
-                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
-                        'id_lesson' => $lesson->id,
-                        'name_lesson' => $lesson->name,
-                        'url_evaluation' => $lesson->url,
-                        'lesson_completed' => $lesson->completed,
-                        'current_lesson' => true,
-                    ];
-                } else {
-                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
-                        'id_lesson' => $lesson->id,
-                        'name_lesson' => $lesson->name,
-                        'url_evaluation' => $lesson->url,
-                        'lesson_completed' => $lesson->completed,
-                        'current_lesson' => false,
-                    ];
-                }
-            }
+        $answeredQuestions = UserAnswer::where('evaluation_id', $evaluation->id)->where('user_id', $user->id)->pluck('question_id')->toArray();
 
+        $userEvaluationExist = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->exists();
 
-            foreach ($section->evaluations as $keyEvaluation => $evaluation) {
+        if (! $userEvaluationExist) {
 
-                $totalLectionSection = $section->lessons->count();
-                $completedLectionSection = $section->lessons;
-                $completedLessonsCount = $section->lessons
-                    ->filter(function ($lesson) {
-                        return $lesson->completed;
-                    })
-                    ->count();
+            $userEvaluationId = UserEvaluation::create([
+                'user_id' => $user->id,
+                'quiz_size' => $totalQuizQuestions,
+                'evaluation_id' => $evaluation->id,
+            ]);
 
-                if ($totalLectionSection != $completedLessonsCount) {
-                    $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
-                        'id_evaluation' => $evaluation->id,
-                        'name_evaluation' => $evaluation->name,
-                        'evaluation_blocked' => true,
-                    ];
-                } else {
-                    if ($evaluation->questions->count() > 0) {
-                        $completed = in_array($evaluation->id, $evaluationsUser);
+        } else {
 
-                        $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
-                            'id_evaluation' => $evaluation->id,
-                            'name_evaluation' => $evaluation->name,
-                            'evaluation_completed' => $completed,
-                            'evaluation_blocked' => false,
-                        ];
-                    }
-                }
-            }
+            $userEvaluationId = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->first();
+            $count = UserAnswer::Questions($evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($evaluation->id)->count();
+
+            // if ($userEvaluationId->completed) {
+            //     $this->showResults();
+            // }
         }
+
+        $evaluationCompleted = UserEvaluation::where('user_id', $user->id)->where('completed', true)->where('evaluation_id', $evaluation->id)->first();
+
+        $json_preguntas_curso['evaluation'] = [
+            'id_evaluation' => $evaluation->id,
+            'name_evaluation' => $evaluation->name,
+            'evaluation_completed' => $evaluationCompleted->completed,
+            'evaluation_blocked' => false,
+        ];
+
+        $answeredQuestions = UserAnswer::where('evaluation_id', $evaluation->id)->where('user_id', $user->id)->pluck('question_id')->toArray();
+
+        $questions = Question::where('evaluation_id', $evaluation->id)
+            // ->whereNotIn('id', $answeredQuestions)
+            ->with('answers')
+            ->inRandomOrder()
+            ->get();
+        dd($questions);
+
+        foreach ($questions as $keyQ => $question) {
+            # code...
+
+        }
+        //If the quiz size is greater then actual questions available in the quiz sections,
+        //Finish the quiz and take the user to results page on exhausting all question from a given section.
+        if ($question === null) {
+            //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
+            $userEvaluationId->quiz_size = $count - 1;
+            $userEvaluationId->completed = true;
+            $userEvaluationId->save();
+
+            return $this->showResults();
+        }
+        //Update the questions taken array so that we don't repeat same question again in the quiz
+        //We feed this array into whereNotIn chain in getNextquestion() function.
+        array_push($answeredQuestions, $question->id);
 
         return response(json_encode(
             [
-                'cursoEstudiante' => $json_progreso_curso,
+                'cursoEvaluacion' => $json_preguntas_curso,
             ],
         ), 200)->header('Content-Type', 'application/json');
-        // dd($json_progreso_curso, $course, $evaluacionesLeccion);
+
+        // Get the first/next question for the quiz.
+        // Since we are using LiveWire component for quiz, the first quesiton and answers will be displayed through mount function.
+        // $currentQuestion = $this->getNextQuestion();
+        // $setupQuiz = false;
+        // $quizInProgress = true;
     }
 
     /**
