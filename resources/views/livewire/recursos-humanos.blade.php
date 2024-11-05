@@ -61,10 +61,8 @@
                             <div style="text-align: left;">{{ $data->correo }}</div>
                         </td>
                         <td style="min-width:40px;">
-                            <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos',{{ $data->id }})">
-                            </i>
-                            <i class="fas fa-trash-alt text-danger"
-                                wire:click.prevent="$dispatch('eliminarRecursos',{{ $data->id }})"> </i>
+                            <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos', { id: {{ $data->id }} })"></i>
+                            <i class="fas fa-trash-alt text-danger" wire:click.prevent="$dispatch('eliminarRecursos', { id: {{ $data->id }} })"></i>
                         </td>
                     </tr>
                 @endforeach
