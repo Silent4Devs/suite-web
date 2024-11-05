@@ -64,7 +64,7 @@ class CreateProporcionaInformacionAia extends Component
             'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
+        $this->reset('nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->dispatch('render');
         $this->dispatch('cerrar-modal', editar: true);
     }
