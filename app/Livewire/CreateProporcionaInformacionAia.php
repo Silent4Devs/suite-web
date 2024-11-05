@@ -8,30 +8,19 @@ use Livewire\Component;
 class CreateProporcionaInformacionAia extends Component
 {
     public $miembroID;
-
     public $nombre;
-
     public $puesto;
-
     public $correo_electronico;
-
     public $extencion;
-
     public $ubicacion;
-
     public $cuestionario_id;
-
     public $interno_externo;
-
     public $id_interesado;
-
     public $parteInteresadaIdEN;
-
     public $view = 'create';
-
     public $normasModel = [];
 
-    protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy'];
+    // protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy'];
 
     public function validarMiembro()
     {
@@ -47,7 +36,7 @@ class CreateProporcionaInformacionAia extends Component
     public function create()
     {
         $this->default();
-        $this->dispatch('abrir-modal');
+        $this->dispatch('abrir-modal'); // Utilizando dispatch para abrir el modal
     }
 
     public function save()
@@ -64,12 +53,12 @@ class CreateProporcionaInformacionAia extends Component
             'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
-        $this->dispatch('render');
-        $this->dispatch('cerrar-modal', editar: true);
+        $this->reset('nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
+        $this->dispatch('cerrar-modal', ['editar' => true]); // Cerramos el modal al guardar
+        $this->dispatch('render'); // Refresca el componente
     }
 
-    public function edit($id)
+    public function editarFuenteInformacionAia($id)
     {
         $this->view = 'edit';
         $model = CuestionarioProporcionaInformacionAIA::find($id);
@@ -81,7 +70,7 @@ class CreateProporcionaInformacionAia extends Component
         $this->ubicacion = $model->ubicacion;
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
-        $this->dispatch('abrir-modal');
+        $this->dispatch('abrir-modal'); // Abrimos el modal para editar
     }
 
     public function default()
@@ -92,7 +81,6 @@ class CreateProporcionaInformacionAia extends Component
         $this->extencion = '';
         $this->ubicacion = '';
         $this->interno_externo = '';
-
         $this->view = 'create';
     }
 
@@ -110,16 +98,17 @@ class CreateProporcionaInformacionAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->dispatch('cerrar-modal', editar: true);
+
+        $this->dispatch('cerrar-modal', ['editar' => true]); // Cerramos el modal al actualizar
         $this->default();
-        $this->dispatch('render');
+        $this->dispatch('render'); // Refresca el componente
     }
 
-    public function destroy($id)
+    public function eliminarFuenteInformacionAia($id)
     {
         $model = CuestionarioProporcionaInformacionAIA::find($id);
         $model->delete();
-        $this->dispatch('render');
+        $this->dispatch('render'); // Refresca el componente tras la eliminación
     }
 
     public function render()
