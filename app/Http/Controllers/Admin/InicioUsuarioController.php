@@ -52,9 +52,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Concurrency;
 
 class InicioUsuarioController extends Controller
 {
@@ -86,7 +86,7 @@ class InicioUsuarioController extends Controller
             fn () => Organizacion::exists(),
             fn () => Area::exists(),
             fn () => Puesto::exists(),
-            fn () => User:: exists(),
+            fn () => User::exists(),
             fn () => Organizacion::getFirst(),
             fn () => PanelInicioRule::getAll(),
             fn () => Documento::getLastFiveWithMacroproceso(),

@@ -89,7 +89,7 @@ class RequisicionesListener implements ShouldQueue
             }
 
             foreach ($involucradosRQOC as $keyINV => $involucrado) {
-                # code...
+                // code...
                 Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
             }
         } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
@@ -138,7 +138,7 @@ class RequisicionesListener implements ShouldQueue
             }
 
             foreach ($involucradosRQOC as $keyINV => $involucrado) {
-                # code...
+                // code...
                 Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
             }
         } else {

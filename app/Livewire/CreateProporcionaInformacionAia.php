@@ -8,16 +8,27 @@ use Livewire\Component;
 class CreateProporcionaInformacionAia extends Component
 {
     public $miembroID;
+
     public $nombre;
+
     public $puesto;
+
     public $correo_electronico;
+
     public $extencion;
+
     public $ubicacion;
+
     public $cuestionario_id;
+
     public $interno_externo;
+
     public $id_interesado;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     public $normasModel = [];
 
     // protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy'];
