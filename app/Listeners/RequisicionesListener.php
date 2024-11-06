@@ -62,28 +62,24 @@ class RequisicionesListener implements ShouldQueue
             // requisiciones
             if ($event->requsicion->firma_solicitante !== null) {
                 $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
-                    ->orWhere('n_empleado', $firmas->solicitante->n_empleado)
                     ->first();
                 $involucradosRQOC->push($user_solicitante);
             }
 
             if ($event->requsicion->firma_jefe !== null) {
                 $user_jefe = User::where('empleado_id', $firmas->jefe->id)
-                    ->orWhere('n_empleado', $firmas->jefe->n_empleado)
                     ->first();
                 $involucradosRQOC->push($user_jefe);
             }
 
             if ($event->requsicion->firma_finanzas !== null) {
                 $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
-                    ->orWhere('n_empleado', $firmas->responsableFinanzas->n_empleado)
                     ->first();
                 $involucradosRQOC->push($user_finanzas);
             }
 
             if ($event->requsicion->firma_compras !== null) {
                 $user_compras = User::where('empleado_id', $firmas->comprador->id)
-                    ->orWhere('n_empleado', $firmas->comprador->n_empleado)
                     ->first();
                 $involucradosRQOC->push($user_compras);
             }
@@ -106,7 +102,6 @@ class RequisicionesListener implements ShouldQueue
                 $responsableComprador = Comprador::with('user')->where('id', $event->requsicion->comprador_id)->first();
                 $comprador = $this->obtenerComprador($responsableComprador);
                 $user_compras = User::where('empleado_id', $firmas->comprador->id)
-                    ->orWhere('n_empleado', $firmas->comprador->n_empleado)
                     ->first();
 
                 $involucradosRQOC->push($user_compras);
@@ -129,7 +124,6 @@ class RequisicionesListener implements ShouldQueue
 
                             $responsable = $responsableNivel->empleado;
                             $user_finanzas = User::where('empleado_id', $responsable->id)
-                                ->orWhere('n_empleado', $responsable->n_empleado)
                                 ->first();
                             $involucradosRQOC->push($user_finanzas);
                         }
