@@ -183,27 +183,13 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fechasRegistradasPromise = Async::run(function () {
-            return Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
-        });
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
 
-        $organizacionPromise = Async::run(function () {
-            return Organizacion::getFirst();
-        });
+        $organizacion = Organizacion::getFirst();
 
-        $userPromise = Async::run(function () {
-            return User::getCurrentUser()->empleado->id;
-        });
+        $user = User::getCurrentUser()->empleado->id;
+        $empleado = Empleado::getMyEmpleadodata($user);
 
-        $empleadoPromise = Async::run(function () use ($userPromise) {
-            return Empleado::getMyEmpleadodata($userPromise->wait());
-        });
-
-        // Wait for all promises to resolve
-        $fechasRegistradas = $fechasRegistradasPromise->wait();
-        $organizacion = $organizacionPromise->wait();
-        $user = $userPromise->wait();
-        $empleado = $empleadoPromise->wait();
         // Si la fecha no está registrada, continúa con la vista de creación.
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
     }
