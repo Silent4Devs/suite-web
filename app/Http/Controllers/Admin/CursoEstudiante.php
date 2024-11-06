@@ -44,7 +44,7 @@ class CursoEstudiante extends Controller
         // Sort and retrieve the last course and the last three courses
         $sortedCursos = $cursos_usuario->sortByDesc('last_review');
         $lastCourse = $sortedCursos->first();
-        $lastThreeCourses = $sortedCursos->take(3);
+        $lastThreeCourse = $sortedCursos->take(3);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));
     }
