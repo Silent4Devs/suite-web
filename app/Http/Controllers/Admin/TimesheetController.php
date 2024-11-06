@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use PDF;
 use Throwable;
+use VXM\Async\AsyncFacade as Async;
 
 class TimesheetController extends Controller
 {
@@ -105,21 +106,31 @@ class TimesheetController extends Controller
 
     public function misRegistros($estatus = 'todos')
     {
-        $times = Timesheet::getPersonalTimesheet();
+        $timesheetTask = Async::run(fn() => Timesheet::getPersonalTimesheet());
+        $organizationTask = Async::run(fn() => $this->obtenerOrganizacion());
+        $userTask = Async::run(fn() => User::getCurrentUser());
 
-        $todos_contador = $times->count();
-        $borrador_contador = $times->where('estatus', 'papelera')->count();
-        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
-        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
-        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+        // Await all async tasks
+        [$times, $organizacion_actual, $user] = Async::await([$timesheetTask, $organizationTask, $userTask]);
 
+        // Start counting tasks in parallel
+        [$todos_contador, $borrador_contador, $pendientes_contador, $aprobados_contador, $rechazos_contador] = Async::await([
+            fn() => $times->count(),
+            fn() => $times->where('estatus', 'papelera')->count(),
+            fn() => $times->where('estatus', 'pendiente')->count(),
+            fn() => $times->where('estatus', 'aprobado')->count(),
+            fn() => $times->where('estatus', 'rechazado')->count()
+        ]);
+
+        // Sort timesheets
         $times = $times->sortByDesc('created_at');
 
-        $organizacion_actual = $this->obtenerOrganizacion();
+        // Extract organization data
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-        $user = User::getCurrentUser();
-        $empleado = Empleado::getMyEmpleadodata($user->empleado->id);
+
+        // Get employee data asynchronously
+        $empleado = Async::await(fn() => Empleado::getMyEmpleadodata($user->empleado->id));
         $empleado_name = $empleado->name;
 
         return view('admin.timesheet.mis-registros', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual', 'estatus', 'empleado_name'));
@@ -687,10 +698,14 @@ class TimesheetController extends Controller
     public function createProyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientes = TimesheetCliente::getAll();
-        $sedes = Sede::getAll();
-        $areas = Area::getAll();
-        $tipos = TimesheetProyecto::TIPOS;
+
+        [$tipos, $clientes, $sedes, $areas] = Async::run([
+            fn() => TimesheetProyecto::TIPOS,
+            fn() => TimesheetCliente::getAll(),
+            fn() => Sede::getAll(),
+            fn() => Area::getAll(),
+        ]);
+
         $tipo = $tipos['Interno'];
 
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
