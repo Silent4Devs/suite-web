@@ -46,9 +46,6 @@ class PortalComunicacionController extends Controller
             function () use (&$cumpleaños) {
                 $cumpleaños = Empleado::getCumpleanos();
             },
-            function () use (&$comunicacionSgis) {
-
-            },
         );
 
         $user = User::getCurrentUser();
