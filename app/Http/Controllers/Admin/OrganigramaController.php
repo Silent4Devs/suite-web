@@ -111,5 +111,5 @@ class OrganigramaController extends Controller
             // Reindex after removing 'baja' items
             $array['children_organigrama'] = array_values($array['children_organigrama']);
         }
-
+    }
 }
