@@ -36,7 +36,7 @@
                     </div>
                 @break
 
-                @case('cancelarRequisicion')
+                @case(' cancelarRequisicion')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
@@ -52,7 +52,7 @@
                     </div>
                 @break
 
-                @case('cancelarOrdenCompra')
+                @case(' cancelarOrdenCompra')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
