@@ -183,7 +183,11 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+        $results = Async::run([
+            fn() => Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray(),
+        ]);
+
+        [$fechasRegistradas] = $results;
 
         $organizacion = Organizacion::getFirst();
 
