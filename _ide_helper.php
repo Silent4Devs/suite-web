@@ -10099,25 +10099,6 @@ namespace Illuminate\Support\Facades {
             /**
      * 
      *
-     * @method static void createSubscription(array|string $channels, \Closure $callback, string $method = 'subscribe')
-     * @method static \Illuminate\Redis\Limiters\ConcurrencyLimiterBuilder funnel(string $name)
-     * @method static \Illuminate\Redis\Limiters\DurationLimiterBuilder throttle(string $name)
-     * @method static mixed client()
-     * @method static void subscribe(array|string $channels, \Closure $callback)
-     * @method static void psubscribe(array|string $channels, \Closure $callback)
-     * @method static mixed command(string $method, array $parameters = [])
-     * @method static void listen(\Closure $callback)
-     * @method static string|null getName()
-     * @method static \Illuminate\Redis\Connections\Connection setName(string $name)
-     * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
-     * @method static void setEventDispatcher(\Illuminate\Contracts\Events\Dispatcher $events)
-     * @method static void unsetEventDispatcher()
-     * @method static void macro(string $name, object|callable $macro)
-     * @method static void mixin(object $mixin, bool $replace = true)
-     * @method static bool hasMacro(string $name)
-     * @method static void flushMacros()
-     * @method static mixed macroCall(string $method, array $parameters)
-     * @see \Illuminate\Redis\RedisManager
      */        class Redis {
                     /**
          * Get a Redis connection by name.

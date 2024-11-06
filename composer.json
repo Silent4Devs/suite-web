@@ -33,6 +33,7 @@
     "simplesoftwareio/simple-qrcode": "^4.2",
     "spatie/async": "^1.6",
     "spatie/calendar-links": "^1.6",
+    "spatie/fork": "^1.2",
     "spatie/geocoder": "^3.10",
     "spatie/laravel-backup": "^8.6",
     "spatie/laravel-db-snapshots": "^2.5",
