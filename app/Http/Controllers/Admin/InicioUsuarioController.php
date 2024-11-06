@@ -70,6 +70,7 @@ class InicioUsuarioController extends Controller
             $existsOrganizacion,
             $existsAreas,
             $existsPuesto,
+            $usuario,
             $existsVinculoEmpleadoAdmin,
             $organizacion,
             $panel_rules,
