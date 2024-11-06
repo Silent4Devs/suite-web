@@ -9,6 +9,7 @@ use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
+use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {
@@ -27,22 +28,23 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
+        $cursos_usuario = UsuariosCursos::with(['cursos.lessons'])
+            ->where('user_id', $usuario->id)
+            ->get()
+            ->map(function ($cu) {
+                $completedLessonsCount = $cu->cursos->lessons->where('completed', true)->count();
+                $totalLessonsCount = $cu->cursos->lessons->count();
 
-        foreach ($cursos_usuario as $cu) {
-            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
-                return $lesson->completed;
-            })->count();
+                $advance = $totalLessonsCount > 0 ? ($completedLessonsCount * 100) / $totalLessonsCount : 0;
+                $cu->advance = round($advance, 2);
 
-            $totalLessonsCount = $cu->cursos->lessons->count();
+                return $cu;
+            });
 
-            $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
-            $cu->advance = round($advance, 2);
-        }
-
-        // Obtener el último curso y los últimos tres cursos
-        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-        $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
+        // Sort and retrieve the last course and the last three courses
+        $sortedCursos = $cursos_usuario->sortByDesc('last_review');
+        $lastCourse = $sortedCursos->first();
+        $lastThreeCourses = $sortedCursos->take(3);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));
     }
