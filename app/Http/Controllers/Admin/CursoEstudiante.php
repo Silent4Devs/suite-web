@@ -52,11 +52,14 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+            $results = Async::run([
+                fn() => Evaluation::where('course_id', $curso_id)->get(),
+                fn() => Course::where('id', $curso_id)->first(),
+            ]);
 
-            $curso = Course::getAll()->where('id', $curso_id)->first();
+            [$evaluacionesLeccion, $curso] = $results;
 
-            if (! $curso) {
+            if (!$curso) {
                 abort(404);
             }
 
