@@ -61,34 +61,58 @@ class RequisicionesListener implements ShouldQueue
 
             // requisiciones
             if ($event->requsicion->firma_solicitante !== null) {
-                $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)->first();
+                $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
+                    ->orWhere('n_empleado', $firmas->solicitante->n_empleado)
+                    ->first();
                 $involucradosRQOC->push($user_solicitante);
             }
+
             if ($event->requsicion->firma_jefe !== null) {
-                $user_jefe = User::where('empleado_id', $firmas->jefe->id)->first();
+                $user_jefe = User::where('empleado_id', $firmas->jefe->id)
+                    ->orWhere('n_empleado', $firmas->jefe->n_empleado)
+                    ->first();
                 $involucradosRQOC->push($user_jefe);
             }
+
             if ($event->requsicion->firma_finanzas !== null) {
-                $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)->first();
+                $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
+                    ->orWhere('n_empleado', $firmas->responsableFinanzas->n_empleado)
+                    ->first();
                 $involucradosRQOC->push($user_finanzas);
             }
+
             if ($event->requsicion->firma_compras !== null) {
-                $user_compras = User::where('empleado_id', $firmas->comprador->id)->first();
+                $user_compras = User::where('empleado_id', $firmas->comprador->id)
+                    ->orWhere('n_empleado', $firmas->comprador->n_empleado)
+                    ->first();
                 $involucradosRQOC->push($user_compras);
             }
+
+            foreach ($involucradosRQOC as $keyINV => $involucrado) {
+                # code...
+                Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+            }
+        } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
+
+            $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
+
+            $user = User::where('id', $event->requsicion->id_user)->first();
+
+            $involucradosRQOC = collect();
 
             // ordenes de compra
             if ($event->requsicion->firma_comprador_orden !== null) {
 
                 $responsableComprador = Comprador::with('user')->where('id', $event->requsicion->comprador_id)->first();
                 $comprador = $this->obtenerComprador($responsableComprador);
-                $user_compras = User::where('empleado_id', $comprador->id)->first();
+                $user_compras = User::where('empleado_id', $firmas->comprador->id)
+                    ->orWhere('n_empleado', $firmas->comprador->n_empleado)
+                    ->first();
 
-                $involucradosRQOC->push($comprador);
-                // $this->tipo_firma_siguiente = 'firma_solicitante_orden';
+                $involucradosRQOC->push($user_compras);
             }
             if ($event->requsicion->firma_solicitante_orden !== null) {
-                $solicitante_email = User::find($event->requsicion->id_user)->empleado->email;
+                $solicitante_email = User::where('id', $event->requsicion->id_user);
                 $involucradosRQOC->push($solicitante_email);
             }
 
@@ -104,18 +128,19 @@ class RequisicionesListener implements ShouldQueue
                         if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
 
                             $responsable = $responsableNivel->empleado;
-                            $user_solicitante = User::where('empleado_id', $responsable->id)->first();
-
-                            $involucradosRQOC->push($user_solicitante);
+                            $user_finanzas = User::where('empleado_id', $responsable->id)
+                                ->orWhere('n_empleado', $responsable->n_empleado)
+                                ->first();
+                            $involucradosRQOC->push($user_finanzas);
                         }
                     }
                 }
             }
 
-            $user = User::where('id', $event->requsicion->id_user)->first();
-
-            // dd($empleado, $event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug);
-            Notification::send($user, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+            foreach ($involucradosRQOC as $keyINV => $involucrado) {
+                # code...
+                Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+            }
         } else {
 
             //Hay que buscar al supervisor de acuerdo a la lista y disponibilidad
