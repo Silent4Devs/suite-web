@@ -45,7 +45,8 @@ class TbTimesheetApiMobileController extends Controller
         return $url;
     }
 
-    public function proyectosArea($empleado){
+    public function proyectosArea($empleado)
+    {
         $proyects = TimesheetProyectoArea::with(['proyecto.tareas' => function ($query) {
             $query->select('id', 'proyecto_id', 'tarea');
         }])
@@ -94,7 +95,7 @@ class TbTimesheetApiMobileController extends Controller
             'registros.*.tarea_id' => ['required', 'integer'],
             'registros.*.facturable' => ['required', 'boolean'],
             'registros.*.descripcion' => ['required', 'string'],
-    
+
             // Validaciones para horas decimales con hasta 2 decimales
             'registros.*.horas_lunes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
             'registros.*.horas_martes' => ['nullable', 'numeric', 'regex:/^\d{1,2}(\.\d{1,2})?$/', 'between:0,24'],
@@ -280,14 +281,14 @@ class TbTimesheetApiMobileController extends Controller
                 "id_tarea" => $hora->tarea->id,
                 "tarea" => $hora->tarea->tarea,
                 "facturable" => $hora->facturable,
-                "horas" =>[
-                    "horas_lunes"=> floatval($hora->horas_lunes),
-                    "horas_martes"=> floatval($hora->horas_martes),
-                    "horas_miercoles"=> floatval($hora->horas_miercoles),
-                    "horas_jueves"=> floatval($hora->horas_jueves),
-                    "horas_viernes"=> floatval($hora->horas_viernes),
-                    "horas_sabado"=> floatval($hora->horas_sabado),
-                    "horas_domingo"=> floatval($hora->horas_domingo),
+                "horas" => [
+                    "horas_lunes" => floatval($hora->horas_lunes),
+                    "horas_martes" => floatval($hora->horas_martes),
+                    "horas_miercoles" => floatval($hora->horas_miercoles),
+                    "horas_jueves" => floatval($hora->horas_jueves),
+                    "horas_viernes" => floatval($hora->horas_viernes),
+                    "horas_sabado" => floatval($hora->horas_sabado),
+                    "horas_domingo" => floatval($hora->horas_domingo),
                 ],
                 "descripcion" => $hora->descripcion,
                 "horas_totales_tarea" => $hora->horas_totales_tarea,
@@ -305,7 +306,6 @@ class TbTimesheetApiMobileController extends Controller
             ]),
             200,
         )->header('Content-Type', 'application/json');
-
     }
 
     public function tbFunctionUpdate(Request $request)
@@ -409,24 +409,26 @@ class TbTimesheetApiMobileController extends Controller
 
                     foreach ($request->registros as $index => $registro) {
 
-                        TimesheetHoras::updateOrCreate([
-                            'id' => $registro["id_registro"],
-                            'timesheet_id' => $timesheet_editado->id,
-                        ],
-                        [
-                            'proyecto_id' => $registro['proyecto_id'],
-                            'tarea_id' => $registro['tarea_id'],
-                            'facturable' => $registro['facturable'],
-                            'horas_lunes' => $registro['horas_lunes'],
-                            'horas_martes' => $registro['horas_martes'],
-                            'horas_miercoles' => $registro['horas_miercoles'],
-                            'horas_jueves' => $registro['horas_jueves'],
-                            'horas_viernes' => $registro['horas_viernes'],
-                            'horas_sabado' => $registro['horas_sabado'],
-                            'horas_domingo' => $registro['horas_domingo'],
-                            'descripcion' => $registro['descripcion'],
-                            'empleado_id' => $usuario->empleado->id,
-                        ]);
+                        TimesheetHoras::updateOrCreate(
+                            [
+                                'id' => $registro["id_registro"],
+                                'timesheet_id' => $timesheet_editado->id,
+                            ],
+                            [
+                                'proyecto_id' => $registro['proyecto_id'],
+                                'tarea_id' => $registro['tarea_id'],
+                                'facturable' => $registro['facturable'],
+                                'horas_lunes' => $registro['horas_lunes'],
+                                'horas_martes' => $registro['horas_martes'],
+                                'horas_miercoles' => $registro['horas_miercoles'],
+                                'horas_jueves' => $registro['horas_jueves'],
+                                'horas_viernes' => $registro['horas_viernes'],
+                                'horas_sabado' => $registro['horas_sabado'],
+                                'horas_domingo' => $registro['horas_domingo'],
+                                'descripcion' => $registro['descripcion'],
+                                'empleado_id' => $usuario->empleado->id,
+                            ]
+                        );
                     }
 
                     if ($timesheet_editado->estatus === 'pendiente') {
@@ -516,14 +518,14 @@ class TbTimesheetApiMobileController extends Controller
                 "id_tarea" => $hora->tarea->id,
                 "tarea" => $hora->tarea->tarea,
                 "facturable" => $hora->facturable,
-                "horas" =>[
-                    "horas_lunes"=> floatval($hora->horas_lunes),
-                    "horas_martes"=> floatval($hora->horas_martes),
-                    "horas_miercoles"=> floatval($hora->horas_miercoles),
-                    "horas_jueves"=> floatval($hora->horas_jueves),
-                    "horas_viernes"=> floatval($hora->horas_viernes),
-                    "horas_sabado"=> floatval($hora->horas_sabado),
-                    "horas_domingo"=> floatval($hora->horas_domingo),
+                "horas" => [
+                    "horas_lunes" => floatval($hora->horas_lunes),
+                    "horas_martes" => floatval($hora->horas_martes),
+                    "horas_miercoles" => floatval($hora->horas_miercoles),
+                    "horas_jueves" => floatval($hora->horas_jueves),
+                    "horas_viernes" => floatval($hora->horas_viernes),
+                    "horas_sabado" => floatval($hora->horas_sabado),
+                    "horas_domingo" => floatval($hora->horas_domingo),
                 ],
                 "descripcion" => $hora->descripcion,
                 "horas_totales_tarea" => $hora->horas_totales_tarea,
@@ -541,7 +543,6 @@ class TbTimesheetApiMobileController extends Controller
             ]),
             200,
         )->header('Content-Type', 'application/json');
-
     }
 
     public function tbFunctionEliminarTimesheet($id_registro)
@@ -551,7 +552,7 @@ class TbTimesheetApiMobileController extends Controller
             //code...
             $eliminarRegistro = Timesheet::where('id', $id_registro)->first();
             $eliminarRegistro->delete();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'Registro Eliminado Correctamente.',
@@ -572,7 +573,7 @@ class TbTimesheetApiMobileController extends Controller
             //code...
             $eliminarRegistro = TimesheetHoras::where('id', $id_registro)->first();
             $eliminarRegistro->delete();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'Registro Eliminado Correctamente.',

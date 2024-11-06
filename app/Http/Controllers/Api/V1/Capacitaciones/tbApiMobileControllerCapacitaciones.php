@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class tbApiMobileControllerCapacitaciones extends Controller
 {
@@ -391,7 +392,6 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 'quiz_size' => $totalQuizQuestions,
                 'evaluation_id' => $evaluation->id,
             ]);
-
         } else {
 
             $userEvaluationId = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->first();
@@ -418,37 +418,63 @@ class tbApiMobileControllerCapacitaciones extends Controller
             ->with('answers')
             ->inRandomOrder()
             ->get();
-        dd($questions);
 
         foreach ($questions as $keyQ => $question) {
             # code...
+            $json_preguntas_curso['evaluation']['questions'][$keyQ] = [
+                'id_question' => $question->id,
+                'question' => $question->question,
+                'is_active' => $question->is_active,
+            ];
 
+            foreach ($question->answers as $keyAns => $answer) {
+                $json_preguntas_curso['evaluation']['questions'][$keyQ]['answers'][] = [
+                    "id_answer" => $answer->id,
+                    "answer" => $answer->answer,
+                    "is_correct" => $answer->is_correct, //Innecesario
+                ];
+            }
         }
-        //If the quiz size is greater then actual questions available in the quiz sections,
-        //Finish the quiz and take the user to results page on exhausting all question from a given section.
-        if ($question === null) {
-            //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
-            $userEvaluationId->quiz_size = $count - 1;
-            $userEvaluationId->completed = true;
-            $userEvaluationId->save();
-
-            return $this->showResults();
-        }
-        //Update the questions taken array so that we don't repeat same question again in the quiz
-        //We feed this array into whereNotIn chain in getNextquestion() function.
-        array_push($answeredQuestions, $question->id);
 
         return response(json_encode(
             [
                 'cursoEvaluacion' => $json_preguntas_curso,
             ],
         ), 200)->header('Content-Type', 'application/json');
+    }
 
-        // Get the first/next question for the quiz.
-        // Since we are using LiveWire component for quiz, the first quesiton and answers will be displayed through mount function.
-        // $currentQuestion = $this->getNextQuestion();
-        // $setupQuiz = false;
-        // $quizInProgress = true;
+    public function tbFunctionRespuestasCursoEvaluacion(Request $request)
+    {
+        // Define las reglas de validación
+        $validator = Validator::make($request->all(), [
+            'id_course' => ['required', 'integer'],
+            'id_evaluation' => ['required', 'integer'],
+            'answers' => ['required', 'array'],
+            'answers.*.id_question' => ['required', 'integer'],
+            'answers.*.id_answer' => ['required', 'integer'],
+        ], [
+            'required' => 'El campo :attribute es obligatorio.',
+            'integer' => 'El campo :attribute debe ser un número.',
+        ]);
+
+        // Si hay errores de validación, retornamos un JSON con el error
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Errores de validación',
+                'errors' => $validator->errors(),
+            ], 422); // Código HTTP 422 Unprocessable Entity
+        }
+
+        // UserAnswer::create([
+        //     'user_id' => auth()->id(),
+        //     'user_evaluation_id' => $this->userEvaluationId->id,
+        //     'answer_id' => $this->answer,
+        //     'is_correct' => $isChoiceCorrect,
+        //     'evaluation_id' => $this->evaluation->id,
+        //     'question_id' => $this->currentQuestion->id,
+        // ]);
+        dd($request->all());
     }
 
     /**
