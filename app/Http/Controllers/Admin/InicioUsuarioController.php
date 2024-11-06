@@ -68,13 +68,6 @@ class InicioUsuarioController extends Controller
 
         $hoy->toDateString();
 
-        [$first, $second] = Concurrency::run([
-            fn () => DB::table('users')->count(),
-            fn () => Empleado::exists()
-        ]);
-
-        dd($first, $second);
-
         Async::batchRun(
             function () use (&$implementaciones) {
                 // Check if the result is already cached
