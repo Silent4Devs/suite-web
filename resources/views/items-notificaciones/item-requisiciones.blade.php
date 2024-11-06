@@ -46,7 +46,23 @@
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
                         &nbsp;&nbsp;
-                        La {{ $last_unread_notification->data['slug'] }}
+                        La requisicion: {{ $last_unread_notification->data['slug'] }}
+                        ha
+                        sido cancelada
+                    </div>
+                @break
+
+                @case('cancelarOrdenCompra')
+                    <div class="d-flex align-items-center justify-content-start">
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}:
+                        @else
+                            <i class="pr-2 fas fa-tasks text-success"></i>
+                        @endif
+                        &nbsp;&nbsp;
+                        La orden de compra correspondiente: {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
