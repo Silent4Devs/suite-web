@@ -191,7 +191,7 @@ class TimesheetController extends Controller
 
         [$fechasRegistradas, $organizacion, $user] = $results;
 
-        $empleado = Async::run(fn() => Empleado::getMyEmpleadodata($user))->wait();
+        $empleado = Empleado::getMyEmpleadodata($user);
 
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion', 'empleado'));
     }
