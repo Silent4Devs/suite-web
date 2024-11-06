@@ -55,6 +55,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use VXM\Async\AsyncFacade as Async;
+use Illuminate\Support\Facades\Concurrency;
 
 class InicioUsuarioController extends Controller
 {
@@ -66,48 +67,60 @@ class InicioUsuarioController extends Controller
 
         $hoy->toDateString();
 
-        Async::batchRun(
-            function () use (&$implementaciones) {
-                // Check if the result is already cached
-                $implementaciones = PlanImplementacion::getAll();
-            },
-            function () use (&$existsEmpleado) {
-                $existsEmpleado = Empleado::exists();
-            },
-            function () use (&$existsOrganizacion) {
-                $existsOrganizacion = Organizacion::exists();
-            },
-            function () use (&$existsAreas) {
-                $existsAreas = Area::exists();
-            },
-            function () use (&$existsPuesto) {
-                $existsPuesto = Puesto::exists();
-            },
-            function () use (&$existsVinculoEmpleadoAdmin) {
-                $existsVinculoEmpleadoAdmin = User::exists();
-            },
-            function () use (&$organizacion) {
-                $organizacion = Organizacion::getFirst();
-            },
-            function () use (&$panel_rules) {
-                $panel_rules = PanelInicioRule::getAll();
-            },
-            function () use (&$documentos_publicados) {
-                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-            },
-            function () use (&$auditorias_anual) {
-                $auditorias_anual = AuditoriaAnual::getAll();
-            },
-            function () use (&$eventos) {
-                $eventos = Calendario::getAll();
-            },
-            function () use (&$oficiales) {
-                $oficiales = CalendarioOficial::getAll();
-            },
-            function () use (&$cumples_aniversarios) {
-                $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
-            },
-        );
+        // $res is a Collection<Result>
+        $res = Concurrency::run([
+            fn () => PlanImplementacion::getAll(),
+            fn () => Empleado::exists(),
+            fn () => Organizacion::exists(),
+            fn () => Area::exists(),
+            fn () => Puesto::exists();
+            fn () => User:: exists();
+        ]);
+
+        dd($res);
+
+        // Async::batchRun(
+        //     function () use (&$implementaciones) {
+        //         // Check if the result is already cached
+        //         $implementaciones = PlanImplementacion::getAll();
+        //     },
+        //     function () use (&$existsEmpleado) {
+        //         $existsEmpleado = Empleado::exists();
+        //     },
+        //     function () use (&$existsOrganizacion) {
+        //         $existsOrganizacion = Organizacion::exists();
+        //     },
+        //     function () use (&$existsAreas) {
+        //         $existsAreas = Area::exists();
+        //     },
+        //     function () use (&$existsPuesto) {
+        //         $existsPuesto = Puesto::exists();
+        //     },
+        //     function () use (&$existsVinculoEmpleadoAdmin) {
+        //         $existsVinculoEmpleadoAdmin = User::exists();
+        //     },
+        //     function () use (&$organizacion) {
+        //         $organizacion = Organizacion::getFirst();
+        //     },
+        //     function () use (&$panel_rules) {
+        //         $panel_rules = PanelInicioRule::getAll();
+        //     },
+        //     function () use (&$documentos_publicados) {
+        //         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
+        //     },
+        //     function () use (&$auditorias_anual) {
+        //         $auditorias_anual = AuditoriaAnual::getAll();
+        //     },
+        //     function () use (&$eventos) {
+        //         $eventos = Calendario::getAll();
+        //     },
+        //     function () use (&$oficiales) {
+        //         $oficiales = CalendarioOficial::getAll();
+        //     },
+        //     function () use (&$cumples_aniversarios) {
+        //         $cumples_aniversarios = Empleado::getAltaEmpleadosWithArea();
+        //     },
+        // );
 
         $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
