@@ -52,15 +52,13 @@ class PortalComunicacionController extends Controller
             function () use (&$comunicacionSgis) {
                 $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
             },
-            function () use (&$comunicacionSgis_carrusel) {
-                $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-            },
         );
 
         $user = User::getCurrentUser();
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
+        $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
         //     return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         // });
