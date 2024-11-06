@@ -37,5 +37,6 @@ class TenantManager
             dd("Connection failed: " . $e->getMessage());
         }
         Schema::connection('tenant')->getConnection()->reconnect();
+        DB::setDefaultConnection('tenant');
     }
 }

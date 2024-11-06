@@ -16,6 +16,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PortalComunicacionController extends Controller
 {
@@ -26,6 +27,9 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
+        $eb = DB::connection('tenant')->getDatabaseName();
+        $databaseName = \DB::connection()->getDatabaseName();
+       // dd($databaseName, $eb);
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
 
