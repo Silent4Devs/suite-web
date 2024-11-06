@@ -37,9 +37,6 @@ class PortalComunicacionController extends Controller
             function () use (&$politica_existe) {
                 $politica_existe = PoliticaSgsi::getAll()->count();
             },
-            function () use (&$documentos_publicados) {
-                $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-            },
             function () use (&$comite_existe) {
                 $comite_existe = Comiteseguridad::getAll()->count();
             },
@@ -58,6 +55,7 @@ class PortalComunicacionController extends Controller
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
+        $documentos_publicados = Documento::getLastFiveWithMacroproceso();
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
