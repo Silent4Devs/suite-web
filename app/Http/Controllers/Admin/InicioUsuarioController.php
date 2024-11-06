@@ -55,8 +55,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use VXM\Async\AsyncFacade as Async;
-use Illuminate\Support\Facades\Concurrency;
-use Illuminate\Support\Facades\DB;
 
 class InicioUsuarioController extends Controller
 {
