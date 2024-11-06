@@ -37,9 +37,6 @@ class PortalComunicacionController extends Controller
             function () use (&$politica_existe) {
                 $politica_existe = PoliticaSgsi::getAll()->count();
             },
-            function () use (&$user) {
-                $user = User::getCurrentUser();
-            },
             function () use (&$documentos_publicados) {
                 $documentos_publicados = Documento::getLastFiveWithMacroproceso();
             },
@@ -60,6 +57,7 @@ class PortalComunicacionController extends Controller
             },
         );
 
+        $user = User::getCurrentUser();
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
