@@ -49,6 +49,7 @@ class RiskAnalysis extends Component
 
     private function cloneFormulas($riskAnalysis, $questionsFormulas,$formulas)
     {
+        // dd($riskAnalysis);
         foreach($questionsFormulas as $questionFormula){
             foreach($formulas as $formula){
                 $copyQuestion = $questionFormula->replicate();
@@ -71,6 +72,7 @@ class RiskAnalysis extends Component
 
 
                     $newFormula->fill($copyFormula->toArray());
+                    $newFormula->risk_analysis_id = $riskAnalysis;
                     $newFormula->save();
 
                     $settingFormula = TBSettingsTemplateAR_TBFormulaTemplateARModel::where('formula_id', $formula->id)->first();

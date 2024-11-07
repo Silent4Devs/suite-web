@@ -17,6 +17,12 @@ class TBPeriodSheetRiskAnalysisModel extends Model
         'id',
         'period_id',
         'sheet_id',
+        'initial_risk',
+        'residual_risk',
+        'initial_coordinate_y',
+        'initial_coordinate_x',
+        'residual_coordinate_y',
+        'residual_coordinate_x',
     ];
 
     public function sheet()

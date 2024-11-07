@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('sheet_risk_analysis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('risk_analysis_id')->nullable();
+            $table->boolean('initial_risk_confirm')->nullable();
+            $table->boolean('residual_risk_confirm')->nullable();
             $table->foreign('risk_analysis_id')->references('id')->on('risk_analysis')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

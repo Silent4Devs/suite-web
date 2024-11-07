@@ -89,42 +89,70 @@
     @break
 
     @case('11')
-        <div>
-            {{ $question->getFormula->formula }}
-            {{$question->id}}
+        <div class="d-flex justify-content-center align-items-center gap-1">
+            {{-- {{ $question->getFormula->formula }} --}}
+            {{-- {{$question->id}} --}}
+            <div id="scaleIndicator-{{$question->id}}" style="min-width: 68px; padding: 5px 5px; border-radius:11px; text-align:center;"></div>
             <input class="form-control" placeholder="" id="qs-{{ $question->id }}" name="qs-{{ $question->id }}"
-                maxlength="255" required="{{ $question->obligatory }}" readonly wire:model.defer="answersForm.{{$question->id}}.value">
+                maxlength="255" required="{{ $question->obligatory }}" readonly wire:model.defer="answersForm.{{$question->id}}.value"
+                value="{{ old('answersForm.'.$question->id.'.value') ?? ($answersForm[$question->id]['value'] ?? '') }}">
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
+                    // console.log("object formula")
                     const inputId = @json($question->id);
+                    const sections = @json($sections);
+                    const ids = @json($questionsFormulas);
+                    const scales = @json($scales);
                     const inputFormula = document.getElementById(`qs-${inputId}`);
+                    const inputScale = document.getElementById(`scaleIndicator-${inputId}`);
+                    let resultFormula;
+                    // console.log(resultFormula)
+                    let scaleIndicator={};
                     const formula = @json($question->getFormula->formula);
-                    console.log(formula)
-                    const numbers = formula.match(/\$fv(\d+)/g).map(num => num.replace('$fv', ''));
-                    numbers.map((number) => {
-                        const inputId = `qs-${number}`;
-                        const inputElement = document.getElementById(inputId);
+                    // updateStatus();
 
-                        if (inputElement) {
-                            inputElement.addEventListener('input', actualizarFormula);
-                        }
+                    // const numbers = formula.match(/\$fv(\d+)/g).map(num => num.replace('$fv', ''));
+
+                    const numbers = formula.match(/\$fv([^+\-*\/]+)/g).map(num => num.replace('$fv', ''));
+                    numbers.map((number) => {
+                        const uuidFormula = number;
+
+                        ids.map((itm)=>{
+                            if(uuidFormula === itm.uuid_formula){
+                                console.log(itm.id)
+                                const inputId = `qs-${itm.id}`;
+                                const inputElement = document.getElementById(inputId);
+                                if (inputElement) {
+                                    inputElement.addEventListener('input', actualizarFormula);
+                                    inputElement.addEventListener('input', updateStatus);
+                                }
+
+                                Livewire.emit('saveCoordinates', itm.id);
+
+                            }
+                        })
                     });
 
                     function actualizarFormula() {
                         let formulaActualizada = formula.replace(/x/g, '*');
                         numbers.map((item) => {
-                            const inputId = `qs-${item}`;
-                            const inputElement = document.getElementById(inputId);
-                            const valor = inputElement ? inputElement.value : 0;
-                            if (valor !== '') {
-                                formulaActualizada = formulaActualizada.replace(`$fv${item}`, valor);
-                            } else {
+                            ids.map((itm)=>{
+                                if(item === itm.uuid_formula){
+                                    const inputId = `qs-${itm.id}`;
+                                    const inputElement = document.getElementById(inputId);
+                                    const valor = inputElement ? inputElement.value : 0;
+                                    if (valor !== '') {
+                                        formulaActualizada = formulaActualizada.replace(`$fv${item}`, valor);
+                                    } else {
 
-                                // quitar el operador que lo sigue si no hay valor
-                                formulaActualizada = formulaActualizada.replace(`$fv${item}`, '');
-                                // quita el operador que pueda estar antes o después
-                                formulaActualizada = formulaActualizada.replace(/\s*[\+\-\*\/]\s*/, '');
-                            }
+                                        // quitar el operador que lo sigue si no hay valor
+                                        formulaActualizada = formulaActualizada.replace(`$fv${item}`, '');
+                                        // quita el operador que pueda estar antes o después
+                                        formulaActualizada = formulaActualizada.replace(/\s*[\+\-\*\/]\s*/, '');
+                                    }
+                                }
+                            });
+
                         });
                         const formulaParcial = formulaActualizada.replace(/\$fv\d+/g, '');
 
@@ -136,12 +164,43 @@
                             }
 
                             inputFormula.value = resultado;
-                            console.log("Resultado:", resultado);
+                            resultFormula = resultado
+                            // console.log("Resultado:", resultado);
                         } catch (error) {
                             inputFormula.value = formulaParcial;
-                            console.log("Fórmula parcial:", formulaParcial);
+                            resultFormula= formulaParcial;
+                            // console.log("Fórmula parcial:", formulaParcial);
                         }
                     }
+
+                    function updateStatus(){
+                       const newScales = scales.find((item)=> parseInt(item.valor) >= parseInt(resultFormula));
+                    //    console.log(newScales);
+                       scaleIndicator.name = newScales.nombre;
+                       scaleIndicator.color = newScales.color;
+                       inputScale.style.background = scaleIndicator.color;
+                       inputScale.style.color = '#FFFFFF'
+                       inputScale.innerHTML = scaleIndicator.name;
+
+                    }
+
+                    function getStatus(){
+                        // console.log(scales,resultFormula)
+                        const newScales = scales.find((item)=> parseInt(resultFormula) <= parseInt(item.valor));
+                    //    console.log(newScales);
+                       scaleIndicator.name = newScales.nombre;
+                    //    console.log(scaleIndicator)
+                       scaleIndicator.color = newScales.color;
+                       inputScale.style.background = scaleIndicator.color;
+                       inputScale.style.color = '#FFFFFF'
+                       inputScale.innerHTML = scaleIndicator.name;
+                    }
+
+                    Livewire.on("calculateScale", () => {
+                        resultFormula = inputFormula.value
+                        // console.log(resultFormula);
+                        getStatus();
+                    });
                 });
             </script>
         </div>
@@ -171,10 +230,13 @@
     @case('14')
         <div>
             <div class="form-group pl-0 mb-0 anima-focus">
-                {{$question->id}}
-                <input type="number" class="form-control" placeholder="" name="qs-{{ $question->id }}"
-                    id="qs-{{ $question->id }}" required="{{ $question->obligatory }}" wire:model.defer="answersForm.{{$question->id}}.value">
+                {{-- {{$question->id}} --}}
+                <input type="number" step="1" class="form-control" placeholder="" name="qs-{{ $question->id }}"
+                    id="qs-{{ $question->id }}" required="{{ $question->obligatory }}" wire:model.defer="answersForm.{{$question->id}}.value"
+                    min="{{ $probImpa->valor_min }}" max="{{ $probImpa->valor_max }}">
             </div>
+            <strong style="font-style: italic; font-size:11px;">Tu valor debe encontrase entre el
+                {{ $probImpa->valor_min }} y el {{ $probImpa->valor_max }}</strong>
         </div>
     @break
 

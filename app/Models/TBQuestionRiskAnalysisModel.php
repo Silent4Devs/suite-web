@@ -23,6 +23,7 @@ class TBQuestionRiskAnalysisModel extends Model
         'position',
         'obligatory',
         'is_numeric',
+        'uuid_formula',
     ];
 
     public function sections()

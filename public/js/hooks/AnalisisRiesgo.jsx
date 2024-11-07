@@ -667,7 +667,7 @@ export const useFormulasAnalisisRiesgos = (template) => {
     }
 
     const addVariable = (item) => {
-        const id = `$fv${item.id}`
+        const id = `$fv${item.uuid_formula}`
         setFormula(`${formula}${id}`);
     }
 

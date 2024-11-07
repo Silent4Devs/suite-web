@@ -90,9 +90,7 @@
         let cont = 0;
 
         function tablaLivewire(id_tabla) {
-            console.log('funcion');
             $('#' + id_tabla).attr('id', id_tabla + cont);
-
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
@@ -201,11 +199,17 @@
 
             return table;
         }
+
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                console.log('liwe');
                 tablaLivewire('datatable-risk-analysis');
             }, 100);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                tablaLivewire('datatable-risk-analysis-controls');
+            }, 200);
         });
     </script>
 

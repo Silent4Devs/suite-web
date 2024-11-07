@@ -15,10 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('period_id')->nullable();
             $table->unsignedBigInteger('sheet_id')->nullable();
+            $table->float('initial_risk')->nullable();
+            $table->float('residual_risk')->nullable();
+            $table->integer('initial_coordinate_y')->nullable();
+            $table->integer('initial_coordinate_x')->nullable();
+            $table->integer('residual_coordinate_y')->nullable();
+            $table->integer('residual_coordinate_x')->nullable();
             $table->foreign('period_id')->references('id')->on('period_risk_analysis')->onDelete('cascade');
             $table->foreign('sheet_id')->references('id')->on('sheet_risk_analysis')->onDelete('cascade');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

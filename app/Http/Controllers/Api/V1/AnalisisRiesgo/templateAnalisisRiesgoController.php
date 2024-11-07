@@ -17,8 +17,11 @@ use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
+use function PHPSTORM_META\type;
 
 class templateAnalisisRiesgoController extends Controller
 {
@@ -171,9 +174,9 @@ class templateAnalisisRiesgoController extends Controller
             $id = $question->id;
             $exist = intval($id);
             if (! $exist) {
-
                 DB::beginTransaction();
                 try {
+                    $uuid = $this->verifyUuidFormula($question);
                     $questionCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
                         'title' => $question->title,
                         'size' => $question->size,
@@ -181,6 +184,7 @@ class templateAnalisisRiesgoController extends Controller
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
                         'is_numeric' => $question->isNumeric,
+                        'uuid_formula' => $uuid ? $uuid:null,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -1137,6 +1141,7 @@ class templateAnalisisRiesgoController extends Controller
             'size' => 3,
             'obligatory' => true,
             'data' => [],
+            'uuid_formula' => substr(Str::uuid(), 0, 5),
         ]);
 
         $optionImpa = ([
@@ -1146,6 +1151,7 @@ class templateAnalisisRiesgoController extends Controller
             'size' => 3,
             'obligatory' => true,
             'data' => [],
+            'uuid_formula' => substr(Str::uuid(), 0, 5),
         ]);
 
         $questionOptionId = TBQuestionTemplateAnalisisRiesgoModel::create($optionId);
@@ -1213,5 +1219,44 @@ class templateAnalisisRiesgoController extends Controller
             'is_show' => false,
         ]);
 
+    }
+
+    public function verifyUuidFormula($question){
+        switch($question->type){
+            case '3':
+                $uuid=Str::uuid();
+                $uuid = substr($uuid, 0, 5);
+                return $uuid;
+                break;
+            case '5':
+                if($question->is_numeric){
+                    $uuid=Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+                    return $uuid;
+                }else {
+                    return null;
+                }
+                break;
+            case '6':
+                if($question->is_numeric){
+                    $uuid=Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+                    return $uuid;
+                }else {
+                    return null;
+                }
+                break;
+            case '7':
+                if($question->is_numeric){
+                    $uuid=Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+                    return $uuid;
+                }else {
+                    return null;
+                }
+                break;
+            default:
+            return null;
+        }
     }
 }

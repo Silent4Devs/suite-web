@@ -16,7 +16,9 @@ class TBSheetRiskAnalysisModel extends Model
     protected $table = 'sheet_risk_analysis';
 
     protected $fillable = [
-        'risk_analysis_id'
+        'risk_analysis_id',
+        'initial_risk_confirm',
+        'residual_risk_confirm',
     ];
 
     public function answersSheet()
