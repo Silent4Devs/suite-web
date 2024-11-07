@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
+            // \App\Http\Middleware\TenantMiddleware::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -45,6 +46,8 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AuthGates::class,
         ],
         'universal' => [],
+
+
     ];
 
     protected $routeMiddleware = [
@@ -68,6 +71,7 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         'course' => \App\Http\Middleware\CourseMiddleware::class,
+        'tenant' => \App\Http\Middleware\TenantMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 
