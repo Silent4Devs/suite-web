@@ -108,12 +108,12 @@ class TimesheetController extends Controller
     {
         $times = Timesheet::getPersonalTimesheet();
 
-        $todos_contador = Async::run(fn() => $times->count());
-        $borrador_contador = Async::run(fn() => $times->where('estatus', 'papelera')->count());
-        $pendientes_contador = Async::run(fn() => $times->where('estatus', 'pendiente')->count());
-        $aprobados_contador = Async::run(fn() => $times->where('estatus', 'aprobado')->count());
-        $rechazos_contador = Async::run(fn() => $times->where('estatus', 'rechazado')->count());
-        $sorted_times = Async::run(fn() => $times->sortByDesc('created_at'));
+        $todos_contador = Async::run(fn () => $times->count());
+        $borrador_contador = Async::run(fn () => $times->where('estatus', 'papelera')->count());
+        $pendientes_contador = Async::run(fn () => $times->where('estatus', 'pendiente')->count());
+        $aprobados_contador = Async::run(fn () => $times->where('estatus', 'aprobado')->count());
+        $rechazos_contador = Async::run(fn () => $times->where('estatus', 'rechazado')->count());
+        $sorted_times = Async::run(fn () => $times->sortByDesc('created_at'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -130,13 +130,13 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $results = Async::run([
-            fn() => Organizacion::getFirst(),
-            fn() => Timesheet::count(),
-            fn() => Timesheet::orderBy('fecha_dia')->first(),
-            fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
-            fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
-                        ->where('estatus', 'pendiente')
-                        ->count(),
+            fn () => Organizacion::getFirst(),
+            fn () => Timesheet::count(),
+            fn () => Timesheet::orderBy('fecha_dia')->first(),
+            fn () => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
+            fn () => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+                ->where('estatus', 'pendiente')
+                ->count(),
         ]);
 
         // Unpack the results from the async calls
@@ -267,16 +267,16 @@ class TimesheetController extends Controller
             );
         }
 
-        $duplicidad_timesheet = Timesheet::where('fecha_dia', '=', $request->fecha_dia,)
-            ->where('empleado_id', '=', $usuario->empleado->id,)
-            ->where('aprobador_id', '=', $usuario->empleado->supervisor_id,)
-            ->where('estatus', '=', $request->estatus,)
-            ->where('dia_semana', '=', $organizacion_semana->dia_timesheet,)
-            ->where('inicio_semana', '=', $organizacion_semana->inicio_timesheet,)
-            ->where('fin_semana', '=', $organizacion_semana->fin_timesheet,)
+        $duplicidad_timesheet = Timesheet::where('fecha_dia', '=', $request->fecha_dia)
+            ->where('empleado_id', '=', $usuario->empleado->id)
+            ->where('aprobador_id', '=', $usuario->empleado->supervisor_id)
+            ->where('estatus', '=', $request->estatus)
+            ->where('dia_semana', '=', $organizacion_semana->dia_timesheet)
+            ->where('inicio_semana', '=', $organizacion_semana->inicio_timesheet)
+            ->where('fin_semana', '=', $organizacion_semana->fin_timesheet)
             ->exists();
 
-        if (!$duplicidad_timesheet) {
+        if (! $duplicidad_timesheet) {
             foreach ($request->timesheet as $index => $hora) {
                 if ($index > 1) {
                     if (array_key_exists('proyecto', $hora) || array_key_exists('tarea', $hora)) {
@@ -418,7 +418,7 @@ class TimesheetController extends Controller
                     }
                 }
             }
-        }else{
+        } else {
             return response()->json(['status' => 200]);
         }
 

@@ -9,7 +9,6 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use VXM\Async\AsyncFacade as Async;
@@ -26,7 +25,7 @@ class OrganigramaController extends Controller
             if ($request->ajax()) {
                 if ($request->area_filter === 'true') {
                     // Fetch data concurrently
-                    $treeByArea = Async::run(fn() => Area::with(['lider' => function ($query) {
+                    $treeByArea = Async::run(fn () => Area::with(['lider' => function ($query) {
                         $query->select('id', 'name', 'area_id', 'foto', 'puesto_id', 'antiguedad', 'email', 'telefono', 'estatus', 'n_registro', 'n_empleado', 'genero', 'telefono_movil')
                             ->with('children');
                     }])->find($request->area_id)->lider);
@@ -44,6 +43,7 @@ class OrganigramaController extends Controller
                     } else {
                         // Fetch alternative tree
                         $organizacionTree = Empleado::getAllOrganigramaTreeElse($request->id);
+
                         return $organizacionTree ? response()->json($organizacionTree) : response('No encontrado', 404);
                     }
                 }
@@ -51,13 +51,13 @@ class OrganigramaController extends Controller
 
             // Fetch remaining data concurrently
             [$rutaImagenes, $organizacionDB, $areas] = Async::run([
-                fn() => asset('storage/empleados/imagenes/'),
-                fn() => Organizacion::getFirst(),
-                fn() => Area::getAll()
+                fn () => asset('storage/empleados/imagenes/'),
+                fn () => Organizacion::getFirst(),
+                fn () => Area::getAll(),
             ]);
 
             $organizacion = $organizacionDB ? $organizacionDB->empresa : 'la organización';
-            $org_foto = $organizacionDB ? url('images/' . $organizacionDB->logotipo) : url('img/Silent4Business-Logo-Color.png');
+            $org_foto = $organizacionDB ? url('images/'.$organizacionDB->logotipo) : url('img/Silent4Business-Logo-Color.png');
 
             return view('admin.organigrama.index', compact('organizacionTree', 'rutaImagenes', 'organizacion', 'org_foto', 'areas'));
         } catch (\Throwable $th) {

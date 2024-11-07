@@ -109,7 +109,7 @@ class MonedaExtContratosCreate extends Component
             $this->valor_dolar = floatval($convertedAmount);
             $this->actualizarMonExt();
             $this->valorManual($this->valor_dolar);
-        }else{
+        } else {
             $this->valorManual($this->valor_dolar);
         }
     }
@@ -131,9 +131,9 @@ class MonedaExtContratosCreate extends Component
 
     public function convertirME($valor, $tipo)
     {
-        if($this->edit_moneda){
+        if ($this->edit_moneda) {
             $convertirDolares = $this->valor_dolar;
-        }else{
+        } else {
             $convertirDolares = CurrencyConverter::convert(1)
                 ->from($this->tipo_cambio)
                 ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
