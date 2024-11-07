@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('incidentes_vacaciones_areas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('incidente_id')->nullable();
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('incidente_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('incidente_id')->references('id')->on('incidentes_vacaciones')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

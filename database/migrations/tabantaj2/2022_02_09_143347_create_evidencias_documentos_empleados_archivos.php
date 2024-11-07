@@ -15,7 +15,7 @@ class CreateEvidenciasDocumentosEmpleadosArchivos extends Migration
     {
         Schema::create('evidencias_documentos_empleados_archivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evidencias_documentos_empleados_id');
+            $table->integer('evidencias_documentos_empleados_id');
             $table->foreign('evidencias_documentos_empleados_id')->references('id')->on('evidencias_documentos_empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->string('documento');
             $table->boolean('archivado');

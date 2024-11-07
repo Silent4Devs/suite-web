@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evidencia_obj_cuestionario_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pregunta_cuest_obj_ev_des_id');
+            $table->integer('pregunta_cuest_obj_ev_des_id');
             $table->longText('nombre_archivo');
             $table->longText('comentarios')->nullable();
 

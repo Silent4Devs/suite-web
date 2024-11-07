@@ -15,9 +15,9 @@ class CreateFortalezasRiesgosTable extends Migration
     {
         Schema::create('riesgosables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('riesgosable_id');
+            $table->integer('riesgosable_id');
             $table->string('riesgosable_type');
-            $table->unsignedBigInteger('riesgos_id');
+            $table->integer('riesgos_id');
             $table->foreign('riesgos_id')->references('id')->on('matriz_riesgos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

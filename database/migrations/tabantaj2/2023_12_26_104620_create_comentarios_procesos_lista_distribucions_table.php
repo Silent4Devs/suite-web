@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('comentarios_procesos_lista_distribucions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('proceso_id');
+            $table->integer('proceso_id');
             $table->longText('comentario')->nullable();
 
             $table->foreign('proceso_id')->references('id')->on('procesos_lista_distribucions')->onChange('cascade')->onDelete('cascade');

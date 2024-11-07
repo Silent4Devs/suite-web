@@ -15,7 +15,7 @@ class CreateActividadesSugerenciasTable extends Migration
     {
         Schema::create('actividades_sugerencias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sugerencia_id');
+            $table->integer('sugerencia_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

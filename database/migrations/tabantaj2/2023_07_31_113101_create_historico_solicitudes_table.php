@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('historico_solicitudes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('historico')->nullable();
-            $table->unsignedBigInteger('solicitud_id')->nullable();
+            $table->integer('solicitud_id')->nullable();
             $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

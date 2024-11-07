@@ -16,9 +16,9 @@ class CreateEnvioDocumentosTable extends Migration
         Schema::create('envio_documentos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('status')->nullable();
-            $table->unsignedBigInteger('id_solicita')->nullable();
-            $table->unsignedBigInteger('id_coordinador')->nullable();
-            $table->unsignedBigInteger('id_mensajero')->nullable();
+            $table->integer('id_solicita')->nullable();
+            $table->integer('id_coordinador')->nullable();
+            $table->integer('id_mensajero')->nullable();
             $table->time('hora_recepcion_inicio')->nullable();
             $table->time('hora_recepcion_fin')->nullable();
             $table->date('fecha_solicitud')->nullable();

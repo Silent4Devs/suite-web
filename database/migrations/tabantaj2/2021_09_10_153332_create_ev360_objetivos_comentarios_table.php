@@ -18,7 +18,7 @@ class CreateEv360ObjetivosComentariosTable extends Migration
             $table->bigIncrements('id');
             $table->text('comentario');
             $table->enum('tipo', [ObjetivoComentario::EVALUADOR, ObjetivoComentario::EVALUADO]);
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

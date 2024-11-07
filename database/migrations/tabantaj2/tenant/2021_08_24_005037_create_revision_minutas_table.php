@@ -16,7 +16,7 @@ class CreateRevisionMinutasTable extends Migration
     {
         Schema::create('revision_minutas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->unsignedInteger('minuta_id');
             $table->longText('comentarios')->nullable();
             $table->string('nivel')->nullable();

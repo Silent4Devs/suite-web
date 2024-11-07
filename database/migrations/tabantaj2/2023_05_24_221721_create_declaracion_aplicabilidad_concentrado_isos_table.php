@@ -19,7 +19,7 @@ class CreateDeclaracionAplicabilidadConcentradoIsosTable extends Migration
                 $table->id();
                 $table->string('valoracion')->nullable();
                 //foreign
-                $table->unsignedBigInteger('id_gap_dos_catalogo')->nullable();
+                $table->integer('id_gap_dos_catalogo')->nullable();
                 $table->foreign('id_gap_dos_catalogo')->references('id')->on('gap_dos_catalogo_isos');
                 $table->timestamps();
                 $table->softDeletes();

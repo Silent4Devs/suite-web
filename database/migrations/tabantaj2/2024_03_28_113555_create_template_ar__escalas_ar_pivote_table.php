@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('template_ar__escalas_ar_pivote', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('template_id')->nullable();
+            $table->integer('template_id')->nullable();
             $table->float('valor_min', 32, 2);
             $table->float('valor_max', 32, 2);
             $table->foreign('template_id')->references('id')->on('template_analisis_riesgos')->onDelete('cascade');

@@ -15,7 +15,7 @@ class AddNombredocumentoToEvidenciasSgsisTable extends Migration
     {
         Schema::table('evidencias_sgsis', function (Blueprint $table) {
             $table->string('nombredocumento')->after('objetivodocumento')->nullable();
-            $table->unsignedBigInteger('responsable_evidencia_id')->after('responsable_id');
+            $table->integer('responsable_evidencia_id')->after('responsable_id');
             $table->foreign('responsable_evidencia_id')->references('id')->on('empleados');
         });
     }

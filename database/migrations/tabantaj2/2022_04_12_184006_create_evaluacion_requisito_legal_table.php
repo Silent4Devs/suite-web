@@ -20,8 +20,8 @@ class CreateEvaluacionRequisitoLegalTable extends Migration
             $table->string('metodo')->nullable();
             $table->longText('descripcion_cumplimiento')->nullable();
             $table->longText('comentarios')->nullable();
-            $table->unsignedBigInteger('id_matriz');
-            $table->unsignedBigInteger('id_reviso');
+            $table->integer('id_matriz');
+            $table->integer('id_reviso');
             $table->foreign('id_matriz')->references('id')->on('matriz_requisito_legales')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_reviso')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

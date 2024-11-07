@@ -15,7 +15,7 @@ class CreateVisitantesDispositivosTable extends Migration
     {
         Schema::create('visitantes_dispositivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('registrar_visitante_id');
+            $table->integer('registrar_visitante_id');
             $table->string('dispositivo');
             $table->string('serie');
             $table->string('marca')->nullable();

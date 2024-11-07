@@ -17,7 +17,7 @@ class CreateOportunidadesEntendimientoOrganizacionTable extends Migration
             $table->id();
             $table->string('oportunidad')->nullable();
             $table->longText('riesgo')->nullable();
-            $table->unsignedBigInteger('foda_id')->nullable();
+            $table->integer('foda_id')->nullable();
             $table->foreign('foda_id')->references('id')->on('entendimiento_organizacions');
             $table->timestamps();
         });

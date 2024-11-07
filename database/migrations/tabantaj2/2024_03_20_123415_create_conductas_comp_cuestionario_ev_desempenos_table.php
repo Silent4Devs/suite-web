@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('conductas_comp_cuestionario_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('competencia_id');
+            $table->integer('competencia_id');
             $table->longText('definicion');
             $table->integer('ponderacion');
 

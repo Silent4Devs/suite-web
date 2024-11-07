@@ -15,7 +15,7 @@ class CreateCorreoCumpleanosTable extends Migration
     {
         Schema::create('correo_cumpleanos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->date('fecha_envio');
             $table->boolean('enviado')->nullable()->default(false);
             $table->timestamps();

@@ -14,7 +14,7 @@ class AddColumnsAsignadaToComiteseguridadsTable extends Migration
     public function up()
     {
         Schema::table('comiteseguridads', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_asignada')->nullable();
+            $table->integer('id_asignada')->nullable();
             $table->foreign('id_asignada')->references('id')->on('empleados');
         });
     }

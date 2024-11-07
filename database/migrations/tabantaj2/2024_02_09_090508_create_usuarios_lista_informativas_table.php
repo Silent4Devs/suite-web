@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('usuarios_lista_informativas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('modulo_id');
-            $table->unsignedBigInteger('usuario_id');
+            $table->integer('modulo_id');
+            $table->integer('usuario_id');
             $table->timestamps();
 
             $table->foreign('modulo_id')->references('id')->on('lista_informativas')->onChange('cascade')->onDelete('cascade');

@@ -31,22 +31,22 @@ return new class extends Migration
             $table->string('comentario')->nullable();
 
             //foreign
-            $table->unsignedBigInteger('centro_costos_id')->nullable();
+            $table->integer('centro_costos_id')->nullable();
             $table->foreign('centro_costos_id')->references('id')->on('contratos');
             //foreign
-            $table->unsignedBigInteger('requisiciones_id')->nullable();
+            $table->integer('requisiciones_id')->nullable();
             $table->foreign('requisiciones_id')->references('id')->on('requisiciones');
             //foreign
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');
             //foreign
-            $table->unsignedBigInteger('proveedor_id')->nullable();
+            $table->integer('proveedor_id')->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
             //foreign
-            $table->unsignedBigInteger('comprador_id')->nullable();
+            $table->integer('comprador_id')->nullable();
             $table->foreign('comprador_id')->references('id')->on('compradores');
             //foreign
-            $table->unsignedBigInteger('sucursal_id')->nullable();
+            $table->integer('sucursal_id')->nullable();
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->timestamps();
             $table->softDeletes();

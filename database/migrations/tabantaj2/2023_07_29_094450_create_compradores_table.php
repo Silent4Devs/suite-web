@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('clave')->nullable();
             $table->string('estado')->nullable();
             $table->boolean('archivo')->default(false);
-            $table->unsignedBigInteger('id_user')->nullable();
+            $table->integer('id_user')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

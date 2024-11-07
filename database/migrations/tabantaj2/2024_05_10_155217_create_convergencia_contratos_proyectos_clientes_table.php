@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('convergencia_contratos_proyectos_clientes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('timesheet_cliente_id');
-            $table->unsignedBigInteger('timesheet_proyecto_id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('timesheet_cliente_id');
+            $table->integer('timesheet_proyecto_id');
+            $table->integer('contrato_id')->nullable();
             // Add additional fields as needed
             $table->timestamps();
 

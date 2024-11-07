@@ -14,7 +14,7 @@ class AddFkToAuditoriaInternasTable extends Migration
     public function up()
     {
         Schema::table('auditoria_internas', function (Blueprint $table) {
-            $table->unsignedBigInteger('lider_id');
+            $table->integer('lider_id');
             $table->foreign('lider_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
         });
     }

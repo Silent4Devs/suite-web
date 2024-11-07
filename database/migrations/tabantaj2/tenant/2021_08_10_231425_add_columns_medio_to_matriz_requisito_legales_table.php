@@ -18,7 +18,7 @@ class AddColumnsMedioToMatrizRequisitoLegalesTable extends Migration
             $table->string('tipo')->after('formacumple')->nullable();
             $table->string('descripcion_cumplimiento')->nullable();
             $table->string('evidencia')->nullable();
-            $table->unsignedBigInteger('id_reviso')->nullable();
+            $table->integer('id_reviso')->nullable();
             $table->foreign('id_reviso')->references('id')->on('empleados');
         });
     }

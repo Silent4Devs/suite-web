@@ -14,9 +14,9 @@ class AddColumnsResponsableAccionToAccionCorrectivasTable extends Migration
     public function up()
     {
         Schema::table('accion_correctivas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_autorizo')->nullable();
+            $table->integer('id_autorizo')->nullable();
             $table->foreign('id_autorizo')->references('id')->on('empleados');
-            $table->unsignedBigInteger('id_atencion')->nullable();
+            $table->integer('id_atencion')->nullable();
             $table->foreign('id_atencion')->references('id')->on('empleados');
         });
     }

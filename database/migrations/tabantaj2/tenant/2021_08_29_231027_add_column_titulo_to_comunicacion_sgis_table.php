@@ -14,7 +14,7 @@ class AddColumnTituloToComunicacionSgisTable extends Migration
     public function up()
     {
         Schema::table('comunicacion_sgis', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_publico')->nullable();
+            $table->integer('id_publico')->nullable();
             $table->date('fecha_publicacion')->nullable();
             $table->string('titulo')->nullable();
             $table->string('publicar_en')->nullable();

@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('solicitudes_aprobadores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estatus')->nullable();
-            $table->unsignedBigInteger('solicitud_id')->nullable();
+            $table->integer('solicitud_id')->nullable();
             // $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('usuario_id')->nullable();
+            $table->integer('usuario_id')->nullable();
             // $table->foreign('usuario_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

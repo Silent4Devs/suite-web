@@ -35,10 +35,10 @@ class AddColumnCanalToQuejasClientesTable extends Migration
             $table->longText('porque_no_cumplio_responsable')->nullable();
             $table->boolean('conforme_solucion')->default(false);
             $table->boolean('cerrar_ticket')->default(false);
-            $table->unsignedBigInteger('empleado_reporto_id')->nullable();
-            $table->unsignedBigInteger('responsable_sgi_id')->nullable();
-            $table->unsignedBigInteger('responsable_atencion_queja_id')->nullable();
-            $table->unsignedBigInteger('accion_correctiva_id')->nullable();
+            $table->integer('empleado_reporto_id')->nullable();
+            $table->integer('responsable_sgi_id')->nullable();
+            $table->integer('responsable_atencion_queja_id')->nullable();
+            $table->integer('accion_correctiva_id')->nullable();
             $table->foreign('empleado_reporto_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('responsable_sgi_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('responsable_atencion_queja_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');

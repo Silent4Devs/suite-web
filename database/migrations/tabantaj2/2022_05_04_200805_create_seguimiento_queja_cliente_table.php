@@ -15,7 +15,7 @@ class CreateSeguimientoQuejaClienteTable extends Migration
     {
         Schema::create('seguimiento_queja_cliente', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('queja_cliente_id');
+            $table->integer('queja_cliente_id');
             $table->tinyInteger('estado')->default(0);
             $table->foreign('queja_cliente_id')->references('id')->on('quejas_clientes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

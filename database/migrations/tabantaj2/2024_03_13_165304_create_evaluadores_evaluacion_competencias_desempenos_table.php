@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('evaluadores_evaluacion_competencias_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluado_desempeno_id');
-            $table->unsignedBigInteger('evaluador_desempeno_id');
-            $table->unsignedBigInteger('periodo_id');
+            $table->integer('evaluado_desempeno_id');
+            $table->integer('evaluador_desempeno_id');
+            $table->integer('periodo_id');
             $table->double('porcentaje_competencias');
             $table->boolean('finalizada')->default('false');
             $table->text('firma_evaluador')->nullable();

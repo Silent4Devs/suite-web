@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('firmas_requisiciones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('requisicion_id');
-            $table->unsignedBigInteger('solicitante_id');
+            $table->integer('requisicion_id');
+            $table->integer('solicitante_id');
             $table->longText('firma_solicitante')->nullable();
             $table->date('fecha_firma_solicitante')->nullable();
-            $table->unsignedBigInteger('jefe_id')->nullable();
+            $table->integer('jefe_id')->nullable();
             $table->longText('firma_jefe')->nullable();
             $table->date('fecha_firma_jefe')->nullable();
-            $table->unsignedBigInteger('responsable_finanzas_id')->nullable();
+            $table->integer('responsable_finanzas_id')->nullable();
             $table->longText('firma_responsable_finanzas')->nullable();
             $table->date('fecha_firma_responsable_finanzas')->nullable();
-            $table->unsignedBigInteger('comprador_id')->nullable();
+            $table->integer('comprador_id')->nullable();
             $table->longText('firma_comprador')->nullable();
             $table->date('fecha_firma_comprador_requi')->nullable();
 

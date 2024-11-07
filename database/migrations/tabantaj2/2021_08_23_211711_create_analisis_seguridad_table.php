@@ -16,22 +16,22 @@ class CreateAnalisisSeguridadTable extends Migration
         Schema::create('analisis_seguridad', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('seguridad_id')->nullable();
+            $table->integer('seguridad_id')->nullable();
             $table->foreign('seguridad_id')->references('id')->on('incidentes_seguridad');
 
-            $table->unsignedBigInteger('riesgos_id')->nullable();
+            $table->integer('riesgos_id')->nullable();
             $table->foreign('riesgos_id')->references('id')->on('riesgos_identificados');
 
-            $table->unsignedBigInteger('quejas_id')->nullable();
+            $table->integer('quejas_id')->nullable();
             $table->foreign('quejas_id')->references('id')->on('quejas');
 
-            $table->unsignedBigInteger('denuncias_id')->nullable();
+            $table->integer('denuncias_id')->nullable();
             $table->foreign('denuncias_id')->references('id')->on('denuncias');
 
-            $table->unsignedBigInteger('mejoras_id')->nullable();
+            $table->integer('mejoras_id')->nullable();
             $table->foreign('mejoras_id')->references('id')->on('mejoras');
 
-            $table->unsignedBigInteger('sugerencias_id')->nullable();
+            $table->integer('sugerencias_id')->nullable();
             $table->foreign('sugerencias_id')->references('id')->on('sugerencias');
 
             $table->string('formulario')->nullable();

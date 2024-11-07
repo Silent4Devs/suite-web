@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('firma_centro_atencions', function (Blueprint $table) {
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -15,9 +15,9 @@ class CreateFelicitacionesCumpleañosTable extends Migration
     {
         Schema::create('felicitaciones_cumpleaños', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cumpleañero_id');
+            $table->integer('cumpleañero_id');
             $table->foreign('cumpleañero_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('felicitador_id');
+            $table->integer('felicitador_id');
             $table->foreign('felicitador_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->longText('comentarios')->nullable();
             $table->boolean('like')->default(false);

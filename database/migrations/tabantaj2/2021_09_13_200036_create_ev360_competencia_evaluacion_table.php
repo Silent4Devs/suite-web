@@ -15,8 +15,8 @@ class CreateEv360CompetenciaEvaluacionTable extends Migration
     {
         Schema::create('ev360_competencia_evaluacion', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('competencia_id');
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('competencia_id');
+            $table->integer('evaluacion_id');
             $table->foreign('competencia_id')->references('id')->on('ev360_competencias')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

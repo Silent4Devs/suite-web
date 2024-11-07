@@ -15,9 +15,9 @@ class CreateNormasNececidadesExpectativasTable extends Migration
     {
         Schema::create('normas_nececidades_expectativas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('id_norma');
+            $table->integer('id_norma');
             $table->foreign('id_norma')->references('id')->on('normas')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('id_necesidad_expectativa');
+            $table->integer('id_necesidad_expectativa');
             $table->foreign('id_necesidad_expectativa')->references('id')->on('interesadas_nececidades_expectativas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

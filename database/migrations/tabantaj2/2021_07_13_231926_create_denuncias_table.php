@@ -20,10 +20,10 @@ class CreateDenunciasTable extends Migration
 
             $table->string('estatus')->nullable();
 
-            $table->unsignedBigInteger('empleado_denuncio_id')->nullable();
+            $table->integer('empleado_denuncio_id')->nullable();
             $table->foreign('empleado_denuncio_id')->references('id')->on('empleados');
 
-            $table->unsignedBigInteger('empleado_denunciado_id')->nullable();
+            $table->integer('empleado_denunciado_id')->nullable();
             $table->foreign('empleado_denunciado_id')->references('id')->on('empleados');
 
             $table->string('tipo')->nullable();

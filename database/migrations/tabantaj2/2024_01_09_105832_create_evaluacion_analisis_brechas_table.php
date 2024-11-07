@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('evaluacion_analisis_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('analisis_brechas_id');
+            $table->integer('analisis_brechas_id');
             $table->string('nombre_evaluacion');
-            $table->unsignedBigInteger('norma_id');
+            $table->integer('norma_id');
             $table->longText('descripcion');
             $table->integer('no_secciones');
             $table->timestamps();

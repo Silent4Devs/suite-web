@@ -14,7 +14,7 @@ class ChangeLiderIdToAuditoriaInternasTable extends Migration
     public function up()
     {
         Schema::table('auditoria_internas', function (Blueprint $table) {
-            $table->unsignedBigInteger('lider_id')->nullable()->change();
+            $table->integer('lider_id')->nullable()->change();
         });
     }
 

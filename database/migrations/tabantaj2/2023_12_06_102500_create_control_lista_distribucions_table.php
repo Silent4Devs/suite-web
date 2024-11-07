@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('control_lista_distribucions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('proceso_id');
-            $table->unsignedBigInteger('participante_id');
+            $table->integer('proceso_id');
+            $table->integer('participante_id');
             $table->string('estatus');
             $table->string('firma')->nullable();
             $table->timestamps();

@@ -15,8 +15,8 @@ class CreateNormasAlcanceSgsiTable extends Migration
     {
         Schema::create('normas_alcance_sgsi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('alcance_id');
-            $table->unsignedBigInteger('norma_id');
+            $table->integer('alcance_id');
+            $table->integer('norma_id');
             $table->foreign('alcance_id')->references('id')->on('alcance_sgsis')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

@@ -23,7 +23,7 @@ class CreateSolicitudDayoffTable extends Migration
             $table->integer('año');
             $table->integer('autoriza');
             $table->longText('comentarios_aprobador')->nullable();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

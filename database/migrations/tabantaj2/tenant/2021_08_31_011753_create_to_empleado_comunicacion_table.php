@@ -16,7 +16,7 @@ class CreateToEmpleadoComunicacionTable extends Migration
         Schema::create('empleado_comunicacion', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->unsignedInteger('comunicacion_id');
             $table->foreign('empleado_id')->references('id')->on('empleados');
             $table->foreign('comunicacion_id')->references('id')->on('comunicacion_sgis');

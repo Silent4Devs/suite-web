@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('auditoria_internas', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('creador_auditoria_id')->nullable();
+            $table->integer('creador_auditoria_id')->nullable();
 
             $table->foreign('creador_auditoria_id')
                 ->references('id')

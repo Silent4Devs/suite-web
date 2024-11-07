@@ -15,7 +15,7 @@ class CreateMatrizOctaveEscenarioControlesTable extends Migration
     {
         Schema::create('matriz_octave_escenario_controles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_matriz_octave_escenarios')->nullable();
+            $table->integer('id_matriz_octave_escenarios')->nullable();
             $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
             $table->timestamps();
         });

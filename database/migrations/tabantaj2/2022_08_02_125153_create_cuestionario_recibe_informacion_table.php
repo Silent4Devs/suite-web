@@ -20,7 +20,7 @@ class CreateCuestionarioRecibeInformacionTable extends Migration
             $table->string('correo_electronico')->nullable();
             $table->integer('extencion')->nullable();
             $table->string('ubicacion')->nullable();
-            $table->unsignedBigInteger('cuestionario_id')->nullable();
+            $table->integer('cuestionario_id')->nullable();
             $table->foreign('cuestionario_id')->references('id')->on('cuestionario_analisis_impacto')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

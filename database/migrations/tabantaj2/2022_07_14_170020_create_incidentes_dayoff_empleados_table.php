@@ -15,8 +15,8 @@ class CreateIncidentesDayoffEmpleadosTable extends Migration
     {
         Schema::create('incidentes_dayoff_empleados', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('incidente_id')->nullable();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('incidente_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->foreign('incidente_id')->references('id')->on('incidentes_dayoff')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

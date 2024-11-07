@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('firma_centro_atencions', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('id_minutas')->nullable();
+            $table->integer('id_minutas')->nullable();
             $table->foreign('id_minutas')->references('id')->on('minutasaltadireccions')->onUpdate('cascade')->onDelete('cascade');
         });
     }

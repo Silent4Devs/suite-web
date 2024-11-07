@@ -14,7 +14,7 @@ class AddAreaIdToIndicadoresSgsisTable extends Migration
     public function up()
     {
         Schema::table('indicadores_sgsis', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_area')->nullable();
+            $table->integer('id_area')->nullable();
             $table->foreign('id_area')->references('id')->on('areas');
         });
     }

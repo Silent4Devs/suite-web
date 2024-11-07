@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('preguntas_template_analisisde_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('seccion_id');
+            $table->integer('seccion_id');
             $table->longText('pregunta');
             $table->bigInteger('numero_pregunta');
             $table->foreign('seccion_id')->references('id')->on('secciones_template_analisisde_brechas')->onDelete('cascade');

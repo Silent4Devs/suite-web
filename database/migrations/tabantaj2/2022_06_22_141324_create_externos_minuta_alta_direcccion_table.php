@@ -19,7 +19,7 @@ class CreateExternosMinutaAltaDirecccionTable extends Migration
             $table->string('emailEXT')->nullable();
             $table->string('puestoEXT')->nullable();
             $table->string('empresaEXT')->nullable();
-            $table->unsignedBigInteger('minuta_id')->nullable();
+            $table->integer('minuta_id')->nullable();
             $table->foreign('minuta_id')->references('id')->on('minutasaltadireccions')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

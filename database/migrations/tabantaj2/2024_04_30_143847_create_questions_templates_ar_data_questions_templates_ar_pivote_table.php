@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('questions_templates_ar_data_questions_templates_ar_pivote', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('question_id')->nullable();
-            $table->unsignedBigInteger('dataquestion_id')->nullable();
+            $table->integer('question_id')->nullable();
+            $table->integer('dataquestion_id')->nullable();
             $table->foreign('question_id')->references('id')->on('questions_templates_analisis_riesgo')->onDelete('cascade');
             $table->foreign('dataquestion_id')->references('id')->on('data_questions_templates_analisis_riesgo')->onDelete('cascade');
             $table->timestamps();

@@ -15,7 +15,7 @@ class RemoveResponsableFromCartaAceptacion extends Migration
     {
         Schema::table('carta_aceptacion', function (Blueprint $table) {
             $table->dropColumn('responsable_riesgo');
-            $table->unsignedBigInteger('proceso_id')->nullable();
+            $table->integer('proceso_id')->nullable();
             $table->foreign('proceso_id')->references('id')->on('matriz_octave_procesos');
         });
     }

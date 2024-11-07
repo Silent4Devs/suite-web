@@ -14,7 +14,7 @@ class AddIdEvaluacionToEvidenciasMatrizRequisitoLegalesTable extends Migration
     public function up()
     {
         Schema::table('evidencias_matriz_requisito_legales', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_evaluacion')->nullable();
+            $table->integer('id_evaluacion')->nullable();
             $table->foreign('id_evaluacion')->references('id')->on('evaluacion_requisito_legal')->onDelete('cascade')->onUpdate('cascade');
         });
     }

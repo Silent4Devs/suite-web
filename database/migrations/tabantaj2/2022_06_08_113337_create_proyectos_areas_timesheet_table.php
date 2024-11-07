@@ -16,10 +16,10 @@ class CreateProyectosAreasTimesheetTable extends Migration
         Schema::create('timesheet_proyectos_areas', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('proyecto_id');
+            $table->integer('proyecto_id');
             $table->foreign('proyecto_id')->references('id')->on('timesheet_proyectos')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('area_id');
+            $table->integer('area_id');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();

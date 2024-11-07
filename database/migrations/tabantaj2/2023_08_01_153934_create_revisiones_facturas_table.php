@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('revisiones_facturas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('id_facturacion')->nullable();
+            $table->integer('id_facturacion')->nullable();
             $table->integer('no_revisiones')->nullable();
             $table->boolean('cumple')->nullable();
             $table->longText('observaciones')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             // $table->foreign('id_facturacion')->references('id')->on('facturacion')->nullable();
-            $table->unsignedBigInteger('asignado_id')->nullable();
+            $table->integer('asignado_id')->nullable();
             // $table->foreign('asignado_id')->references('id')->on('users');
         });
     }

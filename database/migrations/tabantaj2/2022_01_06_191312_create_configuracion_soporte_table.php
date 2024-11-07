@@ -21,7 +21,7 @@ class CreateConfiguracionSoporteTable extends Migration
             $table->string('extension')->nullable();
             $table->string('tel_celular')->nullable();
             $table->string('correo')->nullable();
-            $table->unsignedBigInteger('id_elaboro')->nullable();
+            $table->integer('id_elaboro')->nullable();
             $table->foreign('id_elaboro')->references('id')->on('empleados');
             $table->timestamps();
             $table->softDeletes();

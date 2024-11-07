@@ -15,7 +15,7 @@ class AddForeignKeyToEntendimientoOrganizacionsTble extends Migration
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
             //$table->foreign('elaboro_id')->references('id')->on('empleados');
-            $table->unsignedBigInteger('id_elabora')->nullable();
+            $table->integer('id_elabora')->nullable();
             $table->foreign('id_elabora')->references('id')->on('empleados');
         });
     }

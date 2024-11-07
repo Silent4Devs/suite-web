@@ -15,9 +15,9 @@ class CreateEv360ObjetivosComentariosPivotTable extends Migration
     {
         Schema::create('ev360_objetivos_comentarios_pivot', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('objetivo_id');
+            $table->integer('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('ev360_objetivos')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('comentario_id');
+            $table->integer('comentario_id');
             $table->foreign('comentario_id')->references('id')->on('ev360_objetivos_comentarios')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

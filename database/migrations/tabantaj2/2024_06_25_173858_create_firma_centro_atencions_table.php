@@ -14,9 +14,9 @@ return new class extends Migration
 
         Schema::create('firma_centro_atencions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('modulo_id');
-            $table->unsignedBigInteger('submodulo_id');
-            $table->unsignedBigInteger('user_id');
+            $table->integer('modulo_id');
+            $table->integer('submodulo_id');
+            $table->integer('user_id');
             $table->longText('firma')->nullable();
             $table->timestamps();
 

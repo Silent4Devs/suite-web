@@ -15,8 +15,8 @@ class CreateObjetivoEmpleadosTable extends Migration
     {
         Schema::create('ev360_objetivo_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
-            $table->unsignedBigInteger('objetivo_id');
+            $table->integer('empleado_id');
+            $table->integer('objetivo_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('objetivo_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

@@ -24,7 +24,7 @@ class CreateCuestionarioRecursosHumanosTable extends Migration
             $table->integer('tel')->nullable();
             $table->string('correo')->nullable();
             $table->integer('escenario')->nullable();
-            $table->unsignedBigInteger('cuestionario_id')->nullable();
+            $table->integer('cuestionario_id')->nullable();
             $table->foreign('cuestionario_id')->references('id')->on('cuestionario_analisis_impacto')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

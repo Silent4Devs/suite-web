@@ -14,7 +14,7 @@ class AddMatrizIdToActivosInformacionTable extends Migration
     public function up()
     {
         Schema::table('activos_informacion', function (Blueprint $table) {
-            $table->unsignedBigInteger('matriz_id')->nullable();
+            $table->integer('matriz_id')->nullable();
             $table->foreign('matriz_id')->references('id')->on('analisis_de_riesgo');
         });
     }

@@ -16,7 +16,7 @@ class CreateFilesRevisonDireccionsTable extends Migration
         Schema::create('files_revison_direccions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedBigInteger('revision_id');
+            $table->integer('revision_id');
             $table->foreign('revision_id')->references('id')->on('minutasaltadireccions')->onDelete('cascade')->onUpdate('cascade');
             $table->softDeletes();
             $table->timestamps();

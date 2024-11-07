@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->string('no_contrato');
             $table->string('tipo_contrato')->nullable();
-            $table->unsignedBigInteger('proveedor_id')->nullable();
+            $table->integer('proveedor_id')->nullable();
             $table->string('nombre_servicio')->nullable();
             $table->longText('objetivo')->nullable();
             $table->date('fecha_inicio')->nullable();
@@ -48,7 +48,7 @@ return new class extends Migration
             $table->boolean('convenio_modificatorio')->after('documento')->nullable();
             $table->string('tipo_cambio')->nullable();
             $table->string('no_proyecto')->nullable();
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('identificador_privado')->nullable()->default(false);
             $table->string('firma1')->nullable();

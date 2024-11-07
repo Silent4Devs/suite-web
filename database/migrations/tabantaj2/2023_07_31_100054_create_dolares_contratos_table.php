@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('dolares_contratos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->string('monto_dolares')->nullable();
             $table->string('maximo_dolares')->nullable();
             $table->string('minimo_dolares')->nullable();

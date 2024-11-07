@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('variables_contratos', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('generar_contrato_id')->nullable();
+            $table->integer('generar_contrato_id')->nullable();
             // $table->foreign('generar_contrato_id')->references('id')->on('generar_contrato');
 
-            $table->unsignedBigInteger('plantilla_id')->nullable();
+            $table->integer('plantilla_id')->nullable();
             // $table->foreign('plantilla_id')->references('id')->on('plantillas');
 
-            $table->unsignedBigInteger('variable_id')->nullable();
+            $table->integer('variable_id')->nullable();
             // $table->foreign('variable_id')->references('id')->on('variables_plantillas');
 
             $table->string('valor_variable');

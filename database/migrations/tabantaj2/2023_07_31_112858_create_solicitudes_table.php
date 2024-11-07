@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('proveedor_id')->nullable();
-            $table->unsignedBigInteger('solicitante_id')->nullable();
-            $table->unsignedBigInteger('asignado_id')->nullable();
-            $table->unsignedBigInteger('tipo_id')->nullable();
+            $table->integer('proveedor_id')->nullable();
+            $table->integer('solicitante_id')->nullable();
+            $table->integer('asignado_id')->nullable();
+            $table->integer('tipo_id')->nullable();
             $table->string('folio')->nullable();
             $table->string('nombre')->nullable();
             $table->longText('descripcion')->nullable();
@@ -30,17 +30,17 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
             $table->json('informacion')->nullable();
             $table->longText('plantilla_contenido')->nullable();
-            $table->unsignedBigInteger('plantilla_id')->nullable();
+            $table->integer('plantilla_id')->nullable();
             $table->foreign('plantilla_id')->references('id')->on('plantillas');
             $table->string('estado')->nullable();
             $table->longText('comentarios_rechazado')->nullable();
             $table->longText('comentarios_solicitante')->nullable();
             $table->longText('comentarios_asignado')->nullable();
-            $table->unsignedBigInteger('contrato_generado_id')->nullable();
+            $table->integer('contrato_generado_id')->nullable();
             $table->foreign('contrato_generado_id')->references('id')->on('generar_contrato')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('aprobador_id')->nullable();
+            $table->integer('aprobador_id')->nullable();
             $table->foreign('aprobador_id')->references('id')->on('users');
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -19,7 +19,7 @@ class CreateAnalisisDeRiesgoTable extends Migration
             $table->string('tipo');
             $table->date('fecha');
             $table->string('porcentaje_implementacion');
-            $table->unsignedBigInteger('id_elaboro')->nullable();
+            $table->integer('id_elaboro')->nullable();
             $table->foreign('id_elaboro')->references('id')->on('empleados');
             $table->integer('estatus');
             $table->timestamps();

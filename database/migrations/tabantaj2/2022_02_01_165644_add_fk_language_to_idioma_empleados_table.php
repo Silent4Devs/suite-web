@@ -14,7 +14,7 @@ class AddFkLanguageToIdiomaEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('idioma_empleados', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_language')->nullable();
+            $table->integer('id_language')->nullable();
             $table->foreign('id_language')->references('id')->on('languages')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -15,7 +15,7 @@ class CreateActividadesAccionCorrectivaTable extends Migration
     {
         Schema::create('actividades_accion_correctiva', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('accion_correctiva_id');
+            $table->integer('accion_correctiva_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

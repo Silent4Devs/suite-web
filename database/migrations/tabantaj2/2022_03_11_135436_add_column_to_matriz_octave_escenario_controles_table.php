@@ -14,7 +14,7 @@ class AddColumnToMatrizOctaveEscenarioControlesTable extends Migration
     public function up()
     {
         Schema::table('matriz_octave_escenario_controles', function (Blueprint $table) {
-            $table->unsignedBigInteger('controles_id')->nullable();
+            $table->integer('controles_id')->nullable();
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
         });
     }

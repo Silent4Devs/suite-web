@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rangos_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('catalogo_rangos_id');
+            $table->integer('catalogo_rangos_id');
             $table->string('parametro');
             $table->float('valor');
             $table->string('color');

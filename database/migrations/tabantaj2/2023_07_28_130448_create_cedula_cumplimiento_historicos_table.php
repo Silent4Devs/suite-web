@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cedula_cumplimiento_historico', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->string('elaboro')->nullable();
             $table->string('reviso')->nullable();
             $table->string('autorizo')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
-            $table->unsignedBigInteger('id_cedula');
+            $table->integer('id_cedula');
             //Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');
             $table->foreign('id_cedula')->references('id')->on('cedula_cumplimiento');

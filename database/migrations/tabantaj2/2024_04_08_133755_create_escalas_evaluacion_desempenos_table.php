@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('escalas_evaluacion_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluacion_desempeno_id');
+            $table->integer('evaluacion_desempeno_id');
             $table->string('parametro');
             $table->float('valor');
             $table->string('color');

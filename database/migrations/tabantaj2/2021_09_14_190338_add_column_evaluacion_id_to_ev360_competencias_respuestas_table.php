@@ -14,7 +14,7 @@ class AddColumnEvaluacionIdToEv360CompetenciasRespuestasTable extends Migration
     public function up()
     {
         Schema::table('ev360_competencias_respuestas', function (Blueprint $table) {
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('evaluacion_id');
             $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
         });
     }

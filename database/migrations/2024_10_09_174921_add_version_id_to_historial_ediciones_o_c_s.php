@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('historial_ediciones_o_c_s', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('version_id')->nullable();
+            $table->integer('version_id')->nullable();
 
             // Relación con la tabla de versiones
             $table->foreign('version_id')->references('id')->on('versiones_orden_compra')->onDelete('cascade');

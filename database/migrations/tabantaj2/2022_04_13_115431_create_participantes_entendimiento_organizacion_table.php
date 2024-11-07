@@ -15,8 +15,8 @@ class CreateParticipantesEntendimientoOrganizacionTable extends Migration
     {
         Schema::create('participantes_entendimiento_organizacion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('foda_id')->nullable();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('foda_id')->nullable();
+            $table->integer('empleado_id');
             $table->foreign('foda_id')->references('id')->on('entendimiento_organizacions');
             $table->foreign('empleado_id')->references('id')->on('empleados');
             $table->timestamps();

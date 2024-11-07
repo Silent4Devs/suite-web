@@ -22,10 +22,10 @@ class CreateTimesheetTable extends Migration
 
             $table->boolean('aprobado')->default(false);
 
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('aprobador_id')->nullable();
+            $table->integer('aprobador_id')->nullable();
             $table->foreign('aprobador_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
         });
     }

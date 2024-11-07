@@ -16,10 +16,10 @@ class CreateVistasDocumentosTable extends Migration
         Schema::create('vistas_documentos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();
 
-            $table->unsignedBigInteger('documento_id');
+            $table->integer('documento_id');
             $table->foreign('documento_id')->references('id')->on('documentos')->nullable();
 
             $table->timestamps();

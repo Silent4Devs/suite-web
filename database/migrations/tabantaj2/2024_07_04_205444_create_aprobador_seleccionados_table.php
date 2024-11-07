@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('aprobador_seleccionados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('modulo_id')->nullable();
-            $table->unsignedBigInteger('submodulo_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('seguridad_id')->nullable();
-            $table->unsignedBigInteger('mejoras_id')->nullable();
-            $table->unsignedBigInteger('riesgos_id')->nullable();
-            $table->unsignedBigInteger('sugerencias_id')->nullable();
-            $table->unsignedBigInteger('quejas_id')->nullable();
-            $table->unsignedBigInteger('denuncias_id')->nullable();
+            $table->integer('modulo_id')->nullable();
+            $table->integer('submodulo_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('seguridad_id')->nullable();
+            $table->integer('mejoras_id')->nullable();
+            $table->integer('riesgos_id')->nullable();
+            $table->integer('sugerencias_id')->nullable();
+            $table->integer('quejas_id')->nullable();
+            $table->integer('denuncias_id')->nullable();
             $table->jsonb('aprobadores')->nullable();
             $table->timestamps();
 

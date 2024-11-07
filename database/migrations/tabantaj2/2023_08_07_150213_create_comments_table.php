@@ -18,9 +18,9 @@ return new class extends Migration
 
             $table->string('name');
 
-            $table->unsignedBigInteger('user_id');
+            $table->integer('user_id');
 
-            $table->unsignedBigInteger('commentable_id');
+            $table->integer('commentable_id');
             $table->string('commentable_type');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

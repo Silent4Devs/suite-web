@@ -14,7 +14,7 @@ class AddColumnCategoriaCapacitacionIdToRecursosTable extends Migration
     public function up()
     {
         Schema::table('recursos', function (Blueprint $table) {
-            $table->unsignedBigInteger('categoria_capacitacion_id')->after('tipo')->nullable();
+            $table->integer('categoria_capacitacion_id')->after('tipo')->nullable();
             $table->foreign('categoria_capacitacion_id')->references('id')->on('categoria_capacitacions')->onDelete('SET NULL');
         });
     }

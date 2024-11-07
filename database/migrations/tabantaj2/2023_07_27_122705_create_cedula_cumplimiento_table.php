@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cedula_cumplimiento', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->string('elaboro')->nullable()->default('');
             $table->string('reviso')->nullable()->default('');
             $table->string('autorizo')->nullable()->default('');

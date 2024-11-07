@@ -15,7 +15,7 @@ class CreateBeneficiariosEmpleadosTable extends Migration
     {
         Schema::create('beneficiarios_empleados', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->string('nombre');
             $table->string('parentesco');
             $table->tinyInteger('porcentaje');

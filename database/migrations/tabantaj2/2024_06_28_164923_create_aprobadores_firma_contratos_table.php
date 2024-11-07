@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('aprobadores_firma_contratos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();

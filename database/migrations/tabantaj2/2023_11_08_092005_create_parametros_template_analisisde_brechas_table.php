@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('parametros_template_analisisde_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('template_id');
+            $table->integer('template_id');
             $table->string('estatus');
             $table->float('valor', 8, 2);
             $table->string('color');

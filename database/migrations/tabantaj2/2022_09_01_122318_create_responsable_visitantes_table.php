@@ -15,7 +15,7 @@ class CreateResponsableVisitantesTable extends Migration
     {
         Schema::create('responsable_visitantes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('fotografia_requerida')->default(false);
             $table->timestamps();

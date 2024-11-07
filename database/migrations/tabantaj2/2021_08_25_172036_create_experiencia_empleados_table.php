@@ -15,7 +15,7 @@ class CreateExperienciaEmpleadosTable extends Migration
     {
         Schema::create('experiencia_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->string('empresa')->nullable();
             $table->string('puesto')->nullable();
             $table->date('inicio_mes')->nullable();

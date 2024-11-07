@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('valor', 8, 2);
             $table->string('color');
             $table->boolean('riesgo_aceptable')->default(false);
-            $table->unsignedBigInteger('min_max_id');
+            $table->integer('min_max_id');
             $table->foreign('min_max_id')->references('id')->on('template_ar__escalas_ar_pivote')->onDelete('cascade');
             $table->timestamps();
         });

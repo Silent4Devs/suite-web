@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('entregas_mensuales', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('no')->nullable();
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');
             $table->longText('nombre_entregable')->nullable();
             $table->longText('descripcion')->nullable();
@@ -28,9 +28,9 @@ return new class extends Migration
             $table->boolean('aplica_deductiva')->after('observaciones')->nullable();
             $table->string('deductiva_penalizacion')->nullable();
             $table->string('justificacion_deductiva_penalizacion')->after('deductiva_penalizacion')->nullable();
-            $table->unsignedBigInteger('factura_id')->nullable();
+            $table->integer('factura_id')->nullable();
             $table->foreign('factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('deductiva_factura_id')->nullable();
+            $table->integer('deductiva_factura_id')->nullable();
             $table->foreign('deductiva_factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nota_credito')->nullable();
             $table->timestamps();

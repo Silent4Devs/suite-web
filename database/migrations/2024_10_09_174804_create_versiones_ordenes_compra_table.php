@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('versiones_orden_compra', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('orden_compra_id');
+            $table->integer('orden_compra_id');
             $table->integer('version')->default(1);
             $table->timestamp('last_updated_at')->nullable();
             $table->timestamps();

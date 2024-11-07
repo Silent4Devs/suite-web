@@ -30,7 +30,7 @@ class CreateRiesgosIdentificadosTable extends Migration
 
             $table->longText('comentarios')->nullable();
 
-            $table->unsignedBigInteger('empleado_reporto_id')->nullable();
+            $table->integer('empleado_reporto_id')->nullable();
 
             $table->foreign('empleado_reporto_id')->references('id')->on('empleados');
 

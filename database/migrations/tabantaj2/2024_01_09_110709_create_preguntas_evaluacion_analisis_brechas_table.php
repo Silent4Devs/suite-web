@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('preguntas_evaluacion_analisis_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('seccion_id');
+            $table->integer('seccion_id');
             $table->longText('pregunta');
             $table->bigInteger('numero_pregunta');
             $table->timestamps();

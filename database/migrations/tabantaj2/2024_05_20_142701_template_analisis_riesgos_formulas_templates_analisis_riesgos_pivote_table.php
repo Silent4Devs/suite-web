@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('settings_template_ar_formulas_templates_ar_pivote_table', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('template_id')->nullable();
-            $table->unsignedBigInteger('formula_id')->nullable();
+            $table->integer('template_id')->nullable();
+            $table->integer('formula_id')->nullable();
             $table->boolean('is_show')->default(false);
             $table->foreign('template_id')->references('id')->on('template_analisis_riesgos')->onDelete('cascade');
             $table->foreign('formula_id')->references('id')->on('formulas_template_analisis_riesgos')->onDelete('cascade');

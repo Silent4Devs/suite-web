@@ -14,7 +14,7 @@ class AddColumnsMatrizRiesgoToTratamientoRiesgosTable extends Migration
     public function up()
     {
         Schema::table('tratamiento_riesgos', function (Blueprint $table) {
-            $table->unsignedBigInteger('matriz_sistema_gestion_id')->nullable();
+            $table->integer('matriz_sistema_gestion_id')->nullable();
             $table->foreign('matriz_sistema_gestion_id')->references('id')->on('matriz_riesgos_sistema_gestion');
         });
     }

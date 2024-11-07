@@ -14,7 +14,7 @@ class AddColumnsIdRevisoToTratamientoRiesgosTable extends Migration
     public function up()
     {
         Schema::table('tratamiento_riesgos', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_reviso')->nullable();
+            $table->integer('id_reviso')->nullable();
             $table->foreign('id_reviso')->references('id')->on('empleados');
         });
     }

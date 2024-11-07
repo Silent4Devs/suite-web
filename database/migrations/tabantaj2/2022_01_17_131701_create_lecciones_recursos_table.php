@@ -18,7 +18,7 @@ class CreateLeccionesRecursosTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('iframe');
-            $table->unsignedBigInteger('seccion_id');
+            $table->integer('seccion_id');
             $table->softDeletes();
             $table->timestamps();
 

@@ -19,13 +19,13 @@ class CreateTimesheetHorasTable extends Migration
 
             $table->boolean('facturable')->nullable();
 
-            $table->unsignedBigInteger('timesheet_id')->nullable();
+            $table->integer('timesheet_id')->nullable();
             $table->foreign('timesheet_id')->references('id')->on('timesheet')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->integer('proyecto_id')->nullable();
             $table->foreign('proyecto_id')->references('id')->on('timesheet_proyectos')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('tarea_id')->nullable();
+            $table->integer('tarea_id')->nullable();
             $table->foreign('tarea_id')->references('id')->on('timesheet_tareas')->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('horas_lunes')->nullable();

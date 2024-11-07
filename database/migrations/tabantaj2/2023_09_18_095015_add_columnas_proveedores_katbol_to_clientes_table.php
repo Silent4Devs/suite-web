@@ -15,7 +15,7 @@ return new class extends Migration
             //
             $table->longText('objeto_descripcion')->nullable();
             $table->longText('cobertura')->nullable();
-            $table->unsignedBigInteger('id_fiscale')->nullable();
+            $table->integer('id_fiscale')->nullable();
             $table->foreign('id_fiscale')->references('id')->on('fiscales')->onUpdate('cascade')->onDelete('cascade');
         });
     }

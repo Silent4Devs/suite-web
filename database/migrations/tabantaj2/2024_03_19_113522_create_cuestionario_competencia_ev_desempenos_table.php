@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('cuestionario_competencia_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('competencia_id');
-            $table->unsignedBigInteger('periodo_id');
+            $table->integer('competencia_id');
+            $table->integer('periodo_id');
 
-            $table->unsignedBigInteger('evaluacion_desempeno_id');
-            $table->unsignedBigInteger('evaluado_desempeno_id');
-            $table->unsignedBigInteger('evaluador_desempeno_id');
+            $table->integer('evaluacion_desempeno_id');
+            $table->integer('evaluado_desempeno_id');
+            $table->integer('evaluador_desempeno_id');
 
             $table->double('calificacion_competencia')->nullable();
             $table->boolean('estatus_calificado')->default(false);

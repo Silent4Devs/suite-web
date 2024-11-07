@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('aprobadores_firma_contratos_historico', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('solicitante_id')->nullable();
+            $table->integer('solicitante_id')->nullable();
             $table->foreign('solicitante_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('empleado_update_id')->nullable();
+            $table->integer('empleado_update_id')->nullable();
             $table->foreign('empleado_update_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
 
             $table->boolean('firma_check')->default(true);

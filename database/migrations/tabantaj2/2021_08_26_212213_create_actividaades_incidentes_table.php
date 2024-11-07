@@ -15,7 +15,7 @@ class CreateActividaadesIncidentesTable extends Migration
     {
         Schema::create('actividades_incidentes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('seguridad_id');
+            $table->integer('seguridad_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

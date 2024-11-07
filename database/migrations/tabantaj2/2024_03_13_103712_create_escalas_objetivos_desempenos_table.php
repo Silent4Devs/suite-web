@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('escalas_objetivos_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_objetivo_desempeno');
+            $table->integer('id_objetivo_desempeno');
             $table->integer('condicion');
             $table->float('valor');
             $table->string('parametro');
             $table->string('color');
-            // $table->unsignedBigInteger('parametro_id');
+            // $table->integer('parametro_id');
 
             // $table->foreign('parametro_id')->references('id')->on('escalas_medicion_objetivos')->onUpdate('cascade')->onDelete('cascade');
 

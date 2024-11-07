@@ -19,7 +19,7 @@ class CreateTimesheetTareasTable extends Migration
 
             $table->string('tarea');
 
-            $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->integer('proyecto_id')->nullable();
             $table->foreign('proyecto_id')->references('id')->on('timesheet_proyectos')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -14,7 +14,7 @@ class AlterMiembrosComiteSeguridadTable extends Migration
     public function up()
     {
         Schema::table('miembros_comite_seguridad', function (Blueprint $table) {
-            $table->unsignedBigInteger('comite_id')->nullable();
+            $table->integer('comite_id')->nullable();
             $table->foreign('comite_id')->references('id')->on('comite_seguridad')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -21345,6 +21345,28 @@ namespace Illuminate\Support {
             }
     }
 
+namespace Stancl\Tenancy {
+            /**
+     * 
+     *
+     */        class Tenancy {
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
+         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
+         * @param string $userId
+         * @param string $redirectUrl
+         * @param string|null $authGuard
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
+         * @static 
+         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
+        {
+                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
+        }
+            }
+    }
+
 namespace Illuminate\Http {
             /**
      * 
@@ -21822,28 +21844,6 @@ namespace Illuminate\Database\Eloquent {
      * @template TModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Support\Collection<TKey, TModel>
      */        class Collection {
-            }
-    }
-
-namespace Stancl\Tenancy {
-            /**
-     * 
-     *
-     */        class Tenancy {
-                    /**
-         * 
-         *
-         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
-         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
-         * @param string $userId
-         * @param string $redirectUrl
-         * @param string|null $authGuard
-         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
-         * @static 
-         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
-        {
-                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
-        }
             }
     }
 

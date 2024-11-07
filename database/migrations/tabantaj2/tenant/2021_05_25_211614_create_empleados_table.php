@@ -21,7 +21,7 @@ class CreateEmpleadosTable extends Migration
             $table->date('antiguedad')->nullable();
             $table->string('estatus')->nullable();
             $table->string('email')->nullable();
-            $table->unsignedBigInteger('supervisor_id')->nullable();
+            $table->integer('supervisor_id')->nullable();
             $table->unsignedInteger('area_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

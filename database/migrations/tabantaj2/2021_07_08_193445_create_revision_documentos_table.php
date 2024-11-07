@@ -16,8 +16,8 @@ class CreateRevisionDocumentosTable extends Migration
     {
         Schema::create('revision_documentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
-            $table->unsignedBigInteger('documento_id');
+            $table->integer('empleado_id');
+            $table->integer('documento_id');
             $table->longText('comentarios')->nullable();
             $table->string('nivel')->nullable();
             $table->enum('estatus', [Documento::APROBADO, Documento::RECHAZADO, Documento::SOLICITUD_REVISION, Documento::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR])->default(Documento::SOLICITUD_REVISION);

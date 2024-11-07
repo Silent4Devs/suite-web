@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('pdf')->nullable();
             $table->string('xml')->nullable();
-            $table->unsignedBigInteger('factura_id');
+            $table->integer('factura_id');
             $table->foreign('factura_id')->references('id')->on('facturacion');
             $table->timestamps();
             $table->softDeletes();

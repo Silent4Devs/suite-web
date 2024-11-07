@@ -15,7 +15,7 @@ class CreateCursosDiplomadosEmpleadosTable extends Migration
     {
         Schema::create('cursos_diplomados_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->string('curso_diploma')->nullable();
             $table->string('tipo')->nullable();
             $table->date('año')->nullable();

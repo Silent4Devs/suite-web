@@ -14,9 +14,9 @@ class AddColumnsEvaluacionEvaluadorEvaluadoToEv360ObjetivosCalificacionesTable e
     public function up()
     {
         Schema::table('ev360_objetivos_calificaciones', function (Blueprint $table) {
-            $table->unsignedBigInteger('evaluado_id');
-            $table->unsignedBigInteger('evaluador_id');
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('evaluado_id');
+            $table->integer('evaluador_id');
+            $table->integer('evaluacion_id');
 
             $table->foreign('evaluado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evaluador_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');

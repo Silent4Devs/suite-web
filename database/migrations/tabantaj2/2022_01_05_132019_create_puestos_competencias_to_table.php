@@ -15,7 +15,7 @@ class CreatePuestosCompetenciasToTable extends Migration
     {
         Schema::create('puestos_competencias_to', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('competencias_id');
+            $table->integer('competencias_id');
             $table->foreign('competencias_id')->references('id')->on('ev360_competencias')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

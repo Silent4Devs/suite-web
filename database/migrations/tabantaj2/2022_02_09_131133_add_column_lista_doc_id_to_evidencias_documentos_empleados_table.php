@@ -14,7 +14,7 @@ class AddColumnListaDocIdToEvidenciasDocumentosEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('evidencias_documentos_empleados', function (Blueprint $table) {
-            $table->unsignedBigInteger('lista_documentos_empleados_id')->nullable();
+            $table->integer('lista_documentos_empleados_id')->nullable();
             $table->foreign('lista_documentos_empleados_id')->references('id')->on('lista_documentos_empleados')->onDelete('cascade')->onUpdate('cascade');
 
             $table->dropColumn('nombre');

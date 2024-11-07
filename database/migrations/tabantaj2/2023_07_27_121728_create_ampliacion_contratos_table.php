@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ampliacion_contratos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->decimal('importe', 15, 2)->nullable();
             $table->decimal('monto_total_ampliado', 15, 2)->nullable();
             $table->date('fecha_inicio')->nullable();

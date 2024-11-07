@@ -17,7 +17,7 @@ class CreateEv360ObjetivosCalificacionesTable extends Migration
             $table->bigIncrements('id');
             $table->text('meta_alcanzada');
             $table->unsignedTinyInteger('calificacion');
-            $table->unsignedBigInteger('objetivo_id');
+            $table->integer('objetivo_id');
             $table->foreign('objetivo_id')->references('id')->on('ev360_objetivos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

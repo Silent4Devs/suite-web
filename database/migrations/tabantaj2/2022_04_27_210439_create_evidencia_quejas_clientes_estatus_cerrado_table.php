@@ -15,7 +15,7 @@ class CreateEvidenciaQuejasClientesEstatusCerradoTable extends Migration
     {
         Schema::create('evidencia_quejas_clientes_estatus_cerrado', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('quejas_clientes_id')->nullable();
+            $table->integer('quejas_clientes_id')->nullable();
             $table->string('cierre');
             $table->timestamps();
             $table->softDeletes();

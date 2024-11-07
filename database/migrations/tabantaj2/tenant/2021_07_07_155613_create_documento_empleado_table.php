@@ -15,8 +15,8 @@ class CreateDocumentoEmpleadoTable extends Migration
     {
         Schema::create('documento_empleado', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
-            $table->unsignedBigInteger('documento_id');
+            $table->integer('empleado_id');
+            $table->integer('documento_id');
 
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
             $table->foreign('documento_id')->references('id')->on('documentos')->onDelete('cascade');

@@ -14,7 +14,7 @@ class AddMatrizIdToMatrizOctaveProcesosTable extends Migration
     public function up()
     {
         Schema::table('matriz_octave_procesos', function (Blueprint $table) {
-            $table->unsignedBigInteger('matriz_id')->nullable();
+            $table->integer('matriz_id')->nullable();
             $table->foreign('matriz_id')->references('id')->on('analisis_de_riesgo');
         });
     }

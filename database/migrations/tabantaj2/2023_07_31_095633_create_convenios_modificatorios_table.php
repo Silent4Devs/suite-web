@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('convenios_modificatorios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->string('no_convenio');
             $table->date('fecha')->nullable();
             $table->longText('descripcion')->nullable();

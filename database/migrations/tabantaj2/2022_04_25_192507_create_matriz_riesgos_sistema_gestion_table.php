@@ -30,7 +30,7 @@ class CreateMatrizRiesgosSistemaGestionTable extends Migration
             $table->unsignedInteger('id_analisis')->nullable();
             $table->unsignedInteger('id_sede')->nullable();
             $table->unsignedInteger('id_proceso')->nullable();
-            $table->unsignedBigInteger('id_responsable')->nullable();
+            $table->integer('id_responsable')->nullable();
             $table->unsignedInteger('activo_id')->nullable();
             $table->unsignedInteger('id_amenaza')->nullable();
             $table->unsignedInteger('id_area')->nullable();

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('niveles_servicio', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->string('nombre')->nullable();
             $table->string('metrica')->nullable();
             $table->string('meta')->nullable();

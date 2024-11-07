@@ -41,7 +41,7 @@ return new class extends Migration
             $table->text('estado_orden')->nullable();
             $table->text('estado_orden_dos')->nullable();
             $table->text('proveedor_catalogo')->nullable();
-            $table->unsignedBigInteger('proveedoroc_id')->nullable();
+            $table->integer('proveedoroc_id')->nullable();
             $table->string('pago')->nullable();
             $table->string('dias_credito')->nullable();
             $table->string('moneda')->nullable();
@@ -60,27 +60,27 @@ return new class extends Migration
             $table->string('isr_retenido')->nullable();
             $table->string('total')->nullable();
             $table->string('user');
-            $table->unsignedBigInteger('id_user')->nullable();
+            $table->integer('id_user')->nullable();
             $table->string('area');
             $table->string('email')->nullable();
 
             //foreign
-            $table->unsignedBigInteger('proveedor_id')->nullable();
+            $table->integer('proveedor_id')->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onUpdate('cascade')->onDelete('cascade');
             //foreign
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');
             //foreign
-            $table->unsignedBigInteger('centro_costos_id')->nullable();
+            $table->integer('centro_costos_id')->nullable();
             $table->foreign('centro_costos_id')->references('id')->on('contratos');
             //foreign
-            $table->unsignedBigInteger('comprador_id')->nullable();
+            $table->integer('comprador_id')->nullable();
             $table->foreign('comprador_id')->references('id')->on('compradores');
             //foreign
-            $table->unsignedBigInteger('sucursal_id')->nullable();
+            $table->integer('sucursal_id')->nullable();
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             //foreign
-            $table->unsignedBigInteger('producto_id')->nullable();
+            $table->integer('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->timestamps();
             $table->softDeletes();

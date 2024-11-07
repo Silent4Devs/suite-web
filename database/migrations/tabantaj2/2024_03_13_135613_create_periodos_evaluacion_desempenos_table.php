@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('periodos_evaluacion_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluacion_desempeno_id');
+            $table->integer('evaluacion_desempeno_id');
             $table->string('nombre_evaluacion')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();

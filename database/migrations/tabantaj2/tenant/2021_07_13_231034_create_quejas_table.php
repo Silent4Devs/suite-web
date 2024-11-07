@@ -20,7 +20,7 @@ class CreateQuejasTable extends Migration
 
             $table->string('estatus')->nullable();
 
-            $table->unsignedBigInteger('empleado_quejo_id')->nullable();
+            $table->integer('empleado_quejo_id')->nullable();
 
             $table->string('quejado')->nullable();
             $table->foreign('empleado_quejo_id')->references('id')->on('empleados');

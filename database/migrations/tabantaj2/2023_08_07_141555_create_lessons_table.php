@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('iframe');
             $table->text('description');
 
-            $table->unsignedBigInteger('platform_id')->nullable();
-            $table->unsignedBigInteger('section_id');
+            $table->integer('platform_id')->nullable();
+            $table->integer('section_id');
 
             $table->foreign('platform_id')->references('id')->on('platforms')->onDelete('set null');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');

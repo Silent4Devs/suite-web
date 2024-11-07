@@ -21,7 +21,7 @@ class CreatePropocionaInformacionAiaTable extends Migration
             $table->integer('extencion')->nullable();
             $table->string('ubicacion')->nullable();
             $table->integer('interno_externo')->nullable();
-            $table->unsignedBigInteger('cuestionario_id')->nullable();
+            $table->integer('cuestionario_id')->nullable();
             $table->foreign('cuestionario_id')->references('id')->on('analisis_aia')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -15,7 +15,7 @@ class CreateActividadesQuejasTable extends Migration
     {
         Schema::create('actividades_quejas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('queja_id');
+            $table->integer('queja_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

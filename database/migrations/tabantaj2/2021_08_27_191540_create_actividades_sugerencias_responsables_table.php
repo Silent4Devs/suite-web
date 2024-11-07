@@ -15,8 +15,8 @@ class CreateActividadesSugerenciasResponsablesTable extends Migration
     {
         Schema::create('actividades_sugerencias_responsables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('responsable_id');
-            $table->unsignedBigInteger('actividad_id');
+            $table->integer('responsable_id');
+            $table->integer('actividad_id');
             $table->timestamps();
             $table->foreign('responsable_id')->references('id')->on('empleados');
             $table->foreign('actividad_id')->references('id')->on('actividades_sugerencias');

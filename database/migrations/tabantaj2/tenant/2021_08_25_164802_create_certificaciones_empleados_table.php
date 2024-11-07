@@ -15,7 +15,7 @@ class CreateCertificacionesEmpleadosTable extends Migration
     {
         Schema::create('certificaciones_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->string('nombre')->nullable();
             $table->string('estatus')->nullable();
             $table->date('vigencia')->nullable();

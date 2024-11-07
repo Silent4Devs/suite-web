@@ -18,7 +18,7 @@ class AddColumnsToPlanImplementacion9001Table extends Migration
             $table->string('modulo_origen')->after('norma')->nullable();
             //$table->string('tipo');
             $table->longText('objetivo')->after('modulo_origen')->nullable();
-            $table->unsignedBigInteger('elaboro_id')->after('objetivo')->nullable();
+            $table->integer('elaboro_id')->after('objetivo')->nullable();
             $table->foreign('elaboro_id')->references('id')->on('empleados');
         });
     }

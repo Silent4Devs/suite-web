@@ -19,7 +19,7 @@ class CreateMejorasTable extends Migration
             $table->string('estatus')->default('nuevo');
             $table->dateTime('fecha_cierre')->nullable();
 
-            $table->unsignedBigInteger('empleado_mejoro_id');
+            $table->integer('empleado_mejoro_id');
             $table->foreign('empleado_mejoro_id')->references('id')->on('empleados');
 
             $table->string('area_mejora')->nullable();

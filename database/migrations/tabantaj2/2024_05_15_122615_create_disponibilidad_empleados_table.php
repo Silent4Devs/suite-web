@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('disponibilidad_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->integer('disponibilidad');
             $table->timestamps();
             $table->softDeletes();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('escalas_obj_cuestionario_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('objetivo_id');
+            $table->integer('objetivo_id');
             $table->integer('condicion');
             $table->text('parametro');
             $table->double('valor');

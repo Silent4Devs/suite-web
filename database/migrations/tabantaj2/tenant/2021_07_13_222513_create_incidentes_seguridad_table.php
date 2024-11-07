@@ -38,8 +38,8 @@ class CreateIncidentesSeguridadTable extends Migration
 
             $table->longText('comentarios')->nullable();
 
-            $table->unsignedBigInteger('empleado_reporto_id')->nullable();
-            $table->unsignedBigInteger('empleado_asignado_id')->nullable();
+            $table->integer('empleado_reporto_id')->nullable();
+            $table->integer('empleado_asignado_id')->nullable();
 
             $table->foreign('empleado_reporto_id')->references('id')->on('empleados');
             $table->foreign('empleado_asignado_id')->references('id')->on('empleados');

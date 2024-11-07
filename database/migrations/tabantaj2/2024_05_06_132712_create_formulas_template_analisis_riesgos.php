@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('formula');
             $table->boolean('riesgo')->default(false);
-            $table->unsignedBigInteger('template_id')->nullable();
-            $table->unsignedBigInteger('section_id')->nullable();
-            $table->unsignedBigInteger('question_id')->nullable();
+            $table->integer('template_id')->nullable();
+            $table->integer('section_id')->nullable();
+            $table->integer('question_id')->nullable();
             $table->foreign('template_id')->references('id')->on('template_analisis_riesgos')->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('sections_templates_analisis_riesgo')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions_templates_analisis_riesgo')->onDelete('cascade');

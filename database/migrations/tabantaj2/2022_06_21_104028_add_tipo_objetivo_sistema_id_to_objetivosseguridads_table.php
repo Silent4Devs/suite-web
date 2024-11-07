@@ -14,7 +14,7 @@ class AddTipoObjetivoSistemaIdToObjetivosseguridadsTable extends Migration
     public function up()
     {
         Schema::table('objetivosseguridads', function (Blueprint $table) {
-            $table->unsignedBigInteger('tipo_objetivo_sistema_id')->nullable();
+            $table->integer('tipo_objetivo_sistema_id')->nullable();
             $table->foreign('tipo_objetivo_sistema_id')->references('id')->on('tipo_objetivo_sistema');
         });
     }

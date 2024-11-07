@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('historial_ediciones_o_c_s', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('requisicion_id'); // ID del registro modificado
+            $table->integer('requisicion_id'); // ID del registro modificado
             $table->string('registro_tipo'); // Tipo de modelo (por ejemplo, App\Models\Registro)
-            $table->unsignedBigInteger('id_empleado'); // ID del empleado que hizo el cambio
+            $table->integer('id_empleado'); // ID del empleado que hizo el cambio
             $table->string('campo'); // Campo modificado
             $table->text('valor_anterior')->nullable(); // Valor anterior
             $table->text('valor_nuevo')->nullable(); // Valor nuevo

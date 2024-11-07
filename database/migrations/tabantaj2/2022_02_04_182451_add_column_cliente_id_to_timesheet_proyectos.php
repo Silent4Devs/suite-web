@@ -14,7 +14,7 @@ class AddColumnClienteIdToTimesheetProyectos extends Migration
     public function up()
     {
         Schema::table('timesheet_proyectos', function (Blueprint $table) {
-            $table->unsignedBigInteger('cliente_id')->nullable();
+            $table->integer('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('timesheet_clientes')->onUpdate('cascade')->onDelete('cascade');
         });
     }

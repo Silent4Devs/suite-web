@@ -15,7 +15,7 @@ class CreateEvidenciasSeguridadTable extends Migration
     {
         Schema::create('evidencias_seguridad', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_seguridad')->nullable();
+            $table->integer('id_seguridad')->nullable();
             $table->string('evidencia');
             $table->timestamps();
             $table->softDeletes();

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('proveedor_indistintos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('requisicion_id')->nullable();
+            $table->integer('requisicion_id')->nullable();
             // $table->foreign('requisicion_id')->references('id')->on('requsiciones')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('proveedor_indistinto_id')->nullable();
+            $table->integer('proveedor_indistinto_id')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->timestamps();

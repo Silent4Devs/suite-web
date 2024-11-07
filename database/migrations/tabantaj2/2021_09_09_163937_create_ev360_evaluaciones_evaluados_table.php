@@ -15,8 +15,8 @@ class CreateEv360EvaluacionesEvaluadosTable extends Migration
     {
         Schema::create('ev360_evaluaciones_evaluados', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('evaluacion_id');
-            $table->unsignedBigInteger('evaluado_id');
+            $table->integer('evaluacion_id');
+            $table->integer('evaluado_id');
 
             $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evaluado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');

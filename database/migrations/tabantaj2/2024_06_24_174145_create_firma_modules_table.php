@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('firma_modules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('modulo_id');
-            $table->unsignedBigInteger('submodulo_id');
+            $table->integer('modulo_id');
+            $table->integer('submodulo_id');
             $table->jsonb('participantes')->nullable();
             $table->timestamps();
 

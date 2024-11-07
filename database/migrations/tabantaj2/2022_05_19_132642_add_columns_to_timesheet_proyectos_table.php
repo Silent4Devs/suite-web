@@ -17,7 +17,7 @@ class AddColumnsToTimesheetProyectosTable extends Migration
             $table->string('identificador')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
-            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->integer('sede_id')->nullable();
             $table->foreign('sede_id')->references('id')->on('sedes')->onDelete('cascade')->onUpdate('cascade');
         });
     }

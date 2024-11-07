@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('secciones_evaluacion_analisis_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('evaluacion_id');
             $table->integer('numero_seccion');
             $table->longText('descripcion');
-            $table->unsignedDecimal('porcentaje_seccion');
+            $table->decimal('porcentaje_seccion');
             $table->timestamps();
             $table->softDeletes();
 

@@ -18,7 +18,7 @@ class AddColumnResponsableToActivosTable extends Migration
         });
         Schema::table('activos', function (Blueprint $table) {
             // $table->dropForeign('dueno_fk_2438646');
-            $table->unsignedBigInteger('dueno_id')->change();
+            $table->integer('dueno_id')->change();
             $table->foreign('dueno_id')->references('id')->on('empleados');
             $table->string('marca')->after('descripcion')->nullable();
             $table->string('modelo')->after('marca')->nullable();
@@ -26,7 +26,7 @@ class AddColumnResponsableToActivosTable extends Migration
             $table->string('n_producto')->after('n_serie')->nullable();
             $table->date('fecha_fin')->after('n_producto')->nullable();
             $table->date('fecha_compra')->after('fecha_fin')->nullable();
-            $table->unsignedBigInteger('id_responsable')->nullable();
+            $table->integer('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
         });
     }

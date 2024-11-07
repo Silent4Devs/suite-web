@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('action_events', function (Blueprint $table) {
             $table->id();
             $table->char('batch_id', 36);
-            $table->unsignedBigInteger('user_id')->index();
+            $table->integer('user_id')->index();
             $table->string('name');
             $table->string('actionable_type');
-            $table->unsignedBigInteger('actionable_id');
+            $table->integer('actionable_id');
             $table->string('target_type');
-            $table->unsignedBigInteger('target_id');
+            $table->integer('target_id');
             $table->string('model_type');
-            $table->unsignedBigInteger('model_id')->nullable();
+            $table->integer('model_id')->nullable();
             $table->text('fields');
             $table->string('status', 25)->default('running');
             $table->text('exception');

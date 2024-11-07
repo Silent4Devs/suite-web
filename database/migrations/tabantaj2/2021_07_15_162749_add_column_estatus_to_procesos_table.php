@@ -16,7 +16,7 @@ class AddColumnEstatusToProcesosTable extends Migration
     {
         Schema::table('procesos', function (Blueprint $table) {
             $table->enum('estatus', [Proceso::ACTIVO, Proceso::NO_ACTIVO])->after('descripcion')->nullable();
-            $table->unsignedBigInteger('documento_id')->after('estatus');
+            $table->integer('documento_id')->after('estatus');
             $table->foreign('documento_id')->references('id')->on('documentos');
         });
     }

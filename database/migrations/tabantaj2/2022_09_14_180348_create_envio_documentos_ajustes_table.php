@@ -15,8 +15,8 @@ class CreateEnvioDocumentosAjustesTable extends Migration
     {
         Schema::create('envio_documentos_ajustes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('id_coordinador')->nullable();
-            $table->unsignedBigInteger('id_mensajero')->nullable();
+            $table->integer('id_coordinador')->nullable();
+            $table->integer('id_mensajero')->nullable();
             $table->foreign('id_coordinador')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_mensajero')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

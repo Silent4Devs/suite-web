@@ -16,7 +16,7 @@ class CreateHistorialVersionesDocumentosTable extends Migration
     {
         Schema::create('historial_versiones_documentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('documento_id');
+            $table->integer('documento_id');
             $table->string('codigo');
             $table->string('nombre');
             $table->string('tipo');
@@ -25,10 +25,10 @@ class CreateHistorialVersionesDocumentosTable extends Migration
             $table->string('version');
             $table->dateTime('fecha');
             $table->string('archivo');
-            $table->unsignedBigInteger('elaboro_id')->nullable();
-            $table->unsignedBigInteger('reviso_id')->nullable();
-            $table->unsignedBigInteger('aprobo_id')->nullable();
-            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->integer('elaboro_id')->nullable();
+            $table->integer('reviso_id')->nullable();
+            $table->integer('aprobo_id')->nullable();
+            $table->integer('responsable_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

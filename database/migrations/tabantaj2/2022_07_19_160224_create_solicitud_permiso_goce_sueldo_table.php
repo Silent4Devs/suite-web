@@ -22,8 +22,8 @@ class CreateSolicitudPermisoGoceSueldoTable extends Migration
             $table->integer('aprobacion')->default(1);
             $table->integer('autoriza');
             $table->longText('comentarios_aprobador')->nullable();
-            $table->unsignedBigInteger('empleado_id')->nullable();
-            $table->unsignedBigInteger('permiso_id')->nullable();
+            $table->integer('empleado_id')->nullable();
+            $table->integer('permiso_id')->nullable();
             $table->foreign('permiso_id')->references('id')->on('permisos_goce_sueldo')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

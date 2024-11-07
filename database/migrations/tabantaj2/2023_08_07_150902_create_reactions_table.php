@@ -19,9 +19,9 @@ return new class extends Migration
 
             $table->enum('value', [Reaction::LIKE, Reaction::DISLIKE]);
 
-            $table->unsignedBigInteger('user_id');
+            $table->integer('user_id');
 
-            $table->unsignedBigInteger('reactionable_id');
+            $table->integer('reactionable_id');
             $table->string('reactionable_type');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

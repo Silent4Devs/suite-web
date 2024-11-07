@@ -15,7 +15,7 @@ class CreateActividadesMejorasTable extends Migration
     {
         Schema::create('actividades_mejoras', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mejora_id');
+            $table->integer('mejora_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

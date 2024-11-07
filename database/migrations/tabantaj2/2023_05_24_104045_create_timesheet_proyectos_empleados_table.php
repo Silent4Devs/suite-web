@@ -16,13 +16,13 @@ class CreateTimesheetProyectosEmpleadosTable extends Migration
         Schema::create('timesheet_proyectos_empleados', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('proyecto_id');
+            $table->integer('proyecto_id');
             $table->foreign('proyecto_id')->references('id')->on('timesheet_proyectos')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
 
             $table->bigInteger('horas_asignadas')->nullable();

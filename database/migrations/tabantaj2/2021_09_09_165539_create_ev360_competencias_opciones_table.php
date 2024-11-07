@@ -17,7 +17,7 @@ class CreateEv360CompetenciasOpcionesTable extends Migration
             $table->bigIncrements('id');
             $table->text('definicion');
             $table->integer('ponderacion');
-            $table->unsignedBigInteger('competencia_id');
+            $table->integer('competencia_id');
             $table->foreign('competencia_id')->references('id')->on('ev360_competencias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

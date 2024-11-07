@@ -19,7 +19,7 @@ class CreateEv360RangosResultadosTable extends Migration
             $table->tinyInteger('minimo_aceptable')->default(80);
             $table->tinyInteger('aceptable')->default(100);
             $table->tinyInteger('sobresaliente')->default(100);
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('evaluacion_id');
             $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ev360_parametros_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('evaluacion_id');
             $table->string('parametro');
             $table->float('valor');
             $table->string('color');

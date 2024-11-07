@@ -14,7 +14,7 @@ class AddColumnPuestoIdToEv360EvaluacionesEvaluadosTable extends Migration
     public function up()
     {
         Schema::table('ev360_evaluaciones_evaluados', function (Blueprint $table) {
-            $table->unsignedBigInteger('puesto_id')->nullable();
+            $table->integer('puesto_id')->nullable();
             $table->foreign('puesto_id')->references('id')->on('puestos');
         });
     }

@@ -15,7 +15,7 @@ class CreateEvidenciasQuejasTable extends Migration
     {
         Schema::create('evidencias_quejas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('id_quejas')->nullable();
+            $table->integer('id_quejas')->nullable();
             $table->string('evidencia');
             $table->timestamps();
             $table->softDeletes();

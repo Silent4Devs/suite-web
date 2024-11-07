@@ -14,8 +14,8 @@ class AddColumnsEvaluadoEvaluadorToEv360CompetenciasRespuestasTable extends Migr
     public function up()
     {
         Schema::table('ev360_competencias_respuestas', function (Blueprint $table) {
-            $table->unsignedBigInteger('evaluado_id');
-            $table->unsignedBigInteger('evaluador_id');
+            $table->integer('evaluado_id');
+            $table->integer('evaluador_id');
             $table->foreign('evaluado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evaluador_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
         });

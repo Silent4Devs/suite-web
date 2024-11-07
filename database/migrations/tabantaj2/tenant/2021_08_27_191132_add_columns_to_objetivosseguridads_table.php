@@ -14,7 +14,7 @@ class AddColumnsToObjetivosseguridadsTable extends Migration
     public function up()
     {
         Schema::table('objetivosseguridads', function (Blueprint $table) {
-            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->integer('responsable_id')->nullable();
             $table->dropColumn('anio');
             $table->string('formula')->nullable();
             $table->string('verde')->nullable();

@@ -14,7 +14,7 @@ class AddColumnResponsableAprobarToPlanificacionControlsTable extends Migration
     public function up()
     {
         Schema::table('planificacion_controls', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_responsable_aprobar')->nullable();
+            $table->integer('id_responsable_aprobar')->nullable();
             $table->longText('firma_registro')->nullable();
             $table->longText('firma_responsable')->nullable();
             $table->longText('firma_responsable_aprobador')->nullable();

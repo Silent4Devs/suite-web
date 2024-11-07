@@ -15,8 +15,8 @@ class CreateEvaluacionObjetivosTable extends Migration
     {
         Schema::create('ev360_evaluacion_objetivos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('objetivo_id');
-            $table->unsignedBigInteger('evaluacion_id');
+            $table->integer('objetivo_id');
+            $table->integer('evaluacion_id');
             $table->foreign('objetivo_id')->references('id')->on('ev360_objetivos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evaluacion_id')->references('id')->on('ev360_evaluaciones')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

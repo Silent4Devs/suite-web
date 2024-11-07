@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('subscription_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('subscription_id');
+            $table->integer('subscription_id');
             $table->string('stripe_id')->index();
             $table->string('stripe_product')->nullable();
             $table->string('stripe_price');

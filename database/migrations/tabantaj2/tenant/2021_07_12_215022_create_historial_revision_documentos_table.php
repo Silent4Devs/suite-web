@@ -16,7 +16,7 @@ class CreateHistorialRevisionDocumentosTable extends Migration
     {
         Schema::create('historial_revision_documentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('documento_id');
+            $table->integer('documento_id');
             $table->longText('descripcion');
             $table->longText('comentarios');
             $table->dateTime('fecha')->nullable();

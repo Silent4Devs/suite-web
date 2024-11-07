@@ -24,7 +24,7 @@ class CreateSugerenciasTable extends Migration
 
             $table->dateTime('fecha_cierre')->nullable();
 
-            $table->unsignedBigInteger('empleado_sugirio_id')->nullable();
+            $table->integer('empleado_sugirio_id')->nullable();
             $table->foreign('empleado_sugirio_id')->references('id')->on('empleados');
 
             $table->timestamps();

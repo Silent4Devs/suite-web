@@ -15,7 +15,7 @@ class AddResponsanbleToCartaAceptacionTable extends Migration
     {
         Schema::table('carta_aceptacion', function (Blueprint $table) {
             $table->longText('hallazgos_auditoria')->nullable();
-            $table->unsignedBigInteger('responsable_riesgo')->nullable();
+            $table->integer('responsable_riesgo')->nullable();
             $table->foreign('responsable_riesgo')->references('id')->on('empleados');
         });
     }

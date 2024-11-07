@@ -17,7 +17,7 @@ class AddColumnsPublicacionAlcanceSgsisTable extends Migration
             $table->date('fecha_publicacion')->nullable();
             $table->date('fecha_entrada')->nullable();
             $table->date('fecha_revision')->nullable();
-            $table->unsignedBigInteger('id_reviso_alcance')->nullable();
+            $table->integer('id_reviso_alcance')->nullable();
             $table->foreign('id_reviso_alcance')->references('id')->on('empleados');
         });
     }

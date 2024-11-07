@@ -15,8 +15,8 @@ class CreateActivosContenedoresTable extends Migration
     {
         Schema::create('activos_contenedores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('activo_id');
-            $table->unsignedBigInteger('contenedor_id');
+            $table->integer('activo_id');
+            $table->integer('contenedor_id');
             $table->foreign('activo_id')->references('id')->on('activos_informacion')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('contenedor_id')->references('id')->on('matriz_octave_contenedores')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

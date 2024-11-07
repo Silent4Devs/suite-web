@@ -14,8 +14,8 @@ class AddTipoControlAccesoIdToControlAccesosTable extends Migration
     public function up()
     {
         Schema::table('control_accesos', function (Blueprint $table) {
-            $table->unsignedBigInteger('tipo_control_acceso_id')->nullable();
-            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->integer('tipo_control_acceso_id')->nullable();
+            $table->integer('responsable_id')->nullable();
             $table->longText('justificacion')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();

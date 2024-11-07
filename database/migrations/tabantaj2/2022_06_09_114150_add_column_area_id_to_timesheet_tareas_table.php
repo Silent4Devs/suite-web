@@ -14,7 +14,7 @@ class AddColumnAreaIdToTimesheetTareasTable extends Migration
     public function up()
     {
         Schema::table('timesheet_tareas', function (Blueprint $table) {
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
 
             $table->boolean('todos')->default(true);

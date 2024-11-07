@@ -15,7 +15,7 @@ class CreateEvidenciasCertificadosEmpleadosTable extends Migration
     {
         Schema::create('evidencias_certificados_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->integer('empleado_id')->nullable();
             $table->string('evidencia')->nullable();
             $table->timestamps();
             $table->softDeletes();

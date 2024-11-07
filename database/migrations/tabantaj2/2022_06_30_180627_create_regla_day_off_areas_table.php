@@ -15,8 +15,8 @@ class CreateReglaDayOffAreasTable extends Migration
     {
         Schema::create('regla_dayOff_areas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('regla_id')->nullable();
-            $table->unsignedBigInteger('area_id')->nullable();
+            $table->integer('regla_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('regla_id')->references('id')->on('day_off')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

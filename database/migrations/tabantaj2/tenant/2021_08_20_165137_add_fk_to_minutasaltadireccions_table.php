@@ -15,10 +15,10 @@ class AddFkToMinutasaltadireccionsTable extends Migration
         public function up()
         {
             Schema::table('minutasaltadireccions', function (Blueprint $table) {
-                $table->unsignedBigInteger('responsable_id')->after('responsablereunion_id');
+                $table->integer('responsable_id')->after('responsablereunion_id');
                 $table->foreign('responsable_id')->references('id')->on('empleados');
 
-                $table->unsignedBigInteger('responsable_id')->after('responsablereunion_id');
+                $table->integer('responsable_id')->after('responsablereunion_id');
                 $table->foreign('responsable_id')->references('id')->on('empleados');
 
 

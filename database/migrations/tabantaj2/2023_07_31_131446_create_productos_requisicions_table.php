@@ -18,12 +18,12 @@ return new class extends Migration
             $table->longText('espesificaciones');
             $table->integer('cantidad');
             //foreign
-            $table->unsignedBigInteger('producto_id')->nullable();
+            $table->integer('producto_id')->nullable();
             // $table->foreign('producto_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             //foreign
-            $table->unsignedBigInteger('requisiciones_id')->nullable();
+            $table->integer('requisiciones_id')->nullable();
             // $table->foreign('requisiciones_id')->references('id')->on('requsiciones')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('contrato_id')->nullable();
+            $table->integer('contrato_id')->nullable();
             // $table->foreign('contrato_id')->references('id')->on('contratos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('no_personas')->nullable();
             $table->integer('porcentaje_involucramiento')->nullable();

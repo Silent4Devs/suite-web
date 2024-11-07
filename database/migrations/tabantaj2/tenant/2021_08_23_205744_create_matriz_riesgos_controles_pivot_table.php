@@ -15,8 +15,8 @@ class CreateMatrizRiesgosControlesPivotTable extends Migration
     {
         Schema::create('matriz_riesgos_controles_pivot', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('matriz_id');
-            $table->unsignedBigInteger('controles_id');
+            $table->integer('matriz_id');
+            $table->integer('controles_id');
             $table->foreign('matriz_id')->references('id')->on('matriz_riesgos')->onDelete('cascade');
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad')->onDelete('cascade');
             $table->timestamps();

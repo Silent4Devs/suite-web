@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('cuestionario_objetivo_ev_desempenos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('objetivo_id');
-            $table->unsignedBigInteger('periodo_id');
+            $table->integer('objetivo_id');
+            $table->integer('periodo_id');
             $table->boolean('aplicabilidad')->default(true);
 
-            $table->unsignedBigInteger('evaluacion_desempeno_id');
-            $table->unsignedBigInteger('evaluado_desempeno_id');
-            $table->unsignedBigInteger('evaluador_desempeno_id');
+            $table->integer('evaluacion_desempeno_id');
+            $table->integer('evaluado_desempeno_id');
+            $table->integer('evaluador_desempeno_id');
 
             $table->double('calificacion_objetivo')->nullable();
             $table->boolean('estatus_calificado')->default(false);

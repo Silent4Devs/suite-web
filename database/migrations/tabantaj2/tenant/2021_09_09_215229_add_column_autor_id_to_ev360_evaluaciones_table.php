@@ -14,7 +14,7 @@ class AddColumnAutorIdToEv360EvaluacionesTable extends Migration
     public function up()
     {
         Schema::table('ev360_evaluaciones', function (Blueprint $table) {
-            $table->unsignedBigInteger('autor_id')->after('estatus')->nullable();
+            $table->integer('autor_id')->after('estatus')->nullable();
             $table->foreign('autor_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
         });
     }

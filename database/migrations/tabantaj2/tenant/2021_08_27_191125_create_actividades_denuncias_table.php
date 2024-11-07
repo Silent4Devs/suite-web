@@ -15,7 +15,7 @@ class CreateActividadesDenunciasTable extends Migration
     {
         Schema::create('actividades_denuncias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('denuncia_id');
+            $table->integer('denuncia_id');
             $table->string('actividad');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

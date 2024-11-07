@@ -16,9 +16,9 @@ class CreateActivosInformacionAprobacionesTable extends Migration
         Schema::create('activos_informacion_aprobaciones', function (Blueprint $table) {
             $table->id();
             $table->boolean('aceptado')->default(false);
-            $table->unsignedBigInteger('persona_califico_id');
-            $table->unsignedBigInteger('activoInformacion_id');
-            $table->unsignedBigInteger('carta_aceptacion_aprobacion_id');
+            $table->integer('persona_califico_id');
+            $table->integer('activoInformacion_id');
+            $table->integer('carta_aceptacion_aprobacion_id');
             $table->foreign('persona_califico_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('activoInformacion_id')->references('id')->on('activos_informacion')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('carta_aceptacion_aprobacion_id')->references('id')->on('carta_aceptacion_aprobaciones')->onDelete('cascade')->onUpdate('cascade');

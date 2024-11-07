@@ -19,7 +19,7 @@ class CreateIdiomaEmpleadosTable extends Migration
             $table->string('nivel');
             $table->smallInteger('porcentaje')->nullable();
             $table->string('certificado')->nullable();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->timestamps();
 
             $table->foreign('empleado_id')

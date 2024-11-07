@@ -17,7 +17,7 @@ class CreateInteresadasNececidadesExpectativasTable extends Migration
             $table->increments('id');
             $table->string('nececidades')->nullable();
             $table->string('expectativas')->nullable();
-            $table->unsignedBigInteger('id_interesada');
+            $table->integer('id_interesada');
             $table->foreign('id_interesada')->references('id')->on('partes_interesadas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

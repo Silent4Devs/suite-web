@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pregunta_id');
-            $table->unsignedBigInteger('parametro_id')->nullable();
+            $table->integer('pregunta_id');
+            $table->integer('parametro_id')->nullable();
             $table->longText('evidencia')->nullable();
             $table->longText('recomendacion')->nullable();
 

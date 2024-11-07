@@ -16,7 +16,7 @@ class AddForeignKeyToIndicadoresSgsisTable extends Migration
         Schema::table('indicadores_sgsis', function (Blueprint $table) {
             $table->unsignedInteger('id_proceso')->nullable();
             $table->foreign('id_proceso')->references('id')->on('procesos');
-            $table->unsignedBigInteger('id_empleado')->nullable();
+            $table->integer('id_empleado')->nullable();
         });
 
         Schema::table('indicadores_sgsis', function ($table) {

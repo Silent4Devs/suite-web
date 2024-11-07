@@ -15,8 +15,8 @@ class CreateCartaAceptacionAprobacionesTable extends Migration
     {
         Schema::create('carta_aceptacion_aprobaciones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('aprobador_id');
-            $table->unsignedBigInteger('carta_id');
+            $table->integer('aprobador_id');
+            $table->integer('carta_id');
             $table->string('autoridad');
             $table->longText('comentarios')->nullable();
             $table->string('firma')->nullable();

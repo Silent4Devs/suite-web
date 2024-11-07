@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('historico_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empleado_id');
+            $table->integer('empleado_id');
             $table->string('campo_modificado');
             $table->date('fecha_cambio');
-            $table->unsignedBigInteger('valor_anterior_id');
+            $table->integer('valor_anterior_id');
             $table->string('tabla_origen');
             $table->timestamps();
             $table->softDeletes();

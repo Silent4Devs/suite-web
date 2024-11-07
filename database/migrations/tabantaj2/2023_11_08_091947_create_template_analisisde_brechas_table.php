@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('template_analisisde_brechas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_template');
-            $table->unsignedBigInteger('norma_id');
+            $table->integer('norma_id');
             $table->longText('descripcion');
             $table->integer('no_secciones');
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('cascade');

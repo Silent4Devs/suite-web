@@ -14,9 +14,9 @@ class AddColumnsRegistroToAccionCorrectivasTable extends Migration
     public function up()
     {
         Schema::table('accion_correctivas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_registro')->nullable();
+            $table->integer('id_registro')->nullable();
             $table->foreign('id_registro')->references('id')->on('empleados');
-            $table->unsignedBigInteger('id_reporto')->nullable();
+            $table->integer('id_reporto')->nullable();
             $table->foreign('id_reporto')->references('id')->on('empleados');
         });
     }

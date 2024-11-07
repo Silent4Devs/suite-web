@@ -15,7 +15,7 @@ class CreateAuditoriaInternoClausulaTable extends Migration
     {
         Schema::create('auditoria_interno_clausula', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clausula_id');
+            $table->integer('clausula_id');
             $table->foreign('clausula_id')->references('id')->on('clausulas')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('auditoria_id');
             $table->foreign('auditoria_id')->references('id')->on('auditoria_internas')->onUpdate('cascade')->onDelete('cascade');

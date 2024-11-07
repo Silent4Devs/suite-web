@@ -18,7 +18,7 @@ class CreateCartaAceptacionTable extends Migration
             $table->string('folio_riesgo')->nullable();
             $table->dateTime('fecharegistro')->nullable();
             $table->dateTime('fechaaprobacion')->nullable();
-            $table->unsignedBigInteger('responsable_id')->nullable();
+            $table->integer('responsable_id')->nullable();
             $table->string('activo_folio')->nullable();
             $table->string('nombre_activo')->nullable();
             $table->string('criticidad_activo')->nullable();
@@ -36,13 +36,13 @@ class CreateCartaAceptacionTable extends Migration
             $table->longText('hallazgo')->nullable();
             $table->longText('controles_compensatorios')->nullable();
             $table->longText('recomendaciones')->nullable();
-            $table->unsignedBigInteger('director_resp_id')->nullable();
+            $table->integer('director_resp_id')->nullable();
             $table->date('fecha_aut_direct')->nullable();
-            $table->unsignedBigInteger('vp_responsable_id')->nullable();
+            $table->integer('vp_responsable_id')->nullable();
             $table->date('fecha_vp_aut')->nullable();
-            $table->unsignedBigInteger('presidencia_id')->nullable();
+            $table->integer('presidencia_id')->nullable();
             $table->date('fecha_aut_presidencia')->nullable();
-            $table->unsignedBigInteger('vice_operaciones_id')->nullable();
+            $table->integer('vice_operaciones_id')->nullable();
             $table->date('fecha_aut_viceoperaciones')->nullable();
             $table->foreign('responsable_id')->references('id')->on('empleados');
             $table->foreign('director_resp_id')->references('id')->on('empleados');

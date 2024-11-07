@@ -17,7 +17,7 @@ class AddColumnsEntradaVigorToPoliticaSgsisTable extends Migration
             $table->date('fecha_publicacion')->nullable();
             $table->date('fecha_entrada')->nullable();
             $table->date('fecha_revision')->nullable();
-            $table->unsignedBigInteger('id_reviso_politica')->nullable();
+            $table->integer('id_reviso_politica')->nullable();
             $table->foreign('id_reviso_politica')->references('id')->on('empleados');
         });
     }

@@ -17,7 +17,7 @@ class CreateEv360CompetenciasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->text('descripcion')->nullable();
-            $table->unsignedBigInteger('tipo_id');
+            $table->integer('tipo_id');
             $table->foreign('tipo_id')->references('id')->on('ev360_tipo_competencias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

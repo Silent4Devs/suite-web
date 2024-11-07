@@ -16,8 +16,8 @@ class CreateQuejasClientesTable extends Migration
         Schema::create('quejas_clientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
-            $table->unsignedBigInteger('cliente_id');
-            $table->unsignedBigInteger('proyectos_id');
+            $table->integer('cliente_id');
+            $table->integer('proyectos_id');
             $table->string('puesto')->nullable();
             $table->string('telefono')->nullable();
             $table->string('correo')->nullable();

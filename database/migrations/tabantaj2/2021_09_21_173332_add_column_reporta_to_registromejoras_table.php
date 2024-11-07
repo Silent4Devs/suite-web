@@ -14,11 +14,11 @@ class AddColumnReportaToRegistromejorasTable extends Migration
     public function up()
     {
         Schema::table('registromejoras', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_reporta')->nullable();
+            $table->integer('id_reporta')->nullable();
             $table->foreign('id_reporta')->references('id')->on('empleados');
-            $table->unsignedBigInteger('id_responsable')->nullable();
+            $table->integer('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
-            $table->unsignedBigInteger('id_participantes')->nullable();
+            $table->integer('id_participantes')->nullable();
             $table->foreign('id_participantes')->references('id')->on('empleados');
         });
     }

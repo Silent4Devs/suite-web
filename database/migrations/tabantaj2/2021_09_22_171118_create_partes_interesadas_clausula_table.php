@@ -15,7 +15,7 @@ class CreatePartesInteresadasClausulaTable extends Migration
     {
         Schema::create('partes_interesadas_clausula', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clausula_id');
+            $table->integer('clausula_id');
             $table->foreign('clausula_id')->references('id')->on('clausulas')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('partesint_id');
             $table->foreign('partesint_id')->references('id')->on('partes_interesadas')->onUpdate('cascade')->onDelete('cascade');

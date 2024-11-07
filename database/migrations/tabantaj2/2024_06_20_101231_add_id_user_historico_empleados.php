@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('historico_empleados', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable(); // Agregar columna para el ID del usuario
+            $table->integer('user_id')->nullable(); // Agregar columna para el ID del usuario
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Agregar clave foránea para el ID del usuario
         });
     }

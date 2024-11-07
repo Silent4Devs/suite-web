@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('versiones_requisicion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('requisicion_id');
+            $table->integer('requisicion_id');
             $table->integer('version')->default(1);
             $table->timestamp('last_updated_at')->nullable();
             $table->timestamps();

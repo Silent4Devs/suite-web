@@ -20,7 +20,7 @@ class CreateCuestionarioRecursosMaterialesTable extends Migration
             $table->integer('telefono')->nullable()->default(0);
             $table->string('otro')->nullable();
             $table->integer('escenario')->nullable();
-            $table->unsignedBigInteger('cuestionario_id')->nullable();
+            $table->integer('cuestionario_id')->nullable();
             $table->foreign('cuestionario_id')->references('id')->on('cuestionario_analisis_impacto')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -17,9 +17,9 @@ class CreateActivosInformacion2Table extends Migration
             $table->increments('id');
             $table->string('identificador')->unique();
             $table->string('nombreVP')->nullable();
-            $table->unsignedBigInteger('duenoVP')->nullable();
+            $table->integer('duenoVP')->nullable();
             $table->string('nombre_direccion')->nullable();
-            $table->unsignedBigInteger('custodioALDirector')->nullable();
+            $table->integer('custodioALDirector')->nullable();
             $table->string('activo_informacion')->nullable();
             $table->string('formato')->nullable();
             $table->unsignedInteger('proceso_id')->nullable();

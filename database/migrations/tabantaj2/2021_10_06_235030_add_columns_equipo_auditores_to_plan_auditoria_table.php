@@ -14,7 +14,7 @@ class AddColumnsEquipoAuditoresToPlanAuditoriaTable extends Migration
     public function up()
     {
         Schema::table('plan_auditoria', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_equipo_auditores')->nullable();
+            $table->integer('id_equipo_auditores')->nullable();
             $table->foreign('id_equipo_auditores')->references('id')->on('empleados');
         });
     }

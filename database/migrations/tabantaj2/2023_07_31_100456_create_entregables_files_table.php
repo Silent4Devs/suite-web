@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('entregables_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('pdf')->nullable();
-            $table->unsignedBigInteger('entregable_id');
+            $table->integer('entregable_id');
             $table->timestamps();
             $table->softDeletes();
         });

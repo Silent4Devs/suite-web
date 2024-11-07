@@ -15,9 +15,9 @@ class CreateAccionesCorrectivasAprobacionablesTable extends Migration
     {
         Schema::create('acciones_correctivas_aprobacionables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('acciones_correctivas_aprobacionables_id');
+            $table->integer('acciones_correctivas_aprobacionables_id');
             $table->string('acciones_correctivas_aprobacionables_type');
-            $table->unsignedBigInteger('acciones_correctivas_id');
+            $table->integer('acciones_correctivas_id');
             $table->foreign('acciones_correctivas_id')->references('id')->on('accion_correctivas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
