@@ -28,6 +28,13 @@ class EmpleadosSeeder extends Seeder
             'extension' => null,
             'telefono_movil' => null,
             'n_empleado' => 1,
+            'direccion' => 'Not provided',
+            'sede_id' => 1,                 
+            'telefono' => null,
+            'n_registro' => null,
+            'genero' => null,
+            'email' => 'example@example.com',
+            'resumen' => ''
         ]);
     }
 }

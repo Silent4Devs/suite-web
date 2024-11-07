@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 // Ev360RangosResultadoSeeder::class,    // sin uso
                 ActividadFaseSeeder::class,
                 OrganizacionSeeder::class,
-                // SedeSeeder::class,  // sin sedes que mostrar | seeder no util
+                SedeSeeder::class,  // sin sedes que mostrar | seeder no util
                 // GrupoSeeder::class,  // seeder no util
                 AreaSeeder::class,
                 PuestoSeeder::class,
