@@ -51,7 +51,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     container_name: php-tabantaj
     depends_on:
       - postgres-tabantaj
@@ -64,28 +64,10 @@ services:
     networks:
       - tabantajnetwork
 
-  laravel-octane:
-    image: php:8.2-fpm-alpine
-    container_name: laravel-octane
-    build:
-      context: .
-      dockerfile: Dockerfile.prod  # Asegúrate de que tu Dockerfile instale Octane
-    depends_on:
-      - php
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/var/www/html
-    command: ["php", "artisan", "octane:start"]
-    ports:
-      - "8000:8000"  # Cambia el puerto si es necesario
-    networks:
-      - tabantajnetwork
-
   queue-worker:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -103,7 +85,7 @@ services:
   schedule-worker:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
