@@ -367,76 +367,94 @@ class tbApiMobileControllerCapacitaciones extends Controller
     public function tbFunctionCursoEvaluacion($curso_id, $evaluation_id)
     {
         $user = User::getCurrentUser();
+        $course = Course::with('instructor.empleado')->findOrFail($curso_id);
+        $evaluation = Evaluation::with('questions.answers')->findOrFail($evaluation_id);
 
-        $course = Course::getAll()->find($curso_id);
-        $evaluation = Evaluation::find($evaluation_id);
+        $json_preguntas_curso = [
+            'course' => $this->formatCourseData($course),
+            'evaluation' => $this->formatEvaluationData($evaluation, $user),
+        ];
 
-        $json_preguntas_curso = [];
+        return response()->json(['cursoEvaluacion' => $json_preguntas_curso], 200);
+    }
 
-        $json_preguntas_curso['course'] = [
+    private function formatCourseData($course)
+    {
+        return [
             'id_course' => $course->id,
             'title' => $course->title,
             'nombre_instructor' => $course->instructor->name,
-            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta)
+                ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta)
+                : '',
         ];
+    }
 
-        $totalQuizQuestions = count($evaluation->questions);
+    private function formatEvaluationData($evaluation, $user)
+    {
+        $totalQuizQuestions = $evaluation->questions->count();
 
-        $answeredQuestions = UserAnswer::where('evaluation_id', $evaluation->id)->where('user_id', $user->id)->pluck('question_id')->toArray();
+        $userEvaluation = UserEvaluation::firstOrCreate(
+            ['user_id' => $user->id, 'evaluation_id' => $evaluation->id],
+            ['quiz_size' => $totalQuizQuestions, 'completed' => false]
+        );
 
-        $userEvaluationExist = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->exists();
-
-        if (! $userEvaluationExist) {
-
-            $userEvaluationId = UserEvaluation::create([
-                'user_id' => $user->id,
-                'quiz_size' => $totalQuizQuestions,
-                'evaluation_id' => $evaluation->id,
-            ]);
-        } else {
-            $userEvaluationId = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->first();
-            $count = UserAnswer::Questions($evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($evaluation->id)->count();
-        }
-
-        $evaluationCompleted = UserEvaluation::where('user_id', $user->id)->where('completed', true)->where('evaluation_id', $evaluation->id)->first();
-
-        $json_preguntas_curso['evaluation'] = [
+        $evaluationData = [
             'id_evaluation' => $evaluation->id,
             'name_evaluation' => $evaluation->name,
-            'evaluation_completed' => $evaluationCompleted->completed,
+            'evaluation_completed' => $userEvaluation->completed,
             'evaluation_blocked' => false,
+            'questions' => $userEvaluation->completed
+                ? $this->formatCompletedQuestions($userEvaluation)
+                : $this->formatUncompletedQuestions($evaluation)
         ];
 
-        $answeredQuestions = UserAnswer::where('evaluation_id', $evaluation->id)->where('user_id', $user->id)->pluck('question_id')->toArray();
+        return $evaluationData;
+    }
 
-        $questions = Question::where('evaluation_id', $evaluation->id)
-            // ->whereNotIn('id', $answeredQuestions)
-            ->with('answers')
-            ->inRandomOrder()
-            ->get();
-
-        foreach ($questions as $keyQ => $question) {
-            # code...
-            $json_preguntas_curso['evaluation']['questions'][$keyQ] = [
+    private function formatUncompletedQuestions($evaluation)
+    {
+        $questionsData = [];
+        foreach ($evaluation->questions->shuffle() as $question) {
+            $questionsData[] = [
                 'id_question' => $question->id,
                 'question' => $question->question,
                 'is_active' => $question->is_active,
+                'answers' => $this->formatAnswers($question->answers),
             ];
-
-            foreach ($question->answers as $keyAns => $answer) {
-                $json_preguntas_curso['evaluation']['questions'][$keyQ]['answers'][] = [
-                    "id_answer" => $answer->id,
-                    "answer" => $answer->answer,
-                    "is_correct" => $answer->is_correct, //Innecesario
-                ];
-            }
         }
+        return $questionsData;
+    }
 
-        return response(json_encode(
-            [
-                'cursoEvaluacion' => $json_preguntas_curso,
-            ],
-        ), 200)->header('Content-Type', 'application/json');
+    private function formatCompletedQuestions($userEvaluation)
+    {
+        $questionsData = [];
+        foreach ($userEvaluation->userAnswers as $answeredQuestion) {
+            $question = $answeredQuestion->question;
+            $questionsData[] = [
+                'id_question' => $question->id,
+                'question' => $question->question,
+                'is_active' => $question->is_active,
+                'answers' => $this->formatAnswers($question->answers, $answeredQuestion->answer_id, $answeredQuestion->is_correct),
+            ];
+        }
+        return $questionsData;
+    }
+
+    private function formatAnswers($answers, $selectedAnswerId = null, $isCorrect = false)
+    {
+        $answersData = [];
+        foreach ($answers as $answer) {
+            $answersData[] = [
+                "id_answer" => $answer->id,
+                "answer" => $answer->answer,
+                "is_correct" => $selectedAnswerId === $answer->id
+                    ? (bool) $isCorrect
+                    : (bool) $answer->is_correct,
+                "selected" => $selectedAnswerId === $answer->id,
+            ];
+        }
+        return $answersData;
     }
 
     public function tbFunctionRespuestasCursoEvaluacion(Request $request)
@@ -462,10 +480,16 @@ class tbApiMobileControllerCapacitaciones extends Controller
             ], 422); // Código HTTP 422 Unprocessable Entity
         }
 
+        // Obtener al usuario actual
         $user = User::getCurrentUser();
+
+        // Obtener el registro de la evaluacion
         $userEvaluation = UserEvaluation::where('user_id', $user->id)
             ->where('evaluation_id', $request->id_evaluation)
             ->first();
+
+        // Inicializar la variable
+        $correctQuestions = 0;
 
         // Preparar un array para la inserción masiva
         $data = [];
@@ -475,7 +499,13 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 ->where('question_id', $answer["id_question"])
                 ->first();
 
+            // Obtener si es correcta o incorrecta
             $isChoiceCorrect = $correctAnswer && $correctAnswer->is_correct === "1";
+
+            // Sumarla solo si es correcta
+            if($isChoiceCorrect){
+                $correctQuestions++;
+            }
 
             $data[] = [
                 'user_id' => $user->id,
@@ -489,12 +519,24 @@ class tbApiMobileControllerCapacitaciones extends Controller
             ];
         }
 
-        // Insertar todas las respuestas en una sola operación
+        // Obtener el numero de preguntas contestadas en el cuestionario
+        $totalQuestions = count($request->answers);
+
+        // Obtener su calificacion de la evaluación
+        $percentage = ($correctQuestions * 100) / $totalQuestions;
+
+        // Establecerla como completada y poner su porcentaje
+        $userEvaluation->update([
+            'score' => $percentage,
+            'completed' => true,
+        ]);
+
+        // Insertar todas las respuestas en una sola operación (batch)
         UserAnswer::insert($data);
 
         return response()->json([
             'success' => true,
-            'message' => 'Respuestas guardadas exitosamente',
+            'message' => 'Cuestionario Completado. Respuestas guardadas exitosamente',
         ]);
     }
 

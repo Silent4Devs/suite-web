@@ -2,6 +2,8 @@
 
 namespace App\Models\Escuela\Instructor;
 
+use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\UserEvaluation;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
