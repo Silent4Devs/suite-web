@@ -534,7 +534,7 @@ class OrdenCompraController extends Controller
             if (removeUnicodeCharacters($user->email) === 'lourdes.abadia@silent4business.com' || removeUnicodeCharacters($user->email) === 'ldelgadillo@silent4business.com' || removeUnicodeCharacters($user->email) === 'aurora.soriano@silent4business.com') {
                 $tipo_firma = 'firma_finanzas_orden';
             } else {
-                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera del finanzas');
+                return view('contract_manager.ordenes-compra.error')->with('mensaje', 'No tiene permisos para firmar<br> En espera de finanzas');
             }
         } elseif ($requisicion->firma_comprador_orden === null) {
             if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
