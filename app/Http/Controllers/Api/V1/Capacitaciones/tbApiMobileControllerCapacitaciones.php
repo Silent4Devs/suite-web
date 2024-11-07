@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Instructor\Answer;
 use App\Models\Escuela\Instructor\Question;
 use App\Models\Escuela\Instructor\UserAnswer;
 use App\Models\Escuela\Level;
@@ -393,13 +394,8 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 'evaluation_id' => $evaluation->id,
             ]);
         } else {
-
             $userEvaluationId = UserEvaluation::where('user_id', $user->id)->where('evaluation_id', $evaluation->id)->first();
             $count = UserAnswer::Questions($evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($evaluation->id)->count();
-
-            // if ($userEvaluationId->completed) {
-            //     $this->showResults();
-            // }
         }
 
         $evaluationCompleted = UserEvaluation::where('user_id', $user->id)->where('completed', true)->where('evaluation_id', $evaluation->id)->first();
@@ -466,16 +462,42 @@ class tbApiMobileControllerCapacitaciones extends Controller
             ], 422); // Código HTTP 422 Unprocessable Entity
         }
 
-        // UserAnswer::create([
-        //     'user_id' => auth()->id(),
-        //     'user_evaluation_id' => $this->userEvaluationId->id,
-        //     'answer_id' => $this->answer,
-        //     'is_correct' => $isChoiceCorrect,
-        //     'evaluation_id' => $this->evaluation->id,
-        //     'question_id' => $this->currentQuestion->id,
-        // ]);
-        dd($request->all());
+        $user = User::getCurrentUser();
+        $userEvaluation = UserEvaluation::where('user_id', $user->id)
+            ->where('evaluation_id', $request->id_evaluation)
+            ->first();
+
+        // Preparar un array para la inserción masiva
+        $data = [];
+        foreach ($request->answers as $answer) {
+            // Comprobar si la respuesta es correcta
+            $correctAnswer = Answer::where('id', $answer["id_answer"])
+                ->where('question_id', $answer["id_question"])
+                ->first();
+
+            $isChoiceCorrect = $correctAnswer && $correctAnswer->is_correct === "1";
+
+            $data[] = [
+                'user_id' => $user->id,
+                'user_evaluation_id' => $userEvaluation->id,
+                'evaluation_id' => $request->id_evaluation,
+                'question_id' => $answer['id_question'],
+                'answer_id' => $answer['id_answer'],
+                'is_correct' => $isChoiceCorrect,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insertar todas las respuestas en una sola operación
+        UserAnswer::insert($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Respuestas guardadas exitosamente',
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
