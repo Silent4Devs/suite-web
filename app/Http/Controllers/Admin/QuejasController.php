@@ -18,6 +18,7 @@ use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\Sede;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -63,6 +64,8 @@ class QuejasController extends Controller
             'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => User::getCurrentUser()->empleado->id,
@@ -78,6 +81,7 @@ class QuejasController extends Controller
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -115,7 +119,7 @@ class QuejasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejas = Quejas::with('quejo:id,name,foto')->where('archivado', false)->get();
+        $quejas = Quejas::select('empleado_quejo_id', 'id', 'titulo', 'fecha', 'fecha_cierre', 'estatus', 'sede', 'ubicacion', 'descripcion', 'area_quejado', 'colaborador_quejado', 'proceso_quejado', 'externo_quejado')->with('quejo:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($quejas)->toJson();
     }
@@ -215,7 +219,7 @@ class QuejasController extends Controller
 
         $organizacion = Organizacion::first();
 
-        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->fecha_cierre ? Carbon::createFromFormat('d-m-Y, h:i:s a', $request->fecha_cierre, 'UTC')->format('Y-m-d H:i:s') : null);
+        $fecha = $request->estatus === 'cancelado' ? Carbon::now()->format('Y-m-d H:i:s') : ($request->estatus === 'cerrado' ? Carbon::now()->format('Y-m-d H:i:s') : null);
 
         $quejas->update([
             'titulo' => $request->titulo,
@@ -321,7 +325,7 @@ class QuejasController extends Controller
 
     public function recuperarArchivadoQueja($id)
     {
-        Mejoras::where('id', $id)->update(['archivado' => false]);
+        Quejas::where('id', $id)->update(['archivado' => false]);
 
         return redirect()->route('admin.desk.index');
     }

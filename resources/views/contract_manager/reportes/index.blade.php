@@ -315,12 +315,11 @@
                                 <option value="">No hay proveedores registrados</option>
                             @endforelse
                         </select>
-                        {!! Form::submit('Generar reporte', [
-                            'class' => 'btn tb-btn-primary',
-                            'id' => 'buscar_proveedor',
-                            'onclick' => "buscarproveedor($('#proveedor').val());return false;",
-                            'style' => '',
-                        ]) !!}
+                        <button type="submit" class="btn tb-btn-primary" id="buscar_proveedor"
+                                onclick="buscarproveedor($('#proveedor').val()); return false;">
+                            Generar reporte
+                        </button>
+
                     </div>
                     <div class="card">
                         <div id="proveedor_reporte" class="card-content">
@@ -369,12 +368,10 @@
                                 <option value="">No hay contratos registrados</option>
                             @endforelse
                         </select>
-                        {!! Form::submit('Generar reporte', [
-                            'class' => 'btn tb-btn-primary',
-                            'id' => 'buscar_contrato',
-                            'onclick' => "buscarcontrato($('#contrato').val());return false;",
-                            'style' => '',
-                        ]) !!}
+                        <button type="submit" class="btn tb-btn-primary" id="buscar_contrato"
+                                onclick="buscarcontrato($('#contrato').val()); return false;">
+                            Generar reporte
+                        </button>
                     </div>
                     <div class="card">
                         <div id="contrato_reporte" class="card-content">

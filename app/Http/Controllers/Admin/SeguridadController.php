@@ -20,6 +20,7 @@ use App\Models\Proceso;
 use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,6 +65,8 @@ class SeguridadController extends Controller
             'procedente' => 'required',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
             'fecha' => $request->fecha,
@@ -76,6 +79,7 @@ class SeguridadController extends Controller
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'procedente' => $incidente_procedente,
             'justificacion' => $request->justificacion,
+            'sentimientos' => $sentimientos,
         ]);
 
         if ($incidente_procedente) {

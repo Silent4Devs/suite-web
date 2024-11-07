@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Vista-Global-Dayoff') }}
+    {{-- {{ Breadcrumbs::render('Vista-Global-Dayoff') }} --}}
 
 
     <h5 class=" titulo_general_funcion">Vista Global de Solicitudes de Day OFF</h5>

@@ -61,52 +61,50 @@
                         @enderror
                     </div> --}}
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="text" id="name_proyect" placeholder="" name="proyecto_name" class="form-control"
-                            maxlength="254" required>
-                        {!! Form::label('name_proyect', 'Nombre del proyecto*', ['class' => 'asterisco']) !!}
+                        <label for="name_proyect" class="asterisco">Nombre del proyecto*</label>
+                        <input type="text" id="name_proyect" name="proyecto_name" class="form-control" maxlength="254" required>
                         <span id="alertaGenerica" style="color: red; display: none;"></span>
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
+                        <label for="cliente_id" class="asterisco">Cliente*</label>
                         <select name="cliente_id" id="cliente_id" class="form-control" required>
                             <option selected value="">Seleccione cliente</option>
                             @foreach ($clientes as $cliente)
-                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}
-                                </option>
+                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('cliente_id', 'Cliente*', ['class' => 'asterisco']) !!}
                     </div>
-                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
-                        id="caja_areas_seleccionadas_create">
-                        <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
-                            name="areas_seleccionadas[]" placeholder="">
+
+                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;" id="caja_areas_seleccionadas_create">
+                        <label for="areas_seleccionadas" class="asterisco">Área(s) participante(s)*</label>
+                        <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas" name="areas_seleccionadas[]">
                             @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">
-                                    {{ $area->area }}
-                                </option>
+                                <option value="{{ $area->id }}">{{ $area->area }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('areas_seleccionadas', ' Área(s) participante(s)*', ['class' => 'asterisco']) !!}
                         <div class="mt-1">
                             <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                         </div>
                     </div>
+
                     <div class="form-group col-md-4 anima-focus">
+                        <label for="sede_id" class="asterisco">Sede</label>
                         <select class="form-control" name="sede_id" id="sede_id">
                             <option selected value="">Seleccione sede</option>
                             @foreach ($sedes as $sede)
                                 <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('sede_id', 'Sede', ['class' => 'asterisco']) !!}
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="date" name="fecha_inicio" placeholder="" id="fecha_inicio" class="form-control">
-                        {!! Form::label('fecha_inicio', 'Fecha de inicio', ['class' => 'asterisco']) !!}
+                        <label for="fecha_inicio" class="asterisco">Fecha de inicio</label>
+                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
                         @if ($errors->has('fecha_inicio'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_inicio') }}
@@ -116,9 +114,10 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+
                     <div class="form-group col-md-4 anima-focus">
+                        <label for="fecha_fin" class="asterisco">Fecha de fin</label>
                         <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
-                        {!! Form::label('fecha_fin', 'Fecha de fin', ['class' => 'asterisco']) !!}
                         @if ($errors->has('fecha_fin'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_fin') }}
@@ -128,20 +127,10 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    {{-- <div class="form-group col-md-4 anima-focus">
-                        <select class="form-control" name="tipo" id="tipo" required>
-                            @foreach ($tipos as $tipo_it)
-                                <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it ? 'selected' : '' }}>
-                                    {{ $tipo_it }}
-                                </option>
-                            @endforeach
-                        </select>
-                        {!! Form::label('tipo', 'Tipo*', ['class' => 'asterisco']) !!}
-                    </div> --}}
+
                     <div class="form-group col-md-4 anima-focus">
-                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." placeholder=""
-                            name="horas_proyecto" maxlength="250" id="horas_asignadas" class="form-control">
-                        {!! Form::label('horas_proyecto', 'Horas Asignadas al proyecto', ['class' => 'asterisco']) !!}
+                        <label for="horas_proyecto" class="asterisco">Horas Asignadas al proyecto</label>
+                        <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros." name="horas_proyecto" maxlength="250" id="horas_proyecto" class="form-control">
                         @if ($errors->has('horas_proyecto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('horas_proyecto') }}
@@ -149,9 +138,17 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-12 text-right">
-                        <button id="submit-btn" class="btn btn-primary" type="button">Crear Proyecto</button>
+                        <button id="submit-btn" class="btn btn-primary" type="button" onclick="mostrarCargando()">
+                            Crear Proyecto
+                        </button>
+
+                        <!-- Indicador de carga (oculto por defecto) -->
+                        <div id="loading-spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <span class="sr-only">Cargando...</span>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -160,6 +157,20 @@
 @endsection
 
 @section('scripts')
+    <script>
+         function mostrarCargando() {
+        // Desactivar el botón y mostrar el spinner
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('loading-indicator').style.display = 'inline-block';
+
+        // Simula una petición, puedes quitar esto si tienes una petición real
+        setTimeout(function() {
+            // Rehabilitar el botón y ocultar el spinner (cuando termina la carga)
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('loading-indicator').style.display = 'none';
+        }, 3000); // Cambia 3000 por la duración de tu carga (3 segundos en este ejemplo)
+    }
+    </script>
     <script>
         $(document).ready(function() {
             // Select2 Multiple

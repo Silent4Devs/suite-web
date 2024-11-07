@@ -1,6 +1,7 @@
-FROM dunglas/frankenphp:latest-builder-php8.2-alpine
+# Usa la imagen oficial de PHP
+FROM php:8.2-fpm-alpine
 
-# Add docker-php-extension-installer script
+# Añadir script de instalador de extensiones PHP
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # Install dependencies
@@ -17,6 +18,7 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
+    #mysql-client \
     nodejs \
     npm \
     oniguruma-dev \
@@ -36,11 +38,14 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
     redis-stable \
+    #imagick-stable \
+    #xdebug-stable \
     bcmath \
     calendar \
     exif \
     gd \
     intl \
+    #pdo_mysql \
     pdo_pgsql \
     pcntl \
     soap \
@@ -55,24 +60,29 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp \
     ftp
 
-COPY composer.json ./
-COPY composer.lock ./
-#RUN composer update
-RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
-#RUN composer dump-autoload
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /app
+# Crear directorios de caché y establecer permisos
+RUN mkdir -p storage/framework/cache bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 
-# Copy application files
-COPY . /app
 
-# Ensure permissions are correct
-RUN chown -R www-data:www-data /app \
-    && chmod 755 -R /app
+# Copiar el proyecto al contenedor
+COPY . /var/www
 
-EXPOSE 80 443 8000
+# Establecer el directorio de trabajo
+WORKDIR /var/www
 
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+
+# Instalar dependencias de Laravel y Laravel Octane
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs || true && \
+    composer require laravel/octane --ignore-platform-reqs || true && \
+    composer require spiral/roadrunner --ignore-platform-reqs || true
+
+# Exponer el puerto que usará Octane
+EXPOSE 9000
+
+# Comando para ejecutar Octane con RoadRunner
+CMD ["php", "artisan", "octane:start", "--host=0.0.0.0", "--server=roadrunner"]

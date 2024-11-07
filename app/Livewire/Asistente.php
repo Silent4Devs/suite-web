@@ -4,53 +4,79 @@ namespace App\Livewire;
 
 use App\Services\AsistentService;
 use Livewire\Component;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class Asistente extends Component
 {
     public $search = '';
-    public $respuesta;
-    public $lineas;
-    public $filename;
-    public $filePath;
-    public $chatboxOpen = false;
-    
-    // Nuevo array para almacenar las preguntas
-    public $preguntas = [];
-    
-    public $respuestas = []; // Asegúrate de tener esta propiedad para las respuestas
 
-    // Nueva propiedad para controlar la visibilidad del mensaje de bienvenida
+    public $respuesta;
+
+    public $lineas;
+
+    public $filename;
+
+    public $filePath;
+
+    public $chatboxOpen = false;
+
+    public $preguntas = [];
+
+    public $respuestas = [];
+
     public $firstMessageVisible = true;
 
+    public function mount()
+    {
+        $this->loadChatData();
+    }
+
+    public function loadChatData()
+    {
+        $storedQuestions = json_decode(session('stored_questions', '[]'), true);
+        $storedAnswers = json_decode(session('stored_answers', '[]'), true);
+
+        $this->preguntas = $storedQuestions;
+        $this->respuestas = $storedAnswers;
+
+        if (count($this->preguntas) > 0) {
+            $this->firstMessageVisible = false;
+        }
+    }
 
     public function toggleChatbox()
     {
         $this->chatboxOpen = ! $this->chatboxOpen;
         $this->search = '';
         $this->respuesta = '';
-        $this->firstMessageVisible = true; // Reiniciar la visibilidad al abrir el chat
+        $this->firstMessageVisible = true;
     }
 
     public function askAsisten()
     {
         $asistenService = app(AsistentService::class);
-        
-        // Guardar la pregunta en el array
+
         $this->preguntas[] = $this->search;
 
         $response = $asistenService->postQuestionToPythonAPI($this->search);
-        
-        // Verificar si la respuesta es un array y acceder a la cadena
+
         if (is_array($response) && isset($response['response'])) {
-            $this->respuestas[] = $response['response']; // Añadir la respuesta al array
+            $tr = new GoogleTranslate('es');
+            $respuestaEnEspanol = $tr->translate($response['response']);
+            $this->respuestas[] = $respuestaEnEspanol;
         } else {
             $this->respuestas[] = 'Error: respuesta no válida';
         }
 
-        // Cambiar la visibilidad del mensaje de bienvenida
         $this->firstMessageVisible = false;
+        $this->updatedPreguntas();
+        $this->search = '';
+    }
 
-        $this->search = ''; // Limpiar el input de búsqueda
+    public function updatedPreguntas()
+    {
+        session(['stored_questions' => json_encode($this->preguntas)]);
+        session(['stored_answers' => json_encode($this->respuestas)]);
     }
 
     public function render()
@@ -58,4 +84,3 @@ class Asistente extends Component
         return view('livewire.asistente');
     }
 }
-

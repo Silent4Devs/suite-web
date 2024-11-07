@@ -90,27 +90,30 @@
                 @csrf
                 <div class="form-group anima-focus">
                     <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}"
-                        name="nombre_politica" placeholder=" " id="nombre_politica" value="{{ old('nombre_politica') }}"
-                        required>
-                    {!! Form::label('nombre_politica', 'Nombre de la política*', ['class' => 'asterisco']) !!}
+                           name="nombre_politica" placeholder=" " id="nombre_politica"
+                           value="{{ old('nombre_politica') }}" required>
+                    <label for="nombre_politica" class="asterisco">Nombre de la política*</label>
                 </div>
-                <div class="form-group  anima-focus">
-                    <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi"
-                        id="politicasgsi" placeholder=" " required>{{ old('politicasgsi') }}</textarea>
-                    {!! Form::label('politicasgsi', 'Política del Sistema de Gestión*', ['class' => 'asterisco']) !!}
+
+                <div class="form-group anima-focus">
+                    <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}"
+                              name="politicasgsi" id="politicasgsi" placeholder=" " required>{{ old('politicasgsi') }}</textarea>
+                    <label for="politicasgsi" class="asterisco">Política del Sistema de Gestión*</label>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-md-6 anima-focus">
                         <input class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_publicacion" placeholder=" " id="fecha_publicacion" min="1945-01-01"
-                            required>
-                        {!! Form::label('fecha_publicacion', 'Fecha de publicación*', ['class' => 'asterisco']) !!}
+                               type="date" name="fecha_publicacion" id="fecha_publicacion"
+                               min="1945-01-01" required>
+                        <label for="fecha_publicacion" class="asterisco">Fecha de publicación*</label>
                     </div>
 
                     <div class="form-group col-md-6 anima-focus">
-                        <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_revision" id="fecha_revision" placeholder=" " min="1945-01-01" required>
-                        {!! Form::label('fecha_revision', 'Fecha de revision*', ['class' => 'asterisco']) !!}
+                        <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                               type="date" name="fecha_revision" id="fecha_revision"
+                               min="1945-01-01" required>
+                        <label for="fecha_revision" class="asterisco">Fecha de revisión*</label>
                     </div>
                 </div>
 

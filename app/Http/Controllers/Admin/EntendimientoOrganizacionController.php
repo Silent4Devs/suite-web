@@ -136,7 +136,8 @@ class EntendimientoOrganizacionController extends Controller
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
-        // dd($foda);
+        event(new EntendimientoOrganizacionEvent($foda, 'create', 'entendimiento_organizacions', 'Entendimiento'));
+
         return redirect()->route('admin.foda-organizacions.edit', $foda)->with('success', 'Análisis FODA creado correctamente');
     }
 
@@ -221,6 +222,8 @@ class EntendimientoOrganizacionController extends Controller
         abort_if(Gate::denies('analisis_foda_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entendimientoOrganizacion->delete();
+
+        event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }

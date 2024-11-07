@@ -39,7 +39,7 @@
 
         .img-size {
             /* 	padding: 0;
-                            margin: 0; */
+                                margin: 0; */
             height: 450px;
             width: 700px;
             background-size: cover;
@@ -87,9 +87,9 @@
         /* se comento por que se descuadra la cabecera de la tabla y el registro */
         /* .table tr th:nth-child(6){
 
-                            width:415px !important;
-                            max-width:415px !important;
-                        } */
+                                width:415px !important;
+                                max-width:415px !important;
+                            } */
 
         .table tr td:nth-child(2) {
 
@@ -475,18 +475,18 @@
                                             <ol class='carousel-indicators'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         return `
-                                                                        <li
-                                                                        data-target='#carouselExampleIndicators${row.id}'
-                                                                        data-slide-to='${idx}'></li>`})}
+                                                                            <li
+                                                                            data-target='#carouselExampleIndicators${row.id}'
+                                                                            data-slide-to='${idx}'></li>`})}
                                             </ol>
                                             <div class='carousel-inner'>
                                                     ${archivos?.map((archivo,idx)=>{
                                                         const [extension, ...nameParts] = archivo.documento.split('.').reverse();
                                                         if(extension == 'pdf'){
                                                         return `
-                                                                        <div class='carousel-item ${idx==0?"active":""}'>
-                                                                            <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
-                                                                        </div>`
+                                                                            <div class='carousel-item ${idx==0?"active":""}'>
+                                                                                <embed seamless class='img-size' src='{{ asset('storage/documentos_material_sgsi') }}/${archivo.documento}'></embed>
+                                                                            </div>`
                                                     }else{
                                                         return ` <
                                         div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >

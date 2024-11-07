@@ -16,22 +16,22 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.analisis-impacto.store']) !!}
+            <form action="{{ route('admin.analisis-impacto.store') }}" method="POST">
+                @csrf
 
-            @include('admin.analysisImpact.fields')
+                @include('admin.analysisImpact.fields')
 
-            <!-- Submit Field -->
-            <div class="row">
-                <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analisis-impacto.index') }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
+                <!-- Submit Field -->
+                <div class="row">
+                    <div class="text-right form-group col-12">
+                        <a href="{{ route('admin.analisis-impacto.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">
+                            {{ trans('global.save') }}
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

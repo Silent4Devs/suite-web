@@ -30,7 +30,7 @@ class EvidenciasSgsiController extends Controller
 
         if ($request->ajax()) {
             $query = EvidenciasSgsi::select('id', 'nombredocumento', 'fechadocumento', 'objetivodocumento')->get();
-            
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

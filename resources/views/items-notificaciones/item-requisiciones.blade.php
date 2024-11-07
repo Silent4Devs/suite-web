@@ -16,6 +16,7 @@
                         <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada solicita su firma</p>
                     </div>
                 @break
+
                 @case(' delete')
                     <div class="d-flex align-items-center justify-content-start">
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
@@ -28,9 +29,42 @@
                         &nbsp;&nbsp;
                         <p class="p-0 m-0">
                             La {{ $last_unread_notification->data['slug'] }} con fecha
-                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }} ha
+                            {{ \Carbon\Carbon::parse($last_unread_notification->data['deleted_at'] ?? null)->format('d M Y, h:i A') ?? '' }}
+                            ha
                             sido eliminada
                         </p>
+                    </div>
+                @break
+
+                @case(' cancelarRequisicion')
+                    <div class="d-flex align-items-center justify-content-start">
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}:
+                        @else
+                            <i class="pr-2 fas fa-tasks text-success"></i>
+                        @endif
+                        &nbsp;&nbsp;
+                        La requisicion: {{ $last_unread_notification->data['slug'] }}
+                        ha
+                        sido cancelada
+                    </div>
+                @break
+
+                @case(' cancelarOrdenCompra')
+                    <div class="d-flex align-items-center justify-content-start">
+                        @if (!empty($last_unread_notification->data['avatar_ruta']))
+                            <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                                class="rounded-circle" style="width: 50px; height: 50px;">
+                            {{ $last_unread_notification->data['name'] }}:
+                        @else
+                            <i class="pr-2 fas fa-tasks text-success"></i>
+                        @endif
+                        &nbsp;&nbsp;
+                        La orden de compra correspondiente: {{ $last_unread_notification->data['slug'] }}
+                        ha
+                        sido cancelada
                     </div>
                 @break
 
@@ -51,5 +85,18 @@
                 </span>
             </div>
         @endif
+
+        <!-- Botón de eliminar -->
+        <div style="flex-basis: calc(5% - 2px)">
+            <span class="btn-delete" data-toggle="tooltip" data-placement="top" onclick="reloadPage()"
+                title="Eliminar notificación" wire:click="deleteNotification('{{ $last_unread_notification->id }}')">
+                <i class="fas fa-trash"></i>
+            </span>
+        </div>
     @endif
 </div>
+<script>
+    function reloadPage() {
+        location.reload(); // Recarga la página
+    }
+</script>

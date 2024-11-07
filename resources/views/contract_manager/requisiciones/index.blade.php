@@ -45,6 +45,10 @@
                                         <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('rechazado')
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
@@ -109,25 +113,47 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"
+                                            class="dropdown-item">
+                                            <i class="fa-solid fa-print"></i> Ver/Imprimir
+                                        </a>
 
-                                {{-- @if ($requisicion->estado === 'rechazado')
-                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                @endif --}}
+                                        <a onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"
+                                            class="dropdown-item">
+                                            <i class="fa-solid fa-box-archive"></i> Archivar
+                                        </a>
 
-                                <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
-                                        class="fa-solid fa-print"></i></a>
+                                        <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"
+                                            class="dropdown-item text-danger">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
 
+                                        @if ($requisicion->estado == 'cancelada' || $requisicion->estado == 'rechazado')
+                                            <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </a>
+                                        @endif
 
-                                <a
-                                    onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i
-                                        class="fa-solid fa-box-archive"></i></a>
-
-                                <a
-                                    onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i
-                                        class="fas fa-trash text-danger"></i></a>
-
-
+                                        @if ($requisicion->estado == 'curso')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 1, {{ $requisicion->id }})"
+                                                class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})"
+                                                class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -200,6 +226,53 @@
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
                     window.location.href = url;
+                }
+            });
+        }
+
+        function mostrarAlerta3(url, tipo, id) {
+            let titleText = tipo == 1 ?
+                '¿Está seguro de cancelar la requisición RQ-' + id + '?' :
+                '¿Está seguro de cancelar la requisición RQ-' + id +
+                '? Al realizar esta acción también se cancelará la orden de compra.';
+
+            Swal.fire({
+                title: titleText,
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la solicitud AJAX usando fetch
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Cancelado!', 'La Requisición ha sido cancelada.', 'success').then(
+                                    () => {
+                                        window.location.reload(); // Refresca la página
+                                    });
+                            } else {
+                                Swal.fire('Error', 'No se pudo cancelar la requisición. Inténtelo de nuevo.',
+                                    'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'Hubo un problema al procesar la solicitud.', 'error');
+                            console.error('Error:', error);
+                        });
                 }
             });
         }

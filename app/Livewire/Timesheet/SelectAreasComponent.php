@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Timesheet;
 
 use App\Models\Area;
 use Livewire\Component;

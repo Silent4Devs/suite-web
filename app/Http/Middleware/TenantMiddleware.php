@@ -32,6 +32,7 @@ class TenantMiddleware
         })->firstOrfail();
 
         $this->tenantManager->setTenant($tenant);
+        tenancy()->initialize($tenant);
 
         return $next($request);
     }

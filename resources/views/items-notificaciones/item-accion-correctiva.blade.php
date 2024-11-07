@@ -70,5 +70,18 @@
                 </span>
             </div>
         @endif
+        <!-- Botón de eliminar -->
+        <div style="flex-basis: calc(5% - 2px)">
+            <span class="btn-delete" data-toggle="tooltip" data-placement="top" onclick="reloadPage()" title="Eliminar notificación"
+                wire:click="deleteNotification('{{ $last_unread_notification->id }}')">
+                <i class="fas fa-trash"></i>
+            </span>
+        </div>
     @endif
 </div>
+
+<script>
+    function reloadPage() {
+        location.reload(); // Recarga la página
+    }
+</script>

@@ -97,28 +97,35 @@
                 action="{{ route('admin.comiteseguridads.update', [$comiteseguridad->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <div class="form-group col-sm-12 col-md-12 col-lg-12  anima-focus">
-                    <input class="form-control  {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}" maxlength="255"
-                        type="text" name="nombre_comite" id="nombre_comite"
-                        value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}" placeholder=" " required>
-                    {!! Form::label('nombre_comite', 'Nombre del Comité*', ['class' => 'asterisco']) !!}
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 anima-focus">
+                    <input class="form-control {{ $errors->has('nombre_comite') ? 'is-invalid' : '' }}"
+                           maxlength="255"
+                           type="text"
+                           name="nombre_comite"
+                           id="nombre_comite"
+                           value="{{ old('nombre_comite', $comiteseguridad->nombre_comite) }}"
+                           placeholder=" "
+                           required>
+                    <label for="nombre_comite" class="asterisco">Nombre del Comité*</label>
                     @if ($errors->has('nombre_comite'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre_comite') }}
                         </div>
                     @endif
-
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 anima-focus">
-                    <textarea required class="form-control" id="descripcion" name="descripcion" placeholder=" " rows="4">{{ old('descripcion', $comiteseguridad->descripcion) }}</textarea>
-                    {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+                    <textarea required class="form-control"
+                              id="descripcion"
+                              name="descripcion"
+                              placeholder=" "
+                              rows="4">{{ old('descripcion', $comiteseguridad->descripcion) }}</textarea>
+                    <label for="descripcion" class="asterisco">Descripción*</label>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
                         </div>
                     @endif
-
                 </div>
 
                 <div class="text-right form-group col-12" id="miDiv" style="display: none;">

@@ -234,7 +234,7 @@ class RequisicionesCreateComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -455,7 +455,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key.'_'.uniqid().'.'.$provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],
@@ -483,12 +483,14 @@ class RequisicionesCreateComponent extends Component
                 ]);
             }
 
+            KatbolRequsicion::desactivarHistorial();
             foreach ($this->provedores_colllection as $keyProvCol => $provCol) {
                 $this->requisicionCreada->update([
                     'proveedor_catalogo' => $provCol->nombre,
                     // 'proveedoroc_id' => $this->provCol->id,
                 ]);
             }
+            KatbolRequsicion::activarHistorial();
 
             $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicionCreada->id)->pluck('proveedor_id')->toArray();
 
@@ -594,7 +596,7 @@ class RequisicionesCreateComponent extends Component
 
             $jefe = $this->user->empleado->supervisor;
             //Buscamos al supervisor por su id
-            $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+            $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
             //Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;

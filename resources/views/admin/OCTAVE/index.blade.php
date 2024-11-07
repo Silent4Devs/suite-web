@@ -40,8 +40,8 @@
                             href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
-                  
-                    
+
+
 
                     {{-- <a class="pr-3 ml-2 rounded btn btn-primary" style=" margin: 13px 12px 12px 10px;"
                         href="{{ route('admin.matriz-riesgos.octave') }}?id_analisis={{ $id_matriz }}" type="submit"

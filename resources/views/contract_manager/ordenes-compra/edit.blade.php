@@ -366,7 +366,7 @@
                                             <option value="{{ $contrato->id }}"
                                                 data-no="{{ $contrato->no_contrato }}"
                                                 data-servicio="{{ $contrato->nombre_servicio }}"
-                                                {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
+                                                {{ $requisicion->contrato_id == $contrato->id ? 'selected' : '' }}>
                                                 {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
                                                 {{ $contrato->nombre_servicio }}
                                             </option>
@@ -557,7 +557,7 @@
         </div>
         <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
             <a href="{{ route('contract_manager.orden-compra') }}" class="btn btn-outline-primary">Regresar</a>
-            <button class="btn tb-btn-primary" onclick="mensaje()">Guardar</button>
+            <button class="btn tb-btn-primary">Guardar</button>
         </div>
     </form>
 </div>
@@ -576,6 +576,31 @@
 </script>
 @section('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form'); // Selecciona el formulario
+        const requiredInputs = form.querySelectorAll(
+            'input[required], select[required]'); // Selecciona todos los inputs y selects requeridos
+
+        form.addEventListener('submit', function(event) {
+            let valid = true;
+
+            requiredInputs.forEach(input => {
+                if (!input.value) {
+                    input.style.borderColor = 'red'; // Cambia el borde a rojo si está vacío
+                    input.style.backgroundColor = '#ffe6e6'; // Fondo rojo claro
+                    valid = false;
+                } else {
+                    input.style.borderColor = ''; // Resetea el estilo si es válido
+                    input.style.backgroundColor = '';
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault(); // Evita que el formulario se envíe si hay campos vacíos
+            }
+        });
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
         $('select').select2('destroy');
 

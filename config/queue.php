@@ -29,7 +29,7 @@ return [
     */
  
     'connections' => [
- 
+
         'sync' => [
             'driver' => 'sync',
         ],
@@ -66,9 +66,9 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
- 
+
         'rabbitmq' => [
- 
+
             'driver' => 'rabbitmq',
             'hosts' => [
                 [
@@ -80,7 +80,7 @@ return [
                 ],
                 // ...
             ],
- 
+
             // ...
         ],
  

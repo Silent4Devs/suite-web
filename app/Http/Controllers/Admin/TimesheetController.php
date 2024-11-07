@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use PDF;
 use Throwable;
+use VXM\Async\AsyncFacade as Async;
 
 class TimesheetController extends Controller
 {
@@ -59,7 +60,7 @@ class TimesheetController extends Controller
     public function index($estatus = 'todos')
     {
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cacheKey = 'timesheet-' . User::getCurrentUser()->empleado->id;
+        $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
         // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
         // dd($times);
@@ -91,7 +92,7 @@ class TimesheetController extends Controller
     private function forgetCache()
     {
         //Borrar cache de Timesheet
-        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
         Cache::forget('Timesheet:timesheet_estatus');
@@ -107,13 +108,12 @@ class TimesheetController extends Controller
     {
         $times = Timesheet::getPersonalTimesheet();
 
-        $todos_contador = $times->count();
-        $borrador_contador = $times->where('estatus', 'papelera')->count();
-        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
-        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
-        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
-
-        $times = $times->sortByDesc('created_at');
+        $todos_contador = Async::run(fn() => $times->count());
+        $borrador_contador = Async::run(fn() => $times->where('estatus', 'papelera')->count());
+        $pendientes_contador = Async::run(fn() => $times->where('estatus', 'pendiente')->count());
+        $aprobados_contador = Async::run(fn() => $times->where('estatus', 'aprobado')->count());
+        $rechazos_contador = Async::run(fn() => $times->where('estatus', 'rechazado')->count());
+        $sorted_times = Async::run(fn() => $times->sortByDesc('created_at'));
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -129,18 +129,25 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion = Organizacion::getFirst();
+        $results = Async::run([
+            fn() => Organizacion::getFirst(),
+            fn() => Timesheet::count(),
+            fn() => Timesheet::orderBy('fecha_dia')->first(),
+            fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
+            fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+                        ->where('estatus', 'pendiente')
+                        ->count(),
+        ]);
 
-        if (Timesheet::count() > 0) {
-            $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
-            $time_exist = true;
+        // Unpack the results from the async calls
+        [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador] = $results;
+
+        $time_exist = $timesheetCount > 0 ? true : false;
+        if ($time_exist) {
+            $time_viejo = $time_viejo->fecha_dia;
         } else {
             $time_viejo = null;
-            $time_exist = false;
         }
-
-        $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
-        $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)->where('estatus', 'pendiente')->count();
 
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
@@ -374,7 +381,7 @@ class TimesheetController extends Controller
 
                         try {
                             // Enviar correo
-                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                            Mail::to(trim(removeUnicodeCharacters($aprobador->email)))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
                         } catch (Throwable $e) {
                             report($e);
 
@@ -619,7 +626,7 @@ class TimesheetController extends Controller
                         'timesheet_id' => $timesheet_edit->id,
                         'proyecto_id' => array_key_exists('proyecto', $hora) ? $hora['proyecto'] : null,
                         'tarea_id' => array_key_exists('tarea', $hora) ? $hora['tarea'] : null,
-                        'facturable' => $hora['facturable'],
+                        'facturable' => array_key_exists('facturable', $hora) ? true : false,
                         'horas_lunes' => $hora['lunes'],
                         'horas_martes' => $hora['martes'],
                         'horas_miercoles' => $hora['miercoles'],
@@ -641,7 +648,7 @@ class TimesheetController extends Controller
 
             try {
                 // Enviar correo
-                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->queue(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -857,11 +864,11 @@ class TimesheetController extends Controller
             ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
             ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_' . $id)->where('timesheet_proyectos.id', $id)
+        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
             ->get('sedes.sede');
 
-        $clientes = TimesheetProyecto::getAll('clientes_' . $id)->where('timesheet_proyectos.id', $id)
+        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
             ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
             ->get('timesheet_clientes.nombre');
 
@@ -942,7 +949,7 @@ class TimesheetController extends Controller
 
     public function tareasProyecto($proyecto_id)
     {
-        $proyecto = TimesheetProyecto::getAll('tareas_' . $proyecto_id)->find($proyecto_id);
+        $proyecto = TimesheetProyecto::getAll('tareas_'.$proyecto_id)->find($proyecto_id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -955,12 +962,6 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', User::getCurrentUser()->empleado->id)->get();
-
-        // try {
-        //     event(new TimesheetEvent($papelera, 'papelera', 'timesheet', 'Timesheet Papelera'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1007,12 +1008,6 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        // try {
-        //     event(new TimesheetEvent($aprobaciones, 'aprobaciones', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
-
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
     }
 
@@ -1034,12 +1029,6 @@ class TimesheetController extends Controller
                 ->where('aprobador_id', $usuario->empleado->id)
                 ->get();
         }
-
-        // try {
-        //     event(new TimesheetEvent($aprobados, 'aprobados', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1067,12 +1056,6 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        // try {
-        //     event(new TimesheetEvent($rechazos, 'rechazos', 'timesheet', 'Timesheet Rechazado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -1085,11 +1068,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::where('id', $id)->first();
 
-        // try {
-        //     event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
 
         $aprobar->update([
             'estatus' => 'aprobado',
@@ -1102,7 +1081,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             // report($e);
 
@@ -1117,11 +1096,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rechazar = Timesheet::where('id', $id)->first();
 
-        // try {
-        //     event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
 
         $rechazar->update([
             'estatus' => 'rechazado',
@@ -1133,7 +1108,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             // report($e);
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
@@ -1224,7 +1199,7 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_clientes_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo Permiso
         $request->validate(
             [
-                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador,' . $id . '',
+                'identificador' => 'required|max:255|unique:timesheet_clientes,identificador,'.$id.'',
                 'razon_social' => 'required|string|max:255',
                 'nombre' => 'required|string|max:255',
                 'rfc' => 'max:15',
@@ -1389,7 +1364,7 @@ class TimesheetController extends Controller
     public function proyectosEmpleados($id)
     {
         abort_if(Gate::denies('asignar_empleados'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('empleado_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('empleado_'.$id)->find($id);
 
         if (! $proyecto) {
             abort(404);
@@ -1405,7 +1380,7 @@ class TimesheetController extends Controller
     public function proyectosExternos($id)
     {
         abort_if(Gate::denies('asignar_externos'), Response::HTTP_FORBIDDEN, '403 Forbidden'); //Nuevo permiso
-        $proyecto = TimesheetProyecto::getAll('externos_' . $id)->find($id);
+        $proyecto = TimesheetProyecto::getAll('externos_'.$id)->find($id);
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -1519,7 +1494,7 @@ class TimesheetController extends Controller
                     try {
                         // Enviar correo
                         Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
-                            ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                            ->queue(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
 

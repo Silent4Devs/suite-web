@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\DeterminacionAlcance;
 
 use App\Models\Empleado;
 use App\Models\Timesheet;

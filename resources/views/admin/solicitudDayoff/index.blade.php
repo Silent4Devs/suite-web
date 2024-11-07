@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('Solicitud-Dayoff') }}
+        {{-- {{ Breadcrumbs::render('Solicitud-Dayoff') }} --}}
     </div>
 
     <style>
@@ -211,29 +211,7 @@
                     window.location.href = url;
                 }
             };
-            // let btnExport = {
-            //     text: '<i  class="fas fa-download"></i>',
-            //     titleAttr: 'Descargar plantilla',
-            //     className: "btn btn_cargar",
-            //     url: "{{ route('descarga-amenaza') }}",
-            //     action: function(e, dt, node, config) {
-            //         let {
-            //             url
-            //         } = config;
-            //         window.location.href = url;
-            //     }
-            // };
-            // let btnImport = {
-            //     text: '<i  class="fas fa-file-upload"></i>',
-            //     titleAttr: 'Importar datos',
-            //     className: "btn btn_cargar",
-            //     action: function(e, dt, node, config) {
-            //         $('#csvImportModal').modal('show');
-            //     }
-            // };
 
-            // dtButtons.push(btnExport);
-            // dtButtons.push(btnImport);
 
             @can('solicitud_dayoff_crear')
                 dtButtons.push(btnAgregar);
@@ -246,118 +224,14 @@
                 serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                // ajax: "{{ route('admin.solicitud-dayoff.index') }}",
-                // columns: [{
-                //         data: 'dias_solicitados',
-                //         name: 'dias_solicitados',
-                //         render: function(data, type, row) {
-                //             return `<div style="text-align:center">${data}</div>`;
-                //         }
 
-                //     },
-                //     // {
-                //     //     data: 'año',
-                //     //     name: 'año',
-                //     //     render: function(data, type, row) {
-                //     //         return `<div style="text-align:center">${data} año</div>`;
-                //     //     }
-
-                //     // },
-                //     {
-                //         data: 'fecha_inicio',
-                //         name: 'fecha_inicio',
-                //         render: function(data, type, row) {
-                //             let fecha = data.split('-');
-                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                //             return `<div style="text-align:left">${fechaDMY}</div>`;
-                //             return `<div style="text-align:left">${data}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'fecha_fin',
-                //         name: 'fecha_fin',
-                //         render: function(data, type, row) {
-                //             let fecha = data.split('-');
-                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                //             return `<div style="text-align:left">${fechaDMY}</div>`;
-                //             return `<div style="text-align:left">${data}</div>`;
-                //         }
-                //     },
-                //     {
-                //         data: 'aprobacion',
-                //         name: 'aprobacion',
-                //         render: function(data, type, row) {
-                //             const aprobacion = row.aprobacion;
-
-                //             switch (Number(aprobacion)) {
-                //                 case 1:
-                //                     return `
-            //                     <div  style="text-align:left">
-            //                         <span class="badge badge-pill badge-warning">Pendiente</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 case 2:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                         <span class="badge badge-pill badge-danger">Rechazado</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 case 3:
-                //                     return `
-            //                     <div style="text-align:left">
-            //                         <span class="badge badge-pill badge-success">Aprobado</span>
-            //                     </div>
-            //                     `;
-                //                     break;
-                //                 default:
-                //                     return `
-            //                     <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-            //                     `;
-                //             }
-                //         }
-                //     },
-
-                //     // {
-                //     //     data: 'descripcion',
-                //     //     name: 'descripcion',
-                //     //     render: function(data, type, row) {
-                //     //         return `<div style="text-align:left">${data}</div>`;
-                //     //     }
-                //     // },
-                //     {
-                //         data: 'actions',
-                //         render: function(data, type, row, meta) {
-                //             let aprobacion = row.aprobacion;
-                //             let id = row.id;
-                //             console.log(id);
-                //             if (aprobacion == 3) {
-                //                 return `
-            //                 <div style="text-aling:center">
-            //                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-            //                 </div>
-            //                `;
-
-                //             } else {
-                //                 let urlEliminar = '{{ route('admin.solicitud-dayoff.destroy') }}'
-                //                 return `
-            //                 <div style="text-aling:center">
-            //                 <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-            //                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
-            //                 </div>
-            //                `;
-                //             }
-
-                //         }
-                //     }
-                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
             };
             let table = $('#datatable-solicitud-dayoff').DataTable(dtOverrideGlobals);
+
             $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                 <h5>

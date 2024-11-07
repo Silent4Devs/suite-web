@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaPermisoGoceSueldo as MailRespuestaPermisoGoceSueldo;
@@ -115,13 +115,13 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
             if (isset($informados->participantes[0])) {
                 foreach ($informados->participantes as $participante) {
-                    $correos[] = $participante->empleado->email;
+                    $correos[] = removeUnicodeCharacters($participante->empleado->email);
                 }
             }
 
             if (isset($informados->usuarios[0])) {
                 foreach ($informados->usuarios as $usuario) {
-                    $correos[] = $usuario->usuario->email;
+                    $correos[] = removeUnicodeCharacters($usuario->usuario->email);
                 }
             }
             Mail::to(removeUnicodeCharacters($supervisor->email))->queue(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));
@@ -185,13 +185,13 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
                 if (isset($informados->participantes[0])) {
                     foreach ($informados->participantes as $participante) {
-                        $correos[] = $participante->empleado->email;
+                        $correos[] = removeUnicodeCharacters($participante->empleado->email);
                     }
                 }
 
                 if (isset($informados->usuarios[0])) {
                     foreach ($informados->usuarios as $usuario) {
-                        $correos[] = $usuario->usuario->email;
+                        $correos[] = removeUnicodeCharacters($usuario->usuario->email);
                     }
                 }
                 Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud, $correos));

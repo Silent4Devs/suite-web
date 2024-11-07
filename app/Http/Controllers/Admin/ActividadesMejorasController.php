@@ -15,7 +15,7 @@ class ActividadesMejorasController extends Controller
     public function index(Request $request, $mejora_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadMejora::with('responsables')->where('mejora_id', $mejora_id)->get();
+            $actividades = ActividadMejora::with('responsables:id,name,foto,email')->where('mejora_id', $mejora_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }

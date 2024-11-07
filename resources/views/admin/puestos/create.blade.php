@@ -1237,14 +1237,13 @@
         });
     </script>
 
-
-    <script>
+    {{-- Causa mal funcionamiento --}}
+    {{-- <script>
         $(document).ready(function() {
             const puesto = @json($puesto);
             const contactos = @json($contactos);
             console.log(contactos);
             let fila = 0;
-
 
             function agregarFilaContactos(contable, contact) {
                 console.log(contact)
@@ -1335,7 +1334,7 @@
             });
 
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {
