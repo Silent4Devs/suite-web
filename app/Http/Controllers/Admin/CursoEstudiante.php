@@ -71,7 +71,6 @@ class CursoEstudiante extends Controller
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-        // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
 
