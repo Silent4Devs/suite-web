@@ -34,11 +34,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //https now working by nginx
-        // if (env('APP_ENV') === 'production') {
-        //     $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
+        if (env('APP_ENV') === 'production') {
+            $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
 
-        //     URL::forceScheme('https');
-        // }
+            URL::forceScheme('https');
+        }
 
         // Carbon::setLocale(config('app.locale'));
         Paginator::useBootstrap();
