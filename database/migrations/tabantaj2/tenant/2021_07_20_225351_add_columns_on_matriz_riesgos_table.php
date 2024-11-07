@@ -16,15 +16,15 @@ class AddColumnsOnMatrizRiesgosTable extends Migration
         Schema::table('matriz_riesgos', function (Blueprint $table) {
             $table->dropColumn('proceso');
             $table->dropColumn('responsableproceso');
-            $table->unsignedInteger('id_analisis')->nullable();
+            $table->integer('id_analisis')->nullable();
             $table->foreign('id_analisis')->references('id')->on('analisis_de_riesgo');
-            $table->unsignedInteger('id_sede')->nullable();
+            $table->integer('id_sede')->nullable();
             $table->foreign('id_sede')->references('id')->on('sedes');
-            $table->unsignedInteger('id_proceso')->nullable();
+            $table->integer('id_proceso')->nullable();
             $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->integer('id_responsable')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados');
-            $table->unsignedInteger('activo_id')->nullable();
+            $table->integer('activo_id')->nullable();
             $table->foreign('activo_id')->references('id')->on('activos');
         });
     }

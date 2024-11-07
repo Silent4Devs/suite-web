@@ -15,7 +15,7 @@ class CreateDocumentoConcientizacionSgisTable extends Migration
     {
         Schema::create('documento_concientizacion_sgis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('concientSgsi_id')->nullable();
+            $table->integer('concientSgsi_id')->nullable();
             $table->string('documento')->nullable();
 
             $table->timestamps();

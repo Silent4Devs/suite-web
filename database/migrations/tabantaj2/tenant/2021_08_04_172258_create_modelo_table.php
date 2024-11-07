@@ -15,7 +15,7 @@ class CreateModeloTable extends Migration
     {
         Schema::create('modelo', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('marca_id')->nullable();
+            $table->integer('marca_id')->nullable();
             $table->string('nombre')->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();

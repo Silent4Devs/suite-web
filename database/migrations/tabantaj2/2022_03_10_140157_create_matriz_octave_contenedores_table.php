@@ -20,7 +20,7 @@ class CreateMatrizOctaveContenedoresTable extends Migration
             $table->integer('riesgo')->nullable();
             $table->string('vinculado_ai')->nullable();
             $table->string('descripcion')->nullable();
-            $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
+            $table->integer('id_matriz_octave_escenarios')->nullable();
             $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
             $table->timestamps();
         });

@@ -9,7 +9,7 @@ class AddRelationshipFieldsToRecursosTable extends Migration
     public function up()
     {
         Schema::table('recursos', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484752')->references('id')->on('teams');
         });
     }

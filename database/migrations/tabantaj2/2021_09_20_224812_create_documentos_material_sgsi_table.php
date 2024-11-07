@@ -15,7 +15,7 @@ class CreateDocumentosMaterialSgsiTable extends Migration
     {
         Schema::create('documentos_material_sgsi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('material_id')->nullable();
+            $table->integer('material_id')->nullable();
             $table->string('documento')->nullable();
 
             $table->timestamps();

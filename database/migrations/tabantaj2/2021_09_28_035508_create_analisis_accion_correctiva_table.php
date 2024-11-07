@@ -15,7 +15,7 @@ class CreateAnalisisAccionCorrectivaTable extends Migration
     {
         Schema::create('analisis_accion_correctiva', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('accion_correctiva_id')->nullable();
+            $table->integer('accion_correctiva_id')->nullable();
             $table->string('metodo')->nullable();
             $table->longText('ideas')->nullable();
             $table->longText('causa_ideas')->nullable();

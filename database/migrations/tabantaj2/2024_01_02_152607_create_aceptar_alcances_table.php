@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('aceptar_alcances', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('id_alcance');
+            $table->integer('id_alcance');
 
             $table->boolean('acepto')->default(true);
 
-            $table->unsignedInteger('id_empleado');
+            $table->integer('id_empleado');
 
             $table->foreign('id_empleado')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
 

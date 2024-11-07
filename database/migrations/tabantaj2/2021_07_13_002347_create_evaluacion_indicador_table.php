@@ -19,7 +19,7 @@ class CreateEvaluacionIndicadorTable extends Migration
             $table->string('evaluacion')->nullable();
             $table->date('fecha')->nullable();
             $table->integer('resultado')->nullable();
-            $table->unsignedInteger('id_indicador')->nullable();
+            $table->integer('id_indicador')->nullable();
             $table->foreign('id_indicador')->references('id')->on('indicadores_sgsis');
             $table->timestamps();
             $table->softDeletes();

@@ -16,18 +16,18 @@ class CreateMatrizOctaveTable extends Migration
         Schema::create('matriz_octave', function (Blueprint $table) {
             $table->increments('id');
             $table->string('vp')->nullable();
-            $table->unsignedInteger('id_area')->nullable();
-            $table->unsignedInteger('id_sede')->nullable();
+            $table->integer('id_area')->nullable();
+            $table->integer('id_sede')->nullable();
             $table->string('servicio')->nullable();
-            $table->unsignedInteger('id_proceso')->nullable();
-            $table->unsignedInteger('activo_id')->nullable();
+            $table->integer('id_proceso')->nullable();
+            $table->integer('activo_id')->nullable();
             $table->integer('operacional')->nullable();
             $table->integer('cumplimiento')->nullable();
             $table->integer('legal')->nullable();
             $table->integer('reputacional')->nullable();
             $table->integer('tecnologico')->nullable();
             $table->integer('valor')->nullable();
-            $table->unsignedInteger('id_analisis')->nullable();
+            $table->integer('id_analisis')->nullable();
             $table->foreign('id_analisis')->references('id')->on('analisis_de_riesgo');
             $table->foreign('id_area')->references('id')->on('areas');
             $table->foreign('id_sede')->references('id')->on('sedes');

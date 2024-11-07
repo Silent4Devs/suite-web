@@ -9,7 +9,7 @@ class AddRelationshipFieldsToRevisionDireccionsTable extends Migration
     public function up()
     {
         Schema::table('revision_direccions', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484767')->references('id')->on('teams');
         });
     }

@@ -16,7 +16,7 @@ class CreateHistoralRevisionMinutasTable extends Migration
     {
         Schema::create('historal_revision_minutas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('minuta_id');
+            $table->integer('minuta_id');
             $table->longText('descripcion');
             $table->longText('comentarios');
             $table->dateTime('fecha')->nullable();

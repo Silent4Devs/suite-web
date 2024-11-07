@@ -18,7 +18,7 @@ class CreateSchedulesTable extends Migration
             $table->string('working_day')->nullable();
             $table->string('start_work_time')->nullable();
             $table->string('end_work_time')->nullable();
-            $table->unsignedInteger('organizacions_id')->after('id')->nullable();
+            $table->integer('organizacions_id')->after('id')->nullable();
             $table->foreign('organizacions_id')->references('id')->on('organizacions')->onDelete('SET NULL')->onUpdate('cascade');
             $table->timestamps();
         });

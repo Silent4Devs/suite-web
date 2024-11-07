@@ -19,7 +19,7 @@ class CreateEvaluacionObjetivoTable extends Migration
             $table->string('evaluacion')->nullable();
             $table->date('fecha')->nullable();
             $table->integer('resultado')->nullable();
-            $table->unsignedInteger('id_objetivo')->nullable();
+            $table->integer('id_objetivo')->nullable();
             $table->foreign('id_objetivo')->references('id')->on('objetivosseguridads');
             $table->timestamps();
             $table->softDeletes();

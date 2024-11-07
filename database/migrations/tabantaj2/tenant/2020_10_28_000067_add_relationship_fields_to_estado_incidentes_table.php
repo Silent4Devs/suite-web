@@ -9,7 +9,7 @@ class AddRelationshipFieldsToEstadoIncidentesTable extends Migration
     public function up()
     {
         Schema::table('estado_incidentes', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484382')->references('id')->on('teams');
         });
     }

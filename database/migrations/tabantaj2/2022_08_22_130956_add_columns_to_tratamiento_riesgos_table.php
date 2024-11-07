@@ -19,7 +19,7 @@ class AddColumnsToTratamientoRiesgosTable extends Migration
             $table->string('tipo_riesgo')->nullable();
             $table->float('riesgototal', 5, 2)->nullable();
             $table->string('riesgo_total_residual')->nullable();
-            $table->unsignedInteger('id_proceso')->nullable();
+            $table->integer('id_proceso')->nullable();
             $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->string('inversion_requerida')->nullable();
         });

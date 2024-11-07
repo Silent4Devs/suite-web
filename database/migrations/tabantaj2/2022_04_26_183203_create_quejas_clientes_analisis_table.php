@@ -15,7 +15,7 @@ class CreateQuejasClientesAnalisisTable extends Migration
     {
         Schema::create('quejas_clientes_analisis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('quejas_clientes_id')->nullable();
+            $table->integer('quejas_clientes_id')->nullable();
             $table->string('metodo')->nullable();
             $table->longText('ideas')->nullable();
             $table->longText('causa_ideas')->nullable();

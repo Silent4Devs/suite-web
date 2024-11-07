@@ -15,8 +15,8 @@ class AddColumnsToAreasTable extends Migration
     {
         Schema::table('areas', function (Blueprint $table) {
             $table->string('descripcion', 100)->after('area')->nullable();
-            $table->unsignedInteger('id_grupo')->after('area')->nullable();
-            $table->unsignedInteger('id_reporta')->after('id_grupo')->nullable();
+            $table->integer('id_grupo')->after('area')->nullable();
+            $table->integer('id_reporta')->after('id_grupo')->nullable();
         });
     }
 

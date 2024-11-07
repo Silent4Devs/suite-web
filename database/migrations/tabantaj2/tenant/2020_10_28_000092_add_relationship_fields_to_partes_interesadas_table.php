@@ -9,7 +9,7 @@ class AddRelationshipFieldsToPartesInteresadasTable extends Migration
     public function up()
     {
         Schema::table('partes_interesadas', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484742')->references('id')->on('teams');
         });
     }

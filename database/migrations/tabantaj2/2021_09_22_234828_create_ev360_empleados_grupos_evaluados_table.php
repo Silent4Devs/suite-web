@@ -15,7 +15,7 @@ class CreateEv360EmpleadosGruposEvaluadosTable extends Migration
     {
         Schema::create('ev360_empleados_grupos_evaluados', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('grupo_id');
+            $table->integer('grupo_id');
             $table->integer('empleado_id');
             $table->foreign('grupo_id')->references('id')->on('ev360_grupos_evaluados')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');

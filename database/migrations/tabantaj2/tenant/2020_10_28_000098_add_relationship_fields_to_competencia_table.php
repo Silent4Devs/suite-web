@@ -9,9 +9,9 @@ class AddRelationshipFieldsToCompetenciaTable extends Migration
     public function up()
     {
         Schema::table('competencia', function (Blueprint $table) {
-            $table->unsignedInteger('nombrecolaborador_id');
+            $table->integer('nombrecolaborador_id');
             $table->foreign('nombrecolaborador_id', 'nombrecolaborador_fk_2436578')->references('id')->on('users');
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484753')->references('id')->on('teams');
         });
     }

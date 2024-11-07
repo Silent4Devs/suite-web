@@ -16,11 +16,11 @@ class CreateAceptoPoliticaTable extends Migration
         Schema::create('acepto_politica', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('id_politica');
+            $table->integer('id_politica');
 
             $table->boolean('acepto')->default(true);
 
-            $table->unsignedInteger('id_empleado');
+            $table->integer('id_empleado');
 
             $table->foreign('id_empleado')->references('id')->on('empleados')->onDelete('cascade')->onUpdate('cascade');
 

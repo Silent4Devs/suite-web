@@ -15,7 +15,7 @@ class CreateDocumentoControlAccesosTable extends Migration
     {
         Schema::create('documento_control_accesos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('controlA_id')->nullable();
+            $table->integer('controlA_id')->nullable();
             $table->string('documento')->nullable();
 
             $table->timestamps();

@@ -9,7 +9,7 @@ class AddRelationshipFieldsToFaqCategoriesTable extends Migration
     public function up()
     {
         Schema::table('faq_categories', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484870')->references('id')->on('teams');
         });
     }

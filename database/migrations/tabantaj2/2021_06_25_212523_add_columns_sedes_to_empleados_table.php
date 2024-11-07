@@ -14,7 +14,7 @@ class AddColumnsSedesToEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('empleados', function (Blueprint $table) {
-            $table->unsignedInteger('sede_id')->after('area_id')->nullable();
+            $table->integer('sede_id')->after('area_id')->nullable();
             $table->foreign('sede_id')->references('id')->on('sedes')->onUpdate('cascade')->onDelete('SET NULL');
         });
     }

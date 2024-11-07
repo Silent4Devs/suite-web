@@ -14,9 +14,9 @@ class AddColumnFolioToAccionCorrectivasTable extends Migration
     public function up()
     {
         Schema::table('accion_correctivas', function (Blueprint $table) {
-            $table->unsignedInteger('area_id')->nullable();
-            $table->unsignedInteger('proceso_id')->nullable();
-            $table->unsignedInteger('activo_id')->nullable();
+            $table->integer('area_id')->nullable();
+            $table->integer('proceso_id')->nullable();
+            $table->integer('activo_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('proceso_id')->references('id')->on('procesos');
             $table->foreign('activo_id')->references('id')->on('tipoactivos');

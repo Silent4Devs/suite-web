@@ -16,7 +16,7 @@ class CreateActivoIntegridadTable extends Migration
         Schema::create('activo_integridad', function (Blueprint $table) {
             $table->increments('id');
             $table->string('integridad')->unique()->nullable();
-            $table->unsignedInteger('valor')->nullable();
+            $table->integer('valor')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,7 +17,7 @@ class CreateAuditoriaInternoEmpleadoTable extends Migration
             $table->id();
             $table->integer('empleado_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedInteger('auditoria_id');
+            $table->integer('auditoria_id');
             $table->foreign('auditoria_id')->references('id')->on('auditoria_internas')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

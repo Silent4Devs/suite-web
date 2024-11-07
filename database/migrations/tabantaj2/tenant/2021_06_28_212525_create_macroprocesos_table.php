@@ -17,7 +17,7 @@ class CreateMacroprocesosTable extends Migration
             $table->increments('id');
             $table->string('codigo')->nullable();
             $table->string('nombre')->nullable();
-            $table->unsignedInteger('id_grupo')->nullable();
+            $table->integer('id_grupo')->nullable();
             $table->foreign('id_grupo')->references('id')->on('grupos');
             $table->string('descripcion')->nullable();
             $table->timestamps();

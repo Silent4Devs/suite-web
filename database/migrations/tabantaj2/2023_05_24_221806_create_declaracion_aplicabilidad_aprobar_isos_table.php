@@ -25,7 +25,7 @@ class CreateDeclaracionAplicabilidadAprobarIsosTable extends Migration
                 $table->integer('empleado_id')->nullable();
                 $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();
                 //foreign
-                $table->unsignedInteger('declaracion_id')->nullable();
+                $table->integer('declaracion_id')->nullable();
                 $table->foreign('declaracion_id')->references('id')->on('declaracion_aplicabilidad_concentrado_isos')->nullable();
                 $table->timestamps();
                 $table->softDeletes();

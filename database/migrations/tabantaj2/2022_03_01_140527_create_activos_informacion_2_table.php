@@ -22,11 +22,11 @@ class CreateActivosInformacion2Table extends Migration
             $table->integer('custodioALDirector')->nullable();
             $table->string('activo_informacion')->nullable();
             $table->string('formato')->nullable();
-            $table->unsignedInteger('proceso_id')->nullable();
-            $table->unsignedInteger('creacion')->nullable();
-            $table->unsignedInteger('recepcion')->nullable();
+            $table->integer('proceso_id')->nullable();
+            $table->integer('creacion')->nullable();
+            $table->integer('recepcion')->nullable();
             $table->string('otra_recepcion');
-            $table->unsignedInteger('uso_digital')->nullable();
+            $table->integer('uso_digital')->nullable();
             $table->string('nombre_aplicacion')->nullable();
             $table->string('carpeta_compartida')->nullable();
             $table->string('otra_AppCarpeta')->nullable();

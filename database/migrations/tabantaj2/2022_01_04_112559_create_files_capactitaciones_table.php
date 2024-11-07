@@ -16,7 +16,7 @@ class CreateFilesCapactitacionesTable extends Migration
         Schema::create('files_capacitaciones', function (Blueprint $table) {
             $table->id();
             $table->string('archivo');
-            $table->unsignedInteger('recurso_id');
+            $table->integer('recurso_id');
             $table->timestamps();
 
             $table->foreign('recurso_id')->references('id')->on('recursos')->onDelete('cascade')->onUpdate('cascade');

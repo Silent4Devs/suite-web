@@ -27,7 +27,7 @@ class RemoveActividadPadreIdToPlanBaseActividades extends Migration
     public function down()
     {
         Schema::table('plan_base_actividades', function (Blueprint $table) {
-            $table->unsignedInteger('actividad_padre_id')->nullable();
+            $table->integer('actividad_padre_id')->nullable();
             $table->foreign('actividad_padre_id', 'actividad_padre_fk_2475385')->references('id')->on('plan_base_actividades');
         });
     }

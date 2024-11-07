@@ -17,7 +17,7 @@ class CreateMatrizIso31000Table extends Migration
             $table->increments('id');
             $table->string('proveedores')->nullable();
             $table->string('servicio')->nullable();
-            $table->unsignedInteger('id_proceso')->nullable();
+            $table->integer('id_proceso')->nullable();
             $table->longText('descripcion_servicio')->nullable();
             $table->integer('estrategico')->nullable();
             $table->integer('operacional')->nullable();
@@ -26,7 +26,7 @@ class CreateMatrizIso31000Table extends Migration
             $table->integer('reputacional')->nullable();
             $table->integer('tecnologico')->nullable();
             $table->integer('valor')->nullable();
-            $table->unsignedInteger('id_analisis')->nullable();
+            $table->integer('id_analisis')->nullable();
             $table->foreign('id_analisis')->references('id')->on('analisis_de_riesgo');
             $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->timestamps();

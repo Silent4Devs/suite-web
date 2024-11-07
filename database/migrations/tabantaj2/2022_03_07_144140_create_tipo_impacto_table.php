@@ -19,9 +19,9 @@ class CreateTipoImpactoTable extends Migration
             $table->longText('criterio')->nullable();
             $table->longText('base')->nullable();
             $table->foreign('niveles_impacto_id')->references('id')->on('niveles_impacto');
-            $table->unsignedInteger('niveles_impacto_id')->nullable();
+            $table->integer('niveles_impacto_id')->nullable();
             $table->foreign('tabla_impacto_id')->references('id')->on('tabla_impacto');
-            $table->unsignedInteger('tabla_impacto_id')->nullable();
+            $table->integer('tabla_impacto_id')->nullable();
             $table->timestamps();
         });
     }

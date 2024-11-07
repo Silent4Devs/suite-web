@@ -9,9 +9,9 @@ class CreateRecursoUserPivotTable extends Migration
     public function up()
     {
         Schema::create('recurso_user', function (Blueprint $table) {
-            $table->unsignedInteger('recurso_id');
+            $table->integer('recurso_id');
             $table->foreign('recurso_id', 'recurso_id_fk_2484751')->references('id')->on('recursos')->onDelete('cascade');
-            $table->unsignedInteger('user_id');
+            $table->integer('user_id');
             $table->foreign('user_id', 'user_id_fk_2484751')->references('id')->on('users')->onDelete('cascade');
         });
     }

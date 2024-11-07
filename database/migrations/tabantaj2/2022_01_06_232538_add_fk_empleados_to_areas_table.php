@@ -14,7 +14,7 @@ class AddFkEmpleadosToAreasTable extends Migration
     public function up()
     {
         Schema::table('areas', function (Blueprint $table) {
-            $table->unsignedInteger('empleados_id')->nullable();
+            $table->integer('empleados_id')->nullable();
             $table->foreign('empleados_id')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
         });
     }

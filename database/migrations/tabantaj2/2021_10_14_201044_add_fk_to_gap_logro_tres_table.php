@@ -14,7 +14,7 @@ class AddFkToGapLogroTresTable extends Migration
     public function up()
     {
         Schema::table('gap_logro_tres', function (Blueprint $table) {
-            $table->unsignedInteger('analisis_brechas_id')->nullable();
+            $table->integer('analisis_brechas_id')->nullable();
             $table->foreign('analisis_brechas_id')->references('id')->on('analisis_brechas')->onDelete('SET NULL')->onUpdate('cascade');
         });
     }

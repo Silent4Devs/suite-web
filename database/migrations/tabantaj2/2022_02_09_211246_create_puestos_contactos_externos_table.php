@@ -17,7 +17,7 @@ class CreatePuestosContactosExternosTable extends Migration
             $table->id();
             $table->string('nombre_contacto_int')->nullable();
             $table->longText('proposito')->nullable();
-            $table->unsignedInteger('puesto_id')->after('id')->nullable();
+            $table->integer('puesto_id')->after('id')->nullable();
             $table->foreign('puesto_id')->references('id')->on('puestos')->onDelete('SET NULL')->onUpdate('cascade');
             $table->timestamps();
         });

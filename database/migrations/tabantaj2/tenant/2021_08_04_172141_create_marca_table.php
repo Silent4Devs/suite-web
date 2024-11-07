@@ -15,7 +15,7 @@ class CreateMarcaTable extends Migration
     {
         Schema::create('marca', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('activo_id')->nullable();
+            $table->integer('activo_id')->nullable();
             $table->string('nombre')->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();

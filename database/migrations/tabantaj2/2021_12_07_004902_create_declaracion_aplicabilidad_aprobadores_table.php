@@ -15,7 +15,7 @@ class CreateDeclaracionAplicabilidadAprobadoresTable extends Migration
     {
         Schema::create('declaracion_aplicabilidad_aprobadores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('declaracion_id')->nullable();
+            $table->integer('declaracion_id')->nullable();
             $table->integer('aprobadores_id')->nullable();
             $table->integer('estatus')->nullable();
             $table->longText('comentarios')->nullable();

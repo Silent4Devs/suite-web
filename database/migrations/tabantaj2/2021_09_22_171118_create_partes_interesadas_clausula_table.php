@@ -17,7 +17,7 @@ class CreatePartesInteresadasClausulaTable extends Migration
             $table->id();
             $table->integer('clausula_id');
             $table->foreign('clausula_id')->references('id')->on('clausulas')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedInteger('partesint_id');
+            $table->integer('partesint_id');
             $table->foreign('partesint_id')->references('id')->on('partes_interesadas')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

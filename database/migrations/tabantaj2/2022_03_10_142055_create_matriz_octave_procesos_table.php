@@ -15,17 +15,17 @@ class CreateMatrizOctaveProcesosTable extends Migration
     {
         Schema::create('matriz_octave_procesos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_proceso')->nullable();
+            $table->integer('id_proceso')->nullable();
             $table->integer('nivel_riesgo')->nullable();
-            $table->unsignedInteger('id_direccion')->nullable();
-            $table->unsignedInteger('servicio_id')->nullable();
+            $table->integer('id_direccion')->nullable();
+            $table->integer('servicio_id')->nullable();
             $table->integer('operacional')->nullable();
             $table->integer('cumplimiento')->nullable();
             $table->integer('legal')->nullable();
             $table->integer('reputacional')->nullable();
             $table->integer('tecnologico')->nullable();
             $table->integer('impacto')->nullable();
-            $table->unsignedInteger('id_activos_informacion')->nullable();
+            $table->integer('id_activos_informacion')->nullable();
             $table->integer('promedio')->nullable();
             $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->foreign('id_direccion')->references('id')->on('areas');

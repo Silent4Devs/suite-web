@@ -14,10 +14,10 @@ class AddColumnsElaboroRevisoToPuestosTable extends Migration
     public function up()
     {
         Schema::table('puestos', function (Blueprint $table) {
-            $table->unsignedInteger('elaboro_id')->nullable();
-            $table->unsignedInteger('reviso_id')->nullable();
-            $table->unsignedInteger('autoriza_id')->nullable();
-            $table->unsignedInteger('reporta_puesto_id')->nullable();
+            $table->integer('elaboro_id')->nullable();
+            $table->integer('reviso_id')->nullable();
+            $table->integer('autoriza_id')->nullable();
+            $table->integer('reporta_puesto_id')->nullable();
             $table->foreign('autoriza_id')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');
             $table->foreign('reviso_id')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');
             $table->foreign('elaboro_id')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');

@@ -16,7 +16,7 @@ class CreateActivoConfidencialidadTable extends Migration
         Schema::create('activo_confidencialidad', function (Blueprint $table) {
             $table->increments('id');
             $table->string('confidencialidad')->unique()->nullable();
-            $table->unsignedInteger('valor')->nullable();
+            $table->integer('valor')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

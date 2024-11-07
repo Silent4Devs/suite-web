@@ -14,7 +14,7 @@ class ColumnDocumentoIdToProcesosTable extends Migration
     public function up()
     {
         Schema::table('procesos', function (Blueprint $table) {
-            $table->unsignedInteger('documento_id')->nullable()->change();
+            $table->integer('documento_id')->nullable()->change();
         });
     }
 

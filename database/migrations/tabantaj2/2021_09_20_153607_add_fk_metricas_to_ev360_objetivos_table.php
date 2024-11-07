@@ -14,7 +14,7 @@ class AddFkMetricasToEv360ObjetivosTable extends Migration
     public function up()
     {
         Schema::table('ev360_objetivos', function (Blueprint $table) {
-            $table->unsignedInteger('metrica_id');
+            $table->integer('metrica_id');
             $table->foreign('metrica_id')->references('id')->on('ev360_metricas_objetivos')->onDelete('cascade')->onUpdate('cascade');
         });
     }

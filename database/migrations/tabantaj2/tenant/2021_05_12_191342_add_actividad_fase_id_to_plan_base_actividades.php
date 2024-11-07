@@ -14,7 +14,7 @@ class AddActividadFaseIdToPlanBaseActividades extends Migration
     public function up()
     {
         Schema::table('plan_base_actividades', function (Blueprint $table) {
-            // $table->unsignedInteger('actividad_fase_id')->nullable();
+            // $table->integer('actividad_fase_id')->nullable();
 
             $table->integer('actividad_fase_id')->nullable();
         });

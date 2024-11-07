@@ -14,7 +14,7 @@ class AddColumAreaToEvidenciasSgsisTable extends Migration
     public function up()
     {
         Schema::table('evidencias_sgsis', function (Blueprint $table) {
-            $table->unsignedInteger('area_id')->nullable();
+            $table->integer('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas');
         });
     }

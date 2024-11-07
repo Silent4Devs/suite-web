@@ -9,7 +9,7 @@ class AddRelationshipFieldsToPoliticaSgsisTable extends Migration
     public function up()
     {
         Schema::table('politica_sgsis', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484747')->references('id')->on('teams');
         });
     }

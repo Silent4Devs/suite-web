@@ -18,9 +18,9 @@ class CreateMatrizoctaveActivosInfoTable extends Migration
             $table->string('nombre_ai')->nullable();
             $table->integer('valor_criticidad')->nullable();
             $table->string('contenedor_activos')->nullable();
-            $table->unsignedInteger('id_amenaza')->nullable();
-            $table->unsignedInteger('id_octave')->nullable();
-            $table->unsignedInteger('id_vulnerabilidad')->nullable();
+            $table->integer('id_amenaza')->nullable();
+            $table->integer('id_octave')->nullable();
+            $table->integer('id_vulnerabilidad')->nullable();
             $table->longText('escenario_riesgo')->nullable();
             $table->integer('id_custodio')->nullable();
             $table->integer('id_dueno')->nullable();

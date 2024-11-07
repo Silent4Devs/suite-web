@@ -19,7 +19,7 @@ class CreateNivelesImpactoTable extends Migration
             $table->string('clasificacion')->nullable();
             $table->string('color', 10)->nullable();
             $table->foreign('tabla_impacto_id')->references('id')->on('tabla_impacto');
-            $table->unsignedInteger('tabla_impacto_id')->nullable();
+            $table->integer('tabla_impacto_id')->nullable();
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ class CreateProcesosOctaveHistoricosTable extends Migration
     {
         Schema::create('procesos_octave_historicos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('proceso_id')->nullable();
-            $table->unsignedInteger('matriz_id')->nullable();
+            $table->integer('proceso_id')->nullable();
+            $table->integer('matriz_id')->nullable();
             $table->json('historico');
             $table->date('fecha_registro')->nullable();
             $table->foreign('matriz_id')->references('id')->on('analisis_de_riesgo');

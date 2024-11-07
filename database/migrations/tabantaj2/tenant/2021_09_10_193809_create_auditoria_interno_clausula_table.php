@@ -17,7 +17,7 @@ class CreateAuditoriaInternoClausulaTable extends Migration
             $table->id();
             $table->integer('clausula_id');
             $table->foreign('clausula_id')->references('id')->on('clausulas')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedInteger('auditoria_id');
+            $table->integer('auditoria_id');
             $table->foreign('auditoria_id')->references('id')->on('auditoria_internas')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

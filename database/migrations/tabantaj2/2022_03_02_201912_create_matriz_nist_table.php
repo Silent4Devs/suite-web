@@ -23,10 +23,10 @@ class CreateMatrizNistTable extends Migration
             $table->string('categoria')->nullable();
             $table->string('causa')->nullable();
             $table->string('tipo')->nullable();
-            $table->unsignedInteger('severidad')->nullable();
-            $table->unsignedInteger('probabilidad')->nullable();
-            $table->unsignedInteger('impacto_num')->nullable();
-            $table->unsignedInteger('valor')->nullable();
+            $table->integer('severidad')->nullable();
+            $table->integer('probabilidad')->nullable();
+            $table->integer('impacto_num')->nullable();
+            $table->integer('valor')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

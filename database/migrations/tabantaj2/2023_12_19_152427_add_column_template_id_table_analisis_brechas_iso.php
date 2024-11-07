@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('analisis_brechas_isos', function (Blueprint $table) {
-            $table->unsignedInteger('template_id')->nullable();
+            $table->integer('template_id')->nullable();
         });
     }
 

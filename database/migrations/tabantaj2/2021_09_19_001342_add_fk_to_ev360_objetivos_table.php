@@ -14,7 +14,7 @@ class AddFkToEv360ObjetivosTable extends Migration
     public function up()
     {
         Schema::table('ev360_objetivos', function (Blueprint $table) {
-            $table->unsignedInteger('tipo_id');
+            $table->integer('tipo_id');
             $table->foreign('tipo_id')->references('id')->on('ev360_tipo_objetivos')->onDelete('cascade')->onUpdate('cascade');
         });
     }

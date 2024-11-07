@@ -15,7 +15,7 @@ class AddColumnsFechafinToAuditoriaAnualsTable extends Migration
     {
         Schema::table('auditoria_anuals', function (Blueprint $table) {
             // $table->dropForeign('auditorlider_id');
-            /* $table->unsignedInteger('auditorlider_id')->nullable(); */
+            /* $table->integer('auditorlider_id')->nullable(); */
             $table->foreign('auditorlider_id')->references('id')->on('empleados');
             $table->datetime('fechainicio')->change();
             $table->datetime('fechafin')->nullable();

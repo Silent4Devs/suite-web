@@ -15,7 +15,7 @@ class CreateCompetenciasPorPuestoTable extends Migration
     {
         Schema::create('ev360_competencias_por_puesto', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('puesto_id');
+            $table->integer('puesto_id');
             $table->integer('competencia_id');
             $table->integer('nivel_esperado');
 

@@ -15,8 +15,8 @@ class CreateTipoNivelImpactoToTable extends Migration
     {
         Schema::create('tipo_nivel_impacto', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('tipo_impacto_id')->nullable();
-            $table->unsignedInteger('niveles_impacto_id')->nullable();
+            $table->integer('tipo_impacto_id')->nullable();
+            $table->integer('niveles_impacto_id')->nullable();
             $table->text('contenido')->nullable();
             $table->foreign('tipo_impacto_id')->references('id')->on('tipo_impacto');
             $table->foreign('niveles_impacto_id')->references('id')->on('niveles_impacto');

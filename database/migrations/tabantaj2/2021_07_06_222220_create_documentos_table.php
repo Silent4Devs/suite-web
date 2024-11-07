@@ -19,8 +19,8 @@ class CreateDocumentosTable extends Migration
             $table->string('codigo')->unique();
             $table->string('nombre');
             $table->string('tipo');
-            $table->unsignedInteger('macroproceso_id')->nullable();
-            $table->unsignedInteger('proceso_id')->nullable();
+            $table->integer('macroproceso_id')->nullable();
+            $table->integer('proceso_id')->nullable();
             $table->enum('estatus', [Documento::EN_ELABORACION, Documento::EN_REVISION, Documento::PUBLICADO, Documento::DOCUMENTO_RECHAZADO, Documento::DOCUMENTO_OBSOLETO])->default(Documento::EN_ELABORACION);
             $table->string('version');
             $table->dateTime('fecha');

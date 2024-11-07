@@ -15,7 +15,7 @@ class CreateEvidenciasMatrizRequisitoLegalesTable extends Migration
     {
         Schema::create('evidencias_matriz_requisito_legales', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_matriz_requisito')->nullable();
+            $table->integer('id_matriz_requisito')->nullable();
             $table->string('evidencia');
             $table->timestamps();
             $table->softDeletes();

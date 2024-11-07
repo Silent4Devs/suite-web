@@ -15,7 +15,7 @@ class CreateEmpleadosTratamientoRiesgosTable extends Migration
     {
         Schema::create('empleados_tratamiento_riesgos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('tratamiento_id');
+            $table->integer('tratamiento_id');
             $table->integer('empleado_id');
             $table->foreign('tratamiento_id')->references('id')->on('tratamiento_riesgos');
             $table->foreign('empleado_id')->references('id')->on('empleados');

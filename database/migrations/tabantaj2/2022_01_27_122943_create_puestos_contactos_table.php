@@ -16,8 +16,8 @@ class CreatePuestosContactosTable extends Migration
         Schema::create('puestos_contactos', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion_contacto')->nullable();
-            $table->unsignedInteger('id_contacto')->after('id')->nullable();
-            $table->unsignedInteger('puesto_id')->after('id')->nullable();
+            $table->integer('id_contacto')->after('id')->nullable();
+            $table->integer('puesto_id')->after('id')->nullable();
             $table->foreign('puesto_id')->references('id')->on('puestos')->onDelete('SET NULL')->onUpdate('cascade');
             $table->foreign('id_contacto')->references('id')->on('empleados')->onDelete('SET NULL')->onUpdate('cascade');
             $table->timestamps();

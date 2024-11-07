@@ -15,7 +15,7 @@ class CreateDeclaracionAplicabilidadResponsablesTable extends Migration
     {
         Schema::create('declaracion_aplicabilidad_responsables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('declaracion_id')->nullable();
+            $table->integer('declaracion_id')->nullable();
             $table->integer('empleado_id')->nullable();
             $table->string('aplica')->nullable();
             $table->longText('justificacion')->nullable();

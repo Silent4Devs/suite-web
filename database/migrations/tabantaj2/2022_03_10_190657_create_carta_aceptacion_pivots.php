@@ -15,9 +15,9 @@ class CreateCartaAceptacionPivots extends Migration
     {
         Schema::table('carta_aceptacion_pivots', function (Blueprint $table) {
             // $table->increments('id');
-            // $table->unsignedInteger('controles_id')->nullable();
+            // $table->integer('controles_id')->nullable();
             // $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
-            // $table->unsignedInteger('id_matriz_octave_escenarios')->nullable();
+            // $table->integer('id_matriz_octave_escenarios')->nullable();
             // $table->foreign('id_matriz_octave_escenarios')->references('id')->on('matriz_octave_escenarios');
             // $table->timestamps();
         });

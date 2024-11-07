@@ -15,7 +15,7 @@ class CreateDocumentoAuditoriaAnualsTable extends Migration
     {
         Schema::create('documento_auditoria_anuals', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_auditoria_anuals')->nullable();
+            $table->integer('id_auditoria_anuals')->nullable();
             $table->string('documento');
             $table->timestamps();
         });

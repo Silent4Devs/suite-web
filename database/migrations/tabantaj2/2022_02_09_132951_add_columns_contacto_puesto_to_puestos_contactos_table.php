@@ -14,7 +14,7 @@ class AddColumnsContactoPuestoToPuestosContactosTable extends Migration
     public function up()
     {
         Schema::table('puestos_contactos', function (Blueprint $table) {
-            $table->unsignedInteger('contacto_puesto_id')->nullable();
+            $table->integer('contacto_puesto_id')->nullable();
             $table->foreign('contacto_puesto_id')->references('id')->on('puestos')->onDelete('SET NULL')->onUpdate('cascade');
         });
     }

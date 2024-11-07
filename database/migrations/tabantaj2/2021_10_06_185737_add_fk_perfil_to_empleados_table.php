@@ -14,7 +14,7 @@ class AddFkPerfilToEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('empleados', function (Blueprint $table) {
-            $table->unsignedInteger('perfil_empleado_id')->nullable();
+            $table->integer('perfil_empleado_id')->nullable();
             $table->foreign('perfil_empleado_id')->references('id')->on('perfil_empleados')->onDelete('SET NULL')->onUpdate('cascade');
         });
     }

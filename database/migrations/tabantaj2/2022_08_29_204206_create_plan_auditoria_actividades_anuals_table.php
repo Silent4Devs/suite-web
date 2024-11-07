@@ -20,8 +20,8 @@ class CreatePlanAuditoriaActividadesAnualsTable extends Migration
             $table->time('horario_inicio')->nullable();
             $table->time('horario_termino')->nullable();
             $table->string('nombre_auditor')->nullable();
-            $table->unsignedInteger('id_auditado')->nullable();
-            $table->unsignedInteger('plan_auditoria_id')->nullable();
+            $table->integer('id_auditado')->nullable();
+            $table->integer('plan_auditoria_id')->nullable();
             $table->foreign('id_auditado')->references('id')->on('empleados');
             $table->foreign('plan_auditoria_id')->references('id')->on('plan_auditoria');
             $table->timestamps();

@@ -16,7 +16,7 @@ class CrearTablaSubcategoriaActivos extends Migration
         Schema::create('subcategoria_activos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subcategoria');
-            $table->unsignedInteger('categoria_id');
+            $table->integer('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('tipoactivos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

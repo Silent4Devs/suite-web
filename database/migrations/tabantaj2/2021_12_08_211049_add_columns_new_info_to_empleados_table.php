@@ -14,7 +14,7 @@ class AddColumnsNewInfoToEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('empleados', function (Blueprint $table) {
-            $table->unsignedInteger('tipo_contrato_empleados_id')->nullable();
+            $table->integer('tipo_contrato_empleados_id')->nullable();
             $table->string('domicilio_personal')->nullable();
             $table->string('telefono_casa')->nullable();
             $table->string('correo_personal')->nullable();
@@ -24,7 +24,7 @@ class AddColumnsNewInfoToEmpleadosTable extends Migration
             $table->string('RFC')->nullable();
             $table->string('lugar_nacimiento')->nullable();
             $table->string('nacionalidad')->nullable();
-            $table->unsignedInteger('entidad_crediticias_id')->nullable();
+            $table->integer('entidad_crediticias_id')->nullable();
             $table->string('numero_credito')->nullable();
             $table->string('descuento')->nullable();
             $table->string('banco')->nullable();

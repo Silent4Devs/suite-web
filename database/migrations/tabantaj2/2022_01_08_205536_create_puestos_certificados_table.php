@@ -17,7 +17,7 @@ class CreatePuestosCertificadosTable extends Migration
             $table->id();
             $table->string('requisito')->nullable();
             $table->string('nombre')->nullable();
-            $table->unsignedInteger('puesto_id')->after('id')->nullable();
+            $table->integer('puesto_id')->after('id')->nullable();
             $table->foreign('puesto_id')->references('id')->on('puestos')->onDelete('SET NULL')->onUpdate('cascade');
             $table->timestamps();
         });

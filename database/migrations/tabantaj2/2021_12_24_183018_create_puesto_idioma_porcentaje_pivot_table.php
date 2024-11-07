@@ -15,11 +15,11 @@ class CreatePuestoIdiomaPorcentajePivotTable extends Migration
     {
         Schema::create('puesto_idioma_porcentaje_pivot', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('id_language');
+            $table->integer('id_language');
             $table->foreign('id_language')->references('id')->on('languages')->onDelete('cascade');
-            $table->unsignedInteger('id_puesto');
+            $table->integer('id_puesto');
             $table->foreign('id_puesto')->references('id')->on('puestos')->onDelete('cascade');
-            $table->unsignedInteger('id_porcentaje');
+            $table->integer('id_porcentaje');
             $table->foreign('id_porcentaje')->references('id')->on('porcentajes')->onDelete('cascade');
             $table->timestamps();
         });

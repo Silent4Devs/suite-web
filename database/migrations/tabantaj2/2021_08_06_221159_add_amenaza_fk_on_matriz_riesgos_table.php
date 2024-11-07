@@ -16,9 +16,9 @@ class AddAmenazaFkOnMatrizRiesgosTable extends Migration
         Schema::table('matriz_riesgos', function (Blueprint $table) {
             $table->dropColumn('amenaza');
             $table->dropColumn('vulnerabilidad');
-            $table->unsignedInteger('id_amenaza')->nullable();
-            $table->unsignedInteger('id_area')->nullable();
-            $table->unsignedInteger('id_vulnerabilidad')->nullable();
+            $table->integer('id_amenaza')->nullable();
+            $table->integer('id_area')->nullable();
+            $table->integer('id_vulnerabilidad')->nullable();
         });
     }
 

@@ -15,8 +15,8 @@ class MatrizOctaveControlesPivots extends Migration
     {
         Schema::create('matriz_octave_controles_pivots', function (Blueprint $table) {
             $table->increments('id');
-            $table->UnsignedInteger('id_matriz')->nullable();
-            $table->unsignedInteger('controles_id')->nullable();
+            $table->integer('id_matriz')->nullable();
+            $table->integer('controles_id')->nullable();
             $table->foreign('id_matriz')->references('id')->on('matriz_octave');
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
             $table->timestamps();

@@ -17,7 +17,7 @@ class CreateVulnerabilidadsTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('descripcion')->nullable();
-            $table->unsignedInteger('id_amenaza')->nullable();
+            $table->integer('id_amenaza')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

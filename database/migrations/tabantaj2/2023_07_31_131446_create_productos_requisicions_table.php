@@ -27,7 +27,7 @@ return new class extends Migration
             // $table->foreign('contrato_id')->references('id')->on('contratos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('no_personas')->nullable();
             $table->integer('porcentaje_involucramiento')->nullable();
-            $table->unsignedInteger('centro_costo_id')->nullable();
+            $table->integer('centro_costo_id')->nullable();
             // $table->foreign('centro_costo_id')->references('id')->on('centro_costos')->onUpdate('cascade')->onDelete('cascade');
             $table->string('sub_total')->nullable();
             $table->string('descuento')->nullable();

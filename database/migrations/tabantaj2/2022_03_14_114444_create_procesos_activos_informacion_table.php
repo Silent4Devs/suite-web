@@ -15,9 +15,9 @@ class CreateProcesosActivosInformacionTable extends Migration
     {
         Schema::create('procesos_activos_informacion', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('losprocesos_id')->nullable();
+            $table->integer('losprocesos_id')->nullable();
             $table->foreign('losprocesos_id')->references('id')->on('procesos')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('id_activos_informacion')->nullable();
+            $table->integer('id_activos_informacion')->nullable();
             $table->foreign('id_activos_informacion')->references('id')->on('activos_informacion')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

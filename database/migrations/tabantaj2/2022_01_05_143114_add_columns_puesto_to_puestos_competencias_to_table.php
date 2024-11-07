@@ -14,7 +14,7 @@ class AddColumnsPuestoToPuestosCompetenciasToTable extends Migration
     public function up()
     {
         Schema::table('puestos_competencias_to', function (Blueprint $table) {
-            $table->unsignedInteger('puestos_id');
+            $table->integer('puestos_id');
             $table->foreign('puestos_id')->references('id')->on('puestos')->onUpdate('cascade')->onDelete('cascade');
         });
     }

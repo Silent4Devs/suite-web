@@ -16,7 +16,7 @@ class CreateEmpleadoRecursoTable extends Migration
         Schema::create('empleado_recurso', function (Blueprint $table) {
             $table->id();
             $table->integer('empleado_id');
-            $table->unsignedInteger('recurso_id');
+            $table->integer('recurso_id');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
             $table->foreign('recurso_id', 'empleado_recurso_recurso_id_fk')->references('id')->on('recursos')->onDelete('cascade');
 

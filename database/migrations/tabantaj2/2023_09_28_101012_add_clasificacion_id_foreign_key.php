@@ -15,7 +15,7 @@ return new class extends Migration
             //
             $table->string('no_tipo')->nullable();
             $table->string('titulo')->nullable();
-            $table->unsignedInteger('clasificacion_id')->nullable();
+            $table->integer('clasificacion_id')->nullable();
             $table->foreign('clasificacion_id')->references('id')->on('clasificaciones_auditorias');
         });
     }

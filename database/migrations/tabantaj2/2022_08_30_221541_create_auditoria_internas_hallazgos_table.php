@@ -18,9 +18,9 @@ class CreateAuditoriaInternasHallazgosTable extends Migration
             $table->longText('incumplimiento_requisito')->nullable();
             $table->longText('descripcion')->nullable();
             $table->string('clasificacion_hallazgo')->nullable();
-            $table->unsignedInteger('auditoria_internas_id')->nullable();
-            $table->unsignedInteger('area_id')->nullable();
-            $table->unsignedInteger('proceso_id')->nullable();
+            $table->integer('auditoria_internas_id')->nullable();
+            $table->integer('area_id')->nullable();
+            $table->integer('proceso_id')->nullable();
             $table->foreign('auditoria_internas_id')->references('id')->on('auditoria_internas');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('proceso_id')->references('id')->on('procesos');

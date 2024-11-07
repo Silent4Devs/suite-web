@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('status')->nullable();
             $table->ipAddress('ip')->nullable();
             $table->dateTime('date');
-            $table->unsignedInteger('counter');
+            $table->integer('counter');
 
             $table->index('date');
             $table->index(['user_id', 'date', 'route', 'method']);

@@ -9,9 +9,9 @@ class AddRelationshipFieldsToMaterialIsoVeinticientesTable extends Migration
     public function up()
     {
         Schema::table('material_iso_veinticientes', function (Blueprint $table) {
-            $table->unsignedInteger('arearesponsable_id')->nullable();
+            $table->integer('arearesponsable_id')->nullable();
             $table->foreign('arearesponsable_id', 'arearesponsable_fk_2474624')->references('id')->on('areas');
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484756')->references('id')->on('teams');
         });
     }

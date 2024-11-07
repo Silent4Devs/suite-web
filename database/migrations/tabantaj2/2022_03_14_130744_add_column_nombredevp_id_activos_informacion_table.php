@@ -14,11 +14,11 @@ class AddColumnNombredevpIdActivosInformacionTable extends Migration
     public function up()
     {
         Schema::table('activos_informacion', function (Blueprint $table) {
-            $table->unsignedInteger('vp_id')->nullable();
+            $table->integer('vp_id')->nullable();
             $table->foreign('vp_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('name_direccion_id')->nullable();
+            $table->integer('name_direccion_id')->nullable();
             $table->foreign('name_direccion_id')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('nombredevp_id')->nullable();
+            $table->integer('nombredevp_id')->nullable();
             $table->foreign('nombredevp_id')->references('id')->on('grupos')->onDelete('cascade')->onUpdate('cascade');
         });
     }

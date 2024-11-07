@@ -14,7 +14,7 @@ class AddFkToAlcanceSgsisTable extends Migration
     public function up()
     {
         Schema::table('alcance_sgsis', function (Blueprint $table) {
-            $table->unsignedInteger('norma_id')->nullable();
+            $table->integer('norma_id')->nullable();
             $table->foreign('norma_id')->references('id')->on('normas')->onDelete('SET NULL')->onUpdate('cascade');
         });
     }

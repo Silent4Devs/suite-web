@@ -14,7 +14,7 @@ class AddColumnIdRegistroToTratamientoRiesgosTable extends Migration
     public function up()
     {
         Schema::table('tratamiento_riesgos', function (Blueprint $table) {
-            $table->unsignedInteger('id_registro')->nullable();
+            $table->integer('id_registro')->nullable();
             $table->foreign('id_registro')->references('id')->on('empleados');
         });
     }

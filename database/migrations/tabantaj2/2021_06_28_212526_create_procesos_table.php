@@ -17,7 +17,7 @@ class CreateProcesosTable extends Migration
             $table->increments('id');
             $table->string('codigo')->nullable();
             $table->string('nombre')->nullable();
-            $table->unsignedInteger('id_macroproceso')->nullable();
+            $table->integer('id_macroproceso')->nullable();
             $table->foreign('id_macroproceso')->references('id')->on('macroprocesos');
             $table->string('descripcion')->nullable();
             $table->timestamps();

@@ -14,7 +14,7 @@ class AddColumnDuenoToTratamientoRiesgosTable extends Migration
     public function up()
     {
         Schema::table('tratamiento_riesgos', function (Blueprint $table) {
-            $table->unsignedInteger('id_dueno')->nullable();
+            $table->integer('id_dueno')->nullable();
             $table->foreign('id_dueno')->references('id')->on('empleados');
         });
     }

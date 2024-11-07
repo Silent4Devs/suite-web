@@ -16,7 +16,7 @@ class CreateActivoDisponibilidadTable extends Migration
         Schema::create('activo_disponibilidad', function (Blueprint $table) {
             $table->increments('id');
             $table->string('disponibilidad')->unique()->nullable();
-            $table->unsignedInteger('valor')->nullable();
+            $table->integer('valor')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

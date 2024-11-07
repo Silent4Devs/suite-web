@@ -15,9 +15,9 @@ class CreateMatrizOctaveContenedoresEscenariosTable extends Migration
     {
         Schema::create('matriz_octave_contenedores_escenarios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_octave_escenario')->nullable();
+            $table->integer('id_octave_escenario')->nullable();
             $table->foreign('id_octave_escenario')->references('id')->on('matriz_octave_escenarios');
-            $table->unsignedInteger('id_octave_contenedor')->nullable();
+            $table->integer('id_octave_contenedor')->nullable();
             $table->foreign('id_octave_contenedor')->references('id')->on('matriz_octave_contenedores');
             $table->timestamps();
         });

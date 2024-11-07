@@ -17,7 +17,7 @@ class CreateRevisionMinutasTable extends Migration
         Schema::create('revision_minutas', function (Blueprint $table) {
             $table->id();
             $table->integer('empleado_id');
-            $table->unsignedInteger('minuta_id');
+            $table->integer('minuta_id');
             $table->longText('comentarios')->nullable();
             $table->string('nivel')->nullable();
             $table->enum('estatus', [RevisionMinuta::APROBADO, RevisionMinuta::RECHAZADO, RevisionMinuta::SOLICITUD_REVISION, RevisionMinuta::RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR, RevisionMinuta::RECHAZADO_POR_NUEVA_EDICION])->default(RevisionMinuta::SOLICITUD_REVISION);

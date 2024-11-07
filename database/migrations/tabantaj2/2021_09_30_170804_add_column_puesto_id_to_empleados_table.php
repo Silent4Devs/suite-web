@@ -14,7 +14,7 @@ class AddColumnPuestoIdToEmpleadosTable extends Migration
     public function up()
     {
         Schema::table('empleados', function (Blueprint $table) {
-            $table->unsignedInteger('puesto_id')->nullable();
+            $table->integer('puesto_id')->nullable();
             $table->foreign('puesto_id')->references('id')->on('puestos')->onDelete('cascade')->onUpdate('cascade');
         });
     }

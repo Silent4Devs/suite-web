@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('auditoria_internas_hallazgos', function (Blueprint $table) {
             //
-            $table->unsignedInteger('clausula_id')->nullable();
+            $table->integer('clausula_id')->nullable();
             $table->foreign('clausula_id')->references('id')->on('clausulas_auditorias');
         });
     }

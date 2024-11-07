@@ -15,7 +15,7 @@ class CreateVariablesObjetivosseguridadTable extends Migration
     {
         Schema::create('variables_objetivosseguridad', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_objetivo')->nullable();
+            $table->integer('id_objetivo')->nullable();
             $table->foreign('id_objetivo')->references('id')->on('objetivosseguridads');
             $table->string('variable')->nullable();
             $table->timestamps();

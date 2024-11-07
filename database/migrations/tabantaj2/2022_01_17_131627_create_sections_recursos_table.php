@@ -16,7 +16,7 @@ class CreateSectionsRecursosTable extends Migration
         Schema::create('secciones_recursos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('recurso_id');
+            $table->integer('recurso_id');
             $table->timestamps();
             $table->softDeletes();
 

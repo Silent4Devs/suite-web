@@ -15,8 +15,8 @@ class MatrizIso31000ControlesPivots extends Migration
     {
         Schema::create('matriz_iso31000_controles_pivots', function (Blueprint $table) {
             $table->increments('id');
-            $table->UnsignedInteger('id_matriz')->nullable();
-            $table->unsignedInteger('controles_id')->nullable();
+            $table->integer('id_matriz')->nullable();
+            $table->integer('controles_id')->nullable();
             $table->foreign('id_matriz')->references('id')->on('matriz_iso31000');
             $table->foreign('controles_id')->references('id')->on('declaracion_aplicabilidad');
             $table->timestamps();

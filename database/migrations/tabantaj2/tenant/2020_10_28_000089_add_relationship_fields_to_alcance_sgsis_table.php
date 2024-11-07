@@ -9,7 +9,7 @@ class AddRelationshipFieldsToAlcanceSgsisTable extends Migration
     public function up()
     {
         Schema::table('alcance_sgsis', function (Blueprint $table) {
-            $table->unsignedInteger('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2484744')->references('id')->on('teams');
         });
     }

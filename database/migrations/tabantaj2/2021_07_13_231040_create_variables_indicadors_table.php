@@ -15,7 +15,7 @@ class CreateVariablesIndicadorsTable extends Migration
     {
         Schema::create('variables_indicadors', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_indicador')->nullable();
+            $table->integer('id_indicador')->nullable();
             $table->foreign('id_indicador')->references('id')->on('indicadores_sgsis');
             $table->string('variable')->nullable();
             $table->integer('valor')->nullable();

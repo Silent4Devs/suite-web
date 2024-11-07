@@ -15,7 +15,7 @@ class CreatePlanAuditoriaEmpleadosTable extends Migration
     {
         Schema::create('plan_auditoria_empleados', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('plan_auditoria_id');
+            $table->integer('plan_auditoria_id');
             $table->integer('empleado_id');
             $table->foreign('plan_auditoria_id')->references('id')->on('plan_auditoria');
             $table->foreign('empleado_id')->references('id')->on('empleados');

@@ -15,7 +15,7 @@ class CreateEvidenciasEvidenciasSgsisTable extends Migration
     {
         Schema::create('evidencias_evidencias_sgsis', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_evidencias_sgsis')->nullable();
+            $table->integer('id_evidencias_sgsis')->nullable();
             $table->string('evidencia');
             $table->timestamps();
             $table->softDeletes();

@@ -15,7 +15,7 @@ class CreateEmpleadosMinutasAltaDireccionTable extends Migration
     {
         Schema::create('empleados_minutas_alta_direccion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('minuta_id');
+            $table->integer('minuta_id');
             $table->integer('empleado_id');
             $table->timestamps();
         });

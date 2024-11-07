@@ -15,7 +15,7 @@ class CreateImagenesComunicacionSgisTable extends Migration
     {
         Schema::create('imagenes_comunicacion_sgis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('comunicacion_id')->nullable();
+            $table->integer('comunicacion_id')->nullable();
             $table->string('imagen')->nullable();
             $table->timestamps();
             $table->softDeletes();

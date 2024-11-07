@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('auditoria_internas_reportes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_auditoria');
-            $table->unsignedInteger('empleado_id');
-            $table->unsignedInteger('lider_id');
+            $table->integer('id_auditoria');
+            $table->integer('empleado_id');
+            $table->integer('lider_id');
             $table->longText('comentarios')->nullable();
             $table->string('estado')->nullable();
             $table->string('firma_empleado')->nullable();
