@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Jobs\ContratosJob;
 use App\Models\ContractManager\Contrato;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -28,8 +27,6 @@ class ContratoEvent implements ShouldBroadcast
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
-
-        ContratosJob::dispatch($this->contratos, $this->tipo_consulta, $this->tabla, $this->slug);
     }
 
     public function broadcastOn()

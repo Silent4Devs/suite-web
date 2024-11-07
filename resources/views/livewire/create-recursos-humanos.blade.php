@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
-                           
+
                             <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model="escenario" >
                                 <option selected>Seleccione</option>
                                 <option value="1">En Operación Normal</option>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
 
-                   
+
                     <div class="row">
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label class="required" for="correo"><i class="bi bi-envelope-fill iconos-crear"></i>Correo
@@ -131,11 +131,7 @@
                             @endif
                         </div>
                     </div>
-                   
 
-                  
-
-                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

@@ -79,6 +79,7 @@ class CreateRecursosHumanos extends Component
     {
         $this->view = 'editRecursos';
         $model = CuestionarioRecursosHumanos::find($id);
+
         $this->miembroID = $model->id;
         $this->escenario = $model->escenario;
         $this->empresa = $model->empresa;

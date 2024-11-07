@@ -133,7 +133,7 @@
 				@show --}}
 			</div>
 			<div class="caja mensaje">
-                <span style="position: relative; top: -2rem;">¡Vaya! No podemos procesar la petición. Si persiste, contacte a Desarrollo.</span>
+                <span style="position: relative; top: -2rem;">¡Lo sentimos! Hubo un error al procesar tu solicitud. Si el inconveniente continúa, contáctanos.</span>
 				@yield('message')
 			</div>
             {{-- <div class="caja mensaje">
@@ -147,6 +147,8 @@
 			</div>
 		</div>
 	</div>
-
+    <script>
+        console.log("Error {{ $code }}: {{ $message }}");
+    </script>
 </body>
 </html>

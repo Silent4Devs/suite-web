@@ -121,14 +121,16 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                <form
-                                    action="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"
-                                    method="GET">
-                                    @method('GET')
-                                    <a
-                                        href="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                </form>
+                                @if ($requisicion->estado_orden != 'rechazado_oc' && $requisicion->estado_orden != 'cancelada')
+                                    <form
+                                        action="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"
+                                        method="GET">
+                                        @method('GET')
+                                        <a
+                                            href="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

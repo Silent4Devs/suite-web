@@ -32,8 +32,6 @@ class CoursesCurriculum extends Component
 
     public function render()
     {
-        $test = $this->course->sections_order;
-
         // $this->dispatch('renderJS');
         $this->dispatch('renderJS');
 

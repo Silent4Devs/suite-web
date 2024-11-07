@@ -1,44 +1,38 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Listeners;
 
 use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
 use App\Notifications\MatrizRequisitosNotification;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 
-class MatrizRequisitosJob implements ShouldQueue
+class MatrizRequisitosListener implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue;
 
-    protected $matriz;
+    public $tries = 5;
 
-    protected $tipo_consulta;
-
-    protected $tabla;
-
-    protected $slug;
-
-    public function __construct($matriz, $tipo_consulta, $tabla, $slug)
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $this->matriz = $matriz;
-        $this->tipo_consulta = $tipo_consulta;
-        $this->tabla = $tabla;
-        $this->slug = $slug;
+        //
     }
 
     /**
      * Handle the event.
      *
+     * @param  object  $event
      * @return void
      */
-    public function handle()
+    public function handle($event)
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', 'MatrizRequisitoLegale')->first();
 
@@ -47,7 +41,7 @@ class MatrizRequisitosJob implements ShouldQueue
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleados->email)))->first();
 
-            Notification::send($user, new MatrizRequisitosNotification($this->matriz, $this->tipo_consulta, $this->tabla, $this->slug));
+            Notification::send($user, new MatrizRequisitosNotification($event->matriz, $event->tipo_consulta, $event->tabla, $event->slug));
         }
     }
 }

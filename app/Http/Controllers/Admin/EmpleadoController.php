@@ -204,7 +204,7 @@ class EmpleadoController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string',
+            'nameUsuario' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
             //     'area_id' => 'required|exists:areas,id',
             //     'supervisor_id' => $validateSupervisor,
@@ -349,7 +349,7 @@ class EmpleadoController extends Controller
     {
         // dd($request);
         $empleado = Empleado::create([
-            'name' => $request->name,
+            'name' => $request->nameUsuario,
             'area_id' => $request->area_id,
             'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
@@ -524,7 +524,6 @@ class EmpleadoController extends Controller
         $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
-
     }
 
     public function storeWithCompetencia(Request $request)
@@ -1324,8 +1323,9 @@ class EmpleadoController extends Controller
             $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
         }
 
-        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $usuario = User::where('empleado_id', $empleado->id)->first();
         $usuario->update([
+            'email' => removeUnicodeCharacters($request->email),
             'n_empleado' => $request->n_empleado,
         ]);
         $this->assignDependenciesModel($request, $empleado);
@@ -1474,9 +1474,11 @@ class EmpleadoController extends Controller
 
     public function updateImageProfile(Request $request)
     {
+        // dd($request->all());
         $empleado = User::getCurrentUser()->empleado;
-        if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
-            $value = substr($request->image, strpos($request->image, ',') + 1);
+        // dd($request->file('foto'));
+        if (! (preg_match('/^data:image\/(\w+);base64,/', $request->file('foto')))) {
+            $value = substr($request->file('foto'), strpos($request->file('foto'), ',') + 1);
             $value = base64_decode($value);
             $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
 
@@ -1484,7 +1486,6 @@ class EmpleadoController extends Controller
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
-
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
                 file_put_contents($route, $apiResponse['body']);
@@ -1497,6 +1498,7 @@ class EmpleadoController extends Controller
             return response()->json(['success' => 'Imágen actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
+
         }
         // $folderPath = public_path('upload/');
         // $image_parts = explode(";base64,", $request->image);

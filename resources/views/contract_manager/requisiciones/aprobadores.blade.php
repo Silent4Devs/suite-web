@@ -97,6 +97,10 @@
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('firmada')
                                     @case('firmada_final')
                                         <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
@@ -160,14 +164,17 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                <form
-                                    action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
-                                    method="GET">
-                                    @method('GET')
-                                    <a
-                                        href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                </form>
+                                @if ($requisicion->estado != 'rechazado' && $requisicion->estado != 'cancelada')
+                                    <form
+                                        action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
+                                        method="GET">
+                                        @method('GET')
+                                        <a
+                                            href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                    </form>
+                                @endif
+
                                 @if (isset($requisicion->registroFirmas))
                                     @if ($requisicion->registroFirmas->duplicados($empleadoActual->id))
                                         <!-- Button trigger modal -->

@@ -311,17 +311,28 @@
                                 AGREGAR SERVICIOS Y PRODUCTOS
                             </div>
 
-                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
-                                <!-- Button content when not loading -->
-                                <span wire:loading.remove>
-                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
-                                </span>
 
-                                <!-- Loading spinner when loading -->
-                                <span wire:loading>
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
-                                </span>
-                            </button>
+                            <div>
+                                <a href="{{ route('contract_manager.requisiciones') }}">
+                                    <button type="button" class="btn btn-primary">
+                                        <!-- Button content when not loading -->
+                                        <span>
+                                            Cancelar
+                                        </span>
+                                    </button>
+                                </a>
+                                <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                    <!-- Button content when not loading -->
+                                    <span wire:loading.remove>
+                                        Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                    </span>
+
+                                    <!-- Loading spinner when loading -->
+                                    <span wire:loading>
+                                        <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                    </span>
+                                </button>
+                            </div>
 
                         </div>
                     </form>
@@ -581,17 +592,29 @@
                                 <i class="fa-regular fa-square-plus icon-prior"></i>
                                 AGREGAR PROVEEDOR
                             </button>
-                            <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
-                                <!-- Button content when not loading -->
-                                <span wire:loading.remove>
-                                    Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
-                                </span>
+                            <div>
+                                <a href="{{ route('contract_manager.requisiciones') }}">
+                                    <button type="button" class="btn btn-primary">
+                                        <!-- Button content when not loading -->
+                                        <span>
+                                            Cancelar
+                                        </span>
+                                    </button>
+                                </a>
 
-                                <!-- Loading spinner when loading -->
-                                <span wire:loading>
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
-                                </span>
-                            </button>
+                                <button class="btn btn-primary" type="submit" wire:loading.attr="disabled">
+                                    <!-- Button content when not loading -->
+                                    <span wire:loading.remove>
+                                        Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
+                                    </span>
+
+                                    <!-- Loading spinner when loading -->
+                                    <span wire:loading>
+                                        <i class="fa-solid fa-spinner fa-spin"></i> Procesando...
+                                    </span>
+                                </button>
+
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -853,7 +876,7 @@
                                 <div class="flex">
                                     <div class="flex-item">
                                         <hr>
-                                        <small>FECHA, FIRMA Y NOMBRE DEL FINANZAS</small>
+                                        <small>FECHA, FIRMA Y NOMBRE DE FINANZAS</small>
                                     </div>
                                     <div class="flex-item">
                                         <hr>
@@ -1127,4 +1150,25 @@
             }
         });
     });
+</script>
+
+<script>
+    const firmaCanvas = document.getElementById('firma_requi');
+
+    function disableScroll() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function enableScroll() {
+        document.body.style.overflow = '';
+    }
+
+    firmaCanvas.addEventListener('mousedown', disableScroll);
+    firmaCanvas.addEventListener('touchstart', disableScroll);
+
+    firmaCanvas.addEventListener('mouseup', enableScroll);
+    firmaCanvas.addEventListener('touchend', enableScroll);
+
+    document.addEventListener('mouseup', enableScroll);
+    document.addEventListener('touchend', enableScroll);
 </script>

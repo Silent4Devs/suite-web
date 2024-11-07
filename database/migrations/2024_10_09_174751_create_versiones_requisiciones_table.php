@@ -22,14 +22,6 @@ return new class extends Migration
             // Relaciones
             $table->foreign('requisicion_id')->references('id')->on('requisiciones')->onDelete('cascade');
         });
-
-        Schema::table('historial_ediciones_req', function (Blueprint $table) {
-            $table->unsignedBigInteger('version_id')->nullable();
-
-            // Relación con la tabla de versiones
-            $table->foreign('version_id')->references('id')->on('versiones_requisicion')->onDelete('cascade');
-        });
-
     }
 
     /**

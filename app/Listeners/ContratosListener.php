@@ -1,40 +1,28 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Listeners;
 
 use App\Models\FirmaModule;
 use App\Models\User;
 use App\Notifications\ContratoNotification;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 
-class ContratosJob implements ShouldQueue
+class ContratosListener implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use InteractsWithQueue;
 
-    protected $contratos;
-
-    protected $tipo_consulta;
-
-    protected $tabla;
-
-    protected $slug;
+    public $tries = 5;
 
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct($contratos, $tipo_consulta, $tabla, $slug)
+    public function __construct()
     {
-        $this->contratos = $contratos;
-        $this->tipo_consulta = $tipo_consulta;
-        $this->tabla = $tabla;
-        $this->slug = $slug;
+        //
     }
 
     /**
@@ -43,7 +31,7 @@ class ContratosJob implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle()
+    public function handle($event)
     {
         try {
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
@@ -60,10 +48,9 @@ class ContratosJob implements ShouldQueue
             $usuarios = User::whereIn('id', $participantes)->get();
 
             // Enviar la notificación a cada usuario
-            Notification::send($usuarios, new ContratoNotification($this->contratos, $this->tipo_consulta, $this->tabla, $this->slug));
-
-        } catch (\Exception $e) {
-            return view('errors.alerta_error', compact('e'));
+            Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }

@@ -1,21 +1,27 @@
 <div class="form-group">
     <div class="mt-2 row justify-content-start">
         <div class="form-group col-6 anima-focus">
-            <input type="text" name="title" id="title" class="form-control {{ $errors->has('title') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('title', $course->title) }}">
+            <input type="text" name="title" id="title"
+                class="form-control {{ $errors->has('title') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('title', isset($course->title) ? $course->title : '') }}">
             <label for="title">Título del curso*:</label>
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-6 anima-focus">
-            <input type="text" name="slug" id="slug" class="form-control {{ $errors->has('slug') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('slug', $course->slug) }}">
+            <input type="text" name="slug" id="slug"
+                class="form-control {{ $errors->has('slug') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('slug', isset($course->slug) ? $course->slug : '') }}">
             <label for="slug">Slug del curso*:</label>
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            <input type="text" name="subtitle" class="form-control {{ $errors->has('subtitle') ? 'border-red-600' : '' }}" placeholder="" value="{{ old('subtitle', $course->subtitle) }}">
+            <input type="text" name="subtitle"
+                class="form-control {{ $errors->has('subtitle') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('subtitle', isset($course->subtitle) ? $course->subtitle : '') }}">
             <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
             @error('subtitle')
                 <p class="text-danger">{{ $message }}</p>
@@ -29,7 +35,7 @@
                     @if ($empleado->empleado)
                         @if ($empleado->empleado->estatus == 'alta')
                             <option value="{{ $empleado->id }}"
-                                {{ isset($course) && $empleado->id == $course->empleado_id ? 'selected' : '' }}>
+                                {{ isset($course) && $empleado->id == (isset($course->empleado_id) ? $course->empleado_id : '') ? 'selected' : '' }}>
                                 {{ $empleado->name }}
                             </option>
                         @endif
@@ -42,7 +48,8 @@
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            <textarea name="description" id="description" class="form-control {{ $errors->has('description') ? 'border-red-600' : '' }}" placeholder="">{{ old('description', $course->description) }}</textarea>
+            <textarea name="description" id="description"
+                class="form-control {{ $errors->has('description') ? 'border-red-600' : '' }}" placeholder="">{{ old('description', isset($course->description) ? $course->description : '') }}</textarea>
             <label for="description">Descripción del curso:</label>
             @error('description')
                 <p class="text-danger">{{ $message }}</p>
@@ -65,8 +72,10 @@
         <div class="form-group col-6 anima-focus">
             <select name="category_id" id="category_id" class="form-control">
                 <option value="">Seleccione una opción</option>
-                @foreach($categories as $key => $value)
-                    <option value="{{ $key }}" {{ old('category_id', $selectedCategory) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @foreach ($categories as $key => $value)
+                    <option value="{{ $key }}"
+                        {{ old('category_id', isset($course->category_id) ? $course->category_id : '') == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
                 @endforeach
             </select>
             <label for="category_id">Categoría*</label>
@@ -77,8 +86,10 @@
         <div class="form-group col-6 anima-focus">
             <select name="level_id" id="level_id" class="form-control">
                 <option value="">Seleccione una opción</option>
-                @foreach($levels as $key => $value)
-                    <option value="{{ $key }}" {{ old('level_id', $selectedLevel) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                @foreach ($levels as $key => $value)
+                    <option value="{{ $key }}"
+                        {{ old('level_id', isset($course->level_id) ? $course->level_id : '') == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
                 @endforeach
             </select>
             <label for="level_id">Niveles*</label>
@@ -95,7 +106,8 @@
         <div class="col-6">
             <figure class="object-fit: container; width: 250px;height: 100px; background:green;">
                 @isset($course->image->url)
-                    <img src="{{ asset($course->image->url) }}" id="picture" alt="" style="height:100px">
+                    <img src="{{ asset(isset($course->image->url) ? $course->image->url : '') }}" id="picture"
+                        alt="" style="height:100px">
                 @else
                     <img class="object-cover object-center w-full h-64"
                         src="{{ asset('img/escuela/home/imagen-estudiantes.jpg') }}" id="picture" alt=""
@@ -104,13 +116,9 @@
             </figure>
         </div>
         <div class="col-6">
-            {{-- @isset($course)
-                <p class="mb-4">{{ $course->description }}</p>
-            @endisset --}}
             <input type="file" name="file"
-                   class="form-input w-full {{ $errors->has('file') ? 'border-red-600' : '' }}"
-                   id="file"
-                   accept="image/*">
+                class="form-input w-full {{ $errors->has('file') ? 'border-red-600' : '' }}" id="file"
+                accept="image/*">
             @error('file')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
