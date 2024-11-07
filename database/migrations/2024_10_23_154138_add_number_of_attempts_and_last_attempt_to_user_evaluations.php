@@ -28,5 +28,5 @@ return new class extends Migration
             $table->dropColumn('number_of_attempts');
             $table->dropColumn('last_attempt');
         });
-    }    
+    }
 };

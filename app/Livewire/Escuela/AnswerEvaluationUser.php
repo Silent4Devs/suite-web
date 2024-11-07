@@ -59,9 +59,13 @@ class AnswerEvaluationUser extends Component
     public $evaluacion_id;
 
     public $showRetry = false;
+
     public $retry = false;
+
     public $attempt_count = null;
+
     public $answeredQuestionsretry = [];
+
     public $last_score = null;
 
     public $tiempoRestante;
@@ -212,7 +216,7 @@ class AnswerEvaluationUser extends Component
                 $this->showRetry = false;
                 $this->retry = false;
                 $this->showResults();
-            } elseif (!$this->userEvaluationId->completed && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
+            } elseif (! $this->userEvaluationId->completed && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
                 $this->retry = true;
                 $this->startQuiz();
             } else {
@@ -227,7 +231,7 @@ class AnswerEvaluationUser extends Component
         $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
         $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
-        if ($this->percentage < 100 && !$this->retry && ($this->attempt_count > 0)) {
+        if ($this->percentage < 100 && ! $this->retry && ($this->attempt_count > 0)) {
             $this->showRetry = true;
         } else {
             $this->showRetry = false;
@@ -318,7 +322,7 @@ class AnswerEvaluationUser extends Component
 
             $this->startQuiz();
         } else {
-            dd("mensaje error");
+            dd('mensaje error');
         }
     }
 
@@ -360,7 +364,7 @@ class AnswerEvaluationUser extends Component
         $this->totalQuizQuestions = count($this->evaluation->questions);
         $this->startQuiz();
 
-        if (!$this->retry) {
+        if (! $this->retry) {
             $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
 
             $this->count = count($this->answeredQuestions) + 1;
