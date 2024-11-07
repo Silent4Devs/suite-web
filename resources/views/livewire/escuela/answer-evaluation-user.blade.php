@@ -88,7 +88,7 @@
                                 8 horas antes de poder intentarlo de nuevo.</p>
                             <button type="button" wire:click="retryEvaluation"
                                 class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
-                                Volver a intentar Evaluación
+                                Intentar Nuevamente
                                 </a>
                         </div>
                     @elseif($percentage < 100)
@@ -130,7 +130,7 @@
                                 <span>Porcentaje mas alto</span>
                             </div>
                             <div class="col-3">
-                                <span>{{ round($this->userEvaluationId->score) . '%' }}</span>
+                                <span>{{ round($userEvaluationId->score) . '%' }}</span>
                             </div>
                         </div>
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
@@ -138,7 +138,7 @@
                                 <span>Estado de la evaluación</span>
                             </div>
                             <div class="col-3">
-                                <span>{{ round($percentage) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
+                                <span>{{ round($userEvaluationId->score) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
                             </div>
                         </div>
 
