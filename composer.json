@@ -39,6 +39,7 @@
     "spatie/laravel-medialibrary": "^11.0",
     "spatie/laravel-permission": "^6.0",
     "spatie/laravel-responsecache": "^7.4",
+    "spiral/roadrunner": "^2024.2",
     "stichoza/google-translate-php": "^5.2",
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
