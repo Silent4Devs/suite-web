@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Carbon\Laravel\ServiceProvider::class,
+        Illuminate\Concurrency\ConcurrencyServiceProvider::class,
         /*
          * Package Service Providers...
          */

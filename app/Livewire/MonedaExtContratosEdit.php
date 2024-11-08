@@ -10,7 +10,7 @@ class MonedaExtContratosEdit extends Component
 {
     public $divisas;
 
-    public $tipo_cambio = '';
+    public $tipo_cambio = 'MXN';
 
     public $valor_dolar = 0;
 
@@ -35,9 +35,8 @@ class MonedaExtContratosEdit extends Component
         // $currencies = CurrencyConverter::currencies()->get();
 
         $contratos = Contrato::where('id', $id_contrato)->first();
-        // dd($contratos);
 
-        if (! empty($contratos->dolares)) {
+        if (! empty($contratos->dolares->monto_dolares)) {
             // code...
             $this->moneda_extranjera = true;
 
@@ -58,6 +57,13 @@ class MonedaExtContratosEdit extends Component
             'MXN',
             'USD',
         ];
+
+        if (session()->get('tipo_cambio', 'MXN') === null) {
+            $this->tipo_cambio = 'MXN';
+        } else {
+            session()->put('tipo_cambio', 'MXN');
+            $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
+        }
 
         // $this->divisas = [
         //     '0' => 'MXN',
@@ -123,12 +129,16 @@ class MonedaExtContratosEdit extends Component
             $this->valor_dolar = floatval($convertedAmount);
 
             $this->valorManual($this->valor_dolar);
+        } else {
+            $this->valorManual($this->valor_dolar);
         }
     }
 
     public function valorManual($val)
     {
         $valor = floatval($val);
+
+        $this->valor_dolar = $val;
 
         $this->monto_pago = (floatval($this->monto_dolares) * $valor);
 
@@ -141,10 +151,14 @@ class MonedaExtContratosEdit extends Component
 
     public function convertirME($valor, $tipo)
     {
-        $convertirDolares = CurrencyConverter::convert(1)
-            ->from($this->tipo_cambio)
-            ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-            ->format();
+        if ($this->edit_moneda) {
+            $convertirDolares = $this->valor_dolar;
+        } else {
+            $convertirDolares = CurrencyConverter::convert(1)
+                ->from($this->tipo_cambio)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+        }
 
         $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
         $conversion = number_format($conversion, 2, '.', '');

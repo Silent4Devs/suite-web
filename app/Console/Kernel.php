@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CapacitacionesReactivarIntentos;
 use App\Console\Commands\CrearEvaluacionesDesempeno;
 use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
@@ -20,9 +21,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        CapacitacionesReactivarIntentos::class,
+        EnviarCorreoFelicitaciones::class,
         NotificarRecursos::class,
         NotificarEvaluacion360::class,
-        EnviarCorreoFelicitaciones::class,
         NotificarUsuarioCapacitacion::class,
         TransferFile::class,
     ];
@@ -46,13 +48,22 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-
+        //Envia correo de felicitaciones al personal el día de su cumpleaños
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
+
+        //Reactivalas capacitaciones tras 8 horas
+        $schedule->command(CapacitacionesReactivarIntentos::class)
+            ->timezone('America/Mexico_City')
+            ->everyFifteenMinutes()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor();
+
         $schedule->command(CrearEvaluacionesDesempeno::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('09:00')

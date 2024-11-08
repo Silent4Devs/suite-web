@@ -9,7 +9,7 @@ class MonedaExtContratosCreate extends Component
 {
     public $divisas;
 
-    public $tipo_cambio = '';
+    public $tipo_cambio = 'MXN';
 
     public $valor_dolar = 0;
 
@@ -43,20 +43,20 @@ class MonedaExtContratosCreate extends Component
             'USD',
         ];
 
-        // $this->divisas = [
-        //     '0' => 'MXN',
-        //     '1' => 'USD',
-        //     '2' => 'EUR',
-        //     '3' => 'GBP',
-        //     '4' => 'CHF',
-        //     '5' => 'JPY',
-        //     '6' => 'HKD',
-        //     '7' => 'CAD',
-        //     '8' => 'CNY',
-        //     '9' => 'AUD',
-        //     '10' => 'BRL',
-        //     '11' => 'RUB',
-        // ];
+        if (session()->get('tipo_cambio', 'MXN') === null) {
+            $this->tipo_cambio = 'MXN';
+        } else {
+            session()->put('tipo_cambio', 'MXN');
+            $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
+        }
+
+        if ($this->tipo_cambio !== 'MXN') {
+            $this->moneda_extranjera = true;
+            $this->valor_dolar = CurrencyConverter::convert(1)
+                ->from($this->tipo_cambio)
+                ->to('MXN')
+                ->format();
+        }
     }
 
     public function render()
@@ -95,9 +95,16 @@ class MonedaExtContratosCreate extends Component
         ]);
     }
 
+    public function actualizarMonExt()
+    {
+        $valor_dolar = $this->valor_dolar;
+        $this->dispatch('actualizarDolares', [
+            'valor_dolar' => $valor_dolar,
+        ]);
+    }
+
     public function updatedEditMoneda($bool)
     {
-        // dd($bool);
         if (! $bool) {
             $convertedAmount = CurrencyConverter::convert(1.0)
                 ->from($this->tipo_cambio)
@@ -105,7 +112,9 @@ class MonedaExtContratosCreate extends Component
                 ->format();
 
             $this->valor_dolar = floatval($convertedAmount);
-
+            $this->actualizarMonExt();
+            $this->valorManual($this->valor_dolar);
+        } else {
             $this->valorManual($this->valor_dolar);
         }
     }
@@ -113,6 +122,8 @@ class MonedaExtContratosCreate extends Component
     public function valorManual($val)
     {
         $valor = floatval($val);
+
+        $this->valor_dolar = $val;
 
         $this->monto_pago = (floatval($this->monto_dolares) * $valor);
 
@@ -125,10 +136,14 @@ class MonedaExtContratosCreate extends Component
 
     public function convertirME($valor, $tipo)
     {
-        $convertirDolares = CurrencyConverter::convert(1)
-            ->from($this->tipo_cambio)
-            ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-            ->format();
+        if ($this->edit_moneda) {
+            $convertirDolares = $this->valor_dolar;
+        } else {
+            $convertirDolares = CurrencyConverter::convert(1)
+                ->from($this->tipo_cambio)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+        }
 
         $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
         $conversion = number_format($conversion, 2, '.', '');

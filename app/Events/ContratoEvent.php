@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-
 use App\Models\ContractManager\Contrato;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;

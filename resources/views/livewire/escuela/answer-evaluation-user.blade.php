@@ -1,5 +1,36 @@
 <div>
-    @if (!$showResults)
+    @if (!$showResults && !$showRetry && $retry)
+        <div class="p-5 mx-2 mt-4 bg-white rounded-lg shadow-lg md:p-20">
+            <strong>Descripción</strong>
+            <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluation->description !!}</div>
+            <div class="text-right pt-8">
+                <span class="p-1 font-extrabold text-gray-400">Progreso
+                    {{ $count }}/{{ $totalQuizQuestions }}</span>
+            </div>
+            <p>{{ $count }}. {{ $currentQuestion->question }}</p>
+            @foreach ($currentQuestion->answers as $answer)
+                <div class="px-3 py-3 m-3 text-sm text-gray-800 border-2 border-gray-300 rounded-lg max-w-auto form">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault{{ $answer->id }}" value="{{ $answer->id }}" wire:model="answer">
+                    <label class="form-check-label" for="flexRadioDefault{{ $answer->id }}">
+                        {{ $answer->answer }}
+                    </label>
+                </div>
+            @endforeach
+            @error('answer')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+
+
+            <div class="flex items-center justify-end mt-4">
+
+                <button wire:click="nextQuestion" type="submit"
+                    class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">
+                    {{ __('SIGUIENTE') }}
+                </button>
+            </div>
+        </div>
+    @elseif ($retry && $this->attempt_count > 0)
         <div class="p-5 mx-2 mt-4 bg-white rounded-lg shadow-lg md:p-20">
             <strong>Descripción</strong>
             <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluation->description !!}</div>
@@ -49,8 +80,25 @@
                             id="quiz-{{ $userEvaluationId }}" value="{{ round($percentage) }}" max="100">
                             {{ round($percentage) }} </progress> <span> {{ round($percentage) }}% </span>
                     </div>
+                    @if ($showRetry)
+                        <div class="items-center justify-center text-center mt-2">
+                            <p>Tienes un total de <strong>{{ $userEvaluationId->number_of_attempts }}</strong>
+                                intentos para alcanzar el 100% en la evaluación. Independientemente de si apruebas o
+                                repruebas, si no logras el 100% después de utilizar todos tus intentos, deberás esperar
+                                8 horas antes de poder intentarlo de nuevo.</p>
+                            <button type="button" wire:click="retryEvaluation"
+                                class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
+                                Intentar Nuevamente
+                                </a>
+                        </div>
+                    @elseif($percentage < 100)
+                        <div class="items-center justify-center text-center mt-2">
+                            <div wire:poll.1s="updateContador">
+                                <h3>Tiempo hasta el siguiente intento: {{ $tiempoRestante }}</h3>
+                            </div>
+                        </div>
+                    @endif
                     <div>
-
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
                             <div class="col-3">
                                 <span>Respuestas correctas</span>
@@ -69,7 +117,6 @@
                                 <span>{{ $totalQuizQuestions }}</span>
                             </div>
                         </div>
-
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
                             <div class="col-3">
                                 <span>Porcentaje</span>
@@ -80,15 +127,27 @@
                         </div>
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
                             <div class="col-3">
+                                <span>Porcentaje mas alto</span>
+                            </div>
+                            <div class="col-3">
+                                @if ($userEvaluationId->score == null || $userEvaluationId->score == 0)
+                                    <span>{{ round($percentage) . '%' }}</span>
+                                @else
+                                    <span>{{ round($userEvaluationId->score) . '%' }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
+                            <div class="col-3">
                                 <span>Estado de la evaluación</span>
                             </div>
                             <div class="col-3">
-                                <span>{{ round($percentage) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
+                                <span>{{ round($userEvaluationId->score) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
                             </div>
                         </div>
 
                     </div>
-                    <div class="flex items-center justify-end mt-4">
+                    <div class="flex items-center justify-end mt-2">
 
                         <a href="{{ route('admin.curso-estudiante', ['course' => $course->id]) }}"
                             class="inline-flex items-center px-4 py-2 m-4 btn btn-cancelar">

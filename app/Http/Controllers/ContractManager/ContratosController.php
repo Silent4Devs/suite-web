@@ -109,6 +109,8 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
+        session()->put('tipo_cambio', request('tipo_cambio'));
+
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required|max:500',
@@ -427,6 +429,8 @@ class ContratosController extends AppBaseController
 
         event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
 
+        session()->put('tipo_cambio', null);
+
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
@@ -622,6 +626,8 @@ class ContratosController extends AppBaseController
      */
     public function update($id, Request $request)
     {
+        session()->put('tipo_cambio', request('tipo_cambio'));
+
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
             'no_proyecto' => 'required',
@@ -895,6 +901,8 @@ class ContratosController extends AppBaseController
         ]);
 
         event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
+
+        session()->put('tipo_cambio', null);
 
         return response()->json([
             'status' => 'success',

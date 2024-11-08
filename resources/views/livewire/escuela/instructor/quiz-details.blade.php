@@ -121,18 +121,18 @@
                                             </div>
                                         @endif
                                     @else
-                                        @if ($answer->is_correct == '1')
+                                        {{-- @if ($answer->is_correct == '1')
                                             <div class="px-2 mt-1 bg-success text-white rounded">
                                                 <span class="mr-2">{{ $alphabet[$key] }}</span>
                                                 {{ $correctAnswer->answer }}
                                                 <span class="p-1 font-extrabold">(Correct Answer)</span>
                                             </div>
-                                        @else
-                                            <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
-                                                <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
-                                                {{ $answer->answer }}
-                                            </div>
-                                        @endif
+                                        @else --}}
+                                        <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
+                                            <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
+                                            {{ $answer->answer }}
+                                        </div>
+                                        {{-- @endif --}}
                                     @endif
                                 @endisset
                             @endforeach

@@ -210,26 +210,32 @@ class CourseStatus extends Component
             }
         }
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+        $ids = $this->evaluacionesGenerales->pluck('id');
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+        $i = $i + $results;
+
+
+        //calcular el porcentaje del curso
+        $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());
 
         return round($advance, 2);
     }
 
     public function getSectionAdvanceProperty()
     {
-        $i = 0;
+        // $i = 0;
 
-        foreach ($this->lecciones_orden as $lesson) {
-            if ($lesson->completed) {
-                $i++;
-            }
-        }
+        // foreach ($this->lecciones_orden as $lesson) {
+        //     if ($lesson->completed) {
+        //         $i++;
+        //     }
+        // }
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+        // //calcular el porcentaje de la
+        // $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-        return round($advance, 2);
+        // return round($advance, 2);
+        return $this->advance;
     }
 
     public function download()

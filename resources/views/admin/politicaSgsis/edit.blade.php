@@ -129,7 +129,11 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.politica-sgsis.index') }}" class="btn btn-outline-primary"
                         style="text-decoration: none;">Cancelar</a>
-                    <button class="btn tb-btn-primary" type="submit" style="color: white">
+                    <button id="preloaderBtn" class="btn btn-primary" type="button" disabled style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Procesando...
+                    </button>
+                    <button id="submitBtn" class="btn tb-btn-primary" type="submit" style="color: white">
                         Guardar y enviar a aprobación
                     </button>
                 </div>
@@ -153,6 +157,20 @@
 
 
 @section('scripts')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitBtn = document.getElementById('submitBtn');
+        const preloaderBtn = document.getElementById('preloaderBtn');
+
+        submitBtn.addEventListener('click', function (e) {
+            // Prevenir múltiples clics
+            submitBtn.style.display = 'none'; // Ocultar el botón de envío
+            preloaderBtn.style.display = 'inline-block'; // Mostrar el botón preloader
+        });
+    });
+</script>
+
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('politicasgsi', {

@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-
 use App\Models\PoliticaSgsi;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
