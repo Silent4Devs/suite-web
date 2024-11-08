@@ -122,10 +122,10 @@ class User extends Authenticatable implements Auditable
             throw new \Exception('No tenant initialized.');
         }
 
-        $tenantPrefix = $tenant->getTenantKey(); 
+        $tenantPrefix = $tenant->getTenantKey();
         $cacheKey = $tenantPrefix . ':Auth_user:user' . Auth::user()->id;
         $databaseName = DB::connection()->getDatabaseName();
-        //dd($cacheKey,$tenantPrefix,$tenant,Auth::user(),$databaseName);
+        //dd($cacheKey, $tenantPrefix, $tenant, Auth::user(), $databaseName);
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return Auth::user();
         });

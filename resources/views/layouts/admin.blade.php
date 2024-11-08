@@ -91,8 +91,8 @@
         use App\Models\User;
         use App\Models\Empleado;
         $databaseName = \DB::connection()->getDatabaseName();
-        
-        $usuario = User::getCurrentUser();
+        $usuario = Auth::user();
+        dd($databaseName, $usuario);
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado_id);
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
