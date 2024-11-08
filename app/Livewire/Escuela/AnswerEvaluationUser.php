@@ -197,7 +197,11 @@ class AnswerEvaluationUser extends Component
             $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
             $this->showResults = false;
 
-            $this->last_score = $this->userEvaluationId->score;
+            if ($this->userEvaluationId->score != null) {
+                $this->last_score = $this->userEvaluationId->score;
+            } else {
+                $this->last_score = $this->percentage;
+            }
             // dd($this->showResults);
             // $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
             // dd(1, $this->count, UserAnswer::Questions($this->evaluation->id)->get(), UserAnswer::Questions($this->evaluation->id)->count());
