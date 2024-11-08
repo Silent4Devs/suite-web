@@ -34,26 +34,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //https now working by nginx
-        if (env('APP_ENV') === 'production') {
-            $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
+        // if (env('APP_ENV') === 'production') {
+        //     $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
 
-            URL::forceScheme('https');
-        }
+        //     URL::forceScheme('https');
+        // }
 
-        // Carbon::setLocale(config('app.locale'));
-        Paginator::useBootstrap();
+        // // Carbon::setLocale(config('app.locale'));
+        // Paginator::useBootstrap();
 
-        Session::extend('Custom', function ($app) {
-            $files = new \Illuminate\Filesystem\Filesystem('/s');
-            $minutes = Config::get('session.lifetime');
-            $path = Config::get('session.path');
+        // Session::extend('Custom', function ($app) {
+        //     $files = new \Illuminate\Filesystem\Filesystem('/s');
+        //     $minutes = Config::get('session.lifetime');
+        //     $path = Config::get('session.path');
 
-            return new \App\Extensions\CustomSessionHandler($files, $path, $minutes);
-        });
+        //     return new \App\Extensions\CustomSessionHandler($files, $path, $minutes);
+        // });
 
-        $version_iso = VersionesIso::getFirst()->version_historico ?? null;
-        view()->composer('*', function ($view) use ($version_iso) {
-            $view->with('version_iso', $version_iso);
-        });
+        // $version_iso = VersionesIso::getFirst()->version_historico ?? null;
+        // view()->composer('*', function ($view) use ($version_iso) {
+        //     $view->with('version_iso', $version_iso);
+        // });
     }
 }
