@@ -29,7 +29,7 @@
     "predis/predis": "^2.2",
     "pusher/pusher-php-server": "^7.2",
     "realrashid/sweet-alert": "^7.1",
-    "sentry/sentry-laravel": "^4.0",
+    "sentry/sentry-laravel": "^4.10",
     "simplesoftwareio/simple-qrcode": "^4.2",
     "spatie/async": "^1.6",
     "spatie/calendar-links": "^1.6",
