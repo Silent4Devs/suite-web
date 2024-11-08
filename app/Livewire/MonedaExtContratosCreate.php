@@ -9,7 +9,7 @@ class MonedaExtContratosCreate extends Component
 {
     public $divisas;
 
-    public $tipo_cambio = '';
+    public $tipo_cambio = 'MXN';
 
     public $valor_dolar = 0;
 
@@ -43,7 +43,12 @@ class MonedaExtContratosCreate extends Component
             'USD',
         ];
 
-        $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
+        if (session()->get('tipo_cambio', 'MXN') === null) {
+            $this->tipo_cambio = "MXN";
+        } else {
+            session()->put('tipo_cambio', 'MXN');
+            $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
+        }
 
         if ($this->tipo_cambio !== 'MXN') {
             $this->moneda_extranjera = true;
