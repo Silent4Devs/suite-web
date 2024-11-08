@@ -60,7 +60,7 @@ class MonedaExtContratosEdit extends Component
         ];
 
         if (session()->get('tipo_cambio', 'MXN') === null) {
-            $this->tipo_cambio = "MXN";
+            $this->tipo_cambio = 'MXN';
         } else {
             session()->put('tipo_cambio', 'MXN');
             $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
