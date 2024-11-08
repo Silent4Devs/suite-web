@@ -35,9 +35,8 @@ class MonedaExtContratosEdit extends Component
         // $currencies = CurrencyConverter::currencies()->get();
 
         $contratos = Contrato::where('id', $id_contrato)->first();
-        // dd($contratos);
 
-        if (! empty($contratos->dolares)) {
+        if (! empty($contratos->dolares->monto_dolares)) {
             // code...
             $this->moneda_extranjera = true;
 
