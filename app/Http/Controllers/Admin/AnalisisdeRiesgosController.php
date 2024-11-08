@@ -227,9 +227,10 @@ class AnalisisdeRiesgosController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         $riskAnalysis = TBRiskAnalysisGeneralModel::FindOrFail($id);
+        // dd($riskAnalysis->riskAnalysis->id);
         $newDate = Carbon::createFromFormat('Y-m-d', $riskAnalysis->fecha)->format('d-m-Y');
         $riskAnalysis->fecha = $newDate;
-        $riskAnalysisId = $riskAnalysis->id;
+        $riskAnalysisId = $riskAnalysis->riskAnalysis->id;
         // dd($riskAnalysis);
 
         return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis','riskAnalysisId','logo_actual', 'empresa_actual'));

@@ -36,4 +36,9 @@ class TBRiskAnalysisGeneralModel extends Model
     {
         return $this->belongsTo(Norma::class, 'norma_id');
     }
+
+    public function riskAnalysis()
+    {
+        return $this->hasOne(TBRiskAnalysisModel::class,'id');
+    }
 }

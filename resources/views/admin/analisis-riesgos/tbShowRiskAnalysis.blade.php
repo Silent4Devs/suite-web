@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/templateAnalisisRiesgo/sections.css') }}">
@@ -82,6 +83,8 @@
     @livewire('analisis-riesgos.head-map-risk-two')
 
     @livewire('analisis-riesgos.form-risk-analysis', ['RiskAnalysisId' => $riskAnalysisId])
+
+    @livewire('analisis-riesgos.treatment-plan')
 @endsection
 
 @section('scripts')

@@ -50,6 +50,8 @@ class FormRiskAnalysis extends Component
     public $controlsSheet;
     public $cloneControlsSheet;
 
+    public $descriptionQuestionId;
+
     public $risks = [
         'id' => null,
         'initial' => 0,
@@ -63,16 +65,36 @@ class FormRiskAnalysis extends Component
     public $sheetForm = [
         'status' => 1, // evaluate = 1, finish = 2
         'bg' => '#FFFFD8',
+        'initial_risk_confirm' => false,
+        'residual_risk_confirm' => false,
         // 'edit' => false,
     ];
 
     public $answersForm;
 
-    protected $listeners = ['formData','saveCoordinates'];
+    protected $listeners = ['formData','saveCoordinates','riskConfirm'];
 
     public function riskConfirm()
     {
+        $sheet = TBSheetRiskAnalysisModel::find($this->sheetId);
+        if($this->sheetForm['status'] === 1){
+            $sheet->update([
+                'initial_risk_confirm' => true,
+            ]);
+        }else {
+            $sheet->update([
+                'residual_risk_confirm' => true,
+            ]);
+        }
+        // dd("change");
+        // dd($this->sheetForm['status']);
+        // $this->emit('riskConfirmMessage');
+    }
 
+    public function riskConfirmMessage()
+    {
+        // dd($this->sheetForm['status']);
+        $this->emit('riskConfirmMessage');
     }
 
     public function saveCoordinates($id)
@@ -190,7 +212,8 @@ class FormRiskAnalysis extends Component
     public function saveInitialResidualRisks($questionId, $value)
     {
         $questionFormula = TBFormulaRiskAnalysisModel::where('riesgo',true)->where('risk_analysis_id', $this->riskAnalysisId)->first();
-        $risk = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id',$this->sheetId)->first();
+        $periodSheet = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id',$this->sheetId)->first();
+        $sheet = TBSheetRiskAnalysisModel::find($periodSheet->sheet_id);
 
         // foreach ($this->questionsAnswer as $index => $questionAnswer) {
         //     $questionId = str_replace('qs-', '', $index);
@@ -205,8 +228,9 @@ class FormRiskAnalysis extends Component
 
         switch(!is_null($questionFormula)){
             case (intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 1):
+
                 // dd($this->questionsAnswer, $this->scalesCoordinates);
-                $risk->update([
+                $periodSheet->update([
                     'initial_risk' => $value,
                     'initial_coordinate_y' => $commonKeys[0],
                     'initial_coordinate_x' => $commonKeys[1],
@@ -215,7 +239,7 @@ class FormRiskAnalysis extends Component
                 ]);
                 break;
             case (intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 2):
-                $risk->update([
+                $periodSheet->update([
                     'residual_risk' => $value,
                     'residual_coordinate_y' => $commonKeys[0],
                     'residual_coordinate_x' => $commonKeys[1],
@@ -224,6 +248,28 @@ class FormRiskAnalysis extends Component
             default:
                 break;
         }
+
+        foreach($this->scales as $scale){
+            // dump($scale->valor);
+            switch(true){
+                case (!is_null($value) && $value <= $scale->valor):
+                    // dump($scale);
+                    if ($scale->riesgo_aceptable === true) {
+                        $sheet->update([
+                            'require_treatment_plan' => false,
+                        ]);
+                        break 2;
+                    } else {
+                        $sheet->update([
+                            'require_treatment_plan' => true,
+                        ]);
+                        break 2;
+                    }
+                    break;
+                    default:
+                    break;
+                }
+            }
 
         // dd($this->scalesCoordinates);
         // $formula =  $questionFormula->formula;
@@ -339,6 +385,7 @@ class FormRiskAnalysis extends Component
     public function chageStatusForm($status, $id)
     {
         $this->sheetId = $id;
+
         // dd($id);
         $this->sheetForm['status'] = $status;
         $this->sheetForm['bg'] = match ($status) {
@@ -622,6 +669,9 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
+
+        $this->emitTo('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
+        // $this->emit('TreatmentPlan',$this->period_id);
 
         // if ($this->sheetId) {
         //     $this->getControlsSheet();

@@ -103,16 +103,20 @@
                                         </i>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        @if (!$sheetTable->sheet->initial_risk_confirm)
                                         <li><a class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#formRiskAnalysis"
                                                 wire:click="chageStatusForm(1,{{ $sheetTable->sheet->id }})">
                                                 <p class="m-0">Evaluar/editar formulario</p>
                                             </a></li>
+                                        @endif
+                                        @if ($sheetTable->sheet->initial_risk_confirm)
                                         <li><a class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#formRiskAnalysis"
                                                 wire:click="chageStatusForm(2,{{ $sheetTable->sheet->id }})">
                                                 <p class="m-0">Finalizar /editar formulario</p>
                                             </a></li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>
@@ -242,7 +246,7 @@
                     <div class="d-flex justify-content-end gap-3">
                         <button type="button" class="btn tb-btn-secondary" data-dismiss="modal"
                             onclick="limpiarFormulario()">CANCELAR</button>
-                        <button  class="btn tb-btn-primary">CONFIRMAR RIESGO {{$sheetForm['status'] === 2 ? 'RESIDUAL':'INICIAL'}}</button>
+                        <button wire:click="riskConfirmMessage"  class="btn tb-btn-primary">CONFIRMAR RIESGO {{$sheetForm['status'] === 2 ? 'RESIDUAL':'INICIAL'}}</button>
                     </div>
 
                     {{-- <div class="card" style="width: 100%; margin:0px;">
@@ -530,24 +534,57 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
-        }
-      });
+        Livewire.on("riskConfirmMessage", () => {
+            Swal.fire({
+                html: `
+                <h3 class="mb-0" style="color:#575757; font-size:22px;"><strong>Confirmar riesgo </strong></h3>
+                <h6 style="color:#575757;"><strong>¿Estás seguro que deseas realizar esta accion?</strong></h6>
+                <h6>Esta acción será permanente y no podrá deshacerse</h6>
+                `,
+                showCancelButton: true,
+                customClass: {
+                    title: 'custom-title',
+                    confirmButton: 'btn tb-btn-primary',
+                    cancelButton: 'custom-cancel-button'
+                },
+                confirmButtonText: "Confirmar Riesgo",
+                cancelButtonText: "Regresar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('riskConfirm');
+                    Swal.fire({
+                        title: "Confirmado",
+                        text: "El riesgo se confirmo con éxito",
+                        icon: "success"
+                    });
+                }
+            });
+        })
     });
 </script>
+
+    {{-- <script>
+        document.addEventListener('deleteMessage', event => {
+            Swal.fire({
+                title: "Eliminar este elemento",
+                text: "¿Estás seguro de querer eliminar este registro?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // @this.call('delete');
+                    Swal.fire({
+                    title: "Eliminado",
+                    text: "El registro se eliminó exitosamente",
+                    icon: "success"
+                    });
+                }
+            });
+        });
+    </script> --}}
 
 </div>

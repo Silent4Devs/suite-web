@@ -20,6 +20,11 @@ class TBRiskAnalysisModel extends Model
     ];
 
     //Relations
+    public function riskAnalysisGeneral()
+    {
+        return $this->belongsTo(TBRiskAnalysisGeneralModel::class, 'general_id');
+    }
+
     public function norma()
     {
         return $this->belongsTo(Norma::class, 'norma_id');

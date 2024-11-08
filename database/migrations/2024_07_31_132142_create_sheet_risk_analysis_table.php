@@ -16,7 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('risk_analysis_id')->nullable();
             $table->boolean('initial_risk_confirm')->nullable();
             $table->boolean('residual_risk_confirm')->nullable();
+            $table->boolean('require_treatment_plan')->nullable();
+            $table->unsignedBigInteger('treatment_plan_id')->nullable();
             $table->foreign('risk_analysis_id')->references('id')->on('risk_analysis')->onDelete('cascade');
+            $table->foreign('treatment_plan_id')->references('id')->on('plan_implementacions')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
