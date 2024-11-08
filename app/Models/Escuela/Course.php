@@ -86,7 +86,7 @@ class Course extends Model implements Auditable
                 }
             }
 
-            $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
+            $querys_unidos = $sectionsRegisters;
 
             return $querys_unidos;
         } else {
