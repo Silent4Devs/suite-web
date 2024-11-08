@@ -130,7 +130,11 @@
                                 <span>Porcentaje mas alto</span>
                             </div>
                             <div class="col-3">
-                                <span>{{ round($userEvaluationId->score) . '%' }}</span>
+                                @if ($userEvaluationId->score == null || $userEvaluationId->score == 0)
+                                    <span>{{ round($percentage) . '%' }}</span>
+                                @else
+                                    <span>{{ round($userEvaluationId->score) . '%' }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="p-4 m-3 rounded row" style="background-color:#CDD7E1;">
