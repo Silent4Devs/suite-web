@@ -36,7 +36,7 @@ class CourseUser extends Model implements Auditable
     public function getCompletadoAttribute() {
         $sections = Section::where('course_id', $this->course_id)->get();
 
-        $evaluaciones = Evaluation::getAll()->where('course_id', $this->course_id);
+        $evaluaciones = Evaluation::getAll()->where('course_id', 24);
 
         $i = 0;
         $i_less = 0;

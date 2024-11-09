@@ -8,7 +8,7 @@
     <h6>Mis Certificaciones</h6>
 
     @foreach ($cursosUser as $cursoUser)
-        @if ($cursoUser->completado == 100)
+        @if ($cursoUser->completado == 100 && $cursoUser->curso->certificado)
             <div class="card card-body mt-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex justify-content-between align-items-center gap-3">
@@ -23,8 +23,8 @@
                         certificado</button>
                 </div>
             </div>
-            <div id="certificado-{{ $cursoUser->curso->id }}" class="solo-print">
 
+            <div id="certificado-{{ $cursoUser->curso->id }}" class="solo-print">
                 <img src="{{ $cursoUser->curso->certificado_ruta }}" class="certificado-img" alt="">
                 <div class="content-certificado">
                     <div class="curso-title">
