@@ -41,7 +41,10 @@ class RequisicionesListener implements ShouldQueue
     {
 
         // //Colaboradores
-        $user = User::getCurrentUser(); //Solicitante
+        $auth = Auth::user(); //Solicitante
+        $user = User::where('id', $auth->id)->first(); //Solicitante
+        $empleado = $user->empleado;
+        // dd($user, $auth, $empleado);
         // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
@@ -131,7 +134,7 @@ class RequisicionesListener implements ShouldQueue
                 // $disponibilidad = DisponibilidadEmpleados::where('empleado_id', $supervisor->empleado_id)->first();
 
                 try {
-                    $supervisor = $this->responsableJefe($user->empleado);
+                    $supervisor = $this->responsableJefe($empleado);
                     $responsablefinanzas = $this->responsableFinanzas();
 
                     if ($supervisor->disponibilidad === 1) {
