@@ -42,8 +42,8 @@ class RequisicionesListener implements ShouldQueue
 
         // //Colaboradores
         try {
-        $user = User::where('id', $event->requsicion->id_user)->first(); //Solicitante
-        $empleado = Empleado::where('email', $user->email)->first();
+            $user = User::where('id', $event->requsicion->id_user)->first(); //Solicitante
+            $empleado = Empleado::where('email', $user->email)->first();
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -51,39 +51,46 @@ class RequisicionesListener implements ShouldQueue
         // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
+                try {
+                    $firmas = FirmasRequisiciones::with(
+                        'solicitante',
+                        'jefe',
+                        'responsableFinanzas',
+                        'comprador'
+                    )->where('requisicion_id', $event->requsicion->id)->first();
 
-                $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
+                    $involucradosRQOC = collect();
 
-                $involucradosRQOC = collect();
+                    // requisiciones
+                    if ($event->requsicion->firma_solicitante !== null) {
+                        $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
+                            ->first();
 
-                // requisiciones
-                if ($event->requsicion->firma_solicitante !== null) {
-                    $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
-                        ->first();
-                    $involucradosRQOC->push($user_solicitante);
-                }
+                        Notification::send($user_solicitante, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
 
-                if ($event->requsicion->firma_jefe !== null) {
-                    $user_jefe = User::where('empleado_id', $firmas->jefe->id)
-                        ->first();
-                    $involucradosRQOC->push($user_jefe);
-                }
+                    if ($event->requsicion->firma_jefe !== null) {
+                        $user_jefe = User::where('empleado_id', $firmas->jefe->id)
+                            ->first();
 
-                if ($event->requsicion->firma_finanzas !== null) {
-                    $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
-                        ->first();
-                    $involucradosRQOC->push($user_finanzas);
-                }
+                        Notification::send($user_jefe, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
 
-                if ($event->requsicion->firma_compras !== null) {
-                    $user_compras = User::where('empleado_id', $firmas->comprador->id)
-                        ->first();
-                    $involucradosRQOC->push($user_compras);
-                }
+                    if ($event->requsicion->firma_finanzas !== null) {
+                        $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
+                            ->first();
 
-                foreach ($involucradosRQOC as $keyINV => $involucrado) {
-                    // code...
-                    Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                        Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
+
+                    if ($event->requsicion->firma_compras !== null) {
+                        $user_compras = User::where('empleado_id', $firmas->comprador->id)
+                            ->first();
+
+                        Notification::send($user_compras, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
+                } catch (\Throwable $th) {
+                    dd($th);
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
 
