@@ -33,7 +33,8 @@ class CourseUser extends Model implements Auditable
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    public function getCompletadoAttribute() {
+    public function getCompletadoAttribute()
+    {
         $sections = Section::where('course_id', $this->course_id)->get();
 
         $evaluaciones = Evaluation::getAll()->where('course_id', 24);
@@ -56,7 +57,6 @@ class CourseUser extends Model implements Auditable
 
         //calcular el porcentaje de la
         $advance = ($i * 100) / ($i_less + $evaluaciones->count());
-
 
         return round($advance, 2);
     }
