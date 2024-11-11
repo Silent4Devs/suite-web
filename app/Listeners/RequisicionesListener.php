@@ -204,9 +204,13 @@ class RequisicionesListener implements ShouldQueue
                     }
                 }
             } catch (\Throwable $th) {
-                //throw $th;
+                dd($th);
             }
         }
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+
     }
 
     public function responsableJefe($empleado)
