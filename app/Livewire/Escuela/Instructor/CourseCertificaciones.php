@@ -1,23 +1,25 @@
 <?php
 
 namespace App\Livewire\Escuela\Instructor;
-use App\Models\Escuela\Course;
 
 use Livewire\Component;
 
 class CourseCertificaciones extends Component
 {
     public $course;
+
     public $habilitar_certificado;
 
-    public function updatedHabilitarCertificado($value) {
+    public function updatedHabilitarCertificado($value)
+    {
         $this->habilitar_certificado = $value;
         $this->course->update([
             'certificado' => $value ? 1 : 0,
         ]);
     }
 
-    public function mount($course) {
+    public function mount($course)
+    {
         $this->course = $course;
     }
 
@@ -26,17 +28,18 @@ class CourseCertificaciones extends Component
         return view('livewire.escuela.instructor.course-certificaciones');
     }
 
-    public function addFirma($data) {
+    public function addFirma($data)
+    {
 
         $this->course->update([
             'firma_instructor' => $data['firma_instructor'],
         ]);
     }
 
-    public function selectCert($cert) {
+    public function selectCert($cert)
+    {
         $this->course->update([
             'certificado' => $cert,
         ]);
     }
 }
-

@@ -194,18 +194,20 @@ class Course extends Model implements Auditable
         return null;
     }
 
-    public function getCertificadoRutaAttribute() {
+    public function getCertificadoRutaAttribute()
+    {
         if ($this->certificado) {
-            return asset('img/escuela/certificaciones/certificado' . $this->certificado . '.png');
-        }else{
+            return asset('img/escuela/certificaciones/certificado'.$this->certificado.'.png');
+        } else {
             return null;
         }
     }
 
-    public function getFirmaInstructorRutaAttribute() {
+    public function getFirmaInstructorRutaAttribute()
+    {
         if ($this->firma_instructor) {
-            return asset('storage/cursos/firmas-instructores/' . $this->firma_instructor);
-        }else{
+            return asset('storage/cursos/firmas-instructores/'.$this->firma_instructor);
+        } else {
             return null;
         }
     }
