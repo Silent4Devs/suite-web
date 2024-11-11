@@ -104,8 +104,10 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+        $this->dispatch('render');
 
         return view('livewire.escuela.course-status');
+
     }
 
     //METODOS
