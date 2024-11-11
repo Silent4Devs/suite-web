@@ -21,7 +21,7 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
-    protected $append = ['sections_order', 'rating', 'last_finished_lesson'];
+    protected $append = ['sections_order', 'rating', 'last_finished_lesson', 'certificado_ruta'];
 
     const BORRADOR = 1;
 
@@ -192,5 +192,21 @@ class Course extends Model implements Auditable
         }
 
         return null;
+    }
+
+    public function getCertificadoRutaAttribute() {
+        if ($this->certificado) {
+            return asset('img/escuela/certificaciones/certificado' . $this->certificado . '.png');
+        }else{
+            return null;
+        }
+    }
+
+    public function getFirmaInstructorRutaAttribute() {
+        if ($this->firma_instructor) {
+            return asset('storage/cursos/firmas-instructores/' . $this->firma_instructor);
+        }else{
+            return null;
+        }
     }
 }

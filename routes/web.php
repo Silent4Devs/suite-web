@@ -83,6 +83,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
     Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
+    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
     //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users

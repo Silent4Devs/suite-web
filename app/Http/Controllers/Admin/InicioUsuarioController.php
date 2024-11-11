@@ -46,6 +46,8 @@ use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\User;
+use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\VersionesIso;
 use App\Services\SentimentService;
 use Carbon\Carbon;
@@ -1312,5 +1314,14 @@ class InicioUsuarioController extends Controller
         $cambioED->update([
             'disponibilidad' => $request->cambiar,
         ]);
+    }
+
+    public function misCursos()
+    {
+        $user = User::getCurrentUser();
+
+        $cursosUser = CourseUser::where('user_id', $user->id)->get();
+
+        return view('admin.inicioUsuario.mis-cursos', compact('cursosUser', 'user'));
     }
 }
