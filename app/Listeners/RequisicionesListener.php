@@ -39,18 +39,8 @@ class RequisicionesListener implements ShouldQueue
     public function handle($event)
     {
 
-        // try {
-        //     $user = User::getCurrentUser();
-        //     $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
-        //     Notification::send($supervisor, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
-        // } catch (\Throwable $th) {
-        //     dd($th);
-        // }
-
-        // //Colaboradores
-        $user = User::getCurrentUser(); //Solicitante
-        // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
-
+        try {
+            $user = User::getCurrentUser();
         if ($event->tipo_consulta == 'cancelarRequisicion') {
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
@@ -215,9 +205,13 @@ class RequisicionesListener implements ShouldQueue
                     }
                 }
             } catch (\Throwable $th) {
-                //throw $th;
+                dd($th);
             }
         }
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+
     }
 
     public function responsableJefe($user)
