@@ -42,8 +42,7 @@ class RequisicionesListener implements ShouldQueue
 
         // //Colaboradores
         try {
-        $auth = auth()->user()->id;
-        $user = User::where('id', $auth)->first(); //Solicitante
+        $user = User::where('id', Auth::user()->id)->first(); //Solicitante
         $empleado = Empleado::where('email', $user->email)->first();
         } catch (\Throwable $th) {
             dd($th);
