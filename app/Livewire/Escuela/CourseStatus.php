@@ -209,14 +209,18 @@ class CourseStatus extends Component
                 $i++;
             }
         }
-
-        $ids = $this->evaluacionesGenerales->pluck('id');
+        $evaluations_count = 0;
+        if (isset($this->evaluacionesGenerales)) {
+            $ids = $this->evaluacionesGenerales->pluck('id');
+            $evaluations_count = $this->evaluacionesGenerales->count();
+        } else {
+            $ids = [];
+        }
         $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
-
         //calcular el porcentaje del curso
-        $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());
+        $advance = ($i * 100) / ($this->lecciones_orden->count() + $evaluations_count);
 
         return round($advance, 2);
     }

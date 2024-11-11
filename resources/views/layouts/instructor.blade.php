@@ -206,7 +206,7 @@
         </div>
     </div>
     <div class="tab-pane mb-4 fade" id="nav-certificaciones-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
-        certs
+        @livewire('escuela.instructor.course-certificaciones', ['course' => $course], key('course-audiences' . $course->id))
     </div>
     <script>
         function cambiarPestana(tab) {
