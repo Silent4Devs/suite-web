@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Notifications\RequisicionesNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class RequisicionesListener implements ShouldQueue
@@ -39,23 +40,13 @@ class RequisicionesListener implements ShouldQueue
     public function handle($event)
     {
 
-        // try {
-        //     $user = User::getCurrentUser();
-        //     $supervisor = User::where('email', trim(removeUnicodeCharacters($user->empleado->supervisor->email)))->first();
-        //     Notification::send($supervisor, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
-        // } catch (\Throwable $th) {
-        //     dd($th);
-        // }
-
         // //Colaboradores
         $user = User::getCurrentUser(); //Solicitante
         // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
-
+        // dd($user->empleado);
         if ($event->tipo_consulta == 'cancelarRequisicion') {
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
-
-            $user = User::where('id', $event->requsicion->id_user)->first();
 
             $involucradosRQOC = collect();
 
@@ -91,8 +82,6 @@ class RequisicionesListener implements ShouldQueue
         } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
-
-            $user = User::where('id', $event->requsicion->id_user)->first();
 
             $involucradosRQOC = collect();
 
@@ -142,7 +131,7 @@ class RequisicionesListener implements ShouldQueue
             // $disponibilidad = DisponibilidadEmpleados::where('empleado_id', $supervisor->empleado_id)->first();
 
             try {
-                $supervisor = $this->responsableJefe($user);
+                $supervisor = $this->responsableJefe($user->empleado);
                 $responsablefinanzas = $this->responsableFinanzas();
 
                 if ($supervisor->disponibilidad === 1) {
@@ -220,14 +209,14 @@ class RequisicionesListener implements ShouldQueue
         }
     }
 
-    public function responsableJefe($user)
+    public function responsableJefe($empleado)
     {
         //Llamamos lista de lideres
         $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
         //Traemos participantes
         $listaPart = $listaReq->participantes;
 
-        $jefe = $user->empleado->supervisor;
+        $jefe = $empleado->supervisor;
         //Buscamos al supervisor por su id
         $supList = $listaPart->where('empleado_id', $jefe->id)->first();
 
