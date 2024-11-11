@@ -41,10 +41,13 @@ class RequisicionesListener implements ShouldQueue
     {
 
         // //Colaboradores
+        try {
         $auth = Auth::user();
         $user = User::where('id', $auth->id)->first(); //Solicitante
         $empleado = Empleado::where('email', $user->email)->first();
-
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
         // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
         try {
