@@ -225,10 +225,10 @@ class AnswerEvaluationUser extends Component
                     $this->showRetry = false;
                     $this->retry = false;
                     $this->showResults();
-                } elseif ((!$this->userEvaluationId->completed) && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
+                } elseif ((! $this->userEvaluationId->completed) && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
                     $this->retry = true;
                     $this->currentQuestion = $this->getNextQuestion();
-                } elseif ((!$this->userEvaluationId->completed) && ($this->userEvaluationId->score == 0) && ($this->attempt_count > 0)) {
+                } elseif ((! $this->userEvaluationId->completed) && ($this->userEvaluationId->score == 0) && ($this->attempt_count > 0)) {
                     $this->showRetry = false;
                     $this->showResults = false;
                     $this->retry = false;
@@ -390,6 +390,7 @@ class AnswerEvaluationUser extends Component
             // dd(2);
             $this->count = ($this->totalQuizQuestions + 1) - count($this->answeredQuestionsretry);
         }
+
         // dd(3);
         return view('livewire.escuela.answer-evaluation-user');
     }

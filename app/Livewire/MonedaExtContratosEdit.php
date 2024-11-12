@@ -40,7 +40,7 @@ class MonedaExtContratosEdit extends Component
             // code...
             $this->moneda_extranjera = true;
 
-            $this->tipo_cambio = $contratos->tipo_cambio ?? "MXN";
+            $this->tipo_cambio = $contratos->tipo_cambio ?? 'MXN';
 
             $this->valor_dolar = $contratos->dolares->valor_dolar ?? 0;
 
