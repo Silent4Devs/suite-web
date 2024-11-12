@@ -65,12 +65,15 @@ COPY . /var/www/html
 RUN mkdir -p storage/framework/cache storage/framework/views \
     && chown -R www-data:www-data storage bootstrap/cache
 
-# Instalar Laravel Octane y Frankephp usando Composer
+# Instalar Laravel Octane y FrankenPHP usando Composer
 RUN composer require laravel/octane
 
 # Instalar Laravel Octane
 RUN php artisan octane:install
 
-# Exponer el puerto para Frankephp
+
+# Exponer el puerto 9000
 EXPOSE 9000
 
+# Comando para iniciar el servidor de Octane con FrankenPHP
+CMD ["php", "artisan", "octane:start", "--server=frankenphp", "--host=0.0.0.0", "--port=9000"]

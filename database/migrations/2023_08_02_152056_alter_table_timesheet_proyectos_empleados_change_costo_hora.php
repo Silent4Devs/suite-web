@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('timesheet_proyectos_empleados', function (Blueprint $table) {
-            //
-            $table->unsignedFloat('horas_asignadas', 8, 2)->change();
-            $table->unsignedFloat('costo_hora', 8, 2)->change();
-        });
+        // Schema::table('timesheet_proyectos_empleados', function (Blueprint $table) {
+        //     //
+        //     $table->unsignedFloat('horas_asignadas', 8, 2)->change();
+        //     $table->unsignedFloat('costo_hora', 8, 2)->change();
+        // });
 
-        Schema::table('timesheet_proyectos_proveedores', function (Blueprint $table) {
-            //
-            $table->unsignedFloat('horas_tercero', 8, 2)->change();
-            $table->unsignedFloat('costo_tercero', 8, 2)->change();
-        });
+        // Schema::table('timesheet_proyectos_proveedores', function (Blueprint $table) {
+        //     //
+        //     $table->unsignedFloat('horas_tercero', 8, 2)->change();
+        //     $table->unsignedFloat('costo_tercero', 8, 2)->change();
+        // });
     }
 
     /**
@@ -33,8 +33,5 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('timesheet_proyectos_empleados', function (Blueprint $table) {
-            //
-        });
     }
 };

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('preguntas_template_analisisde_brechas', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('seccion_id');
-            $table->longText('pregunta');
-            $table->bigInteger('numero_pregunta');
-            $table->foreign('seccion_id')->references('id')->on('secciones_template_analisisde_brechas')->onDelete('cascade');
-            $table->timestamps();
-        });
+        // Schema::create('preguntas_template_analisisde_brechas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedBigInteger('seccion_id');
+        //     $table->longText('pregunta');
+        //     $table->bigInteger('numero_pregunta');
+        //     $table->foreign('seccion_id')->references('id')->on('secciones_template_analisisde_brechas')->onDelete('cascade');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('preguntas_template_analisisde_brechas');
+        // Schema::dropIfExists('preguntas_template_analisisde_brechas');
     }
 };

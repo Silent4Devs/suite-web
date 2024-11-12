@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
-            //
-            $table->unsignedBigInteger('ev_analisis_template_id')->nullable();
+        // Schema::table('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
+        //     //
+        //     $table->unsignedBigInteger('ev_analisis_template_id')->nullable();
 
-            $table->foreign('ev_analisis_template_id')->references('id')->on('evaluacion_templates_analisis_brechas')->onDelete('cascade');
-        });
+        //     $table->foreign('ev_analisis_template_id')->references('id')->on('evaluacion_templates_analisis_brechas')->onDelete('cascade');
+        // });
     }
 
     /**
@@ -24,9 +24,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
-            //
-            $table->dropConstrainedForeignId('ev_analisis_template_id');
-        });
+        // Schema::table('respuestas_evaluacion_analisis_brechas', function (Blueprint $table) {
+        //     //
+        //     $table->dropConstrainedForeignId('ev_analisis_template_id');
+        // });
     }
 };
