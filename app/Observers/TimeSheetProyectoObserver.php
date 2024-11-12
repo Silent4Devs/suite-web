@@ -15,7 +15,7 @@ class TimeSheetProyectoObserver
      */
     public function created(TimeSheetProyecto $timeSheetProyecto)
     {
-        event(new TimesheetProyectoEvent($timeSheetProyecto, 'createProyectos', 'timesheet_proyectos', 'Proyecto'));
+        // event(new TimesheetProyectoEvent($timeSheetProyecto, 'createProyectos', 'timesheet_proyectos', 'Proyecto'));
         $this->forgetCache();
     }
 
@@ -26,7 +26,7 @@ class TimeSheetProyectoObserver
      */
     public function updated(TimeSheetProyecto $timeSheetProyecto)
     {
-        event(new TimesheetProyectoEvent($timeSheetProyecto, 'updateProyectos', 'timesheet_proyectos', 'Proyecto'));
+        // event(new TimesheetProyectoEvent($timeSheetProyecto, 'updateProyectos', 'timesheet_proyectos', 'Proyecto'));
         $this->forgetCache();
     }
 
