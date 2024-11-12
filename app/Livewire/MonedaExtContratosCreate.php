@@ -125,11 +125,12 @@ class MonedaExtContratosCreate extends Component
 
         $this->valor_dolar = $val;
 
-        $this->monto_pago = (floatval($this->monto_dolares) * $valor);
+        // Usa bcmul para multiplicar la cantidad por la tasa de cambio con 2 decimales
+        $this->monto_pago = bcmul($valor, (floatval($this->monto_dolares)), 2);
 
-        $this->maximo = (floatval($this->maximo_dolares) * $valor);
+        $this->maximo = bcmul($valor, (floatval($this->maximo_dolares)), 2);
 
-        $this->minimo = (floatval($this->minimo_dolares) * $valor);
+        $this->minimo = bcmul($valor, (floatval($this->minimo_dolares)), 2);
 
         $this->actualizarMontos();
     }
@@ -145,7 +146,7 @@ class MonedaExtContratosCreate extends Component
                 ->format();
         }
 
-        $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
+        $conversion = floor(bcmul(floatval($convertirDolares), floatval($valor), 2) * 100) / 100;
         $conversion = number_format($conversion, 2, '.', '');
 
         switch ($tipo) {
