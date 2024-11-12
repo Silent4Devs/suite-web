@@ -1,5 +1,5 @@
 <div>
-    @if (!$showResults && !$showRetry && $retry)
+    @if (!$showResults && !$showRetry && !$retry)
         <div class="p-5 mx-2 mt-4 bg-white rounded-lg shadow-lg md:p-20">
             <strong>Descripción</strong>
             <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluation->description !!}</div>
@@ -86,10 +86,17 @@
                                 intentos para alcanzar el 100% en la evaluación. Independientemente de si apruebas o
                                 repruebas, si no logras el 100% después de utilizar todos tus intentos, deberás esperar
                                 8 horas antes de poder intentarlo de nuevo.</p>
-                            <button type="button" wire:click="retryEvaluation"
-                                class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
-                                Intentar Nuevamente
-                                </a>
+
+                            <div wire:loading.remove>
+                                <button type="button" wire:click="retryEvaluation"
+                                    class="inline-flex items-center px-4 py-2 m-4 btn btn-primary">
+                                    Intentar Nuevamente
+                                </button>
+                            </div>
+
+                            <div wire:loading wire:target="retryEvaluation">
+                                Cargando Evaluación.
+                            </div>
                         </div>
                     @elseif($percentage < 100)
                         <div class="items-center justify-center text-center mt-2">
@@ -130,7 +137,7 @@
                                 <span>Porcentaje mas alto</span>
                             </div>
                             <div class="col-3">
-                                @if ($userEvaluationId->score == null || $userEvaluationId->score == 0)
+                                @if ($userEvaluationId->score == null)
                                     <span>{{ round($percentage) . '%' }}</span>
                                 @else
                                     <span>{{ round($userEvaluationId->score) . '%' }}</span>
@@ -150,7 +157,7 @@
                     <div class="flex items-center justify-end mt-2">
 
                         <a href="{{ route('admin.curso-estudiante', ['course' => $course->id]) }}"
-                            class="inline-flex items-center px-4 py-2 m-4 btn btn-cancelar">
+                            class="btn btn-secondary">
                             Regresar
                         </a>
 
