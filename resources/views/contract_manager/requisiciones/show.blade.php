@@ -314,7 +314,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_solicitante)
                                 <img src="{{ $requisicion->firma_solicitante }}" class="img-firma">
-                                <p>{{ $requisicion->user }}</p>
+                                <p>{{ $firma_siguiente->solicitante->name ?? '' }}</p>
                                 <p>{{ $requisicion->fecha_firma_solicitante_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -327,11 +327,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_jefe)
                                 <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
-                                <p>
-                                    @isset($supervisor)
-                                        {{ $supervisor }}
-                                    @endisset
-                                </p>
+                                <p>{{ $firma_siguiente->jefe->name ?? '' }}</p>
                                 <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -346,7 +342,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas)
                                 <img src="{{ $requisicion->firma_finanzas }}" class="img-firma">
-                                <p>{{ $firma_finanzas ?? '' }}</p>
+                                <p>{{ $firma_siguiente->responsableFinanzas->name ?? '' }} </p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -359,7 +355,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_compras)
                                 <img src="{{ $requisicion->firma_compras }}" class="img-firma">
-                                <p>{{ $requisicion->comprador->user->name }} </p>
+                                <p>{{ $requisicion->comprador->user->name ?? '' }} </p>
                                 <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
