@@ -104,12 +104,18 @@ class AnswerEvaluationUser extends Component
             //If the quiz size is greater then actual questions available in the quiz sections,
             //Finish the quiz and take the user to results page on exhausting all question from a given section.
             if ($question === null) {
+
                 $this->retry = false;
+
+                $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
+                $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
+                $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
+
                 //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
                 $this->userEvaluationId->quiz_size = $this->count - 1;
                 $this->userEvaluationId->completed = true;
 
-                if ($this->last_score < $this->percentage) {
+                if (($this->userEvaluationId->score < $this->percentage)) {
                     $this->userEvaluationId->score = $this->percentage;
                 }
 
@@ -142,11 +148,14 @@ class AnswerEvaluationUser extends Component
             //If the quiz size is greater then actual questions available in the quiz sections,
             //Finish the quiz and take the user to results page on exhausting all question from a given section.
             if ($question === null) {
+                $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
+                $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
+                $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
                 //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
                 $this->userEvaluationId->quiz_size = $this->count - 1;
                 $this->userEvaluationId->completed = true;
 
-                if ($this->last_score < $this->percentage) {
+                if (($this->userEvaluationId->score < $this->percentage)) {
                     $this->userEvaluationId->score = $this->percentage;
                 }
 
@@ -185,46 +194,48 @@ class AnswerEvaluationUser extends Component
 
             // Get the first/next question for the quiz.
             // Since we are using LiveWire component for quiz, the first quesiton and answers will be displayed through mount function.
-            $this->currentQuestion = $this->getNextQuestion();
             $this->setupQuiz = false;
             $this->quizInProgress = true;
-        } elseif ($this->retry && ($this->attempt_count > 0)) {
-            $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
-            $this->userEvaluationId->update(['completed' => false]);
-            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
-            $this->count = 1;
-
-            $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
-            $this->showResults = false;
-
-            if ($this->userEvaluationId->score != null) {
-                $this->last_score = $this->userEvaluationId->score;
-            } else {
-                $this->last_score = $this->percentage;
-            }
-            // dd($this->showResults);
-            // $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
-            // dd(1, $this->count, UserAnswer::Questions($this->evaluation->id)->get(), UserAnswer::Questions($this->evaluation->id)->count());
-
-            // Get the first/next question for the quiz.
-            // Since we are using LiveWire component for quiz, the first quesiton and answers will be displayed through mount function.
+            $this->retry = false;
             $this->currentQuestion = $this->getNextQuestion();
-            $this->setupQuiz = false;
-            $this->quizInProgress = true;
         } else {
+
             $this->userEvaluationId = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('evaluation_id', $this->evaluation->id)->first();
-            $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
-            $this->attempt_count = $this->userEvaluationId->number_of_attempts;
-            // dd($this->userEvaluationId->completed, ($this->userEvaluationId->score != 0), $this->attempt_count > 0);
-            if ($this->userEvaluationId->completed && $this->attempt_count > 0) {
-                $this->showRetry = false;
-                $this->retry = false;
-                $this->showResults();
-            } elseif (! $this->userEvaluationId->completed && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
-                $this->retry = true;
-                $this->startQuiz();
+
+            if (($this->userEvaluationId->completed) && ($this->retry) && ($this->attempt_count > 0)) {
+
+                $this->userEvaluationId->update(['completed' => false]);
+                $this->attempt_count = $this->userEvaluationId->number_of_attempts;
+                $this->count = 1;
+
+                $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
+                $this->showResults = false;
+
+                // Get the first/next question for the quiz.
+                // Since we are using LiveWire component for quiz, the first quesiton and answers will be displayed through mount function.
+                $this->currentQuestion = $this->getNextQuestion();
+                $this->setupQuiz = false;
+                $this->quizInProgress = true;
             } else {
-                $this->showResults();
+
+                $this->count = UserAnswer::Questions($this->evaluation->id)->count() == 0 ? 1 : UserAnswer::Questions($this->evaluation->id)->count();
+                $this->attempt_count = $this->userEvaluationId->number_of_attempts;
+                // dd($this->userEvaluationId->completed, ($this->userEvaluationId->score != 0), $this->attempt_count > 0);
+                if ($this->userEvaluationId->completed && $this->attempt_count > 0) {
+                    $this->showRetry = false;
+                    $this->retry = false;
+                    $this->showResults();
+                } elseif ((! $this->userEvaluationId->completed) && ($this->userEvaluationId->score != 0) && ($this->attempt_count > 0)) {
+                    $this->retry = true;
+                    $this->currentQuestion = $this->getNextQuestion();
+                } elseif ((! $this->userEvaluationId->completed) && ($this->userEvaluationId->score == 0) && ($this->attempt_count > 0)) {
+                    $this->showRetry = false;
+                    $this->showResults = false;
+                    $this->retry = false;
+                    $this->currentQuestion = $this->getNextQuestion();
+                } else {
+                    $this->showResults();
+                }
             }
         }
     }
@@ -232,6 +243,7 @@ class AnswerEvaluationUser extends Component
     public function showResults()
     {
         $this->showResults = true;
+        $this->retry = false;
         $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
         $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
@@ -317,7 +329,7 @@ class AnswerEvaluationUser extends Component
     public function retryEvaluation()
     {
         if ($this->attempt_count >= 0) {
-            // dd("reintento");
+
             $this->retry = true;
 
             $this->answeredQuestionsretry = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
@@ -367,15 +379,19 @@ class AnswerEvaluationUser extends Component
         $this->getEvaluation($evaluation);
         $this->totalQuizQuestions = count($this->evaluation->questions);
         $this->startQuiz();
-
+        // dump($this->retry);
+        // dd($this->userEvaluationId->score, $this->percentage, ($this->userEvaluationId->score < $this->percentage));
         if (! $this->retry) {
+            // dd(1);
             $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
 
             $this->count = count($this->answeredQuestions) + 1;
         } else {
+            // dd(2);
             $this->count = ($this->totalQuizQuestions + 1) - count($this->answeredQuestionsretry);
         }
 
+        // dd(3);
         return view('livewire.escuela.answer-evaluation-user');
     }
 }

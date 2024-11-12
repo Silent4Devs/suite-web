@@ -40,7 +40,7 @@ class MonedaExtContratosEdit extends Component
             // code...
             $this->moneda_extranjera = true;
 
-            $this->tipo_cambio = $contratos->tipo_cambio;
+            $this->tipo_cambio = $contratos->tipo_cambio ?? 'MXN';
 
             $this->valor_dolar = $contratos->dolares->valor_dolar ?? 0;
 
@@ -57,13 +57,6 @@ class MonedaExtContratosEdit extends Component
             'MXN',
             'USD',
         ];
-
-        if (session()->get('tipo_cambio', 'MXN') === null) {
-            $this->tipo_cambio = 'MXN';
-        } else {
-            session()->put('tipo_cambio', 'MXN');
-            $this->tipo_cambio = session()->get('tipo_cambio', 'MXN'); // "MXN" como valor predeterminado
-        }
 
         // $this->divisas = [
         //     '0' => 'MXN',
@@ -140,11 +133,12 @@ class MonedaExtContratosEdit extends Component
 
         $this->valor_dolar = $val;
 
-        $this->monto_pago = (floatval($this->monto_dolares) * $valor);
+        // Usa bcmul para multiplicar la cantidad por la tasa de cambio con 2 decimales
+        $this->monto_pago = bcmul($valor, (floatval($this->monto_dolares)), 2);
 
-        $this->maximo = (floatval($this->maximo_dolares) * $valor);
+        $this->maximo = bcmul($valor, (floatval($this->maximo_dolares)), 2);
 
-        $this->minimo = (floatval($this->minimo_dolares) * $valor);
+        $this->minimo = bcmul($valor, (floatval($this->minimo_dolares)), 2);
 
         $this->actualizarMontos();
     }
@@ -160,7 +154,7 @@ class MonedaExtContratosEdit extends Component
                 ->format();
         }
 
-        $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
+        $conversion = floor(bcmul(floatval($convertirDolares), floatval($valor), 2) * 100) / 100;
         $conversion = number_format($conversion, 2, '.', '');
 
         switch ($tipo) {

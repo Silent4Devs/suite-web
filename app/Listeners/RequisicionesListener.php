@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\ContractManager\Comprador;
-use App\Models\DisponibilidadEmpleados;
 use App\Models\Empleado;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
@@ -12,7 +11,6 @@ use App\Models\User;
 use App\Notifications\RequisicionesNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class RequisicionesListener implements ShouldQueue
@@ -138,7 +136,6 @@ class RequisicionesListener implements ShouldQueue
                     Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
             } else {
-
 
                 try {
                     $supervisor = $this->responsableJefe($empleado);
