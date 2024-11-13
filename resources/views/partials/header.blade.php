@@ -167,6 +167,13 @@
                                         Personalización visual
                                     </button>
                                 </div>
+                                <div class="mt-3">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        href="{{ route('admin.inicioUsuario.mis-cursos') }}">
+                                        <i class="bi bi-trophy"></i>
+                                        Mis logros
+                                    </a>
+                                </div>
                                 <div class="mt-3 text-end">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1"
@@ -518,7 +525,7 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
-                                        <li><a href="{{ route('admin.module_firmas') }}">Modulo Firmas</a></li>
+                                    <li><a href="{{ route('admin.module_firmas') }}">Modulo Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan

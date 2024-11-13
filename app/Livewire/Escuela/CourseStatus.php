@@ -3,6 +3,7 @@
 namespace App\Livewire\Escuela;
 
 use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
@@ -37,6 +38,8 @@ class CourseStatus extends Component
     public $hora;
 
     public $render;
+
+    public $cursoCompletado;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
@@ -104,6 +107,8 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+
+        $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
         return view('livewire.escuela.course-status');
     }
