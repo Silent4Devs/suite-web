@@ -1864,6 +1864,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('levels', 'Escuela\Admin\LevelController');
     Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
+    Route::get('certificado-course', 'Escuela\Admin\CertificadoController@index');
+    Route::post('certificado-course-select', 'Escuela\Admin\CertificadoController@selectCertificado');
 
     // pasarela de pago
     Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');

@@ -2,6 +2,7 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\Organizacion;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -196,11 +197,9 @@ class Course extends Model implements Auditable
 
     public function getCertificadoRutaAttribute()
     {
-        if ($this->certificado) {
-            return asset('img/escuela/certificaciones/certificado'.$this->certificado.'.png');
-        } else {
-            return null;
-        }
+        $certificado_general = Organizacion::select('certificado')->first()->certificado;
+
+        return asset('img/escuela/certificaciones/certificado'.$certificado_general.'.png');
     }
 
     public function getFirmaInstructorRutaAttribute()
