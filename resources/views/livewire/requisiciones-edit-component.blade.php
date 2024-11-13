@@ -625,8 +625,7 @@
                             <div class="flex header-doc">
                                 <div class="flex-item item-doc-img">
                                     @php
-                                        use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = App\Models\Organizacion::first();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
