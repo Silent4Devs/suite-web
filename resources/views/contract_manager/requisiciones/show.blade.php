@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+@endsection
 @section('content')
 @section('titulo', 'Ver Requisición')
 
@@ -372,13 +375,17 @@
                     </div>
                 </div>
 
-                <div class="row print-none">
-                    <div class="col-12">
-                        <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
-                                bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info" style="position: relative;   left:40%;"><a
+                <div class=" mb-3 ml-3 print-none">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center">
+                            <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
+                                    bueno de Gestión de talento.</i></small>
+                        </div>
+                        <div class="col-6 d-flex justify-content-center">
+                            <button class="btn tb-btn-secondary" ><a
                                 href="{{ route('contract_manager.requisiciones') }}"
                                 style="color: #EEEEEE">Regresar</a></button>
+                        </div>
                     </div>
                 </div>
             </div>
