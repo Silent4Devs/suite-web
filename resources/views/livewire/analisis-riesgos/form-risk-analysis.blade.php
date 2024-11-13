@@ -11,8 +11,6 @@
 
         .inputfile+label {
             max-width: 80%;
-            /* font-size: 1.25rem; */
-            /* font-weight: 700; */
             text-overflow: ellipsis;
             white-space: nowrap;
             cursor: pointer;
@@ -24,12 +22,6 @@
         .inputfile-3+label {
             color: #006DDB;
         }
-
-        /* .inputfile-3:focus+label,
-        .inputfile-3.has-focus+label,
-        .inputfile-3+label:hover {
-            color: #c39f77;
-        } */
     </style>
     <h4 style="margin: 0px;">Formulario</h4>
     <hr style="margin-top: 20px;">
@@ -48,14 +40,8 @@
                 Registrar
             </button>
         @endif
-        {{-- <button type="button" style="width: 180px; height: 50px;" class="btn tb-btn-primary" data-toggle="modal"
-            data-target="#formRiskAnalysis">
-            <i class="material-symbols-outlined">
-                text_snippet
-            </i>
-            Ver Formulario
-        </button> --}}
-        <button wire:click="$emit('finishPeriod')" type="button"
+
+        <button wire:click="$emit('finishPeriod',{{$period_id}})" type="button"
             style="width: 180px; height: 50px; background-color:#FA8E00; color:#FFFFFF;" class="btn">
             Finalizar
         </button>
@@ -104,19 +90,29 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         @if (!$sheetTable->sheet->initial_risk_confirm)
-                                        <li><a class="dropdown-item" type="button" data-toggle="modal"
-                                                data-target="#formRiskAnalysis"
-                                                wire:click="chageStatusForm(1,{{ $sheetTable->sheet->id }})">
-                                                <p class="m-0">Evaluar/editar formulario</p>
-                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item" type="button" data-toggle="modal"
+                                                    data-target="#formRiskAnalysis"
+                                                    wire:click="chageStatusForm(1,{{ $sheetTable->sheet->id }})">
+                                                    <p class="m-0">Evaluar/editar formulario</p>
+                                                </a>
+                                            </li>
                                         @endif
                                         @if ($sheetTable->sheet->initial_risk_confirm)
-                                        <li><a class="dropdown-item" type="button" data-toggle="modal"
-                                                data-target="#formRiskAnalysis"
-                                                wire:click="chageStatusForm(2,{{ $sheetTable->sheet->id }})">
-                                                <p class="m-0">Finalizar /editar formulario</p>
-                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item" type="button" data-toggle="modal"
+                                                    data-target="#formRiskAnalysis"
+                                                    wire:click="chageStatusForm(2,{{ $sheetTable->sheet->id }})">
+                                                    <p class="m-0">Finalizar /editar formulario</p>
+                                                </a>
+                                            </li>
                                         @endif
+                                        <li>
+                                            <a class="dropdown-item" type="button"
+                                                wire:click="$emit('confirmDeleteSheet',{{$sheetTable->sheet->id}})">
+                                                <p class="m-0">Eliminar</p>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </td>
@@ -196,9 +192,9 @@
                             @endforeach
 
                             <div class="d-flex justify-content-end gap-3">
-                                {{-- <button type="button" class="btn tb-btn-secondary" data-dismiss="modal"
-                                    onclick="limpiarFormulario()">CANCELAR</button> --}}
-                                <button type="submit" id="submitButton" class="btn tb-btn-primary">GUARDAR FORMULARIO</button>
+
+                                <button type="submit" id="submitButton" class="btn tb-btn-primary">GUARDAR
+                                    FORMULARIO</button>
                             </div>
                         </form>
                     </div>
@@ -210,135 +206,73 @@
                                 <h6>Nivel de riesgo residual</h6>
                                 <h2>{{ $risks['initial'] }}% / {{ $risks['residual'] }}%</h2>
                             </div>
-                            <div class="d-flex flex-column align-items-center justify-content-center"
+                            <div class="d-flex flex-row align-items-center justify-content-center gap-6"
                                 style="height: 190px; width:100%; border-radius: 0px 16px 16px 0px;">
-                                <h6>Probabilidad / Impacto</h6>
+                                <div class="d-flex flex-column align-items-center" style="width: 150px;">
+                                    <h4>Probabilidad</h4>
+                                    <div
+                                        style="min-width: 45px; border: 1px solid #707070; border-radius: 11px; text-align:center; ">
+                                        <h5 class="mb-0">{{ $risks['coords']['residual']['prob'] }}</h5>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex flex-column align-items-center" style="width: 150px;">
+                                    <h4>Impacto</h4>
+                                    <div
+                                        style="min-width: 45px; border: 1px solid #707070; border-radius: 11px; text-align:center; ">
+                                        <h5 class="mb-0">{{ $risks['coords']['residual']['impac'] }}</h5>
+                                    </div>
+                                </div>
                             </div>
                         @else
                             <div class="d-flex flex-column align-items-center justify-content-center"
                                 style="height: 190px; width:50%; background-color:{{ $sheetForm['bg'] }}; border-radius: 16px 0px 0px 16px;">
                                 <h6>Nivel de riesgo inicial</h6>
                                 <h2>{{ $risks['initial'] }}%</h2>
-                                <div style="width: auto; padding:5px; background: {{$risks['approveInitial'] ? '#78BB50':'#FF9898'}}; border-radius: 11px;">
-                                    @if($risks['approveInitial'])
-                                    <h6 style="color:#FFFFFF" class="mb-0">Aceptable</h6>
+                                <div
+                                    style="width: auto; padding:5px; background: {{ $risks['approveInitial'] ? '#78BB50' : '#FF9898' }}; border-radius: 11px;">
+                                    @if ($risks['approveInitial'])
+                                        <h6 style="color:#FFFFFF" class="mb-0">Aceptable</h6>
                                     @else
-                                    <h6 style="color:#FFFFFF" class="mb-0">
-                                        No aceptable
-                                    </h6>
+                                        <h6 style="color:#FFFFFF" class="mb-0">
+                                            No aceptable
+                                        </h6>
                                     @endif
                                 </div>
                                 {{-- @dump($risks['approveInitial'] ) --}}
                             </div>
-                            <div class="d-flex flex-column align-items-center justify-content-center"
+
+                            <div class="d-flex flex-row align-items-center justify-content-center gap-6"
                                 style="height: 190px; width:100%; border-radius: 0px 16px 16px 0px;">
-                                <h6>Probabilidad / Impacto</h6>
+                                <div class="d-flex flex-column align-items-center" style="width: 150px;">
+                                    <h4>Probabilidad</h4>
+                                    <div
+                                        style="min-width: 45px; border: 1px solid #707070; border-radius: 11px; text-align:center; ">
+                                        <h5 class="mb-0">{{ $risks['coords']['initial']['prob'] }}</h5>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex flex-column align-items-center" style="width: 150px;">
+                                    <h4>Impacto</h4>
+                                    <div
+                                        style="min-width: 45px; border: 1px solid #707070; border-radius: 11px; text-align:center; ">
+                                        <h5 class="mb-0">{{ $risks['coords']['initial']['impac'] }}</h5>
+                                    </div>
+                                </div>
                             </div>
                         @endif
                     </div>
                     {{-- controls --}}
                     @if ($sheetId)
                         <livewire:analisis-riesgos.controls-risk-analysis :riskAnalysisId="$riskAnalysisId" />
-
-                        {{-- <livewire:analisis-riesgos.controls-risk-analysis :sheetId="$sheetId" /> --}}
                     @endif
 
                     <div class="d-flex justify-content-end gap-3">
                         <button type="button" class="btn tb-btn-secondary" data-dismiss="modal"
                             onclick="limpiarFormulario()">CANCELAR</button>
-                        <button wire:click="riskConfirmMessage"  class="btn tb-btn-primary">CONFIRMAR RIESGO {{$sheetForm['status'] === 2 ? 'RESIDUAL':'INICIAL'}}</button>
+                        <button wire:click="riskConfirmMessage" class="btn tb-btn-primary">CONFIRMAR RIESGO
+                            {{ $sheetForm['status'] === 2 ? 'RESIDUAL' : 'INICIAL' }}</button>
                     </div>
-
-                    {{-- <div class="card" style="width: 100%; margin:0px;">
-                        <div class="card-body">
-                            @if ($sheetId)
-                                <div class="datatable-fix">
-                                    <table class="table w-100 datatable datatable-risk-analysis-controls"
-                                        id="datatable-risk-analysis-controls">
-                                        <thead class="">
-                                            <tr>
-                                                <th>Control</th>
-                                                <th>Declaración de aplicabilidad</th>
-                                                <th>Aplica</th>
-                                                <th>Justificación</th>
-                                                <th style="width:100px;"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($controlsSheet as $index => $controlSheet)
-                                                <tr>
-                                                    <td>
-                                                        {{ $controlSheet->control }} {{ $controlSheet->control_name }}
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                name="applicability"
-                                                                id="flexCheckDefault-{{ $index }}"
-                                                                {{ $controlSheet->applicability ? 'checked' : '' }}
-                                                                wire:model.defer="controlsSheet.{{ $index }}.applicability">
-                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                {{ $controlSheet->control }}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class='d-flex gap-1'>
-                                                            <div>No</div>
-                                                            <div class="custom-control custom-switch">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch1-{{ $index }}"
-                                                                    wire:model.defer="controlsSheet.{{ $index }}.is_apply">
-                                                                <label class="custom-control-label"
-                                                                    for="customSwitch1-{{ $index }}">Sí</label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <textarea style="min-height: 70px;" class="form-control" name="justify" id="justify"
-                                                                wire:model.defer="controlsSheet.{{ $index }}.justification">{{ $controlSheet->justification }}</textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        @if ($controlSheet->file)
-                                                        <div class="mt-4 pl-4 d-flex justify-content-start align-items-center"
-                                                            style="">
-                                                            <p><i wire:click="download"
-                                                                    class="mr-2 cursor-pointer fas fa-download"
-                                                                    title="Descargar"></i></p>
-                                                            <p class="ml-2">
-                                                                <i wire:click="destroy"
-                                                                    class="cursor-pointer fa-regular fa-trash-can"
-                                                                    style="" title="Eliminar"></i>
-                                                            </p>
-                                                        </div>
-                                                        @else
-                                                        <div>
-                                                            <input type="file" name="file-3-{{$index}}" id="file-3-{{$index}}"
-                                                                class="inputfile inputfile-3" wire:model.defer="controlsSheet.{{ $index }}.file" />
-                                                            <label for="file-3-{{$index}}">
-                                                                <span class="material-symbols-outlined">
-                                                                    attach_file
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="controlsSheet.{{ $index }}.file">
-                                                            Cargando ...
-                                                        </div>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
-                            <button type="button" wire:click="saveTable" id="submitControls"
-                                class="btn tb-btn-primary">GUARDAR CONTROLES</button>
-                        </div>
-                    </div> --}}
-
                 </div>
             </div>
         </div>
@@ -372,7 +306,7 @@
                                 class="btn btn-simple-secondary" data-dismiss="modal">
                                 Cancelar
                             </button>
-                            <button wire:click="createPeriod" style="width: 163px; height: auto;"
+                            <button wire:click="verifyStatus" style="width: 163px; height: auto;"
                                 class="btn tb-btn-secondary">
                                 No Aceptar
                             </button>
@@ -388,18 +322,6 @@
 
     {{-- send form --}}
     <script>
-        // function submitForm() {
-        //     e.preventDefault();
-        //     const form = document.getElementById('Form');
-        //     const formData = new FormData(form);
-
-        //     const data = {};
-        //     formData.forEach((value, key) => {
-        //         data[key] = value;
-        //     });
-
-        //     Livewire.emit('formData', data);
-        // };
         document.getElementById('submitButton').addEventListener('click', function(e) {
             const form = document.getElementById('Form');
             const formData = new FormData(form);
@@ -417,11 +339,7 @@
 
     <script>
         function handleApplicability(checkbox, index) {
-            // Get the checked state of the checkbox
             const isChecked = checkbox.checked;
-
-            // Manually emit the event to Livewire
-            // Livewire.emit('changeApplicability', index, isChecked);
         }
     </script>
 
@@ -429,7 +347,7 @@
     <script>
         function limpiarFormulario() {
             const form = document.getElementById('Form');
-            form.reset(); // Esto restablece los valores del formulario a los valores por defecto (vaciar si no hay valor predeterminado)
+            form.reset();
         }
     </script>
 
@@ -437,7 +355,6 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {
-                console.log('liwe');
                 setTimeout(() => {
                     tablaLivewire('datatable-risk-analysis');
                 }, 200);
@@ -476,7 +393,7 @@
                     cancelButtonText: "Regresar",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('template-top-analisis-riesgos', 'destroy', id);
+                        Livewire.emit('closePeriod', id);
                         Swal.fire({
                             title: "Finalizado",
                             text: "El periodo de analisis finalizo con éxito",
@@ -514,15 +431,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             Livewire.on("responseTableControls", () => {
-                // let title = "";
-                // let action = "";
-                // if (!edit) {
-                //     title = "Guardado";
-                //     action = "guardo";
-                // } else {
-                //     title = "Editado";
-                //     action = "edito";
-                // }
                 Swal.fire({
                     title: 'Guardado y/o Editado',
                     text: `Se guardo y/o edito exitosamente los controles`,
@@ -532,59 +440,78 @@
         });
     </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        Livewire.on("riskConfirmMessage", () => {
-            Swal.fire({
-                html: `
-                <h3 class="mb-0" style="color:#575757; font-size:22px;"><strong>Confirmar riesgo </strong></h3>
-                <h6 style="color:#575757;"><strong>¿Estás seguro que deseas realizar esta accion?</strong></h6>
-                <h6>Esta acción será permanente y no podrá deshacerse</h6>
-                `,
-                showCancelButton: true,
-                customClass: {
-                    title: 'custom-title',
-                    confirmButton: 'btn tb-btn-primary',
-                    cancelButton: 'custom-cancel-button'
-                },
-                confirmButtonText: "Confirmar Riesgo",
-                cancelButtonText: "Regresar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emit('riskConfirm');
-                    Swal.fire({
-                        title: "Confirmado",
-                        text: "El riesgo se confirmo con éxito",
-                        icon: "success"
-                    });
-                }
-            });
-        })
-    });
-</script>
+    {{-- Message confirm --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Livewire.on("riskConfirmMessage", () => {
+                Swal.fire({
+                    html: `
+                    <h3 class="mb-0" style="color:#575757; font-size:22px;"><strong>Confirmar riesgo </strong></h3>
+                    <h6 style="color:#575757;"><strong>¿Estás seguro que deseas realizar esta accion?</strong></h6>
+                    <h6>Esta acción será permanente y no podrá deshacerse</h6>
+                    `,
+                    showCancelButton: true,
+                    customClass: {
+                        title: 'custom-title',
+                        confirmButton: 'btn tb-btn-primary',
+                        cancelButton: 'custom-cancel-button'
+                    },
+                    confirmButtonText: "Confirmar Riesgo",
+                    cancelButtonText: "Regresar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('riskConfirm');
+                        Swal.fire({
+                            title: "Confirmado",
+                            text: "El riesgo se confirmo con éxito",
+                            icon: "success"
+                        });
+                    }
+                });
+            })
 
-    {{-- <script>
-        document.addEventListener('deleteMessage', event => {
-            Swal.fire({
-                title: "Eliminar este elemento",
-                text: "¿Estás seguro de querer eliminar este registro?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sí",
-                cancelButtonText: "No"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // @this.call('delete');
-                    Swal.fire({
-                    title: "Eliminado",
-                    text: "El registro se eliminó exitosamente",
-                    icon: "success"
-                    });
-                }
-            });
+            Livewire.on("confirmDeleteSheet", (id) => {
+                console.log(id)
+                Swal.fire({
+                    html: `
+                <div class='d-flex justify-content-center'>
+                    <div class="fondo-icon-delete">
+                    <i class="material-symbols-outlined custom-icon-delete">
+                        delete
+                    </i>
+                    </div>
+                </div>
+                <h2 class='title'>Eliminar este elemento</h2>
+                <p class='text'>¿Estás seguro de querer eliminar este registro?</p>
+                `,
+                    showCancelButton: true,
+                    confirmButtonText: "Si, Eliminar",
+                    cancelButtonText: "Cancelar",
+                    customClass: {
+                        confirmButton: 'btn-primary',
+                        cancelButton: 'btn-secondary',
+                    },
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('destroySheet',id);
+                        Swal.fire({
+                            html: `
+                        <div class='d-flex justify-content-center'>
+                            <div class="fondo-icon-succeed">
+                            <span class="material-symbols-outlined custom-icon-succeed">
+                                done
+                            </span>
+                            </div>
+                        </div>
+                        <h2 class='title'>Acción realizada con éxito</h2>
+                        <p class='text'>Se elimino el registro exitosamente</p>
+                        `,
+                        });
+                    }
+                });
+            })
         });
-    </script> --}}
+    </script>
 
 </div>

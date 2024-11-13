@@ -1,8 +1,9 @@
-
 @extends('layouts.admin')
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/templateAnalisisRiesgo/sections.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/common/alerts.css') }}">
 @endsection
 @section('content')
     {{-- <style>
@@ -80,7 +81,7 @@
 
     </div>
 
-    @livewire('analisis-riesgos.head-map-risk-two')
+    @livewire('analisis-riesgos.head-map-risk-two', ['RiskAnalysisId' => $riskAnalysisId])
 
     @livewire('analisis-riesgos.form-risk-analysis', ['RiskAnalysisId' => $riskAnalysisId])
 
@@ -220,7 +221,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             var columnsCount = 5;
 
@@ -342,101 +343,125 @@
 
             option && myChart.setOption(option);
         });
-    </script>
-    <script>
+    </script> --}}
+    {{-- <script>
         $(document).ready(function() {
             var chartDom = document.getElementById('map-position-cl-v2');
             var myChart = echarts.init(chartDom);
             var option;
+            const filterStartIndex = 16;
 
-            // prettier-ignore
-            const hours = [
-                '1a', '2a', '3a', '4a'
+            // Configuración de etiquetas y colores
+            const probabilidad = ['1', '2', '3', '4']; // Ascendente de izquierda a derecha
+            const impacto = ['1', '2', '3', '4']; // Ascendente de abajo hacia arriba
+
+            // Colors
+            const colores = ['#4BCFA2', '#F2C322', '#FF8C34', '#FC5375'];
+
+            const pieces = [
+                        { min: 1, max: 2, color: 'green' },       // Verde para valores de 1 a 3
+                        { min: 3, max: 6, color: 'yellow' },      // Amarillo para valores de 4 a 6
+                        { min: 8, max: 9, color: 'orange' },      // Naranja para valores de 7 a 9
+                        { min: 10, max: 16, color: 'red' }        // Rojo para valores de 10 a 16
+                    ]
+
+            //data default
+            const dataDefault = [
+                [0, 0, 1], [1, 0, 2], [2, 0, 3], [3, 0, 4], // Nivel de riesgo para Impacto 1
+                [0, 1, 2], [1, 1, 4], [2, 1, 6], [3, 1, 8], // Nivel de riesgo para Impacto 2
+                [0, 2, 3], [1, 2, 6], [2, 2, 9], [3, 2, 12], // Nivel de riesgo para Impacto 3
+                [0, 3, 4], [1, 3, 8], [2, 3, 12], [3, 3, 16], // Nivel de riesgo para Impacto 4
             ];
-            // prettier-ignore
-            const days = [
-                '1', '2', '3', '4',
-            ];
-            // prettier-ignore
-            const data = [
-                    [0, 0, 5],
-                    [0, 1, 1],
-                    [0, 2, 2],
-                    [0, 3, 3],
-                    [1, 0, 1],
-                    [1, 1, 2],
-                    [1, 2, 3],
-                    [1, 3, 4],
-                    [2, 0, 2],
-                    [2, 1, 3],
-                    [2, 2, 4],
-                    [2, 3, 4],
-                    [3, 0, 3],
-                    [3, 1, 4],
-                    [3, 2, 4],
-                    [3, 3, 4]
-                ]
-                .map(function(item) {
-                    return [item[1], item[0], item[2] || '-'];
-                });
+
+
+            const dataNew = [[0,0,1],[3,3,15],]
+
+            const data = [...dataDefault,...dataNew];
+
+            // Configuración del gráfico
             option = {
                 tooltip: {
-                    position: 'top'
-                },
-                grid: {
-                    // top: '10%'
+                    position: 'top',
+                    formatter: (params) => {
+                        const [x, y] = params.value;
+                        // Filtra valores solo después del índice definido
+                        let valuesAtCoordinates = data
+                            .slice(filterStartIndex) // Aplica el filtro de inicio
+                            .filter(item => item[0] === x && item[1] === y)
+                            .map(item => item[2]);
+
+                        const valuesString = valuesAtCoordinates.join(', ');
+                        if(valuesString){
+                            return `Riesgos Residuales: <br> ${valuesString}`;
+                        }else {
+                            return null;
+                        }
+                    }
                 },
                 xAxis: {
                     type: 'category',
-                    data: hours,
-                    splitArea: {
-                        show: true
-                    },
+                    data: probabilidad,
                     name: "Probabilidad",
                     nameLocation: "center",
                     nameGap: 20,
+                    splitArea: {
+                        show: false
+                    },
                     axisLabel: {
-                        show: false,
+                        show: false
                     },
                     axisTick: {
-                        show: false,
+                        show: false
                     },
                 },
                 yAxis: {
                     type: 'category',
-                    name: 'Valor Y',
-                    splitArea: {
-                        show: true
-                    },
+                    data: impacto,
                     name: "Impacto",
                     nameLocation: "center",
                     nameGap: 20,
+                    splitArea: {
+                        show: false
+                    },
                     axisLabel: {
-                        show: false,
+                        show: false
                     },
                     axisTick: {
-                        show: false,
+                        show: false
                     },
                 },
                 visualMap: {
-                    show: false,
+                    show:false,
                     min: 1,
                     max: 4,
-                    calculable: true,
+                    calculable: false,
                     orient: 'horizontal',
                     left: 'center',
+                    pieces: pieces,
                     inRange: {
-                        color: ['#4BCFA2', '#F2C322', '#FF8C34', '#FC5375']
+                        color: colores // Asignación de colores para los niveles
                     }
-                    // padding:5,
-                    // top: '5%'
                 },
                 series: [{
-                    // name: 'Punch Card',
+                    name: 'Riesgo Residual',
                     type: 'heatmap',
                     data: data,
                     label: {
-                        show: false,
+                        show: true,  // Asegúrate de que las etiquetas se muestren
+                        formatter: (params) => {
+                            const [x, y] = params.value;
+                            // Filtra los valores de la celda correspondiente
+                            let valuesAtCoordinates = data
+                                .slice(filterStartIndex) // Aplica el filtro de inicio
+                                .filter(item => item[0] === x && item[1] === y);
+                            // Muestra la cantidad de valores en la celda
+                            return valuesAtCoordinates.length > 0 ? valuesAtCoordinates.length : 0;
+                        },
+                        textStyle: {
+                            fontSize: 18, // Aumenta el tamaño de la fuente (en píxeles)
+                            // fontWeight: 'bold', // O puedes cambiar el peso de la fuente si lo deseas
+                            color: '#FFFFFF' // Puedes cambiar el color del texto si lo necesitas
+                        }
                     },
                     emphasis: {
                         itemStyle: {
@@ -447,9 +472,10 @@
                 }]
             };
 
-            option && myChart.setOption(option);
+            // Renderizar la gráfica
+            myChart.setOption(option);
+
         });
-    </script>
+    </script> --}}
+
 @endsection
-
-

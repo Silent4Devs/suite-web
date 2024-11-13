@@ -24,8 +24,23 @@ class TBSheetRiskAnalysisModel extends Model
         'treatment_plan_id',
     ];
 
+    protected static function boot()
+{
+    parent::boot();
+
+    static::deleting(function ($a) {
+        // Marcar como eliminados lógicamente los registros en la tabla de pivote `C`
+        $a->PeriodSheetDelete()->update(['deleted_at' => now()]);
+    });
+}
+
     public function answersSheet()
     {
         return $this->belongsToMany(TBAnswerSheetRiskAnalysisModel::class, 'answers_sheet_risk_analysis_pivote', 'sheet_id', 'answer_id')->orderBy('id');
+    }
+
+    public function PeriodSheetDelete()
+    {
+        return $this->hasMany(TBPeriodSheetRiskAnalysisModel::class, 'sheet_id');
     }
 }
