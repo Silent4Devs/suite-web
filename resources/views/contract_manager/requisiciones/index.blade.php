@@ -260,7 +260,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                Swal.fire('¡Cancelado!', 'La Requisición ha sido cancelada.', 'success').then(
+                                Swal.fire('¡Cancelado!', 'La requisición ha sido cancelada.', 'success').then(
                                     () => {
                                         window.location.reload(); // Refresca la página
                                     });
