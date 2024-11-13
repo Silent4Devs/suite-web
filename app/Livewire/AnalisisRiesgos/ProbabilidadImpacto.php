@@ -61,7 +61,10 @@ class ProbabilidadImpacto extends Component
 
     public function asignarInputs()
     {
-        $getData = TBTemplateArProbImpArModel::find($this->template_id);
+        // dd($this->template_id);
+        // $getData = TBTemplateArProbImpArModel::find($this->template_id);
+        $getData = TBTemplateArProbImpArModel::where('template_id', $this->template_id)->first();
+
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;
         if (! $getData->getProbImp->isEmpty()) {

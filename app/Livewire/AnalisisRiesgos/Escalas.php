@@ -23,7 +23,7 @@ class Escalas extends Component
     protected $listeners = [
         'renderReloadEscala' => 'mount',
         'renderSaveEscala' => 'save',
-        'destroy',
+        'destroyEscala' => 'destroy',
     ];
 
     public $min;
