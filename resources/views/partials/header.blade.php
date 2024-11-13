@@ -31,7 +31,7 @@
                 <div class="close-menu-header"></div>
             </button>
             <a href="{{ url('/admin/portal-comunicacion') }}">
-                <img src="{{ asset($logotipo) }}" style="height: 40px;">
+                <img src="{{ asset('img/logo-ltr.png') }}" alt="" style="height: 40px;">
             </a>
             @livewire('global-search-component', ['lugar' => 'header'])
         </div>
