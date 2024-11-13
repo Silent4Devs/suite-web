@@ -25,7 +25,7 @@ use App\Models\TBTemplateAnalisisRiesgoModel;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class RiskAnalysis extends Component
+class RiskAnalysisComponent extends Component
 {
     public $name;
 
