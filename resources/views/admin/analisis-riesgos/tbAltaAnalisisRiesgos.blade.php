@@ -4,5 +4,5 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/templateAnalisisRiesgo/inputFile.css') }}">
 @endsection
 @section('content')
-    @livewire('analisis-riesgos.risk-analysis-component')
+    @livewire('analisis-riesgos.risk-analysis')
 @endsection
