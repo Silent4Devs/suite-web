@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\MinutasEvent;
 use App\Models\Minutasaltadireccion;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,7 +13,7 @@ class MinutasAltaDireccionObserver
      */
     public function created(Minutasaltadireccion $minutasaltadireccion): void
     {
-        //
+        event(new MinutasEvent($minutasaltadireccion, 'create', 'minutasaltadireccions', 'Minuta'));
         $this->forgetCache();
     }
 
@@ -21,7 +22,7 @@ class MinutasAltaDireccionObserver
      */
     public function updated(Minutasaltadireccion $minutasaltadireccion): void
     {
-        //
+        event(new MinutasEvent($minutasaltadireccion, 'update', 'minutasaltadireccions', 'Minuta'));
         $this->forgetCache();
     }
 
@@ -30,25 +31,7 @@ class MinutasAltaDireccionObserver
      */
     public function deleted(Minutasaltadireccion $minutasaltadireccion): void
     {
-        //
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Minutasaltadireccion "restored" event.
-     */
-    public function restored(Minutasaltadireccion $minutasaltadireccion): void
-    {
-        //
-        $this->forgetCache();
-    }
-
-    /**
-     * Handle the Minutasaltadireccion "force deleted" event.
-     */
-    public function forceDeleted(Minutasaltadireccion $minutasaltadireccion): void
-    {
-        //
+        event(new MinutasEvent($minutasaltadireccion, 'delete', 'minutasaltadireccions', 'Minuta'));
         $this->forgetCache();
     }
 

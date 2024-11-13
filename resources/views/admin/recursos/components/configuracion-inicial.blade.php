@@ -4,8 +4,8 @@
             <label class="required" for="cursoscapacitaciones">
                 <i class="fab fa-discourse iconos-crear"></i> Título
             </label>
-            <input required class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}" type="text"
-                name="cursoscapacitaciones" id="cursoscapacitaciones"
+            <input required class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}"
+                type="text" name="cursoscapacitaciones" id="cursoscapacitaciones"
                 value="{{ old('cursoscapacitaciones', $recurso->cursoscapacitaciones) }}" autocomplete="off">
             <span class="cursoscapacitaciones_error text-danger errores"></span>
             @if ($errors->has('cursoscapacitaciones'))
@@ -20,12 +20,13 @@
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <div class="row">
                 <div class="col-12">
-                    <label class="required" for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
+                    <label class="required" for="categoria_capacitacion_id"><i
+                            class="fab fa-discourse iconos-crear"></i>
                         Categoría
                     </label>
                 </div>
                 <div class="col-11 pr-1">
-                    @livewire('categoria-capacitacion-select',['categoria_seleccionada'=>$recurso->categoria_capacitacion_id])
+                    @livewire('categoria-capacitacion-select', ['categoria_seleccionada' => $recurso->categoria_capacitacion_id])
                     <span class="categoria_capacitacion_id_error text-danger errores"></span>
                 </div>
                 <div class="col-1 pl-0">
@@ -102,7 +103,8 @@
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <label class="required" for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                 Inicio</label>
-            <input required class="form-control" type="datetime-local" id="fecha_curso" name="fecha_curso" min="1945-01-01T00:00"
+            <input required class="form-control" type="datetime-local" id="fecha_curso" name="fecha_curso"
+                min="1945-01-01T00:00"
                 value="{{ old('fecha_curso', \Carbon\Carbon::parse($recurso->fecha_curso)->format('Y-m-d\TH:i')) }}">
             <span class="fecha_curso_error text-danger errores"></span>
             @if ($errors->has('fecha_curso'))
@@ -116,7 +118,8 @@
                 <i class="fas fa-calendar-alt iconos-crear"></i>
                 Fecha Fin
             </label>
-            <input required class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin" min="1945-01-01T00:00"
+            <input required class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
+                min="1945-01-01T00:00"
                 value="{{ old('fecha_fin', \Carbon\Carbon::parse($recurso->fecha_fin)->format('Y-m-d\TH:i')) }}">
             <span class="fecha_fin_error text-danger errores"></span>
             @if ($errors->has('fecha_fin'))
@@ -161,8 +164,8 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
+    <a href="{{ route('admin.recursos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+    <button class="btn btn-primary btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>
 </div>

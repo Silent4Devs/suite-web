@@ -17,5 +17,6 @@ class TimesheetTareaFilter extends ModelFilter
     public function proyecto($proyecto_id)
     {
         return $this->where('proyecto_id', $proyecto_id);
+
     }
 }

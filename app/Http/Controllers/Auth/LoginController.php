@@ -69,7 +69,7 @@ class LoginController extends Controller
     {
         if ($user->two_factor) {
             $user->generateTwoFactorCode();
-            $user->notify(new TwoFactorCodeNotification());
+            $user->notify(new TwoFactorCodeNotification);
         }
     }
 

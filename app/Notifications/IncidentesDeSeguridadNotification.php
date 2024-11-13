@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\IncidentesDeSeguridad;
+use App\Models\IncidentesSeguridad;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,7 +13,7 @@ class IncidentesDeSeguridadNotification extends Notification
 {
     use Queueable;
 
-    public $incidentesDeSeguridad;
+    public $incidentesSeguridad;
 
     public $tipo_consulta;
 
@@ -21,36 +21,19 @@ class IncidentesDeSeguridadNotification extends Notification
 
     public $slug;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(IncidentesDeSeguridad $incidentesDeSeguridad, $tipo_consulta, $tabla, $slug)
+    public function __construct(IncidentesSeguridad $incidentesSeguridad, $tipo_consulta, $tabla, $slug)
     {
-        $this->incidentesDeSeguridad = $incidentesDeSeguridad;
+        $this->incidentesSeguridad = $incidentesSeguridad;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function via($notifiable)
     {
         return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail($notifiable)
     {
         return (new MailMessage)
@@ -59,23 +42,17 @@ class IncidentesDeSeguridadNotification extends Notification
             ->line('Thank you for using our application!');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->incidentesDeSeguridad->id,
-            'folio' => $this->incidentesDeSeguridad->folio,
+            'id' => $this->incidentesSeguridad->id,
+            'folio' => $this->incidentesSeguridad->folio,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
-            'name' => Auth::user()->name,
-            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
+            // 'name' => Auth::user()->name,
+            // 'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

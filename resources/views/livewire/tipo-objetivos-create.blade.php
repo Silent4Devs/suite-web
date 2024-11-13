@@ -1,5 +1,5 @@
-<div wire:ignore.self class="modal fade" id="tipoObjetivoModal" tabindex="-1"
-    aria-labelledby="tipoObjetivoModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="tipoObjetivoModal" tabindex="-1" aria-labelledby="tipoObjetivoModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background: #00a57e;color: white;">
@@ -16,8 +16,8 @@
                         <div class="form-group">
                             <label for="nombre">Nombre: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
-                                id="nombre" aria-describedby="nombre" wire:model.defer="nombre"
-                                value="{{ old('nombre') }}" autocomplete="off">
+                                id="nombre" aria-describedby="nombre" wire:model="nombre" value="{{ old('nombre') }}"
+                                autocomplete="off">
                             <small>Ingresa el nombre del tipo de objetivo</small>
                             @if ($errors->has('nombre'))
                                 <span class="invalid-feedback">{{ $errors->first('nombre') }}</span>
@@ -47,18 +47,17 @@
                                     <div class="text-center col-6">
                                         <img id="uploadPreviewPerspectiva" class="imagen-preview"
                                             src="{{ asset('img/not-available.png') }}" width="150" height="150"
-                                            accept="image/png, image/gif, image/jpeg" style="clip-path: circle(60px at 50% 50%);
+                                            accept="image/png, image/gif, image/jpeg"
+                                            style="clip-path: circle(60px at 50% 50%);
                                             height: 120px;" />
                                         @if ($errors->has('fotoPerspectiva'))
-                                            <span
-                                                class="text-danger">{{ $errors->first('fotoPerspectiva') }}</span>
+                                            <span class="text-danger">{{ $errors->first('fotoPerspectiva') }}</span>
                                         @endif
                                     </div>
                                 </div>
                                 <span class="text-danger fotoPerspectiva_error error-ajax"></span>
                                 <input name="fotoPerspectiva" type="file" accept="image/png, image/jpeg"
-                                    class="form-control-file" id="fotoPerspectiva" wire:model.defer="fotoPerspectiva"
-                                    hidden>
+                                    class="form-control-file" id="fotoPerspectiva" wire:model="fotoPerspectiva" hidden>
                             </div>
                         </div>
                     </div>
@@ -66,8 +65,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
             </div>
         </div>
     </div>

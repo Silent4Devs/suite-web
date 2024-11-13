@@ -1,27 +1,28 @@
 <div class="col-12">
 
-        <h6 class="title-foda-item d-inline">OPORTUNIDADES</h6>
-        <a class="d-inline" data-toggle="modal" data-target="#modalOportunidades">
-            <i class="material-icons" style="cursor: pointer;">edit</i>
-        </a>
+    <h6 class="title-foda-item d-inline">OPORTUNIDADES</h6>
+    <a class="d-inline" data-toggle="modal" data-target="#modalOportunidades">
+        <i class="material-icons" style="cursor: pointer;">edit</i>
+    </a>
 
-        <div class="modal fade" id="modalOportunidades"  tabindex="-1" aria-labelledby="modalOportunidadesLabel" aria-hidden="true" wire:ignore.self>
-            <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
-                <i class="fa-solid fa-x fa-2xl"
-                style="color: #ffffff;"></i>
-            </button>
-            <div class="modal-dialog  modal-lg">
+    <div class="modal fade" id="modalOportunidades" tabindex="-1" aria-labelledby="modalOportunidadesLabel"
+        aria-hidden="true" wire:ignore.self>
+        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"
+            class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+        </button>
+        <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-black">
                     <h5 class="modal-title" id="modalOportunidadesLabel">Oportunidades</h5>
                 </div>
                 <div class="modal-body">
                     <div class="mt-2 form-group anima-focus">
-                        <textarea class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
-                        wire:model.defer="oportunidad" placeholder="">
+                        <textarea class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}" wire:model="oportunidad"
+                            placeholder="">
                         </textarea>
                         @error('oportunidad')
-                        <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
+                            <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                         @enderror
                         <label for="oportunidad">Agrega una oportunidad</label>
                         {{-- <small class="text-danger errores descripcion_contacto_error"></small> --}}
@@ -39,42 +40,45 @@
                                     <th style="min-width:100px;">Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody >
-                                @foreach ($oportunidades as $index=>$oportunidad)
-                                <tr>
-                                    <td>
-                                        {{$index+1}}
-                                    </td>
-                                    <td>
-                                        {{$oportunidad->oportunidad}}
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn dropdown-toggle" type="button"
-                                            data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" wire:click="edit({{ $oportunidad->id }})">
-                                                <div class="d-flex align-items-start">
-                                                    <i class="material-icons-outlined" style="width: 24px;font-size:18px;">edit_outline</i>
-                                                    Editar
+                            <tbody>
+                                @foreach ($oportunidades as $index => $oportunidad)
+                                    <tr>
+                                        <td>
+                                            {{ $index + 1 }}
+                                        </td>
+                                        <td>
+                                            {{ $oportunidad->oportunidad }}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle" type="button"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" wire:click="edit({{ $oportunidad->id }})">
+                                                        <div class="d-flex align-items-start">
+                                                            <i class="material-icons-outlined"
+                                                                style="width: 24px;font-size:18px;">edit_outline</i>
+                                                            Editar
+                                                        </div>
+                                                    </a>
+                                                    <a class="dropdown-item"
+                                                        wire:click="$dispatch('deleteO',{ id: {{ $oportunidad->id }} })">
+                                                        <div class="d-flex align-items-start">
+                                                            <i class="material-icons-outlined"
+                                                                style="width: 24px;font-size:18px;">delete_outlined</i>
+                                                            Eliminar
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </a>
-                                            <a class="dropdown-item" wire:click="$emit('deleteO',{{$oportunidad->id}})">
-                                                <div class="d-flex align-items-start">
-                                                    <i class="material-icons-outlined" style="width: 24px;font-size:18px;">delete_outlined</i>
-                                                    Eliminar
-                                                </div>
-                                            </a>
-                                        </div>
-                                        </div>
-                                        {{-- <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                            {{-- <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
                                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
-                                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
+                                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
                                             data-target="#marcaslec" title="Asociar un Riesgo"></i> --}}
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -93,33 +97,35 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light text-primary border border-primary" data-dismiss="modal" >Guardar</button>
+                    <button type="button" class="btn btn-light text-primary border border-primary"
+                        data-dismiss="modal">Guardar</button>
                 </div>
             </div>
-            </div>
         </div>
-        <p class="mt-3">
-            @foreach ($oportunidades as $oportunidad)
-                @if ($oportunidad->tiene_riesgos_asociados)
-                    <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt"
-                        title="Riesgo Asociado"></i>{{ $oportunidad->oportunidad }}. <br>
-                @else
-                    {{ $oportunidad->oportunidad }}. <br>
-                @endif
-            @endforeach
-        </p>
+    </div>
+    <p class="mt-3">
+        @foreach ($oportunidades as $oportunidad)
+            @if ($oportunidad->tiene_riesgos_asociados)
+                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt"
+                    title="Riesgo Asociado"></i>{{ $oportunidad->oportunidad }}. <br>
+            @else
+                {{ $oportunidad->oportunidad }}. <br>
+            @endif
+        @endforeach
+    </p>
 
-        @yield('js')
-       <script>
+    @yield('js')
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("deleteO", id=>{
+            Livewire.on("deleteO", id => {
                 Swal.fire({
                     title: "Remover Oportunidad del foda",
                     text: "¿Esta seguro que desea eliminar la oportunidad del FODA?",
@@ -130,20 +136,20 @@
                     confirmButtonText: "Eliminar",
                     cancelButtonText: "Cancelar",
                 }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emitTo('oportunidades-component','destroy',id);
-                    Swal.fire({
-                    title: "Eliminado",
-                    text: "La Oportunidad se elimino con éxito",
-                    icon: "success"
-                    });
-                }
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('oportunidades-component', 'destroy', id);
+                        Swal.fire({
+                            title: "Eliminado",
+                            text: "La Oportunidad se elimino con éxito",
+                            icon: "success"
+                        });
+                    }
                 });
             })
         });
-       </script>
+    </script>
 
-    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Oportunidades</span>
     </div> --}}
@@ -151,7 +157,7 @@
     {{-- <div class="mt-2">
         <label for="oportunidad"><i class="fas fa-lightbulb iconos-crear"></i>Nombre</label>
         <input class="form-control {{ $errors->has('oportunidad') ? 'is-invalid' : '' }}"
-            wire:model.defer="oportunidad">
+            wire:model="oportunidad">
         @error('oportunidad')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -161,14 +167,14 @@
     {{-- <div class="mt-2">
         <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
         <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}"
-            wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+            wire:model="riesgo">{{ old('riesgo') }}</textarea>
         <small class="text-danger errores descripcion_contacto_error"></small>
     </div> --}}
 
 
     {{-- <div class="mb-3 col-12 mt-4 " style="text-align: end">
         <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-            class="btn btn-success">Agregar</button>
+            class="btn btn-primary">Agregar</button>
     </div>
 
 
@@ -182,7 +188,7 @@
                 </tr>
             </thead>
             <tbody >
-                @foreach ($oportunidades as $index=>$oportunidad)
+                @foreach ($oportunidades as $index => $oportunidad)
                 <tr>
                     <td>
                         {{$index+1}}
@@ -193,7 +199,7 @@
                     <td>
                         <i wire:click="destroy({{ $oportunidad->id }})" class="fas fa-trash-alt text-danger"></i>
                         <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $oportunidad->id }})"></i>
-                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
+                        <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$oportunidad->id}},'oportunidad')" data-toggle="modal"
                             data-target="#marcaslec" title="Asociar un Riesgo"></i>
                     </td>
                 </tr>

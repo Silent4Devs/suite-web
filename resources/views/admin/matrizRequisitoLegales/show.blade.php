@@ -94,7 +94,7 @@
                 </div><br>
             @else
                 <div class="form-group col-12">
-                    <p class="text-center text-light p-1" style="background-color:#345183; border-radius: 100px;">
+                    <p class="text-center text-light p-1" style="background-color:var(--color-tbj); border-radius: 100px;">
                         Evaluaciones</p>
                 </div>
                 <table class="table">
@@ -328,7 +328,7 @@
                                             </ul>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success"
+                                            <button type="button" class="btn btn-primary"
                                                 data-dismiss="modal">Cerrar</button>
                                         </div>
                                     </div>

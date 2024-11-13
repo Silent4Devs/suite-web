@@ -110,6 +110,6 @@
     h4,
     h5,
     h6 {
-        color: #306BA9;
+        color: var(--color-tbj);
     }
 </style> --}}

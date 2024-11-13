@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Area;
+use App\Models\Sede;
+use App\Models\TimesheetProyecto;
+use Livewire\Component;
+
+class ContratosIdentificadorProyectosIntExt extends Component
+{
+    public $identificador_proyect;
+
+    public $select_tipos = [];
+
+    public $tipo;
+
+    public $mensaje = null;
+
+    public $class = 'success';
+
+    public $colorTexto = '';
+
+    public $creacion_proyecto = false;
+
+    public $proyectos;
+
+    public $areas;
+
+    public $sedes;
+
+    public function mount()
+    {
+        $this->proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+        $this->areas = Area::getAll();
+        $this->sedes = Sede::getAll();
+    }
+
+    public function render()
+    {
+        return view('livewire.contratos-identificador-proyectos-int-ext');
+    }
+
+    public function verificarIdentificador($text)
+    {
+        $this->identificador_proyect = $text;
+        $busqueda = TimesheetProyecto::select('tipo')->where('identificador', $text)->get()->pluck('tipo')->toArray();
+
+        $this->select_tipos = array_diff(TimesheetProyecto::TIPOS, $busqueda);
+
+        if (count($busqueda) == 1) {
+            if (! empty($busqueda) && $busqueda[0] == 'Interno') {
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto interno.';
+                $this->colorTexto = 'orange';
+            } elseif (! empty($busqueda) && $busqueda[0] == 'Externo') {
+                $this->mensaje = 'Este Identificador se encuentra en uso por un proyecto externo.';
+                $this->colorTexto = 'orange';
+            } else {
+                $this->mensaje = 'Este Identificador no esta disponible.';
+                $this->class = 'error';
+                $this->colorTexto = 'red';
+            }
+        } elseif (count($busqueda) == 2) {
+            $this->mensaje = 'Este Identificador no esta disponible.';
+            $this->class = 'error';
+            $this->colorTexto = 'red';
+        } elseif (count($busqueda) == 0) {
+            $this->mensaje = 'El Identificador esta disponible.';
+            $this->class = 'error';
+            $this->colorTexto = 'green';
+        }
+    }
+}

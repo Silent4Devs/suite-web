@@ -7,8 +7,8 @@
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -22,7 +22,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -84,6 +84,57 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach ($query as $keySol => $sol)
+                        <tr>
+                            <td style="min-width: 200px;">
+                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $sol->empleado->avatar }}"
+                                    title="{{ $sol->empleado->avatar }}" class="rounded-circle"
+                                    style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                                <span>{{ $sol->empleado->name }}</span>
+                            </td>
+                            <td style="min-width: 110px;">
+                                {{ $sol->dias_solicitados }}
+                            </td>
+                            <td style="min-width: 75px;">
+                                {{ \Carbon\Carbon::parse($sol->fecha_inicio)->format('d-m-Y') }}
+                            </td>
+                            <td style="min-width: 75px;">
+                                {{ \Carbon\Carbon::parse($sol->fecha_fin)->format('d-m-Y') }}
+                            </td>
+                            <td style="min-width: 75px;">
+                                @switch($sol->aprobacion)
+                                    @case(1)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-warning">Pendiente</span>
+                                        </div>
+                                    @break
+
+                                    @case(2)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-danger">Rechazado</span>
+                                        </div>
+                                    @break
+
+                                    @case(3)
+                                        <div style="text-align:left">
+                                            <span class="badge badge-pill badge-success">Aprobado</span>
+                                        </div>
+                                    @break
+
+                                    @default
+                                        <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+                                @endswitch
+                            </td>
+                            <td style="min-width: 70px;">
+                                <div style="text-aling:center">
+                                    <a href="{{ $sol->id }}/respuesta" title="Aprobar/ Rechazar solicitud"><i
+                                            class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i>
+                                    </a>
+                                </div>
+                            </td>
+                    @endforeach
+                </tbody>
             </table>
 
         </div>
@@ -225,104 +276,104 @@
                 pageLength: 10,
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.solicitud-vacaciones.aprobacion') }}",
-                columns: [{
-                        data: 'empleado',
-                        name: 'empleado',
-                        render: function(data, type, row, meta) {
-                            data = JSON.parse(data);
-                            return `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                            <span>${data.name}</span>
-                            `;
-                        }
-                    },
-                    {
-                        data: 'dias_solicitados',
-                        name: 'dias_solicitados',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
+                // ajax: "{{ route('admin.solicitud-vacaciones.aprobacion') }}",
+                // columns: [{
+                //         data: 'empleado',
+                //         name: 'empleado',
+                //         render: function(data, type, row, meta) {
+                //             data = JSON.parse(data);
+                //             return `
+            //             <img src="{{ asset('storage/empleados/imagenes') }}/${data.avatar}" title="${data.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+            //             <span>${data.name}</span>
+            //             `;
+                //         }
+                //     },
+                //     {
+                //         data: 'dias_solicitados',
+                //         name: 'dias_solicitados',
+                //         render: function(data, type, row) {
+                //             return `<div style="text-align:center">${data}</div>`;
+                //         }
 
-                    },
+                //     },
 
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'aprobacion',
-                        name: 'aprobacion',
-                        render: function(data, type, row) {
-                            const aprobacion = row.aprobacion;
-                            console.log(aprobacion)
-                            switch (Number(aprobacion)) {
-                                case 1:
-                                    return `
-                                <div  style="text-align:left">
-                                    <span class="badge badge-pill badge-warning">Pendiente</span>
-                                </div>
-                                `;
-                                    break;
-                                case 2:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-danger">Rechazado</span>
-                                </div>
-                                `;
-                                    break;
-                                case 3:
-                                    return `
-                                <div style="text-align:left">
-                                    <span class="badge badge-pill badge-success">Aprobado</span>
-                                </div>
-                                `;
-                                    break;
-                                default:
-                                    return `
-                                <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                `;
-                            }
-                        }
-                    },
+                //     {
+                //         data: 'fecha_inicio',
+                //         name: 'fecha_inicio',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //             return `<div style="text-align:left">${data}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'fecha_fin',
+                //         name: 'fecha_fin',
+                //         render: function(data, type, row) {
+                //             let fecha = data.split('-');
+                //             let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                //             return `<div style="text-align:left">${fechaDMY}</div>`;
+                //             return `<div style="text-align:left">${data}</div>`;
+                //         }
+                //     },
+                //     {
+                //         data: 'aprobacion',
+                //         name: 'aprobacion',
+                //         render: function(data, type, row) {
+                //             const aprobacion = row.aprobacion;
+                //             console.log(aprobacion)
+                //             switch (Number(aprobacion)) {
+                //                 case 1:
+                //                     return `
+            //                 <div  style="text-align:left">
+            //                     <span class="badge badge-pill badge-warning">Pendiente</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 case 2:
+                //                     return `
+            //                 <div style="text-align:left">
+            //                     <span class="badge badge-pill badge-danger">Rechazado</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 case 3:
+                //                     return `
+            //                 <div style="text-align:left">
+            //                     <span class="badge badge-pill badge-success">Aprobado</span>
+            //                 </div>
+            //                 `;
+                //                     break;
+                //                 default:
+                //                     return `
+            //                 <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
+            //                 `;
+                //             }
+                //         }
+                //     },
 
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:left">${data}</div>`;
-                    //     }
-                    // },
-                    {
-                        data: 'opciones',
-                        render: function(data, type, row, meta) {
-                            return `
-                                <div style="text-aling:center">
-                                <a href="${row.id}/respuesta"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i></a>
-                                </div
-                               `;
-                        }
-                    }
-                ],
+                //     // {
+                //     //     data: 'descripcion',
+                //     //     name: 'descripcion',
+                //     //     render: function(data, type, row) {
+                //     //         return `<div style="text-align:left">${data}</div>`;
+                //     //     }
+                //     // },
+                //     {
+                //         data: 'opciones',
+                //         render: function(data, type, row, meta) {
+                //             return `
+            //                 <div style="text-aling:center">
+            //                 <a href="${row.id}/respuesta"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i></a>
+            //                 </div
+            //                `;
+                //         }
+                //     }
+                // ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']

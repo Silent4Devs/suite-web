@@ -1,195 +1,126 @@
 @extends('layouts.admin')
-@section('content')
-    <style type="text/css">
-        body {
-            background-color: #fff;
+@section('css')
+    @vite(['resources/css/centroAtencion.css'])
+@endsection
+@section('styles')
+    <style>
+        .gruop-item-menu-slider {
+            display: none !important;
         }
 
-        section {
-            padding-top: 50px;
-        }
-
-        table,
-        h2 {
-            margin-top: 30px;
-        }
-
-        .card {
-            box-shadow: none !important;
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        table i {
-            font-size: 15pt;
-            margin-right: 7px;
-        }
-
-        .fa-edit {
-            color: rgb(4, 4, 4);
-        }
-
-        .fa-archive {
-            color: #212529;
-        }
-
-        .cdr-celeste {
-            background: #4A98FF;
-        }
-
-        .cdr-amarillo {
-            background: #FFCB63;
-        }
-
-        .cdr-morado {
-            background: #AC84FF;
-        }
-
-        .cdr-azul {
-            background: #6863FF;
-        }
-
-        .cdr-verde {
-            background: #6DC866;
-        }
-
-        .cdr-rojo {
-            background: #FF417B;
-        }
-
-        .caja_secciones section {
-            overflow: unset !important;
-        }
-
-        .tarjetas_seguridad_indicadores {
-            width: 100%;
-            height: 80px;
-            color: #fff;
-            margin-bottom: 40px;
-            font-size: 12pt;
-            border-radius: 6px;
-        }
-
-        .tarjetas_seguridad_indicadores i {
-            position: relative;
-            font-size: 20pt;
-            margin-right: 10px;
-        }
-
-        .far.fa-circle:after {
-            content: "-";
-            position: absolute;
-            top: -18%;
-            left: 33%;
-            transform: scale(1.3);
-        }
-
-        .tarjetas_seguridad_indicadores div {
-            width: 100%;
-            text-align: center;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .numero {
-            font-size: 16pt;
-        }
-
-        .botones_tabla {
-            width: 100%;
-            display: flex;
+        .group-menu-centro-atencion {
+            display: flex !important;
         }
     </style>
-
-
-    {{-- {{ Breadcrumbs::render('centro-atencion') }} --}}
+@endsection
+@section('content')
     <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
-    <div id="desk" class="mt-5 card" style="border: none;">
 
-        @include('partials.flashMessages')
-        <div class="caja_botones_secciones">
+    @include('partials.flashMessages')
+    <div class="">
 
-            <div class="caja_botones_menu">
-                @can('centro_atencion_incidentes_de_seguridad_acceder')
-                    <a href="#" data-tabs="incidentes" class="btn_activo">
-                        <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
+        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes" role="tab"
+                        aria-controls="incidentes" aria-selected="true" style="background-color: #4A98FF !important;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Incidentes de seguridad</span>
                     </a>
-                @endcan
-                @can('centro_atencion_riesgos_acceder')
-                    <a href="#" data-tabs="riesgos">
-                        <i class="fas fa-shield-alt"></i> Riesgos
+                </li>
+            @endcan
+            @can('centro_atencion_riesgos_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab"
+                        aria-controls="riesgos" aria-selected="false" style="background-color: #4A98FF !important;">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Riesgos</span>
                     </a>
-                @endcan
-                @can('centro_atencion_quejas_acceder')
-                    <a href="#" data-tabs="quejas">
-                        <i class="fas fa-frown"></i> Quejas
+                </li>
+            @endcan
+            @can('centro_atencion_quejas_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="quejas-tab" data-bs-toggle="tab" href="#quejas" role="tab"
+                        aria-controls="quejas" aria-selected="false" style="background-color: #FF8F55 !important;">
+                        <i class="fas fa-frown"></i>
+                        <span> Quejas</span>
                     </a>
-                @endcan
-                @can('centro_atencion_quejas_clientes_acceder')
-                    <a href="#" data-tabs="quejasClientes">
-                        <i class="fas fa-thumbs-down"></i> Quejas Clientes
+                </li>
+            @endcan
+            @can('centro_atencion_quejas_clientes_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="quejasClientes-tab" data-bs-toggle="tab" href="#quejasClientes" role="tab"
+                        aria-controls="quejasClientes" aria-selected="false" style="background-color: #78BB50 !important;">
+                        <i class="fas fa-thumbs-down"></i>
+                        <span> Quejas Clientes</span>
                     </a>
-                @endcan
-                @can('centro_atencion_denuncias_acceder')
-                    <a href="#" data-tabs="denuncias">
-                        <i class="fas fa-hand-paper"></i> Denuncias
+                </li>
+            @endcan
+            @can('centro_atencion_denuncias_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="denuncias-tab" data-bs-toggle="tab" href="#denuncias" role="tab"
+                        aria-controls="denuncias" aria-selected="false" style="background-color: #BE74FF !important;">
+                        <i class="fas fa-hand-paper"></i>
+                        <span> Denuncias</span>
                     </a>
-                @endcan
-                @can('centro_atencion_mejoras_acceder')
-                    <a href="#" data-tabs="mejoras">
-                        <i class="fas fa-rocket"></i> Mejoras
+                </li>
+            @endcan
+            @can('centro_atencion_mejoras_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="mejoras-tab" data-bs-toggle="tab" href="#mejoras" role="tab"
+                        aria-controls="mejoras" aria-selected="false" style="background-color: #7A7A7A !important;">
+                        <i class="fas fa-rocket"></i>
+                        <span> Mejoras</span>
                     </a>
-                @endcan
-                @can('centro_atencion_sugerencias_acceder')
-                    <a href="#" data-tabs="sugerencias">
-                        <i class="fas fa-lightbulb"></i> Sugerencias
+                </li>
+            @endcan
+            @can('centro_atencion_sugerencias_acceder')
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="sugerencias-tab" data-bs-toggle="tab" href="#sugerencias" role="tab"
+                        aria-controls="sugerencias" aria-selected="false" style="background-color: #FE5661 !important;">
+                        <i class="fas fa-lightbulb"></i>
+                        <span> Sugerencias</span>
                     </a>
-                @endcan
-            </div>
+                </li>
+            @endcan
+        </ul> --}}
 
-            <div class="caja_caja_secciones">
-
-                <div class="caja_secciones">
-                    @can('centro_atencion_incidentes_de_seguridad_acceder')
-                        <section id="incidentes"
-                            class="{{ Auth::user()->can('incidentes_seguridad_access') ? 'caja_tab_reveldada' : '' }}">
-                            @include('admin.desk.seguridad.seguridad')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_riesgos_acceder')
-                        <section id="riesgos">
-                            @include('admin.desk.riesgos.riesgos')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_quejas_acceder')
-                        <section id="quejas">
-                            @include('admin.desk.quejas.quejas')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_quejas_clientes_acceder')
-                        <section id="quejasClientes">
-                            @include('admin.desk.clientes.clientes')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_denuncias_acceder')
-                        <section id="denuncias">
-                            @include('admin.desk.denuncias.denuncias')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_mejoras_acceder')
-                        <section id="mejoras">
-                            @include('admin.desk.mejoras.mejoras')
-                        </section>
-                    @endcan
-                    @can('centro_atencion_sugerencias_acceder')
-                        <section id="sugerencias">
-                            @include('admin.desk.sugerencias.sugerencias')
-                        </section>
-                    @endcan
+        <div class="tab-content" id="myTabContent">
+            @can('centro_atencion_incidentes_de_seguridad_acceder')
+                <div class="tab-pane fade show active" id="incidentes" role="tabpanel" aria-labelledby="incidentes-tab">
+                    @include('admin.desk.seguridad.seguridad')
                 </div>
-
-            </div>
+            @endcan
+            @can('centro_atencion_riesgos_acceder')
+                <div class="tab-pane fade " id="riesgos" role="tabpanel" aria-labelledby="riesgos-tab">
+                    @include('admin.desk.riesgos.riesgos')
+                </div>
+            @endcan
+            @can('centro_atencion_quejas_acceder')
+                <div class="tab-pane fade" id="quejas" role="tabpanel" aria-labelledby="quejas-tab">
+                    @include('admin.desk.quejas.quejas')
+                </div>
+            @endcan
+            @can('centro_atencion_quejas_clientes_acceder')
+                <div class="tab-pane fade" id="quejasClientes" role="tabpanel" aria-labelledby="quejasClientes-tab">
+                    @include('admin.desk.clientes.clientes')
+                </div>
+            @endcan
+            @can('centro_atencion_denuncias_acceder')
+                <div class="tab-pane fade" id="denuncias" role="tabpanel" aria-labelledby="denuncias-tab">
+                    @include('admin.desk.denuncias.denuncias')
+                </div>
+            @endcan
+            @can('centro_atencion_mejoras_acceder')
+                <div class="tab-pane fade" id="mejoras" role="tabpanel" aria-labelledby="mejoras-tab">
+                    @include('admin.desk.mejoras.mejoras')
+                </div>
+            @endcan
+            @can('centro_atencion_sugerencias_acceder')
+                <div class="tab-pane fade" id="sugerencias" role="tabpanel" aria-labelledby="sugerencias-tab">
+                    @include('admin.desk.sugerencias.sugerencias')
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

@@ -149,7 +149,7 @@ class Edit_clasificacion:
 
         # Guardar actualización
         print("Dando clic al botón Guardar para guardar actualización...")
-        guardar_xpath = "//button[@class='btn btn-danger' and normalize-space()='Guardar']"
+        guardar_xpath = "//button[@class='btn btn-primary' and normalize-space()='Guardar']"
         guardar = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, guardar_xpath))
         )

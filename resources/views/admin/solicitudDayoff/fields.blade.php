@@ -1,17 +1,17 @@
 @php
-// if ($dias_disponibles == null) {
-//     $valor = 'no tienes dias disponibles';
-//     $mostrar = false;
-// } else {
-//     $valor = $dias_disponibles;
-//     $mostrar = true;
-// }
+    // if ($dias_disponibles == null) {
+    //     $valor = 'no tienes dias disponibles';
+    //     $mostrar = false;
+    // } else {
+    //     $valor = $dias_disponibles;
+    //     $mostrar = true;
+    // }
 
-if ($dias_pendientes >= 1) {
-    $leyenda_dias_pendientes = true;
-} else {
-    $leyenda_dias_pendientes = false;
-}
+    if ($dias_pendientes >= 1) {
+        $leyenda_dias_pendientes = true;
+    } else {
+        $leyenda_dias_pendientes = false;
+    }
 
 @endphp
 
@@ -69,40 +69,42 @@ if ($dias_pendientes >= 1) {
         <!-- Categoria Field -->
         <div class="row">
             <div class="form-group col-sm-6">
-                <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Fecha de inicio:', ['class' => 'required']) !!}
-                {!! Form::date('fecha_inicio', null, [
-                    'class' => 'form-control',
-                    'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...',
-                    'id' => 'fecha_inicio',
-                ]) !!}
+                <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+                <label for="fecha_inicio" class="required">Fecha de inicio:</label>
+                <input type="date" name="fecha_inicio" id="fecha_inicio"
+                    class="form-control"
+                    placeholder="Ingrese la fecha en que inician sus vacaciones..."
+                    value="{{ old('fecha_inicio') }}">
                 @error('fecha_inicio')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
-            <!-- Categoria Field -->
+
+            <!-- Fecha de fin Field -->
             <div class="form-group col-sm-6">
-                <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Fecha de fin:', ['class' => 'required']) !!}
-                {!! Form::date('fecha_fin', null, [
-                    'class' => 'form-control',
-                    'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
-                    'id' => 'fecha_fin',
-                ]) !!}
+                <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+                <label for="fecha_fin" class="required">Fecha de fin:</label>
+                <input type="date" name="fecha_fin" id="fecha_fin"
+                    class="form-control"
+                    placeholder="Ingrese la fecha en que terminan sus vacaciones..."
+                    value="{{ old('fecha_fin') }}">
                 @error('fecha_fin')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
         </div>
-        <!-- Categoria Field -->
+
+        <!-- Días solicitados Field -->
         <div class="row">
             <div class="form-group col-sm-12">
-                <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('dias_solicitados', 'Días solicitados:', ['class' => 'required']) !!}
-                {!! Form::number('dias_solicitados', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '0',
-                    'readonly',
-                    'id' => 'dias_solicitados',
-                    'style' => 'text-align:center',
-                ]) !!}
+                <i class="bi bi-calendar-week-fill iconos-crear"></i>
+                <label for="dias_solicitados" class="required">Días solicitados:</label>
+                <input type="number" name="dias_solicitados" id="dias_solicitados"
+                    class="form-control"
+                    placeholder="0"
+                    readonly
+                    style="text-align:center"
+                    value="{{ old('dias_solicitados') }}">
                 @error('dias_solicitados')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -113,9 +115,10 @@ if ($dias_pendientes >= 1) {
         <!-- Descripcion Field -->
         <div class="row">
             <div class="form-group col-sm-12">
-                <label for="exampleFormControlTextarea1"> <i
-                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios para el aprobador:') !!}</label>
-                <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+                <label for="descripcion">
+                    <i class="fas fa-file-alt iconos-crear"></i>Comentarios para el aprobador:
+                </label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
             </div>
         </div>
 
@@ -126,8 +129,8 @@ if ($dias_pendientes >= 1) {
         <input type="hidden" value="{{ $autoriza }}" name="autoriza">
         <!-- Submit Field -->
         <div class="text-right form-group col-12">
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" id="enviar" type="submit">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+            <button class="btn btn-primary" id="enviar" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -242,7 +245,7 @@ if ($dias_pendientes >= 1) {
                     } else {
                         alert(
                             "Recuerda que solo podrás solicitar un dia a la vez de los dias disponibles ¡Intentalo de nuevo!"
-                            );
+                        );
                         $("#dias_solicitados").attr("value", 0);
                         document.getElementById("fecha_fin").value = "";
                     }

@@ -2,8 +2,70 @@
 @section('content')
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/forms.css') }}{{ config('app.cssVersion') }}">
     <style type="text/css">
+        .caja-firmas-doc .flex {
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .caja-firmas-doc .flex-item {
+            width: 300px;
+            padding: 20px !important;
+        }
+
+        .firma-content {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .caja-space-firma {
+            position: relative;
+            width: 500px;
+            height: 350px;
+        }
+
+        .caja-space-firma input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .caja-space-firma canvas {
+            /* width: 100%;
+                                    height: 100%; */
+            border: 1px solid #5a5a5a;
+            ;
+        }
+
+        .img-firma {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .caja-firmas-doc p {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item {
+            width: 100%;
+            max-height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            align-self: stretch;
+        }
+
+
         sup {
             color: red;
         }
@@ -11,12 +73,20 @@
         ol.breadcrumb {
             margin-bottom: 0px;
         }
+
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #ADD8E6 !important;
+        }
+
+        #info-bar {
+            display: none;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('riesgos-edit', $riesgos) }}
 @include('partials.flashMessages')
 <div class="card">
-    <div class="text-center card-header" style="background-color: #345183;">
+    <div class="text-center card-header" style="background-color: var(--color-tbj)">
         <strong style="font-size: 16pt; color: #fff;"><i class="mr-4 fas fa-shield-virus"></i>Riesgos</strong>
     </div>
     <div class="caja_botones_menu">
@@ -30,18 +100,17 @@
             <div class="caja_secciones">
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
-                        <form class="row" method="POST"
-                            action="{{ route('admin.desk.riesgos-update', $riesgos) }}">
+                        <form class="row" method="POST" action="{{ route('admin.desk.riesgos-update', $riesgos) }}">
                             @csrf
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
                                 style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                                 <div class="row w-100">
                                     <div class="text-center col-1 align-items-center d-flex justify-content-center">
                                         <div class="w-100">
-                                            <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                                            {{-- <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i> --}}
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
@@ -55,7 +124,48 @@
                             <div class="mt-1 form-group col-12">
                                 <b>Datos generales:</b>
                             </div>
-                            <div class="mt-2 form-group col-2">
+
+                            @if (is_null($firma_validacion))
+                                <div style="position: relative; left: 2rem;">
+                                    <label>
+                                        <input type="checkbox" id="toggle-info"
+                                            {{ !empty($aprobadoresArray) ? 'checked' : '' }}>
+                                        Activar flujo de firma(s)
+                                    </label>
+                                    <br>
+                                </div>
+
+
+                                <div class="mt-2 form-group col-md-12">
+                                    <div class="info-bar" id="info-bar"
+                                        style="display: {{ !empty($aprobadoresArray) ? 'block' : 'none' }};">
+                                        <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
+                                        <select id="participantes" name="participantes[]" class="form-control"
+                                            multiple="multiple"
+                                            style="padding: 10px; border-radius: 50px; border: 1px solid #007BFF;">
+                                            @if ($firmaModules && $firmaModules->empleados)
+                                                @if (count($firmaModules->empleados) > 0)
+                                                    @foreach ($firmaModules->empleados as $empleado)
+                                                        <option value="{{ $empleado->id }}"
+                                                            @if (is_array($aprobadoresArray) && in_array($empleado->id, $aprobadoresArray)) selected @endif>
+                                                            {{ $empleado->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>No hay participantes disponibles.
+                                                    </option>
+                                                @endif
+                                            @else
+                                                <option value="" disabled>No hay participantes disponibles.
+                                                </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            <div class="mt-2 form-group col-12">
                                 <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
                                 <div class="form-control">{{ $riesgos->folio }}</div>
                             </div>
@@ -132,7 +242,7 @@
                                 <div class="container">
                                     <div class="mb-4 row">
                                         <div class="col text-start">
-                                            <a href="#" class="btn btn-danger" data-toggle="modal"
+                                            <a href="#" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#largeModal">Evidencia</a>
                                         </div>
                                     </div>
@@ -156,7 +266,7 @@
                                                             </ol>
                                                             <div class='carousel-inner'>
                                                                 @foreach ($riesgos->evidencias_riesgos as $idx => $evidencia)
-                                                                    @if (pathinfo($evidencia->evidencia , PATHINFO_EXTENSION) == 'pdf')
+                                                                    @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
                                                                         <div
                                                                             class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
                                                                             <iframe class='img-size'
@@ -259,38 +369,39 @@
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control">{{ Str::limit($riesgos->reporto->name, 30, '...') }}</div>
+                                <div class="form-control">{{ Str::limit(isset($riesgos->reporto->name), 30, '...') }}
+                                </div>
                             </div>
 
 
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                <div class="form-control">{{ $riesgos->reporto->puesto }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->puesto) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-4">
                                 <label class="form-label"><i
                                         class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-                                <div class="form-control">{{ $riesgos->reporto->area->area }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->area->area) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
                                     electrónico</label>
-                                <div class="form-control">{{ $riesgos->reporto->email }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->email) }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-6">
                                 <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-                                <div class="form-control">{{ $riesgos->reporto->telefono }}</div>
+                                <div class="form-control">{{ isset($riesgos->reporto->telefono) }}</div>
                             </div>
 
 
 
                             <div class="mt-2 text-right form-group col-12">
-                                <a href="{{ asset('admin/desk') }}" class="btn btn_cancelar">Cancelar</a>
-                                <input type="submit" class="btn btn-success" value="Enviar">
+                                <a href="{{ asset('admin/desk') }}" class="btn btn-outline-primary">Cancelar</a>
+                                <input type="submit" class="btn btn-primary" value="Enviar">
                             </div>
                         </form>
                     </div>
@@ -306,7 +417,7 @@
                                             <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
                                         </div>
                                     </div>
-                                    <div class="col-11">
+                                    <div class="col-12" style="width: 300rem;">
                                         <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">
                                             Instrucciones</p>
                                         <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Al final de
@@ -344,12 +455,12 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" name="ideas">{{ old('ideas', $analisis->ideas ?? '') }}</textarea>
                                         </div>
 
                                         <div class="form-group col-12">
                                             <label>Causa Raíz</label>
-                                            <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
+                                            <textarea class="form-control" name="causa_ideas">{{ old('causa_ideas', $analisis->causas_ideas ?? '') }}</textarea>
                                         </div>
                                     </div>
 
@@ -475,7 +586,7 @@
                                     </div>
                                 </div>
                                 <div class="py-3 text-right col-12">
-                                    <input type="submit" class="btn btn-success">
+                                    <input type="submit" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>
@@ -489,17 +600,18 @@
                                 <strong style="font-size:13pt;">Folio: {{ $riesgos->folio }}</strong>
                             </div>
                         </div>
-                        <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
-                            <button style="position:absolute; right: 2px; top:2px;"
-                                class="btn btn-success btn_modal_form">Agregar actividad</button>
-                            @if (count($riesgos->planes))
-                                <a style="position:absolute; right: 170px; top:2px;"
-                                    href="{{ route('admin.planes-de-accion.show', $riesgos->planes->first()->id) }}"
-                                    class="btn btn-success"><i class="mr-2 fas fa-stream"></i> Plan De
-                                    Acción</a>
-                            @endif
+                        <div
+                            style="display: flex; justify-content: flex-start; align-items: center; position: relative;">
+                            <h5 style="margin: 0; flex-grow: 1;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-primary btn_modal_form">Agregar actividad</button>
+                                @if (count($riesgos->planes))
+                                    <a href="{{ route('admin.planes-de-accion.show', $riesgos->planes->first()->id) }}"
+                                        class="btn btn-primary"><i class="mr-2 fas fa-stream"></i> Plan De Acción</a>
+                                @endif
+                            </div>
                         </div>
+
                         <div class="mt-4 datatable-fix" style="width: 100%;">
                             <table id="tabla_plan_accion_riesgos" class="table">
                                 <thead>
@@ -525,7 +637,7 @@
                             <form class="card" id="form_plan_accion" method="POST"
                                 action="{{ route('admin.desk-riesgos-actividades.store') }}">
                                 <input type="hidden" name="riesgo_id" value="{{ $riesgos->id }}">
-                                <div class="text-center card-header" style="background-color: #345183;">
+                                <div class="text-center card-header" style="background-color: var(--color-tbj)">
                                     <strong style="font-size: 16pt; color: #fff;"><i
                                             class="mr-4 fas fa-tasks"></i>Crear: Plan de Trabajo</strong>
                                 </div>
@@ -591,10 +703,11 @@
                                             <textarea class="form-control" name="comentarios" id="comentarios"></textarea>
                                             <span class="text-danger error_comentarios errors"></span>
                                         </div>
+
                                         <div class="text-right form-group col-md-12">
-                                            <a href="#" class="btn btn_cancelar">Cancelar</a>
+                                            <a href="#" class="btn btn-outline-primary">Cancelar</a>
                                             <input type="submit" value="Guardar"
-                                                class="btn btn-success btn_enviar_form_modal">
+                                                class="btn btn-primary btn_enviar_form_modal">
                                         </div>
                                     </div>
                                 </div>
@@ -608,14 +721,330 @@
 </div>
 
 
+@php
+    $userIsAuthorized = false;
+    $existingRecord = App\Models\FirmaCentroAtencion::where('id_riesgos', $riesgos->id)
+        ->where('user_id', Auth::id())
+        ->first();
+    if ($aprobadores) {
+        $aprobadoresArray = json_decode($aprobadores->aprobadores, true); // Decodificar JSON a array
+        if (is_array($aprobadoresArray) && in_array(Auth::id(), $aprobadoresArray)) {
+            $userIsAuthorized = true;
+        }
+    }
+@endphp
 
 
+@if ($riesgos->estatus === 'cerrado' || $riesgos->estatus === 'cancelado')
+    @if ($userIsAuthorized)
+        @if (!$existingRecord)
+            <form method="POST" action="{{ route('admin.module_firmas.riesgos', ['id' => $riesgos->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
+                    <div class="" style="position: relative; left: 2rem;">
+                        <br>
+                        <h5><strong>Firma*</strong></h5>
+                        <p>
+                            Indispensable firmar antes de guardar y enviarla a aprobación.
+                        </p>
+                    </div>
+                    <div class="flex caja-firmar">
+                        <div class="flex-item"
+                            style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                            <div id="firma_content" class="caja-space-firma"
+                                style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
+                                <canvas id="firma_requi" width="500px" height="300px">
+                                    Navegador no compatible
+                                </canvas>
+                                <input type="hidden" name="firma" id="firma">
+                            </div>
+                            <div>
+                                <div class="btn"
+                                    style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);"
+                                    id="clear">Limpiar</div>
+                            </div>
+                            <div class="flex my-4" style="justify-content: end;">
+                                <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endif
+    @endif
+@endif
 
-
+@if ($userIsAuthorized || auth()->user()->roles->contains('title', 'Admin'))
+    <div class="card card-content" style="margin-bottom: 30px">
+        <div class="caja-firmas-doc">
+            @foreach ($firmas as $firma)
+                <div class="flex" style="margin-top: 70px;">
+                    <div class="flex-item">
+                        @if ($firma->firma)
+                            <img src="{{ $firma->firma_ruta_riesgos }}" class="img-firma" width="200"
+                                height="100">
+                            <p>Fecha: {{ $firma->created_at->format('d-m-Y') }}</p>
+                            <p>Firmante: {{ $firma->empleado->name }}</p>
+                        @else
+                            <div style="height: 137px;"></div>
+                        @endif
+                        <hr>
+                        <p>
+                            <small>FECHA, FIRMA Y NOMBRE DEL PARTICIPANTE </small>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
 @endsection
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 @section('scripts')
+<script>
+    function validar(params) {
+        var x = $("#firma").val();
+        if (x) {
+            document.getElementById("myForm").submit();
+        } else {
+            Swal.fire(
+                'Aun no ha firmado',
+                'Porfavor Intentelo nuevamente',
+                'error');
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        (function() {
+
+
+            window.requestAnimFrame = (function(callback) {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimaitonFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+            })();
+
+            if (document.getElementById('firma_requi')) {
+                renderCanvas("firma_requi", "clear");
+            }
+
+        })();
+
+        $('#firma_requi').mouseleave(function() {
+            var canvas = document.getElementById('firma_requi');
+            var dataUrl = canvas.toDataURL();
+            $('#firma').val(dataUrl);
+        });
+
+        function renderCanvas(contenedor, clearBtnCanvas) {
+
+            var canvas = document.getElementById(contenedor);
+            console.log(canvas);
+            var ctx = canvas.getContext("2d");
+            ctx.strokeStyle = "#222222";
+            ctx.lineWidth = 1;
+
+            var drawing = false;
+            var mousePos = {
+                x: 0,
+                y: 0
+            };
+            var lastPos = mousePos;
+
+            canvas.addEventListener("mousedown", function(e) {
+                drawing = true;
+                lastPos = getMousePos(canvas, e);
+            }, false);
+
+            canvas.addEventListener("mouseup", function(e) {
+                drawing = false;
+            }, false);
+
+            canvas.addEventListener("mousemove", function(e) {
+                mousePos = getMousePos(canvas, e);
+            }, false);
+
+            // Add touch event support for mobile
+            canvas.addEventListener("touchstart", function(e) {
+
+            }, false);
+
+            canvas.addEventListener("touchmove", function(e) {
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchstart", function(e) {
+                mousePos = getTouchPos(canvas, e);
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchend", function(e) {
+                var me = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(me);
+            }, false);
+
+            function getMousePos(canvasDom, mouseEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: mouseEvent.clientX - rect.left,
+                    y: mouseEvent.clientY - rect.top
+                }
+            }
+
+            function getTouchPos(canvasDom, touchEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: touchEvent.touches[0].clientX - rect.left,
+                    y: touchEvent.touches[0].clientY - rect.top
+                }
+            }
+
+            function renderCanvas() {
+                if (drawing) {
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    ctx.stroke();
+                    lastPos = mousePos;
+                }
+            }
+
+            // Prevent scrolling when touching the canvas
+            document.body.addEventListener("touchstart", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchend", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchmove", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+
+            (function drawLoop() {
+                requestAnimFrame(drawLoop);
+                renderCanvas();
+            })();
+
+            function clearCanvas() {
+                canvas.width = canvas.width;
+            }
+
+            function isCanvasBlank() {
+                const context = canvas.getContext('2d');
+
+                const pixelBuffer = new Uint32Array(
+                    context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                );
+
+                return !pixelBuffer.some(color => color !== 0);
+            }
+
+            // Set up the UI
+            // var sigText = document.getElementById(dataBaseCanvas);
+            // var sigImage = document.getElementById(imageCanvas);
+            var clearBtn = document.getElementById(clearBtnCanvas);
+            // var submitBtn = document.getElementById(submitBtnCanvas);
+            clearBtn.addEventListener("click", function(e) {
+                clearCanvas();
+                // sigText.innerHTML = "Data URL for your signature will go here!";
+                // sigImage.setAttribute("src", "");
+            }, false);
+            // submitBtn.addEventListener("click", function(e) {
+            //     const blank = isCanvasBlank();
+            //     if (!blank) {
+            //         // var dataUrl = canvas.toDataURL();
+            //         // sigText.innerHTML = dataUrl;
+            //         // sigImage.setAttribute("src", dataUrl);
+            //     } else {
+            //         if (toastr) {
+            //             toastr.info('No has firmado en el canvas');
+            //         } else {
+            //             alert('No has firmado en el canvas');
+            //         }
+            //     }
+            // }, false);
+
+        }
+
+        function isCanvasEmpty(canvas) {
+            const context = canvas.getContext('2d');
+
+            const pixelBuffer = new Uint32Array(
+                context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+            );
+
+            return !pixelBuffer.some(color => color !== 0);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#participantes').select2({
+            placeholder: 'Selecciona participantes',
+            allowClear: true,
+            tags: true,
+            tokenSeparators: [',', ' '],
+            templateResult: formatEmpleado,
+            templateSelection: formatEmpleadoSelection,
+            maximumSelectionLength: 5 // Limita a un máximo de 5 selecciones
+        });
+
+        function formatEmpleado(empleado) {
+            if (!empleado.id) {
+                return empleado.text;
+            }
+            var $nombre = $('<span>' + empleado.text + '</span>');
+            var $container = $('<span>').append($nombre);
+            return $container;
+        }
+
+        function formatEmpleadoSelection(empleado) {
+            return empleado.text;
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('toggle-info');
+        const infoBar = document.getElementById('info-bar');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                infoBar.style.display = 'block';
+            } else {
+                infoBar.style.display = 'none';
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     const formatDate = (current_datetime) => {
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" +

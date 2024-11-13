@@ -13,6 +13,8 @@ class DocumentoNotification extends Notification
 {
     use Queueable;
 
+    public $id_documento;
+
     public $documento;
 
     public $tipo_consulta;
@@ -28,6 +30,7 @@ class DocumentoNotification extends Notification
      */
     public function __construct(Documento $documento, $tipo_consulta, $tabla, $slug)
     {
+        $this->id_documento = $documento->id;
         $this->documento = $documento;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
@@ -68,13 +71,14 @@ class DocumentoNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->documento->id,
+            'id' => $this->id_documento,
+            // 'id' => $this->documento->id,
             'time' => Carbon::now(),
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
-            'name' => Auth::user()->name,
-            'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
+            // 'name' => Auth::user()->name,
+            // 'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

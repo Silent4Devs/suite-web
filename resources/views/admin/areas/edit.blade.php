@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-@if (session('mensajeError'))
-<div class="alert alert-danger">
-    {{ session('mensajeError') }}
-</div>
-@endif
+    @if (session('mensajeError'))
+        <div class="alert alert-danger">
+            {{ session('mensajeError') }}
+        </div>
+    @endif
     <h5 class="col-12 titulo_general_funcion">Editar: Registro de Área</h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -16,8 +16,8 @@
                     <div class="form-group col-sm-4 col-md-4 col-lg-4">
                         <label class="required" for="area"><i
                                 class="fab fa-adn iconos-crear"></i>{{ trans('cruds.area.fields.area') }}</label>
-                        <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                            name="area" id="area" value="{{ old('area', $area->area) }}">
+                        <input class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}" type="text"
+                            maxlength="255" name="area" id="area" value="{{ old('area', $area->area) }}">
                         @if ($errors->has('area'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('area') }}
@@ -126,8 +126,8 @@
                 <div class="row col-12">
                     <div class="form-group col-sm-12">
                         <label for="descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Descripción</label>
-                        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" maxlength="550" name="descripcion"
-                            id="descripcion">{{ old('descripcion', $area->descripcion) }}</textarea>
+                        <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" maxlength="550"
+                            name="descripcion" id="descripcion">{{ old('descripcion', $area->descripcion) }}</textarea>
                         @if ($errors->has('descripcion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('descripcion') }}
@@ -140,8 +140,8 @@
 
 
                 <div class="text-right form-group col-12" style="margin-left:15px;">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -6,7 +6,7 @@
    </div>
 </div> --}}
 <h4 class="sub-titulo-form col s12">AGREGAR ENTREGABLE</h4>
-<form wire:submit.prevent="store" enctype="multipart/form-data">
+<form wire:submit="store" enctype="multipart/form-data">
 
     @include('livewire.entregable-mensual.form')
 
@@ -15,7 +15,7 @@
     </button>-->
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">
-            <button wire:click="store" type="submit" class="btn btn-success">Guardar</button>
+            <button wire:click="store" type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </div>
 

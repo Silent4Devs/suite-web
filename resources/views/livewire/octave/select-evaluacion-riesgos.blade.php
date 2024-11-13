@@ -2,7 +2,7 @@
     <div wire:ignore class="form-group col-md-3 col-sm-12">
         <label for="confidencialidad"><i class="fas fa-lock iconos-crear"></i>Confidencialidad</label><br>
         <select class="form-control select2 {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}"
-            name="confidencialidad" wire:model="confidencialidad" id="confidencialidad_informacion">
+            name="confidencialidad" wire:model.live="confidencialidad" id="confidencialidad_informacion">
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -16,7 +16,7 @@
     <div wire:ignore class="form-group col-md-3 col-sm-12">
         <label for="disponibilidad"><i class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label><br>
         <select class="form-control select2 {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}"
-            name="disponibilidad" wire:model="disponibilidad" id="disponibilidad_informacion">
+            name="disponibilidad" wire:model.live="disponibilidad" id="disponibilidad_informacion">
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -30,7 +30,7 @@
     <div wire:ignore class="form-group col-md-3 col-sm-12">
         <label for="integridad"><i class="fab fa-black-tie iconos-crear"></i>Integridad</label><br>
         <select class="form-control select2 {{ $errors->has('integridad') ? 'is-invalid' : '' }}" name="integridad"
-            wire:model="integridad" id="integridad_informacion">
+            wire:model.live="integridad" id="integridad_informacion">
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -46,7 +46,7 @@
             del Riesgo</label><br>
         <input class="mt-2 form-control {{ $errors->has('evaluacion_riesgo') ? 'is-invalid' : '' }}" type="text"
             style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};" name="evaluacion_riesgo"
-            wire:model="evaluacion" id="evaluacion_informacion" value="{{ old('evaluacion_riesgo', '') }}">
+            wire:model.live="evaluacion" id="evaluacion_informacion" value="{{ old('evaluacion_riesgo', '') }}">
         <small class="text-danger errores evaluacion_riesgo_error"></small>
     </div>
 </div>

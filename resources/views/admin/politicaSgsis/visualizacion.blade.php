@@ -16,7 +16,7 @@
         }
 
         .caja_titulo h3 {
-            color: #345183;
+            color: var(--color-tbj);
             bottom: 0;
         }
 
@@ -38,34 +38,54 @@
             font-weight: bolder !important;
             color: rgb(255, 255, 255) !important;
         }
-        .card {
-        border-radius: 15px; /* Puedes ajustar el valor según tus preferencias */
-        overflow: hidden; /* Asegura que las esquinas redondas se apliquen correctamente */
-    }
 
-    .encabezado {
-            background:#FFF5DF;
-            color: #606060; /* Color del texto en el encabezado */
-            padding: 10px; /* Ajusta el espaciado interno del encabezado */
-            border-top-left-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior izquierda */
-            border-top-right-radius: 15px; /* Aplica esquinas redondeadas solo en la esquina superior derecha */
+        .card {
+            border-radius: 15px;
+            /* Puedes ajustar el valor según tus preferencias */
+            overflow: hidden;
+            /* Asegura que las esquinas redondas se apliquen correctamente */
+        }
+
+        .encabezado {
+            background: #FFF5DF;
+            color: #606060;
+            /* Color del texto en el encabezado */
+            padding: 10px;
+            /* Ajusta el espaciado interno del encabezado */
+            border-top-left-radius: 15px;
+            /* Aplica esquinas redondeadas solo en la esquina superior izquierda */
+            border-top-right-radius: 15px;
+            /* Aplica esquinas redondeadas solo en la esquina superior derecha */
             position: relative;
             left: .5rem;
             top: 2rem;
         }
 
-        .quitar{
+        .quitar {
             font-weight: normal;
         }
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.politicaSgsis.visualizacion') }}
-<h5 class="col-12 titulo_general_funcion">Politícas de la Organización: <strong> {{ $organizacions->empresa }}</h5>
-        @foreach ($politicaSgsis as $data)
+<h5 class="col-12 titulo_general_funcion">Políticas de la Organización: <strong>{{ $organizacions->empresa }}</strong>
+</h5>
+
+@if ($politicaSgsis->isEmpty())
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">¡Aun no hay políticas aprobadas!</h4>
+            </div>
+        </div>
+    </div>
+@else
+    @foreach ($politicaSgsis as $data)
         <div class="encabezado">
             <h6><strong>{{ $data->nombre_politica ?: 'Nombre: No definido' }}</strong></h6>
-            <p  class="quitar">Fecha de publicación : {{ $data->fecha_publicacion ?: 'fecha_publicacion: No definido' }}</p>
-            <div class="d-flex justify-content-end" style="position: relative; top: -2rem; right: 2rem;">@livewire('aceptar-politica', ['id_politica' => $data->id])</div>
+            <p class="quitar">Fecha de publicación :
+                {{ $data->fecha_publicacion ?: 'Fecha de publicación: No definido' }}</p>
+            <div class="d-flex justify-content-end" style="position: relative; top: -2rem; right: 2rem;">
+                @livewire('aceptar-politica', ['id_politica' => $data->id])</div>
         </div>
         <div class="card card-body">
             <div class="col-sm-12 d-flex align-items-center">
@@ -73,10 +93,12 @@
                     <p class="quitar">{!! \Illuminate\Support\Str::limit(strip_tags($data->politicasgsi), 1050) !!}</p>
                 </div>
                 <div class="ml-auto">
-                    <img src="{{ asset('comite.png') }}" alt="Comite Image">
+                    <img src="{{ asset('comite.png') }}" alt="Imagen del Comité">
                 </div>
             </div>
         </div>
-        @endforeach
+    @endforeach
+@endif
+
 
 @endsection

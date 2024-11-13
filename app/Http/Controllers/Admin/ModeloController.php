@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Marca;
@@ -151,9 +151,7 @@ class ModeloController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function massDestroy(MassDestroyModeloRequest $request)
-    {
-    }
+    public function massDestroy(MassDestroyModeloRequest $request) {}
 
     public function getModelos(Request $request, $id = null)
     {

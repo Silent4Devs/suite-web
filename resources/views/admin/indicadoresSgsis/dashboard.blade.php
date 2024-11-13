@@ -29,7 +29,7 @@
     {{ Breadcrumbs::render('admin.indicadores-dashboard') }}
 
     <div class="text-right mt-5 mr-5">
-        <a class="btn btn-danger" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
+        <a class="btn btn-primary" type="button" class="pl-0 ml-0 btn text-primary" data-toggle="modal"
             data-target="#largeModal">Porcentaje de Cumplimiento</a>
     </div>
 
@@ -89,10 +89,12 @@
                     <tbody>
                         @foreach ($areas as $area)
                             @php
-                                
+
                                 $enCumplimiento = 0;
                                 $enIncumplimiento = 0;
-                                $parametroCumplimiento = $porcentajeCumplimiento ? $porcentajeCumplimiento->porcentaje_cumplimiento : 60;
+                                $parametroCumplimiento = $porcentajeCumplimiento
+                                    ? $porcentajeCumplimiento->porcentaje_cumplimiento
+                                    : 60;
                                 $estaEnCumplimiento = false;
                             @endphp
                             @foreach ($indicadores as $indicador)
@@ -107,10 +109,14 @@
                                         @endphp
                                     @endforeach
                                     @php
-                                        $totalIndicadores = count($indicador->evaluacion_indicadors) > 0 ? count($indicador->evaluacion_indicadors) : 1;
+                                        $totalIndicadores =
+                                            count($indicador->evaluacion_indicadors) > 0
+                                                ? count($indicador->evaluacion_indicadors)
+                                                : 1;
                                         $porcentajeEnCumplimiento = ($enCumplimiento * 100) / $totalIndicadores;
-                                        $estaEnCumplimiento = round($porcentajeEnCumplimiento) >= $parametroCumplimiento ? true : false;
-                                        
+                                        $estaEnCumplimiento =
+                                            round($porcentajeEnCumplimiento) >= $parametroCumplimiento ? true : false;
+
                                     @endphp
                                 @endif
                             @endforeach
@@ -414,12 +420,14 @@
 
             e.preventDefault();
             document.querySelectorAll('.errors').forEach(error => {
-                                error.innerHTML = "";
-                            });
+                error.innerHTML = "";
+            });
             $.ajax({
                 type: "post",
                 url: "{{ route('admin.indicadores-porcentaje-dashboard') }}",
-                data: {porcentaje},
+                data: {
+                    porcentaje
+                },
                 dataType: "json",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -430,20 +438,20 @@
                             .then(() => {
                                 window.location.reload();
                                 $('#largeModal').modal('show')
-                                document.querySelector('.modal-backdrop').style.display="none";
+                                document.querySelector('.modal-backdrop').style.display = "none";
                             })
                     }
                 },
                 error: function(request, status, error) {
-                            document.querySelectorAll('.errors').forEach(error => {
-                                error.innerHTML = "";
-                            });
-                            $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {
-                                console.log(valueOfElement, indexInArray);
-                                $(`span.error_${indexInArray}`).text(valueOfElement[0]);
+                    document.querySelectorAll('.errors').forEach(error => {
+                        error.innerHTML = "";
+                    });
+                    $.each(request.responseJSON.errors, function(indexInArray, valueOfElement) {
+                        console.log(valueOfElement, indexInArray);
+                        $(`span.error_${indexInArray}`).text(valueOfElement[0]);
 
-                            });
-                        }
+                    });
+                }
             });
         })
     </script>

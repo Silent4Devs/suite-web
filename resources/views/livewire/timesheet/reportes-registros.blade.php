@@ -3,7 +3,7 @@
         <a href="#" id="btn_todos" wire:click="todos">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #83BCFE;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;">Todos</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $todos_contador }} </strong>
@@ -14,7 +14,7 @@
         <a href="#" id="btn_aprobado" wire:click="aprobados">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #B8EFA8;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;">Aprobados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $aprobados_contador }} </strong>
@@ -25,7 +25,7 @@
         <a href="#" id="btn_pendiente" wire:click="pendientes">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #FFDBA4;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;"> Pendientes</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $pendientes_contador }} </strong>
@@ -36,7 +36,7 @@
         <a href="#" id="btn_rechazado" wire:click="rechazos">
             <div class="card-complement">
                 <div class="bg-objet" style="background-color: #FFA4A4;"></div>
-                <div class="card-comple-info d-flex align-items-center justify-content-between px-3 w-100">
+                <div class="card-comple-info d-flex align-items-center justify-content-between w-100">
                     <strong style="font-size: 16px;"> Rechazados</strong>
                     <span class="d-flex align-items-center" style="gap: 5px;">
                         <strong style="font-size: 22px"> {{ $rechazos_contador }} </strong>
@@ -50,7 +50,7 @@
         <div class="row">
             <div class="col-md-3 form-group">
                 <label class="form-label">Área</label>
-                <select class="form-control" wire:model.lazy="area_id">
+                <select class="form-control" wire:model.blur="area_id">
                     <option selected value="0">Todas</option>
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -59,7 +59,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Colaborador</label>
-                <select class="form-control" wire:model.lazy="emp_id">
+                <select class="form-control" wire:model.blur="emp_id">
                     <option selected value="0">Todos</option>
                     @foreach ($emp as $em)
                         <option value="{{ $em->id }}">{{ $em->name }}</option>
@@ -69,11 +69,11 @@
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de inicio</label>
                 <input class="form-control date_librery" type="date" name="fecha_inicio"
-                    wire:model.lazy="fecha_inicio">
+                    wire:model.blur="fecha_inicio">
             </div>
             <div class="col-md-3 form-group">
                 <label class="form-label">Fecha de fin</label>
-                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.lazy="fecha_fin">
+                <input class="form-control date_librery" type="date" name="fecha_fin" wire:model.blur="fecha_fin">
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <span>Mostrando</span>
-                        <select name="" id="" class="form-control ml-2" wire:model="perPage">
+                        <select name="" id="" class="form-control ml-2" wire:model.live="perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -100,11 +100,11 @@
                             <option value="100">100</option>
                         </select>
                         <button id="" class="btn px-5 ml-4" style="background-color:#D5FFE7; border: #fff"
-                            wire:click="exportExcel()">
+                            wire:click="RegistroTimesheet()">
                             Excel
                         </button>
                     </div>
-                    <input type="text" class="form-control" placeholder="Buscar..." wire:model="search"
+                    <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search"
                         style="max-width: 150px;">
                 </div>
             </div>

@@ -31,7 +31,10 @@ class RevisionDocumento extends Model implements Auditable
     ];
 
     protected $appends = [
-        'fecha_solicitud', 'before_level_all_answered', 'estatus_revisiones_formateado', 'color_revisiones_estatus',
+        'fecha_solicitud',
+        'before_level_all_answered',
+        'estatus_revisiones_formateado',
+        'color_revisiones_estatus',
     ];
 
     public static function getAllWithDocumento()
@@ -119,6 +122,11 @@ class RevisionDocumento extends Model implements Auditable
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class)->alta();
+        return $this->belongsTo(Empleado::class)->alta()->select('id', 'name', 'email', 'puesto_id', 'area_id', 'estatus');
+    }
+
+    public function empleadoMobile()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta()->select('id', 'name', 'foto', 'genero');
     }
 }

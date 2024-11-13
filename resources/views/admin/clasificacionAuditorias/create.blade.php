@@ -16,7 +16,7 @@
                     <p style="font-size: 18px; color: #788BAC;"><strong>Clasificación</strong></p>
                 </div>
             </div>
-            <form method="POST" action="{{ route('admin.auditoria-clasificacion.store') }}">
+            <form id="clasificacionForm" method="POST" action="{{ route('admin.auditoria-clasificacion.store') }}">
                 @csrf
                 <div class="row">
                     <div class="distancia form-group col-md-6">
@@ -48,12 +48,67 @@
                     </div>
                 </div>
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.auditoria-clasificacion') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.auditoria-clasificacion') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('clasificacionForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+            let form = $(this);
+            let formData = form.serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'), // Usa la URL de acción del formulario
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Token CSRF
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = response
+                                .redirect_url; // Redirigir después de cerrar SweetAlert
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) { // Manejo de errores de validación
+                        let errors = xhr.responseJSON.errors;
+                        for (let field in errors) {
+                            console.log(errors[field][
+                                0
+                            ]); // Aquí puedes mostrar los errores en el frontend
+                        }
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error inesperado.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

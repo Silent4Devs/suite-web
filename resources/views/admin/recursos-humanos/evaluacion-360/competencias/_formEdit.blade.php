@@ -1,18 +1,21 @@
 <div>
     <div class="container">
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             COMPETENCIA
         </div>
         @include('admin.recursos-humanos.evaluacion-360.competencias._form')
         <div>
             <div class="pl-0 form-check form-switch">
 
-                    <input class="form-check-input"
-                        {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }}
-                        name="toda_la_empresa" type="checkbox" id="toda_la_empresa">
-                    <span class="checkmark"></span>
-                {!! Form::label('nombre_comite', 'Asignar esta competencia a todos los
-                empleados de la organización*', ['class' => 'asterisco']) !!}
+                <input class="form-check-input"
+                    {{ old('toda_la_empresa', $competencia->toda_la_empresa) ? 'checked' : '' }} name="toda_la_empresa"
+                    type="checkbox" id="toda_la_empresa">
+                <span class="checkmark"></span>
+                <label for="nombre_comite" class="asterisco">
+                    Asignar esta competencia a todos los empleados de la organización*
+                </label>
+
                 {{-- <label class="form-check-label" for="toda_la_empresa"></label> --}}
             </div>
             <span id="niveles_cargando" class="d-none"><i class="fas fa-circle-notch fa-spin"></i>
@@ -23,7 +26,8 @@
         </div>
     </div>
     <div class="container mt-4">
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             CONDUCTAS ESPERADAS
         </div>
         <div class="px-1 py-2 mb-3 rounded" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">

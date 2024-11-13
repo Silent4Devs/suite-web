@@ -1,5 +1,5 @@
 {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/global/darkMode.css') }}">  --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menu.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menu.css') }}{{ config('app.cssVersion') }}">
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show c-sidebar-light" style=" border: none;">
     <div class="bg-transparent c-sidebar-brand d-md-down-none caja_caja_img_logo">
 
@@ -31,7 +31,7 @@
     <ul class="c-sidebar-nav dark_mode1">
 
         <li class="c-sidebar-nav-title">
-            <font class="letra_blanca" style="color: #345183;">Menu</font>
+            <font class="letra_blanca" style="color: var(--color-tbj)">Menu</font>
         </li>
         @can('mi_perfil_acceder')
             <li class="c-sidebar-nav-item">
@@ -257,7 +257,7 @@
                 $usuario->can('matriz_bia_menu_acceder') ||
                 $usuario->can('mis_cursos_acceder'))
             <li class="c-sidebar-nav-title">
-                <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
+                <font class="letra_blanca" style="color: var(--color-tbj)">Módulos&nbsp;Tabantaj</font>
             </li>
         @endif
         @can('visitantes_acceder')
@@ -501,7 +501,7 @@
                 $usuario->can('katbol_contratos_acceso') ||
                 $usuario->can('katbol_requisiciones_acceso'))
             <li class="c-sidebar-nav-title">
-                <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Katbol</font>
+                <font class="letra_blanca" style="color: var(--color-tbj)">Módulos&nbsp;Katbol</font>
             </li>
         @endif
         @can('dashboard_gestion_contratos_acceder')
@@ -552,7 +552,7 @@
 
         @can('permisos_de_administracion_acceder')
             <li class="c-sidebar-nav-title">
-                <font class="letra_blanca" style="color: #345183;">Administración</font>
+                <font class="letra_blanca" style="color: var(--color-tbj)">Administración</font>
             </li>
 
             {{-- @can('planes_accion_access') --}}
@@ -569,8 +569,7 @@
                 </li>
             @endcan --}}
 
-            @if (auth()->user()->can('clausulas_auditorias_acceder') ||
-                    auth()->user()->can('clasificaciones_auditorias_acceder'))
+            @if (auth()->user()->can('clausulas_auditorias_acceder') || auth()->user()->can('clasificaciones_auditorias_acceder'))
                 <li class="c-sidebar-nav-dropdown">
                     <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                         <i class="bi bi-folder iconos_menu letra_blanca"></i>

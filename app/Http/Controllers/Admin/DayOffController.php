@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Exports\VistaGlobalDayOffExport;
 use App\Http\Controllers\Controller;
@@ -85,7 +85,7 @@ class DayOffController extends Controller
     {
         abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $areas = Area::getAll();
-        $vacacion = new DayOff();
+        $vacacion = new DayOff;
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
         return view('admin.dayOff.create', compact('vacacion', 'areas', 'areas_seleccionadas'));
@@ -115,7 +115,7 @@ class DayOffController extends Controller
                 $errorMessage = 'Debe seleccionar un area.';
 
                 // Manually add error message to $errors bag
-                $errors = new \Illuminate\Support\MessageBag();
+                $errors = new \Illuminate\Support\MessageBag;
                 $errors->add('custom_areas', $errorMessage);
 
                 // Redirect back with the input data and errors
@@ -169,7 +169,7 @@ class DayOffController extends Controller
                 $errorMessage = 'Debe seleccionar un area.';
 
                 // Manually add error message to $errors bag
-                $errors = new \Illuminate\Support\MessageBag();
+                $errors = new \Illuminate\Support\MessageBag;
                 $errors->add('custom_areas', $errorMessage);
 
                 // Redirect back with the input data and errors
@@ -251,7 +251,7 @@ class DayOffController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new VistaGlobalDayOffExport();
+        $export = new VistaGlobalDayOffExport;
 
         return Excel::download($export, 'Control_Ausencias_DayOff.xlsx');
     }

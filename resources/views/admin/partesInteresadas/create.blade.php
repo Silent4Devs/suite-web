@@ -4,33 +4,35 @@
 
 
     <h5 class="col-12 titulo_general_funcion">Partes Interesadas</h5>
-<div class="card card-body" style="background-color: #5397D5; color: #fff;">
-    <div class="d-flex" style="gap: 25px;">
-        <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
-        <div>
-            <br>
-            <h4>¿Qué es Partes Interesadas?</h4>
-            <p>
-                Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización.
-            </p>
-            <p>
-              Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
-            </p>
+    <div class="card card-body" style="background-color: #5397D5; color: #fff;">
+        <div class="d-flex" style="gap: 25px;">
+            <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
+            <div>
+                <br>
+                <h4>¿Qué es Partes Interesadas?</h4>
+                <p>
+                    Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información
+                    de la organización.
+                </p>
+                <p>
+                    Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
+                </p>
+            </div>
         </div>
     </div>
-</div>
     <div class="mt-4 card">
 
         <div class="card-body">
             <form method="POST" action="{{ route('admin.partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
-                {{ Form::hidden('pdf-value', 'PartesInt') }}
+                <input type="hidden" name="pdf-value" value="PartesInt" id="pdf-value">
+
                 <div class="form-group col-md-12">
                     <label class="required" for="parteinteresada"> <i class="fas fa-user-tie iconos-crear"></i>
                         {{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>
-                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                        name="parteinteresada" wire:model.lazy="parteinteresada" id="parteinteresada"
+                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text"
+                        maxlength="255" name="parteinteresada" wire:model.blur="parteinteresada" id="parteinteresada"
                         value="{{ old('parteinteresada', '') }}" required>
                     @if ($errors->has('parteinteresada'))
                         <div class="invalid-feedback">
@@ -48,7 +50,7 @@
                             {{ trans('cruds.partesInteresada.fields.requisitos') }}</label>
                         <textarea class="form-control {{ $errors->has('requisitos') ? 'is-invalid' : '' }}"
                             name="requisitos" id="requisitos"
-                            wire:model.lazy="requisitos">{{ old('requisitos') }}</textarea>
+                            wire:model.blur="requisitos">{{ old('requisitos') }}</textarea>
                         @if ($errors->has('requisitos'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('requisitos') }}
@@ -61,8 +63,8 @@
                 {{-- @livewire('partes-interesadas-component') --}}
 
                 <div class="text-right form-group col-md-12">
-                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

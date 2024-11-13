@@ -37,5 +37,5 @@ element_entrar_modulo = "(//A[@href='#'])[6]"
 element_entrar_submodulo = "//A[@href='https://192.168.9.78/admin/users'][text()='Usuarios']"
 
 agregar_btn_xpath= "//BUTTON[@class='btn btn-xs btn-outline-success rounded ml-2 pr-3 agregar']"
-guardar_xpath = "//BUTTON[@class='btn btn-danger' and text()='Guardar']"
+guardar_xpath = "//BUTTON[@class='btn btn-primary' and text()='Guardar']"
 

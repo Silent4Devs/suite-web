@@ -1,35 +1,20 @@
 @extends('layouts.admin')
 @section('content')
-    <style type="text/css">
-        table {
-            table-layout: fixed;
-            width: 500px;
-        }
-
-        th,
-        td {
-            border: 1px solid blue;
-            width: 130px;
-            word-wrap: break-word
-        }
-    </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
-        <div class="card-body datatable-fix">
+        <div class="card-body">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
                 @method('GET')
-                <a style="color: white;" class="btn btn-primary"
-                    href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
+                <a class="btn btn-primary" href="{{ route('contract_manager.requisiciones.create') }}">Agregar</a>
                 <button class="btn btn-primary" type="submit" title="Aprobadores">
                     Aprobadores
                 </button>
-                <a style="color: white;" class="btn btn-primary"
-                    href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
+                <a class="btn btn-primary" href="{{ route('contract_manager.requisiciones.archivo') }}">Archivados</a>
             </form>
-            <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
-                <thead class="thead-dark">
+            <table id="dom" class="table w-100 datatable-perspectiva" style="width: 100%">
+                <thead class="">
                     <tr>
-                        <th style="vertical-align: top">Folio</th>
+                        <th style="vertical-align: top; min-width: 100px;">Folio</th>
                         <th style="vertical-align: top">Fecha De Solicitud</th>
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
@@ -48,7 +33,8 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto') }}
+                            </td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
@@ -59,11 +45,18 @@
                                         <h5><span class="badge badge-pill badge-success">Aprobado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('rechazado')
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
 
                                     @case('firmada')
+                                        <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
+                                    @break
+
                                     @case('firmada_final')
                                         <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
                                     @break
@@ -74,29 +67,29 @@
 
                             </td>
                             @php
-                            $user = Illuminate\Support\Facades\DB::table('users')
-                              ->select('id', 'name')
-                              ->where('id', $requisicion->id_user)
-                              ->first();
+                                $user = Illuminate\Support\Facades\DB::table('users')
+                                    ->select('id', 'name')
+                                    ->where('id', $requisicion->id_user)
+                                    ->first();
                             @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{$user->name ?? ''}}</p>
+                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_jefe))
-
-                                    @php
-                                    $employee = App\Models\User::find($requisicion->id_user)->empleado;
-
-                                    if ($employee !== null && $employee->supervisor !== null) {
-                                        $supervisorName = $employee->supervisor->name;
-                                    } else {
-                                        $supervisorName = "N/A"; // Or any default value you prefer
-                                    }
-                                    @endphp
-                                        <p>Jefe: {{$supervisorName ?? ''}} </p>
+                                        @php
+                                            $employee = App\Models\User::find($requisicion->id_user)->empleado;
+                                            if ($requisicion->registroFirmas) {
+                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
+                                            } elseif ($employee !== null && $employee->supervisor !== null) {
+                                                $supervisorName = $employee->supervisor->name;
+                                            } else {
+                                                $supervisorName = 'N/A'; // Or any default value you prefer
+                                            }
+                                        @endphp
+                                        <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
@@ -104,11 +97,12 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
-
-                                    @php
-                                     $comprador = App\Models\ContractManager\Comprador::with('user')->where('id', $requisicion->comprador_id)->first();
-                                    @endphp
-                                    <p>Comprador: {{  $comprador->name }}</p>
+                                        @php
+                                            $comprador = App\Models\ContractManager\Comprador::with('user')
+                                                ->where('id', $requisicion->comprador_id)
+                                                ->first();
+                                        @endphp
+                                        <p>Comprador: {{ $comprador->name }}</p>
                                     @break
 
                                     @default
@@ -119,25 +113,47 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"
+                                            class="dropdown-item">
+                                            <i class="fa-solid fa-print"></i> Ver/Imprimir
+                                        </a>
 
-                                {{-- @if ($requisicion->estado === 'rechazado')
-                                    <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                @endif --}}
+                                        <a onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"
+                                            class="dropdown-item">
+                                            <i class="fa-solid fa-box-archive"></i> Archivar
+                                        </a>
 
-                                <a href="{{ route('contract_manager.requisiciones.show', $requisicion->id) }}"><i
-                                        class="fa-solid fa-print"></i></a>
+                                        <a onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"
+                                            class="dropdown-item text-danger">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </a>
 
+                                        @if ($requisicion->estado == 'cancelada' || $requisicion->estado == 'rechazado')
+                                            <a href="{{ route('contract_manager.requisiciones.edit', $requisicion->id) }}"
+                                                class="dropdown-item">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </a>
+                                        @endif
 
-                                <a
-                                    onclick="mostrarAlerta2('{{ route('contract_manager.requisiciones.estado', $requisicion->id) }}')"><i
-                                        class="fa-solid fa-box-archive"></i></a>
-
-                                <a
-                                    onclick="mostrarAlerta('{{ route('contract_manager.requisiciones.destroy', $requisicion->id) }}')"><i
-                                        class="fas fa-trash text-danger"></i></a>
-
-
+                                        @if ($requisicion->estado == 'curso')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 1, {{ $requisicion->id }})"
+                                                class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
+                                            <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})"
+                                                class="dropdown-item">
+                                                <span class="material-symbols-outlined">cancel</span> Cancelar
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -154,6 +170,7 @@
 
     <script>
         function mostrarAlerta(url) {
+            console.log('URL para eliminar:', url);
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'No podrás deshacer esta acción',
@@ -163,11 +180,33 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Coloca aquí la lógica para eliminar el elemento
-                    // Esto puede incluir una solicitud AJAX al servidor o cualquier otra lógica de eliminación
-                    // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
-                    Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success');
-                    window.location.href = url;
+                    fetch(url, {
+                            method: 'GET', // Cambia a 'DELETE' si es necesario
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Eliminado!', 'El elemento ha sido eliminado.', 'success')
+                                    .then(() => {
+                                        window.location.reload(); // Refresca la página
+                                    });
+                            } else {
+                                window.location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            window.location.reload();
+                        });
                 }
             });
         }
@@ -187,6 +226,53 @@
                     // Una vez que el elemento se haya eliminado, puedes mostrar un mensaje de éxito
                     Swal.fire('Archivado!', 'El elemento ha sido archivado.', 'success');
                     window.location.href = url;
+                }
+            });
+        }
+
+        function mostrarAlerta3(url, tipo, id) {
+            let titleText = tipo == 1 ?
+                '¿Está seguro de cancelar la requisición RQ-' + id + '?' :
+                '¿Está seguro de cancelar la requisición RQ-' + id +
+                '? Al realizar esta acción también se cancelará la orden de compra.';
+
+            Swal.fire({
+                title: titleText,
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la solicitud AJAX usando fetch
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Cancelado!', 'La requisición ha sido cancelada.', 'success').then(
+                                    () => {
+                                        window.location.reload(); // Refresca la página
+                                    });
+                            } else {
+                                Swal.fire('Error', 'No se pudo cancelar la requisición. Inténtelo de nuevo.',
+                                    'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'Hubo un problema al procesar la solicitud.', 'error');
+                            console.error('Error:', error);
+                        });
                 }
             });
         }

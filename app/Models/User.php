@@ -97,7 +97,11 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
-        $cacheKey = 'Auth_user:user'.auth()->user()->id;
+        if (! Auth::check()) {
+            return null; // or handle the unauthenticated case as needed
+        }
+
+        $cacheKey = 'Auth_user:user'.Auth::user()->id;
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return Auth::user();
@@ -110,6 +114,16 @@ class User extends Authenticatable implements Auditable
             return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
         } else {
             return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+        }
+    }
+
+    //Funcion para capacitaciones devuelve pocos datos
+    public function profesor()
+    {
+        if ($this->empleado_id != null) {
+            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->select('id', 'name', 'foto', 'email', 'n_empleado')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->select('id', 'name', 'foto', 'email', 'n_empleado')->alta();
         }
     }
 

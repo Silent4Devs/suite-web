@@ -15,11 +15,11 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.solicitud-vacaciones.store']) !!}
-
-            @include('admin.solicitudVacaciones.fields')
-
-            {!! Form::close() !!}
+            <form action="{{ route('admin.solicitud-vacaciones.store') }}" method="POST">
+                @csrf
+                @include('admin.solicitudVacaciones.fields')
+            </form>
         </div>
+
     </div>
 @endsection

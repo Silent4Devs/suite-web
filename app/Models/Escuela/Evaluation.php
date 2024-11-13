@@ -7,6 +7,7 @@ use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Evaluation extends Model implements Auditable
@@ -37,5 +38,12 @@ class Evaluation extends Model implements Auditable
     public function getCompletedAttribute()
     {
         return $this->users->contains(auth()->user()->id);
+    }
+
+    public static function getAll()
+    {
+        return Cache::remember('Evaluations:evaluations_all', 3600 * 7, function () {
+            return self::get();
+        });
     }
 }

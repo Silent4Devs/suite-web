@@ -52,7 +52,7 @@ table {
 
 .caja-calendar-semana label,
 .caja-calendar-semana label i {
-    color: #486489;
+    color: var(--color-tbj);
 }
 
 .anima-focus label {
@@ -61,12 +61,12 @@ table {
 
 .caja-calendar-semana .anima-focus label {
     background-color: #fff !important;
-    color: #486489 !important;
+    color: var(--color-tbj) !important;
     font-size: 18px;
 }
 
 .caja-calendar-semana .anima-focus input {
-    color: #486489 !important;
+    color: var(--color-tbj) !important;
     font-size: 18px;
     background-color: #fff;
 }
@@ -86,6 +86,7 @@ table {
 .tabla-llenar-horas input,
 .tabla-llenar-horas div.form-control {
     margin-top: 7px;
+    min-width: 80px;
 }
 
 .tabla-llenar-horas input[type="checkbox"] {
@@ -112,7 +113,7 @@ table {
     border: #D2D2D2 1px solid;
     border-radius: 100px;
     padding: 3px 10px;
-    color: #306BA9;
+    color: var(--color-tbj);
 }
 
 .tabla-llenar-horas tbody tr:first-child td {
@@ -190,7 +191,7 @@ body.c-dark-theme .btn-outline-secondary {
 
 .indicador_numero {
     position: absolute;
-    background-color: #3086AF;
+    background-color: var(--color-tbj);
     color: #fff !important;
     display: flex;
     align-items: center;
@@ -548,6 +549,7 @@ table.dataTable tbody tr.selected td {
 
 .bg-objet {
     width: 40px;
+    min-width: 40px;
     height: 80px;
     transition: 0.2s;
     position: absolute;
@@ -566,6 +568,7 @@ table.dataTable tbody tr.selected td {
     z-index: 1;
     color: #818181;
     transition: 0.2s;
+    padding-right: 10px;
 }
 
 .card-complement:hover .card-comple-info {
@@ -580,7 +583,7 @@ table.dataTable tbody tr.selected td {
     left: 0;
     margin-top: -80px;
     z-index: 10;
-    background-color: #7195C9;
+    background-color: var(--color-tbj);
     border: 1px solid #bdbdbd;
     color: #fff;
     border-top-right-radius: 18px;
@@ -761,7 +764,7 @@ table.dataTable tbody tr.selected td {
 }
 
 .caja-calendar-semana {
-    background-color: #3f699f;
+    background-color: var(--color-tbj);
     padding: 0px 20px;
     padding-top: 5px;
     border-top-left-radius: 16px;

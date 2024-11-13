@@ -489,7 +489,6 @@
             text-align: center;
             width: 1.6em;
         }
-
     </style>
 
     <style>
@@ -614,7 +613,6 @@
 
 
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -630,7 +628,8 @@
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
                 </div>
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     DATOS GENERALES
                 </div>
                 <div class="row">
@@ -679,8 +678,8 @@
                     <div class="form-group col-md-12 col-sm-12">
                         <label for="descripcion_servicio"><i class="fas fa-file-alt iconos-crear"></i>Descripción del
                             servicio a proporcionar</label><br>
-                        <textarea class="form-control {{ $errors->has('descripcion_servicio') ? 'is-invalid' : '' }}"
-                            type="text" name="descripcion_servicio">{{ old('descripcion_servicio', '') }}</textarea>
+                        <textarea class="form-control {{ $errors->has('descripcion_servicio') ? 'is-invalid' : '' }}" type="text"
+                            name="descripcion_servicio">{{ old('descripcion_servicio', '') }}</textarea>
                         @if ($errors->has('descripcion_servicio'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('descripcion_servicio') }}
@@ -691,19 +690,21 @@
 
 
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     EVALUACIÓN DE IMPACTOS ASOCIADOS AL PROCESO SOPORTE PROVEEDOR
                 </div>
-                @livewire('i-s-o31000.impactos-asociados',[
-                'estrategico'=> 1,
-                'operacional'=> 1,
-                'cumplimiento'=> 1,
-                'legal'=> 1,
-                'reputacional'=> 1,
-                'tecnologico'=> 1
+                @livewire('i-s-o31000.impactos-asociados', [
+                    'estrategico' => 1,
+                    'operacional' => 1,
+                    'cumplimiento' => 1,
+                    'legal' => 1,
+                    'reputacional' => 1,
+                    'tecnologico' => 1,
                 ])
                 <hr>
-                <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+                <div class="text-center form-group"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                     ACTIVOS DE INFORMACIÓN
                 </div>
 
@@ -751,22 +752,21 @@
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12">
                         <label><i class="fas fa-camera-retro iconos-crear"></i>Escenario de Riesgo</label><br>
-                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}"
-                            type="text" name="escenario_riesgo"
-                            id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
+                        <textarea class="form-control {{ $errors->has('escenario_riesgo') ? 'is-invalid' : '' }}" type="text"
+                            name="escenario_riesgo" id="escenario_riesgo_informacion">{{ old('escenario_riesgo', '') }}</textarea>
                         <small class="text-danger errores escenario_riesgo_error"></small>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
-                        <label for="id_vulnerabilidad"><i class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
+                        <label for="id_vulnerabilidad"><i
+                                class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
                         <select class="mt-2 procesoSelect form-control" name="id_vulnerabilidad"
                             id="vulnerabilidad_informacion">
                             <option value="">Seleccione una opción</option>
                             @foreach ($vulnerabilidades as $vulnerabilidad)
-                                <option
-                                    {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
+                                <option {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
                                     value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
                                 </option>
                             @endforeach
@@ -775,13 +775,13 @@
                     </div>
                 </div>
 
-                @livewire('i-s-o31000.activos-informacion',[
-                'impactoOb' => 6
+                @livewire('i-s-o31000.activos-informacion', [
+                    'impactoOb' => 6,
                 ])
 
                 <div class="mb-3 ml-3 col-12 mt-4 text-right">
                     <button type="button" name="btn-suscribir-activos_info" id="btn-suscribir-activos_info"
-                        class="btn btn-success">Agregar</button>
+                        class="btn btn-primary">Agregar</button>
                 </div>
 
 
@@ -789,7 +789,8 @@
                     <table class="scroll_estilo table table-responsive" id="activos_info_table" style="width:100%">
                         <thead>
                             <tr class="negras">
-                                <th class="text-center" style="background-color:#3490DC;" colspan="5">Descripción General
+                                <th class="text-center" style="background-color:#3490DC;" colspan="5">Descripción
+                                    General
                                 </th>
                                 <th class="text-center" style="background-color:#1168af;" colspan="3">Evaluación del
                                     Escenario</th>
@@ -819,8 +820,8 @@
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad.ISO31000', ['id' => $id_analisis]) }}"
-                        class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

@@ -106,16 +106,18 @@
     <h5 class="col-12 titulo_general_funcion">Programa Anual de Auditoría</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
-            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;" class="mt-2 mb-2 ml-2 img-fluid">
+            <img src="{{ asset('assets/Imagen 2@2x.png') }}" alt="jpg" style="width:200px;"
+                class="mt-2 mb-2 ml-2 img-fluid">
             <div>
                 <br>
                 <br>
-                <h4>¿Qué es Programa Anual de Auditoria?   </h4>
+                <h4>¿Qué es Programa Anual de Auditoria? </h4>
                 <p>
                     Plan para evaluar regularmente el sistema de seguridad de la información de la empresa.
                 </p>
                 <p>
-                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es necesario.
+                    Asegurándote de que todo esté en orden y proporcionando oportunidades para hacer mejoras si es
+                    necesario.
                 </p>
             </div>
         </div>
@@ -124,8 +126,8 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <a href="{{ route('admin.auditoria-anuals.index') }}" class="btn_cancelar">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                    <a href="{{ route('admin.auditoria-anuals.index') }}" class="btn btn-outline-primary">Regresar</a>
+                    <button class="btn btn-primary print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
@@ -144,13 +146,14 @@
                         </div>
                         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                             <span
-                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                                style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                             <br>
-                            <span style="color:#345183; font-size:15px;"><strong>Programa Anual de Auditoría</strong></span>
+                            <span style="color:var(--color-tbj); font-size:15px;"><strong>Programa Anual de
+                                    Auditoría</strong></span>
 
                         </div>
                         <div class="col-3 p-2">
-                            <span style="color:#345183;">Fecha:
+                            <span style="color:var(--color-tbj)">Fecha:
                                 {{ \Carbon\Carbon::parse($auditoriaAnual->created_at)->format('d-m-Y') }}
                             </span>
                         </div>
@@ -174,13 +177,13 @@
                         </span>
                     </div>
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Objetivo de la Auditoría</span>
                     </div>
 
                     <span style="text-align: justify; color:#18183c;">{!! $auditoriaAnual->objetivo ? $auditoriaAnual->objetivo : 'Sin registro' !!}</span>
 
-                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px var(--color-tbj)">
                         <span style="font-size: 17px; font-weight: bold;">Alcance de la Auditoría</span>
                     </div>
 

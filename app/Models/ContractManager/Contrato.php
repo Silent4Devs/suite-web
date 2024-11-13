@@ -2,7 +2,10 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\Area;
+use App\Models\ConvergenciaContratos;
 use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -181,6 +184,7 @@ class Contrato extends Model implements Auditable
         'updated_by',
         'identificador_privado',
         'firma1',
+        'razon_soc_id',
     ];
 
     /**
@@ -280,7 +284,12 @@ class Contrato extends Model implements Auditable
 
     public function dolares()
     {
-        return $this->hasMany(DolaresContrato::class, 'contrato_id');
+        return $this->hasOne(DolaresContrato::class, 'contrato_id', 'id');
+    }
+
+    public function razonSocial()
+    {
+        return $this->belongsTo(Sucursal::class, 'razon_soc_id', 'id');
     }
 
     public function getArchivoAttribute()
@@ -298,5 +307,34 @@ class Contrato extends Model implements Auditable
     public function getNameProveedorAttribute()
     {
         return $this->no_contrato.'-'.$this->nombre_servicio;
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(TimesheetCliente::class, 'proveedor_id');
+    }
+
+    public function clienteConvergencia()
+    {
+        return $this->hasOneThrough(
+            TimesheetCliente::class,
+            ConvergenciaContratos::class,
+            'contrato_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_cliente_id' // Local key on the convergence table...
+        );
+    }
+
+    public function proyectoConvergencia()
+    {
+        return $this->hasOneThrough(
+            TimesheetProyecto::class,
+            ConvergenciaContratos::class,
+            'contrato_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the timesheet proyectos table...
+            'id', // Local key on the contratos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
     }
 }

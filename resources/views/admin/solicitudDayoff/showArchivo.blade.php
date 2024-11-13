@@ -16,7 +16,7 @@
                 <!-- Categoria Enabled-->
                 <div class="col-12 col-sm-12">
                     <div class="text-center form-group"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         DETALLES DE LA SOLICITUD
                     </div>
                     <!-- Categoria Field -->
@@ -65,7 +65,8 @@
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
                                         class="fa-solid fa-file-circle-check iconos-crear"></i>Fecha de inicio:</label>
-                                <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($vacacion->fecha_inicio)->format('d/m/Y')}}"
+                                <input type="text" class="form-control"
+                                    value="{{ \Carbon\Carbon::parse($vacacion->fecha_inicio)->format('d/m/Y') }}"
                                     style="text-align: center">
                             </fieldset>
                         </div>
@@ -73,7 +74,8 @@
                             <fieldset disabled>
                                 <label for="disabledTextInput"> <i
                                         class="fa-solid fa-file-circle-xmark iconos-crear"></i>Fecha de fin:</label>
-                                <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($vacacion->fecha_fin)->format('d/m/Y')}}"
+                                <input type="text" class="form-control"
+                                    value="{{ \Carbon\Carbon::parse($vacacion->fecha_fin)->format('d/m/Y') }}"
                                     style="text-align: center">
                             </fieldset>
                         </div>
@@ -95,16 +97,17 @@
                     <!-- Descripcion Field -->
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
-                            <textarea class="form-control" id="edescripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+                            <label for="descripcion">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del solicitante:
+                            </label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
 
 
                     {{-- Respuesta --}}
                     <div class="text-center form-group"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         RESPUESTA DEL APROBADOR
                     </div>
 
@@ -112,9 +115,11 @@
                         <div class="form-group col-sm-6">
                             <label for="aprobacion" class="">Estatus:</label>
                             <select class="form-control" name="aprobacion" disabled>
-                                <option value="2" {{ 2 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Rechazado
+                                <option value="2" {{ 2 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>
+                                    Rechazado
                                 </option>
-                                <option value="3" {{ 3 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Aprobado
+                                <option value="3" {{ 3 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>
+                                    Aprobado
                                 </option>
                                 <option {{ 1 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Pendiente
                                 </option>
@@ -124,14 +129,17 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
-                            <textarea class="form-control" name="comentarios_aprobador" rows="2" disabled>{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
+                            <label for="comentarios_aprobador">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del aprobador:
+                            </label>
+                            <textarea class="form-control" id="comentarios_aprobador" name="comentarios_aprobador" rows="2" disabled>{{ old('comentarios_aprobador', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>
+
                     <!-- Submit Field -->
                     <div class="text-right form-group col-12">
-                        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Regresar</a>
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Regresar</a>
                     </div>
                 </div>
             </div>

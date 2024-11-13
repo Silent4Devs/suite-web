@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendario;
+use DataTables;
 use Illuminate\Http\Request;
 
 class RegistrarCalendarioController extends Controller
@@ -11,7 +13,7 @@ class RegistrarCalendarioController extends Controller
     {
         if ($request->ajax()) {
             $query = Calendario::orderByDesc('id')->get();
-            $table = Datatables::of($query);
+            $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
@@ -57,7 +59,7 @@ class RegistrarCalendarioController extends Controller
 
     public function create(Request $request)
     {
-        $calendario = new Calendario();
+        $calendario = new Calendario;
 
         return view('admin.registrarGlosario.create', compact('calendario'));
     }

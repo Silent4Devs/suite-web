@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
     @can('plan_base_actividade_create')
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Plan de Trabajo Base </strong></h3>
             </div>
             {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('admin.plan-base-actividades.create') }}">
+                    <a class="btn btn-primary" href="{{ route('admin.plan-base-actividades.create') }}">
                         Agregar <strong>+</strong>
                     </a>
                 </div>
@@ -161,7 +160,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10 
+                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -198,40 +197,52 @@
 
             @can('plan_base_actividade_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar plan de trabajo base',
-                url: "{{ route('admin.plan-base-actividades.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar plan de trabajo base',
+                    url: "{{ route('admin.plan-base-actividades.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('plan_base_actividade_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.plan-base-actividades.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-                return
-                }
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.plan-base-actividades.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+                            return
+                        }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 // dtButtons.push(deleteButton)
             @endcan
@@ -272,9 +283,10 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
-                            
+
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.responsable.avatar}" title="${row.responsable.name}"></img>`;
+
                             return `${row.responsable ? html: ''}`;
                         }
                     },
@@ -282,9 +294,10 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
 
-                            
-                            let html = `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.colaborador.avatar}" title="${row.colaborador.name}"></img>`;
-                            
+
+                            let html =
+                                `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${row.colaborador.avatar}" title="${row.colaborador.name}"></img>`;
+
                             return `${row.colaborador ? html: ''}`;
                         }
                     },
@@ -328,6 +341,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

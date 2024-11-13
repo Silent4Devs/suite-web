@@ -27,7 +27,6 @@ class AddResponsanbleToCartaAceptacionTable extends Migration
      */
     public function down()
     {
-        Schema::table('carta_aceptacion', function (Blueprint $table) {
-        });
+        Schema::table('carta_aceptacion', function (Blueprint $table) {});
     }
 }

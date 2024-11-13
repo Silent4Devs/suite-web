@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Editar: Lineamiento</h5>
@@ -24,19 +24,22 @@
         </div>
     </div>
 
-    {!! Form::model($vacacion, ['route' => ['admin.vacaciones.update', $vacacion->id], 'method' => 'patch']) !!}
-    <div class="mt-4 card card-body">
-        <h5>Modificación de lineamientos</h5>
-        <hr>
+    <form action="{{ route('admin.vacaciones.update', $vacacion->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
+        <div class="mt-4 card card-body">
+            <h5>Modificación de lineamientos</h5>
+            <hr>
 
-        @include('admin.vacaciones.fields')
+            @include('admin.vacaciones.fields')
 
-    </div>
-    <div class="text-right form-group col-12">
-        <a href="{{ route('admin.vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-danger" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
+        </div>
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-primary" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
+
 @endsection

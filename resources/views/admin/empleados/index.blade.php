@@ -2,7 +2,7 @@
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Empleados</h5>
 
-     <div class="text-right">
+    <div class="text-right">
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.empleados.create') }}" type="button" class="btn tb-btn-primary">Registrar Empleados</a>
 
@@ -15,86 +15,95 @@
                             class="fas fa-file-upload"></i> Importar datos</a>
         </div>
     </div>
-        @include('partials.flashMessages')
-        <div class="datatable-fix datatable-rds">
-            <h3 class="title-table-rds"> Empleados</h3>
-             <table id="dom" class="datatable datatable-perspectiva">
-                <thead>
-                    <tr>
-                        <th>Avatar</th>
-                        <th>N° Empleado</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>Area</th>
-                        <th>Puesto</th>
-                        <th>Supervisor</th>
-                        <th>Antiguedad</th>
-                        <th>Estatus</th>
-                        <th>Sede</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Opciones</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($empleados as $empleado)
-                        <tr>
-                            <td>
-                                <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
-                            </td>
-                            @if ($empleado->n_empleado)
-                                <td>{{ $empleado->n_empleado }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            <td>{{ $empleado->name }}</td>
-                            @if ($empleado->email)
-                                <td>{{ $empleado->email }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            @if ($empleado->telefono)
-                                <td>{{ $empleado->telefono }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            <td>{{ $empleado->area->area }}</td>
-                            <td>{{ $empleado->puesto }}</td>
-                            @if (optional($empleado->supervisor)->name)
-                                <td>{{ optional($empleado->supervisor)->name }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            <td>{{ $empleado->antiguedad }}</td>
-                            <td>{{ $empleado->estatus }}</td>
-                            @if (optional($empleado->sede)->sede)
-                                <td>{{ optional($empleado->sede)->sede }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            @if ($empleado->cumpleaños)
-                                <td>{{ $empleado->cumpleaños }}</td>
-                            @else
-                                <td>Sin Registro</td>
-                            @endif
-                            <td>
-                                <a href="{{ route('admin.empleados.edit', $empleado->id) }}"><i
-                                        class="fas fa-edit"></i></a>
-
-                                <a href="{{ route('admin.empleados.show', $empleado->id) }}"><i class="fas fa-eye"></i></a>
-
-                                <a href="{{ route('admin.empleado.solicitud-baja', $empleado->id) }}"><i
-                                        class="fas fa-trash-alt text-danger"></i></a>
-
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <h3 class="title-table-rds"> Empleados</h3>
+        <div class="d-flex justify-content-end">
+            {{-- No funcional por ahora --}}
+            {{-- <a class="boton-transparente boton-sin-borde" href="{{ route('admin.descarga-empleados-general') route('descarga-empleado') }}">
+                <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp; --}}
+            <a class="boton-transparente boton-sin-borde" href="{{ route('admin.descarga-empleados-general') }}">
+                <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp;
         </div>
+        <table id="dom" class="datatable datatable-perspectiva">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>N° Empleado</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Area</th>
+                    <th>Puesto</th>
+                    <th>Supervisor</th>
+                    <th>Antiguedad</th>
+                    <th>Estatus</th>
+                    <th>Sede</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Opciones</th>
 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($empleados as $empleado)
+                    <tr>
+                        <td>
+                            <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
+                        </td>
+                        @if ($empleado->n_empleado)
+                            <td>{{ $empleado->n_empleado }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        <td>{{ $empleado->name }}</td>
+                        @if ($empleado->email)
+                            <td>{{ $empleado->email }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        @if ($empleado->telefono)
+                            <td>{{ $empleado->telefono }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        <td>{{ $empleado->area->area }}</td>
+                        <td>{{ $empleado->puesto }}</td>
+                        @if (optional($empleado->supervisor)->name)
+                            <td>{{ optional($empleado->supervisor)->name }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        <td>{{ $empleado->antiguedad }}</td>
+                        <td>{{ $empleado->estatus }}</td>
+                        @if (optional($empleado->sede)->sede)
+                            <td>{{ optional($empleado->sede)->sede }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        @if ($empleado->cumpleaños)
+                            <td>{{ $empleado->cumpleaños }}</td>
+                        @else
+                            <td>Sin Registro</td>
+                        @endif
+                        <td>
+                            <a href="{{ route('admin.empleados.edit', $empleado->id) }}"><i class="fas fa-edit"></i></a>
+
+                            <a href="{{ route('admin.empleados.show', $empleado->id) }}"><i class="fas fa-eye"></i></a>
+
+                            <a href="{{ route('admin.empleado.solicitud-baja', $empleado->id) }}"><i
+                                    class="fas fa-trash-alt text-danger"></i></a>
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -243,7 +252,8 @@
 
 
         $(document).ready(function() {
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -262,7 +272,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,

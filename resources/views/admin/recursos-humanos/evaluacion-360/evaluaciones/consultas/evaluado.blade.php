@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="col-12 pr-0 mr-0 mb-4">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger print-none" onclick="javascript:window.print()">
+                    <button class="btn btn-primary print-none" onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
                     </button>
@@ -76,7 +76,7 @@
                     <h6 class="m-0 text-white">Informe de resultados</h6>
                 </div> --}}
                     <div class="text-center form-group col-12"
-                        style="background-color:#345183; border-radius: 100px; color: white;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                         DATOS DEL EVALUADO
                     </div>
                     <div class="col-12">
@@ -105,7 +105,7 @@
                     <h6 class="m-0 text-white">Metodología utilizada</h6>
                 </div> --}}
                     {{-- <div class="mt-2 text-center form-group col-12"
-                        style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                         Metodología utilizada
                     </div>
                     <p class="p-0 col-12" style="font-size:11px; text-align: justify;">
@@ -142,7 +142,7 @@
                     <div class="col-12">
                         <div class="mt-1 row justify-content-between">
                             <div class="mt-2 text-center form-group col-12"
-                                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                                 Resultados Generales obtenidos
                             </div>
                             <div class="col-4" style="font-size:12px">
@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div class="mt-2 text-center form-group col-12"
-                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                 Resultado de la evaluación por competencias
             </div>
             @if (session()->has('success'))
@@ -315,7 +315,7 @@
                 </div>
             </div>
             <div class="mt-2 text-center form-group col-12"
-                style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                 Gráficas Competencias
             </div>
             <div id="graficasCompetencias">
@@ -351,7 +351,7 @@
                 <div class="col-12">
                     <div class="mt-4 row">
                         <div class="mt-2 text-center form-group col-12"
-                            style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                            style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                             Resultado de la evaluación por objetivos
                         </div>
                     </div>
@@ -561,7 +561,7 @@
                     </div>
                 </div>
                 <div class="mt-2 text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                     Gráficas Objetivos
                 </div>
                 <div id="graficasObjetivos">
@@ -585,7 +585,7 @@
                     </div>
                 </div>
                 <div class="mt-2 text-center form-group col-12"
-                    style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
                     Sección de Firmas
                 </div>
                 <div class="col-12">

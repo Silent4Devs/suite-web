@@ -1,5 +1,5 @@
 <div>
-
+    {{-- <x-loading-indicator /> --}}
     <style>
         .fantasma {
             opacity: 0;
@@ -8,15 +8,19 @@
         .sortable-chosen>.card-header {
             background-color: #15b6b9 !important;
         }
+
+        .test {
+            display: block !important;
+        }
     </style>
 
     <h4>Lecciones</h4>
     <hr class="mt-2">
-
+    {{-- @dump($course->order_section) --}}
     {{-- add new section --}}
     <div class="mt-2">
         <div class="d-flex justify-content-end" style="margin: 30px 0px;">
-            <button class="btn advance" wire:click="store" type="button">
+            <button class="btn btn-outline-primary advance" wire:click="store" type="button">
                 AGREGAR NUEVA SECCIÓN <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -24,13 +28,13 @@
     <div id="lista-secciones">
         @forelse($course->sections as $item)
             {{--  <div class="card shadow-none" x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }">  --}}
-            <div class="card shadow-none" id="secction{{ $item->id }}" data-id="seccion-{{ $item->id }}">
-                @if ($section->id == $item->id)
-                    <div class="card-header" style="background: #306BA9; color: #FFFFFF;">
+            <div class="card shadow-none" id="seccion-{{ $item['id'] }}" data-id="seccion-{{ $item['id'] }}">
+                @if ($section->id === $item['id'])
+                    <div class="card-header" style="background: var(--color-tbj); color: #FFFFFF;">
                         <div class="row ">
                             <div class="col-10">
-                                <form class="flex-1" wire:submit.prevent="update">
-                                    <input wire:model="section.name" type="text"
+                                <form class="flex-1" wire:submit="update">
+                                    <input wire:model="name" type="text"
                                         class="form-control w-full @if ($errors->has('section.name')) invalid @endif"
                                         placeholder="Escribir...">
                                     @error('section.name')
@@ -43,8 +47,8 @@
                 @else
                     {{-- show section --}}
                     <div class="card-header"
-                        style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
-                        id="secction-show-{{ $item->id }}">
+                        style="background: var(--color-tbj); color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                        id="secction-show-{{ $item['id'] }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="">
                                 <h3 class="mb-0">{{ $item->name }}</h3>
@@ -64,8 +68,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body" id="secction-body-{{ $item->id }}">
-                        @livewire('escuela.instructor.courses-lesson', ['section' => $item], key($item->id))
+                    <div class="card-body" id="secction-body-{{ $item['id'] }}">
+                        @livewire('escuela.instructor.courses-lesson', ['section' => $item], key($item['id']))
                     </div>
                 @endif
             </div>
@@ -92,12 +96,13 @@
         group: "lista",
         store: {
             set: (sortable) => {
-                const orden = sortable.toArray();
-                localStorage.setItem(sortable.options.group.name, orden.join('|'));
+                let orden = sortable.toArray();
+                @this.set('order', orden.join(','));
             },
             get: (sortable) => {
-                const orden = localStorage.getItem(sortable.options.group.name);
-                return orden ? orden.split('|') : [];
+                if (@json($course->order_section)) {
+                    return @json($course->order_section).split(',');
+                }
             }
         },
     });

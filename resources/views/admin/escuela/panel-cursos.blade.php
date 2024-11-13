@@ -61,29 +61,25 @@
                             <td>
                                 @switch($curso->status)
                                     @case(1)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                        <span class="bg-warning p-2 rounded-lg" style="color: #a74b00;">
                                             Borrador
                                         </span>
                                     @break
 
                                     @case(2)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">
+                                        <span class="bg-info color-white p-2 rounded-lg">
                                             Revisión
                                         </span>
                                     @break
 
                                     @case(3)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                        <span class="bg-success color-white p-2 rounded-lg">
                                             Publicado
                                         </span>
                                     @break
 
                                     @case(4)
-                                        <span
-                                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                        <span class="bg-secondary color-white p-2 rounded-lg">
                                             Cerrado
                                         </span>
                                     @break

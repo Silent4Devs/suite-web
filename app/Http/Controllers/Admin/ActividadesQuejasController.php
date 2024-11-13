@@ -15,7 +15,7 @@ class ActividadesQuejasController extends Controller
     public function index(Request $request, $queja_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadQueja::with('responsables')->where('queja_id', $queja_id)->get();
+            $actividades = ActividadQueja::with('responsables:id,name,foto,email')->where('queja_id', $queja_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }
@@ -197,7 +197,7 @@ class ActividadesQuejasController extends Controller
                 ]);
                 $modelo->planes()->sync($planEdit);
             } else {
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
                 $planImplementacion->tasks = $tasks;
                 $planImplementacion->canAdd = true;
                 $planImplementacion->canWrite = true;

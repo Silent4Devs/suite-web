@@ -3,23 +3,25 @@
 @section('title', 'Crear nivel')
 
 @section('content')
-<h5 class="col-12 titulo_general_funcion">Crear Niveles</h5>
-<div class="mt-5 card">
-    <div class="card-body">
-        {!! Form::open(['route' => 'admin.levels.store']) !!}
-        <h1 class="font-weight-bold mb-4" style="padding-bottom: 10px; border-color: #3086AF !important; font-size: 20px; border-bottom-style:solid;border-width: 1px;">Nivel</h1>
-        <div class="form-group d-flex align-items-center anima-focus">
-                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => '']) !!}
-                {!! Form::label('name', 'Nombre del Nivel*', ['class' => 'asterisco']) !!}
-                @error('name')
-                    <span class="text-danger">{{$message}}</span>
-                @enderror
-                <br>
-                {!! Form::submit('CREAR NIVEL  +', ['class' => 'btn tb-btn-primary', 'style' => 'color: #ffff;']) !!}
-            </div>
+    <h5 class="col-12 titulo_general_funcion">Crear Niveles</h5>
+    <div class="mt-5 card">
+        <div class="card-body">
+            <form action="{{ route('admin.levels.store') }}" method="POST">
+                @csrf
+                <h5 class="font-weight-bold mb-4">Nivel</h5>
+                <div class="form-group">
+                    <label for="name" class="asterisco">Nombre del Nivel*</label>
+                    <input type="text" name="name" class="form-control" placeholder="" value="{{ old('name') }}">
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <br>
+                    <div class="text-right">
+                        <button type="submit" class="btn tb-btn-primary" style="color: #ffff;">CREAR NIVEL +</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        {!! Form::close() !!}
     </div>
-</div>
-@endsection
 
+@endsection

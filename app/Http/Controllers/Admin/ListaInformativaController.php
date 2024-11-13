@@ -8,7 +8,9 @@ use App\Models\ListaInformativa;
 use App\Models\ParticipantesListaInformativa;
 use App\Models\User;
 use App\Models\UsuariosListaInformativa;
+use Gate;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListaInformativaController extends Controller
 {
@@ -17,8 +19,9 @@ class ListaInformativaController extends Controller
      */
     public function index(Request $request)
     {
-        $query = ListaInformativa::with('participantes.empleado')->orderByDesc('id')->get();
-        // dd($query);
+        abort_if(Gate::denies('lista_informativa_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $query = ListaInformativa::getAll();
 
         $participantes = ListaInformativa::with('participantes.empleado')->get();
 
@@ -49,6 +52,8 @@ class ListaInformativaController extends Controller
      */
     public function show($id)
     {
+        abort_if(Gate::denies('lista_informativa_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->find($id);
 
         $participantes_seleccionados = [];
@@ -87,6 +92,8 @@ class ListaInformativaController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('lista_informativa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $lista = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->find($id);
 
         $participantes_seleccionados = [];
@@ -109,12 +116,12 @@ class ListaInformativaController extends Controller
                 ];
         }
         // dd($participantes_seleccionados);
-        $empleados = Empleado::getAltaDataColumns();
+        $empleados = Empleado::getAltaDataColumns()->sortBy('name');
 
         $usuarios = User::getAllWithEmpleado()
             ->filter(function ($user) {
                 return $user->empleado == null;
-            });
+            })->sortBy('name');
 
         // dd($usuarios);
         return view('admin.listainformativa.edit', compact('lista', 'participantes_seleccionados', 'empleados', 'usuarios'));
@@ -125,10 +132,16 @@ class ListaInformativaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('lista_informativa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
-        $lista = ListaInformativa::select('id')->find($id);
-
+        $lista = ListaInformativa::select('id', 'modulo')->find($id);
+        $module = $lista->modulo;
         if (isset($request->nivel1[0]) || isset($request->nivel2[0])) {
+
+            $lista->update([
+                'modulo' => $module,
+            ]);
+
             $participantes = ParticipantesListaInformativa::where('modulo_id', '=', $lista->id)->delete();
             $usuarios = UsuariosListaInformativa::where('modulo_id', '=', $lista->id)->delete();
 
@@ -162,7 +175,7 @@ class ListaInformativaController extends Controller
             $errorMessage = 'La lista informativa debe contener al menos un colaborador.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('nivel_null', $errorMessage);
 
             // Redirect back with the input data and errors

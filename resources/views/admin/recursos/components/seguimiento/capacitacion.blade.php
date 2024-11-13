@@ -127,7 +127,7 @@
                             value="{{ \Carbon\Carbon::parse($recurso->fecha_limite)->format('Y-m-d\TH:i:s') }}" />
                         <p class="errores text-danger" style="font-size: 9px !important;text-transform: capitalize;"
                             id="fecha_limite_error"></p>
-                        @if ($recurso->configuracion_invitacion_envio->programar_envio)
+                            @if (!is_null($recurso->configuracion_invitacion_envio) && $recurso->configuracion_invitacion_envio->programar_envio)
                             <label class="mt-2" for="fecha_envio_invitacion"><i
                                     class="fas fa-calendar mr-2"></i> Fecha
                                 Programada Para Envío por Correo</label>
@@ -152,7 +152,6 @@ integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFc
 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const recurso = @json($recurso);
         document.getElementById('descargarFormato').addEventListener('click', function(e) {
             let html = `
             <div class="w-100">
@@ -175,7 +174,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                         <td class="d-flex justify-content-center">
                             <input class="form-control" type="checkbox">
                         </td>
-                    </tr> 
+                    </tr>
                             `;
             });
             html += `</tbody>

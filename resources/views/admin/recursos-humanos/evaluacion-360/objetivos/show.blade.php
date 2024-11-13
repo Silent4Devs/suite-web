@@ -105,7 +105,7 @@
             </div>
             <div class="col-12" style="text-align: end">
                 <div class="mt-2">
-                    <a href="{{ url()->previous() }}" class="btn btn_cancelar">Regresar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-primary">Regresar</a>
                 </div>
             </div>
         </div>

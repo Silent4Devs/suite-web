@@ -25,7 +25,7 @@
     }
 </style>
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{config('app.cssVersion')}}" @endsection
+<link rel="stylesheet" href="{{ asset('css/listadistribucion.css') }}{{ config('app.cssVersion') }}" @endsection
     @section('content')
     @include('admin.listadistribucion.estilos')
 
@@ -362,7 +362,7 @@
             }
 
             var avatar = $(option.element).data('avatar');
-            var avatarHtml = `<img src="${avatar}" class="img_empleado" />`;
+            var avatarHtml = `<img src="${avatar}" class="img_empleado" style="margin-left: 20px;" />`;
             var avatarText = option.text;
 
             var formattedResult = $('<span>' + avatarHtml + ' ' + avatarText + '</span>');

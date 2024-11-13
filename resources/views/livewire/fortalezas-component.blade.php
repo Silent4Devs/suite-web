@@ -4,10 +4,11 @@
     <a class="d-inline" data-toggle="modal" data-target="#modalFortalezas">
         <i class="material-icons" style="cursor: pointer;">edit</i>
     </a>
-    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"  wire:ignore.self>
-        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"  class="close" data-dismiss="modal" aria-label="Close" >
-            <i class="fa-solid fa-x fa-2xl"
-            style="color: #ffffff;"></i>
+    <div class="modal fade" id="modalFortalezas" tabindex="-1" aria-labelledby="modalFortalezasLabel" aria-hidden="true"
+        wire:ignore.self>
+        <button type="button" style="margin:50px 0px 50px 1230px; background:none; position: relative; right: 10rem;"
+            class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
         </button>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -17,7 +18,7 @@
                 <div class="line"></div>
                 <div class="modal-body">
                     <div class="mt-2 form-group anima-focus">
-                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza"></textarea>
+                        <textarea class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model="fortaleza"></textarea>
                         @error('fortaleza')
                             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
                         @enderror
@@ -60,7 +61,7 @@
                                                         </div>
                                                     </a>
                                                     <a class="dropdown-item"
-                                                        wire:click="$emit('delete',{{ $fortaleza->id }})">
+                                                        wire:click="$dispatch('delete',{ id: {{ $fortaleza->id }} })">
                                                         <div class="d-flex align-items-start">
                                                             <i class="material-icons-outlined"
                                                                 style="width: 24px;font-size:18px;">delete_outlined</i>
@@ -95,14 +96,14 @@
         @endforeach
     </p>
 
-    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px #345183;">
+    {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Fortalezas</span>
     </div> --}}
 
     {{-- <div class="mt-2">
         <label for="fortaleza"><i class="fas fa-thumbs-up iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model.defer="fortaleza">
+        <input class="form-control {{ $errors->has('fortaleza') ? 'is-invalid' : '' }}" wire:model="fortaleza">
         @error('fortaleza')
             <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
         @enderror
@@ -110,14 +111,14 @@
 
     {{-- <div class="mt-2">
             <label for="contacto"><i class="fas fa-clipboard-list iconos-crear"></i>Riesgo Asociado</label>
-            <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model.defer="riesgo">{{ old('riesgo') }}</textarea>
+            <textarea class="form-control {{ $errors->has('contacto') ? 'is-invalid' : '' }}" wire:model="riesgo">{{ old('riesgo') }}</textarea>
             <small class="text-danger errores descripcion_contacto_error"></small>
     </div> --}}
 
 
     {{-- <div class="mb-3 col-12 mt-4 " style="text-align: end">
         <button type="button" wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}"
-            class="btn btn-success">{{ $view == 'create' ? 'Agregar' : 'Actualizar' }}</button>
+            class="btn btn-primary">{{ $view == 'create' ? 'Agregar' : 'Actualizar' }}</button>
     </div>
 
 
@@ -142,7 +143,7 @@
                         <td>
                             <i wire:click="destroy({{ $fortaleza->id }})" class="fas fa-trash-alt text-danger"></i>
                             <i class="fas fa-edit text-primary ml-2" wire:click="edit({{ $fortaleza->id }})"></i>
-                            <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$emit('modalRiesgoFoda',{{$fortaleza->id}},'fortaleza')" data-toggle="modal"
+                            <i class="text-danger ml-2 fas fa-exclamation-triangle" wire:click="$dispatch('modalRiesgoFoda',{{$fortaleza->id}},'fortaleza')" data-toggle="modal"
                                 data-target="#marcaslec" title="Asociar un Riesgo"></i>
 
                         </td>

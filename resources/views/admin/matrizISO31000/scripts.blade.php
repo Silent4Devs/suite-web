@@ -445,7 +445,7 @@
             </select>
             </td>
             <td><input class="form-control evaluacion_riesgo" type="text" name="activosmatriz31000[${contador}][evaluacion_riesgo]" data-contador="${contador}" value="${formulario.evaluacionRiesgo}"></td>
-            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-danger remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
+            <td><button type="button" name="btn-remove-activos" id="" class="btn btn-primary remove btn-remove-activos" data-delete-back="${formulario.id?formulario.id:0}">Eliminar</button></td>
          </tr>
           `
                 contenedorActivosInfo.innerHTML += html;

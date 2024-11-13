@@ -1,43 +1,45 @@
-<div class="form-group" >
+<div class="form-group">
     <div class="mt-2 row justify-content-start">
         <div class="form-group col-6 anima-focus">
-            {{-- {!! Form::label('title', 'Título del curso',['class'=> 'mt-8 mb-2 font-bold']) !!} --}}
-            {!! Form::text('title', null, [
-                'class' => 'form-control ' . ($errors->has('title') ? ' border-red-600' : ''),
-                'placeholder' => "",
-            ]) !!}
-            <label for="title">Titulo del curso*:</label>
+            <input type="text" name="title" id="title"
+                class="form-control {{ $errors->has('title') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('title', isset($course->title) ? $course->title : '') }}">
+            <label for="title">Título del curso*:</label>
             @error('title')
-                <p class="text-danger">{{ $errors->first('title') }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-6 anima-focus">
-            {!! Form::text('slug', null, [
-                'class' => 'form-control' . ($errors->has('slug') ? ' border-red-600' : ''),
-                'placeholder' => ""
-            ]) !!}
+            <input type="text" name="slug" id="slug"
+                class="form-control {{ $errors->has('slug') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('slug', isset($course->slug) ? $course->slug : '') }}">
             <label for="slug">Slug del curso*:</label>
             @error('slug')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            {!! Form::text('subtitle', null, [
-                'class' => 'form-control' . ($errors->has('subtitle') ? ' border-red-600' : ''),
-                'placeholder' => ""
-            ]) !!}
+            <input type="text" name="subtitle"
+                class="form-control {{ $errors->has('subtitle') ? 'border-red-600' : '' }}" placeholder=""
+                value="{{ old('subtitle', isset($course->subtitle) ? $course->subtitle : '') }}">
             <label class="required mt-3" for="subtitle">Subtítulo del curso:</label>
             @error('subtitle')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
+
         <div class="form-group col-12 anima-focus">
             <select name="empleado_id" class="form-control{{ $errors->has('empleado_id') ? ' border-red-600' : '' }}">
                 <option value="" disabled></option>
-                @foreach($empleados as $empleado)
-                <option value="{{ $empleado->id }}" {{ isset($course) && $empleado->id == $course->empleado_id ? 'selected' : '' }}>
-                    {{ $empleado->name }}
-                </option>
+                @foreach ($empleados as $empleado)
+                    @if ($empleado->empleado)
+                        @if ($empleado->empleado->estatus == 'alta')
+                            <option value="{{ $empleado->id }}"
+                                {{ isset($course) && $empleado->id == (isset($course->empleado_id) ? $course->empleado_id : '') ? 'selected' : '' }}>
+                                {{ $empleado->name }}
+                            </option>
+                        @endif
+                    @endif
                 @endforeach
             </select>
             <label class="required mt-3" for="empleado_id">Instructor del curso:</label>
@@ -46,54 +48,55 @@
             @enderror
         </div>
         <div class="form-group col-12 anima-focus">
-            {!! Form::textarea('description', null, [
-                'class' => 'form-control' . ($errors->has('description') ? ' border-red-600' : ''),
-                'placeholder' => ""
-            ]) !!}
-            <label  for="description">Descripción del curso:</label>
+            <textarea name="description" id="description"
+                class="form-control {{ $errors->has('description') ? 'border-red-600' : '' }}" placeholder="">{{ old('description', isset($course->description) ? $course->description : '') }}</textarea>
+            <label for="description">Descripción del curso:</label>
             @error('description')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
+
     </div>
     {{-- <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"
-        aria-describedby="title" wire:model.defer="title" value="{{ old('title') }}" autocomplete="off">
+        aria-describedby="title" wire:model="title" value="{{ old('title') }}" autocomplete="off">
         @if ($errors->has('title'))
         <span class="invalid-feedback">{{ $errors->first('title') }}</span>
         @endif
         <span class="text-danger puesto_error error-ajax"></span> --}}
 
-        {{-- {!! Form::label('subtitle', 'Subtítulo del curso:') !!} --}}
-        {{-- {!! Form::label('description', 'Descripción del curso:') !!} --}}
+    {{-- {!! Form::label('subtitle', 'Subtítulo del curso:') !!} --}}
+    {{-- {!! Form::label('description', 'Descripción del curso:') !!} --}}
 
 
     <div class="mt-3 row justify-content-start">
         <div class="form-group col-6 anima-focus">
-            {{-- {!! Form::label('category_id', 'Categoría') !!} --}}
-            {!! Form::select('category_id', $categories, null, [
-                'class' => 'form-control',
-                'placeholder' => 'Seleccione una opción',
-            ]) !!}
-            <label  for="category_id">Categoría*</label>
+            <select name="category_id" id="category_id" class="form-control">
+                <option value="">Seleccione una opción</option>
+                @foreach ($categories as $key => $value)
+                    <option value="{{ $key }}"
+                        {{ old('category_id', isset($course->category_id) ? $course->category_id : '') == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
+                @endforeach
+            </select>
+            <label for="category_id">Categoría*</label>
             @error('category_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group col-6 anima-focus">
-            {{-- {!! Form::label('level_id', 'Niveles') !!} --}}
-            {!! Form::select('level_id', $levels, null, [
-                'class' => 'form-control',
-                'placeholder' => 'Seleccione una opción',
-            ]) !!}
-            <label  for="level_id">Niveles*</label>
+            <select name="level_id" id="level_id" class="form-control">
+                <option value="">Seleccione una opción</option>
+                @foreach ($levels as $key => $value)
+                    <option value="{{ $key }}"
+                        {{ old('level_id', isset($course->level_id) ? $course->level_id : '') == $key ? 'selected' : '' }}>
+                        {{ $value }}</option>
+                @endforeach
+            </select>
+            <label for="level_id">Niveles*</label>
             @error('level_id')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
-        {{-- <div>
-            {!! Form::label('price_id', 'Precio') !!}
-            {!! Form::select('price_id', $prices, null, ['class' => 'form-control']) !!}
-        </div> --}}
     </div>
 
     {{-- <h1 class="mt-8 mb-2 font-bold">Imagen del curso</h1> --}}
@@ -103,8 +106,8 @@
         <div class="col-6">
             <figure class="object-fit: container; width: 250px;height: 100px; background:green;">
                 @isset($course->image->url)
-                    <img  src="{{ asset($course->image->url) }}"
-                        id="picture" alt="" style="height:100px">
+                    <img src="{{ asset(isset($course->image->url) ? $course->image->url : '') }}" id="picture"
+                        alt="" style="height:100px">
                 @else
                     <img class="object-cover object-center w-full h-64"
                         src="{{ asset('img/escuela/home/imagen-estudiantes.jpg') }}" id="picture" alt=""
@@ -113,18 +116,14 @@
             </figure>
         </div>
         <div class="col-6">
-            {{-- @isset($course)
-                <p class="mb-4">{{ $course->description }}</p>
-            @endisset --}}
-            {!! Form::file('file', [
-                'class' => 'form-input w-full' . ($errors->has('file') ? ' border-red-600' : ''),
-                'id' => 'file',
-                'accept' => 'image/*',
-            ]) !!}
+            <input type="file" name="file"
+                class="form-input w-full {{ $errors->has('file') ? 'border-red-600' : '' }}" id="file"
+                accept="image/*">
             @error('file')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
+
     </div>
 
 </div>

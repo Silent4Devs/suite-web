@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style type="text/css">
         :root {
             --color1: #0034c9;
@@ -9,18 +7,9 @@
             --color3: #c90034;
         }
 
-
-        body {
-            background-color: #fff;
-        }
-
         .not-active {
             pointer-events: none;
             cursor: default;
-        }
-
-        .c-main {
-            overflow-y: scroll !important;
         }
 
         #caja_mapa_procesos {
@@ -70,7 +59,7 @@
             margin-top: -15px;
         }
 
-        .caja_central{
+        .caja_central {
             text-shadow: 0px 0px 1px #000;
         }
 
@@ -115,9 +104,11 @@
             overflow-y: auto;
             margin-right: 10px;
         }
-        .caja_central p:not(p.activo){
+
+        .caja_central p:not(p.activo) {
             background-color: #fff !important;
         }
+
         .caja_central span {
             width: auto;
             height: auto;
@@ -249,10 +240,9 @@
             text-align: right;
 
         }
-
     </style>
 
-{{ Breadcrumbs::render('admin.mapa-procesos') }}
+    {{ Breadcrumbs::render('admin.mapa-procesos') }}
 
 
     @if ($exist_no_publicado)
@@ -261,10 +251,9 @@
         </div>
     @endif
     <h5 class="col-12 titulo_general_funcion">Mapa de Procesos de {{ $organizacion->empresa }}</h5>
-    
+
     <div class="col-12 text-right">
-        <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv"
-                style="font-size:18pt;"></i></a>
+        <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-file-csv" style="font-size:18pt;"></i></a>
         <a href="{{ route('admin.areas.exportar') }}" class="mr-5"><i class="fas fa-camera"
                 style="font-size:18pt;"></i></a>
         <i class="fas fa-compress-arrows-alt icono_contraer" style="font-size:18pt;"></i>
@@ -273,7 +262,7 @@
         <div class="caja2">
             <p>Necesidades del cliente</p>
         </div>
-        
+
 
         <div class="caja_central">
             @foreach ($grupos_mapa as $grupo_map)
@@ -282,7 +271,9 @@
                     <div class="caja_grupos" style="border: 1px solid {{ $grupo_map->color }} !important;">
                         @forelse($grupo_map->macroprocesos as $macro_map)
                             <span id="span_caja_macro{{ $macro_map->id }}">
-                                <p style="border: 1px solid {{ $grupo_map->color }} !important; background: {{ $grupo_map->color }};">{{ $macro_map->nombre }}</p>
+                                <p
+                                    style="border: 1px solid {{ $grupo_map->color }} !important; background: {{ $grupo_map->color }};">
+                                    {{ $macro_map->nombre }}</p>
                             </span>
                         @empty
                             <a href="{{ asset('admin/macroprocesos') }}">
@@ -293,14 +284,17 @@
 
 
                     @foreach ($grupo_map->macroprocesos as $macro_map)
-                        <div id="div_caja_macro{{ $macro_map->id }}" class="caja_procesos_dinamica"  style="border: 1px solid {{ $grupo_map->color }} !important;">
+                        <div id="div_caja_macro{{ $macro_map->id }}" class="caja_procesos_dinamica"
+                            style="border: 1px solid {{ $grupo_map->color }} !important;">
                             @forelse($macro_map->procesos as $proceso_map)
-                                    <div class="macro_a  {{ $proceso_map->documento_id == null ? 'not-active' : '' }}" style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important;' : '' }} {{ $proceso_map->documento_id == null ? 'border:1px solid #aaa !important; color:black !important;' : '' }} border: 1px solid {{ $grupo_map->color }};">
-                                        
-                                        <a href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
-                                            {{ $proceso_map->nombre }}
-                                        </a>
-                                    </div>
+                                <div class="macro_a  {{ $proceso_map->documento_id == null ? 'not-active' : '' }}"
+                                    style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important;' : '' }} {{ $proceso_map->documento_id == null ? 'border:1px solid #aaa !important; color:black !important;' : '' }} border: 1px solid {{ $grupo_map->color }};">
+
+                                    <a
+                                        href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                        {{ $proceso_map->nombre }}
+                                    </a>
+                                </div>
                             @empty
                                 Procesos no registrados
                             @endforelse
@@ -308,7 +302,6 @@
                     @endforeach
 
                 </div>
-
             @endforeach
         </div>
 
@@ -324,9 +317,6 @@
         </div> --}}
 
     </div>
-
-
-
 @endsection
 
 
@@ -340,7 +330,7 @@
 
         @foreach ($grupos_mapa as $grupo_map)
             @foreach ($grupo_map->macroprocesos as $macro_map)
-                $("#span_caja_macro{{ $macro_map->id }}").click(function(){
+                $("#span_caja_macro{{ $macro_map->id }}").click(function() {
                     $(".caja_revelada").removeClass("caja_revelada");
                     $("#div_caja_macro{{ $macro_map->id }}").addClass("caja_revelada");
                 });
@@ -352,5 +342,4 @@
             $("span p").removeClass("activo");
         });
     </script>
-
 @endsection

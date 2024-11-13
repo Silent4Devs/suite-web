@@ -4,7 +4,7 @@
             <label for="severidad"><i class="fas fa-gavel iconos-crear"></i>Severidad de la
                 Vulnerabilidad</label>
             <select class="form-control select2 {{ $errors->has('severidad') ? 'is-invalid' : '' }}" name="severidad"
-                id="severidad" wire:model="severidad">
+                id="severidad" wire:model.live="severidad">
                 <option value="" selected disabled>Selecciona</option>
                 <option value="1" {{ $severidad == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $severidad == 2 ? 'selected' : '' }}>2</option>
@@ -17,7 +17,7 @@
         <div class="form-group col-sm-6 col-md-6 col-lg-6" wire:ignore>
             <label for="probabilidad"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
             <select class="form-control select2 {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}"
-                name="probabilidad" id="probabilidad" wire:model="probabilidad">
+                name="probabilidad" id="probabilidad" wire:model.live="probabilidad">
                 <option value="" selected disabled>Selecciona</option>
                 <option value="1" {{ $probabilidad == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $probabilidad == 2 ? 'selected' : '' }}>2</option>
@@ -38,7 +38,7 @@
         <div class="form-group col-sm-6 col-md-6 col-lg-6" wire:ignore>
             <label for="impacto_num"><i class="fas fa-exclamation-triangle iconos-crear"></i>Impacto</label>
             <select class="form-control select2 {{ $errors->has('impacto_num') ? 'is-invalid' : '' }}"
-                name="impacto_num" id="impacto_num" wire:model="impacto">
+                name="impacto_num" id="impacto_num" wire:model.live="impacto">
                 <option value="" selected disabled>Selecciona</option>
                 <option value="1" {{ $impacto == 1 ? 'selected' : '' }}>1</option>
                 <option value="2" {{ $impacto == 2 ? 'selected' : '' }}>2</option>
@@ -56,7 +56,7 @@
         <div class="form-group col-sm-6 col-md-6 col-lg-6" wire:ignore.self>
             <label for="valor"><i class="fas fa-exclamation-circle iconos-crear"></i>Valor del impacto</label>
             <input class="form-control mt-2 {{ $errors->has('valor') ? 'is-invalid' : '' }}" type="number"
-                name="valor" id="valor" value="{{ old('valor', '') }}" wire:model.defer="valor" readonly
+                name="valor" id="valor" value="{{ old('valor', '') }}" wire:model="valor" readonly
                 style="background: {{ $colorReglaTipo }};color:{{ $colorTextoTipo }};">
             @if ($errors->has('valor'))
                 <div class="invalid-feedback">

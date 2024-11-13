@@ -2,7 +2,7 @@
 
 @section('content')
 @section('titulo', 'Firmar Orden de Compra')
-<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 <style>
     .row {
         padding-left: 30px;
@@ -10,14 +10,13 @@
     }
 </style>
 
-<div class="card card-content caja-blue" style="background-color:#49598A;">
+<div class="card card-content caja-blue" style="background-color:var(--color-tbj);">
 
     <div>
-        <img src="{{ asset('img/welcome-blue.svg') }}" alt=""
-            style="width:150px; position: relative; top: 150px; right: 430px;">
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="">
     </div>
 
-    <div style="position: relative; top:-5rem; left: 50px;">
+    <div style="">
         <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3><br>
         <h5 style="font-size: 17px;">Firma tu Orden de Compra para que sea aprobado por las áreas correspondientes</h5>
         <br>
@@ -45,12 +44,12 @@
                 {{ $requisicion->sucursal->direccion }} <br>
             </div>
             <div class="flex-item item-header-doc-info" style="">
-                <h4 style="font-size: 18px; color:#49598A;">Orden de Compra</h4>
+                <h4 style="font-size: 18px; color:var(--color-tbj);">Orden de Compra</h4>
                 <p>Folio: 00-00{{ $requisicion->id }}</p>
                 <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
             </div>
         </div>
-        <div style="border-right: 30px solid #295082;">
+        <div style="border-right: 30px solid var(--color-tbj);">
             <div class="row" style="margin-top: 30px;">
                 <div class="col s12 l3">
                     <strong>Folio de Requisición:</strong> <br>
@@ -106,76 +105,75 @@
                 </div>
                 <div class="col s12 l6">
                     <strong>Proyecto:</strong> <br>
-                        @if($requisicion->contrato === null)
+                    @if ($requisicion->contrato === null)
                         <strong>Contrato Eliminado!</strong>
-                        @else
-                        {{ optional($requisicion->contrato)->no_proyecto }} - {{ optional($requisicion->contrato)->no_contrato }} - {{ optional($requisicion->contrato)->nombre_servicio }}
-                        @endif
+                    @else
+                        {{ optional($requisicion->contrato)->no_proyecto }} -
+                        {{ optional($requisicion->contrato)->no_contrato }} -
+                        {{ optional($requisicion->contrato)->nombre_servicio }}
+                    @endif
                 </div>
             </div>
         </div>
 
         <hr style="width: 80%; margin:auto;">
         @if ($proveedores_catalogo)
-        @foreach ($proveedores_catalogo as $proveedor)
-        <div class="proveedores-doc" style="">
-            <div class="flex header-proveedor-doc">
-                <div class="flex-item">
-                    <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
-                </div>
-            </div>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col s12 l3">
-                    <strong>Proveedor:</strong><br>
-                    {{ $proveedor->razon_social }}
-                </div>
-                <div class="col s12  l3">
-                    <strong>Nombre Comercial:</strong><br>
-                    {{ $proveedor->nombre }}
-                </div>
-                <div class="col s12 l6">
-                    <strong>RFC:</strong><br>
-                    {{ $proveedor->rfc }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 l3">
-                    <strong>Nombre del contacto:</strong><br>
-                    {{ $proveedor->contacto }}
-                </div>
-                <div class="col s12 l9">
-                    <strong>Dirección:</strong><br>
-                    {{ $proveedor->direccion }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 l6">
-                    <strong>Envío a:</strong><br>
-                    {{ $proveedor->envio }}
-                </div>
-                <div class="col s12 l3">
-                    <strong>Facturación a:</strong><br>
-                    {{ $proveedor->facturacion }}
-                </div>
-                <div class="col s12 l3">
-                    <strong>Crédito disponible:</strong><br>
-                    {{ $proveedor->credito }}
-                </div>
-            </div>
-        </div>
-        @endforeach
-            @else
-
-            @endif
-
-
-            @if ($proveedores_catalogo)
             @foreach ($proveedores_catalogo as $proveedor)
-
+                <div class="proveedores-doc" style="">
+                    <div class="flex header-proveedor-doc">
+                        <div class="flex-item">
+                            <strong>Proveedor: </strong> {{ $proveedor->razon_social }}
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col s12 l3">
+                            <strong>Proveedor:</strong><br>
+                            {{ $proveedor->razon_social }}
+                        </div>
+                        <div class="col s12  l3">
+                            <strong>Nombre Comercial:</strong><br>
+                            {{ $proveedor->nombre }}
+                        </div>
+                        <div class="col s12 l6">
+                            <strong>RFC:</strong><br>
+                            {{ $proveedor->rfc }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 l3">
+                            <strong>Nombre del contacto:</strong><br>
+                            {{ $proveedor->contacto }}
+                        </div>
+                        <div class="col s12 l9">
+                            <strong>Dirección:</strong><br>
+                            {{ $proveedor->direccion }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 l6">
+                            <strong>Envío a:</strong><br>
+                            {{ $proveedor->envio }}
+                        </div>
+                        <div class="col s12 l3">
+                            <strong>Facturación a:</strong><br>
+                            {{ $proveedor->facturacion }}
+                        </div>
+                        <div class="col s12 l3">
+                            <strong>Crédito disponible:</strong><br>
+                            {{ $proveedor->credito }}
+                        </div>
+                    </div>
+                </div>
             @endforeach
-                @else
+        @else
+        @endif
 
-                @endif
+
+        @if ($proveedores_catalogo)
+            @foreach ($proveedores_catalogo as $proveedor)
+            @endforeach
+        @else
+        @endif
 
 
 
@@ -280,7 +278,7 @@
                 <div class="col s12 l4">
 
                     <strong> Centro de costo: </strong><br><br>
-                        {{ isset($producto->centro_costo->descripcion) }}
+                    {{ isset($producto->centro_costo->descripcion) }}
                 </div>
                 <div class="col s12 l4">
 
@@ -431,7 +429,10 @@
             action="{{ route('contract_manager.orden-compra.rechazada', ['id' => $requisicion->id]) }}">
             @csrf
             <div class="flex" style="position: relative; top: -1rem; justify-content: space-between;">
-                @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
+                @if (
+                    !$requisicion->firma_solicitante_orden &&
+                        !$requisicion->firma_comprador_orden &&
+                        !$requisicion->firma_finanzas_orden)
                     <button class="btn tb-btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE
                         COMPRA</button>
                 @else

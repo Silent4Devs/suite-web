@@ -16,6 +16,14 @@ class Goal extends Model implements Auditable
 
     protected $guarded = ['id'];
 
+    protected $table = 'goals';
+
+    protected $fillable = [
+        'id',
+        'name',
+        'course_id',
+    ];
+
     //Relacion uno a muchos inversa
     public function course()
     {

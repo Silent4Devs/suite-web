@@ -3,7 +3,7 @@
     x-on:livewire-upload-progress="progress = $event.detail.progress">
     <x-loading-indicator></x-loading-indicator>
     <!-- File Input -->
-    <input type="file" wire:model.lazy="documento">
+    <input type="file" wire:model.blur="documento">
     @error('documento')
         <span class="text-danger">{{ $message }}</span>
     @enderror
@@ -12,8 +12,8 @@
         <progress max="100" x-bind:value="progress"></progress>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn_cancelar" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-danger" wire:click.prevent="save">Guardar</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" wire:click.prevent="save">Guardar</button>
     </div>
 
 

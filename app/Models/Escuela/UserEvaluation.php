@@ -14,6 +14,10 @@ class UserEvaluation extends Model implements Auditable
 
     protected $table = 'user_evaluations';
 
+    protected $casts = [
+        'score' => 'double', // o 'double' según tus necesidades
+    ];
+
     protected $fillable = [
         'completed',
         'user_id',

@@ -4,6 +4,14 @@
         table.dataTable {
             margin: 0px !important;
         }
+
+        .seccion-par {
+            /* background-color: #f5f5f5; */
+        }
+
+        .seccion-impar {
+            /* background-color: #e9e9e9; */
+        }
     </style>
     <h5 class="titulo_general_funcion">Cursos</h5>
 
@@ -16,42 +24,57 @@
                     <tr>
                         <th>Colaborador</th>
                         <th>Avance del curso</th>
-                        <th>Sección evaluada</th>
-                        <th>Calificación gral.</th>
-                        <th>Fecha de evaluacón</th>
+                        @foreach ($evaluaciones as $key => $evaluacion)
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Sección</th>
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Calificacion</th>
+                            <th class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">Fecha de evaluación</th>
+                        @endforeach
+                        <th>Calificación final.</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($cursos_usuario as $cu)
                         @if ($cu->usuarios)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1 mt-2">
-                                        <div class="img-person">
-                                            <img src="{{ $cu->usuarios->avatar_ruta }}" alt="{{ $cu->usuarios->name }}">
+                            @if (isset($cu->usuarios->empleado))
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1 mt-2">
+                                            <div class="img-person">
+                                                <img src="{{ $cu->usuarios->empleado->avatar_ruta }}"
+                                                    alt="{{ $cu->usuarios->name }}">
+                                            </div>
+                                            <span class="course-teacher"> {{ $cu->usuarios->name }}</span>
                                         </div>
-                                        <span class="course-teacher"> {{ $cu->usuarios->name }} </span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1">
-                                        <div class="progress w-100">
-                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{ $cu->advance }}%" aria-valuenow="{{ $cu->advance }}"
-                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <div class="progress w-100">
+                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                    style="width: {{ $cu->advance }}%" aria-valuenow="{{ $cu->advance }}"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small> {{ $cu->advance }} </small>
                                         </div>
-                                        <small> {{ $cu->advance }} </small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>Sección {{ $cu->cursos->lessons->count() }}</span> <br>
-                                    <span></span>
-                                </td>
-                                <td>
-                                    {{ $cu->calificacion }}
-                                </td>
-                                <td>{{ Carbon\Carbon::parse($cu->cursos->created_at)->format('d/m/Y') }}</td>
-                            </tr>
+                                    </td>
+
+                                    {{-- <td>{{ Carbon\Carbon::parse($cu->last_review)->diffForHumans() }}</td> --}}
+
+                                    @foreach ($cu->evaluaciones_usuario as $key => $evaluacion)
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['name'] }}
+                                        </td>
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['calificacion'] == 0 ? 'No aplica' : $evaluacion['calificacion'] }}
+                                        </td>
+                                        <td class="seccion-{{ ($key + 1) % 2 == 0 ? 'par' : 'impar' }}">
+                                            {{ $evaluacion['fecha'] }}</td>
+                                    @endforeach
+
+                                    <td>
+                                        {{ $cu->calificacion }}
+                                    </td>
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
                 </tbody>

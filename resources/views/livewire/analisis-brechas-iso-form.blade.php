@@ -119,7 +119,7 @@
     </div>
 
     <div class="mt-4 card card-body shadow-sm" style="border-radius:16px;">
-        <form wire:submit.prevent={{ $view == 'create' ? 'save' : 'update' }}>
+        <form wire:submit={{ $view == 'create' ? 'save' : 'update' }}>
             {{-- @csrf --}}
             <h5 class="form-group col-12">Datos generales</h5>
             <hr>
@@ -129,7 +129,7 @@
             <div class="row">
                 <div class="form-group col-md-3 col-lg-3 col-sm-12 anima-focus">
                     <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                        id="fecha" min="1945-01-01" disabled wire:model.lazy="fecha">
+                        id="fecha" min="1945-01-01" disabled wire:model.blur="fecha">
                     @if ($errors->has('fecha'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha') }}
@@ -137,12 +137,12 @@
                     @endif
                     <label for="Fecha">Fecha</label>
                 </div>
-                {{ Form::hidden('fecha', date('Y-m-d')) }}
+                <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                        name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.lazy="name"
+                        name="nombre" id="nombre" value="{{ old('nombre', '') }}" required wire:model.blur="name"
                         placeholder="">
                     <label for="nombre">Nombre *</label>
                     @error('name')
@@ -152,7 +152,7 @@
 
                 {{-- <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                        id="estatus" required wire:model.defer="estatus" >
+                        id="estatus" required wire:model="estatus" >
                         <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -170,7 +170,7 @@
                 </div> --}}
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
                     {{-- <select class="form-control {{ $errors->has('norma') ? 'is-invalid' : '' }}" name="norma"
-                        id="estatus" required wire:model.defer="norma" >
+                        id="estatus" required wire:model="norma" >
                         <option value disabled {{ old('norma', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach ($normas as $key => $label)
@@ -185,7 +185,7 @@
                             {{ $errors->first('estatus') }}
                         </div>
                     @endif --}}
-                    <input class="form-control" type="text" id="norma" disabled wire:model.lazy="norma">
+                    <input class="form-control" type="text" id="norma" disabled wire:model.blur="norma">
 
                     <label for="norma">Norma</label>
                 </div>
@@ -195,7 +195,7 @@
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6 anima-focus">
                     <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
-                        id="id_elaboro" required wire:model.lazy="id_elaboro">
+                        id="id_elaboro" required wire:model.blur="id_elaboro">
                         <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach ($empleados as $key => $label)
@@ -298,7 +298,7 @@
                                             Editar
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" wire:click="$emit('delete',{{ $analisis_brecha->id }})">
+                                    <a class="dropdown-item" wire:click="$dispatch('delete',{ id: {{ $analisis_brecha->id }} })">
                                         <div class="d-flex align-items-start">
                                             <i class="material-icons-outlined"
                                                 style="width: 24px;font-size:18px;">delete_outlined</i>
@@ -315,7 +315,7 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:load', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('limpiarNameInput', function() {
                 // Limpiar el campo de entrada de "name" utilizando JavaScript
                 document.getElementById('id_area').textContent = "";

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivoInformacion;
@@ -145,9 +145,7 @@ class ProcesosOctaveController extends Controller
         return $procesos[0]->toJson();
     }
 
-    public function show()
-    {
-    }
+    public function show() {}
 
     public function activos(Request $request)
     {

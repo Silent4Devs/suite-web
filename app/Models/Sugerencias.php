@@ -69,4 +69,35 @@ class Sugerencias extends Model implements Auditable
     {
         return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
     }
+
+    public function getSentimientosArrayAttribute()
+    {
+        $sentimientos = $this->sentimientos;
+
+        $array_null =
+        [
+            'analisis_de_sentimientos' => [
+                [
+                    'neg' => 0.0,
+                    'neu' => 0.0,
+                    'pos' => 0.0,
+                    'compound' => 0.0,
+                ],
+            ],
+            'sentimientos_textblob' => [
+                [
+                    'polarity' => 0.0,
+                    'subjectivity' => 0.0,
+                ],
+            ],
+            'frases_nominales_spacy' => [
+                [],
+            ],
+            'palabras_clave' => [
+                [],
+            ],
+        ];
+
+        return json_decode($sentimientos, true) ?? $array_null;
+    }
 }

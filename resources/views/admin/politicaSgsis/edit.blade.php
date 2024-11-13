@@ -76,7 +76,7 @@
                 <h4>¿Qué es? Política del Sistema de Gestión</h4>
                 <p>
                     Es una declaración oficial de la dirección de una organización que establece sus intenciones y
-                        compromisos con respecto al sistema de gestión implementado en la organización.
+                    compromisos con respecto al sistema de gestión implementado en la organización.
                 </p>
                 <p>
                     La Política del Sistema de Gestión sirve como un documento fundamental para alinear a toda la
@@ -96,39 +96,44 @@
 
                 <div class="form-group anima-focus">
                     <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}"
-                        name="nombre_politica" id="nombre_politica"
-                        value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}" required>
-                    {!! Form::label('nombre_politica', 'Nombre de la política*', ['class' => 'asterisco']) !!}
+                           name="nombre_politica" id="nombre_politica"
+                           value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}" required>
+                    <label for="nombre_politica" class="asterisco">Nombre de la política*</label>
                 </div>
 
                 <div class="form-group anima-focus">
-                    <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi"
-                        id="politicasgsi" required>{{ old('politicasgsi', $politicaSgsi->politicasgsi) }}</textarea>
-                    {!! Form::label('politicasgsi', 'Política del Sistema de Gestión*', ['class' => 'asterisco']) !!}
+                    <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}"
+                              name="politicasgsi" id="politicasgsi" required>{{ old('politicasgsi', $politicaSgsi->politicasgsi) }}</textarea>
+                    <label for="politicasgsi" class="asterisco">Política del Sistema de Gestión*</label>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-sm-6 anima-focus">
-                        <input required
-                            class="form-control date  {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
-                            value="{{ old('fecha_revision', $fecha_publicacion) }}">
-                        {!! Form::label('fecha_publicacion', 'Fecha de publicación*', ['class' => 'asterisco']) !!}
+                        <input class="form-control date {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                               type="date" name="fecha_publicacion" id="fecha_publicacion"
+                               min="1945-01-01"
+                               value="{{ old('fecha_publicacion', $fecha_publicacion) }}" required>
+                        <label for="fecha_publicacion" class="asterisco">Fecha de publicación*</label>
                     </div>
 
                     <div class="form-group col-sm-6 anima-focus">
-                        <input required class="form-control date {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
-                            value="{{ old('fecha_revision', $fecha_revision) }}">
-                        {!! Form::label('fecha_revision', 'Fecha de revision*', ['class' => 'asterisco']) !!}
+                        <input class="form-control date {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                               type="date" name="fecha_revision" id="fecha_revision"
+                               min="1945-01-01"
+                               value="{{ old('fecha_revision', $fecha_revision) }}" required>
+                        <label for="fecha_revision" class="asterisco">Fecha de revisión*</label>
                     </div>
-
                 </div>
 
+
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar"
+                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn btn-outline-primary"
                         style="text-decoration: none;">Cancelar</a>
-                    <button class="btn tb-btn-primary" type="submit" style="color: white">
+                    <button id="preloaderBtn" class="btn btn-primary" type="button" disabled style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Procesando...
+                    </button>
+                    <button id="submitBtn" class="btn tb-btn-primary" type="submit" style="color: white">
                         Guardar y enviar a aprobación
                     </button>
                 </div>
@@ -152,6 +157,20 @@
 
 
 @section('scripts')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitBtn = document.getElementById('submitBtn');
+        const preloaderBtn = document.getElementById('preloaderBtn');
+
+        submitBtn.addEventListener('click', function (e) {
+            // Prevenir múltiples clics
+            submitBtn.style.display = 'none'; // Ocultar el botón de envío
+            preloaderBtn.style.display = 'inline-block'; // Mostrar el botón preloader
+        });
+    });
+</script>
+
     <script>
         $(document).ready(function() {
             CKEDITOR.replace('politicasgsi', {

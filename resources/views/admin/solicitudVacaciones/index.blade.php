@@ -1,14 +1,20 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('Solicitud-Vacaciones') }}
+        {{-- {{ Breadcrumbs::render('Solicitud-Vacaciones') }} --}}
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-solicitudes-vacaciones') }}">
+            <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+        </a> &nbsp;&nbsp;&nbsp;
     </div>
 
     <style>
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 45px;
@@ -22,7 +28,7 @@
 
         .btn_cargar:hover {
             color: #fff;
-            background: #345183;
+            background: var(--color-tbj);
         }
 
         .btn_cargar i {
@@ -51,7 +57,7 @@
             overflow: hidden;
             text-decoration: none;
             display: inline-block;
-            color: #345183;
+            color: var(--color-tbj);
             padding: 5px;
             border: 1px solid #D9D9D9 !important;
             background-color: #EEEEEE;
@@ -64,7 +70,7 @@
 
         .btn_reporte:hover {
             border: 1px solid #345183 !important;
-            color: #345183;
+            color: var(--color-tbj);
             background-color: rgba(0, 0, 0, 0);
         }
 
@@ -210,29 +216,7 @@
                     window.location.href = url;
                 }
             };
-            // let btnExport = {
-            //     text: '<i  class="fas fa-download"></i>',
-            //     titleAttr: 'Descargar plantilla',
-            //     className: "btn btn_cargar",
-            //     url: "{{ route('descarga-amenaza') }}",
-            //     action: function(e, dt, node, config) {
-            //         let {
-            //             url
-            //         } = config;
-            //         window.location.href = url;
-            //     }
-            // };
-            // let btnImport = {
-            //     text: '<i  class="fas fa-file-upload"></i>',
-            //     titleAttr: 'Importar datos',
-            //     className: "btn btn_cargar",
-            //     action: function(e, dt, node, config) {
-            //         $('#csvImportModal').modal('show');
-            //     }
-            // };
 
-            // dtButtons.push(btnExport);
-            // dtButtons.push(btnImport);
 
             @can('solicitud_vacaciones_crear')
                 dtButtons.push(btnAgregar);
@@ -242,121 +226,16 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.solicitud-vacaciones.index') }}",
-                columns: [{
-                        data: 'dias_solicitados',
-                        name: 'dias_solicitados',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data}</div>`;
-                        }
 
-                    },
-                    {
-                        data: 'año',
-                        name: 'año',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data} año</div>`;
-                        }
-
-                    },
-                    {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin',
-                        render: function(data, type, row) {
-                            let fecha = data.split('-');
-                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
-                            return `<div style="text-align:left">${fechaDMY}</div>`;
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'aprobacion',
-                        name: 'aprobacion',
-                        render: function(data, type, row) {
-                            const aprobacion = row.aprobacion;
-
-                            switch (Number(aprobacion)) {
-                                case 1:
-                                    return `
-                                    <div  style="text-align:left">
-                                        <span class="badge badge-pill badge-warning">Pendiente</span>
-                                    </div>
-                                    `;
-                                    break;
-                                case 2:
-                                    return `
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-danger">Rechazado</span>
-                                    </div>
-                                    `;
-                                    break;
-                                case 3:
-                                    return `
-                                    <div style="text-align:left">
-                                        <span class="badge badge-pill badge-success">Aprobado</span>
-                                    </div>
-                                    `;
-                                    break;
-                                default:
-                                    return `
-                                    <span class="badge badge-pill badge-secondary">Sin Seguimiento</span>
-                                    `;
-                            }
-                        }
-                    },
-
-                    // {
-                    //     data: 'descripcion',
-                    //     name: 'descripcion',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:left">${data}</div>`;
-                    //     }
-                    // },
-                    {
-                        data: 'actions',
-                        render: function(data, type, row, meta) {
-                            let aprobacion = row.aprobacion;
-                            let id = row.id;
-                            console.log(id);
-                            if (aprobacion == 3) {
-                                return `
-                                <div style="text-aling:center">
-                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                </div>
-                               `;
-
-                            } else {
-                                let urlEliminar = '{{ route('admin.solicitud-vacaciones.destroy') }}'
-                                return `
-                                <div style="text-aling:center">
-                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
-                                </div>
-                               `;
-                            }
-
-                        }
-                    }
-                ],
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
                 ],
             };
-            let table = $('.datatable-solicitud-vacaciones').DataTable(dtOverrideGlobals);
+            let table = $('#datatable-solicitud-vacaciones').DataTable(dtOverrideGlobals);
             $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                 <h5>
@@ -391,7 +270,7 @@
                             dataType: "JSON",
                             success: function(response) {
                                 if (response.status = 200) {
-                                    table.ajax.reload();
+                                    window.location.reload();
                                 }
                             },
                             error: function(error) {

@@ -9,6 +9,7 @@ use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
+use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {
@@ -27,40 +28,23 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
-        //calculo el porcentaje del curso completado
-        // foreach ($cursos_usuario as $cu) {
-        //     $i = 0;
-        //     $courses_lessons = $cu->cursos->lessons;
-        //     foreach ($courses_lessons as $cl) {
-        //         if ($cl->completed) {
-        //             $i++;
-        //         }
-        //     }
-        //     $advance = ($i * 100) / ($courses_lessons->count());
-        //     $advance = round($advance, 2);
-        //     //agrego el porcentaje del curso a una propiedad
-        //     $cu->advance = $advance;
-        // }
-        // //last course
-        // $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-        // //last three course
-        // $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
+        $cursos_usuario = UsuariosCursos::with(['cursos.lessons'])
+            ->where('user_id', $usuario->id)
+            ->get()
+            ->map(function ($cu) {
+                $completedLessonsCount = $cu->cursos->lessons->where('completed', true)->count();
+                $totalLessonsCount = $cu->cursos->lessons->count();
 
-        foreach ($cursos_usuario as $cu) {
-            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
-                return $lesson->completed;
-            })->count();
+                $advance = $totalLessonsCount > 0 ? ($completedLessonsCount * 100) / $totalLessonsCount : 0;
+                $cu->advance = round($advance, 2);
 
-            $totalLessonsCount = $cu->cursos->lessons->count();
+                return $cu;
+            });
 
-            $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
-            $cu->advance = round($advance, 2);
-        }
-
-        // Obtener el último curso y los últimos tres cursos
-        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-        $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
+        // Sort and retrieve the last course and the last three courses
+        $sortedCursos = $cursos_usuario->sortByDesc('last_review');
+        $lastCourse = $sortedCursos->first();
+        $lastThreeCourse = $sortedCursos->take(3);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));
     }
@@ -68,15 +52,19 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+            // $results = Async::run([
+            //     fn() => Evaluation::where('course_id', $curso_id)->get(),
+            //     fn() => Course::where('id', $curso_id)->first(),
+            // ]);
 
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->first();
             $curso = Course::where('id', $curso_id)->first();
+
+            // [$evaluacionesLeccion, $curso] = $results;
 
             if (! $curso) {
                 abort(404);
             }
-
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
 
             return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
         } catch (\Throwable $th) {
@@ -86,7 +74,6 @@ class CursoEstudiante extends Controller
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-        // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
 

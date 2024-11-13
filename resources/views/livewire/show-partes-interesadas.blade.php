@@ -34,12 +34,14 @@
                             @endif
                         </td>
                         <td>
-                            <i class="fas fa-edit"
-                                wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})"> </i>
-                            {{-- <i class="fas fa-project-diagram"
-                                wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
-                            <i class="fas fa-trash-alt text-danger"
-                                wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
+                        <i class="fas fa-edit"
+                        wire:click.prevent="editarParteInteresada({{ $data->id }})"> </i>
+
+                        <!-- <i class="fas fa-project-diagram"
+                        wire:click.prevent="agregarNormas({{ $data->id }})"> </i> -->
+
+                        <i class="fas fa-trash-alt text-danger"
+                        wire:click.prevent="eliminarParteInteresada({{ $data->id }})"> </i>
                         </td>
                         {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                     </tr>

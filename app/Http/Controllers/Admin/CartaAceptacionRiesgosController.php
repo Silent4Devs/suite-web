@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CartaAceptacionEmail;
@@ -151,7 +151,7 @@ class CartaAceptacionRiesgosController extends Controller
         ]);
 
         foreach ($request->controles_id as $item) {
-            $control = new CartaAceptacionPivot();
+            $control = new CartaAceptacionPivot;
             $control->carta_id = $cartaAceptacion->id;
             $control->controles_id = $item;
             $control->save();

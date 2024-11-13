@@ -394,23 +394,27 @@ class EV360ObjetivosController extends Controller
 
     public function show(Request $request, $empleado)
     {
-        abort_if(Gate::denies('objetivos_estrategicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivo = new Objetivo;
-        $empleado = Empleado::getAll()->find(intval($empleado));
-        if (! $empleado) {
+        try {
+            abort_if(Gate::denies('objetivos_estrategicos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $objetivo = new Objetivo;
+            $empleado = Empleado::getAll()->find(intval($empleado));
+            if (! $empleado) {
+                abort(404);
+            }
+            $empleado->load(['objetivos' => function ($q) {
+                $q->with(['objetivo' => function ($query) {
+                    $query->with(['tipo', 'metrica']);
+                }]);
+            }]);
+            $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
+            if ($request->ajax()) {
+                return datatables()->of($objetivos)->toJson();
+            }
+
+            return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
+        } catch (\Throwable $th) {
             abort(404);
         }
-        $empleado->load(['objetivos' => function ($q) {
-            $q->with(['objetivo' => function ($query) {
-                $query->with(['tipo', 'metrica']);
-            }]);
-        }]);
-        $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
-        if ($request->ajax()) {
-            return datatables()->of($objetivos)->toJson();
-        }
-
-        return view('admin.recursos-humanos.evaluacion-360.objetivos.show', compact('empleado'));
     }
 
     public function indexCopiar($empleado)

@@ -1,20 +1,19 @@
 @extends('layouts.admin')
 
 @section('content')
-
-<style>
-
-    @page{
-        size:landscape;
-    }
-    @media print{
-        #tabla_blanca_imprimir_global{
-            transform: scale(0.5);
-            transform-origin: 0% 0%;
-            color: black;
+    <style>
+        @page {
+            size: landscape;
         }
-    }
-</style>
+
+        @media print {
+            #tabla_blanca_imprimir_global {
+                transform: scale(0.5);
+                transform-origin: 0% 0%;
+                color: black;
+            }
+        }
+    </style>
 
     <div class="mt-5 card">
 
@@ -23,14 +22,14 @@
                 </strong></h3>
         </div>
 
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
-                <div class="col-lg-12">
-                    @include('csvImport.modal', [
-                        'model' => 'MatrizRiesgo',
-                        'route' => 'admin.matriz-riesgos.parseCsvImport',
-                    ])
-                </div>
+        <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+            <div class="col-lg-12">
+                @include('csvImport.modal', [
+                    'model' => 'MatrizRiesgo',
+                    'route' => 'admin.matriz-riesgos.parseCsvImport',
+                ])
             </div>
+        </div>
 
         @if ($numero_sedes > 0)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
@@ -52,12 +51,12 @@
             <div class="card-body datatable-fix">
                 <div class="d-flex justify-content-between">
                     @can('iso_27001_agregar')
-                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                        <a class="pr-3 ml-2 rounded btn btn-primary" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
-                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                    <a class="pr-3 ml-2 rounded btn btn-primary" style=" margin: 13px 12px 12px 10px;"
+                        href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
@@ -121,8 +120,8 @@
                                 Versión ISO
                             </th>
                             <!--<th>
-                                Riesgo total
-                            </th>-->
+                                        Riesgo total
+                                    </th>-->
                             <th>
                                 Control
                             </th>
@@ -490,9 +489,9 @@
                         data: 'version_historico',
                         name: 'version_historico',
                         render: function(data) {
-                            if(data === true) {
+                            if (data === true) {
                                 return `<div style="text-align:center"><div>27001:2013</div></div>`;
-                            }else{
+                            } else {
                                 return `<div style="text-align:center"><div>27001:2022</div></div>`;
                             }
                         }
@@ -811,7 +810,7 @@
                 ],
             };
             let table = $('.datatable-Matriz').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>

@@ -1,22 +1,22 @@
 @extends('layouts.admin')
 @section('content')
     @can('organizacione_create')
-
-
-
         <div class="mt-5 card">
             <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
                 <h3 class="mb-2 text-center text-white"><strong>Organizaciones</strong></h3>
             </div>
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
-                    {{-- <a class="btn btn-success" href="{{ route('admin.organizaciones.create') }}">
+                    {{-- <a class="btn btn-primary" href="{{ route('admin.organizaciones.create') }}">
                         Agregar <strong>+</strong>
                     </a>
                     <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                         {{ trans('global.app_csvImport') }}
                     </button> --}}
-                    @include('csvImport.modal', ['model' => 'Organizacione', 'route' => 'admin.organizaciones.parseCsvImport'])
+                    @include('csvImport.modal', [
+                        'model' => 'Organizacione',
+                        'route' => 'admin.organizaciones.parseCsvImport',
+                    ])
                 </div>
             </div>
         @endcan
@@ -90,7 +90,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -127,22 +127,24 @@
 
             @can('organizacione_create')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar organización',
-                url: "{{ route('admin.organizaciones.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar organización',
+                    url: "{{ route('admin.organizaciones.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                titleAttr: 'Importar datos por CSV',
-                className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                $('#csvImportModal').modal('show');
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
+                    titleAttr: 'Importar datos por CSV',
+                    className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        $('#csvImportModal').modal('show');
+                    }
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnImport);
@@ -150,29 +152,39 @@
             @can('organizacione_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.organizaciones.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
-            
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
-            
-                return
-                }
-            
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.organizaciones.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
+
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
+
+                            return
+                        }
+
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -216,6 +228,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

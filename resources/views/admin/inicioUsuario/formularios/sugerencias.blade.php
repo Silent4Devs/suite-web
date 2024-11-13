@@ -1,23 +1,22 @@
 @extends('layouts.admin')
 @section('content')
-        <style type="text/css">
-            sup {
-                color: red;
-            }
+    <style type="text/css">
+        sup {
+            color: red;
+        }
 
-            ol.breadcrumb {
-                margin-bottom: 0px;
-            }
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+    </style>
 
-        </style>
-
-    @if(asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/inicioUsuario') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('sugerencias-create-perfil') }}
     @endif
-    @if(asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/portal-comunicacion/reportes') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('sugerencias-create-portal') }}
     @endif
-    @if(asset('admin/desk') == redirect()->getUrlGenerator()->previous())
+    @if (asset('admin/desk') == redirect()->getUrlGenerator()->previous())
         {{ Breadcrumbs::render('sugerencias-create') }}
     @endif
 
@@ -35,7 +34,8 @@
                 <hr style="">
 
                 <div class="mt-4">
-                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón "Enviar"
+                    <strong>INSTRUCCIONES:</strong> Por favor, conteste las siguientes preguntas y dé clic en el botón
+                    "Enviar"
                 </div>
 
                 <form method="POST" action="{{ route('admin.reportes-sugerencias-store') }}" class="row">
@@ -45,7 +45,6 @@
                         <b>Datos generales:</b>
                     </div>
                     @if (auth()->user()->empleado)
-
                         <div class="mt-0 form-group col-4">
                             <label class="form-label"><i class="fas fa-user iconos-crear"></i>Nombre</label>
                             <div class="form-control">{{ Str::limit(auth()->user()->empleado->name, 30, '...') }}</div>
@@ -116,12 +115,12 @@
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente su
                             sugerencia<sup>*</sup></label>
-                        <textarea name="descripcion" class="form-control"  maxlength="555" required></textarea>
+                        <textarea name="descripcion" class="form-control" maxlength="555" required></textarea>
                     </div>
 
                     <div class="mt-2 text-right form-group col-12">
-                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                        <input type="submit" name="" class="btn btn-success" value="Enviar">
+                        <a href="{{ asset('admin/inicioUsuario') }}#reportes" class="btn btn-outline-primary">Cancelar</a>
+                        <input type="submit" name="" class="btn btn-primary" value="Enviar">
                     </div>
 
                 </form>
@@ -130,52 +129,44 @@
     </div>
 @endsection
 
-
-
-
-
-
-
 @section('scripts')
     <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_areas select');
+            let textarea = document.querySelector('.multiselect_areas textarea');
 
-       document.addEventListener('DOMContentLoaded', function() {
-        let select = document.querySelector('.multiselect_areas select');
-        let textarea = document.querySelector('.multiselect_areas textarea');
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-        select.addEventListener('change', function(e) {
-            e.preventDefault();
-
-            // Verificar si el valor ya está presente en el área de texto
-            if (!textarea.value.includes(this.value)) {
-                textarea.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este elemento ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este elemento ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-     });
 
-     document.addEventListener('DOMContentLoaded', function() {
-        let select = document.querySelector('.multiselect_procesos select');
-        let textarea = document.querySelector('.multiselect_procesos textarea');
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.querySelector('.multiselect_procesos select');
+            let textarea = document.querySelector('.multiselect_procesos textarea');
 
-        select.addEventListener('change', function(e) {
-            e.preventDefault();
+            select.addEventListener('change', function(e) {
+                e.preventDefault();
 
-            // Verificar si el valor ya está presente en el área de texto
-            if (!textarea.value.includes(this.value)) {
-                textarea.value += `${this.value}, `;
-            } else {
-                // Mostrar mensaje de advertencia si el valor ya está presente
-                alert('Este proceso ya está seleccionado.');
-                // Deseleccionar la opción
-                this.value = '';
-            }
+                // Verificar si el valor ya está presente en el área de texto
+                if (!textarea.value.includes(this.value)) {
+                    textarea.value += `${this.value}, `;
+                } else {
+                    // Mostrar mensaje de advertencia si el valor ya está presente
+                    alert('Este proceso ya está seleccionado.');
+                    // Deseleccionar la opción
+                    this.value = '';
+                }
+            });
         });
-    });
-
     </script>
 @endsection

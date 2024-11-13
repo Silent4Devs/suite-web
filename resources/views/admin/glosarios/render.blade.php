@@ -44,7 +44,7 @@
     {{-- @can('glosario_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.glosarios.create') }}">
+            <a class="btn btn-primary" href="{{ route('admin.glosarios.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.glosario.title_singular') }}
             </a>
         </div>

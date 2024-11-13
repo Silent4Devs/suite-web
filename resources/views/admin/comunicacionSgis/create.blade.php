@@ -7,10 +7,9 @@
             overflow: hidden !important;
             height: auto !important;
         }
-
     </style>
 
-<h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
+    <h5 class="col-12 titulo_general_funcion">Comunicados Generales</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
             <img src="{{ asset('img/audit_port.jpg') }}" alt="Auditoria" style="width: 200px;">
@@ -18,7 +17,8 @@
                 <br>
                 <h4>¿Qué es Comunicados Generales?</h4>
                 <p>
-                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
+                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar
+                    aspectos importantes.
                 </p>
                 <p>
                     Son fundamentales ya que contribuye a la concientización y comprensión general.
@@ -49,8 +49,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i>
                         Contenido</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                        id="descripcion" required>{{ old('descripcion') }}</textarea>
+                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
+                        required>{{ old('descripcion') }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -69,8 +69,8 @@
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi"
-                    required value="{{ old('imagen') }}">
+                    <input type="file" name="imagen" class="form-control"
+                        accept="image/*, .mp4, .mov, .webm, .wmv, .avi" required value="{{ old('imagen') }}">
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}
@@ -111,14 +111,14 @@
                 </select>
             </div> --}}
                 {{-- Select dinamico por grupos --}}
-                @livewire("grupos-comunicacion")
+                @livewire('grupos-comunicacion')
 
 
 
                 <div class="col-sm-12 col-md-6 form-group">
                     <label class="" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link" name="link"
-                        placeholder="http://" id="link" value="{{ old('link') }}">
+                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link"
+                        name="link" placeholder="http://" id="link" value="{{ old('link') }}">
                     @if ($errors->has('link'))
                         <div class="invalid-feedback">
                             {{ $errors->first('link') }}
@@ -154,8 +154,8 @@
 
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

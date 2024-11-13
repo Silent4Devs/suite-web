@@ -85,7 +85,6 @@
         .select2-selection__choice__remove {
             display: none;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Crear Documento</h5>
     <div class="card">
@@ -98,10 +97,10 @@
                 @csrf
                 @include('admin.documentos._form')
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
-                    <input type="submit" class="btn btn-danger" value="Guardar">
-                        <button id="publicar" class="btn btn-danger">Publicar</button>
-                    </div>
+                    <a href="{{ route('admin.documentos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <input type="submit" class="btn btn-primary" value="Guardar">
+                    <button id="publicar" class="btn btn-primary">Publicar</button>
+                </div>
             </form>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -109,8 +108,8 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <h5 class="titulo-modal">Publicar <button type="button" class="close"
-                                    data-dismiss="modal" aria-label="Close">
+                            <h5 class="titulo-modal">Publicar <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button></h5>
                             <form action="{{ route('admin.documentos.publish') }}" id="formPublish"
@@ -186,8 +185,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn_cancelar" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="finalizarPublicacion" class="btn btn-primary">Enviar</button>
                         </div>
                     </div>
                 </div>

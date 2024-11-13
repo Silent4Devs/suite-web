@@ -127,28 +127,30 @@
                         @endif
                     </td>
                     <td class="botones_accion" style="min-width: 100px;">
-                        {!! Form::open(['route' => ['contract_manager.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
-                        <div class='btn-group'>
-                            <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
-                                style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
-                            </a>
-                            &nbsp;&nbsp;&nbsp;
-                            @can('katbol_contratos_modificar')
-                                @if ($areas->count() > 0)
-                                    <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
-                                        style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
-                                @endif
-                            @endcan
-                            &nbsp;&nbsp;&nbsp;
-                            @can('katbol_contratos_eliminar')
-                                {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
-                                    'type' => 'submit',
-                                    'style' => 'color:#2395AA; background: none; border: none; padding: 0; font: inherit; cursor: pointer;',
-                                    'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
-                                ]) !!}
-                            @endcan
-                        </div>
-                        {!! Form::close() !!}
+                        <form action="{{ route('contract_manager.contratos-katbol.destroy', $contrato->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <div class='btn-group'>
+                                <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}" style="color:#2395AA;">
+                                    <i class="fa-solid fa-eye" title="Mostrar"></i>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;
+                                @can('katbol_contratos_modificar')
+                                    @if ($areas->count() > 0)
+                                        <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}" style="color:#2395AA;">
+                                            <i class="fas fa-edit" title="Editar"></i>
+                                        </a>
+                                    @endif
+                                @endcan
+                                &nbsp;&nbsp;&nbsp;
+                                @can('katbol_contratos_eliminar')
+                                    <a href="#" onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.destroy', [$contrato->id]) }}')" style="color:#e5760e;">
+                                        <i class="fas fa-trash" title="Eliminar"></i>
+                                    </a>
+                                @endcan
+                            </div>
+                        </form>
+
                     </td>
                 </tr>
             @endforeach
@@ -158,7 +160,27 @@
     {{-- <p class="lead">
         <button id="json" class="btn tb-btn-primary">TO JSON</button>
         <button id="csv" class="btn btn-info">TO CSV</button>
-        <button id="pdf" class="btn btn-danger">TO PDF</button>
-        <button id="txt" class="btn btn-success">TO TXT</button>
+        <button id="pdf" class="btn btn-primary">TO PDF</button>
+        <button id="txt" class="btn btn-primary">TO TXT</button>
     </p> --}}
 </div>
+
+<script>
+        function confirmDelete(url) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás recuperar este ítem después de eliminarlo.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la URL de eliminación
+                window.location.href = url;
+            }
+        });
+    }
+</script>

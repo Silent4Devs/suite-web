@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/cards.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{ config('app.cssVersion') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/centerAttention/cards.css') }}{{ config('app.cssVersion') }}">
 
     <style>
         @media print {
@@ -11,7 +11,7 @@
         }
     </style>
 
-    <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+    <button class="btn btn-primary print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
         <i class="fas fa-print"></i>
         Imprimir
     </button>
@@ -28,14 +28,14 @@
                 <img src="{{ asset($logotipo) }}" class="mt-2 mb-2 ml-4" style="width:100px;">
             </div>
             <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
-                <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
                 <br>
-                <span style="color:#345183; font-size:15px;"><strong>Dashboard: Quejas Clientes.
+                <span style="color:var(--color-tbj); font-size:15px;"><strong>Dashboard: Quejas Clientes.
                     </strong></span>
 
             </div>
             <div class="col-3 p-2">
-                <span style="color:#345183;">Fecha: {{ now()->format('d-m-Y') }}
+                <span style="color:var(--color-tbj)">Fecha: {{ now()->format('d-m-Y') }}
                 </span>
             </div>
         </div>
@@ -92,7 +92,7 @@
     </div>
 
     <div class="card">
-        <div class="card-header" style="height:40px; background-color: #345183;">
+        <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
             <h5 style="font-size:15px" class="text-white">Quejas por Estatus y Prioridad</h5>
         </div>
         <div class="card-body">
@@ -106,7 +106,7 @@
     <div class="row">
         <div class="col-6">
             <div class="card">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Quejas por Prioridad</h5>
                 </div>
                 <div class="card-body">
@@ -119,7 +119,7 @@
 
         <div class="col-6">
             <div class="card">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Canal de Recepción de las Quejas</h5>
                 </div>
                 <div class="card-body">
@@ -139,7 +139,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card ">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Quejas por Cliente</h5>
                 </div>
                 <div class="card-body">
@@ -152,7 +152,7 @@
 
         <div class="col-12">
             <div class="card ">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Quejas por Proyecto</h5>
                 </div>
                 <div class="card-body">
@@ -173,7 +173,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Quejas por Categoría</h5>
                 </div>
                 <div class="card-body">
@@ -186,7 +186,7 @@
 
         <div class="col-12">
             <div class="card ">
-                <div class="card-header" style="background-color: #345183;">
+                <div class="card-header" style="background-color: var(--color-tbj)">
                     <h5 style="font-size:20px" class="text-white">Tickets por áreas</h5>
                 </div>
                 <div class="card-body">
@@ -200,7 +200,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card ">
-                <div class="card-header" style="background-color: #345183;">
+                <div class="card-header" style="background-color: var(--color-tbj)">
                     <h5 style="font-size:20px" class="text-white">Tickets por procesos</h5>
                 </div>
                 <div class="card-body">
@@ -215,7 +215,7 @@
 
         <div class="col-6">
             <div class="card">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Quejas con Acción Correctiva Vinculada</h5>
                 </div>
                 <div class="card-body">
@@ -225,7 +225,7 @@
         </div>
         <div class="col-6">
             <div class="card ">
-                <div class="card-header" style="height:40px; background-color: #345183;">
+                <div class="card-header" style="height:40px; background-color: var(--color-tbj)">
                     <h5 style="font-size:15px" class="text-white">Estatus de los Planes de Trabajo</h5>
                 </div>
                 <div class="card-body">

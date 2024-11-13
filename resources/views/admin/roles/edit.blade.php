@@ -12,8 +12,8 @@
                 @csrf
                 <div class="form-group">
                     <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
-                    <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title"
-                        id="title" value="{{ old('title', $role->title) }}" required>
+                    <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text"
+                        name="title" id="title" value="{{ old('title', $role->title) }}" required>
                     @if ($errors->has('title'))
                         <div class="invalid-feedback">
                             {{ $errors->first('title') }}
@@ -58,12 +58,12 @@
                                 <th>Slug</th>
                             </thead>
                             <tbody>
-                                    <tr style="display:none">
-                                        <td></td>
-                                        <td>ID del permiso</td>
-                                        <td>Descripcion del permiso</td>
-                                        <td>Slug o Codigo del permiso</td>
-                                    </tr>
+                                <tr style="display:none">
+                                    <td></td>
+                                    <td>ID del permiso</td>
+                                    <td>Descripcion del permiso</td>
+                                    <td>Slug o Codigo del permiso</td>
+                                </tr>
                                 @foreach ($permissions as $idx => $permission)
                                     <tr>
                                         <td></td>
@@ -82,8 +82,8 @@
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
         </div>
         <div class="form-group">
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" type="submit" id="btnEnviarPermisos">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+            <button class="btn btn-primary" type="submit" id="btnEnviarPermisos">
                 {{ trans('global.save') }}
             </button>
         </div>

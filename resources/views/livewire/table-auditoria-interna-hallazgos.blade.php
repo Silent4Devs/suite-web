@@ -23,14 +23,14 @@
                     <td style="min-width:100px;">{{ $data->descripcion }}</td>
                     <td style="min-width:100px;">{{ $data->clasificacion_hallazgo }}</td>
                     <td style="min-width:100px;">{{$data->procesos ? $data->procesos->nombre : 'n/a'}}</td>
-                    <td style="min-width:100px;">{{$data->areas ? $data->areas->area : 'n/a'}}</td> 
+                    <td style="min-width:100px;">{{$data->areas ? $data->areas->area : 'n/a'}}</td>
                     <td style="min-width:40px;">
-                        <i class="fas fa-edit" wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
+                        <i class="fas fa-edit" wire:click.prevent="$dispatch('editarParteInteresada',{ id: {{ $data->id }} })">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            wire:click.prevent="$dispatch('agregarNormas',{ id: {{ $data->id }} })"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
+                            wire:click.prevent="$dispatch('eliminarParteInteresada',{ id: {{ $data->id }} })"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>
@@ -46,7 +46,7 @@
         Livewire.on('cerrar-modal', (event) => {
             $('#exampleModal').modal('hide');
             $('.modal-backdrop').hide();
-           
+
 
         })
         Livewire.on('abrir-modal', () => {

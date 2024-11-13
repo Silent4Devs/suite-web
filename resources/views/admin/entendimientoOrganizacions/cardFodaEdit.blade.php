@@ -17,7 +17,7 @@
             <div>
                 <h5>{{ $empresa_actual }}</h5>
                 <p class="d-inline">
-                    Entendimiento de la Organización: {{ $obtener_FODA->analisis }}
+                    Entendimiento de la Organización: {{ $obtener_FODA->analisis ?? '' }}
                 </p>
                 <a class="d-inline" href="{{ route('admin.entendimiento-organizacions.edit', $foda_actual) }}"
                     style="text-decoration-line: none;">

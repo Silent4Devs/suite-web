@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/foda/print.css') }}{{ config('app.cssVersion') }}">
 
     <style>
         @media print {
@@ -44,16 +44,17 @@
                     </div>
                     <div class="col-5 p-2 mt-3" style="text-align: left;">
                         <br>
-                        <span class="" style="color:#306BA9; font-size:20px;font-weight:bold;">
+                        <span class="" style="color:var(--color-tbj); font-size:20px;font-weight:bold;">
                             Reporte Determinación de alcance
                         </span>
 
                     </div>
                     <div class="col-4 pt-5 pl-5" style="background:#EEFCFF;">
-                        <span class="" style="font-size:14px;color:#345183;background:#EEFCFF;">Fecha de revisión:
+                        <span class="" style="font-size:14px;color:var(--color-tbj)background:#EEFCFF;">Fecha de
+                            revisión:
                             {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_revision)->format('d-m-Y') }}
                         </span>
-                        <div class="" style="font-size:14px;color:#345183;">
+                        <div class="" style="font-size:14px;color:var(--color-tbj)">
                             Fecha de publicación:
                             {{ \Carbon\Carbon::parse($alcanceSgsi->fecha_publicacion)->format('d-m-Y') }}
                         </div>
@@ -62,7 +63,8 @@
                 <div class="row" style="border-right: 16px solid white">
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
-                            <div class="mt-4" style="font-weight: bold;margin-left:55px;font-size:14px; color:#306BA9;">
+                            <div class="mt-4"
+                                style="font-weight: bold;margin-left:55px;font-size:14px; color:var(--color-tbj);">
                                 Nombre del alcance
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
@@ -71,12 +73,13 @@
                         </div>
                     </div>
                     <div class="col-md-1 mb-1"
-                        style="width:10px;padding-left:0px;padding-right:0px;background-color:#295082;
+                        style="width:10px;padding-left:0px;padding-right:0px;background-color:var(--color-tbj);
                     width:10px;padding-left:0px;padding-right: 43px;">
                     </div>
                 </div>
                 <div class="mt-4 mb-3  dato_mairg" style="">
-                    <span style="font-size:14px; color:#306BA9;margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
+                    <span
+                        style="font-size:14px; color:var(--color-tbj);margin-left:55px;font-size: 14px; font-weight: bold; ml-4">
                         Alcance
                     </span>
                     <div class="px-2 mt-2 ml-5 mr-5" style="font-size:14px; color:#606060;">
@@ -115,11 +118,11 @@
         </div>
         <div class="row">
             <div class="text-right form-group col-12">
-                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" id="btnGuardar" type="submit">
+                <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                <button class="btn btn-primary" id="btnGuardar" type="submit">
                     Rechazar
                 </button>
-                <button class="btn btn-danger" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
+                <button class="btn btn-primary" id="btnUpdateAndReview" type="submit" style="width: 230px !important;">
                     Aprobar
                 </button>
             </div>

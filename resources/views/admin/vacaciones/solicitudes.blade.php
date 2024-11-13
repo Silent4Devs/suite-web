@@ -1,19 +1,28 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+<link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('Vista-Global-Vacaciones') }}
+        {{-- {{ Breadcrumbs::render('Vista-Global-Vacaciones') }} --}}
     </div>
 
     <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>
 
     <div class="row">
-        @can('reglas_vacaciones_vista_global')
-            <div class="col-12 text-right">
-                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:200px;"
-                    href="{{ url('admin/ExportVacaciones') }}">
+        {{-- @can('reglas_vacaciones_vista_global')
+            <div class="col-12 text-left">
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px;"
+                    href="{{ route('descarga-solicitudes-vacaciones') }}">
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    Exportar Excel
+                    Reporte
+                </a>
+            </div>
+        @endcan --}}
+        @can('reglas_vacaciones_vista_global')
+            <div class="col-12 text-left">
+                <a type="button" class="btn" style="background-color:#b9eeb9; border: #fff; width:100px;"
+                    href="{{ route('admin.descarga-vacaciones') }}">
+                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    Reporte
                 </a>
             </div>
         @endcan

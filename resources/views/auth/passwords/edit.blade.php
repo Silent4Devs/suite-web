@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <style type="text/css">
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
         .preview {
             overflow: hidden;
             width: 160px;
@@ -28,14 +23,6 @@
             box-shadow: 0 0 0 1px #39f;
             outline: 0;
         }
-
-        .form-group label {
-            color: #3086AF;
-        }
-
-        .card {
-            background-color: #FCFCFC;
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
 
@@ -57,11 +44,17 @@
                                                     style="height: 140px;clip-path: circle(70px at 50% 50%); position: relative; display:initial"
                                                     src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
                                                     alt="{{ auth()->user()->empleado->name }}">
-                                                <label for="imgProfile"
+                                                {{-- <label for="imgProfile"
                                                     style="position: relative;bottom: -73px;right: 53px;font-size: 18px;"><i
-                                                        class="fas fa-camera"></i></label>
-                                                <input id="imgProfile" type="file" name="image" class="image"
-                                                    style="display:none">
+                                                        class="fas fa-camera"></i></label> --}}
+                                                {{-- <input id="imgProfile" type="file" name="image" class="image"
+                                                    style="display:none"> --}}
+                                                    <form action="{{ route('admin.empleado.update-image-profile') }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                    <label for="foto">Selecciona una imagen:</label>
+                                                    <input id="imgProfile" type="file" name="foto"  required>
+                                                    <button type="submit">Subir Imagen</button>
+                                                    </form>
                                             </div>
                                             <div class="mt-1">
                                                 <h6 style="color: #fff; font-size: 20px !important; margin-top: 31px;">
@@ -110,7 +103,7 @@
                                                     id="password_confirmation" required>
                                             </div>
                                             <div class="form-group" style="text-align: end">
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -198,7 +191,7 @@
                                                     style="font-size:12px; margin-top: 3px;">Mostrar mi telefono en
                                                     directorio
                                                     organizacional</label>
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-primary" type="submit">
                                                     {{ trans('global.save') }}
                                                 </button>
                                             </div>
@@ -220,7 +213,7 @@
                                                             class="fas fa-question-circle ml-2"
                                                             title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i>
                                                     </h6>
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
                                                 </form>
@@ -267,7 +260,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 col-12">
                         <div class="card">
-                            <div class="card-body" style="height:355px !important;">
+                            <div class="card-body" style="">
                                 <h6 style="font-size:18px;">Contactos de emergencia</h6>
                                 <hr style="opacity: 0;">
                                 <form action="{{ route('admin.empleado.update-related-info-profile') }}" method="POST">
@@ -276,7 +269,7 @@
                                         'empleado' => $empleado,
                                     ])
                                     <div class="form-group" style="text-align: end">
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-primary" type="submit">
                                             {{ trans('global.save') }}
                                         </button>
                                     </div>
@@ -295,7 +288,7 @@
                                     </div>
                                     <div class="col-6" style="font-size:10px; color: #fff;">
 
-                                        <div class="" style="background-color:#006DDB; padding: 10px;">
+                                        <div class="" style="background-color:var(--color-tbj); padding: 10px;">
                                             <i class="mr-2 fa fa-info-circle"></i>El administrador tiene todos los
                                             permisos
                                         </div>
@@ -332,7 +325,7 @@
                                                 onsubmit="return prompt('{{ __('global.delete_account_warning') }}') == '{{ auth()->user()->email }}'">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <button class="btn btn-danger" type="submit">
+                                                    <button class="btn btn-primary" type="submit">
                                                         {{ trans('global.delete') }}
                                                     </button>
                                                 </div>
@@ -349,7 +342,7 @@
 
             </div>
         </div>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        {{-- <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -381,7 +374,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 @section('scripts')
@@ -399,7 +392,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         var $modal = $('#modal');
         var image = document.getElementById('image');
         var cropper;
@@ -497,5 +490,5 @@
             context.fill();
             return canvas;
         }
-    </script>
+    </script> --}}
 @endsection

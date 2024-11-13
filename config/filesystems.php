@@ -134,6 +134,19 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('NAS_HOST'),
+            'username' => env('NAS_USERNAME'),
+            'password' => env('NAS_PASSWORD'),
+
+            // Optional FTP Settings...
+            // 'port'     => 21,
+            // 'root'     => '',
+            // 'passive'  => true,
+            // 'ssl'      => true,
+            // 'timeout'  => 30,
+        ],
     ],
 
     /*

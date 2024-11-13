@@ -81,6 +81,7 @@ class Organizacion extends Model implements Auditable
         'semanas_min_timesheet',
         'semanas_faltantes',
         'semanas_adicionales',
+        'certificado',
     ];
 
     public static function getExists()
@@ -160,5 +161,10 @@ class Organizacion extends Model implements Auditable
     public function panel()
     {
         return $this->hasMany(PanelOrganizacion::class);
+    }
+
+    public function getCertificadoRutaAttribute()
+    {
+        return asset('img/escuela/certificaciones/certificado'.$this->certificado.'.png');
     }
 }

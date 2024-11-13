@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DocumentoEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\ConfirmacionSolicitudAprobacionMail;
 use App\Mail\SolicitudAprobacionMail;
@@ -396,32 +397,39 @@ class DocumentosController extends Controller
     public function destroy(Request $request, Documento $documento)
     {
         abort_if(Gate::denies('control_documentar_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
+            // Verifica si el documento es de tipo 'proceso'
             if ($documento->tipo == 'proceso') {
-                // logica para eliminar el proceso vinculado al documento
+                // Lógica para eliminar el proceso vinculado al documento
                 $proceso = Proceso::where('documento_id', intval($documento->id))->first();
                 $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
-                if ($request->delete_documents == 'true') {
-                    if ($proceso) {
-                        $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
-                        if ($dependencias) {
-                            foreach ($dependencias as $dependencia) {
-                                $dependencia->delete();
-                            }
-                        }
+
+                if ($request->delete_documents == 'true' && $proceso) {
+                    $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
+                    foreach ($dependencias as $dependencia) {
+                        $dependencia->delete();
                     }
                 }
+
                 if ($proceso) {
                     $proceso->delete();
                 }
-                $revision->delete();
+
+                if ($revision) {
+                    $revision->delete();
+                }
             } else {
                 $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
-                $revision->delete();
+                if ($revision) {
+                    $revision->delete();
+                }
             }
+
+            // Manejo del archivo del documento
             $path_documento = $this->getPathDocumento($documento, 'public');
             $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
-            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto'.'.'.$extension;
+            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto.'.$extension;
 
             $ruta_documento = $path_documento.'/'.$documento->archivo;
             $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento).'/'.$nombre_documento;
@@ -432,6 +440,8 @@ class DocumentosController extends Controller
                 }
                 Storage::move($ruta_documento, $ruta_obsoleto);
             }
+
+            // Eliminar el documento
             $eliminar = $documento->delete();
 
             if ($eliminar) {
@@ -439,14 +449,16 @@ class DocumentosController extends Controller
             }
         } catch (QueryException $e) {
             if ($e->errorInfo[0] == '23000') {
-                return response()->json(['error' => 'Este registro contiene relación con diversas tablas, eliminarlo trearía problemas de estabilidad en el sistema.']);
+                return response()->json(['error' => 'Este registro contiene relación con diversas tablas, eliminarlo traería problemas de estabilidad en el sistema.']);
             }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error inesperado: '.$e->getMessage()], 500);
         }
+
+        return response()->json(['error' => 'No se pudo eliminar el documento'], 500);
     }
 
-    public function doDocumentObsolete(Documento $documento)
-    {
-    }
+    public function doDocumentObsolete(Documento $documento) {}
 
     public function checkCode(Request $request)
     {
@@ -469,7 +481,8 @@ class DocumentosController extends Controller
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
             $documento = Documento::find($documento_id);
-            $documento->load('elaborador', 'macroproceso');
+            // event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento')); //No funciona correctamente
+            // $documento->load('elaborador', 'macroproceso'); //Tarda demasiado, error de memoria e ¿inncesario?
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
@@ -751,7 +764,6 @@ class DocumentosController extends Controller
         $macroprocesosAndProcesos = array_merge($macroprocesos, $procesos);
 
         $documentos = Documento::where('estatus', Documento::PUBLICADO)->get();
-        // $documentos = Documento::get();
 
         return view('admin.documentos.list-published', compact('documentos', 'organizacion', 'macroprocesosAndProcesos'));
     }

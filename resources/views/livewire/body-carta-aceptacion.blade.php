@@ -40,7 +40,7 @@
                 </p>
             </div>
             <div class="mt-3">
-                <strong style="font-size:12px; color:#345183;">Impacto del riesgo
+                <strong style="font-size:12px; color:var(--color-tbj)">Impacto del riesgo
                     evaluado</strong>
                 <p class="m-0 p-0" style="font-size:12px;">
                     <i style="font-size:10px;" id="circuloImpacto" class="mr-1 fas fa-circle"></i>{{ $impacto }}
@@ -78,13 +78,14 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;" colspan="6">
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
+                    colspan="6">
                     <div>
                         Tablero de Riesgos Impacto
                     </div>
                 </th>
             </tr>
-            <tr style="color:#345183; background-color:#fff;" colspan="6">
+            <tr style="color:var(--color-tbj); background-color:#fff;" colspan="6">
                 <th style="font-size:12px;">PROBABILIDAD</th>
                 <th style="font-size:12px;">1.Muy Bajo</th>
                 <th style="font-size:12px;">2.Bajo</th>
@@ -232,41 +233,46 @@
     <table class="table w-100 mt-4 mb-4" id="contactos_externos_table" style="width:100%">
         <thead>
             <tr>
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="2" class="text-center">Descripción</th>
 
             </tr>
         </thead>
         <tbody id="contenedor_contactos_externos">
             <tr>
-                <th style="font-size:12px; color:#345183;">Muy alto</th>
-                <th style="font-size:12px; color:#345183; background-color:rgb(240, 240, 150);">Riesgo catastrófico que
+                <th style="font-size:12px; color:var(--color-tbj)">Muy alto</th>
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
+                    catastrófico que
                     puede afectar la permanencia del n_registro
                     y que genera impactos graves.
                 </th>
             </tr>
             <tr>
-                <th style="font-size:12px; color:#345183;">Alto</th>
-                <th style="font-size:12px; color:#345183; background-color:rgb(240, 240, 150);">Riesgo intolerable para
+                <th style="font-size:12px; color:var(--color-tbj)">Alto</th>
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
+                    intolerable para
                     la organización que genera impactos relevantes.
                 </th>
             </tr>
             <tr>
-                <th style="font-size:12px; color:#345183;">Medio</th>
-                <th style="font-size:12px;color:#345183; background-color:rgb(240, 240, 150);">Riesgo moderado para la
+                <th style="font-size:12px; color:var(--color-tbj)">Medio</th>
+                <th style="font-size:12px;color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo moderado
+                    para la
                     organización que genera impactos significativos.
                 </th>
             </tr>
             <tr>
-                <th style="font-size:12px; color:#345183;">Bajo</th>
-                <th style="font-size:12px; color:#345183; background-color:rgb(240, 240, 150);">Riesgo tolerable para
+                <th style="font-size:12px; color:var(--color-tbj)">Bajo</th>
+                <th style="font-size:12px; color:var(--color-tbj); background-color:rgb(240, 240, 150);">Riesgo
+                    tolerable para
                     la
                     organización que no genera impactos significativos.
                 </th>
             </tr>
             <tr>
-                <th style="font-size:12px; color:#345183;">Muy bajo</th>
-                <th style="font-size:12px;color:#345183; background-color:rgb(240, 240, 150);">Sin riesgo para la
+                <th style="font-size:12px; color:var(--color-tbj)">Muy bajo</th>
+                <th style="font-size:12px;color:var(--color-tbj); background-color:rgb(240, 240, 150);">Sin riesgo para
+                    la
                     organización y no genera algún impacto significativo.
                 </th>
             </tr>
@@ -277,11 +283,11 @@
         <table class="table">
             <thead>
                 <tr style="background-color:#cccccc;">
-                    <th style="color:#345183; font-size:12px; min-width: 100px;">ID Activo</th>
-                    <th style="color:#345183; font-size:12px; min-width: 300px;">Nombre</th>
-                    <th style="color:#345183; font-size:12px; min-width: 150px;">Criticidad</th>
-                    <th style="color:#345183; font-size:12px; min-width: 150px;">Confidencialidad</th>
-                    <th style="color:#345183; font-size:12px; min-width: 100px;">Revisión</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 100px;">ID Activo</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 300px;">Nombre</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 150px;">Criticidad</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 150px;">Confidencialidad</th>
+                    <th style="color:var(--color-tbj); font-size:12px; min-width: 100px;">Revisión</th>
                 </tr>
             </thead>
             <tbody>
@@ -375,7 +381,7 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="2">
                     2.Evaluación del Riesgo a Aceptar</th>
             </tr>
@@ -383,7 +389,7 @@
         </thead>
         <tbody>
             <tr>
-                <td style="color:#345183;">
+                <td style="color:var(--color-tbj)">
 
                     <div class="row">
                         <div class="col-4">
@@ -399,7 +405,7 @@
         </tbody>
         <tbody>
             <tr>
-                <td style="color:#345183;">
+                <td style="color:var(--color-tbj)">
 
                     <div class="row">
                         <div class="col-4">
@@ -415,7 +421,7 @@
 
         <tbody>
             <tr>
-                <td style="color:#345183;">
+                <td style="color:var(--color-tbj)">
 
                     <div class="row">
                         <div class="col-4">
@@ -434,7 +440,7 @@
         <thead>
             <tr class="negras">
 
-                <th class="text-center" style="font-size:12px; color:#345183; background-color:#cccccc;"
+                <th class="text-center" style="font-size:12px; color:var(--color-tbj); background-color:#cccccc;"
                     colspan="6">
                     <div>
                         Tipo de Impacto del Riesgo
@@ -442,13 +448,16 @@
                 </th>
             </tr>
             <tr>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 200px;">
+                <th scope="col"
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 200px;">
                     Criterio
                 </th>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 100x;">
+                <th scope="col"
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 100x;">
                     Valor
                 </th>
-                <th scope="col" style="font-size:12px; background-color:#fff; color:#345183; min-width: 400px;">
+                <th scope="col"
+                    style="font-size:12px; background-color:#fff; color:var(--color-tbj); min-width: 400px;">
                     Detalle
                 </th>
             </tr>
@@ -539,9 +548,17 @@
         </tbody>
     </table>
     @php
-        $promedioConfidencialidad1 = round(array_sum($promedioConfidencialidad) / (count($promedioConfidencialidad) > 0 ? count($promedioConfidencialidad) : 1));
-        $promedioDisponibilidad1 = round(array_sum($promedioDisponibilidad) / (count($promedioDisponibilidad) > 0 ? count($promedioDisponibilidad) : 1));
-        $promedioIntegridad1 = round(array_sum($promedioIntegridad) / (count($promedioIntegridad) > 0 ? count($promedioIntegridad) : 1));
+        $promedioConfidencialidad1 = round(
+            array_sum($promedioConfidencialidad) /
+                (count($promedioConfidencialidad) > 0 ? count($promedioConfidencialidad) : 1),
+        );
+        $promedioDisponibilidad1 = round(
+            array_sum($promedioDisponibilidad) /
+                (count($promedioDisponibilidad) > 0 ? count($promedioDisponibilidad) : 1),
+        );
+        $promedioIntegridad1 = round(
+            array_sum($promedioIntegridad) / (count($promedioIntegridad) > 0 ? count($promedioIntegridad) : 1),
+        );
         $probabilidad = round(($promedioConfidencialidad1 + $promedioIntegridad1 + $promedioIntegridad1) / 3);
     @endphp
     <input id="copia_probabilidad" type="hidden" value='{{ $probabilidad }}' />
@@ -551,7 +568,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="proceso_id" class="required"> <i
                         class="far fa-calendar-alt iconos-crear"></i>Proceso</label>
-                <select class="form-control" id="proceso_id" name="proceso_id" wire:model.lazy="procesoId" required>
+                <select class="form-control" id="proceso_id" name="proceso_id" wire:model.blur="procesoId" required>
                     <option value="">-- Seleccionar Proceso --</option>
                     @foreach ($procesos as $proceso)
                         <option value="{{ $proceso->id }}">{{ $proceso->proceso->codigo }}-
@@ -785,7 +802,8 @@
         </table>
 
         <div class="col-12">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 1. Clasificación del Activo relacionado
             </div>
         </div>
@@ -822,7 +840,8 @@
         </div>
 
         <div class="col-12">
-            <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+            <div class="text-center form-group"
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 2. Evaluación del riesgo a Aceptar
             </div>
         </div>
@@ -933,9 +952,17 @@
                 </tbody>
             </table>
             @php
-                $promedioConfidencialidad1 = round(array_sum($promedioConfidencialidad) / (count($promedioConfidencialidad) > 0 ? count($promedioConfidencialidad) : 1));
-                $promedioDisponibilidad1 = round(array_sum($promedioDisponibilidad) / (count($promedioDisponibilidad) > 0 ? count($promedioDisponibilidad) : 1));
-                $promedioIntegridad1 = round(array_sum($promedioIntegridad) / (count($promedioIntegridad) > 0 ? count($promedioIntegridad) : 1));
+                $promedioConfidencialidad1 = round(
+                    array_sum($promedioConfidencialidad) /
+                        (count($promedioConfidencialidad) > 0 ? count($promedioConfidencialidad) : 1),
+                );
+                $promedioDisponibilidad1 = round(
+                    array_sum($promedioDisponibilidad) /
+                        (count($promedioDisponibilidad) > 0 ? count($promedioDisponibilidad) : 1),
+                );
+                $promedioIntegridad1 = round(
+                    array_sum($promedioIntegridad) / (count($promedioIntegridad) > 0 ? count($promedioIntegridad) : 1),
+                );
                 $probabilidad = round(($promedioConfidencialidad1 + $promedioIntegridad1 + $promedioIntegridad1) / 3);
             @endphp
             <input id="copia_probabilidad" type="hidden" value='{{ $probabilidad }}' />

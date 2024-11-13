@@ -152,7 +152,7 @@ class MatrizRiesgosController extends Controller
         $matrizRiesgo = MatrizRiesgo::create($request->all());
 
         foreach ($request->controles_id as $item) {
-            $control = new MatrizRiesgosControlesPivot();
+            $control = new MatrizRiesgosControlesPivot;
             // $control->matriz_id = 2;
             $control->version_historico = $matrizRiesgo->version_historico;
             $control->matriz_id = $matrizRiesgo->id;
@@ -207,7 +207,7 @@ class MatrizRiesgosController extends Controller
     public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
     {
         abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $calculo = new Mriesgos();
+        $calculo = new Mriesgos;
 
         $matrizRiesgo->update($request->all());
         $matrizRiesgo->matriz_riesgos_controles_pivots()->sync($request->controles_id);
@@ -419,7 +419,7 @@ class MatrizRiesgosController extends Controller
 
     public function createPlanAccion(MatrizRiesgo $id)
     {
-        $planImplementacion = new PlanImplementacion();
+        $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Riegos';
         $referencia = $modulo->nombrerequisito;
@@ -442,7 +442,7 @@ class MatrizRiesgosController extends Controller
             'objetivo.required' => 'Debes de definir un objetivo para el Plan de Trabajo',
         ]);
 
-        $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+        $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
         $planImplementacion->tasks = [];
         $planImplementacion->canAdd = true;
         $planImplementacion->canWrite = true;
@@ -462,9 +462,7 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
     }
 
-    public function ControlesGet()
-    {
-    }
+    public function ControlesGet() {}
 
     public function SistemaGestion(Request $request)
     {
@@ -821,7 +819,7 @@ class MatrizRiesgosController extends Controller
     public function createSistemaGestion()
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRiesgo = new MatrizRiesgosSistemaGestion();
+        $matrizRiesgo = new MatrizRiesgosSistemaGestion;
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
@@ -938,7 +936,7 @@ class MatrizRiesgosController extends Controller
 
         // dd($matrizRiesgo);
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($matrizRiesgo);
-        $calculo = new Mriesgos();
+        $calculo = new Mriesgos;
         $res = $calculo->CalculoD($request);
         $request->request->add(['resultadoponderacion' => $res]);
         $matrizRiesgo->update($request->all());
@@ -1102,7 +1100,7 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
-        $matrizOctave = new MatrizOctave();
+        $matrizOctave = new MatrizOctave;
         $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
         // dd($nombreAis);
 
@@ -1376,7 +1374,7 @@ class MatrizRiesgosController extends Controller
         $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $matrizNist = new MatrizNist();
+        $matrizNist = new MatrizNist;
         $vulnerabilidades = Vulnerabilidad::getAll();
         $controles = DeclaracionAplicabilidad::getAll();
 

@@ -62,7 +62,7 @@
                                     {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Hallazgos</h5>
 
                                 <input id="auditoria_internas_id" name="auditoria_internas_id" type="hidden"
-                                    value=" {{ $id_auditoria }}" wire:model.defer="auditoria_internas_id">
+                                    value=" {{ $id_auditoria }}" wire:model="auditoria_internas_id">
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -76,7 +76,7 @@
                                             <div class="anima-focus">
                                                 <select name="c_id" id="c_id"
                                                     class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
-                                                    wire:model.defer="c_id" required>
+                                                    wire:model="c_id" required>
                                                     <option value="">Seleccione una Claúsula</option>
                                                     @foreach ($clausulas as $claus)
                                                         <option value="{{ $claus->id }}">
@@ -94,7 +94,7 @@
                                             <div class="anima-focus">
                                                 <select name="c_edit_id" id="c_edit_id"
                                                     class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
-                                                    wire:model.defer="c_edit_id" required>
+                                                    wire:model="c_edit_id" required>
                                                     @foreach ($clausulas as $claus)
                                                         <option value="{{ $claus->id }}">
                                                             {{ $claus->nombre_clausulas }}
@@ -113,7 +113,7 @@
                                             <input type="text"
                                                 class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
                                                 name="incumplimiento_requisito" id="incumplimiento_requisito"
-                                                wire:model.defer="incumplimiento_requisito" required placeholder="" />
+                                                wire:model="incumplimiento_requisito" required placeholder="" />
                                             <label class="required" for="incumplimiento_requisito">
                                                 Requisito</label>
                                         </div>
@@ -129,7 +129,7 @@
                                     <div class="form-group mt-3 mb-3 col-sm-12">
                                         <div class="anima-focus">
                                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
-                                                id="descripcion" wire:model.defer="descripcion" required placeholder=""></textarea>
+                                                id="descripcion" wire:model="descripcion" required placeholder=""></textarea>
                                             <label class="required" for="descripcion">
                                                 Descripción</label>
                                         </div>
@@ -148,7 +148,7 @@
                                         <div class="anima-focus">
                                             <input type="number" min="1" max="100000"
                                                 class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
-                                                name="no_tipo" id="no_tipo" wire:model.defer="no_tipo"
+                                                name="no_tipo" id="no_tipo" wire:model="no_tipo"
                                                 placeholder=""></input>
                                             <label class="required" for="no_tipo">
                                                 No.</label>
@@ -164,7 +164,7 @@
                                         <div class="anima-focus">
                                             <input type="text"
                                                 class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
-                                                name="titulo" id="titulo" wire:model.defer="titulo"
+                                                name="titulo" id="titulo" wire:model="titulo"
                                                 placeholder="" />
                                             <label class="required" for="titulo">
                                                 Título</label>
@@ -182,7 +182,7 @@
                                         <div class="anima-focus">
                                             <select name="clasificacion_id" id="clasificacion_id"
                                                 class="form-control select {{ $errors->has('clasificacion_id') ? 'is-invalid' : '' }}"
-                                                wire:model.defer="clasificacion_id">
+                                                wire:model="clasificacion_id">
                                                 <option value="">Seleccione una Clasificación</option>
                                                 @foreach ($clasificaciones as $clasif)
                                                     <option value="{{ $clasif->id }}">
@@ -206,7 +206,7 @@
                                         <div class="anima-focus">
                                             <select
                                                 class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
-                                                name="proceso_id" id="proceso_id" wire:model.defer="proceso">
+                                                name="proceso_id" id="proceso_id" wire:model="proceso">
                                                 <option value="">Seleccione un proceso</option>
                                                 @foreach ($procesos as $proceso)
                                                     <option value="{{ $proceso->id }}">
@@ -300,7 +300,7 @@
                                                 <a class="dropdown-item"
                                                     wire:click.prevent="modal('borrar', {{ $data->id }})">
                                                     <i class="fa-solid fa-trash"
-                                                        wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"></i>&nbsp;Eliminar</a>
+                                                        wire:click.prevent="$dispatch('eliminarParteInteresada',{ id: {{ $data->id }} })"></i>&nbsp;Eliminar</a>
                                             </div>
                                         </div>
                                     </td>
@@ -327,7 +327,7 @@
                 <div class="col s12">
                     <div class="form-group col-sm-12 right " style="margin: 0; text-align: end">
                         <div><span>Mostrar</span>
-                            <select class="select_pagination" wire:model="pagination">
+                            <select class="select_pagination" wire:model.live="pagination">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>
@@ -350,7 +350,7 @@
                     <div class="form-group col-sm-12">
                         <div class="anima-focus">
                             <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
-                                id="comentarios" wire:model.defer="comentarios"></textarea>
+                                id="comentarios" wire:model="comentarios"></textarea>
                             <label class="required" for="comentarios">
                                 Comentarios</label>
                         </div>

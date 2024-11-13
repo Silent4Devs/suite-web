@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Ajustes-vacaciones') }}
+    {{-- {{ Breadcrumbs::render('Ajustes-vacaciones') }} --}}
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">

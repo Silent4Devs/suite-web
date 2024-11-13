@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style>
-         .table tr td:nth-child(2) {
+        .table tr td:nth-child(2) {
             text-align: justify !important;
         }
 
@@ -12,6 +10,7 @@
             text-align: center !important;
 
         }
+
         .table tr td:nth-child(3) {
             text-align: justify !important;
         }
@@ -72,8 +71,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -88,7 +87,6 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.politica-sgsis.index') }}
@@ -98,46 +96,46 @@
             <a href="{{ route('admin.politica-sgsis.create') }}" type="button" class="btn tb-btn-primary">Aprobar Politica</a>
         </div>
     </div>
-       @include('partials.flashMessages')
-       <div class="datatable-fix datatable-rds">
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
         <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
         <div class="text-right">
             <div class="d-flex justify-content-end">
-                <a href="#" id="btpdf"  type="button" class="btpdf" title="pdf"><img src="{{asset('imprimir.svg')}}" alt="Importar" class="icon"></a>
-                &nbsp;  &nbsp;
+                <a href="#" id="btpdf" type="button" class="btpdf" title="pdf"><img
+                        src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon"></a>
+                &nbsp; &nbsp;
             </div>
             @include('csvImport.modalcomitedeseguridad', [
                 'model' => 'Vulnerabilidad',
                 'route' => 'admin.vulnerabilidads.parseCsvImport',
             ])
-       </div>
-             <table class="table table-bordered" id="datatable-PoliticaSgsi">
-                <thead>
-                    <tr>
-                        <th style="text-transform: capitalize">
-                            {{ trans('cruds.politicaSgsi.fields.id') }}
-                        </th>
-                        <th>
-                            Nombre de la política
-                        </th>
-                        <th>
-                            Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
-                        </th>
-                        <th>
-                            Estatus
-                        </th>
-                        <th>
-                            Mostrar
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+        </div>
+        <table class="table table-bordered" id="datatable-PoliticaSgsi">
+            <thead>
+                <tr>
+                    <th style="text-transform: capitalize">
+                        {{ trans('cruds.politicaSgsi.fields.id') }}
+                    </th>
+                    <th>
+                        Nombre de la política
+                    </th>
+                    <th>
+                        Política&nbsp;del&nbsp;Sistema&nbsp;de&nbsp;Gestión
+                    </th>
+                    <th>
+                        Estatus
+                    </th>
+                    <th>
+                        Mostrar
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
 
-      </div>
-
+    </div>
 @endsection
 @section('scripts')
     @parent
@@ -228,34 +226,36 @@
             ];
             @can('politica_sistema_gestion_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar nueva política SGSI',
-                url: "{{ route('admin.politica-sgsis.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar nueva política SGSI',
+                    url: "{{ route('admin.politica-sgsis.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-politica_sgi') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-politica_sgi') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xlsxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xlsxImportModal').modal('show');
+                    }
                 };
 
                 dtButtons.push(btnAgregar);
@@ -265,29 +265,39 @@
             @can('politica_sistema_gestion_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.politica-sgsis.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-                return $(entry).data('entry-id')
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.politica-sgsis.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).nodes(), function(entry) {
+                            return $(entry).data('entry-id')
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan

@@ -15,7 +15,7 @@
                 <div class="card-body" style="border-top: 1px solid #D8D8D8;">
                     <div class="row text-primary">
                         <div class="form-group col-8 anima-focus">
-                            <input wire:model.lazy="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text" placeholder=""
+                            <input wire:model.blur="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text" placeholder=""
                                 class="w-full form-control @if ($errors->has('name')) invalid @endif">
                             @error('name')
                                 <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="form-group col-4 anima-focus">
-                            <select wire:model.lazy="platform_id" id="platform-{{ $section->id }}" type="text"
+                            <select wire:model.blur="platform_id" id="platform-{{ $section->id }}" type="text"
                                 class=" w-full form-control @if ($errors->has('platform_id')) invalid @endif">
                                 @foreach ($platforms as $platform)
                                     <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -37,7 +37,7 @@
 
                         </div>
                         <div class="form-group col-12 mt-4 anima-focus">
-                            <input wire:model.lazy="url" id="url-{{ $section->id }}" type="text" placeholder=""
+                            <input wire:model.blur="url" id="url-{{ $section->id }}" type="text" placeholder=""
                                 class=" w-full form-control @if ($errors->has('url')) invalid @endif">
                             @error('url')
                                 <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -46,14 +46,14 @@
 
                         </div>
                         <div class="form-group col-12 anima-focus">
-                            <textarea wire:model.lazy="description" id="description-{{ $section->id }}" type="text" placeholder=""
+                            <textarea wire:model.blur="description" id="description-{{ $section->id }}" type="text" placeholder=""
                                 class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
                             <label for="url-{{ $section->id }}">Descripción</label>
 
                         </div>
                         <div class="col-12">
                             <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
-                                <input wire:model="file" type="file" class="flex-1 form-input">
+                                <input wire:model.live="file" type="file" class="flex-1 form-input">
                             </div>
                             <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
                                 Cargando ...

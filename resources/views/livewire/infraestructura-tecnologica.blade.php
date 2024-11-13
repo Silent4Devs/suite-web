@@ -31,7 +31,7 @@
                         @else
                         <div style="text-align: left;">{{$data->escenario}}</div>
                         @endif
-                        
+
                     </th>
                     <td style="min-width:80px;">
                         <div style="text-align: left;">{{ $data->sistemas}}</div>
@@ -47,12 +47,12 @@
                     </td>
                     <td style="min-width:40px;">
                         <i class="fas fa-edit"
-                            wire:click.prevent="$emit('editarInfraestructura',{{ $data->id }})">
+                            wire:click.prevent="$dispatch('editarInfraestructura',{ id: {{ $data->id }} }">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
-                            wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
+                            wire:click.prevent="$dispatch('agregarNormas',{ id: {{ $data->id }} }"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarInfraestructura',{{ $data->id }})"> </i>
+                            wire:click.prevent="$dispatch('eliminarInfraestructura',{ id: {{ $data->id }} }"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>
@@ -82,6 +82,6 @@
             });
 
         })
-      
+
     })
 </script>

@@ -1,13 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
+            border-top: 2px solid var(--color-tbj);
         }
 
         div.tab-pane ul {
@@ -42,7 +41,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #345183;
+            color: var(--color-tbj);
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -51,8 +50,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -73,12 +72,11 @@
             height: calc(100% - 40px);
 
         }
+
         .not-active {
             pointer-events: none;
             cursor: default;
         }
-
-
     </style>
 
 
@@ -89,12 +87,11 @@
     <div class="mt-2 card">
         <div class="card-body">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
-                    aria-labelledby="nav-riesgo-tab">
+                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel" aria-labelledby="nav-riesgo-tab">
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.menu-BIA') }}">
+                                <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
                                     <div>
                                         <i class="bi bi-currency-exchange"></i><br>
                                         BIA
@@ -104,7 +101,7 @@
                         @endcan
                         @can('matriz_bia_matriz')
                             <li>
-                                <a href="{{ route('admin.analysisImpact.menu-AIA') }}">
+                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
                                     <div>
                                         <i class="bi bi-bezier2" disabled></i><br>
                                         AIA

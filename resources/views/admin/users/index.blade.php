@@ -5,6 +5,7 @@
             table-layout: fixed;
             width: 600px;
         }
+
         th,
         td {
             border: 1px solid blue;
@@ -16,9 +17,15 @@
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
             <div class="p-2">
-                <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
+                <a href={{ route('admin.users.eliminados') }} class="btn btn-primary" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-usuario') }}">
+                <!-- <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon"> -->
+                <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
+            </a> &nbsp;&nbsp;&nbsp;
         </div>
         <div class="card-body datatable-fix">
             @if (!$existsVinculoEmpleadoAdmin)
@@ -282,7 +289,8 @@
 
 
         $(document).ready(function() {
-            let dtButtons = [{
+            let dtButtons = [
+                /*{
                     extend: 'csvHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -301,7 +309,7 @@
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
-                },
+                },*/
                 {
                     extend: 'pdfHtml5',
                     title: `Usuarios ${new Date().toLocaleDateString().trim()}`,

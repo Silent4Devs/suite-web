@@ -37,8 +37,14 @@
                 <h5>Minuta Revisión por Dirección</h5>
             </div>
             <div>
-                <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                <div class="form-row mt-4">
+                    <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-12">
+                        <label>
+                            <input type="checkbox" name="firma_check" id="toggle-info" value="0">
+                            Activar flujo de firma(s)
+                        </label>
+                    </div>
+                    <div class="form-group mt-4 col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group anima-focus">
                             <select required class="form-control" name="responsable_id" id="responsable_id">
                                 <option value="">Seleccione una opción</option>
@@ -216,15 +222,13 @@
                                 <label for="area">Área</label>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                                <select class="form-control" id="asistencia" name="asistencia" placeholder="">
-                                    <option value="Si" default>Sí</option>
-                                    <option value="No">No</option>
-                                    <option value="Ausencia Justificada">Ausencia Justificada</option>
-                                </select>
-                                <label for="asistencia">Asistencia</label>
-                            </div>
+                        <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
+                            <select class="form-control custom-select" id="asistencia" name="asistencia" placeholder="">
+                                <option value="Si" default>Sí</option>
+                                <option value="No">No</option>
+                                <option value="Ausencia Justificada">Ausencia Justificada</option>
+                            </select>
+                            <label for="asistencia">Asistencia </label>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             <button id="btn-suscribir-participante" type="submit" class="mr-3 btn btn-link"
@@ -265,13 +269,14 @@
                             <label for="puestoEXT">Puesto</label>
                         </div>
                         <div class="form-group anima-focus col-sm-12 col-md-12 col-lg-6">
-                            <input class="form-control" type="text" id="empresaEXT" maxlength="255" placeholder="" />
+                            <input class="form-control" type="text" id="empresaEXT" maxlength="255"
+                                placeholder="" />
                             <label for="empresaEXT">Empresa u
                                 Organización</label>
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-6">
                             <label for="asistenciaEXT">Asistencia</label>
-                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT"  placeholder="">
+                            <select class="form-control" id="asistenciaEXT" name="asistenciaEXT" placeholder="">
                                 <option value="Si" default>Sí</option>
                                 <option value="No">No</option>
                                 <option value="Ausencia Justificada">Ausencia Justificada</option>
@@ -345,7 +350,7 @@
 
 
         <div class="text-right form-group col-12">
-            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar"
+            <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn btn-outline-primary"
                 style="text-decoration: none;">Cancelar</a>
             <button id="btnGuardar" class="btn tb-btn-primary" type="submit" style="width: 13%;">
                 {{ trans('global.save') }}
@@ -499,38 +504,39 @@
                         $("#cargando_participantes").show();
                     },
                     success: function(data) {
-                    // Check if the response corresponds to the latest search query
-                    if (currentRequestNumber === currentSearchRequest) {
-                        if (data.usuarios.length === 0) {
-                            // No se encontraron usuarios, mostrar un mensaje
-                            let mensaje = "<p>No se encontraron usuarios.</p>";
-                            $("#participantes_sugeridos").html(mensaje);
-                            $("#cargando_participantes").hide();
-                            $("#participantes_sugeridos").show();
-                            $("#participantes_search").css("background", "#FFF");
-                        } else {
-                            let lista = "<ul class='list-group id=empleados-lista'>";
-                            $.each(data.usuarios, function(ind, usuario) {
-                                var result = `{"id":"${usuario.id}",
+                        // Check if the response corresponds to the latest search query
+                        if (currentRequestNumber === currentSearchRequest) {
+                            if (data.usuarios.length === 0) {
+                                // No se encontraron usuarios, mostrar un mensaje
+                                let mensaje = "<p>No se encontraron usuarios.</p>";
+                                $("#participantes_sugeridos").html(mensaje);
+                                $("#cargando_participantes").hide();
+                                $("#participantes_sugeridos").show();
+                                $("#participantes_search").css("background", "#FFF");
+                            } else {
+                                let lista = "<ul class='list-group id=empleados-lista'>";
+                                $.each(data.usuarios, function(ind, usuario) {
+                                    var result = `{"id":"${usuario.id}",
                                     "name":"${usuario.name}",
                                     "email":"${usuario.email}",
                                     "puesto":"${usuario.puesto}",
                                     "area":"${usuario.area}"
                                 }`;
-                                lista +=
-                                    "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
-                                    result + ")' >" +
-                                    usuario.name + "</button>";
-                            });
-                            lista += "</ul>";
+                                    lista +=
+                                        "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" +
+                                        result + ")' >" +
+                                        usuario.name + "</button>";
+                                });
+                                lista += "</ul>";
 
-                            $("#cargando_participantes").hide();
-                            $("#participantes_sugeridos").show();
-                            let sugeridos = document.querySelector("#participantes_sugeridos");
-                            sugeridos.innerHTML = lista;
-                            $("#participantes_search").css("background", "#FFF");
+                                $("#cargando_participantes").hide();
+                                $("#participantes_sugeridos").show();
+                                let sugeridos = document.querySelector(
+                                    "#participantes_sugeridos");
+                                sugeridos.innerHTML = lista;
+                                $("#participantes_search").css("background", "#FFF");
+                            }
                         }
-                }
                     }
                 });
             });

@@ -8359,7 +8359,7 @@ class ContratosTableSeeder extends Seeder
         foreach ($contratos as $contrato) {
             foreach ($clientes as $cliente) {
                 if ($cliente->id_old === $contrato['proveedor_id']) {
-                    $contratos = new Contrato();
+                    $contratos = new Contrato;
                     $contratos->no_contrato = $contrato['no_contrato'];
                     $contratos->tipo_contrato = $contrato['tipo_contrato'];
                     $contratos->proveedor_id = $cliente->id;

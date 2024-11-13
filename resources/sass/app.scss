@@ -1,34 +1,104 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import "vars";
+@import "bootstrap/scss/bootstrap";
 
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
-//fontawesome
-@import "~@fortawesome/fontawesome-free/css/all.css";
-
-//coreui icons
-@import "~@coreui/icons/css/free.css";
-
-//coreui
-@import "~@coreui/coreui/dist/css/coreui.css";
-
-//select2
-@import "~select2/dist/css/select2.min.css";
-
-//dropzone
-@import "~dropzone/dist/min/dropzone.min.css";
-
-//date time picker
-@import "~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css";
-
-//datatables bs
-@import "~datatables.net-bs/css/dataTables.bootstrap.min.css";
-
-//perfect scrollbar
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+// normal --------------
+html *{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+header a{
+    color: unset !important;
+    text-decoration: unset !important;
+}
+button{
+    background-color: unset;
+    color: unset;
+    border: none;
+    cursor: pointer;
+}
+.color-tbj{
+    color: var(--color-tbj);
+}
 
 
+/* btn menu ------- */
+.btn-menu-header{
+    min-width: 30px;
+    min-height: 30px;
+
+    padding: 0 !important;
+    display: grid;
+    grid-template-areas: "menu";
+    place-items: center;
+    background-color: #000000;
+}
+.points-menu-header{
+    grid-area: menu;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+}
+.point-menu-header{
+    width: 4px;
+    height: 4px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+.close-menu-header{
+    grid-area: menu;
+    display: grid;
+    grid-template-areas: "closeMenu";
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.close-menu-header::after,
+.close-menu-header::before{
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    grid-area: closeMenu;
+}
+.close-menu-header::after{
+    transform: rotate(45deg);
+}
+.close-menu-header::before{
+    transform: rotate(-45deg);
+}
+// animacion btn header
+.points-menu-header{
+    transform: rotate(0deg);
+    transition: 0.5s;
+}
+.point-menu-header{
+    visibility: visible;
+}
+.point-menu-header{
+    transition: 0.5s;
+    transition: opacity 0s;
+}
+.active .points-menu-header{
+    visibility: hidden;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+.close-menu-header{
+    visibility: hidden;
+    clip-path: circle(0% at 50% 50%);
+    transform: rotate(-45deg);
+    transition: 0.5s;
+}
+.active .close-menu-header{
+    visibility: visible;
+    clip-path: circle(100% at 50% 50%);
+    transform: rotate(0deg);
+}

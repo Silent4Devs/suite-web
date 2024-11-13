@@ -10,7 +10,7 @@
             width: 33.33%;
             text-decoration: none;
             display: inline-block;
-            color: #345183;
+            color: var(--color-tbj);
             padding: 5px 0px;
             border-top: 1px solid #ccc !important;
             border-right: 1px solid #ccc;
@@ -76,15 +76,14 @@
             transition-delay: 0.5s;
             width: 100%;
         }
-
     </style>
     <style type="text/css">
         div.nav .nav-link {
-            color: #345183;
+            color: var(--color-tbj);
         }
 
         .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
+            border-top: 2px solid var(--color-tbj);
         }
 
         div.tab-pane ul {
@@ -119,7 +118,7 @@
             align-items: center;
             justify-content: center;
             background-color: #eee;
-            color: #345183;
+            color: var(--color-tbj);
             border-radius: 6px;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
             transition: 0.1s;
@@ -128,8 +127,8 @@
 
         div.tab-pane a:hover {
             text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
+            color: var(--color-tbj);
+            border: 1px solid var(--color-tbj);
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
             background-color: #fff;
         }
@@ -168,36 +167,43 @@
 
         }
 
-        .btn_modal_video{
-            width: 160px !important; transform: scale(0.7); position:absolute; right: 0; margin-top:-35px;
+        .btn_modal_video {
+            width: 160px !important;
+            transform: scale(0.7);
+            position: absolute;
+            right: 0;
+            margin-top: -35px;
         }
-
     </style>
 
     {{-- Breadcrumbs::render('admin.iso27001.index') --}}
 
 
-    <div class="modal fade" id="modal_guia_general" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document" style="margin-top:150px;">
-        <div class="modal-content" style="background-color: #1C274A; position:relative; min-width: 600px; width: 90% !important; border:1px solid rgba(255, 255, 255, 0.3);">
-            <div class="text-right p-3" data-dismiss="modal" style="font-size: 20px; color:#fff; cursor: pointer;"><i class="fas fa-times"></i></div>
-            <div class="modal-body">
-                <video src="" autoplay controls style="width:100%;"></video>
+    <div class="modal fade" id="modal_guia_general" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document" style="margin-top:150px;">
+            <div class="modal-content"
+                style="background-color: #1C274A; position:relative; min-width: 600px; width: 90% !important; border:1px solid rgba(255, 255, 255, 0.3);">
+                <div class="text-right p-3" data-dismiss="modal" style="font-size: 20px; color:#fff; cursor: pointer;"><i
+                        class="fas fa-times"></i></div>
+                <div class="modal-body">
+                    <video src="" autoplay controls style="width:100%;"></video>
+                </div>
             </div>
         </div>
-      </div>
     </div>
 
 
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">ISO 9001 - Gestión de la calidad</h5>
         <div class="d-flex">
-            <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
-               <i class="far fa-play-circle mr-2"></i> 
-               GUÍA GENERAL
+            <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal"
+                data-target="#modal_guia_general">
+                <i class="far fa-play-circle mr-2"></i>
+                GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <a href="{{ route('admin.home') }}" class="btn btn-primary">
                 <i class="fas fa-chart-pie mr-2"></i>
                 DASHBOARD
             </a>
@@ -209,7 +215,7 @@
             <div class="row">
                 {{-- <div class="col-4 justify-content-end pr-0" style="text-align:end">
                     <span style="font-size:15px">
-                        <a href="{{ route('admin.home') }}" class="btn btn-success">
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Dashboard
                         </a>
@@ -225,8 +231,8 @@
                         <i class="mr-2 fas fa-box" style="font-size:20px;" style="text-decoration:none;"></i>
                         Contexto
                     </a>
-                    <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
-                        href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
+                    <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab" href="#nav-liderazgo"
+                        role="tab" aria-controls="nav-liderazgo" aria-selected="false">
                         <i class="mr-2 fas fa-gavel" style="font-size:20px;" style="text-decoration:none;"></i>
                         Liderazgo
                     </a>
@@ -240,8 +246,8 @@
                         <i class="mr-2 fas fa-headset" style="font-size:20px;" style="text-decoration:none;"></i>
                         Soporte
                     </a>
-                    <a class="nav-link" id="nav-operacion-tab" data-type="operacion" data-toggle="tab"
-                        href="#nav-operacion" role="tab" aria-controls="nav-operacion" aria-selected="false">
+                    <a class="nav-link" id="nav-operacion-tab" data-type="operacion" data-toggle="tab" href="#nav-operacion"
+                        role="tab" aria-controls="nav-operacion" aria-selected="false">
                         <i class="mr-2 fas fa-briefcase" style="font-size:20px;" style="text-decoration:none;"></i>
                         Operación
                     </a>
@@ -257,7 +263,7 @@
                     </a>
                 </div>
             </nav>
-            
+
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
                     aria-labelledby="nav-contexto-tab">
@@ -276,7 +282,8 @@
                 <div class="tab-pane mb-4 fade" id="nav-operacion" role="tabpanel" aria-labelledby="nav-operacion-tab">
                     @include('admin.iso9001.components.operacion')
                 </div>
-                <div class="tab-pane mb-4 fade" id="nav-evaluacion" role="tabpanel" aria-labelledby="nav-evaluacion-tab">
+                <div class="tab-pane mb-4 fade" id="nav-evaluacion" role="tabpanel"
+                    aria-labelledby="nav-evaluacion-tab">
                     @include('admin.iso9001.components.evaluacion')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-mejora" role="tabpanel" aria-labelledby="nav-mejora-tab">

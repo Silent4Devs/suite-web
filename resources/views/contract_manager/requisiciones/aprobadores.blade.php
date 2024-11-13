@@ -25,22 +25,37 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
-    <!-- Botón 1 -->
-    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar Requisiciones pendientes solicitantes</button>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Botón 1 -->
+            <button type="button"
+                class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn2" style="width: 100%;">Filtrar Requisiciones pendientes
+                solicitantes</button>
+        </div>
 
-    <!-- Botón 2 -->
-    <button type="button" class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn1" style="position: relative; left: 2rem;">Filtrar requisiciones pendientes jefes</button>
-
-    <!-- Botón 3 -->
-    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar requisiciones pendientes finanzas</button>
-
-    <!-- Botón 4 -->
-    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn3" style="position: relative; left: 6rem;">Filtrar requisiciones pendientes compradores</button>
-
+        <div class="col-md-6">
+            <!-- Botón 2 -->
+            <button type="button"
+                class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn1" style="width: 100%;">Filtrar requisiciones pendientes jefes</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Botón 3 -->
+            <button type="button"
+                class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn" style="width: 100%;">Filtrar requisiciones pendientes finanzas</button>
+        </div>
+        <div class="col-md-6">
+            <!-- Botón 4 -->
+            <button type="button"
+                class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn3" style="width: 100%;">Filtrar requisiciones pendientes
+                compradores</button>
+        </div>
+    </div>
 
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
@@ -66,7 +81,8 @@
                             <td>RQ-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto') }}
+                            </td>
                             <td>
                                 @switch($requisicion->estado)
                                     @case('curso')
@@ -81,6 +97,10 @@
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('firmada')
                                     @case('firmada_final')
                                         <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
@@ -89,15 +109,12 @@
                                     @default
                                         <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
                                 @endswitch
-
                             </td>
                             @php
-
                                 $user = Illuminate\Support\Facades\DB::table('users')
                                     ->select('id', 'name')
                                     ->where('id', $requisicion->id_user)
                                     ->first();
-
                             @endphp
                             <td>
                                 @switch(true)
@@ -108,21 +125,20 @@
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
                                             $employee = App\Models\User::find($requisicion->id_user);
-                                            if ($employee !== null) {
-                                                // El usuario existe, ahora verifica si tiene la propiedad 'empleado'
+                                            if ($requisicion->registroFirmas) {
+                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
+                                            } elseif ($employee !== null) {
                                                 if (
                                                     $employee->empleado !== null &&
                                                     $employee->empleado->supervisor !== null
                                                 ) {
                                                     $supervisorName = $employee->empleado->supervisor->name;
                                                 } else {
-                                                    $supervisorName = 'N/A'; // O cualquier valor predeterminado que prefieras
+                                                    $supervisorName = 'N/A';
                                                 }
                                             } else {
-                                                // El usuario no existe
-                                                $supervisorName = 'N/A'; // O cualquier valor predeterminado que prefieras
+                                                $supervisorName = 'N/A';
                                             }
-
                                         @endphp
                                         <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
@@ -148,14 +164,69 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                <form
-                                    action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
-                                    method="GET">
-                                    @method('GET')
-                                    <a
-                                        href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                </form>
+                                @if ($requisicion->estado != 'rechazado' && $requisicion->estado != 'cancelada')
+                                    <form
+                                        action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
+                                        method="GET">
+                                        @method('GET')
+                                        <a
+                                            href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                    </form>
+                                @endif
+
+                                @if (isset($requisicion->registroFirmas))
+                                    @if ($requisicion->registroFirmas->duplicados($empleadoActual->id))
+                                        <!-- Button trigger modal -->
+                                        <a data-toggle="modal" data-target="#modal-{{ $requisicion->id }}">
+                                            <i class="fa-solid fa-file-signature"></i>
+                                        </a>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal-{{ $requisicion->id }}" data-backdrop="static"
+                                            data-keyboard="false" tabindex="-1"
+                                            aria-labelledby="modalLabel-{{ $requisicion->id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalLabel-{{ $requisicion->id }}">
+                                                            Delegar Firma</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Seleccione al responsable al que delegará su firma</p>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="anima-focus">
+                                                                    <select class="form-control" name="nuevo_responsable"
+                                                                        id="nuevo_responsable-{{ $requisicion->id }}">
+                                                                        @foreach ($sustitutosLD as $key => $sustituto)
+                                                                            <option value="{{ $sustituto->id }}">
+                                                                                {{ $sustituto->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        for="nuevo_responsable-{{ $requisicion->id }}">Responsable</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cerrar</button>
+                                                        <button type="button"
+                                                            class="btn btn-primary cambiarResponsableButton"
+                                                            data-requisicion-id="{{ $requisicion->id }}">Cambiar
+                                                            Responsable</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -171,6 +242,56 @@
             alert("{{ session('mensaje') }}");
         </script>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $('.cambiarResponsableButton').click(function() {
+                let button = $(this);
+                let requisicionId = button.data('requisicion-id');
+                let nuevoResponsableId = $('#nuevo_responsable-' + requisicionId).val();
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, cambiar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('contract_manager.requisiciones.cambiarResponsable') }}', // Replace with your route
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                requisicion_id: requisicionId,
+                                nuevo_responsable: nuevoResponsableId
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Cambiado!',
+                                    'El responsable ha sido cambiado.',
+                                    'success'
+                                ).then(() => {
+                                    location
+                                        .reload(); // Reload the page or do whatever you want after success
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Error!',
+                                    'Hubo un problema al cambiar el responsable.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         (function() {
 

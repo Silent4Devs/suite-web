@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
+    <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
     <h5 class="titulo_general_funcion">Editar: Excepción de Vacaciones</h5>
@@ -23,21 +23,21 @@
         </div>
     </div>
 
-    {!! Form::model($vacacion, [
-        'route' => ['admin.incidentes-vacaciones.update', $vacacion->id],
-        'method' => 'patch',
-    ]) !!}
-    <div class="mt-4 card card-body">
-        <span class="sub-title-vac">Modificación de excepciones</span>
-        <hr>
+    <form action="{{ route('admin.incidentes-vacaciones.update', $vacacion->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
+        <div class="mt-4 card card-body">
+            <span class="sub-title-vac">Modificación de excepciones</span>
+            <hr>
 
-        @include('admin.incidentesVacaciones.fields')
-    </div>
-    <div class="text-right">
-        <a href="{{ route('admin.incidentes-vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-danger" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
+            @include('admin.incidentesVacaciones.fields')
+        </div>
+        <div class="text-right">
+            <a href="{{ route('admin.incidentes-vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-primary" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
+
 @endsection

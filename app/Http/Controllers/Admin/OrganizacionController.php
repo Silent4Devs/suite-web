@@ -103,22 +103,6 @@ class OrganizacionController extends Controller
             'razon_social' => 'required|max:255',
             'rfc' => 'required|max:255',
             'representante_legal' => 'required|max:255',
-        ], [
-            'empresa.max' => 'La empresa no debe exceder de 255 caracteres',
-            'direccion.max' => 'La direccion no debe exceder de 255 caracteres',
-            'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
-            'correo.max' => 'El correo no debe exceder de 255 caracteres',
-            'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
-            'servicios' => 'El servicios no debe exceder de 255 caracteres',
-            'giro' => 'El giro no debe exceder de 255 caracteres',
-            'mision' => 'La mision no debe exceder de 255 caracteres',
-            'vision' => 'La vision no debe exceder de 255 caracteres',
-            'valores' => 'Los valores no debe exceder de 255 caracteres',
-            'antecedentes' => 'Los antecedentes no debe exceder de 255 caracteres',
-            'razon_social' => 'La razon_social no debe exceder de 255 caracteres',
-            'rfc' => 'El rfc no debe exceder de 255 caracteres',
-            'representante_legal' => 'La representante_legal no debe exceder de 255 caracteres',
-
         ]);
 
         $organizacions = Organizacion::create([
@@ -224,29 +208,13 @@ class OrganizacionController extends Controller
             'pagina_web' => 'required|max:255',
             'servicios' => 'required|max:255',
             'giro' => 'required|max:255',
-            'mision' => 'required|max:255',
-            'vision' => 'required|max:255',
-            'valores' => 'required|max:255',
-            'antecedentes' => 'required|max:255',
+            'mision' => 'required',
+            'vision' => 'required',
+            'valores' => 'required',
+            'antecedentes' => 'required',
             'razon_social' => 'required|max:255',
             'rfc' => 'required|max:255',
             'representante_legal' => 'required|max:255',
-        ], [
-            'empresa.max' => 'La empresa no debe exceder de 255 caracteres',
-            'direccion.max' => 'La direccion no debe exceder de 255 caracteres',
-            'telefono.max' => 'El telefono no debe exceder de 255 caracteres',
-            'correo.max' => 'El correo no debe exceder de 255 caracteres',
-            'pagina_web.max' => 'La pagina_web no debe exceder de 255 caracteres',
-            'servicios' => 'El servicios no debe exceder de 255 caracteres',
-            'giro' => 'El giro no debe exceder de 255 caracteres',
-            'mision' => 'La mision no debe exceder de 255 caracteres',
-            'vision' => 'La vision no debe exceder de 255 caracteres',
-            'valores' => 'Los valores no debe exceder de 255 caracteres',
-            'antecedentes' => 'Los antecedentes no debe exceder de 255 caracteres',
-            'razon_social' => 'La razon_social no debe exceder de 255 caracteres',
-            'rfc' => 'El rfc no debe exceder de 255 caracteres',
-            'representante_legal' => 'La representante_legal no debe exceder de 255 caracteres',
-
         ]);
 
         $organizacion->update($request->all());
@@ -314,7 +282,7 @@ class OrganizacionController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        $model = new Organizacion();
+        $model = new Organizacion;
         $model->id = $request->input('crud_id', 0);
         $model->exists = true;
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

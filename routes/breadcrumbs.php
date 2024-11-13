@@ -175,12 +175,12 @@ Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
 });
 
 Breadcrumbs::for('BIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('BIA');
 });
 
 Breadcrumbs::for('AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('AIA');
 });
 
@@ -191,9 +191,9 @@ Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analysisImpact.menu'));
-    $trail->push('AIA', route('admin.analysisImpact.menu-AIA'));
-    $trail->push('Cuestionario', route('admin.analysisImpact.index'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('AIA', route('admin.analisis-impacto.menu-AIA'));
+    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
 });
 
 Breadcrumbs::for('admin.BIA.Cuestionario.index', function ($trail) {
@@ -602,87 +602,87 @@ Breadcrumbs::for('EV360-Evaluaciones-Evaluacion', function ($trail, $evaluacion)
     $trail->push('Evaluación', route('admin.ev360-evaluaciones.evaluacion', $evaluacion->id));
 });
 
-Breadcrumbs::for('Ausencias', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-});
-Breadcrumbs::for('Ajustes-vacaciones', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Vacaciones', route('admin.Ausencias.index'));
-});
-Breadcrumbs::for('Ajustes-permisos-goce-sueldo', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Permisos', route('admin.Ausencias.index'));
-});
+// Breadcrumbs::for('Ausencias', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+// });
+// Breadcrumbs::for('Ajustes-vacaciones', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Vacaciones', route('admin.Ausencias.index'));
+// });
+// Breadcrumbs::for('Ajustes-permisos-goce-sueldo', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Permisos', route('admin.Ausencias.index'));
+// });
 
-Breadcrumbs::for('Ajustes-dayoff', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Day Off', route('admin.Ausencias.index'));
-});
+// Breadcrumbs::for('Ajustes-dayoff', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Day Off', route('admin.Ausencias.index'));
+// });
 
-Breadcrumbs::for('Reglas-Vacaciones', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
-    $trail->push('Lineamientos', route('admin.vacaciones.index'));
-});
-Breadcrumbs::for('Reglas-Goce-Sueldo', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Permisos', route('admin.ajustes-permisos-goce-sueldo'));
-    $trail->push('Lineamientos', route('admin.permisos-goce-sueldo.index'));
-});
-Breadcrumbs::for('Incidentes-Vacaciones', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
-    $trail->push('Excepciones', route('admin.vacaciones.index'));
-});
-Breadcrumbs::for('Incidentes-dayoff', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Day Off', route('admin.ajustes-dayoff'));
-    $trail->push('Excepciones', route('admin.vacaciones.index'));
-});
-Breadcrumbs::for('Vista-Global-Vacaciones', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
-    $trail->push('Vista Global', route('admin.vacaciones.index'));
-});
-Breadcrumbs::for('Vista-Global-Permisos', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Permisos', route('admin.ajustes-permisos-goce-sueldo'));
-    $trail->push('Vista Global', route('admin.permisos-goce-sueldo.index'));
-});
-Breadcrumbs::for('Vista-Global-Dayoff', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes Day Off', route('admin.ajustes-dayoff'));
-    $trail->push('Vista Global', route('admin.vacaciones.index'));
-});
-Breadcrumbs::for('Reglas-DayOff', function ($trail) {
-    $trail->parent('capital-humano');
-    $trail->push('Empleados', route('admin.capital-humano.index'));
-    $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
-    $trail->push('Ajustes de Day Off', route('admin.ajustes-dayoff'));
-    $trail->push('Lineamientos', route('admin.dayOff.index'));
-});
+// Breadcrumbs::for('Reglas-Vacaciones', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
+//     $trail->push('Lineamientos', route('admin.vacaciones.index'));
+// });
+// Breadcrumbs::for('Reglas-Goce-Sueldo', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Permisos', route('admin.ajustes-permisos-goce-sueldo'));
+//     $trail->push('Lineamientos', route('admin.permisos-goce-sueldo.index'));
+// });
+// Breadcrumbs::for('Incidentes-Vacaciones', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
+//     $trail->push('Excepciones', route('admin.vacaciones.index'));
+// });
+// Breadcrumbs::for('Incidentes-dayoff', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Day Off', route('admin.ajustes-dayoff'));
+//     $trail->push('Excepciones', route('admin.vacaciones.index'));
+// });
+// Breadcrumbs::for('Vista-Global-Vacaciones', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Vacaciones', route('admin.ajustes-vacaciones'));
+//     $trail->push('Vista Global', route('admin.vacaciones.index'));
+// });
+// Breadcrumbs::for('Vista-Global-Permisos', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Permisos', route('admin.ajustes-permisos-goce-sueldo'));
+//     $trail->push('Vista Global', route('admin.permisos-goce-sueldo.index'));
+// });
+// Breadcrumbs::for('Vista-Global-Dayoff', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes Day Off', route('admin.ajustes-dayoff'));
+//     $trail->push('Vista Global', route('admin.vacaciones.index'));
+// });
+// Breadcrumbs::for('Reglas-DayOff', function ($trail) {
+//     $trail->parent('capital-humano');
+//     $trail->push('Empleados', route('admin.capital-humano.index'));
+//     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
+//     $trail->push('Ajustes de Day Off', route('admin.ajustes-dayoff'));
+//     $trail->push('Lineamientos', route('admin.dayOff.index'));
+// });
 Breadcrumbs::for('EV360-Competencias', function ($trail) {
     $trail->parent('capital-humano');
     $trail->push('Empleados');

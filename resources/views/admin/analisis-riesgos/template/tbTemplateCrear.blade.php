@@ -25,32 +25,37 @@
             color: #FFFFFF;
             opacity: 1;
         }
-        .title-ejemplo{
+
+        .title-ejemplo {
             text-align: left;
             font: normal normal medium 22px/20px Roboto;
             letter-spacing: 0px;
             color: #818181;
             opacity: 1;
         }
-        .ejemploE{
+
+        .ejemploE {
             width: 68px;
             height: 52px;
             background: #FFCF9E 0% 0% no-repeat padding-box;
             border: 1px solid #B5B5B5;
             opacity: 1;
         }
-        .input-disabled{
+
+        .input-disabled {
             background: #E8F3FF 0% 0% no-repeat padding-box !important;
             border: 1px solid #C5C5C5;
             opacity: 1;
         }
+
         .column-asignar {
             text-align: left;
             font: normal normal normal 12px Roboto;
             letter-spacing: 0px;
-            color: #006DDB;
+            color: var(--color-tbj);
             opacity: 1;
         }
+
         .title-rango {
             text-align: left;
             font: normal normal medium 14px/20px Roboto;
@@ -58,7 +63,8 @@
             color: #575757;
             opacity: 1;
         }
-        .subtitle-rango{
+
+        .subtitle-rango {
             text-align: left;
             font: normal normal normal 14px/17px Roboto;
             letter-spacing: 0px;
@@ -66,21 +72,21 @@
             opacity: 1;
         }
 
-        .btnBack{
+        .btnBack {
             width: 142px;
             height: 48.5px;
             text-align: "center";
             background: #FFFFFF 0% 0% no-repeat padding-box;
-            border: 1px solid #006DDB;
+            border: 1px solid var(--color-tbj);
             border-radius: 6px;
             opacity: 1;
             margin-right: 12px;
-            color: #006DDB;
+            color: var(--color-tbj);
         }
 
-        .btnDraft{
+        .btnDraft {
             background: 'none';
-            color : #006DDB;
+            color: var(--color-tbj);
             height: 45px;
             border: "none";
         }
@@ -114,7 +120,7 @@
 
     <div>
         <div class="select-option">
-            @include('admin.analisis-riesgos.components.tbEscalasPrincipal',['template_id' => $id])
+            @include('admin.analisis-riesgos.components.tbEscalasPrincipal', ['template_id' => $id])
         </div>
         <div class="select-option">
             @include('admin.analisis-riesgos.components.tbGenerateTemplate', ['template_id' => $id])
@@ -131,32 +137,30 @@
     </div>
 
     {{-- <button id="miBoton">Haz clic aquí</button> --}}
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <button id="btnDraft" type="button" class="btn btnDraft mt-3 ml-0">GUARDAR EN BORRADOR</button>
-    </div>
-    <div class="col-12 col-sm-6">
-        <div class="d-flex justify-content-end">
-            <button id="btnBack" type="button" class="btn btnBack mt-3 ml-0">Atras</button>
-            <button id="miBoton" type="button" class="btn btn-primary mt-3 ml-0">GUARDAR Y CONTINUAR</button>
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <button id="btnDraft" type="button" class="btn btnDraft mt-3 ml-0">GUARDAR EN BORRADOR</button>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="d-flex justify-content-end">
+                <button id="btnBack" type="button" class="btn btnBack mt-3 ml-0">Atras</button>
+                <button id="miBoton" type="button" class="btn btn-primary mt-3 ml-0">GUARDAR Y CONTINUAR</button>
+            </div>
         </div>
     </div>
-</div>
-
-
 @endsection
 
 @section('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    $('#btnDraft').on('click', function() {
-        Swal.fire({
-        title: "Se ha guardado tu template como borrador.",
-        icon: "success"
-        });
-    })
-   })
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#btnDraft').on('click', function() {
+                Swal.fire({
+                    title: "Se ha guardado tu template como borrador.",
+                    icon: "success"
+                });
+            })
+        })
+    </script>
     {{-- <script>
         var sortable = new Sortable(document.getElementById('sortable-container'), {
             animation: 150, // Animation speed (in milliseconds)
@@ -203,51 +207,68 @@
         });
     </script>
 
-     {{-- Reload and save functions for node stepper  --}}
-     <script>
+    {{-- Reload and save functions for node stepper  --}}
+    <script>
         // node template
         function reloadGenerateFormTemplate(reload) {
             let reloadGenerateFormTemplate = new CustomEvent('updateReload', {
-                detail: { reload: reload }
+                detail: {
+                    reload: reload
+                }
             });
             window.dispatchEvent(reloadGenerateFormTemplate);
         }
-        function saveGenerateFormTemplate(save){
-            let saveGenerateFormTemplate = new CustomEvent('saveFormTemplate',{
-                detail: { save: save }
+
+        function saveGenerateFormTemplate(save) {
+            let saveGenerateFormTemplate = new CustomEvent('saveFormTemplate', {
+                detail: {
+                    save: save
+                }
             });
             window.dispatchEvent(saveGenerateFormTemplate);
         }
         //node formulas
-        function reloadGenerateFormulas(reload){
-            let reloadGenerateFormulas = new CustomEvent('reloadModuleFormulas',{
-                detail: { reload: reload }
+        function reloadGenerateFormulas(reload) {
+            let reloadGenerateFormulas = new CustomEvent('reloadModuleFormulas', {
+                detail: {
+                    reload: reload
+                }
             });
             window.dispatchEvent(reloadGenerateFormulas);
         }
-        function saveGenerateFormulas(save){
-            let saveGenerateFormulas = new CustomEvent('saveFormTemplateFormulas',{
-                detail: { save: save }
+
+        function saveGenerateFormulas(save) {
+            let saveGenerateFormulas = new CustomEvent('saveFormTemplateFormulas', {
+                detail: {
+                    save: save
+                }
             });
             window.dispatchEvent(saveGenerateFormulas);
         }
         //node settigns
-        function reloadGenerateSettigns(reload){
-            let reloadGenerateSettigns = new CustomEvent('reloadModuleSettigns',{
-                detail: { reload: reload }
+        function reloadGenerateSettigns(reload) {
+            let reloadGenerateSettigns = new CustomEvent('reloadModuleSettigns', {
+                detail: {
+                    reload: reload
+                }
             });
             window.dispatchEvent(reloadGenerateSettigns);
         }
-        function saveGenerateSettigns(save){
-            let saveGenerateSettins = new CustomEvent('saveFormTemplateSettigns',{
-                detail:{ save: save}
+
+        function saveGenerateSettigns(save) {
+            let saveGenerateSettins = new CustomEvent('saveFormTemplateSettigns', {
+                detail: {
+                    save: save
+                }
             });
             window.dispatchEvent(saveGenerateSettins);
         }
         //module Preview
-        function reloadGeneratePreview(reload){
-            let reloadGeneratePreview = new CustomEvent('reloadModulePreview',{
-                detail: { reload: reload }
+        function reloadGeneratePreview(reload) {
+            let reloadGeneratePreview = new CustomEvent('reloadModulePreview', {
+                detail: {
+                    reload: reload
+                }
             });
             window.dispatchEvent(reloadGeneratePreview);
         }
@@ -259,66 +280,72 @@
             let template_id = "{{ $id }}"
             const save = true;
             $('#miBoton').on('click', function() {
-                    let getTotalPoints = $('.point').length,
+                let getTotalPoints = $('.point').length,
                     getIndex = $('.point--active').index();
-                    getAdvance = getIndex + 1;
-                    switch(getIndex){
-                        case 1:
-                            Livewire.emit('renderSaveDataGeneral');
-                            Livewire.emit('renderSaveEscala');
-                            Livewire.emit('renderSaveProbImp');
-                            Livewire.emit('renderReloadEscala',template_id);
-                            Livewire.emit('renderReloadProbImp',template_id);
-                            break;
-                        case 2:
-                            saveGenerateFormTemplate(save);
-                            break;
-                        case 3:
-                            saveGenerateFormulas(save);
-                            break;
-                        case 4:
+                getAdvance = getIndex + 1;
+                switch (getIndex) {
+                    case 1:
+                        Livewire.emit('renderSaveDataGeneral');
+                        Livewire.emit('renderSaveEscala');
+                        Livewire.emit('renderSaveProbImp');
+                        Livewire.emit('renderReloadEscala', template_id);
+                        Livewire.emit('renderReloadProbImp', template_id);
+                        break;
+                    case 2:
+                        saveGenerateFormTemplate(save);
+                        break;
+                    case 3:
+                        saveGenerateFormulas(save);
+                        break;
+                    case 4:
 
-                            saveGenerateSettigns(save);
-                            break;
-                        default:
-                            console.log('default btn');
-                    }
+                        saveGenerateSettigns(save);
+                        break;
+                    default:
+                        console.log('default btn');
+                }
             });
 
-            $('#btnBack').on('click', function(){
+            $('#btnBack').on('click', function() {
                 let getTotalPoints = $('.point').length,
-                        getIndex = $('.point--active').index();
-                        getback = getIndex - 1;
+                    getIndex = $('.point--active').index();
+                getback = getIndex - 1;
 
-                        console.log(getIndex)
-                        if(getback !== 0 ){
-                            $('.select-option').hide();
-                            $('.select-option:nth-child(' + (getback) + ')').show();
-                            TweenMax.to($('.bar__fill'), 0.6, {
-                                width: (getIndex - 2) / (getTotalPoints - 1) * 100 + '%'
+                console.log(getIndex)
+                if (getback !== 0) {
+                    $('.select-option').hide();
+                    $('.select-option:nth-child(' + (getback) + ')').show();
+                    TweenMax.to($('.bar__fill'), 0.6, {
+                        width: (getIndex - 2) / (getTotalPoints - 1) * 100 + '%'
+                    });
+                    $('.point--active').prev().removeClass('point--complete');
+                    $('.point--active').prev().addClass('point--active');
+                    $('.point--active').next().removeClass('point--active');
+
+                    switch (getback) {
+                        case 4:
+                            reloadGenerateSettigns(true);
+                            // reloadGenerateFormulas(true);
+                            break;
+                        case 3:
+                            reloadGenerateFormulas(true);
+                            // reloadGenerateSettigns(true);
+                            break;
+                        case 2:
+                            reloadGenerateFormTemplate(true);
+                            break;
+                        default:
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
                             });
-                            $('.point--active').prev().removeClass('point--complete');
-                            $('.point--active').prev().addClass('point--active');
-                            $('.point--active').next().removeClass('point--active');
-
-                            switch(getback){
-                            case 4:
-                                reloadGenerateSettigns(true);
-                                // reloadGenerateFormulas(true);
-                                break;
-                            case 3:
-                                reloadGenerateFormulas(true);
-                                // reloadGenerateSettigns(true);
-                                break;
-                            case 2:
-                                reloadGenerateFormTemplate(true);
-                                break;
-                            default:
-                            window.scrollTo({top: 0,behavior: 'smooth' });
-                                break;
-                        }
+                            break;
                     }
-                    window.scrollTo({top: 0,behavior: 'smooth' });
+                }
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
 
             })
         });
@@ -330,26 +357,26 @@
             let template_id = "{{ $id }}"
             const reload = true;
             $('.point').on('click', function(e) {
-              let getIndex = $('.point--active').index();
-              switch(getIndex){
-                case 1:
-                    Livewire.emit('renderReloadEscala',template_id);
-                    Livewire.emit('renderReloadProbImp',template_id);
-                    break;
-                case 2:
-                    reloadGenerateFormTemplate(reload)
-                    break;
-                case 3:
-                    reloadGenerateFormulas(reload);
-                    break;
-                case 4:
-                    reloadGenerateSettigns(reload);
-                    break;
-                case 5:
-                reloadGeneratePreview(reload);
-                default:
-                    console.log('default');
-              }
+                let getIndex = $('.point--active').index();
+                switch (getIndex) {
+                    case 1:
+                        Livewire.emit('renderReloadEscala', template_id);
+                        Livewire.emit('renderReloadProbImp', template_id);
+                        break;
+                    case 2:
+                        reloadGenerateFormTemplate(reload)
+                        break;
+                    case 3:
+                        reloadGenerateFormulas(reload);
+                        break;
+                    case 4:
+                        reloadGenerateSettigns(reload);
+                        break;
+                    case 5:
+                        reloadGeneratePreview(reload);
+                    default:
+                        console.log('default');
+                }
             });
 
         });
@@ -358,24 +385,41 @@
     {{-- script para el heatmap --}}
     <script>
         // $(document).ready(function() {
-            var chartDom = document.getElementById('head-map');
-            var myChart = echarts.init(chartDom);
-            var option;
+        var chartDom = document.getElementById('head-map');
+        var myChart = echarts.init(chartDom);
+        var option;
 
-            // prettier-ignore
-            const hours = [
-                '1a','2a','3a','4a'
-            ];
-            // prettier-ignore
-            const days = [
-                '1', '2','3','4',
-            ];
-            // prettier-ignore
-            const data = [[0, 0, 1], [0, 1, 1], [0, 2, 2], [0,3,3], [1,0,1],[1,1,2],[1,2,3],[1,3,4],[2,0,2],[2,1,3],[2,2,4],[2,3,4],[3,0,3],[3,1,4],[3,2,4],[3,3,4]]
-                .map(function (item) {
+        // prettier-ignore
+        const hours = [
+            '1a', '2a', '3a', '4a'
+        ];
+        // prettier-ignore
+        const days = [
+            '1', '2', '3', '4',
+        ];
+        // prettier-ignore
+        const data = [
+                [0, 0, 1],
+                [0, 1, 1],
+                [0, 2, 2],
+                [0, 3, 3],
+                [1, 0, 1],
+                [1, 1, 2],
+                [1, 2, 3],
+                [1, 3, 4],
+                [2, 0, 2],
+                [2, 1, 3],
+                [2, 2, 4],
+                [2, 3, 4],
+                [3, 0, 3],
+                [3, 1, 4],
+                [3, 2, 4],
+                [3, 3, 4]
+            ]
+            .map(function(item) {
                 return [item[1], item[0], item[2] || '-'];
             });
-            option = {
+        option = {
             tooltip: {
                 position: 'top'
             },
@@ -389,34 +433,34 @@
                 splitArea: {
                     show: true
                 },
-                name:"Probabilidad",
-                nameLocation:"center",
-                nameGap:20,
-                axisLabel:{
-                show:false,
+                name: "Probabilidad",
+                nameLocation: "center",
+                nameGap: 20,
+                axisLabel: {
+                    show: false,
                 },
-                axisTick:{
-                show:false,
+                axisTick: {
+                    show: false,
                 },
             },
             yAxis: {
                 type: 'category',
                 name: 'Valor Y',
                 splitArea: {
-                show: true
+                    show: true
                 },
-                name:"Impacto",
-                nameLocation:"center",
-                nameGap:20,
-                axisLabel:{
-                show:false,
+                name: "Impacto",
+                nameLocation: "center",
+                nameGap: 20,
+                axisLabel: {
+                    show: false,
                 },
-                axisTick:{
-                show:false,
+                axisTick: {
+                    show: false,
                 },
             },
             visualMap: {
-                show:false,
+                show: false,
                 min: 1,
                 max: 4,
                 calculable: true,
@@ -428,8 +472,7 @@
                 // padding:5,
                 // top: '5%'
             },
-            series: [
-                {
+            series: [{
                 // name: 'Punch Card',
                 type: 'heatmap',
                 data: data,
@@ -438,28 +481,27 @@
                 },
                 emphasis: {
                     itemStyle: {
-                    shadowBlur: 10,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                 }
-                }
-            ]
-            };
+            }]
+        };
 
-            option && myChart.setOption(option);
-                    // })
+        option && myChart.setOption(option);
+        // })
     </script>
 
     <script>
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:init', function() {
             let validacion1, validacion2;
 
-            Livewire.on('validateEscala', function (newValue) {
+            Livewire.on('validateEscala', function(newValue) {
                 validacion1 = newValue;
                 compararVariables();
             });
 
-            Livewire.on('validateProb_Imp', function (newValue) {
+            Livewire.on('validateProb_Imp', function(newValue) {
                 validacion2 = newValue;
                 compararVariables();
             });
@@ -477,23 +519,26 @@
             }
 
             const advanceStepper = () => {
-                    let getTotalPoints = $('.point').length,
+                let getTotalPoints = $('.point').length,
                     getIndex = $('.point--active').index();
-                    getAdvance = getIndex + 1;
-                    if(getIndex === 1){
-                        $('.select-option').hide();
-                        $('.select-option:nth-child(' + (getAdvance) + ')').show();
+                getAdvance = getIndex + 1;
+                if (getIndex === 1) {
+                    $('.select-option').hide();
+                    $('.select-option:nth-child(' + (getAdvance) + ')').show();
 
-                        TweenMax.to($('.bar__fill'), 0.6, {
-                            width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
-                        });
+                    TweenMax.to($('.bar__fill'), 0.6, {
+                        width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
+                    });
 
-                        $('.point--active').addClass('point--complete');
-                        $('.point--active').next().addClass('point--active')
-                        $('.point--active').prev().removeClass('point--active')
-                    }
-                    window.scrollTo({top: 0,behavior: 'smooth' });
-                    reloadGenerateFormTemplate(true)
+                    $('.point--active').addClass('point--complete');
+                    $('.point--active').next().addClass('point--active')
+                    $('.point--active').prev().removeClass('point--active')
+                }
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                reloadGenerateFormTemplate(true)
             }
 
             const resetValidate = () => {
@@ -504,51 +549,50 @@
         });
     </script>
 
-    {{--Script para avanzar y recargar el siguiente modulo desde reactjs  --}}
+    {{-- Script para avanzar y recargar el siguiente modulo desde reactjs  --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const advanceStepper = () => {
-                        let getTotalPoints = $('.point').length,
-                        getIndex = $('.point--active').index();
-                        getAdvance = getIndex + 1;
+                let getTotalPoints = $('.point').length,
+                    getIndex = $('.point--active').index();
+                getAdvance = getIndex + 1;
 
-                        $('.select-option').hide();
-                        $('.select-option:nth-child(' + (getAdvance) + ')').show();
+                $('.select-option').hide();
+                $('.select-option:nth-child(' + (getAdvance) + ')').show();
 
-                        TweenMax.to($('.bar__fill'), 0.6, {
-                            width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
-                        });
+                TweenMax.to($('.bar__fill'), 0.6, {
+                    width: (getIndex) / (getTotalPoints - 1) * 100 + '%'
+                });
 
-                        $('.point--active').addClass('point--complete');
-                        $('.point--active').next().addClass('point--active')
-                        $('.point--active').prev().removeClass('point--active')
-                        switch(getAdvance){
-                            case 3:
-                                reloadGenerateFormulas(true);
-                                break;
-                            case 4:
-                                reloadGenerateSettigns(true);
-                                break;
-                            case 5:
-                                reloadGeneratePreview(true);
-                                break;
-                            default:
-                                break;
-                        }
-                        window.scrollTo({top: 0,behavior: 'smooth' });
+                $('.point--active').addClass('point--complete');
+                $('.point--active').next().addClass('point--active')
+                $('.point--active').prev().removeClass('point--active')
+                switch (getAdvance) {
+                    case 3:
+                        reloadGenerateFormulas(true);
+                        break;
+                    case 4:
+                        reloadGenerateSettigns(true);
+                        break;
+                    case 5:
+                        reloadGeneratePreview(true);
+                        break;
+                    default:
+                        break;
+                }
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            window.addEventListener('advanceModuleTemplate', function(event) {
+                var message = event.detail.message;
+                if (message === true) {
+                    advanceStepper();
                 }
 
-                window.addEventListener('advanceModuleTemplate', function(event) {
-                    var message = event.detail.message;
-                    if(message === true){
-                        advanceStepper();
-                    }
-
-                });
+            });
         });
     </script>
-
-
-
-
 @endsection

@@ -10,10 +10,12 @@
                 <br>
                 <h4>¿Qué es Concientización SGSI?</h4>
                 <p>
-                    Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la información.
+                    Proporcionar el conocimiento y la comprensión necesarios para ser parte activa en la seguridad de la
+                    información.
                 </p>
                 <p>
-                    Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
+                    Implica que todos los miembros de la organización, desde la alta dirección hasta los empleados de todos
+                    los niveles, estén conscientes de los riesgos asociados con la seguridad de la información.
                 </p>
             </div>
         </div>
@@ -28,16 +30,15 @@
                 <div class="form-group col-12">
                     <label class="required" for="objetivocomunicado"><i
                             class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado') }}</label>
-                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}"
-                        type="text" name="objetivocomunicado" id="objetivocomunicado"
+                    <input class="form-control {{ $errors->has('objetivocomunicado') ? 'is-invalid' : '' }}" type="text"
+                        name="objetivocomunicado" id="objetivocomunicado"
                         value="{{ old('objetivocomunicado', $concientizacionSgi->objetivocomunicado) }}" required>
                     @if ($errors->has('objetivocomunicado'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivocomunicado') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.objetivocomunicado_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="required"><i
@@ -57,8 +58,7 @@
                             {{ $errors->first('personalobjetivo') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.concientizacionSgi.fields.personalobjetivo_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.personalobjetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="required" for="arearesponsable_id"><i
@@ -81,8 +81,8 @@
                 <div class="form-group col-md-6">
                     <label class="required"><i
                             class="fas fa-pager iconos-crear"></i>{{ trans('cruds.concientizacionSgi.fields.medio_envio') }}</label>
-                    <select required class="form-control {{ $errors->has('medio_envio') ? 'is-invalid' : '' }}" name="medio_envio"
-                        id="medio_envio">
+                    <select required class="form-control {{ $errors->has('medio_envio') ? 'is-invalid' : '' }}"
+                        name="medio_envio" id="medio_envio">
                         <option value disabled {{ old('medio_envio', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
                         @foreach (App\Models\ConcientizacionSgi::MEDIO_ENVIO_SELECT as $key => $label)
@@ -109,8 +109,7 @@
                             {{ $errors->first('fecha_publicacion') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.concientizacionSgi.fields.fecha_publicacion_helper') }}</span>
                 </div>
 
                 <div class="mb-3 col-sm-12">
@@ -135,8 +134,8 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route("admin.concientizacion-sgis.index") }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.concientizacion-sgis.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>

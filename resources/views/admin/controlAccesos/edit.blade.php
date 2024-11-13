@@ -9,10 +9,12 @@
                 <br>
                 <h4>¿Qué es Control de Acceso?</h4>
                 <p>
-                    Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión de seguridad.
+                    Garantiza que las personas adecuadas tengan el acceso adecuado a la información en un sistema de gestión
+                    de seguridad.
                 </p>
                 <p>
-                    Esencial para garantizar la seguridad y la integridad de la información, así como para proteger los activos críticos de una organización.
+                    Esencial para garantizar la seguridad y la integridad de la información, así como para proteger los
+                    activos críticos de una organización.
                 </p>
             </div>
         </div>
@@ -26,10 +28,9 @@
                 <div class="form-group col-sm-12 ">
                     <label class="required" for="tipo">Tipo</label>
                     <div style="float: right;">
-                        <button id="btnAgregarTipo" onclick="event.preventDefault();"
-                            class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
-                            data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
-                            data-whatever="@mdo" title="Agregar tipo de permiso"><i
+                        <button id="btnAgregarTipo" onclick="event.preventDefault();" class="text-white btn btn-sm"
+                            style="background:#3eb2ad;height: 32px;" data-toggle="modal" data-target="#tipoCompetenciaModal"
+                            data-whatever="@mdo" data-whatever="@mdo" title="Agregar tipo de permiso"><i
                                 class="fas fa-plus"></i></button>
                     </div>
                     @livewire('permiso-component')
@@ -38,78 +39,74 @@
                 </div>
 
                 <div class="form-group col-sm-4 mt-3 anima-focus">
-                    <select
-                        class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}" onchange="printarea();"
-                        name='responsable_id' id='responsable_id' required>
+                    <select class="form-control {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
+                            onchange="printarea();" name='responsable_id' id='responsable_id' required>
                         <option value="">Seleccione un responsable</option>
                         @foreach ($responsables as $responsable)
-                            <option value="{{ $responsable->id }}"
-                                data-area="{{ $responsable->area->area }}"
-                                data-puesto="{{ $responsable->puesto }}"
-                                {{ old('responsable_id',$controlAcceso->responsable_id) == $responsable->id ? 'selected' : '' }}>
+                            <option value="{{ $responsable->id }}" data-area="{{ $responsable->area->area }}"
+                                    data-puesto="{{ $responsable->puesto }}"
+                                    {{ old('responsable_id', $controlAcceso->responsable_id) == $responsable->id ? 'selected' : '' }}>
                                 {{ $responsable->name }}</option>
                         @endforeach
                     </select>
-                    {!! Form::label('responsable_id', 'Responsable*', ['class' => 'asterisco']) !!}
+                    <label for="responsable_id" class="asterisco">Responsable*</label>
                     @if ($errors->has('responsable_id'))
                         <div class="invalid-feedback">
                             {{ $errors->first('responsable_id') }}
                         </div>
                     @endif
-            </div>
-
-
-
-            <div class="form-group col-md-4 mt-3 anima-focus">
-                <div class="form-control" id="responsable_puesto"></div>
-                {!! Form::label('responsable_puesto', 'Puesto*', ['class' => 'asterisco']) !!}
-            </div>
-
-
-            <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3 anima-focus">
-                <div class="form-control" id="responsable_area" ></div>
-                {!! Form::label('responsable_area', 'Área*', ['class' => 'asterisco']) !!}
-            </div>
-
-        <div class=" mb-4 ml-3 w-100" style="border-bottom: solid 2px #345183;">
-            <span style="font-size: 17px; font-weight: bold;">
-                Periodo</span>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
-            <input required placeholder="" class="form-control" type="date" min="1945-01-01"
-            id="fecha_inicio" name="fecha_inicio" value="{{ old('fecha_inicio',$controlAcceso->fecha_inicio )}}">
-            {!! Form::label('fecha_inicio', 'Fecha Inicio*', ['class' => 'asterisco']) !!}
-            <span class="fecha_inicio_error text-danger errores"></span>
-            @if ($errors->has('fecha_inicio'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fecha_inicio') }}
                 </div>
-            @endif
-        </div>
 
-        <div class="form-group col-sm-12 col-md-12 col-lg-6  anima-focus">
-            <input required placeholder="" class="form-control" type="date" min="1945-01-01"
-            id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin',$controlAcceso->fecha_fin ) }}">
-            {!! Form::label('fecha_fin', 'Fecha Fin*', ['class' => 'asterisco']) !!}
-            <span class="fecha_fin_error text-danger errores"></span>
-            @if ($errors->has('fecha_fin'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('fecha_fin') }}
+                <div class="form-group col-md-4 mt-3 anima-focus">
+                    <div class="form-control" id="responsable_puesto"></div>
+                    <label for="responsable_puesto" class="asterisco">Puesto*</label>
                 </div>
-            @endif
-        </div>
-        <div class="form-group col-md-12 anima-focus">
-            <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
-                name="justificacion" id="justificacion">{{ old('justificacion',$controlAcceso->justificacion ) }}</textarea>
-                {!! Form::label('justificacion', 'Justificación*', ['class' => 'asterisco']) !!}
-            @if($errors->has('justificacion'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('justificacion') }}
+
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3 anima-focus">
+                    <div class="form-control" id="responsable_area"></div>
+                    <label for="responsable_area" class="asterisco">Área*</label>
                 </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
-        </div>
+
+                <div class=" mb-4 ml-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
+                    <span style="font-size: 17px; font-weight: bold;">
+                        Periodo</span>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
+                    <input required placeholder="" class="form-control" type="date" min="1945-01-01" id="fecha_inicio"
+                           name="fecha_inicio" value="{{ old('fecha_inicio', $controlAcceso->fecha_inicio) }}">
+                    <label for="fecha_inicio" class="asterisco">Fecha Inicio*</label>
+                    <span class="fecha_inicio_error text-danger errores"></span>
+                    @if ($errors->has('fecha_inicio'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_inicio') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 anima-focus">
+                    <input required placeholder="" class="form-control" type="date" min="1945-01-01" id="fecha_fin"
+                           name="fecha_fin" value="{{ old('fecha_fin', $controlAcceso->fecha_fin) }}">
+                    <label for="fecha_fin" class="asterisco">Fecha Fin*</label>
+                    <span class="fecha_fin_error text-danger errores"></span>
+                    @if ($errors->has('fecha_fin'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_fin') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-12 anima-focus">
+                    <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
+                              name="justificacion" id="justificacion">{{ old('justificacion', $controlAcceso->justificacion) }}</textarea>
+                    <label for="justificacion" class="asterisco">Justificación*</label>
+                    @if ($errors->has('justificacion'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('justificacion') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.controlAcceso.fields.descripcion_helper') }}</span>
+                </div>
 
                 <div class="form-group col-md-12">
                     <label class="required" for="descripcion">{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
@@ -146,8 +143,8 @@
                 {{-- editar --}}
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ route("admin.control-accesos.index") }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.control-accesos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -283,5 +280,4 @@
             }
         }
     </script>
-
 @endsection

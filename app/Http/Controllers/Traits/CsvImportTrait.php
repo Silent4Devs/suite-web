@@ -85,7 +85,7 @@ trait CsvImportTrait
         $modelName = $request->input('model', false);
         $fullModelName = "App\Models\\".$modelName;
 
-        $model = new $fullModelName();
+        $model = new $fullModelName;
         $fillables = $model->getFillable();
 
         $redirect = url()->previous();

@@ -22,7 +22,7 @@ class ActividadesRiesgosController extends Controller
         // $incidente = IncidentesSeguridad::find(intval($riesgo_id));
 
         if ($request->ajax()) {
-            $actividades = ActividadRiesgo::with('responsables')->where('riesgo_id', $riesgo_id)->get();
+            $actividades = ActividadRiesgo::with('responsables:id,name,foto,email')->where('riesgo_id', $riesgo_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }
@@ -219,7 +219,7 @@ class ActividadesRiesgosController extends Controller
                 ]);
                 $modelo->planes()->sync($planEdit);
             } else {
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
                 $planImplementacion->tasks = $tasks;
                 $planImplementacion->canAdd = true;
                 $planImplementacion->canWrite = true;

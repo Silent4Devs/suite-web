@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\EmpleadosGeneralExport;
+use App\Exports\HistorialEmpleadoExport;
 use App\Functions\CountriesFunction;
 use App\Http\Controllers\Controller;
 use App\Mail\EnviarCorreoBienvenidaTabantaj;
 use App\Models\Area;
 use App\Models\CertificacionesEmpleados;
 use App\Models\CursosDiplomasEmpleados;
+use App\Models\DisponibilidadEmpleados;
 use App\Models\EducacionEmpleados;
 use App\Models\Empleado;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasCertificadosEmpleados;
 use App\Models\EvidenciasDocumentosEmpleados;
 use App\Models\ExperienciaEmpleados;
+use App\Models\HistoricoEmpleados;
 use App\Models\Language;
 use App\Models\ListaDocumentoEmpleado;
 use App\Models\Organizacion;
@@ -71,11 +74,61 @@ class EmpleadoController extends Controller
 
                 return $empleado;
             });
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.empleados.index', compact('empleados', 'logo_actual', 'empresa_actual'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function baja(Request $request)
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->where('estatus', 'baja')->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
+
+                return $empleado;
+            });
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.empleados.baja', compact('empleados', 'logo_actual', 'empresa_actual'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function historial(Request $request)
+    {
+        abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleados = Empleado::with('supervisor', 'sede', 'perfil')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.empleados.historial', compact('empleados'));
+    }
+
+    public function seleccionar(Request $request)
+    {
+        $visualizarEmpleados = Empleado::with('supervisor', 'sede', 'perfil')->find(intval($request->empleado));
+
+        $empleados = Empleado::with('supervisor', 'sede', 'perfil')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.empleados.historial', compact('visualizarEmpleados', 'empleados'));
     }
 
     public function getCertificaciones($empleado)
@@ -141,27 +194,31 @@ class EmpleadoController extends Controller
         $educacions = json_decode($request->educacion);
         $cursos = json_decode($request->curso);
         $certificados = json_decode($request->certificado);
-        // dd($cursos);
 
         $ceo_exists = Empleado::getCeoExists();
+
         $validateSupervisor = 'nullable|exists:empleados,id';
+
         if ($ceo_exists) {
             $validateSupervisor = 'required|exists:empleados,id';
         }
 
         $request->validate([
-            'name' => 'required|string',
+            'nameUsuario' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados',
-            'area_id' => 'required|exists:areas,id',
-            'supervisor_id' => $validateSupervisor,
-            'puesto_id' => 'required|exists:puestos,id',
-            'antiguedad' => 'required',
-            'email' => 'required|email',
-            'sede_id' => 'required',
+            //     'area_id' => 'required|exists:areas,id',
+            //     'supervisor_id' => $validateSupervisor,
+            //     'puesto_id' => 'required|exists:puestos,id',
+            //     'antiguedad' => 'required',
+            'email' => 'required|email|unique:empleados',
+            //     'sede_id' => 'required',
         ], [
             'n_empleado.unique' => 'El número de empleado ya ha sido tomado',
+            'email.unique' => 'El email de empleado ya ha sido tomado',
         ]);
+
         $sede = Sede::select('id', 'direccion')->find($request->sede_id);
+
         if ($sede) {
             $request->query->set('direccion', $sede->direccion);
         }
@@ -292,7 +349,7 @@ class EmpleadoController extends Controller
     {
         // dd($request);
         $empleado = Empleado::create([
-            'name' => $request->name,
+            'name' => $request->nameUsuario,
             'area_id' => $request->area_id,
             'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
@@ -348,6 +405,10 @@ class EmpleadoController extends Controller
             'pagadora_actual' => $request->pagadora_actual,
             'periodicidad_nomina' => $request->periodicidad_nomina,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
+        ]);
+        DisponibilidadEmpleados::create([
+            'empleado_id' => $empleado->id,
+            'disponibilidad' => 1,
         ]);
         $this->createUserFromEmpleado($empleado);
         $this->assignDependenciesModel($request, $empleado);
@@ -459,11 +520,10 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
+
         $empleado = $this->onlyStore($request);
 
         return response()->json(['status' => 'success', 'message' => 'Empleado agregado'], 200);
-
-        // return redirect()->route('admin.empleados.index')->with('success', 'Guardado con éxito');
     }
 
     public function storeWithCompetencia(Request $request)
@@ -924,6 +984,10 @@ class EmpleadoController extends Controller
         $expedientes = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', intval($id));
         $empleado = Empleado::getaltaAll();
 
+        // foreach ($visualizarEmpleados->registrosHistorico as $key => $registro) {
+        //     dump($registro->relacion);
+        // }
+
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
 
@@ -1070,6 +1134,20 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
+    public function agregarHistorico($id, $tabla, $campo, $valor_anterior, $userId)
+    {
+        $hoy = Carbon::today();
+
+        HistoricoEmpleados::create([
+            'empleado_id' => $id,
+            'campo_modificado' => $campo,
+            'fecha_cambio' => $hoy,
+            'valor_anterior_id' => $valor_anterior,
+            'user_id' => $userId,
+            'tabla_origen' => $tabla,
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -1078,6 +1156,7 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $ceo = Empleado::select('id')->whereNull('supervisor_id')->first();
         $ceo_exists = Empleado::getCeoExists();
         $validateSupervisor = 'nullable|exists:empleados,id';
@@ -1090,7 +1169,7 @@ class EmpleadoController extends Controller
             }
         }
         $request->validate([
-            'name' => 'required|string',
+            'nameUsuario' => 'required|string',
             'n_empleado' => 'nullable|unique:empleados,n_empleado,'.$id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
@@ -1159,19 +1238,10 @@ class EmpleadoController extends Controller
             }
         }
 
-        // if ($request->hasFile('files')) {
-        //     $files = $request->file('files');
-        //     foreach ($files as $file) {
-        //         if (Storage::putFileAs('public/documentos_empleados', $file, $file->getClientOriginalName())) {
-        //             EvidenciasDocumentosEmpleados::create([
-        //                 'documentos' => $file->getClientOriginalName(),
-        //                 'empleado_id' => $empleado->id,
-        //             ]);
-        //         }
-        //     }
-        // }
+        $oldValues = $empleado->getOriginal();
+
         $empleado->update([
-            'name' => $request->name,
+            'name' => $request->nameUsuario,
             'area_id' => $request->area_id,
             'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
@@ -1232,8 +1302,30 @@ class EmpleadoController extends Controller
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
         ]);
 
-        $usuario = User::where('empleado_id', $empleado->id)->orWhere('n_empleado', $empleado->n_empleado)->first();
+        $userId = auth()->id();
+
+        $newValues = $empleado->fresh()->getAttributes();
+
+        // Verifica si los campos específicos han cambiado
+        $areaIdChanged = $oldValues['area_id'] !== $newValues['area_id'];
+        $puestoIdChanged = $oldValues['puesto_id'] !== $newValues['puesto_id'];
+
+        // Realiza acciones basadas en los cambios
+        if ($areaIdChanged) {
+            // El campo area_id ha sido modificado
+            // Realiza las acciones necesarias...
+            $this->agregarHistorico($id, 'areas', 'Área', $oldValues['area_id'], $userId);
+        }
+
+        if ($puestoIdChanged) {
+            // El campo puesto_id ha sido modificado
+            // Realiza las acciones necesarias...
+            $this->agregarHistorico($id, 'puestos', 'Puesto', $oldValues['puesto_id'], $userId);
+        }
+
+        $usuario = User::where('empleado_id', $empleado->id)->first();
         $usuario->update([
+            'email' => removeUnicodeCharacters($request->email),
             'n_empleado' => $request->n_empleado,
         ]);
         $this->assignDependenciesModel($request, $empleado);
@@ -1382,9 +1474,11 @@ class EmpleadoController extends Controller
 
     public function updateImageProfile(Request $request)
     {
+        // dd($request->all());
         $empleado = User::getCurrentUser()->empleado;
-        if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
-            $value = substr($request->image, strpos($request->image, ',') + 1);
+        // dd($request->file('foto'));
+        if (! (preg_match('/^data:image\/(\w+);base64,/', $request->file('foto')))) {
+            $value = substr($request->file('foto'), strpos($request->file('foto'), ',') + 1);
             $value = base64_decode($value);
             $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
 
@@ -1392,7 +1486,6 @@ class EmpleadoController extends Controller
 
             // Call the ImageService to consume the external API
             $apiResponse = ImageService::consumeImageCompresorApi($request->file('foto'));
-
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
                 file_put_contents($route, $apiResponse['body']);
@@ -1405,6 +1498,7 @@ class EmpleadoController extends Controller
             return response()->json(['success' => 'Imágen actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
+
         }
         // $folderPath = public_path('upload/');
         // $image_parts = explode(";base64,", $request->image);
@@ -1640,8 +1734,17 @@ class EmpleadoController extends Controller
     public function exportExcel()
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $export = new EmpleadosGeneralExport();
+        $export = new EmpleadosGeneralExport;
 
         return Excel::download($export, 'Empleados.xlsx');
+    }
+
+    public function exportarHistorial($id)
+    {
+        $empleado = Empleado::findOrFail(intval($id)); // Asumiendo que el modelo de empleado es User
+
+        $registrosHistorico = $empleado->registrosHistorico->toArray(); // Asegúrate de que esto sea correcto
+
+        return Excel::download(new HistorialEmpleadoExport($registrosHistorico), 'historial_empleado_'.$id.'.xlsx');
     }
 }

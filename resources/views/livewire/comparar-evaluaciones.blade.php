@@ -2,12 +2,12 @@
     <div class="mt-3 row">
         <div class="col-12">
             <div class="mt-2 text-center form-group"
-                style="background-color:#345183; border-radius: 100px; color: white;">
+                style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
                 Comparar
             </div>
         </div>
         <div class="col-5">
-            <select class="form-control" name="" wire:model.defer="evaluacion1" id="evaluacion1">
+            <select class="form-control" name="" wire:model="evaluacion1" id="evaluacion1">
                 <option value="">-- Selecciona evaluación 1 --</option>
                 @foreach ($evaluaciones as $evaluacion)
                     <option value="{{ $evaluacion->id }}">{{ $evaluacion->nombre }}</option>
@@ -18,7 +18,7 @@
             @endif
         </div>
         <div class="col-5">
-            <select class="form-control" name="" wire:model.defer="evaluacion2" id="evaluacion2">
+            <select class="form-control" name="" wire:model="evaluacion2" id="evaluacion2">
                 <option value="">-- Selecciona evaluación 2 --</option>
                 @foreach ($evaluaciones as $evaluacion)
                     <option value="{{ $evaluacion->id }}">{{ $evaluacion->nombre }}</option>
@@ -26,7 +26,8 @@
             </select>
         </div>
         <div class="col-2">
-            <button class="h-100 btn btn-sm tb-btn-primary" wire:click="compararEvaluaciones('evaluado')">Comparar</button>
+            <button class="h-100 btn btn-sm tb-btn-primary"
+                wire:click="compararEvaluaciones('evaluado')">Comparar</button>
         </div>
 
         <div class="col-6">

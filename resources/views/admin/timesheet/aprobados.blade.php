@@ -16,12 +16,12 @@
         <div class="row">
             <div class="btn_estatus_caja mb-3" style="display: flex; justify-content: end; width: 100%">
                 <a href="{{ route('admin.timesheet-aprobados') }}" class="btn btn-outline-primary mr-2"
-                    style="{{ !$habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }} position: relative;padding:10px;"
+                    style="{{ !$habilitarTodos ? 'background-color: #E9F9FF;color:var(--color-tbj)' : '' }} position: relative;padding:10px;"
                     id="btn_directos" title="Mostrar todos los colaboradores de los cuales eres líder directo">
                     Directos
                 </a>
                 <a href="{{ route('admin.timesheet-aprobados') }}?habilitarTodos=true" class="btn btn-outline-primary"
-                    style="{{ $habilitarTodos ? 'background-color: #E9F9FF;color:#006DDB;' : '' }}  position: relative;padding:10px;"
+                    style="{{ $habilitarTodos ? 'background-color: #E9F9FF;color:var(--color-tbj)' : '' }}  position: relative;padding:10px;"
                     id="btn_todos" title="Mostrar todos los colaboradores de los cuales eres líder">
                     Todos
                 </a>
@@ -106,7 +106,7 @@
                                         <small>Escriba el motivo por el cual rechaza este registro (Obligatorio).</small>
                                     </div>
                                     <div class="col-12 text-right">
-                                        <button title="Rechazar" class="btn btn_cancelar" data-dismiss="modal">
+                                        <button title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Cancelar
                                         </button>
                                         <button title="Rechazar" class="btn btn-info"

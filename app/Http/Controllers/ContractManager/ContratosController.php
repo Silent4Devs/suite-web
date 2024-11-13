@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Events\ContratoEvent;
 use App\Exports\ReporteClienteExport;
 use App\Functions\CierreContratoData;
 use App\Functions\EntregablesData;
@@ -9,6 +10,9 @@ use App\Functions\FormatearFecha;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
+use App\Mail\AprobadorFirmaContratoMail;
+use App\Models\AprobadorFirmaContrato;
+use App\Models\AprobadorFirmaContratoHistorico;
 use App\Models\Area;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
@@ -17,16 +21,23 @@ use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\Sucursal;
+use App\Models\ConvergenciaContratos;
 use App\Models\Empleado;
+use App\Models\FirmaModule;
 use App\Models\Organizacion;
 use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,6 +45,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContratosController extends AppBaseController
 {
+    use ObtenerOrganizacion;
+
     /** @var ContratoRepository */
     private $contratoRepository;
 
@@ -77,11 +90,15 @@ class ContratosController extends AppBaseController
         $contratos = new Contrato;
         $areas = Area::getAll();
         $organizacion = Organizacion::getFirst();
+        $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
         $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
+        $razones_sociales = Sucursal::getArchivoFalse();
 
-        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+
+        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma', 'razones_sociales'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
     /**
@@ -92,6 +109,7 @@ class ContratosController extends AppBaseController
      */
     public function store(Request $request)
     {
+        session()->put('tipo_cambio', request('tipo_cambio'));
 
         $validatedData = $request->validate([
             'no_contrato' => 'required_unless:identificador_privado,1',
@@ -110,19 +128,37 @@ class ContratosController extends AppBaseController
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
-            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
+            'fecha_firma' => 'required|before_or_equal:fecha_fin',
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
-            'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
-            'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
+            'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
+            'minimo' => 'nullable|numeric|max:99999999999.99',
+            'maximo' => 'nullable|numeric|max:99999999999.99',
+            'monto_dolares' => 'nullable|numeric|max:99999999999.99',
+            'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'valor_dolar' => 'nullable|numeric|max:99999999999.99',
             'pmp_asignado' => 'required',
             // 'signed' => 'required',
+            // "creacion_proyecto" => "nullable|boolean",
+            'no_proyecto' => 'required_if:creacion_proyecto,false|string',
+            'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
+            'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
+            'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
+            'sede_id' => 'nullable|integer|exists:sedes,id', //required_if:creacion_proyecto,true|
+            'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
+            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
+            'horas_proyecto' => 'nullable|integer|min:0',
+            'razon_soc_id' => 'required|integer',
         ], [
-            'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
+            'no_proyecto.int' => 'Debe seleccionar un proyecto o crear uno.',
+            'monto_pago.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'valor_dolar.max' => 'El valor del dolar no puede superar 99,999,999,999.99',
             'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
             'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
@@ -199,6 +235,26 @@ class ContratosController extends AppBaseController
             $num_contrato = $no_contrato_sin_slashes;
         }
 
+        if ($request->creacion_proyecto) {
+            $proyecto = TimesheetProyecto::create([
+                'identificador' => $request->identificador,
+                'tipo' => $request->tipo,
+                'proyecto' => $request->proyecto_name,
+                'sede_id' => $request->sede_id,
+                'fecha_inicio' => $request->fecha_inicio_proyecto,
+                'fecha_fin' => $request->fecha_fin_proyecto,
+                'horas_proyecto' => $request->horas_proyecto,
+                'cliente_id' => $request->proveedor_id,
+            ]);
+
+            $proyecto_area = TimesheetProyectoArea::create([
+                'area_id' => $request->area_id,
+                'proyecto_id' => $proyecto->id,
+            ]);
+        } else {
+            $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+        }
+
         $contrato = $this->contratoRepository->create([
             'tipo_contrato' => $request->tipo_contrato,
             'identificador_privado' => $request->identificador_privado,
@@ -228,7 +284,14 @@ class ContratosController extends AppBaseController
             'no_proyecto' => $request->no_proyecto,
             'area_id' => $request->area_id,
             // 'firma1' => $firma,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $input);
+
+        $convergencia = ConvergenciaContratos::create([
+            'timesheet_proyecto_id' => $proyecto->id,
+            'timesheet_cliente_id' => $request->proveedor_id,
+            'contrato_id' => $contrato->id,
+        ]);
 
         $dolares = DolaresContrato::create([
             'contrato_id' => $contrato->id,
@@ -271,7 +334,17 @@ class ContratosController extends AppBaseController
             if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones')) {
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
-            $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
+
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
+
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
@@ -316,7 +389,7 @@ class ContratosController extends AppBaseController
 
         // EntregaMensual::insert($res);
 
-        $dataCieCont = new CierreContratoData();
+        $dataCieCont = new CierreContratoData;
         $cie = $dataCieCont->TraerDatos($contrato->id);
 
         CierreContrato::insert($cie);
@@ -329,9 +402,35 @@ class ContratosController extends AppBaseController
             'cumple' => true,
         ]);
 
-        // dd('hola1');
+        // aprobadores
+        if (isset($request->aprobadores_firma)) {
+            foreach ($request->aprobadores_firma as $aprobador_id) {
+                $aprobador_firma_contrato = AprobadorFirmaContrato::create([
+                    'contrato_id' => $contrato->id,
+                    'aprobador_id' => $aprobador_id,
+                    'solicitante_id' => User::getCurrentUser()->empleado->id,
+                ]);
 
-        //return redirect(route('contratos.index'));
+                if (isset($aprobador_firma_contrato->aprobador->email)) {
+
+                    try {
+                        Mail::to(removeUnicodeCharacters($aprobador_firma_contrato->aprobador->email))->queue(new AprobadorFirmaContratoMail($aprobador_firma_contrato));
+                    } catch (\Throwable $th) {
+                    }
+                }
+            }
+        }
+        $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
+            'contrato_id' => $contrato->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false,
+        ]);
+
+        event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
+
+        session()->put('tipo_cambio', null);
+
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
@@ -362,11 +461,90 @@ class ContratosController extends AppBaseController
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
             $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-            //dd($descargar_archivo);
-            return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            $razones_sociales = Sucursal::getArchivoFalse();
+
+            // aprobadores
+            $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $id)->get();
+            $firmar = false;
+            $firmado = false;
+            foreach ($aprobacionFirmaContrato as $firma_item) {
+                if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                    if (! isset($firma_item->firma)) {
+                        $firmar = true;
+                    }
+                }
+                if ($firma_item->firma) {
+                    $firmado = true;
+                }
+            }
+
+            return view('contract_manager.contratos-katbol.show', compact('razones_sociales', 'proveedor_id', 'dolares', 'areas', 'proyectos', 'aprobacionFirmaContrato', 'firmar', 'firmado'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
         }
+    }
+
+    public function aprobacionFirma(Request $request)
+    {
+
+        $contrato = Contrato::find($request->contrato_id);
+
+        $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $request->contrato_id)->where('aprobador_id', User::getCurrentUser()->empleado->id)->first();
+
+        $base64Image = $request->firma_base;
+
+        // Eliminar el prefijo 'data:image/png;base64,' si existe
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+            $base64Image = substr($base64Image, strpos($base64Image, ',') + 1);
+            $type = strtolower($type[1]); // png, jpg, gif
+
+            if (! in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                throw new \Exception('Tipo de imagen inválido');
+            }
+        } else {
+            throw new \Exception('Datos de imagen base64 inválidos');
+        }
+
+        // Decodificar la cadena Base64
+        $image = base64_decode($base64Image);
+
+        if (strpos($base64Image, 'data:image/') === 0) {
+            [$type, $base64Image] = explode(';', $base64Image);
+            [, $base64Image] = explode(',', $base64Image);
+        }
+
+        // Generar un nombre único para la imagen
+        $imageName = uniqid().'.'.$type;
+        // Guardar la imagen en el sistema de archivos
+
+        $ruta_carpeta = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma');
+
+        Storage::put('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName, $image);
+
+        // Dar permisos chmod 777 a la carpeta
+        chmod($ruta_carpeta, 0777);
+
+        // Obtener la URL de la imagen guardada
+        $imageUrl = Storage::url('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/aprobacionFirma/'.$imageName);
+
+        $aprobacionFirmaContrato->update([
+            'firma' => $imageName,
+        ]);
+
+        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
+    }
+
+    public function historicoAprobacion()
+    {
+        $aprobaciones_historico = AprobadorFirmaContratoHistorico::get();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('contract_manager.contratos-katbol.aprobacion-firma-historico', compact('aprobaciones_historico', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     /**
@@ -410,7 +588,30 @@ class ContratosController extends AppBaseController
 
             $organizacion = Organizacion::getFirst();
 
-            return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+
+            $razones_sociales = Sucursal::getArchivoFalse();
+
+            // firmas aprobadores
+            $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+            // dd($firma->aprobadores);
+            // $exampleVar = $firma->aprobadores[0];
+            $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
+            $firmar = false;
+            $firmado = false;
+            foreach ($aprobacionFirmaContrato as $firma_item) {
+                if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                    if (! isset($firma_item->firma)) {
+                        $firmar = true;
+                    }
+                }
+                if ($firma_item->firma) {
+                    $firmado = true;
+                }
+            }
+            $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
+
+            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -425,9 +626,11 @@ class ContratosController extends AppBaseController
      */
     public function update($id, Request $request)
     {
-        // dd($request->signed);
+        session()->put('tipo_cambio', request('tipo_cambio'));
+
         $validatedData = $request->validate([
             'no_contrato' => ['required', new NumeroContrato($id)],
+            'no_proyecto' => 'required',
             'nombre_servicio' => 'required|max:500',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
@@ -444,19 +647,26 @@ class ContratosController extends AppBaseController
             'fecha_fin' => 'required|after:fecha_inicio',
             'area_id' => 'required',
             // 'fecha_firma' => 'after:fecha_fin|before:fecha_inicio',
-            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
+            'fecha_firma' => 'required|before_or_equal:fecha_fin',
             'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
-            'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-            'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
+            'minimo' => 'nullable|numeric|max:99999999999.99',
+            'maximo' => 'nullable|numeric|max:99999999999.99',
+            'monto_dolares' => 'nullable|numeric|max:99999999999.99',
+            'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
+            'valor_dolar' => 'nullable|numeric|max:99999999999.99',
+            'razon_soc_id' => 'required|integer',
         ], [
-            'monto_pago.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'maximo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-            'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_pago.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'monto_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'maximo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'minimo_dolares.max' => 'El monto total debe ser menor a 99,999,999,999.99',
+            'valor_dolar.max' => 'El valor del dolar no puede superar 99,999,999,999.99',
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
-            'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
-
         ]);
 
         $resultado = null;
@@ -537,6 +747,8 @@ class ContratosController extends AppBaseController
 
         $areas = Area::getIdNameAll();
 
+        $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $request->no_proyecto)->first();
+
         $contrato = $this->contratoRepository->update([
             'tipo_contrato' => $request->tipo_contrato,
             'no_contrato' => $no_contrato_sin_slashes,
@@ -564,7 +776,17 @@ class ContratosController extends AppBaseController
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
             'updated_by' => User::getCurrentUser()->empleado->id,
+            'razon_soc_id' => $request->razon_soc_id,
         ], $id);
+
+        $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
+
+        if (isset($convergencia)) {
+            $convergencia->update([
+                'timesheet_proyecto_id' => $proyecto->id,
+                'timesheet_cliente_id' => $request->proveedor_id,
+            ]);
+        }
 
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
         if ($dolares) {
@@ -584,44 +806,30 @@ class ContratosController extends AppBaseController
             ]);
         }
 
-        // firma
-        // if($request->signed != null){
-        //     $ruta_firma_ant = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas/'.$contrato->firma1);
-        //     if(File::exists($ruta_firma_ant)){
-        //         // dd($ruta_firma_ant);
-        //         File::delete($ruta_firma_ant);
-
-        //         $folderPath = storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/firmas/');
-        //         $image_parts = explode(";base64,", $request->signed);
-        //         $image_type_aux = explode("image/", $image_parts[0]);
-        //         $image_type = $image_type_aux[1];
-        //         $image_base64 = base64_decode($image_parts[1]);
-        //         $firma = uniqid() . '.'.$image_type;
-        //         $file = $folderPath . $firma;
-
-        //         file_put_contents($file, $image_base64);
-
-        //         $contrato = $this->contratoRepository->update([
-        //             'firma1' => $firma,
-        //         ], $id);
-        //     }
-        // }
-
         $ruta_file_contrato = null;
         $nombre_f = $contrato->file_contrato;
         if ($request->file('file_contrato') != null) {
-            //esto agregamos 25-03-2021//
-            $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato);
-            if ($isExists) {
-                if ($contrato->file_contrato != null) {
-                    //dd(Storage::disk('public'));
-                    unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato));
-                }
+            $storagePath = 'public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
+            $currentFilePath = $storagePath.'/'.$contrato->file_contrato;
+
+            // Verificar si el archivo ya existe y eliminarlo
+            if (Storage::disk('public')->exists($currentFilePath)) {
+                Storage::disk('public')->delete($currentFilePath);
             }
 
+            // Obtener el nombre original del archivo
             $nombre = $request->file('file_contrato')->getClientOriginalName();
             $nombre_f = $contrato->id.$fecha_inicio.$nombre;
-            $request->file('file_contrato')->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, $nombre_f);
+
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
+
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
 
             // $ruta_file_contrato = Storage::url($archivo);
             $contrato->update([
@@ -639,7 +847,6 @@ class ContratosController extends AppBaseController
             $isExists = Storage::disk('public')->exists('contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento);
             if ($isExists) {
                 if ($contrato->documento != null) {
-                    //dd(Storage::disk('public'));
                     unlink(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones'.'/'.$contrato->documento));
                 }
             }
@@ -649,15 +856,58 @@ class ContratosController extends AppBaseController
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
 
-            $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
+            $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones';
+
+            // Guardar el archivo en el disco 'public' con la ruta específica
+            Storage::disk('public')->put($ruta.'/'.$contrato->id.$fecha_inicio.$nombre, file_get_contents($file));
+
+            $ruta_carpeta = storage_path('app/public/'.$ruta);
+
+            // Dar permisos chmod 777 a la carpeta
+            chmod($ruta_carpeta, 0777);
+
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
         }
-        //## FIN UPDATE REES####
-        // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-        return redirect("/contract_manager/contratos-katbol/{$contrato->id}/edit");
+        // aprobadores
+        if (isset($request->aprobadores_firma) && isset($request->firma_check)) {
+            $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
+            foreach ($aprobacionFirmaContrato as $aprobador_old) {
+                $aprobador_old->delete();
+            }
+            foreach ($request->aprobadores_firma as $aprobador_id) {
+                $aprobador_firma_contrato = AprobadorFirmaContrato::create([
+                    'contrato_id' => $contrato->id,
+                    'aprobador_id' => $aprobador_id,
+                    'solicitante_id' => User::getCurrentUser()->empleado->id,
+                ]);
+
+                if (isset($aprobador_firma_contrato->aprobador->email)) {
+
+                    try {
+                        Mail::to(removeUnicodeCharacters($aprobador_firma_contrato->aprobador->email))->queue(new AprobadorFirmaContratoMail($aprobador_firma_contrato));
+                    } catch (\Throwable $th) {
+                    }
+                }
+            }
+        }
+        $aprobador_firma_contrato_historico = AprobadorFirmaContratoHistorico::create([
+            'contrato_id' => $contrato->id,
+            'solicitante_id' => User::getCurrentUser()->empleado->id,
+            'empleado_update_id' => User::getCurrentUser()->empleado->id,
+            'firma_check' => isset($request->firma_check) ? true : false,
+        ]);
+
+        event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
+
+        session()->put('tipo_cambio', null);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '¡Contrato actualizado correctamente!',
+        ]);
     }
 
     /**
@@ -671,16 +921,17 @@ class ContratosController extends AppBaseController
     public function destroy($id)
     {
         abort_if(Gate::denies('katbol_contratos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $contrato = $this->contratoRepository->find($id);
 
         if (empty($contrato)) {
-            // notify()->error('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
             return redirect(route('contract_manager.contratos-katbol.index'));
         }
 
         $this->contratoRepository->delete($id);
-        // notify()->success('¡Se ha eliminado la información del contrato satisfactoriamente.!');
+
+        event(new ContratoEvent($contrato, 'delete', 'contratos', 'Contratos'));
 
         return redirect(route('contract_manager.contratos-katbol.index'));
     }

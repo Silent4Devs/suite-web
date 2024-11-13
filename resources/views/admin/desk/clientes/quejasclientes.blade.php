@@ -8,7 +8,6 @@
         ol.breadcrumb {
             margin-bottom: 0px;
         }
-
     </style>
 
     @can('centro_atencion_quejas_clientes_agregar')
@@ -43,8 +42,8 @@
                         <div class="mt-0 form-group col-6">
                             <label class="form-label"><i
                                     class="bi bi-building mr-2 iconos-crear"></i>Cliente<sup>*</sup></label>
-                            <select class="form-control {{ $errors->has('cliente_id') ? 'is-invalid' : '' }}"
-                                name="cliente_id" required>
+                            <select class="form-control {{ $errors->has('cliente_id') ? 'is-invalid' : '' }}" name="cliente_id"
+                                required>
                                 <option disabled selected>Seleccionar al cliente</option>
                                 @foreach ($clientes as $cliente)
                                     <option {{ old('cliente_id') == $cliente->id ? ' selected="selected"' : '' }}
@@ -243,8 +242,8 @@
 
                         <div class="row col-12 d-none" id="campos_otro">
                             <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                <input class="form-control {{ $errors->has('otro_canal') ? 'is-invalid' : '' }}" type="text"
-                                    name="otro_canal" value="{{ old('otro_canal') }}">
+                                <input class="form-control {{ $errors->has('otro_canal') ? 'is-invalid' : '' }}"
+                                    type="text" name="otro_canal" value="{{ old('otro_canal') }}">
                             </div>
                         </div>
 
@@ -253,8 +252,7 @@
                                 la
                                 queja<sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                 title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
-                            <textarea type="text" name="descripcion" class="form-control" value="{{ old('descripcion') }}"
-                                required>{{ old('descripcion') }}</textarea>
+                            <textarea type="text" name="descripcion" class="form-control" value="{{ old('descripcion') }}" required>{{ old('descripcion') }}</textarea>
                             @if ($errors->has('descripcion'))
                                 <span class="text-danger">
                                     {{ $errors->first('descripcion') }}
@@ -267,8 +265,7 @@
                                 el cliente
                                 <sup>*</sup></label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                 title="Describa detalladamente cual es la solución que requiere el cliente para retirar la queja."></i>
-                            <textarea name="solucion_requerida_cliente" class="form-control"
-                                required>{{ old('solucion_requerida_cliente') }}</textarea>
+                            <textarea name="solucion_requerida_cliente" class="form-control" required>{{ old('solucion_requerida_cliente') }}</textarea>
                             @if ($errors->has('solucion_requerida_cliente'))
                                 <span class="text-danger">
                                     {{ $errors->first('solucion_requerida_cliente') }}
@@ -325,17 +322,17 @@
                     </div> --}}
 
                         <div class="mt-4 text-right form-group col-12">
-                            <a href="{{ asset('admin/desk') }}#reportes" class="btn btn_cancelar">Cancelar</a>
-                            <input type="submit" class="btn btn-success" value="Guardar">
+                            <a href="{{ asset('admin/desk') }}#reportes" class="btn btn-outline-primary">Cancelar</a>
+                            <input type="submit" class="btn btn-primary" value="Guardar">
                         </div>
 
                     </form>
                 </div>
             </div>
         </div>
-        @endcan
+    @endcan
 
-    @endsection
+@endsection
 
 
 

@@ -1,20 +1,20 @@
-<div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DE LA SOLICITUD
 </div>
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-6">
         <fieldset disabled>
-            <label for="disabledTextInput"><i
-                    class="fa-solid fa-calendar-check iconos-crear"></i>Estatus:</label>
-            <input type="text" class="form-control"  value="{{ $solicitud->status ?: 'Por asignar' }}"
+            <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Estatus:</label>
+            <input type="text" class="form-control" value="{{ $solicitud->status ?: 'Por asignar' }}"
                 style="text-align: center">
         </fieldset>
     </div>
     <div class="form-group col-sm-6">
-        <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Fecha de solicitud:</label>
+        <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Fecha de
+            solicitud:</label>
         <input type="text" class="form-control" name="fecha_solicitud" style="text-align: center"
-            value="{{ $fecha_solicitud  }}" readonly>
+            value="{{ $fecha_solicitud }}" readonly>
     </div>
 
 </div>
@@ -36,27 +36,23 @@
         </fieldset>
     </div>
 </div>
-<div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+<div class="text-center form-group" style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
     DETALLES DEL DESTINO
 </div>
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('destinatario', 'Nombre de quien recibe:', ['class' => 'required']) !!}
-        {!! Form::text('destinatario', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese nombre del destinatario',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+        <label for="destinatario" class="required">Nombre de quien recibe:</label>
+        <input type="text" name="destinatario" class="form-control" placeholder="Ingrese nombre del destinatario" value="{{ old('destinatario') }}">
         @error('destinatario')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
+
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('telefono', 'Teléfono de quien recibe:', ['class' => 'required']) !!}
-        {!! Form::text('telefono', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese numero telefonico del destinatario',
-            'id' => 'fecha_fin',
-        ]) !!}
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="telefono" class="required">Teléfono de quien recibe:</label>
+        <input type="text" name="telefono" class="form-control" placeholder="Ingrese numero telefonico del destinatario" id="fecha_fin" value="{{ old('telefono') }}">
         @error('telefono')
             <small class="text-danger">{{ $message }}</small>
         @enderror
@@ -65,23 +61,19 @@
 </div>
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('lugar', 'Lugar:', ['class' => 'required']) !!}
-        {!! Form::text('lugar', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese lugar de referencia',
-            
-        ]) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>
+        <label for="lugar" class="required">Lugar:</label>
+        <input type="text" name="lugar" class="form-control" placeholder="Ingrese lugar de referencia" value="{{ old('lugar') }}">
         @error('lugar')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
+
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('descripcion', 'Dirección:', ['class' => 'required']) !!}
-        {!! Form::text('descripcion', null, [
-            'class' => 'form-control',
-            'placeholder' => 'Ingrese direccion exacta',
-        ]) !!}
-        @error('direccion')
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="descripcion" class="required">Dirección:</label>
+        <input type="text" name="descripcion" class="form-control" placeholder="Ingrese direccion exacta" value="{{ old('descripcion') }}">
+        @error('descripcion')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
@@ -90,24 +82,24 @@
 
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_limite', 'Fecha limite:', ['class' => 'required']) !!}
-        {!! Form::date('fecha_limite', null, [
-            'class' => 'form-control',
-        ]) !!}
-         @error('fecha_limite')
-         <small class="text-danger">{{ $message }}</small>
-     @enderror
-      
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
+        <label for="fecha_limite" class="required">Fecha limite:</label>
+        <input type="date" name="fecha_limite" class="form-control" value="{{ old('fecha_limite') }}">
+        @error('fecha_limite')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Horario desde:</label>
-            <input type="time" class="form-control" name="hora_recepcion_inicio"  value="{{ old('hora_recepcion_inicio', $solicitud->hora_recepcion_inicio) }}">
+        <input type="time" class="form-control" name="hora_recepcion_inicio"
+            value="{{ old('hora_recepcion_inicio', $solicitud->hora_recepcion_inicio) }}">
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Hasta:</label>
-            <input type="time" class="form-control" name="hora_recepcion_fin"  value="{{ old('hora_recepcion_fin', $solicitud->hora_recepcion_fin) }}">
+        <input type="time" class="form-control" name="hora_recepcion_fin"
+            value="{{ old('hora_recepcion_fin', $solicitud->hora_recepcion_fin) }}">
     </div>
-    
+
 
 </div>
 
@@ -119,10 +111,12 @@
 <!-- Descripcion Field -->
 <div class="row">
     <div class="form-group col-sm-12">
-        <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('notas', 'Notas:') !!}</label>
+        <label for="notas">
+            <i class="fas fa-file-alt iconos-crear"></i>Notas:
+        </label>
         <textarea class="form-control" name="notas" rows="2">{{ old('notas', $solicitud->notas) }}</textarea>
     </div>
+
 </div>
 
 <input type="hidden" value="{{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->id)[0] : '' }}"
@@ -132,8 +126,8 @@
 
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" id="enviar" type="submit">
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+    <button class="btn btn-primary" id="enviar" type="submit">
         {{ trans('global.save') }}
     </button>
 </div>

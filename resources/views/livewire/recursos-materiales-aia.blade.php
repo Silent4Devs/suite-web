@@ -6,7 +6,7 @@
     </div>
 
     <div class="row">
-       
+
             <table class="table" width="100%">
                 <thead class="head-light">
                     <tr>
@@ -46,16 +46,16 @@
 
                             <td style="min-width:40px;">
                                 <i class="fas fa-edit"
-                                    wire:click.prevent="$emit('editarMateriales',{{ $data->id }})">
+                                    wire:click.prevent="$dispatch('editarMateriales',{ id: {{ $data->id }} })">
                                 </i>
                                 <i class="fas fa-trash-alt text-danger"
-                                    wire:click.prevent="$emit('eliminarMateriales',{{ $data->id }})"> </i>
+                                    wire:click.prevent="$dispatch('eliminarMateriales',{ id: {{ $data->id }} })"> </i>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-       
+
     </div>
 
 

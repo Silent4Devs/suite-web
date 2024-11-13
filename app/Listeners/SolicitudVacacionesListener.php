@@ -4,10 +4,17 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
+use Auth;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
 
-class SolicitudVacacionesListener
+class SolicitudVacacionesListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    public $tries = 5;
+
     /**
      * Create the event listener.
      *
@@ -26,12 +33,24 @@ class SolicitudVacacionesListener
      */
     public function handle($event)
     {
-        User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())
-            ->get()
-            ->each(function (User $user) use ($event) {
-                Notification::send($user, new SolicitudVacacionesNotification($event->solicitud_vacation, $event->tipo_consulta, $event->tabla, $event->slug));
-            });
+        try {
+            $user = Auth::user();
+
+            if ($user) {
+                // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario
+                $supervisor = $user->empleado->supervisor ?? null;
+
+                if ($supervisor) {
+                    $supervisorEmail = trim(removeUnicodeCharacters($supervisor->email));
+                    $supervisor = User::where('email', $supervisorEmail)->first();
+
+                    if ($supervisor) {
+                        Notification::send($supervisor, new SolicitudVacacionesNotification($event->solicitud_vacation, $event->tipo_consulta, $event->tabla, $event->slug));
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

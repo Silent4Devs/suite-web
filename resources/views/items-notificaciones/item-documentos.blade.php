@@ -8,7 +8,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tasks text-success"></i>
                         @endif
@@ -22,7 +22,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-info"></i>
                         @endif
@@ -40,7 +40,7 @@
                         @if (!empty($last_unread_notification->data['avatar_ruta']))
                             <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
                                 class="rounded-circle" style="width: 50px; height: 50px;">
-                            {{ $last_unread_notification->data['name'] }}.:
+                            {{ $last_unread_notification->data['name'] }}:
                         @else
                             <i class="pr-2 fas fa-tools text-danger"></i>
                         @endif
@@ -52,6 +52,23 @@
                         </p>
                     </div>
                 @break
+
+                @case(' publish')
+                <div class="d-flex align-items-center justify-content-start">
+                    @if (!empty($last_unread_notification->data['avatar_ruta']))
+                        <img src="{{ asset($last_unread_notification->data['avatar_ruta']) }}" alt=""
+                            class="rounded-circle" style="width: 50px; height: 50px;">
+                        {{ $last_unread_notification->data['name'] }}:
+                    @else
+                        <i class="pr-2 fas fa-tools text-danger"></i>
+                    @endif
+                    &nbsp;&nbsp;
+                    <p class="p-0 m-0">
+                        El {{ $last_unread_notification->data['slug'] }} {{ $last_unread_notification->data['id'] }}  ha
+                        sido publicado
+                    </p>
+                </div>
+            @break
 
                 @default
             @endswitch
@@ -70,5 +87,18 @@
                 </span>
             </div>
         @endif
+
+        <!-- Botón de eliminar -->
+        <div style="flex-basis: calc(5% - 2px)">
+            <span class="btn-delete" data-toggle="tooltip" data-placement="top" onclick="reloadPage()" title="Eliminar notificación"
+                wire:click="deleteNotification('{{ $last_unread_notification->id }}')">
+                <i class="fas fa-trash"></i>
+            </span>
+        </div>
     @endif
 </div>
+<script>
+    function reloadPage() {
+        location.reload(); // Recarga la página
+    }
+</script>

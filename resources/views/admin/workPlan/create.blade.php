@@ -40,7 +40,8 @@
 
                     </div>
                     <div class="row">
-                        <div style="
+                        <div
+                            style="
                         width: -webkit-fill-available;
                         padding-left: 20px;
                         padding-right: 20px;">
@@ -59,8 +60,8 @@
                     </div>
             </div>
             <div class="text-right form-group col-12" style="margin-left:-5px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <button class="btn btn-danger" type="submit">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
+                <button class="btn btn-primary" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>

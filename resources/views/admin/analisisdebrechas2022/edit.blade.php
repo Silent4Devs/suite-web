@@ -20,7 +20,7 @@
                 @csrf
 
                 <div class="py-1 text-center form-group col-12"
-                    style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                    style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
 
                 <div class="form-group">
@@ -50,7 +50,7 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
+                    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label class="required" for="estatus"><i
@@ -120,8 +120,9 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.analisisdebrechas-2022.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.analisisdebrechas-2022.index') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -181,4 +182,3 @@
             }
         });
     </script>
-@endsection

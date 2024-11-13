@@ -1,19 +1,21 @@
 <div class="row mt-3">
     <div class="col-sm-12 col-md-12 col-12">
-        <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             FOTO DEL EMPLEADO
         </div>
         @include('admin.empleados._imagen_empleado')
     </div>
     <div class="col-12">
-        <div class="mt-4 text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
+        <div class="mt-4 text-center form-group"
+            style="background-color:var(--color-tbj); border-radius: 100px; color: white;">
             INFORMACIÓN GENERAL
         </div>
     </div>
     <div class="form-group col-sm-6">
-        <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
-        <input class="form-control" type="text" name="name" id="name"
-            value="{{ old('name', $empleado->name) }}" required>
+        <label class="required" for="nameUsuario"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
+        <input class="form-control" type="text" name="nameUsuario" id="nameUsuario"
+            value="{{ old('nameUsuario', $empleado->name) }}" required>
     </div>
     <div class="form-group col-sm-6">
         <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°

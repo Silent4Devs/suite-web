@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ContractManager\Contrato;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -56,5 +57,34 @@ class TimesheetCliente extends Model
     public function cliente()
     {
         return $this->hasMany(QuejasCliente::class, 'cliente_id');
+    }
+
+    public function proyectos()
+    {
+        return $this->hasMany(TimesheetProyecto::class, 'cliente_id');
+    }
+
+    public function proyectosConvergencia()
+    {
+        return $this->hasManyThrough(
+            TimesheetProyecto::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'timesheet_proyecto_id' // Local key on the convergence table...
+        );
+    }
+
+    public function contratosConvergencia()
+    {
+        return $this->hasManyThrough(
+            Contrato::class,
+            ConvergenciaContratos::class,
+            'timesheet_cliente_id', // Foreign key on the convergence table...
+            'id', // Foreign key on the contratos table...
+            'id', // Local key on the timesheet proyectos table...
+            'contrato_id' // Local key on the convergence table...
+        );
     }
 }

@@ -112,7 +112,7 @@
 
                 <div class="col-12">
                     <div class="d-flex justify-content-end w-100">
-                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn_cancelar">Regresar</a>
+                        <a href="{{ route('admin.ev360-objetivos.index') }}" class="btn btn-outline-primary">Regresar</a>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
         aria-labelledby="objetivoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background: #345183;color: white;">
+                <div class="modal-header" style="background: var(--color-tbj)color: white;">
                     <h4 class="modal-title" id="objetivoModalLabel"><i class="mr-1 fas fa-chalkboard-teacher"></i>
                         Conductas
                         Esperadas
@@ -141,9 +141,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCancelarEditObjetivo" class="btn_cancelar"
+                    <button type="button" id="btnCancelarEditObjetivo" class="btn btn-outline-primary"
                         data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnActualizarObjetivo" class="btn btn-danger">Guardar</button>
+                    <button type="button" id="btnActualizarObjetivo" class="btn btn-primary">Guardar</button>
                 </div>
                 <div class="display-almacenando row" id="displayAlmacenandoUniversal" style="display: none">
                     <div class="col-12">

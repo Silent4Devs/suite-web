@@ -23,8 +23,8 @@
         </div>
         <div class="card-body datatable-fix">
             @if ($courses->count())
-                <table class="table table-bordered w-100 datatable-User">
-                    <thead class="thead-dark">
+                <table class="table w-100 datatable-User">
+                    <thead class="">
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -110,23 +110,26 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @switch($course->status)
                                         @case(1)
-                                            <span
-                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                            <span class="bg-warning p-2 rounded-lg" style="color: #a74b00;">
                                                 Borrador
                                             </span>
                                         @break
 
                                         @case(2)
-                                            <span
-                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">
+                                            <span class="bg-info color-white p-2 rounded-lg">
                                                 Revisión
                                             </span>
                                         @break
 
                                         @case(3)
-                                            <span
-                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                            <span class="bg-success color-white p-2 rounded-lg">
                                                 Publicado
+                                            </span>
+                                        @break
+
+                                        @case(4)
+                                            <span class="bg-secondary color-white p-2 rounded-lg">
+                                                Cerrado
                                             </span>
                                         @break
 
@@ -155,4 +158,3 @@
         </div>
     </div>
 </div>
-{{-- @endsection --}}

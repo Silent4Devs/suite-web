@@ -10,13 +10,13 @@
     align-items: center;
     justify-content: left;
     gap: 20px;
-    color: #306BA9;
+    color: var(--color-tbj);
     font-size: 16px;
 }
 
 .title-card-portal-c {
     font-size: 26px;
-    color: #3086AF;
+    color: var(--color-tbj);
     margin-bottom: 35px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .caja-doc-etiquetas span {
-    color: #3086AF;
+    color: var(--color-tbj);
     font-size: 10px;
     padding: 1px 7px;
     background-color: #fff;
@@ -162,7 +162,7 @@
 
 .carrusel-portal button {
     border: none;
-    color: #306BA9;
+    color: var(--color-tbj);
     opacity: 0.5;
 }
 
@@ -199,7 +199,7 @@
 
 .carrusel-vertical-boletin {
     display: flex !important;
-    flex-direction: row;
+    flex-direction: row !important;
     align-items: stretch;
     overflow: hidden;
     max-height: 600px;

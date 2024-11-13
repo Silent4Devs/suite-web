@@ -38,13 +38,9 @@ class CustomSessionHandler implements \SessionHandlerInterface
         $this->minutes = $minutes;
     }
 
-    public function open($savePath, $sessionName)
-    {
-    }
+    public function open($savePath, $sessionName) {}
 
-    public function close()
-    {
-    }
+    public function close() {}
 
     public function read($sessionId)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
@@ -79,7 +79,7 @@ class IncidentesDayOffController extends Controller
     public function create()
     {
         abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new IncidentesDayOff();
+        $vacacion = new IncidentesDayOff;
         $empleados = Empleado::getAltaEmpleados();
         $puestos = Puesto::getAll();
         $areas = Area::getAll();
@@ -119,7 +119,7 @@ class IncidentesDayOffController extends Controller
             $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('custom_error', $errorMessage);
 
             // Redirect back with the input data and errors
@@ -173,7 +173,7 @@ class IncidentesDayOffController extends Controller
         if (empty($vacacion)) {
             Alert::warning('warning', 'Data not found');
 
-            return redirect(route('admin.incidentes-dayoff'));
+            return redirect(route('admin.incidentes-dayoff.index'));
         }
 
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
@@ -210,7 +210,7 @@ class IncidentesDayOffController extends Controller
             $errorMessage = 'Debe seleccionar al menos una opción sobre a quien aplicara la excepción.';
 
             // Manually add error message to $errors bag
-            $errors = new \Illuminate\Support\MessageBag();
+            $errors = new \Illuminate\Support\MessageBag;
             $errors->add('custom_error', $errorMessage);
 
             // Redirect back with the input data and errors
@@ -249,7 +249,6 @@ class IncidentesDayOffController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
         abort_if(Gate::denies('incidentes_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesDayoff::find($id);
         $vacaciones->delete();

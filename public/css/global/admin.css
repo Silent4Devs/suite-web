@@ -6,8 +6,7 @@
 .caja_botones_menu a {
     text-decoration: none;
     display: inline-block;
-    color: #345183;
-    padding: 5px 13px;
+    color: var(--color-tbj);    padding: 5px 13px;
     font-weight: bold;
     margin: 0;
     text-align: center;
@@ -23,7 +22,7 @@
 
 .caja_botones_menu a.btn_activo,
 .caja_botones_menu a.btn_activo:hover {
-    background-color: #345183;
+    background-color: var(--color-tbj);
     box-shadow: 0px -2px 0px 0px;
     color: #fff;
 }
@@ -206,15 +205,13 @@ table.dataTable {
     transition: .2s ease-in;
 }
 
-.iconos-crear {
-    font-size: 15pt;
-    color: #3086AF;
+.iconos-crear{
+    color: var(--color-tbj);
     margin-right: 10px;
 }
 
 .verde_silent {
-    background-color: #345183;
-}
+    background-color: var(--color-tbj);}
 
 .azul_silent {
     background-color: #2589AA;
@@ -315,7 +312,9 @@ header {
 .btn-outline-light,
 .btn-outline-dark,
 .btn-cancelar,
-.btn_cancelar {
+.btn_cancelar,
+.tb-btn-primary,
+.tb-btn-seccondary {
     padding: 12px 25px !important;
     border-radius: 8px !important;
     cursor: pointer;
@@ -335,7 +334,8 @@ header {
 }
 
 .btn.btn-success,
-.btn.btn-danger {
+.btn.btn-danger,
+.btn.tb-btn-primary {
     background-color: #057BE2 !important;
     color: #fff !important;
 }
@@ -376,8 +376,7 @@ header {
 }
 
 .breadcrumb li.active {
-    color: #006DDB;
-}
+    color: var(--color-tbj);}
 
 .breadcrumb-item+.breadcrumb-item::before {
     content: ':';
@@ -924,11 +923,16 @@ table.dataTable tr th {
 
 
 .table td {
-    /* text-align: justify !important; */
+    border-bottom: none !important;
+    border-top: none !important;
+}
+.table tr {
+    border-bottom: none !important;
+    border-top: none !important;
 }
 
 .titulo_general_funcion {
-    color: #3086AF;
+    color: var(--color-tbj);
     margin-bottom: 40px;
 }
 
@@ -938,7 +942,7 @@ table.dataTable tr th {
 }
 
 .form-group label {
-    color: #3086AF;
+    color: var(--color-tbj);
 }
 
 .titulo-formulario {
@@ -996,7 +1000,7 @@ table.dataTable tr th {
 .line-active-nav {
     width: 0px;
     height: 1px;
-    background-color: #3086AF;
+    /* background-color: var(--color-tbj); */
     position: absolute;
     transition: 0.4s;
 }
@@ -1004,7 +1008,7 @@ table.dataTable tr th {
 /* ------------------------ */
 
 .ventana_menu ul {
-    margin-top: 100px !important;
+    margin-top: 40px !important;
 }
 
 .dt-button-collection.dropdown-menu {
@@ -1084,7 +1088,6 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     padding-bottom: 20px;
     margin-top: 0px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #E5E5E5;
 }
 
 .datatable-rds table.dataTable thead,
@@ -1209,10 +1212,6 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
     z-index: 100;
 }
 
-#contenido_imprimir {
-    padding: 20px;
-}
-
 .solo-print {
     display: none;
 }
@@ -1232,7 +1231,8 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 @media print {
 
     .vista_print,
-    .print-none {
+    .print-none
+    {
         display: none !important;
     }
 
@@ -1242,6 +1242,7 @@ table.dataTable thead>tr>td.sorting_desc_disabled:before {
 
     body {
         background-color: #fff !important;
+        background-image: none !important;
     }
 
     .table th {
@@ -1305,7 +1306,10 @@ a:hover {
 }
 
 a {
-    color: unset;
+    text-decoration: none !important;
+}
+a:not(a.btn){
+    color: unset !important;
 }
 
 .table .thead-dark th {
@@ -1327,9 +1331,7 @@ a {
 
 .vrd-agua {
     border: none;
-    border-bottom: 1px solid #006DDB;
-    color: #006DDB;
-    border-radius: 0px !important;
+    border-bottom: 1px solid var(--color-tbj);    color: var(--color-tbj);    border-radius: 0px !important;
 }
 
 .btn label {
@@ -1437,4 +1439,27 @@ table td {
 
 .progress-bar.bg-warning {
     background-color: #FFCB80 !important;
+}
+
+.cke_notifications_area{
+    display: none !important;
+}
+
+.select2-dropdown{
+    z-index: 999999999999999999 !important;
+}
+
+
+.nav.nav-tabs{
+    margin-bottom: 20px;
+    border-bottom: none !important;
+    border: none !important;
+}
+
+.table.dataTable.no-footer{
+    border-bottom: none !important;
+}
+
+.table th{
+    border-color: #cdcdcd !important;
 }

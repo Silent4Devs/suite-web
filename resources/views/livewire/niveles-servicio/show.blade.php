@@ -2,6 +2,6 @@
 
 @include('livewire.niveles-servicio.form')
 
-<button wire:click="default" class="btn-redondeado btn blue">
+<button wire:click="default" class="btn btn-primary">
     Volver
 </button>

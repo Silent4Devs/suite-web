@@ -36,14 +36,14 @@
                     <select id="select_metodos" class="form-control" name="metodo">
                         <option selected disabled>- -</option>
                         <option
-                            {{ old('Lluvia de ideas (Brainstorming)', $analisis ? $analisis->metodo : '') =='Lluvia de ideas (Brainstorming)'? 'selected': '' }}
+                            {{ old('Lluvia de ideas (Brainstorming)', $analisis ? $analisis->metodo : '') == 'Lluvia de ideas (Brainstorming)' ? 'selected' : '' }}
                             class="op_ideas" data-metodo="ideas">Lluvia de ideas (Brainstorming)
                         </option>
                         <option
                             {{ old('5 Porqués (5 Why)', $analisis ? $analisis->metodo : '') == '5 Porqués (5 Why)' ? 'selected' : '' }}
                             class="op_porque" data-metodo="porque">5 Porqués (5 Why)</option>
                         <option
-                            {{ old('Diagrama causa efecto (Ishikawa)', $analisis ? $analisis->metodo : '') =='Diagrama causa efecto (Ishikawa)'? 'selected': '' }}
+                            {{ old('Diagrama causa efecto (Ishikawa)', $analisis ? $analisis->metodo : '') == 'Diagrama causa efecto (Ishikawa)' ? 'selected' : '' }}
                             class="op_digrama" data-metodo="digrama">Diagrama causa efecto (Ishikawa)
                         </option>
                     </select>
@@ -95,8 +95,7 @@
                 <div id="digrama" class="caja_oculta_dinamica">
                     <div class="mt-5 col-md-12" style="overflow: auto;">
                         <div style="width: 100%; min-width:980px; margin-left:80px;">
-                            <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
-                                style="width:190%; margin-top:20px;">
+                            <img src="{{ asset('img/diagrama_causa_raiz.png') }}" style="width:190%; margin-top:20px;">
                             <div
                                 style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
                                 <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
@@ -135,19 +134,17 @@
                             </div>
                             <div class="col-6"
                                 style="top:60px; left:290px; position: absolute; height:30px !important;">
-                                <textarea name="control_a" class="politicas_txtarea"
-                                    id="analisisControl">{{ $analisis ? $analisis->control_a : '' }}</textarea>
+                                <textarea name="control_a" class="politicas_txtarea" id="analisisControl">{{ $analisis ? $analisis->control_a : '' }}</textarea>
                                 @error('control_a')
                                     <span class="text-danger">{{ $message }}</span>
-                                @enderror    
+                                @enderror
                             </div>
-                            
+
                             {{-- <textarea name="control_b"
                                 class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->control_b : '' }}</textarea> --}}
                             <div class="col-6"
                                 style="top:60px; left:810px; position: absolute; height:30px !important;">
-                                <textarea name="proceso_a" class="procesos_txtarea"
-                                    id="analisisProceso">{{ $analisis ? $analisis->proceso_a : '' }}</textarea>
+                                <textarea name="proceso_a" class="procesos_txtarea" id="analisisProceso">{{ $analisis ? $analisis->proceso_a : '' }}</textarea>
                                 @error('proceso_a')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -156,8 +153,7 @@
                                 class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->proceso_b : '' }}</textarea> --}}
                             <div class="col-6"
                                 style="top:60px; left:1315px; position: absolute; height:30px !important;">
-                                <textarea name="personas_a" class="personas_txtarea"
-                                    id="analisisPersona">{{ $analisis ? $analisis->personas_a : '' }}</textarea>
+                                <textarea name="personas_a" class="personas_txtarea" id="analisisPersona">{{ $analisis ? $analisis->personas_a : '' }}</textarea>
                                 @error('personas_a')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -165,40 +161,37 @@
                             {{-- <textarea name="personas_b"
                                 class="personas_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->personas_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; right:380px; position: absolute;">
-                                <textarea name="tecnologia_a" class="tecnologia_txtarea txt_obj_secundarios_b"
-                                    id="analisisTecnologia">{{ $analisis ? $analisis->tecnologia_a : '' }}</textarea>
+                                <textarea name="tecnologia_a" class="tecnologia_txtarea txt_obj_secundarios_b" id="analisisTecnologia">{{ $analisis ? $analisis->tecnologia_a : '' }}</textarea>
                                 @error('tecnologia_a')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis ? $analisis->tecnologia_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:540px; position: absolute;">
-                                <textarea name="metodos_a" id="analisisMetodos"
-                                    class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis ? $analisis->metodos_a : '' }}</textarea>
+                                <textarea name="metodos_a" id="analisisMetodos" class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis ? $analisis->metodos_a : '' }}</textarea>
                                 @error('metodos_a')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis ? $analisis->metodos_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:1060px; position: absolute;">
-                                <textarea name="ambiente_a"
-                                    class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis ? $analisis->ambiente_a : '' }}</textarea>
+                                <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis ? $analisis->ambiente_a : '' }}</textarea>
                                 @error('ambiente_a')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis ? $analisis->ambiente_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:1600px; position: absolute;">
-                                <textarea name="problema_diagrama"
-                                    class="problemas_txtarea" id="analisisProblema">{{ $analisis ? $analisis->problema_diagrama : '' }}</textarea>
+                                <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis ? $analisis->problema_diagrama : '' }}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                <input type="submit" class="btn btn-success" value="Guardar">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                    class="btn btn-outline-primary">Cancelar</a>
+                <input type="submit" class="btn btn-primary" value="Guardar">
             </div>
             {{-- <div class="py-3 text-right col-12">
             </div> --}}

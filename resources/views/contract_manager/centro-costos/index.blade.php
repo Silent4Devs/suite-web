@@ -15,8 +15,10 @@
 
     <div class="text-right">
         <div class="d-flex justify-content-end">
-            <a href="{{ route('contract_manager.centro-costos.create') }}" type="button" class="btn tb-btn-primary">Registrar Centro</a> &nbsp; &nbsp;
-            <a href="{{ route('contract_manager.centro-costos.view_archivados') }}" type="button" class="btn tb-btn-primary">Archivados</a>
+            <a href="{{ route('contract_manager.centro-costos.create') }}" type="button" class="btn tb-btn-primary">Registrar
+                Centro</a> &nbsp; &nbsp;
+            <a href="{{ route('contract_manager.centro-costos.view_archivados') }}" type="button"
+                class="btn tb-btn-primary">Archivados</a>
         </div>
     </div>
 
@@ -24,17 +26,15 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Centro">
-                <thead class="thead-dark">
+            <table class="table w-100 datatable-Centro">
+                <thead class="">
                     <tr>
-
                         <th style="vertical-align: top">
                             Clave
                         </th>
                         <th style="vertical-align: top">
                             Nombre
                         </th>
-
                         <th style="vertical-align: top">
                             Opciones
                         </th>

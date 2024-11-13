@@ -10,7 +10,8 @@
                 <br>
                 <h4>¿Qué es Comunicados Generales?</h4>
                 <p>
-                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar aspectos importantes.
+                    Anuncios o mensajes importantes que la organización comparte con todos sus colaboradores para comunicar
+                    aspectos importantes.
                 </p>
                 <p>
                     Son fundamentales ya que contribuye a la concientización y comprensión general.
@@ -28,8 +29,8 @@
                 <div class="form-group col-12">
                     <label class="required" for="TitulodComunicado"><i class="fas fa-align-left iconos-crear"></i>
                         Título del Comunicado</label>
-                    <input class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}" type="text" name="titulo"
-                        id="titulo" value="{{ old('titulo', $comunicacionSgi->titulo) }}" required>
+                    <input class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}" type="text"
+                        name="titulo" id="titulo" value="{{ old('titulo', $comunicacionSgi->titulo) }}" required>
                     @if ($errors->has('titulo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('titulo') }}
@@ -66,8 +67,8 @@
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi"
-                    value="{{ old('imagen') }}" required>
+                    <input type="file" name="imagen" class="form-control"
+                        accept="image/*, .mp4, .mov, .webm, .wmv, .avi" value="{{ old('imagen') }}" required>
                     @if (count($comunicacionSgi->imagenes_comunicacion) > 0)
                         <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
                         <small>Tamaño recomendado de la imagen 500px por 300px</small>
@@ -92,9 +93,10 @@
 
 
                 <div class="form-group col-md-6 col-sm-12">
-                    <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
-                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
-                        name="publicar_en" id="publicar_en" required>
+                    <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en
+                    </label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="publicar_en"
+                        id="publicar_en" required>
                         <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción
                         </option>
@@ -131,12 +133,13 @@
                         @endforeach
                     </select>
                 </div> --}}
-                @livewire("grupos-comunicacion")
+                @livewire('grupos-comunicacion')
 
                 <div class="col-sm-12 col-md-6">
                     <label class="" for="link"><i class="fas fa-link iconos-crear"></i>Link</label>
-                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link" name="link"
-                        placeholder="http://" id="link" value="{{ old('link', $comunicacionSgi->link) }}">
+                    <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="link"
+                        name="link" placeholder="http://" id="link"
+                        value="{{ old('link', $comunicacionSgi->link) }}">
                     @if ($errors->has('link'))
                         <div class="invalid-feedback">
                             {{ $errors->first('link') }}
@@ -171,8 +174,8 @@
                 </div>
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -188,7 +191,7 @@
                                         <ol class='carousel-indicators'>
                                             @foreach ($comunicacionSgi->documentos_comunicacion as $idx => $documento)
                                                 <li data-target=#carouselExampleIndicators
-                                                    data-slide-to= '{{ $idx  == 0 ? 'active' : '' }}''>
+                                                    data-slide-to= '{{ $idx == 0 ? 'active' : '' }}''>
                                                 </li>
                                             @endforeach
 

@@ -15,7 +15,7 @@ class ActividadesMejorasController extends Controller
     public function index(Request $request, $mejora_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadMejora::with('responsables')->where('mejora_id', $mejora_id)->get();
+            $actividades = ActividadMejora::with('responsables:id,name,foto,email')->where('mejora_id', $mejora_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }
@@ -197,7 +197,7 @@ class ActividadesMejorasController extends Controller
                 ]);
                 $modelo->planes()->sync($planEdit);
             } else {
-                $planImplementacion = new PlanImplementacion(); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+                $planImplementacion = new PlanImplementacion; // Necesario se carga inicialmente el Diagrama Universal de Gantt
                 $planImplementacion->tasks = $tasks;
                 $planImplementacion->canAdd = true;
                 $planImplementacion->canWrite = true;

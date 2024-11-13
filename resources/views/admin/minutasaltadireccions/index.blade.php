@@ -32,7 +32,7 @@
             text-align: left;
             font: normal normal medium 20px/20px Roboto;
             letter-spacing: 0px;
-            color: #306BA9;
+            color: var(--color-tbj);
             opacity: 1;
             position: relative;
             top: -2rem;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ajustesMatrizBIA;
@@ -91,7 +91,7 @@ class AnalisisdeImpactoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario = new AnalisisImpacto();
+        $cuestionario = new AnalisisImpacto;
 
         return view('admin.analysisImpact.create', compact('cuestionario'));
     }
@@ -125,7 +125,7 @@ class AnalisisdeImpactoController extends Controller
 
         $cuestionario = AnalisisImpacto::create($request->all());
 
-        return redirect()->route('admin.analysisImpact.edit', ['id' => $cuestionario]);
+        return redirect()->route('admin.analisis-impacto.edit', ['id' => $cuestionario]);
     }
 
     public function show($id)
@@ -145,7 +145,7 @@ class AnalisisdeImpactoController extends Controller
         if (empty($cuestionario)) {
             Alert::warning('warning', 'Analisis not found');
 
-            return redirect(route('admin.analysisImpact.index'));
+            return redirect(route('admin.analisis-impacto.index'));
         }
 
         return view('admin.analysisImpact.edit', ['id' => $cuestionario], compact('cuestionario'));
@@ -350,7 +350,7 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información añadida con éxito');
 
-        return redirect(route('admin.analysisImpact.index'));
+        return redirect(route('admin.analisis-impacto.index'));
     }
 
     public function destroy($id)
@@ -404,7 +404,7 @@ class AnalisisdeImpactoController extends Controller
         if (empty($cuestionario)) {
             Alert::warning('warning', 'Información añadida con éxito');
 
-            return redirect(route('admin.analysisImpact.matriz'));
+            return redirect(route('admin.analisis-impacto.matriz'));
         }
 
         return view('admin.analysisImpact.ajustes', compact('cuestionario'));
@@ -418,6 +418,6 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario->update($request->all());
         Alert::success('éxito', 'Información añadida con éxito');
 
-        return redirect()->route('admin.analysisImpact.matriz');
+        return redirect()->route('admin.analisis-impacto.matriz');
     }
 }

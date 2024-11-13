@@ -6,7 +6,7 @@
             <form method="POST" action="{{ route('admin.analisisdebrechas-2022.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12" style="background-color:var(--color-tbj); border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
@@ -22,7 +22,8 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
+        <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
+
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">

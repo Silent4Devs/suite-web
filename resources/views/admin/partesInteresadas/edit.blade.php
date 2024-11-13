@@ -9,10 +9,11 @@
                 <br>
                 <h4>¿Qué es Partes Interesadas?</h4>
                 <p>
-                    Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información de la organización.
+                    Son aquellas personas o grupos que tienen algún interés o influencia en la seguridad de la información
+                    de la organización.
                 </p>
                 <p>
-                  Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
+                    Pueden ser clientes, empleados, proveedores, autoridades gubernamentales, entre otros.
                 </p>
             </div>
         </div>
@@ -28,8 +29,8 @@
                 <div class="form-group col-md-12">
                     <label class="required" for="parteinteresada"><i
                             class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>
-                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text" maxlength="255"
-                        name="parteinteresada" id="parteinteresada"
+                    <input class="form-control {{ $errors->has('parteinteresada') ? 'is-invalid' : '' }}" type="text"
+                        maxlength="255" name="parteinteresada" id="parteinteresada"
                         value="{{ old('parteinteresada', $partesInteresada->parteinteresada) }}" required>
                     @if ($errors->has('parteinteresada'))
                         <div class="invalid-feedback">
@@ -39,11 +40,11 @@
                     <span class="help-block">{{ trans('cruds.partesInteresada.fields.parteinteresada_helper') }}</span>
                 </div>
 
-                @livewire('show-partes-interesadas',['id_interesado'=>$partesInteresada->id])
+                @livewire('show-partes-interesadas', ['id_interesado' => $partesInteresada->id])
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" id="btnActualizarParteInteresada" type="submit">
+                    <a href="{{ route('admin.partes-interesadas.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" id="btnActualizarParteInteresada" type="submit">
                         Guardar
                     </button>
                 </div>

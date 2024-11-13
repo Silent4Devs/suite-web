@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-<style type="text/css">
-    sup {
-        color: red;
-    }
-</style>
+    <style type="text/css">
+        sup {
+            color: red;
+        }
+    </style>
     {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
     <h5 class="col-12 titulo_general_funcion">Editar: Tratamiento de los Riesgos</h5>
     <div class="mt-4 card">
@@ -16,9 +16,8 @@
 
                 <div class="form-group col-md-4 mb-4">
                     <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
-                    <input readonly disabled type="number"
-                        value="{{ old('identificador', $tratamientos->identificador) }}" class="form-control"
-                        name="identificador" id="identificador" required>
+                    <input readonly disabled type="number" value="{{ old('identificador', $tratamientos->identificador) }}"
+                        class="form-control" name="identificador" id="identificador" required>
                     <div id="identificadorDisponible">
                     </div>
                 </div>
@@ -36,8 +35,8 @@
 
                 <div class="form-group col-md-4 col-sm-4">
                     <label for="tipo_riesgo"><i class="fas fa-asterisk iconos-crear"></i>Tipo de riesgo</label>
-                    <select required class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}" name="tipo_riesgo"
-                        id="tipo_riesgo" disabled readonly>
+                    <select required class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}"
+                        name="tipo_riesgo" id="tipo_riesgo" disabled readonly>
                         <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT as $key => $label)
@@ -58,21 +57,24 @@
                 <div class="form-group col-md-4 mb-4">
                     <label><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo Total</label>
                     <input readonly disabled type="number" name="riesgototal" id="riesgoTotalResultado"
-                        value="{{ old('riesgototal', $tratamientos->riesgototal) }}" class="form-control" data-riesgo-total="{{$tratamientos->riesgototal}}">
+                        value="{{ old('riesgototal', $tratamientos->riesgototal) }}" class="form-control"
+                        data-riesgo-total="{{ $tratamientos->riesgototal }}">
 
                 </div>
 
                 <div class="form-group col-md-4 mb-4">
                     <label><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo Residual</label>
-                    <input readonly disabled type="number" id="riesgoTotalResidual" name="riesgo_total_residual" data-riesgo-residual="{{ $tratamientos->riesgo_total_residual }}"
+                    <input readonly disabled type="number" id="riesgoTotalResidual" name="riesgo_total_residual"
+                        data-riesgo-residual="{{ $tratamientos->riesgo_total_residual }}"
                         value="{{ old('riesgo_total_residual', $tratamientos->riesgo_total_residual) }}"
                         class="form-control">
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="acciones"><i class="fas fa-clipboard-list iconos-crear"></i>Acciones de Tratamiento<sup>*</sup></label>
-                    <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}"
-                        name="acciones" id="acciones" required>{{ old('acciones', $tratamientos->acciones) }}</textarea>
+                    <label for="acciones"><i class="fas fa-clipboard-list iconos-crear"></i>Acciones de
+                        Tratamiento<sup>*</sup></label>
+                    <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}" name="acciones" id="acciones"
+                        required>{{ old('acciones', $tratamientos->acciones) }}</textarea>
                     @if ($errors->has('acciones'))
                         <div class="invalid-feedback">
                             {{ $errors->first('acciones') }}
@@ -82,8 +84,8 @@
 
                 <div class="form-group col-md-6 col-sm-4 col-lg-4">
                     <label for="id_dueno"><i class="fas fa-user-tie iconos-crear"></i>Dueño del riesgo<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_dueno') ? 'is-invalid' : '' }}"
-                        name="id_dueno" id="dueno" required>
+                    <select class="form-control {{ $errors->has('id_dueno') ? 'is-invalid' : '' }}" name="id_dueno"
+                        id="dueno" required>
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($empleados as $id => $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -112,14 +114,14 @@
 
                 <div class="form-group col-md-6 col-sm-4 col-lg-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Registró riesgo<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_registro') ? 'is-invalid' : '' }}"
-                        name="id_registro" id="registro" required>
+                    <select class="form-control {{ $errors->has('id_registro') ? 'is-invalid' : '' }}" name="id_registro"
+                        id="registro" required>
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($registros as $id => $registro)
                             <option data-puesto="{{ $registro->puesto }}" value="{{ $registro->id }}"
                                 data-area="{{ $registro->area->area }}"
                                 {{ old('id_registro', $tratamientos->id_registro) == $registro->id ? 'selected' : '' }}>
-                                {{ Str::limit($registro->name , 30, '...') }}
+                                {{ Str::limit($registro->name, 30, '...') }}
                             </option>
                         @endforeach
                     </select>
@@ -141,7 +143,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-12">
-                    <label class="required" for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
+                    <label class="required" for="id_proceso"><i
+                            class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
                     <select required class="procesoSelect form-control" name="id_proceso" id="id_proceso">
                         <option value="">Seleccione una opción</option>
                         @foreach ($procesos as $proceso)
@@ -160,9 +163,10 @@
 
 
                 <div class="form-group col-md-4 col-sm-12 col-lg-4">
-                    <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>Fecha compromiso<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
-                        name="fechacompromiso" id="fechacompromiso"
+                    <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>Fecha
+                        compromiso<sup>*</sup></label>
+                    <input required class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}"
+                        type="date" min="1945-01-01" name="fechacompromiso" id="fechacompromiso"
                         value="{{ old('fechacompromiso', $tratamientos->fechacompromiso ? \Carbon\Carbon::parse($tratamientos->fechacompromiso)->format('Y-m-d') : null) }}">
                     @if ($errors->has('fechacompromiso'))
                         <div class="invalid-feedback">
@@ -172,7 +176,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
-                    <label class="required" for="inversion_requerida"><i class="fas fa-chart-line iconos-crear"></i>Inversión
+                    <label class="required" for="inversion_requerida"><i
+                            class="fas fa-chart-line iconos-crear"></i>Inversión
                         requerida</label>
                     <select required class="form-control {{ $errors->has('inversion_requerida') ? 'is-invalid' : '' }}"
                         name="inversion_requerida" id="inversion_requerida">
@@ -193,7 +198,7 @@
                     <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                 </div>
 
-                <div class="mb-3 mt-3 ml-4 w-100" style="border-bottom: solid 2px #345183;">
+                <div class="mb-3 mt-3 ml-4 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
                         Participantes en la atención del riesgo</span>
                 </div>
@@ -273,8 +278,8 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ route('admin.tratamiento-riesgos.index') }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit" id="btnGuardar">
+                    <a href="{{ route('admin.tratamiento-riesgos.index') }}" class="btn btn-outline-primary">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
                 </div>
@@ -501,111 +506,111 @@
             console.log(arrParticipantes);
         }
     </script>
-        <script>
-            $(document).ready(function() {
-                CKEDITOR.replace('descripcionriesgo', {
-                    toolbar: [{
-                            name: 'styles',
-                            items: ['Styles', 'Format', 'Font', 'FontSize']
-                        },
-                        {
-                            name: 'colors',
-                            items: ['TextColor', 'BGColor']
-                        },
-                        {
-                            name: 'editing',
-                            groups: ['find', 'selection', 'spellchecker'],
-                            items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                        }, {
-                            name: 'clipboard',
-                            groups: ['undo'],
-                            items: ['Undo', 'Redo']
-                        },
-                        {
-                            name: 'tools',
-                            items: ['Maximize']
-                        },
-                        {
-                            name: 'basicstyles',
-                            groups: ['basicstyles', 'cleanup'],
-                            items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                                '-',
-                                'CopyFormatting', 'RemoveFormat'
-                            ]
-                        },
-                        {
-                            name: 'paragraph',
-                            groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                                'Blockquote',
-                                '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                                'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                            ]
-                        },
-                        {
-                            name: 'links',
-                            items: ['Link', 'Unlink']
-                        },
-                        {
-                            name: 'insert',
-                            items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                        },
-                        '/',
-                    ]
-                });
-
-
-                CKEDITOR.replace('acciones', {
-                    toolbar: [{
-                            name: 'styles',
-                            items: ['Styles', 'Format', 'Font', 'FontSize']
-                        },
-                        {
-                            name: 'colors',
-                            items: ['TextColor', 'BGColor']
-                        },
-                        {
-                            name: 'editing',
-                            groups: ['find', 'selection', 'spellchecker'],
-                            items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-                        }, {
-                            name: 'clipboard',
-                            groups: ['undo'],
-                            items: ['Undo', 'Redo']
-                        },
-                        {
-                            name: 'tools',
-                            items: ['Maximize']
-                        },
-                        {
-                            name: 'basicstyles',
-                            groups: ['basicstyles', 'cleanup'],
-                            items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
-                                '-',
-                                'CopyFormatting', 'RemoveFormat'
-                            ]
-                        },
-                        {
-                            name: 'paragraph',
-                            groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
-                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                                'Blockquote',
-                                '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                                'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
-                            ]
-                        },
-                        {
-                            name: 'links',
-                            items: ['Link', 'Unlink']
-                        },
-                        {
-                            name: 'insert',
-                            items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
-                        },
-                        '/',
-                    ]
-                });
-
+    <script>
+        $(document).ready(function() {
+            CKEDITOR.replace('descripcionriesgo', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
             });
-        </script>
+
+
+            CKEDITOR.replace('acciones', {
+                toolbar: [{
+                        name: 'styles',
+                        items: ['Styles', 'Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'editing',
+                        groups: ['find', 'selection', 'spellchecker'],
+                        items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                    }, {
+                        name: 'clipboard',
+                        groups: ['undo'],
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'basicstyles',
+                        groups: ['basicstyles', 'cleanup'],
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                            '-',
+                            'CopyFormatting', 'RemoveFormat'
+                        ]
+                    },
+                    {
+                        name: 'paragraph',
+                        groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                            'Blockquote',
+                            '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                            'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                        ]
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                    },
+                    '/',
+                ]
+            });
+
+        });
+    </script>
 @endsection

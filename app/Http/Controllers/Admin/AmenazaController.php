@@ -89,7 +89,7 @@ class AmenazaController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $amenaza = new Amenaza();
+        $amenaza = new Amenaza;
 
         return view('admin.amenazas.create', compact('amenaza'));
     }

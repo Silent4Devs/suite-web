@@ -1,11 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- {{ Breadcrumbs::render('riesgo-archivo') }} --}}
+<h3 class="col-12 titulo_general_funcion">Archivo Riesgos</h3>
     <div class="pl-4 pr-4 mt-5 card">
-        <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Archivo Riesgos</strong></h3>
-        </div>
-
         <div class="datatable-fix" style="width: 100%;">
 
             <table class="table tabla_riesgos">
@@ -33,66 +29,67 @@
                 </thead>
                 <tbody>
                     @foreach ($riesgos as $riesgo)
-                        {{-- @if($incidentes->archivar == 'false') --}}
-                            <tr>
-                                <td>{{ $riesgo->folio }}</td>
-                                <td>{{ $riesgo->titulo}}</td>
-                                <td>{{ $riesgo->fecha_creacion}}</td>
-                                <td>{{ $riesgo->fecha_reporte}}</td>
-                                <td>{{ $riesgo->fecha_de_cierre}}</td>
-                                <td>{{ $riesgo->descripcion }}</td>
-                                <td>{{ $riesgo->comentarios }}</td>
-                                <td>{{ $riesgo->estatus }}</td>
-                                <td>{{ $riesgo->sede }}</td>
-                                <td>{{ $riesgo->ubicacion }}</td>
-                                <td>{{ $riesgo->procesos_afectados }}</td>
-                                <td>{{ $riesgo->areas_afectados }}</td>
-                                <td>{{ $riesgo->activos_afectados }}</td>
-                                <td>{{ $riesgo->fecha }}</td>
-                                <td>
-                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar }}" title="{{ $riesgo->reporto->name }}">
-                                </td>
-                                <td>{{ $riesgo->reporto->email }}</td>
-                                <td>{{ $riesgo->reporto->telefono }}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i
+                        {{-- @if ($incidentes->archivar == 'false') --}}
+                        <tr>
+                            <td>{{ $riesgo->folio }}</td>
+                            <td>{{ $riesgo->titulo }}</td>
+                            <td>{{ $riesgo->fecha_creacion }}</td>
+                            <td>{{ $riesgo->fecha_reporte }}</td>
+                            <td>{{ $riesgo->fecha_de_cierre }}</td>
+                            <td>{{ $riesgo->descripcion }}</td>
+                            <td>{{ $riesgo->comentarios }}</td>
+                            <td>{{ $riesgo->estatus }}</td>
+                            <td>{{ $riesgo->sede }}</td>
+                            <td>{{ $riesgo->ubicacion }}</td>
+                            <td>{{ $riesgo->procesos_afectados }}</td>
+                            <td>{{ $riesgo->areas_afectados }}</td>
+                            <td>{{ $riesgo->activos_afectados }}</td>
+                            <td>{{ $riesgo->fecha }}</td>
+                            <td>
+                                <img class="img_empleado"
+                                    src="{{ asset('storage/empleados/imagenes/') }}/{{ $riesgo->reporto->avatar ?? '' }}"
+                                    title="{{ $riesgo->reporto->name ?? ''  }}">
+                            </td>
+                            <td>{{ $riesgo->reporto->email  ?? ''  }}</td>
+                            <td>{{ $riesgo->reporto->telefono  ?? '' }}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{{ route('admin.desk.riesgos-edit', $riesgo->id) }}"><i
                                                 class="fas fa-edit"></i></a>
-                                        </div>
-                                        <div class="col-6">
-                                            <form action="{{route('admin.desk.riesgo-archivo.recuperar', $riesgo->id)}}" method="POST">
-                                                @csrf
-                                                <button class="btn" title="Recuperar" style="all: unset !important;">
-                                                    <i class="fas fa-sign-in-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-
+                                    </div>
+                                    <div class="col-6">
+                                        <form action="{{ route('admin.desk.riesgo-archivo.recuperar', $riesgo->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button class="btn" title="Recuperar" style="all: unset !important;">
+                                                <i class="fas fa-sign-in-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
 
-                                </td>
-                                {{-- <td class="opciones_iconos">
+                                </div>
+
+                            </td>
+                            {{-- <td class="opciones_iconos">
                                     <form action="{{route('admin.inicio-Usuario.capacitaciones.recuperar', $incidentes->id)}}" method="POST">
                                         @csrf
                                         <button class="btn" title="Recuperar" style="all: unset !important;">
-                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:#345183;"></i>
+                                            <i class="fas fa-sign-in-alt" style="font-size: 20pt; color:var(--color-tbj)"></i>
                                         </button>
                                     </form>
                                 </td> --}}
-                            </tr>
-			   			{{-- @endif --}}
-
+                        </tr>
+                        {{-- @endif --}}
                     @endforeach
                 </tbody>
             </table>
         </div><br>
-        <div class="form-group"  style="text-align: right;">
-            <a class="btn_cancelar" href="{{ route('admin.desk.index') }}">
+        <div class="form-group" style="text-align: right;">
+            <a class="btn btn-outline-primary" href="{{ route('admin.desk.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
-
     @endsection
     @section('scripts')
         @parent

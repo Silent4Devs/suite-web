@@ -5,7 +5,7 @@
     <div class="row">
         @livewire('create-recursos-humanos-aia', ['cuestionario_id' => $cuestionario_id])
     </div>
-    
+
     <div class="row">
         <table class="table table-responsive" width="100%">
             <thead class="head-light">
@@ -60,10 +60,10 @@
                             <div style="text-align: left;">{{ $data->correo }}</div>
                         </td>
                         <td style="min-width:40px;">
-                            <i class="fas fa-edit" wire:click.prevent="$emit('editarRecursos',{{ $data->id }})">
+                            <i class="fas fa-edit" wire:click.prevent="$dispatch('editarRecursos',{ id: {{ $data->id }} })">
                             </i>
                             <i class="fas fa-trash-alt text-danger"
-                                wire:click.prevent="$emit('eliminarRecursos',{{ $data->id }})"> </i>
+                                wire:click.prevent="$dispatch('eliminarRecursos',{ id: {{ $data->id }} })"> </i>
                         </td>
                     </tr>
                 @endforeach

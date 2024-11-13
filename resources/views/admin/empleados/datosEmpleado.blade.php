@@ -72,7 +72,7 @@
 
                     {{-- <div class="col-md-4"> --}}
                     <div class="mb-4 d-flex" style="margin-left: 70%;position: absolute;top: 4%;">
-                        <a class="btn btn-danger" href="javascript:window.print()" id="but">Imprimir</a>
+                        <a class="btn btn-primary" href="javascript:window.print()" id="but">Imprimir</a>
                     </div>
                     {{-- </div> --}}
                     @php

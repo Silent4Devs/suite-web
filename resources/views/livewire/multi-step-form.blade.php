@@ -12,7 +12,7 @@
             font-size: 13px;
             padding: 5px;
             background: #3451837a;
-            border: 2px solid #345183;
+            border: 2px solid var(--color-tbj);
             color: #353535;
             border-radius: 5px;
         }
@@ -49,7 +49,7 @@
             height: 20px;
             width: 20px;
             background-color: #f9f9f9;
-            border: 1px solid #345183;
+            border: 1px solid var(--color-tbj);
         }
 
         /* On mouse-over, add a grey background color */
@@ -94,7 +94,7 @@
             height: 120px;
             margin: 5px;
             float: left;
-            border: 2px solid #345183;
+            border: 2px solid var(--color-tbj);
             box-sizing: border-box;
             border-radius: 10px;
         }
@@ -135,7 +135,7 @@
 
         input[type=checkbox]:checked~div {
             color: #ffffff;
-            background: #345183;
+            background: var(--color-tbj);
             border-radius: 7px;
             border: none;
             /* box-shadow: 5px 5px 5px 0px #004d4d; */
@@ -144,7 +144,7 @@
         input[type=checkbox]:checked~input[type=number] {
             border-bottom: 2px solid rgb(78 230 236);
             color: #ffffff;
-            background: #345183;
+            background: var(--color-tbj);
             text-align: center;
         }
 
@@ -179,9 +179,10 @@
             padding: 0;
         }
 
+        #progressbar .active:before,
         #progressbar .active {
             z-index: 1;
-            color: #345183;
+            color: var(--color-tbj) !important;
         }
 
         #progressbar li {
@@ -232,9 +233,12 @@
             font-size: 20px;
             color: #ffffff;
             background: lightgray;
+            backdrop-filter: blur(1000px);
             border-radius: 50%;
             margin: 0 auto 10px auto;
-            padding: 2px
+            padding: 2px;
+            position: relative;
+            z-index: 5;
         }
 
         #progressbar li:after {
@@ -250,8 +254,8 @@
 
         #progressbar li.active:before,
         #progressbar li.active:after {
-            background: #345183;
-            z-index: -1;
+            background: var(--color-tbj);
+            color: #fff !important;
         }
 
         .progress {
@@ -259,12 +263,12 @@
         }
 
         .progress-bar {
-            background-color: #345183;
+            background-color: var(--color-tbj);
         }
 
         .head {
             text-transform: capitalize;
-            color: #345183;
+            color: var(--color-tbj);
             font-weight: normal
         }
 
@@ -415,7 +419,7 @@
     </style>
     <div class="container row justify-content-center">
         <div class="mt-3 col-12" style="position: relative;">
-            <form wire:submit.prevent="register">
+            <form wire:submit="register">
                 {{-- STEP 1 --}}
                 @if ($currentStep == 1)
                     <div class="step-one">
@@ -466,7 +470,7 @@
                                                 <i class="mr-1 fas fa-user-circle iconos-crear"></i> Nombre <span
                                                     class="text-danger">*</span>
                                             </label>
-                                            <input type="text" wire:model.defer="nombre"
+                                            <input type="text" wire:model="nombre"
                                                 class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                                 id="nombre" aria-describedby="nombreHelp" name="nombre"
                                                 maxlength="250" value="{{ old('nombre') }}">
@@ -486,7 +490,7 @@
                                                 <i class="mr-1 fas fa-file-signature iconos-crear"></i> Descripción
                                             </label>
                                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id=""
-                                                cols="1" wire:model.defer="descripcion" rows="1">{{ old('descripcion') }}</textarea>
+                                                cols="1" wire:model="descripcion" rows="1">{{ old('descripcion') }}</textarea>
                                             <small id="descripcionHelp" class="form-text text-muted">Ingresa la
                                                 descripción de la evaluación</small>
                                             @if ($errors->has('descripcion'))
@@ -529,7 +533,7 @@
                                                             {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
                                                             {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
                                                             <input type="checkbox" type="checkbox"
-                                                                wire:model.lazy="includeCompetencias"
+                                                                wire:model.blur="includeCompetencias"
                                                                 wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -538,7 +542,7 @@
                                                 <div class="col-7 {{ $showPesoGeneralCompetencias ? '' : 'd-none' }}"
                                                     style="position: relative;">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model.defer="pesoGeneralCompetencias"
+                                                        wire:model="pesoGeneralCompetencias"
                                                         id="pesoGeneralCompetencias" class="form-control" type="text"
                                                         pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
@@ -555,7 +559,7 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model.lazy="includeObjetivos"
+                                                            <input type="checkbox" wire:model.blur="includeObjetivos"
                                                                 class="form-check-input" type="checkbox"
                                                                 wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
                                                             <span class="checkmark"></span>
@@ -564,16 +568,15 @@
                                                 </div>
                                                 <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model.defer="pesoGeneralObjetivos"
-                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
-                                                        pattern="[0-9]*"
+                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
+                                                        class="form-control" type="text" pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                                 <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
                                                     <select class="form-control" name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
+                                                        id="catalogoObjetivos" wire:model="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
                                                             de
                                                             Parametros que utilizara la Evaluacion</option>
@@ -605,11 +608,11 @@
                                             <div>
                                                 <div class="mb-3 row">
                                                     <div class="col-8">
-                                                        <input class="form-control" type="text" wire:model="search"
+                                                        <input class="form-control" type="text" wire:model.live="search"
                                                             placeholder="Buscar competencia...">
                                                     </div>
                                                     <div class="col-4">
-                                                        <select wire:model="filter" class="form-control">
+                                                        <select wire:model.live="filter" class="form-control">
                                                             @foreach ($tipos as $tipo)
                                                                 <option value="{{ $tipo->id }}">
                                                                     {{ $tipo->nombre }}
@@ -631,7 +634,7 @@
                                                         <tbody>
                                                             @foreach ($competencias as $competencia)
                                                                 <tr>
-                                                                    <th scope="row"><input wire:model.prevent="selected"
+                                                                    <th scope="row"><input wire:model.live.prevent="selected"
                                                                             value="{{ $competencia->id }}"
                                                                             type="checkbox">
                                                                     </th>
@@ -722,7 +725,7 @@
                                                 </label>
                                                 <select
                                                     class="mt-2 form-control {{ $errors->has('evaluados_objetivo') ? 'is-invalid' : '' }}"
-                                                    wire:model.lazy="evaluados_objetivo" id="evaluados_objetivo"
+                                                    wire:model.blur="evaluados_objetivo" id="evaluados_objetivo"
                                                     name="evaluados_objetivo"
                                                     wire:change="habilitarSelectAlternativo()">
                                                     <option value="" selected>-- Seleciona una opción --</option>
@@ -749,7 +752,7 @@
                                                 @if ($habilitarSelectAreas)
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_area') ? 'is-invalid' : '' }}"
-                                                        id="by_area" wire:model.defer="by_area">
+                                                        id="by_area" wire:model="by_area">
                                                         <option value="" selected>-- Seleciona el área a evaluar
                                                             --
                                                         </option>
@@ -770,7 +773,7 @@
                                                         evaluar</label>
                                                     <select
                                                         class="mt-3 form-control {{ $errors->has('by_manual') ? 'is-invalid' : '' }}"
-                                                        multiple id="by_manual" wire:model.defer="by_manual">
+                                                        multiple id="by_manual" wire:model="by_manual">
                                                         @foreach ($empleados as $empleado)
                                                             <option value="{{ $empleado->id }}">
                                                                 {{ $empleado->name }}
@@ -848,7 +851,7 @@
                                         <article class="ml-5 feature1">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('jefe_inmediato')"
-                                                wire:model.lazy="evaluado_por_jefe" wire:target="evaluado_por_jefe"
+                                                wire:model.blur="evaluado_por_jefe" wire:target="evaluado_por_jefe"
                                                 id="feature1" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
@@ -864,9 +867,8 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_jefe)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionJefe"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionJefe" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionJefe'))
@@ -880,7 +882,7 @@
                                         <article class="feature2">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('misma_area')"
-                                                wire:model.lazy="evaluado_por_misma_area" id="feature2"
+                                                wire:model.blur="evaluado_por_misma_area" id="feature2"
                                                 wire:target="evaluado_por_misma_area" wire:loading.attr="readonly" />
                                             <div>
                                                 <div>
@@ -898,9 +900,8 @@
                                                 </div>
                                             </div>
                                             @if ($evaluado_por_misma_area)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionArea"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoEvaluacionArea" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoEvaluacionArea'))
@@ -910,10 +911,10 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 ml-5 feature3">
+                                        <article class=" ml-5 feature3">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('equipo_a_cargo')"
-                                                wire:model.lazy="evaluado_por_equipo_a_cargo" id="feature3"
+                                                wire:model.blur="evaluado_por_equipo_a_cargo" id="feature3"
                                                 wire:target="evaluado_por_equipo_a_cargo"
                                                 wire:loading.attr="readonly" />
                                             <div>
@@ -930,7 +931,7 @@
                                                 </span>
                                             </div>
                                             @if ($evaluado_por_equipo_a_cargo)
-                                                <input class="ml-4" wire:model.defer="pesoEvaluacionEquipo"
+                                                <input class="ml-4" wire:model="pesoEvaluacionEquipo"
                                                     type="number" placeholder="Define peso..." max="100"
                                                     min="0">
                                                 <span
@@ -942,10 +943,10 @@
                                             @endif
                                         </article>
 
-                                        <article class="mt-4 feature4">
+                                        <article class=" feature4">
                                             <input readonly disabled type="checkbox"
                                                 wire:change="restarGrados('autoevaluacion')"
-                                                wire:model.lazy="autoevaluacion" id="feature4"
+                                                wire:model.blur="autoevaluacion" id="feature4"
                                                 wire:target="autoevaluacion" wire:loading.attr="readonly" />
                                             <div>
                                                 <span class="text-center">
@@ -961,9 +962,8 @@
                                                 </span>
                                             </div>
                                             @if ($autoevaluacion)
-                                                <input class="ml-4" wire:model.defer="pesoAutoevaluacion"
-                                                    type="number" placeholder="Define peso..." max="100"
-                                                    min="0">
+                                                <input class="ml-4" wire:model="pesoAutoevaluacion" type="number"
+                                                    placeholder="Define peso..." max="100" min="0">
                                                 <span
                                                     style="position: absolute;top: 89px;color: white;left: 83px;">%</span>
                                                 @if ($errors->has('pesoAutoevaluacion'))
@@ -1006,7 +1006,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
@@ -1024,7 +1024,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['autoevaluacion']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.autoevaluacion.id"
                                                             style="pointer-events: none; -webkit-appearance: none;">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
@@ -1043,7 +1043,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1059,7 +1059,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['jefe']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.jefe.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1076,7 +1076,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.par.id">
                                                             {{-- <option value="" selected>Selecciona un evaluador</option> --}}
                                                             @foreach ($empleados as $empleado)
                                                                 <option value="{{ $empleado->id }}">
@@ -1092,7 +1092,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['par']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.par.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.par.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1110,7 +1110,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1127,7 +1127,7 @@
                                                     <td style="text-align: left !important;">
                                                         {{-- <p>{{$listaEvaluado['evaluadores']['subordinado']['id']}}</p> --}}
                                                         <select name="" id="" class="form-control"
-                                                            wire:model.defer="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
+                                                            wire:model="listaEvaluados.{{ $index }}.evaluadores.subordinado.id">
                                                             <option value="" selected>Selecciona un evaluador
                                                             </option>
                                                             @foreach ($empleados as $empleado)
@@ -1291,13 +1291,13 @@
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Inicio</p>
                                             <input class="form-control" type="date"
-                                                wire:model.defer="periodos.{{ $idx }}.fecha_inicio"
+                                                wire:model="periodos.{{ $idx }}.fecha_inicio"
                                                 value="{{ $periodo['fecha_inicio'] }}">
                                         </div>
                                         <div class="pl-0 col-3">
                                             <p class="m-0 text-muted">Fecha Fin</p>
                                             <input class="form-control" type="date"
-                                                wire:model.defer="periodos.{{ $idx }}.fecha_fin"
+                                                wire:model="periodos.{{ $idx }}.fecha_fin"
                                                 value="{{ $periodo['fecha_fin'] }}">
                                         </div>
                                         <div class="col-2">
@@ -1309,12 +1309,12 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <button class="mt-4 btn btn-sm btn-outline-primary" id="addPeriodo"
+                                <button type="button" class="mt-4 btn btn-sm btn-outline-primary" id="addPeriodo"
                                     wire:click="addPeriodo()"><i class="mr-2 fas fa-plus"></i> Añadir Periodo</button>
                                 <hr>
                                 <label class="container-check">Enviar notificación por email a los evaluadores
                                     <input class="form-check-input" type="checkbox" id="sendEmail"
-                                        wire:model.defer="sendEmail">
+                                        wire:model="sendEmail">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>

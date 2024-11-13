@@ -18,13 +18,13 @@
         <img class="screenshot-image d-none" alt="">
 
         <div class="controls">
-            <button class="btn btn-success play" title="Iniciar"><i class="bi bi-play"></i></button>
+            <button class="btn btn-primary play" title="Iniciar"><i class="bi bi-play"></i></button>
             <button class="btn btn-info pause d-none" title="Pausar"><i class="bi bi-pause"></i></button>
-            <button class="btn btn-danger stop d-none" title="Detener"><i class="bi bi-stop"></i></button>
+            <button class="btn btn-primary stop d-none" title="Detener"><i class="bi bi-stop"></i></button>
             <button class="btn btn-dark screenshot d-none" title="Capturar"><i class="bi bi-camera"></i></button>
         </div>
     </div>
-    <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.defer="foto" name="snap_foto"
+    <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model="foto" name="snap_foto"
         class="imageCrop" enctype="multipart/form-data">
 </div>
 @error('foto')

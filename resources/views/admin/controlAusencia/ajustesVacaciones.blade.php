@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Ajustes-vacaciones') }}
+    {{-- {{ Breadcrumbs::render('Ajustes-vacaciones') }} --}}
 
     <h5 class="titulo_general_funcion">Administración de Vacaciones</h5>
 

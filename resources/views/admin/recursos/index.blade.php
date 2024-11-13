@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
     <style>
-         .btn-outline-success {
+        .btn-outline-success {
             background: #788bac !important;
             color: white;
             border: none;
@@ -25,8 +24,8 @@
 
         .btn_cargar {
             border-radius: 100px !important;
-            border: 1px solid #345183;
-            color: #345183;
+            border: 1px solid var(--color-tbj);
+            color: var(--color-tbj);
             text-align: center;
             padding: 0;
             width: 35px;
@@ -41,7 +40,6 @@
         .agregar {
             margin-right: 15px;
         }
-
     </style>
 
     {{ Breadcrumbs::render('admin.recursos.index') }}
@@ -57,74 +55,76 @@
                     Garantizar que todos en la empresa tengan el conocimiento certificando que este se comparta y perdure.
                 </p>
                 <p>
-                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por la organización.
+                    Esto asegura que todos los miembros del personal comprendan las prácticas y directrices establecidas por
+                    la organización.
                 </p>
             </div>
         </div>
     </div>
-            <div class="text-right">
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar Capacitaciones</a>
-                </div>
-            </div>
-            @include('partials.flashMessages')
-            <div class="datatable-fix datatable-rds">
-                <div class="d-flex justify-content-end">
-                    <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
-                        <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                    </a> &nbsp;&nbsp;&nbsp;
-                    <a class="boton-transparente boton-sin-borde" id="btnImport">
-                        <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                    </a>
-                    @include('csvImport.modalcapacitaciones', [
-                        'model' => 'Vulnerabilidad',
-                        'route' => 'admin.vulnerabilidads.parseCsvImport',
-                    ])
-                </div>
-                <h3 class="title-table-rds"> Capacitaciones</h3>
-                <table class="datatable datatable-Recurso" id="datatable-Recurso">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th></th>
-                            <th>
-                                {{ trans('cruds.recurso.fields.id') }}
-                            </th>
-                            <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </th>
-                            <th>
-                                {{ trans('cruds.recurso.fields.participantes') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </th>
-                            <th>
-                                {{ trans('cruds.recurso.fields.instructor') }}
-                            </th>
-                            <th>
-                                Tipo
-                            </th>
-                            <th>
-                                Modalidad
-                            </th>
-                            <th>
-                                Estatus
-                            </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+    <div class="text-right">
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.recursos.create') }}" type="button" class="btn btn-primary">Registrar
+                Capacitaciones</a>
+        </div>
+    </div>
+    @include('partials.flashMessages')
+    <div class="datatable-fix datatable-rds">
+        <div class="d-flex justify-content-end">
+            <a class="boton-transparente boton-sin-borde" href="{{ route('descarga-categoriacapacitacion') }}">
+                <img src="{{ asset('download_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+            </a> &nbsp;&nbsp;&nbsp;
+            <a class="boton-transparente boton-sin-borde" id="btnImport">
+                <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+            </a>
+            @include('csvImport.modalcapacitaciones', [
+                'model' => 'Vulnerabilidad',
+                'route' => 'admin.vulnerabilidads.parseCsvImport',
+            ])
+        </div>
+        <h3 class="title-table-rds"> Capacitaciones</h3>
+        <table class="datatable datatable-Recurso" id="datatable-Recurso">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>
+                        {{ trans('cruds.recurso.fields.id') }}
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                        {{ trans('cruds.recurso.fields.participantes') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                        {{ trans('cruds.recurso.fields.instructor') }}
+                    </th>
+                    <th>
+                        Tipo
+                    </th>
+                    <th>
+                        Modalidad
+                    </th>
+                    <th>
+                        Estatus
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 @endsection
 @section('scripts')
     @parent
     <script>
         $('#btnImport').on('click', function(e) {
-        e.preventDefault();
-        $('#xlsxImportModal').modal('show');
-     });
+            e.preventDefault();
+            $('#xlsxImportModal').modal('show');
+        });
     </script>
 
     <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
@@ -239,29 +239,39 @@
             @can('capacitaciones_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.recursos.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.recursos.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -408,51 +418,63 @@
                 ]
             };
             let table = $('.datatable-Recurso').DataTable(dtOverrideGlobals);
-            document.querySelector('#DataTables_Table_0').addEventListener('click', function(e) {
+            // Función para mostrar la alerta de confirmación
+            function showDeleteConfirmation(url) {
+                return Swal.fire({
+                    title: '¿Quieres eliminar esta capacitación?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'No',
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        await handleDelete(url);
+                    }
+                });
+            }
+
+            // Función para manejar la solicitud de eliminación
+            async function handleDelete(url) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            Accept: "application/json",
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+                        },
+                    });
+                    const data = await response.json();
+                    if (data.estatus === 200) {
+                        toastr.success(data.mensaje);
+                        window.location.reload();
+                        // Aquí necesitas acceso a la tabla para recargarla
+                        // table.ajax.reload();
+                    } else if (data.estatus === 500) {
+                        toastr.error(data.mensaje);
+                    }
+                } catch (error) {
+                    toastr.error(error);
+                }
+            }
+
+            // Event listener para capturar los clics en el documento
+            document.addEventListener('click', function(e) {
                 let target = e.target;
-                if (e.target.tagName == 'I') {
-                    target = e.target.closest('button')
+                if (target.tagName === 'I') {
+                    target = target.closest('button');
                 }
 
-                if (target.classList.contains('btn-eliminar')) {
-                    const url = e.target.getAttribute('data-url');
-                    Swal.fire({
-                        title: '¿Quieres eliminar esta capacitación?',
-                        text: "¡No podrás revertir esto!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: '¡Sí, eliminar!',
-                        cancelButtonText: 'No',
-                    }).then(async (result) => {
-                        if (result.isConfirmed) {
-                            try {
-                                const response = await fetch(url, {
-                                    method: 'DELETE',
-                                    body: {},
-                                    headers: {
-                                        Accept: "application/json",
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                            .attr(
-                                                'content'),
-                                    },
-                                })
-                                const data = await response.json();
-                                if (data.estatus == 200) {
-                                    toastr.success(data.mensaje);
-                                    table.ajax.reload();
-                                }
-                                if (data.estatus == 500) {
-                                    toastr.error(data.mensaje);
-                                }
-                            } catch (error) {
-                                toastr.error(error);
-                            }
-                        }
-                    })
+                if (target && target.classList.contains('btn-eliminar')) {
+                    const url = target.getAttribute('data-url');
+                    if (url) {
+                        showDeleteConfirmation(url);
+                    }
                 }
-            })
+            });
         });
     </script>
 @endsection

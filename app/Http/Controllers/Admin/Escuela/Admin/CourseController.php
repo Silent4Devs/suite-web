@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Escuela\Course;
@@ -9,7 +9,7 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::where('status', 2)->paginate();
+        $courses = Course::where('status', 2)->orderByDesc('id')->cursorPaginate();
 
         return view('admin.courses.index', compact('courses'));
     }
