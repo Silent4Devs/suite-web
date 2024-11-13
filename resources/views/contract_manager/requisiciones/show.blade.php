@@ -135,42 +135,43 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row gy-4">
                             <div class="col s12 l6">
                                 <strong>Proveedor:</strong><br><br>
                                 {{ $provedores->proveedor }}
                             </div>
-                            <div class="row">
-                                <div class="col s12 l4">
+                            <div class="row gy-4">
+                                <div class="col-sm-12 col-lg-2">
                                     <strong>Nombre del contacto:</strong><br><br>
                                     {{ $provedores->contacto }}
                                 </div>
-                                <div class="col s12 l4">
+                                <div class="col-sm-12 col-lg-1">
                                     <strong>Fecha Inicio:</strong><br><br>
                                     {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
                                 </div>
-                                <div class="col s12 l4">
+                                <div class="col-sm-12 col-lg-1">
                                     <strong>Teléfono:</strong><br><br>
                                     {{ $provedores->cel }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <br><br>
+                                <div class="col-sm-12 col-lg-2">
+                                    {{-- <br><br> --}}
                                     <strong>Correo Electrónico:</strong><br><br>
                                     {{ $provedores->contacto_correo }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <br><br>
+                                <div class="col-sm-12 col-lg-1">
+                                    {{-- <br><br> --}}
                                     <strong>Fecha Fin:</strong><br><br>
                                     {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <br><br>
+                                <div class="col-sm-12 col-lg-2">
+                                    {{-- <br><br> --}}
                                     <strong>URL:</strong><br><br>
                                     {{ $provedores->url }}
                                 </div>
-                                <div class="col s12 14">
+                                <div class="col-sm-12 col-lg-2">
                                     <label for="" class="txt-tamaño">
-                                        Cotizaciones <font class="asterisco">*</font>
+                                        <strong>Cotizaciones: <font class="asterisco">*</font></strong><br><br>
+                                        {{-- Cotizaciones <font class="asterisco">*</font> --}}
                                     </label>
                                     <div class="row" style="gap: 25px;">
                                         <div style="min-width: 300px;">Cotizacion actual: <a
@@ -181,15 +182,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-4">
                                 <strong>Comentarios:</strong><br><br>
                                 {{ $provedores->comentarios }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-4">
                                 <strong>Nombre del contacto:</strong><br><br>
                                 {{ $provedores->contacto }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-4">
                                 Cotizacion actual: <a
                                     href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                                     style="text-decoration: underline; color: deepskyblue;" target="_blank">Descargar
@@ -197,24 +198,24 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s12 l6">
+                        <div class="row gy-4">
+                            <div class="ccol-sm-12 col-lg-2">
                                 <strong>Fecha Inicio:</strong><br><br>
                                 {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>Teléfono:</strong><br><br>
                                 {{ $provedores->cel }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-3">
                                 <strong>Correo Electrónico:</strong><br><br>
                                 {{ $provedores->contacto_correo }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>Fecha Fin:</strong><br><br>
                                 {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>URL:</strong><br><br>
                                 {{ $provedores->url }}
                             </div>
