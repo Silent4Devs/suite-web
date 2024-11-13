@@ -107,10 +107,12 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+        $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
         return view('livewire.escuela.course-status');
+
     }
 
     //METODOS
