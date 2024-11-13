@@ -10,7 +10,9 @@ class TBRiskAnalysisScaleModel extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $table = 'scales_risk_analysis';
+
     protected $fillable = [
         'id',
         'nombre',

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TBAnswerSheetRiskAnalysisModel extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
 
     protected $table = 'answers_sheet_risk_analysis';

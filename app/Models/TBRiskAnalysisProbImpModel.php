@@ -10,7 +10,9 @@ class TBRiskAnalysisProbImpModel extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $table = 'prob_imp_risk_analysis';
+
     protected $fillable = [
         'id',
         'nombre',

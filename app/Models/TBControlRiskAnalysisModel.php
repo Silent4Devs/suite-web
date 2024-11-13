@@ -25,7 +25,8 @@ class TBControlRiskAnalysisModel extends Model
         'file',
     ];
 
-    public function control(){
-        return $this->hasOne(GapDosCatalogoIso::class,'id','control_id');
+    public function control()
+    {
+        return $this->hasOne(GapDosCatalogoIso::class, 'id', 'control_id');
     }
 }

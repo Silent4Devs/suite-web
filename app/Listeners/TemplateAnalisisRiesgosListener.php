@@ -2,11 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Models\TBQuestionTemplateAnalisisRiesgoModel;
 use App\Models\TBTemplateLogRiskAnalysisModel;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use PhpParser\Node\Stmt\TryCatch;
 
 class TemplateAnalisisRiesgosListener
 {
@@ -25,22 +21,22 @@ class TemplateAnalisisRiesgosListener
     {
         $step = $event->step;
 
-        switch($step){
+        switch ($step) {
             case 'TBEscalaAnalisisRiesgoModel':
                 $template_id = $event->model->templateAr_escala->template_id;
                 TBTemplateLogRiskAnalysisModel::create([
-                            'step' => 'Escalas',
-                            'action' => $event->tipo_consulta,
-                            'empleado_id' =>  auth()->user()->empleado->id,
-                            'template_id' => $template_id,
-                        ]);
+                    'step' => 'Escalas',
+                    'action' => $event->tipo_consulta,
+                    'empleado_id' => auth()->user()->empleado->id,
+                    'template_id' => $template_id,
+                ]);
                 break;
             case 'TBProbabilidadImpactoAnalisisRiesgoModel':
                 $template_id = $event->model->templateAr_prob_imp->template_id;
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Escalas',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                     'template_id' => $template_id,
                 ]);
                 break;
@@ -49,7 +45,7 @@ class TemplateAnalisisRiesgosListener
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Escalas',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                     'template_id' => $template_id,
                 ]);
                 break;
@@ -58,7 +54,7 @@ class TemplateAnalisisRiesgosListener
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Escalas',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                     'template_id' => $template_id,
                 ]);
                 break;
@@ -67,9 +63,9 @@ class TemplateAnalisisRiesgosListener
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Template',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  354,
+                    // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    // 'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' =>  auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBQuestionTemplateAnalisisRiesgoModel':
@@ -78,9 +74,9 @@ class TemplateAnalisisRiesgosListener
                     TBTemplateLogRiskAnalysisModel::create([
                         'step' => 'Template',
                         'action' => $event->tipo_consulta,
-                        'empleado_id' =>  354,
+                        // 'empleado_id' => 354,
                         'template_id' => $template_id,
-                        // 'empleado_id' =>  auth()->user()->empleado->id,
+                        'empleado_id' =>  auth()->user()->empleado->id,
                     ]);
                 } catch (\Throwable $th) {
                     //throw $th;
@@ -91,9 +87,9 @@ class TemplateAnalisisRiesgosListener
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Formulas',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  354,
+                    // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    // 'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' =>  auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBSettingsTemplateAR_TBFormulaTemplateARModel':
@@ -101,22 +97,22 @@ class TemplateAnalisisRiesgosListener
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Configuración',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  354,
+                    // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    // 'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' =>  auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBSettingsTemplateAR_TBQuestionTemplateARModel':
                 // $template_id = $event;
                 // dd($template_id);
                 // dd($event->model->template_id);
-                $template_id= $event->model->template_id;
+                $template_id = $event->model->template_id;
                 TBTemplateLogRiskAnalysisModel::create([
                     'step' => 'Configuración',
                     'action' => $event->tipo_consulta,
-                    'empleado_id' =>  354,
+                    // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    // 'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' =>  auth()->user()->empleado->id,
                 ]);
                 break;
         }

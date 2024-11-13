@@ -3,10 +3,8 @@
 namespace App\Http\Livewire\AnalisisRiesgos;
 
 use App\Models\PlanImplementacion;
-use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBRiskAnalysisModel;
-use App\Models\TBSectionRiskAnalysisModel;
 use App\Models\TBSheetRiskAnalysisModel;
 use App\Models\User;
 use Livewire\Component;
@@ -14,13 +12,19 @@ use Livewire\Component;
 class TreatmentPlan extends Component
 {
     public $question_id;
+
     public $sheetId;
+
     public $riskName;
+
     public $sheets;
 
     public $parent;
+
     public $inicio;
+
     public $fin;
+
     public $objetivo;
 
     protected $listeners = ['treatmentPlan'];
@@ -87,10 +91,11 @@ class TreatmentPlan extends Component
             'treatment_plan_id' => $planImplementacion->id,
         ]);
 
-        redirect()->route('admin.planes-de-accion.show',$planImplementacion->id);
+        redirect()->route('admin.planes-de-accion.show', $planImplementacion->id);
     }
 
-    public function selectSheetId($id){
+    public function selectSheetId($id)
+    {
         $this->sheetId = $id;
     }
 
@@ -98,12 +103,12 @@ class TreatmentPlan extends Component
     {
         $risk = TBRiskAnalysisModel::find($riskAnalysisId);
 
-        $this->sheets = TBPeriodSheetRiskAnalysisModel::where('period_id',$period)->whereNotNull('initial_risk')->get();
+        $this->sheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period)->whereNotNull('initial_risk')->get();
         // dd($this->sheets);
         // dd($this->sheets->count());
-        if(!is_null($period)){
-            foreach($this->sheets as $key => $sheet){
-                if(!$sheet->sheet->require_treatment_plan){
+        if (! is_null($period)) {
+            foreach ($this->sheets as $key => $sheet) {
+                if (! $sheet->sheet->require_treatment_plan) {
                     $this->sheets->pull($key);
                 }
             }

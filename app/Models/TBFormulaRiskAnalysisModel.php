@@ -12,7 +12,9 @@ class TBFormulaRiskAnalysisModel extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
     protected $table = 'formulas_risk_analysis';
+
     protected $fillable = [
         'id',
         'title',

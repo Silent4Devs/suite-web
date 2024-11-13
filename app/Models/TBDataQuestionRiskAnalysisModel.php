@@ -12,7 +12,9 @@ class TBDataQuestionRiskAnalysisModel extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
     protected $table = 'data_questions_risk_analysis';
+
     protected $fillable = [
         'id',
         'minimum',

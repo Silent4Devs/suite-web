@@ -16,10 +16,15 @@ class ControlsRiskAnalysis extends Component
     use WithFileUploads;
 
     public $riskAnalysisId;
+
     public $sheetId;
+
     public $controlsSheet = [];
+
     public $cloneControlsSheet = [];
+
     public $folder;
+
     protected $listeners = ['reload'];
 
     public function reload($sheetId)
@@ -45,9 +50,10 @@ class ControlsRiskAnalysis extends Component
         $file = $control['file'];
         $uuid = Str::uuid()->toString();
         $date = Carbon::now()->format('d-m-Y');
-        $fileName =  'control-' . $control['control'] . '-' . $uuid . '-' . $date;
+        $fileName = 'control-'.$control['control'].'-'.$uuid.'-'.$date;
         $extension = $file->getClientOriginalExtension();
-        $path =  $file->storeAs($this->folder, $fileName . '.' . $extension);
+        $path = $file->storeAs($this->folder, $fileName.'.'.$extension);
+
         return $path;
     }
 
@@ -57,7 +63,7 @@ class ControlsRiskAnalysis extends Component
         if (! Storage::exists($this->folder)) {
             Storage::makeDirectory($this->folder);
         }
-        if ($control['file'] && !is_string($control['file'])) {
+        if ($control['file'] && ! is_string($control['file'])) {
             $control['file'] = $this->controlFile($control);
         }
         $controlRegister = TBControlRiskAnalysisModel::find($control['id']);
@@ -78,7 +84,7 @@ class ControlsRiskAnalysis extends Component
             'applicability' => $control['applicability'],
             'is_apply' => $control['is_apply'],
             'justification' => $control['justification'],
-            'file' => $control['file']
+            'file' => $control['file'],
         ]);
 
         TBSheetRA_ControlRAModel::create([
@@ -126,7 +132,7 @@ class ControlsRiskAnalysis extends Component
         $controlsRegisters->filter(function ($item) use ($idsCatalogueControls, &$controlsSame) {
             if ($idsCatalogueControls->contains(optional($item->controlSheet)->control_id)) {
                 $data = [
-                    'id' =>  $item->controlSheet->id,
+                    'id' => $item->controlSheet->id,
                     'sheet_id' => $item->sheet_id,
                     'control_id' => $item->controlSheet->control_id,
                     'control' => $item->controlSheet->control->control_iso,
@@ -142,7 +148,7 @@ class ControlsRiskAnalysis extends Component
         });
         // flter controls diferent
         $catalogueControls->filter(function ($item) use ($idsControlsRegister, &$controlsDiferent) {
-            if (!$idsControlsRegister->contains(optional($item)->id)) {
+            if (! $idsControlsRegister->contains(optional($item)->id)) {
                 $data = [
                     'id' => null,
                     'sheet_id' => null,
@@ -174,7 +180,7 @@ class ControlsRiskAnalysis extends Component
     public function mount($riskAnalysisId)
     {
         $this->riskAnalysisId = $riskAnalysisId;
-        $this->folder = 'public/risk_analysis/' . $this->riskAnalysisId;
+        $this->folder = 'public/risk_analysis/'.$this->riskAnalysisId;
         // dd($riskAnalysisId);
     }
 
@@ -182,6 +188,7 @@ class ControlsRiskAnalysis extends Component
     {
         // $this->emit('ejecutarScript');
         $this->emit('scriptTabla2');
+
         return view('livewire.analisis-riesgos.controls-risk-analysis');
     }
 }

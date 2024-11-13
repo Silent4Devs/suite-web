@@ -39,6 +39,6 @@ class TBRiskAnalysisGeneralModel extends Model
 
     public function riskAnalysis()
     {
-        return $this->hasOne(TBRiskAnalysisModel::class,'id');
+        return $this->hasOne(TBRiskAnalysisModel::class, 'id');
     }
 }

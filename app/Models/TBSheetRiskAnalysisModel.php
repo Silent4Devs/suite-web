@@ -25,14 +25,14 @@ class TBSheetRiskAnalysisModel extends Model
     ];
 
     protected static function boot()
-{
-    parent::boot();
+    {
+        parent::boot();
 
-    static::deleting(function ($a) {
-        // Marcar como eliminados lógicamente los registros en la tabla de pivote `C`
-        $a->PeriodSheetDelete()->update(['deleted_at' => now()]);
-    });
-}
+        static::deleting(function ($a) {
+            // Marcar como eliminados lógicamente los registros en la tabla de pivote `C`
+            $a->PeriodSheetDelete()->update(['deleted_at' => now()]);
+        });
+    }
 
     public function answersSheet()
     {

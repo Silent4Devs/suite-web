@@ -17,9 +17,9 @@ use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use function PHPSTORM_META\type;
 
@@ -182,7 +182,7 @@ class templateAnalisisRiesgoController extends Controller
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
                         'is_numeric' => $question->isNumeric,
-                        'uuid_formula' => $uuid ? $uuid:null,
+                        'uuid_formula' => $uuid ? $uuid : null,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -200,6 +200,7 @@ class templateAnalisisRiesgoController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
+
                     continue;
                 }
             } else {
@@ -898,7 +899,7 @@ class templateAnalisisRiesgoController extends Controller
                 foreach ($sections as $index => $section) {
                     $data = $section->questions;
                     $sectionId = $section->id;
-                    $newQuestions = $data->map(function ($itm) use ($sectionId, $index) {
+                    $newQuestions = $data->map(function ($itm) use ($sectionId) {
                         // if ($index === 0) {
                         //     $itm['type'] === '11' ? $itm['position'] = $itm['position'] + 5 : null;
                         //     if ($itm['type'] !== '10' && $itm['type'] !== '11' && $itm['type'] !== '12' && $itm['type'] !== '13' && $itm['type'] !== '14') {
@@ -1219,42 +1220,47 @@ class templateAnalisisRiesgoController extends Controller
 
     }
 
-    public function verifyUuidFormula($question){
-        switch($question->type){
+    public function verifyUuidFormula($question)
+    {
+        switch ($question->type) {
             case '3':
-                $uuid=Str::uuid();
+                $uuid = Str::uuid();
                 $uuid = substr($uuid, 0, 5);
+
                 return $uuid;
                 break;
             case '5':
-                if($question->is_numeric){
-                    $uuid=Str::uuid();
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
                     $uuid = substr($uuid, 0, 5);
+
                     return $uuid;
-                }else {
+                } else {
                     return null;
                 }
                 break;
             case '6':
-                if($question->is_numeric){
-                    $uuid=Str::uuid();
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
                     $uuid = substr($uuid, 0, 5);
+
                     return $uuid;
-                }else {
+                } else {
                     return null;
                 }
                 break;
             case '7':
-                if($question->is_numeric){
-                    $uuid=Str::uuid();
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
                     $uuid = substr($uuid, 0, 5);
+
                     return $uuid;
-                }else {
+                } else {
                     return null;
                 }
                 break;
             default:
-            return null;
+                return null;
         }
     }
 }

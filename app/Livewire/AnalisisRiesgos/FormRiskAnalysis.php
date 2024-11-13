@@ -2,24 +2,19 @@
 
 namespace App\Http\Livewire\AnalisisRiesgos;
 
-use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\TBAnswerRASheetRAModel;
 use App\Models\TBAnswerSheetRiskAnalysisModel;
-use App\Models\TBControlRiskAnalysisModel;
 use App\Models\TBFormulaRiskAnalysisModel;
 use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBRiskAnalysis_ProbImpArModel;
 use App\Models\TBRiskAnalysis_ScalesArModel;
-use App\Models\TBRiskAnalysisProbImpModel;
 use App\Models\TBRiskAnalysisScaleModel;
 use App\Models\TBSectionRiskAnalysisModel;
 use App\Models\TBSettingsAr_FormulasArModel;
 use App\Models\TBSettingsAr_QuestionsArModel;
-use App\Models\TBSheetRA_ControlRAModel;
 use App\Models\TBSheetRiskAnalysisModel;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -29,25 +24,39 @@ class FormRiskAnalysis extends Component
     use WithFileUploads;
 
     public $riskAnalysisId;
+
     public $settignsTable = [];
+
     public $sections;
+
     public $questionsAnswer = [];
+
     public $scales;
+
     public $probImpa;
+
     public $scalesCoordinates = [];
 
     public $verifyPeriod;
+
     public $period_id;
 
     public $questionSettigns;
+
     public $formulasSettings;
 
     public $answersTable = [];
+
     public $verifyAnswers;
+
     public $sheetTables;
+
     public $sheetId;
+
     public $questionsFormulas = [];
+
     public $controlsSheet;
+
     public $cloneControlsSheet;
 
     public $descriptionQuestionId;
@@ -82,19 +91,19 @@ class FormRiskAnalysis extends Component
 
     public $answersForm;
 
-    protected $listeners = ['formData','closePeriod','saveCoordinates','riskConfirm','destroySheet'];
+    protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
 
     public function riskConfirm()
     {
         $sheet = TBSheetRiskAnalysisModel::find($this->sheetId);
-        if($this->sheetForm['status'] === 1){
+        if ($this->sheetForm['status'] === 1) {
             $sheet->update([
                 'initial_risk_confirm' => true,
             ]);
             $this->emitTo('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
             $this->emitTo('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
 
-        }else {
+        } else {
             $sheet->update([
                 'residual_risk_confirm' => true,
             ]);
@@ -108,23 +117,23 @@ class FormRiskAnalysis extends Component
 
     public function saveCoordinates($id)
     {
-        if(!in_array($id,$this->scalesCoordinates)){
+        if (! in_array($id, $this->scalesCoordinates)) {
             $this->scalesCoordinates[] = $id;
         }
     }
 
     public function saveInitialResidualRisks($questionId, $value)
     {
-        $questionFormula = TBFormulaRiskAnalysisModel::where('riesgo',true)->where('risk_analysis_id', $this->riskAnalysisId)->first();
-        $periodSheet = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id',$this->sheetId)->first();
+        $questionFormula = TBFormulaRiskAnalysisModel::where('riesgo', true)->where('risk_analysis_id', $this->riskAnalysisId)->first();
+        $periodSheet = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id', $this->sheetId)->first();
         $sheet = TBSheetRiskAnalysisModel::find($periodSheet->sheet_id);
 
         $ids = $this->getAnswerWithoutPrefix();
-                $commonKeys = array_intersect_key($ids, array_flip($this->scalesCoordinates));
-                $commonKeys = array_values($commonKeys);
+        $commonKeys = array_intersect_key($ids, array_flip($this->scalesCoordinates));
+        $commonKeys = array_values($commonKeys);
 
-        switch(!is_null($questionFormula)){
-            case (intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 1):
+        switch (! is_null($questionFormula)) {
+            case intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 1:
 
                 $periodSheet->update([
                     'initial_risk' => $value,
@@ -133,7 +142,7 @@ class FormRiskAnalysis extends Component
 
                 ]);
                 break;
-            case (intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 2):
+            case intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 2:
                 $periodSheet->update([
                     'residual_risk' => $value,
                     'residual_coordinate_y' => $commonKeys[0],
@@ -144,9 +153,9 @@ class FormRiskAnalysis extends Component
                 break;
         }
 
-        foreach($this->scales as $scale){
-            switch(true){
-                case (!is_null($value) && $value <= $scale->valor):
+        foreach ($this->scales as $scale) {
+            switch (true) {
+                case ! is_null($value) && $value <= $scale->valor:
                     if ($scale->riesgo_aceptable === true) {
                         $sheet->update([
                             'require_treatment_plan' => false,
@@ -159,7 +168,7 @@ class FormRiskAnalysis extends Component
                         break 2;
                     }
                     break;
-                    default:
+                default:
                     break;
             }
         }
@@ -168,11 +177,11 @@ class FormRiskAnalysis extends Component
 
     public function getInitialResidualRisk()
     {
-        $pivot = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id',$this->sheetId)->first();
+        $pivot = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id', $this->sheetId)->first();
 
-        foreach($this->scales as $scale){
-            switch(true){
-                case (!is_null($pivot->initial_risk) && $pivot->initial_risk <= $scale->valor):
+        foreach ($this->scales as $scale) {
+            switch (true) {
+                case ! is_null($pivot->initial_risk) && $pivot->initial_risk <= $scale->valor:
                     if ($scale->riesgo_aceptable === true) {
                         $this->risks['approveInitial'] = true;
                         break 2;
@@ -181,22 +190,22 @@ class FormRiskAnalysis extends Component
                         break 2;
                     }
                     break;
-                    default:
+                default:
                     break;
             }
         }
 
         $max = $this->probImpa->valor_max * $this->probImpa->valor_max;
 
-        $formulaRI = ($pivot->initial_risk / $max ) * 100;
-        $formulaRR = ($pivot->residual_risk / $max ) * 100;
+        $formulaRI = ($pivot->initial_risk / $max) * 100;
+        $formulaRR = ($pivot->residual_risk / $max) * 100;
         $this->risks['id'] = $pivot->id;
         $this->risks['initial'] = $formulaRI;
         $this->risks['residual'] = $formulaRR;
-        $this->risks['coords']['initial']['prob'] = $pivot->initial_coordinate_y ? $pivot->initial_coordinate_y : 0 ;
-        $this->risks['coords']['initial']['impac'] = $pivot->initial_coordinate_x ? $pivot->initial_coordinate_x : 0 ;
-        $this->risks['coords']['residual']['prob'] = $pivot->residual_coordinate_y ? $pivot->residual_coordinate_y : 0 ;
-        $this->risks['coords']['residual']['impac'] = $pivot->residual_coordinate_x ? $pivot->residual_coordinate_x : 0 ;
+        $this->risks['coords']['initial']['prob'] = $pivot->initial_coordinate_y ? $pivot->initial_coordinate_y : 0;
+        $this->risks['coords']['initial']['impac'] = $pivot->initial_coordinate_x ? $pivot->initial_coordinate_x : 0;
+        $this->risks['coords']['residual']['prob'] = $pivot->residual_coordinate_y ? $pivot->residual_coordinate_y : 0;
+        $this->risks['coords']['residual']['impac'] = $pivot->residual_coordinate_x ? $pivot->residual_coordinate_x : 0;
 
     }
 
@@ -204,7 +213,7 @@ class FormRiskAnalysis extends Component
     {
         foreach ($this->sections as $section) {
             foreach ($section->questions as $question) {
-                if (!is_null($question->uuid_formula)) {
+                if (! is_null($question->uuid_formula)) {
                     $this->questionsFormulas[] = $question;
                 }
             }
@@ -270,7 +279,7 @@ class FormRiskAnalysis extends Component
             $period = TBPeriodRiskAnalysisModel::create([
                 'risk_analysis_id' => $this->riskAnalysisId,
                 'status' => 'in-progress',
-                'name' => 'periodo ' . $countPeriod,
+                'name' => 'periodo '.$countPeriod,
                 'start' => $startDate,
             ]);
 
@@ -307,7 +316,7 @@ class FormRiskAnalysis extends Component
             ->where('status', 'in-progress')
             ->exists();
 
-        if (!$verifyPeriodActive) {
+        if (! $verifyPeriodActive) {
             $this->createPeriod();
         } else {
             $this->createSheet();
@@ -330,14 +339,13 @@ class FormRiskAnalysis extends Component
             $answerRegister->value = $questionAnswer;
             if ($answerRegister->isDirty()) {
                 $answerRegister->save();
-                $this->saveInitialResidualRisks($index,$questionAnswer);
+                $this->saveInitialResidualRisks($index, $questionAnswer);
             }
 
             // se iguala el valor del input para formulas
             if ($answerRegister->value != $this->answersForm[$index]['value']) {
                 $this->answersForm[$index]['value'] = $answerRegister->value;
             }
-
 
         }
 
@@ -363,7 +371,7 @@ class FormRiskAnalysis extends Component
                 'answer_id' => $answerRegister->id,
             ]);
 
-            $this->saveInitialResidualRisks($index,$questionAnswer);
+            $this->saveInitialResidualRisks($index, $questionAnswer);
         }
 
         $this->emit('responseForm', $this->sheetForm['edit']);
@@ -373,9 +381,10 @@ class FormRiskAnalysis extends Component
         $this->getInitialResidualRisk();
     }
 
-    public function getAnswerWithoutPrefix(){
+    public function getAnswerWithoutPrefix()
+    {
         $newAswers = array_combine(
-            array_map(fn($key) => str_replace('qs-', '', $key), array_keys($this->questionsAnswer)),
+            array_map(fn ($key) => str_replace('qs-', '', $key), array_keys($this->questionsAnswer)),
             $this->questionsAnswer
         );
 
@@ -385,7 +394,7 @@ class FormRiskAnalysis extends Component
     public function formData($data)
     {
         $this->questionsAnswer = $data;
-        if (!$this->sheetForm['edit']) {
+        if (! $this->sheetForm['edit']) {
             $this->saveForm();
         } else {
             $this->editForm();
@@ -401,7 +410,7 @@ class FormRiskAnalysis extends Component
     {
         //get Scales and probability e impact
         $scalesMax = TBRiskAnalysis_ScalesArModel::where('risk_analysis_id', $this->riskAnalysisId)->first();
-        $this->scales = TBRiskAnalysisScaleModel::where('min_max_id',$scalesMax->id)->orderBy('id','asc')->get();
+        $this->scales = TBRiskAnalysisScaleModel::where('min_max_id', $scalesMax->id)->orderBy('id', 'asc')->get();
         $probsMax = TBRiskAnalysis_ProbImpArModel::where('risk_analysis_id', $this->riskAnalysisId)->first();
         $this->probImpa = $probsMax;
         //get Sections
@@ -434,7 +443,7 @@ class FormRiskAnalysis extends Component
         $verifyPeriodProgress = TBPeriodRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)
             ->where('status', 'in-progress')
             ->exists();
-        $verifyPeriodProgress;
+
         if ($verifyPeriodProgress) {
             $period = TBPeriodRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)
                 ->where('status', 'in-progress')
@@ -443,14 +452,14 @@ class FormRiskAnalysis extends Component
 
             // get answers table general
             $existSheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period->id)->exists();
-            if (!is_null($existSheets)) {
+            if (! is_null($existSheets)) {
                 $sheetsTable = TBPeriodSheetRiskAnalysisModel::where('period_id', $period->id)->get();
                 $this->verifyAnswers = true;
                 foreach ($sheetsTable as $sheetTable) {
                     $this->answersTable = [];
                     $empty1 = [];
                     $empty2 = [];
-                    if ($sheetTable->sheet->answersSheet->count() && !is_null($sheetTable->sheet->answersSheet)) {
+                    if ($sheetTable->sheet->answersSheet->count() && ! is_null($sheetTable->sheet->answersSheet)) {
                         foreach ($sheetTable->sheet->answersSheet as $answerSheet) {
                             foreach ($this->questionSettigns as $questionSetting) {
                                 if ($questionSetting->question_id === $answerSheet->question_id) {
@@ -462,7 +471,6 @@ class FormRiskAnalysis extends Component
                                 if ($formulaSetting->formula->question_id === $answerSheet->question_id) {
                                     $this->answersTable[] = $answerSheet;
                                 }
-
 
                             }
                         }

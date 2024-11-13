@@ -10,7 +10,9 @@ class TBRiskAnalysis_ScalesArModel extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $table = 'risk_analysis_scales_ar_pivote';
+
     protected $fillable = [
         'id',
         'risk_analysis_id',

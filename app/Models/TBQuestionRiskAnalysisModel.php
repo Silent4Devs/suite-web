@@ -38,6 +38,6 @@ class TBQuestionRiskAnalysisModel extends Model
 
     public function getFormula()
     {
-        return $this->hasOne(TBFormulaRiskAnalysisModel::class,'question_id','id');
+        return $this->hasOne(TBFormulaRiskAnalysisModel::class, 'question_id', 'id');
     }
 }

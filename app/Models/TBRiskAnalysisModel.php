@@ -10,7 +10,9 @@ class TBRiskAnalysisModel extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $table = 'risk_analysis';
+
     protected $fillable = [
         'id',
         'nombre',
@@ -40,4 +42,3 @@ class TBRiskAnalysisModel extends Model
         return $this->belongsTo(TBRiskAnalysisProbImpModel::class, 'id');
     }
 }
-

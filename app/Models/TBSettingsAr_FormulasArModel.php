@@ -12,7 +12,9 @@ class TBSettingsAr_FormulasArModel extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+
     protected $table = 'settings_risk_analysis_formulas_ar_pivote';
+
     protected $fillable = [
         'id',
         'risk_analysis_id',

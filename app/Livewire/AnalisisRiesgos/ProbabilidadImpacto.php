@@ -63,7 +63,7 @@ class ProbabilidadImpacto extends Component
     {
         // dd($this->template_id);
         // $getData = TBTemplateArProbImpArModel::find($this->template_id);
-        $getData = TBTemplateArProbImpArModel::where('template_id',$this->template_id)->first();
+        $getData = TBTemplateArProbImpArModel::where('template_id', $this->template_id)->first();
 
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;

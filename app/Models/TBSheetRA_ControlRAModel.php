@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Iso27\GapDosCatalogoIso;
-use App\Models\TBControlRiskAnalysisModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +23,6 @@ class TBSheetRA_ControlRAModel extends Model
 
     public function controlSheet()
     {
-        return $this->hasOne(TBControlRiskAnalysisModel::class,'id','control_sheet_id');
+        return $this->hasOne(TBControlRiskAnalysisModel::class, 'id', 'control_sheet_id');
     }
-
 }

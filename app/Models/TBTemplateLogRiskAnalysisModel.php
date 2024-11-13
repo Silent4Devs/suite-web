@@ -10,7 +10,9 @@ class TBTemplateLogRiskAnalysisModel extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     protected $table = 'template_logs_analisis_riesgos';
+
     protected $fillable = [
         'id',
         'step',

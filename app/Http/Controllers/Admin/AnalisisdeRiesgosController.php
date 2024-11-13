@@ -19,7 +19,6 @@ class AnalisisdeRiesgosController extends Controller
 {
     use ObtenerOrganizacion;
 
-
     public function menu()
     {
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -233,6 +232,6 @@ class AnalisisdeRiesgosController extends Controller
         $riskAnalysisId = $riskAnalysis->riskAnalysis->id;
         // dd($riskAnalysis);
 
-        return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis','riskAnalysisId','logo_actual', 'empresa_actual'));
+        return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis', 'riskAnalysisId', 'logo_actual', 'empresa_actual'));
     }
 }
