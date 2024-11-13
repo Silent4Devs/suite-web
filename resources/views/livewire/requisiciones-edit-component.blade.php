@@ -624,9 +624,15 @@
                         <div class="card card-item doc-requisicion">
                             <div class="flex header-doc">
                                 <div class="flex-item item-doc-img">
-                                    @if ($requisicion->sucursal->mylogo)
-                                        <td><img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                                                style="width:100%; max-width:150px;" alt=""></td>
+                                    @php
+                                        use App\Models\Organizacion;
+                                        $organizacion = Organizacion::first();
+                                        $logotipo = $organizacion->logotipo;
+                                        $empresa = $organizacion->empresa;
+                                    @endphp
+                                    @if ($logotipo)
+                                        <td><img src="{{ asset($logotipo) }}" style="width:100%; max-width:150px;"
+                                                alt=""></td>
                                     @else
                                         <td><img src="{{ asset('sinLogo.png') }}"
                                                 style="width:100%; max-width:150px;" alt=""></td>
