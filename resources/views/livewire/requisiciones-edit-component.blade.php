@@ -631,14 +631,9 @@
                         <div class="card card-item doc-requisicion">
                             <div class="flex header-doc">
                                 <div class="flex-item item-doc-img">
-                                    @php
-                                        $organizacion = App\Models\Organizacion::first();
-                                        $logotipo = $organizacion->logotipo;
-                                        $empresa = $organizacion->empresa;
-                                    @endphp
-                                    @if ($logotipo)
-                                        <td><img src="{{ asset($logotipo) }}" style="width:100%; max-width:150px;"
-                                                alt=""></td>
+                                    @if ($organizacion->logo)
+                                        <td><img src="{{ asset($organizacion->logo) }}"
+                                                style="width:100%; max-width:150px;" alt=""></td>
                                     @else
                                         <td><img src="{{ asset('sinLogo.png') }}"
                                                 style="width:100%; max-width:150px;" alt=""></td>

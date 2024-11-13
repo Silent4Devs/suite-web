@@ -31,9 +31,8 @@
     <div class="card card-item doc-requisicion">
         <div class="flex header-doc">
             <div class="flex-item item-doc-img">
-                @if ($requisicion->sucursal->mylogo)
-                    <img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                        style="width:100%; max-width:150px;">
+                @if ($organizacion->logo)
+                    <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                 @else
                     <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                 @endif
