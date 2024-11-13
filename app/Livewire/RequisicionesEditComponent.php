@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Traits\ObtenerOrganizacion;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
@@ -31,6 +32,7 @@ class RequisicionesEditComponent extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
+    use ObtenerOrganizacion;
 
     public $editRequisicion = null;
 
@@ -190,7 +192,7 @@ class RequisicionesEditComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->editRequisicion->user;
         $this->user_area = $this->editRequisicion->area;

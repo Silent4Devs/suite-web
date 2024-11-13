@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
 @endsection
 @section('content')
 @section('titulo', 'Ver Requisición')
@@ -50,13 +50,8 @@
             <div class="card card-item doc-requisicion">
                 <div class="flex header-doc">
                     <div class="flex-item item-doc-img">
-                        @php
-                            $organizacion = App\Models\Organizacion::first();
-                            $logotipo = $organizacion->logotipo;
-                            $empresa = $organizacion->empresa;
-                        @endphp
-                        @if ($logotipo)
-                            <img src="{{ asset($logotipo) }}" style="width:100%; max-width:150px;">
+                        @if ($organizacion->logo)
+                            <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                         @else
                             <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                         @endif
@@ -383,9 +378,9 @@
                                     bueno de Gestión de talento.</i></small>
                         </div>
                         <div class="col-6 d-flex justify-content-center">
-                            <button class="btn tb-btn-secondary" ><a
-                                href="{{ route('contract_manager.requisiciones') }}"
-                                style="color: #EEEEEE">Regresar</a></button>
+                            <button class="btn tb-btn-secondary"><a
+                                    href="{{ route('contract_manager.requisiciones') }}"
+                                    style="color: #EEEEEE">Regresar</a></button>
                         </div>
                     </div>
                 </div>
