@@ -522,15 +522,22 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col s12 l12 anima-focus">
-                                                    <input type="file" required
-                                                        class="modal-cotizacion form-control-file"
-                                                        wire:model='array_proveedores.{{ $keyP }}.archivo'
+                                                <div class="col s6 l6">
+                                                    Cotizacion actual: {{ $array_proveedores[$keyP]['archivo'] }}
+                                                    <br>
+                                                    <a href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $array_proveedores[$keyP]['archivo']) }}"
+                                                        style="text-decoration: underline; color: deepskyblue;"
+                                                        target="_blank">Descargar
+                                                        cotización <i class="fa-regular fa-circle-down"></i></a>
+                                                </div>
+                                                <div class="col s6 l6 anima-focus">
+                                                    <input type="file" class="modal-cotizacion form-control-file"
+                                                        wire:model='array_proveedores.{{ $keyP }}.cotizacion'
                                                         id="cotizacion_{{ $keyP }}"
                                                         name="cotizacion_{{ $keyP }}"
                                                         accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
                                                     <label for="cotizacion_{{ $keyP }}">
-                                                        Carga de cotizaciones <font class="asterisco">*</font>
+                                                        Carga de cotizaciones
                                                     </label>
                                                 </div>
                                             </div>
