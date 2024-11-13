@@ -130,6 +130,12 @@
 
             </div>
         </div>
+        @if ($cursoCompletado === 100)
+            <div class="">
+                <a href="{{ route('admin.inicioUsuario.mis-cursos') }}"
+                    style="color: #006DDB !important; text-decoration: underline !important;">Certificados</a>
+            </div>
+        @endif
 
         <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
