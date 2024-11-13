@@ -45,12 +45,12 @@
 
 
     <div id="certificados-config">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12 text-right">
                 <div class="btn btn-outline-secondary {{ $course->certificado ? '' : 'cert-null' }}"
                     onclick="cambioConfig()">Seleccionar Certificado</div>
             </div>
-        </div>
+        </div> --}}
         <div class="row mt-3">
             <div class="col-md-6 d-flex">
                 <div class="card card-body">
@@ -58,8 +58,12 @@
                     <hr>
                     <div>
                         <input type="checkbox" name="habilitar_certificado" id="habilitar_certificado"
-                            wire:model.live="habilitar_certificado">
-                        <label for="habilitar_certificado">Emitir certificado del curso</label>
+                            wire:model.live="habilitar_certificado" style="display: none;">
+                        <label for="habilitar_certificado">
+                            <div class="btn btn-outline-primary">
+                                Emitir certificado del curso
+                            </div>
+                        </label>
                     </div>
 
                     <div class="{{ $course->certificado ? '' : 'cert-null' }}">
@@ -67,8 +71,7 @@
                             <strong>Certificado asignado</strong>
                         </p>
                         <div class="d-flex justify-content-center">
-                            <img src="{{ asset('img/escuela/certificaciones/certificado-example' . ($course->certificado ? $course->certificado : 1) . '.png') }}"
-                                alt="" style="width: 50%;">
+                            <img src="{{ $course->certificado_ruta }}" alt="" style="width: 50%;">
                         </div>
                     </div>
                 </div>

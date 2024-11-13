@@ -637,11 +637,9 @@ header.mostrar-menu {
     justify-content: center;
     padding-left: 30px;
 }
-.caja-logo-ltr-light{
-    background-color: var(--color-tbj);
-}
+
 .caja-logo-ltr-light img{
-    width: 250px;
+    width: 50px;
 }
 
 .options-global {
@@ -797,11 +795,6 @@ header.mostrar-menu {
 .menu-global-position-left .title-page-global {
     padding-left: 0px !important;
 }
-.menu-global-position-left .caja-logo-ltr-light {
-    min-width: 0px !important;
-    max-width: 60px !important;
-    overflow: hidden;
-}
 .menu-global-position-left .options-global {
     margin-top: 30px;
 }
@@ -862,11 +855,6 @@ header.mostrar-menu {
 }
 .menu-global-position-right .title-page-global {
     padding-left: 0px !important;
-}
-.menu-global-position-right .caja-logo-ltr-light {
-    min-width: 0px !important;
-    max-width: 60px !important;
-    overflow: hidden;
 }
 .menu-global-position-right .options-global {
     margin-top: 30px;
