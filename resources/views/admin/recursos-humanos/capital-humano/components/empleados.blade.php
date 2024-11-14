@@ -168,7 +168,7 @@
             <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
             <ul>
                 @can('admin_type_catalogue_training')
-                    <li><a href="{{ route('admin.type-catalogue-training.index') }}">
+                    <li><a href="{{ route('type-catalogue-training.index') }}">
                             <div>
                                 <i class="bi bi-briefcase"></i>
                                 <br>
@@ -177,7 +177,7 @@
                         </a></li>
                 @endcan
                 @can('admin_catalogue_training')
-                    <li><a href="{{ route('admin.catalogue-training.index') }}">
+                    <li><a href="{{ route('catalogue-training.index') }}">
                             <div>
                                 <i class="bi bi-briefcase"></i>
                                 <br>
