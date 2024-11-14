@@ -216,6 +216,23 @@ class RequisicionesCreateComponent extends Component
         $this->proveedores_count = $this->proveedores_count + 1;
     }
 
+    public function robot()
+    {
+        $this->filename = 'test.pdf';
+        $this->postData();
+
+        $this->bandera = true;
+
+        $this->filePath = storage_path('app/public/requisiciones.pdf');
+
+        $this->postDataText();
+
+        $this->question = 'El presente documento trata de...';
+
+        $this->askQuestion();
+    }
+
+
     public function mount()
     {
         $this->user = User::getCurrentUser();
