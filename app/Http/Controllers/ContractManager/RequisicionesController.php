@@ -14,6 +14,7 @@ use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Producto;
 use App\Models\Empleado;
 use App\Models\FirmasRequisiciones;
 use App\Models\HistorialEdicionesReq;
@@ -143,6 +144,133 @@ class RequisicionesController extends Controller
         }
     }
 
+    public function formatearValoresId($cambios)
+    {
+        foreach ($cambios as $keyCambio => $registro) {
+
+            switch ($registro->campo) {
+                case 'contrato_id':
+                    $valor_anterior = KatbolContrato::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = KatbolContrato::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->no_contrato . ' - ' . $valor_anterior->nombre_servicio;
+                    $vn = $valor_nuevo->no_contrato . ' - ' . $valor_nuevo->nombre_servicio;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+
+                    break;
+
+                case 'comprador_id':
+                    $valor_anterior = KatbolComprador::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = KatbolComprador::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->nombre;
+                    $vn = $valor_nuevo->nombre;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+                    break;
+
+                case 'sucursal_id':
+                    $valor_anterior = KatbolSucursal::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = KatbolSucursal::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->empresa;
+                    $vn = $valor_nuevo->empresa;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+                    break;
+
+                case 'producto_id':
+
+                    $valor_anterior = Producto::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = Producto::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->descripcion;
+                    $vn = $valor_nuevo->descripcion;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+                    break;
+
+                case 'proveedor_id':
+                    $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+                    break;
+
+                    // case 'id_user':
+                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+
+                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+
+                    //     $registro->valor_anterior = $va;
+                    //     $registro->valor_nuevo = $vn;
+                    //     break;
+
+                    // case 'proveedor_catalogo_id':
+                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+
+                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+
+                    //     $registro->valor_anterior = $va;
+                    //     $registro->valor_nuevo = $vn;
+                    //     break;
+
+                    // case 'ids_proveedores':
+                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+
+                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+
+                    //     $registro->valor_anterior = $va;
+                    //     $registro->valor_nuevo = $vn;
+                    //     break;
+
+                case 'proveedoroc_id':
+                    $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+
+                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+
+                    $registro->valor_anterior = $va;
+                    $registro->valor_nuevo = $vn;
+                    break;
+
+                default:
+                    // Nada, no se modifica el registro
+                    break;
+            };
+        }
+
+        return $cambios;
+
+        // 'contrato_id' => 'Contrato Asociado',
+        //     'comprador_id' => 'Comprador Seleccionado',
+        //     'sucursal_id' => 'Sucursal',
+        //     'producto_id' => 'Producto',
+
+        //     'proveedor_id' => 'Proveedor Seleccionado',
+        //     'id_user' => 'Solicitante',
+
+        //     'proveedor_catalogo_id' => 'Proveedor Seleccionado',
+        //     'ids_proveedores' => 'Proveedores',
+        //     'proveedoroc_id' => 'Proveedor de la Orden de Compra',
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -167,12 +295,15 @@ class RequisicionesController extends Controller
 
         $resultadoRequisiciones = [];
         foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
+            // dd($cambios);
+            $cambios = $this->formatearValoresId($cambios);
+
             $resultadoRequisiciones[] = [
                 'version' => $version,
                 'cambios' => $cambios,
             ];
         }
-
+        // dd($resultadoRequisiciones);
         // Obtener el valor máximo de la versión del array de resultados
         $maximaVersion = collect($resultadoRequisiciones)->max('version');
 
@@ -584,7 +715,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -606,7 +737,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$firma_siguiente->jefe->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $firma_siguiente->jefe->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -644,7 +775,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_finanzas';
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
+                    $mensaje = 'No tiene permisos para firmar<br> En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -675,7 +806,7 @@ class RequisicionesController extends Controller
                 if ($user->empleado->id == $firma_siguiente->comprador_id) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -702,7 +833,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
