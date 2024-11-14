@@ -575,8 +575,8 @@ class RequisicionesCreateComponent extends Component
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
         } catch (Throwable $e) {
-            $this->forgetCache();
             DB::rollback();
+            $this->forgetCache();
             dd($e);
         }
         $this->dataFirma();
@@ -609,7 +609,7 @@ class RequisicionesCreateComponent extends Component
 
         $jefe = $this->user->empleado->supervisor;
         //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+        $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
         //Buscamos en que nivel se encuentra el supervisor
         $nivel = $supList->nivel;
