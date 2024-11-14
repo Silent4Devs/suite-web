@@ -243,7 +243,7 @@ class RequisicionesCreateComponent extends Component
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
         $this->organizacion = Organizacion::getFirst();
-        $this->requisicionService = app(RequisicionService::class);
+        $this->requisicionService = $this->get(RequisicionService::class);
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
