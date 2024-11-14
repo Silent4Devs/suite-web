@@ -514,7 +514,7 @@
                     @if (!empty($cambios['cambios']))
                         @foreach ($cambios['cambios'] as $cambio)
                             <tr>
-                                <td>{{ $cambio->campo }}</td>
+                                <td>{{ getDiccionaryRequisionOrder($cambio->campo) }}</td>
                                 <td>{{ $cambio->valor_anterior }}</td>
                                 <td>{{ $cambio->valor_nuevo }}</td>
                                 <td>{{ $cambio->empleado->name }}</td>
