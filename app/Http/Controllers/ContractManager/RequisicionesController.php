@@ -206,39 +206,6 @@ class RequisicionesController extends Controller
                     $registro->valor_nuevo = $vn;
                     break;
 
-                    // case 'id_user':
-                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
-
-                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
-
-                    //     $registro->valor_anterior = $va;
-                    //     $registro->valor_nuevo = $vn;
-                    //     break;
-
-                    // case 'proveedor_catalogo_id':
-                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
-
-                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
-
-                    //     $registro->valor_anterior = $va;
-                    //     $registro->valor_nuevo = $vn;
-                    //     break;
-
-                    // case 'ids_proveedores':
-                    //     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    //     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
-
-                    //     $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    //     $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
-
-                    //     $registro->valor_anterior = $va;
-                    //     $registro->valor_nuevo = $vn;
-                    //     break;
-
                 case 'proveedoroc_id':
                     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
                     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
@@ -257,18 +224,6 @@ class RequisicionesController extends Controller
         }
 
         return $cambios;
-
-        // 'contrato_id' => 'Contrato Asociado',
-        //     'comprador_id' => 'Comprador Seleccionado',
-        //     'sucursal_id' => 'Sucursal',
-        //     'producto_id' => 'Producto',
-
-        //     'proveedor_id' => 'Proveedor Seleccionado',
-        //     'id_user' => 'Solicitante',
-
-        //     'proveedor_catalogo_id' => 'Proveedor Seleccionado',
-        //     'ids_proveedores' => 'Proveedores',
-        //     'proveedoroc_id' => 'Proveedor de la Orden de Compra',
     }
 
     /**
