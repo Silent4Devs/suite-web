@@ -536,51 +536,31 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <button class="btn btn-primary" wire:click.prevent="openChat">
+                                            <button class="btn btn-primary" wire:click.prevent="robot">
                                                 Robot
                                                 <i class="fa-solid fa-robot"></i>
-                                                <span wire:loading wire:target="openChat">
+                                                <span wire:loading wire:target="robot">
                                                     <i class="fas fa-spinner fa-spin"></i> Cargando...
                                                 </span>
                                             </button>
-
+                                            <br>
+                                            @if ($bandera)
                                             <div>
-                                                @if ($chatOpen)
-                                                    <div class="chat-wrapper">
-                                                        <div class="chat-box">
-                                                            <div class="chat-frame">
-                                                                <div class="chat-header">
-                                                                    <h3>Chat Bot</h3>
-                                                                    <button class="close-btn"
-                                                                        wire:click="closeChat">&times;</button>
-                                                                </div>
-                                                                <div class="chat-content">
-                                                                    <!-- Mensajes del chat -->
-                                                                    @if ($saludo)
-                                                                        <p>Hola, ¿cómo puedo ayudarte hoy?</p>
-                                                                    @endif
-
-                                                                    @if ($respuesta = $this->respuesta['response'] ?? null)
-                                                                        <div class="response">
-                                                                            <p>{{ $respuesta }}</p>
-                                                                        </div>
-                                                                    @endif
-                                                                    <span wire:loading wire:target="askQuestion">
-                                                                        <i class="fas fa-spinner fa-spin"></i>
-                                                                        Cargando...
-                                                                    </span>
-                                                                </div>
-                                                                <div class="chat-input">
-                                                                    <input type="text" id="question"
-                                                                        wire:model.lazy="question">
-                                                                    <button type="submit"
-                                                                        wire:click.prevent="askQuestion">Enviar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
+                                                <label for="question">Pregunta:</label>
+                                                <input type="text" id="question" wire:model.debounce="question">
+                                                <button type="submit" wire:click.prevent="askQuestion">Enviar Pregunta</button>
+                                                <span wire:loading wire:target="askQuestion">
+                                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                </span>
                                             </div>
+                                            <br>
+                                            @if ($respuesta = $this->respuesta['response'] ?? null)
+                                                <div class="response">
+                                                    <h3>Respuesta:</h3>
+                                                    <p>{{ $respuesta }}</p>
+                                                </div>
+                                            @endif
+                                            @endif
                                         @endif
                                     @endif
                                 </div>

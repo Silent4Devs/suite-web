@@ -18,9 +18,11 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -161,10 +163,94 @@ class RequisicionesCreateComponent extends Component
 
     public $alerta_jefes = false;
 
+    protected $requisicionService;
+
+    public function postData()
+    {
+        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+
+        return $result;
+    }
+    public function __construct()
+    {
+        // Instanciamos el servicio de la clase
+        $this->requisicionService = app(RequisicionService::class);
+    }
+
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+        return $result;
+    }
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+        return $result;
+    }
+
+    public function askQuestion()
+    {
+        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
+
+        $this->respuesta = response()->json($response);
+
+        $this->respuesta = $response;
+    }
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
     }
+
+    public function robot($filename)
+    {
+        // Asegúrate de que el archivo existe y es accesible
+        if (Storage::disk('public')->exists('cotizaciones_requisiciones_proveedores/' . $filename)) {
+            $this->filename = $filename;
+
+            // Establecer la bandera para mostrar el formulario de preguntas
+            $this->bandera = true;
+
+            // Ruta completa del archivo
+            $this->filePath = storage_path('app/public/cotizaciones_requisiciones_proveedores/' . $filename);
+
+            // Simula la postData y postDataText con el contenido del archivo
+            $this->postData();
+            $this->postDataText();
+
+            // Pregunta predeterminada
+            $this->question = 'De que habla el documento';
+
+            // Llama a la función para hacer la pregunta
+            $this->askQuestion();
+        } else {
+            // Maneja el caso donde el archivo no existe
+            $this->bandera = false;
+            session()->flash('error', 'Archivo no encontrado.');
+        }
+    }
+
 
     public function mount()
     {
@@ -507,8 +593,8 @@ class RequisicionesCreateComponent extends Component
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
         } catch (Throwable $e) {
-            $this->forgetCache();
             DB::rollback();
+            $this->forgetCache();
             dd($e);
         }
         $this->dataFirma();
@@ -541,7 +627,7 @@ class RequisicionesCreateComponent extends Component
 
         $jefe = $this->user->empleado->supervisor;
         //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+        $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
         //Buscamos en que nivel se encuentra el supervisor
         $nivel = $supList->nivel;
