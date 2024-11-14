@@ -41,6 +41,56 @@
                 </div>
 
                 <div class="mt-6">
+                    <x-form.label for="numero" value="Telefono"/>
+
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <x-form.input autocomplete="off" value="{{ old('numero', '') }}" name="numero" id="numero" type="number" required autofocus />
+                    </div>
+
+                    <x-form.input-error for="numero" />
+                </div>
+
+                <div class="mt-6">
+                    <x-form.label for="cargo" value="Cargo"/>
+
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <x-form.input autocomplete="off" value="{{ old('cargo', '') }}" name="cargo" id="cargo" type="text" required autofocus />
+                    </div>
+
+                    <x-form.input-error for="cargo" />
+                </div>
+
+                <div class="mt-6">
+                    <x-form.label for="sede" value="Sede"/>
+
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <x-form.input autocomplete="off" value="{{ old('sede', '') }}" name="sede" id="sede" type="text" required autofocus />
+                    </div>
+
+                    <x-form.input-error for="sede" />
+                </div>
+
+                <div class="mt-6">
+                    <x-form.label for="direccion" value="Direccion"/>
+
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <x-form.input autocomplete="off" value="{{ old('direccion', '') }}" name="direccion" id="direccion" type="text" required autofocus />
+                    </div>
+
+                    <x-form.input-error for="direccion" />
+                </div>
+
+                <div class="mt-6">
+                    <x-form.label for="resumen" value="Resumen"/>
+
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <x-form.input autocomplete="off" value="{{ old('resumen', '') }}" name="resumen" id="resumen" type="text" required autofocus />
+                    </div>
+
+                    <x-form.input-error for="resumen" />
+                </div>
+
+                <div class="mt-6">
                     <x-form.label for="domain" value="Domain"/>
 
                     <div class="mt-1 flex rounded-md shadow-sm">

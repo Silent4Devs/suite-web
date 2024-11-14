@@ -23,6 +23,11 @@ class RegisterTenantController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:tenants',
             'password' => 'required|string|confirmed|max:255',
+            'numero' => 'required|max:10',
+            'cargo' => 'required|string',
+            'sede' => 'required|string',
+            'direccion' => 'required|string',
+            'resumen' => 'required|string',
         ]);
 
         $data['password'] = bcrypt($data['password']);
@@ -34,7 +39,7 @@ class RegisterTenantController extends Controller
 
         $route = 'admin.inicio-Usuario.index';
 
-        $fullUrl = sprintf('%s://%s.%s', request()->getScheme(), $domain, 'localhost');
+        $fullUrl = sprintf('%s://%s.%s', request()->getScheme(), $domain, 'suite-web.test');
 
         $routeUrl = route($route);
 
