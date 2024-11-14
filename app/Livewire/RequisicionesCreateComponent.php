@@ -22,7 +22,6 @@ use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -223,32 +222,20 @@ class RequisicionesCreateComponent extends Component
         $this->proveedores_count = $this->proveedores_count + 1;
     }
 
-    public function robot($filename)
+    public function robot()
     {
-        // Asegúrate de que el archivo existe y es accesible
-        if (Storage::disk('public')->exists('cotizaciones_requisiciones_proveedores/' . $filename)) {
-            $this->filename = $filename;
+        $this->filename = 'saulcv.pdf';
+        $this->postData();
 
-            // Establecer la bandera para mostrar el formulario de preguntas
-            $this->bandera = true;
+        $this->bandera = true;
 
-            // Ruta completa del archivo
-            $this->filePath = storage_path('app/public/cotizaciones_requisiciones_proveedores/' . $filename);
+        $this->filePath = storage_path('app/public/saulcv.pdf');
 
-            // Simula la postData y postDataText con el contenido del archivo
-            $this->postData();
-            $this->postDataText();
+        $this->postDataText();
 
-            // Pregunta predeterminada
-            $this->question = 'De que habla el documento';
+        $this->question = 'El presente documento trata de...';
 
-            // Llama a la función para hacer la pregunta
-            $this->askQuestion();
-        } else {
-            // Maneja el caso donde el archivo no existe
-            $this->bandera = false;
-            session()->flash('error', 'Archivo no encontrado.');
-        }
+        $this->askQuestion();
     }
 
 
