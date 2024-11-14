@@ -18,6 +18,7 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -161,6 +162,55 @@ class RequisicionesCreateComponent extends Component
 
     public $alerta_jefes = false;
 
+    protected $requisicionService;
+
+    public function postData()
+    {
+        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+
+        return $result;
+    }
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+        return $result;
+    }
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+        return $result;
+    }
+
+    public function askQuestion()
+    {
+        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
+
+        $this->respuesta = response()->json($response);
+
+        $this->respuesta = $response;
+    }
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
@@ -176,6 +226,7 @@ class RequisicionesCreateComponent extends Component
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
         $this->organizacion = Organizacion::getFirst();
+        $this->requisicionService = app(RequisicionService::class);
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
