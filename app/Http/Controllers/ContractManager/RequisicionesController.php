@@ -132,6 +132,8 @@ class RequisicionesController extends Controller
             $resultadoRequisiciones = [];
             foreach ($agrupadosPorVersionRequisiciones as $version => $cambios) {
 
+                $cambios = $this->formatearValoresId($cambios);
+
                 $resultadoRequisiciones[] = [
                     'version' => $version,
                     'cambios' => $cambios,
