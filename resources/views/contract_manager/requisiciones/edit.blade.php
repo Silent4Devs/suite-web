@@ -25,11 +25,11 @@
     @livewire('requisiciones-edit-component', ['id_requisiciondata' => $id])
 
     <div class="card card-body">
-        <h4>Historial de Cambios:</h4>
+        <h4 style="margin-bottom: 20px;">Historial de Cambios:</h4>
 
         @if (!empty($resultadoRequisiciones))
             @foreach ($resultadoRequisiciones as $cambios)
-                <h5>Versión: {{ $cambios['version'] }}</h5>
+                <h5 style="margin-bottom: 10px;">Versión: {{ $cambios['version'] }}</h5>
                 <table class="table">
                     <thead>
                         <tr>
