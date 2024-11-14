@@ -170,6 +170,12 @@ class RequisicionesCreateComponent extends Component
 
         return $result;
     }
+    public function __construct()
+    {
+        // Instanciamos el servicio de la clase
+        $this->requisicionService = app(RequisicionService::class);
+    }
+
 
     public function postDataLoad()
     {
@@ -243,7 +249,6 @@ class RequisicionesCreateComponent extends Component
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
         $this->organizacion = Organizacion::getFirst();
-        $this->requisicionService = $this->get(RequisicionService::class);
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
