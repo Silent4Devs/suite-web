@@ -7,10 +7,10 @@
             border: 1px dashed #999;
         }
     </style>
-    <div class="card">
-        <div class="card-body">
+    <div >
+        {{-- <div class="card-body"> --}}
             <h4 class="color-tbj">Capacitaciones</h4>
-            <hr>
+            <hr style="margin-bottom: 25px;">
             <form wire:submit="{{ $status === 'create' ? 'save' : 'edit' }}">
                 <div class="row" style="padding-left: 14px;">
                     <div class="col-12 col-sm-6 form-group  pl-0 anima-focus">
@@ -91,8 +91,8 @@
                             <label for="endDate">Fecha Fin*</label>
                         </div>
                     @endif
-                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalTraining"
-                        style="height: 45px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;">Dar
+                    <button class="btn btn-primary mb-3" type="button" data-toggle="modal" data-target="#modalTraining"
+                        style="height: 45px; width:250px; background-color: #E2E2E2 ; border: 1px solid #707070; border-radius: 4px; color:#575757;">Dar
                         de alta capacitación</button>
                 </div>
                 <div>
@@ -103,16 +103,16 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-end mt-3">
-                    <button class="btn btn-primary"
+                    <button class="btn btn-primary mb-3"
                         style="height: 45px; background-color: #057BE2; color:#FFFFFF; border: 1px solid #707070; border-radius: 4px;"
                         type="submit"> {{ $status === 'create' ? 'Agregar' : 'Editar' }}</button>
                 </div>
             </form>
-        </div>
+        {{-- </div> --}}
     </div>
 
-    <div class="card">
-        <div class="card-body">
+    <div >
+        {{-- <div class="card-body"> --}}
             <table class="table table-bordered w-100 tblCSV">
                 <thead class="thead-dark">
                     <tr>
@@ -193,7 +193,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        {{-- </div> --}}
     </div>
 
     <!-- Modal -->
