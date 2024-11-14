@@ -215,6 +215,8 @@ class RequisicionesCreateComponent extends Component
         $this->respuesta = response()->json($response);
 
         $this->respuesta = $response;
+
+        dd($this->respuesta);
     }
 
     public function actualizarCountProveedores()
