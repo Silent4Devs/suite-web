@@ -496,11 +496,11 @@
 </div>
 
 <div class="card card-body">
-    <h4>Historial de Cambios:</h4>
+    <h4 style="margin-bottom: 20px;">Historial de Cambios:</h4>
 
     @if (!empty($resultadoRequisiciones))
         @foreach ($resultadoRequisiciones as $cambios)
-            <h5>Versión: {{ $cambios['version'] }}</h5>
+            <h5 style="margin-bottom: 10px;">Versión: {{ $cambios['version'] }}</h5>
             <table class="table">
                 <thead>
                     <tr>
@@ -514,7 +514,7 @@
                     @if (!empty($cambios['cambios']))
                         @foreach ($cambios['cambios'] as $cambio)
                             <tr>
-                                <td>{{ $cambio->campo }}</td>
+                                <td>{{ getDiccionaryRequisionOrder($cambio->campo) }}</td>
                                 <td>{{ $cambio->valor_anterior }}</td>
                                 <td>{{ $cambio->valor_nuevo }}</td>
                                 <td>{{ $cambio->empleado->name }}</td>
