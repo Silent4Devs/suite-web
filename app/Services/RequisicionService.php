@@ -84,7 +84,7 @@ class RequisicionService
     public function postDataExtractPythonAPI($image)
     {
         // Define la URL del endpoint de la API de Python, incluyendo el nombre del archivo dinámico
-        $url = "http://127.0.0.1:8000/extract_text_from_image/{$image}";
+        $url = "http://192.168.9.77:8080/extract_text_from_image/{$image}";
 
         try {
             // Realiza la solicitud POST sin enviar datos en el cuerpo
@@ -100,7 +100,7 @@ class RequisicionService
 
     public function postDataTextPythonAPI($filePath, $fileName)
     {
-        $url = 'http://127.0.0.1:8000/text_to_chromadb/';
+        $url = 'http://192.168.9.77:8080/text_to_chromadb/';
 
         try {
             $response = $this->client->post($url, [
@@ -121,7 +121,7 @@ class RequisicionService
 
     public function postQuestionToPythonAPI($question)
     {
-        $url = 'http://127.0.0.1:8000/ask-question/';
+        $url = 'http://192.168.9.77:8080/ask-question/';
 
         try {
             $response = $this->client->post($url, [
