@@ -168,13 +168,13 @@
                                     <strong>URL:</strong><br><br>
                                     {{ $provedores->url }}
                                 </div>
-                                <div class="col-sm-12 col-lg-2">
+                                <div class="col-sm-12 col-lg-3">
                                     <label for="" class="txt-tamaño">
                                         <strong>Cotizaciones: <font class="asterisco">*</font></strong><br><br>
                                         {{-- Cotizaciones <font class="asterisco">*</font> --}}
                                     </label>
                                     <div class="row" style="gap: 25px;">
-                                        <div style="min-width: 300px;">Cotizacion actual: <a
+                                        <div>Cotizacion actual: <a
                                                 href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                                                 style="text-decoration: underline; color: deepskyblue;"
                                                 target="_blank">Descargar cotización <i
