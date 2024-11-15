@@ -38,7 +38,8 @@
 
     @livewire('requisiciones-edit-component', ['id_requisiciondata' => $id, 'contadorEdit' => $contadorEdit])
 
-    <div class="card card-body">
+    @livewire('tabla-historico-requisiciones', ['idReq' => $id])
+    {{-- <div class="card card-body">
         <h4 style="margin-bottom: 20px;">Historial de Cambios:</h4>
 
         @if (!empty($resultadoRequisiciones))
@@ -76,7 +77,7 @@
             <h6>No hay cambios registrados</h6>
         @endif
 
-    </div>
+    </div> --}}
 @else
     <div class="card pulse-0" style="width: 156px; height: 68px;">
         <div class="card-body d-flex flex-column align-items-center">
