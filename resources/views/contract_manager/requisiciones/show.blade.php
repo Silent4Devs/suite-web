@@ -371,19 +371,20 @@
                     </div>
                 </div>
 
-                <div class=" mb-3 ml-3 print-none">
+                <div class="print-none" style="margin-left: 30px; margin-bottom:30px;">
                     <div class="row">
-                        <div class="col-6 d-flex align-items-center">
+                        <div class="col-6 d-flex align-items-center pl-0">
                             <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
                                     bueno de Gestión de talento.</i></small>
                         </div>
-                        <div class="col-6 d-flex justify-content-center">
-                            <button class="btn tb-btn-secondary"><a
+                        <div class="col-6 d-flex justify-content-end pr-0 ">
+                            <button class="btn tb-btn-secondary" style="margin-right: 30px;"><a
                                     href="{{ route('contract_manager.requisiciones') }}"
                                     style="color: #EEEEEE">Regresar</a></button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
