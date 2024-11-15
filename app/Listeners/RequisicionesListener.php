@@ -64,12 +64,22 @@ class RequisicionesListener implements ShouldQueue
                         $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
                             ->first();
 
+                        if($user_solicitante == null){
+                            $user_solicitante = User::where('email', $firmas->solicitante->email)
+                                ->first();
+                        }
+
                         Notification::send($user_solicitante, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
                     if ($event->requsicion->firma_jefe !== null) {
                         $user_jefe = User::where('empleado_id', $firmas->jefe->id)
                             ->first();
+
+                        if($user_jefe == null){
+                            $user_jefe = User::where('email', $firmas->jefe->email)
+                                ->first();
+                        }
 
                         Notification::send($user_jefe, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
@@ -78,12 +88,22 @@ class RequisicionesListener implements ShouldQueue
                         $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
                             ->first();
 
+                        if($user_finanzas == null){
+                            $user_finanzas = User::where('email', $firmas->responsableFinanzas->email)
+                                ->first();
+                        }
+
                         Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
                     if ($event->requsicion->firma_compras !== null) {
                         $user_compras = User::where('empleado_id', $firmas->comprador->id)
                             ->first();
+
+                        if($user_compras == null){
+                            $user_compras = User::where('email', $firmas->comprador->email)
+                                ->first();
+                        }
 
                         Notification::send($user_compras, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
@@ -101,40 +121,56 @@ class RequisicionesListener implements ShouldQueue
 
                     $responsableComprador = Comprador::with('user')->where('id', $event->requsicion->comprador_id)->first();
                     $comprador = $this->obtenerComprador($responsableComprador);
+                    // dd($comprador);
+
                     $user_compras = User::where('empleado_id', $firmas->comprador->id)
                         ->first();
 
-                    $involucradosRQOC->push($user_compras);
-                }
-                if ($event->requsicion->firma_solicitante_orden !== null) {
-                    $solicitante_email = User::where('id', $event->requsicion->id_user);
-                    $involucradosRQOC->push($solicitante_email);
-                }
-
-                if ($event->requsicion->firma_finanzas_orden !== null) {
-
-                    $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
-                    $listaPart = $listaReq->participantes;
-
-                    for ($i = 0; $i <= $listaReq->niveles; $i++) {
-                        $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
-
-                        if ($responsableNivel) {
-                            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                                $responsable = $responsableNivel->empleado;
-                                $user_finanzas = User::where('empleado_id', $responsable->id)
-                                    ->first();
-                                $involucradosRQOC->push($user_finanzas);
-                            }
-                        }
+                    if($user_compras == null){
+                        $user_compras = User::where('email', $firmas->comprador->email)
+                            ->first();
                     }
+
+                    Notification::send($user_compras, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
 
-                foreach ($involucradosRQOC as $keyINV => $involucrado) {
-                    // code...
-                    Notification::send($involucrado, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                if ($event->requsicion->firma_solicitante_orden !== null) {
+                    $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
+                    ->first();
+
+                    if($user_solicitante == null){
+                        $user_solicitante = User::where('email', $firmas->solicitante->email)
+                            ->first();
+                    }
+
+                    Notification::send($user_solicitante, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
+
+                // if ($event->requsicion->firma_finanzas_orden !== null) {
+
+                //     $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+                //     $listaPart = $listaReq->participantes;
+
+                //     for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                //         $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                //         if ($responsableNivel) {
+                //             if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                //                 $responsable = $responsableNivel->empleado;
+                //                 $user_finanzas = User::where('empleado_id', $responsable->id)
+                //                     ->first();
+
+                //                 if($user_finanzas == null){
+                //                     $user_finanzas = User::where('email', $firmas->solicitante->email)
+                //                         ->first();
+                //                 }
+
+                //                 Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                //             }
+                //         }
+                //     }
+                // }
             } else {
 
                 try {
