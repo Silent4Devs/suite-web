@@ -106,7 +106,7 @@
                                     @case(is_null($requisicion->firma_compras))
                                         @php
                                             if ($requisicion->registroFirmas) {
-                                                $compradorName = $requisicion->obtener_responsable_comprador->name
+                                                $compradorName = $requisicion->obtener_responsable_comprador->name;
                                             }else{
                                                 $compradorName = $requisicion->comprador->user->name;
                                             }
