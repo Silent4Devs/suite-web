@@ -3,6 +3,7 @@
 namespace App\Livewire\Escuela;
 
 use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
@@ -37,6 +38,8 @@ class CourseStatus extends Component
     public $hora;
 
     public $render;
+
+    public $cursoCompletado;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
@@ -104,8 +107,12 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+        $this->dispatch('render');
+
+        $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
         return view('livewire.escuela.course-status');
+
     }
 
     //METODOS
@@ -209,27 +216,37 @@ class CourseStatus extends Component
                 $i++;
             }
         }
+        $evaluations_count = 0;
+        if (isset($this->evaluacionesGenerales)) {
+            $ids = $this->evaluacionesGenerales->pluck('id');
+            $evaluations_count = $this->evaluacionesGenerales->count();
+        } else {
+            $ids = [];
+        }
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+        $i = $i + $results;
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+        //calcular el porcentaje del curso
+        $advance = ($i * 100) / ($this->lecciones_orden->count() + $evaluations_count);
 
         return round($advance, 2);
     }
 
     public function getSectionAdvanceProperty()
     {
-        $i = 0;
+        // $i = 0;
 
-        foreach ($this->lecciones_orden as $lesson) {
-            if ($lesson->completed) {
-                $i++;
-            }
-        }
+        // foreach ($this->lecciones_orden as $lesson) {
+        //     if ($lesson->completed) {
+        //         $i++;
+        //     }
+        // }
 
-        //calcular el porcentaje de la
-        $advance = ($i * 100) / ($this->lecciones_orden->count());
+        // //calcular el porcentaje de la
+        // $advance = ($i * 100) / ($this->lecciones_orden->count());
 
-        return round($advance, 2);
+        // return round($advance, 2);
+        return $this->advance;
     }
 
     public function download()

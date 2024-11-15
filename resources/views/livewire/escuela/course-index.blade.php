@@ -189,4 +189,28 @@
             document.getElementById('guardarButtonT').click();
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Escuchar cuando el modal se haya cerrado
+            $('.modal').on('hidden.bs.modal', function() {
+                // Pausar el video dentro del modal
+                var video = $(this).find('video')[0]; // Buscar un elemento <video>
+                if (video) {
+                    video.pause(); // Pausar el video
+                    video.currentTime = 0; // Reiniciar el video al inicio
+                }
+
+                // Pausar el video si es un iframe de YouTube o Vimeo
+                var iframe = $(this).find('iframe')[0]; // Buscar un elemento <iframe>
+                if (iframe) {
+                    var src = iframe.src;
+                    // Para YouTube, detener el video al eliminar el src y restaurarlo
+                    if (src.includes('youtube.com') || src.includes('vimeo.com')) {
+                        iframe.src = ''; // Eliminar el src para detener el video
+                        iframe.src = src; // Restaurar el src para reiniciar el video
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

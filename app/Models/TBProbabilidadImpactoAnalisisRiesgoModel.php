@@ -20,4 +20,9 @@ class TBProbabilidadImpactoAnalisisRiesgoModel extends Model
         'color',
         'min_max_id',
     ];
+
+    public function templateAr_prob_imp()
+    {
+        return $this->belongsTo(TBTemplateArProbImpArModel::class, 'min_max_id');
+    }
 }

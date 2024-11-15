@@ -82,7 +82,7 @@
                                         @php
                                             $employee = App\Models\User::find($requisicion->id_user)->empleado;
                                             if ($requisicion->registroFirmas) {
-                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
+                                                $supervisorName = $requisicion->obtener_responsable_lider->name;
                                             } elseif ($employee !== null && $employee->supervisor !== null) {
                                                 $supervisorName = $employee->supervisor->name;
                                             } else {
@@ -93,16 +93,21 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
-                                        <p>Finanzas</p>
+                                        @php
+                                            if ($requisicion->registroFirmas) {
+                                                $finanzasName = $requisicion->obtener_responsable_finanzas->name;
+                                            } else {
+                                                $finanzasName = 'Sin identificar'; // Or any default value you prefer
+                                            }
+                                        @endphp
+                                        <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
                                         @php
-                                            $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                ->where('id', $requisicion->comprador_id)
-                                                ->first();
+                                            $compradorName = $requisicion->obtener_responsable_comprador
                                         @endphp
-                                        <p>Comprador: {{ $comprador->name }}</p>
+                                        <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
                                     @default
@@ -260,7 +265,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                Swal.fire('¡Cancelado!', 'La Requisición ha sido cancelada.', 'success').then(
+                                Swal.fire('¡Cancelado!', 'La requisición ha sido cancelada.', 'success').then(
                                     () => {
                                         window.location.reload(); // Refresca la página
                                     });

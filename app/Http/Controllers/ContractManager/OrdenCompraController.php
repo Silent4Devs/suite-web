@@ -137,9 +137,11 @@ class OrdenCompraController extends Controller
 
         try {
 
-            $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            // $requisicion = KatbolRequsicion::getArchivoFalseAll()->where('id', $id)->first();
+            $requisicion = KatbolRequsicion::where('id', $id)->first();
             $user = User::find($requisicion->id_finanzas_oc);
-            $proveedores = KatbolProveedorOC::getAll()->where('id', $requisicion->proveedor_id)->first();
+            // $proveedores = KatbolProveedorOC::getAll()->where('id', $requisicion->proveedor_id)->first();
+            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();
 
             if ($user) {
                 $firma_finanzas_name = $user->name;
@@ -147,7 +149,7 @@ class OrdenCompraController extends Controller
                 $firma_finanzas_name = null;
             }
 
-            $organizacion = Organizacion::getLogo();
+            $organizacion = $this->obtenerOrganizacion();
 
             if (! $requisicion) {
                 abort(404);
@@ -832,7 +834,7 @@ class OrdenCompraController extends Controller
             $bandera = $this->bandera = false;
         }
 
-        $organizacion = Organizacion::getFirst();
+        $organizacion = $this->obtenerOrganizacion();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();

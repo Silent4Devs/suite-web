@@ -571,12 +571,14 @@ export const OptionSelect = ({ id, data = [],  changeQuestionProps, isNumeric })
             title: "respuesta 1",
             name: "respuesta1",
             exist: true,
+            value:0,
         },
         {
             id: uuidv4(),
             title: "respuesta 2",
             name: "respuesta2",
             exist: true,
+            value:0,
         },
     ];
     const [options, setOptions] = useState(data.length > 0 ? data : dataDefault);
