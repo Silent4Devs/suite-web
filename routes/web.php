@@ -88,22 +88,28 @@ Route::group(['middleware' => ['tenant']], function () {
     });
 
     Route::get('/tenant-cache-test', function () {
-        $tenant = tenancy()->tenant;
-    
-        if (!$tenant) {
-            return response()->json(['error' => 'No se ha inicializado ningún inquilino.'], 404);
-        }
+        // $tenant = tenancy()->tenant;
 
-        Cache::put('test_key', 'test_value', 60);
-    
+        // if (!$tenant) {
+        //     return response()->json(['error' => 'No se ha inicializado ningún inquilino.'], 404);
+        // }
+
+        // Cache::put('test_key', 'test_value', 60);
+
+        // return response()->json([
+        //     'tenant_id' => $tenant->id,
+        //     'cache_value' => Cache::get('test_key')
+        // ]);
+        $currentGuard = Auth::getDefaultDriver();
+
+        // Intenta obtener el usuario autenticado en el guard 'tenant'
+        $user = Auth::guard('tenant')->user();
+
         return response()->json([
-            'tenant_id' => $tenant->id,
-            'cache_value' => Cache::get('test_key') 
+            'current_guard' => $currentGuard,
+            'tenant_user' => $user,
         ]);
     });
-    
-
-
 
     Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
         Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -112,9 +118,11 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::resource('/', RegistroVisitantesController::class);
     });
 
+
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
     Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
+
     //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
