@@ -16,6 +16,7 @@ use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\ContractManager\Producto;
 use App\Models\Empleado;
+use App\Models\FirmasOrdenesCompra;
 use App\Models\FirmasRequisiciones;
 use App\Models\HistorialEdicionesReq;
 use App\Models\ListaDistribucion;
@@ -582,6 +583,18 @@ class RequisicionesController extends Controller
                     'comprador_id' => $user->empleado->id,
                 ]
             );
+
+            $solicitante_user = User::where('id', $requisicion->id_user)->first();
+
+            $solicitante = Empleado::select('id', 'email')->where('email', $solicitante_user->email)->first();
+
+            $firmas_oc = FirmasOrdenesCompra::updateOrCreate([
+                'requisicion_id' => $requisicion->id,
+            ],
+            [
+                'solicitante_id' => $solicitante->id,
+                'comprador_id' => $user->empleado->id,
+            ]);
 
             // correo de compras
             $userEmail = $requisicion->email;
