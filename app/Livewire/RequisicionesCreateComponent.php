@@ -18,6 +18,7 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Services\RequisicionService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -161,10 +162,82 @@ class RequisicionesCreateComponent extends Component
 
     public $alerta_jefes = false;
 
+    protected $requisicionService;
+
+    public function postData()
+    {
+        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+
+        return $result;
+    }
+    public function __construct()
+    {
+        // Instanciamos el servicio de la clase
+        $this->requisicionService = app(RequisicionService::class);
+    }
+
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+        return $result;
+    }
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+        return $result;
+    }
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+        return $result;
+    }
+
+    public function askQuestion()
+    {
+        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
+
+        $this->respuesta = response()->json($response);
+
+        $this->respuesta = $response;
+    }
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
     }
+
+    public function robot()
+    {
+        $this->filename = 'saulcv.pdf';
+        $this->postData();
+
+        $this->bandera = true;
+
+        $this->filePath = storage_path('app/public/saulcv.pdf');
+
+        $this->postDataText();
+
+        $this->question = 'El presente documento trata de...';
+
+        $this->askQuestion();
+    }
+
 
     public function mount()
     {
@@ -507,8 +580,8 @@ class RequisicionesCreateComponent extends Component
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
         } catch (Throwable $e) {
-            $this->forgetCache();
             DB::rollback();
+            $this->forgetCache();
             dd($e);
         }
         $this->dataFirma();
@@ -541,7 +614,7 @@ class RequisicionesCreateComponent extends Component
 
         $jefe = $this->user->empleado->supervisor;
         //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+        $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
         //Buscamos en que nivel se encuentra el supervisor
         $nivel = $supList->nivel;

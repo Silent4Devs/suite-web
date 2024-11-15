@@ -149,7 +149,7 @@ class OrdenCompraController extends Controller
                 $firma_finanzas_name = null;
             }
 
-            $organizacion = Organizacion::getLogo();
+            $organizacion = $this->obtenerOrganizacion();
 
             if (! $requisicion) {
                 abort(404);
@@ -834,7 +834,7 @@ class OrdenCompraController extends Controller
             $bandera = $this->bandera = false;
         }
 
-        $organizacion = Organizacion::getFirst();
+        $organizacion = $this->obtenerOrganizacion();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();

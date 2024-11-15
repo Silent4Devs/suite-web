@@ -18,6 +18,7 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +31,7 @@ use Throwable;
 class RequisicionesEditComponent extends Component
 {
     use LivewireAlert;
+    use ObtenerOrganizacion;
     use WithFileUploads;
 
     public $editRequisicion = null;
@@ -190,7 +192,7 @@ class RequisicionesEditComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->editRequisicion->user;
         $this->user_area = $this->editRequisicion->area;
@@ -318,7 +320,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -679,7 +681,7 @@ class RequisicionesEditComponent extends Component
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
                 if ($provSug['extArchivo'] != null) {
-                    $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key + 1 . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                    $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
                     KatbolProveedorRequisicion::updateOrCreate(
                         [
                             'id' => $provSug['id_registro'],
