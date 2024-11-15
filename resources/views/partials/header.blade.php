@@ -31,7 +31,7 @@
                 <div class="close-menu-header"></div>
             </button>
             <a href="{{ url('/admin/portal-comunicacion') }}">
-                <img src="{{ asset($logotipo) }}" style="height: 40px;">
+                <img src="{{ asset('img/logo-ltr.png') }}" alt="" style="height: 40px;">
             </a>
             @livewire('global-search-component', ['lugar' => 'header'])
         </div>
@@ -166,6 +166,13 @@
                                         <i class="bi bi-pencil-square"></i>
                                         Personalización visual
                                     </button>
+                                </div>
+                                <div class="mt-3">
+                                    <a style="all: unset; color: #747474; cursor: pointer;"
+                                        href="{{ route('admin.inicioUsuario.mis-cursos') }}">
+                                        <i class="bi bi-trophy"></i>
+                                        Mis logros
+                                    </a>
                                 </div>
                                 <div class="mt-3 text-end">
                                     <div class="custom-control custom-switch">
@@ -518,7 +525,7 @@
                                     @can('glosario_acceder')
                                         <li><a href="{{ route('admin.glosarios.index') }}">Glosario</a></li>
                                     @endcan
-                                        <li><a href="{{ route('admin.module_firmas') }}">Modulo Firmas</a></li>
+                                    <li><a href="{{ route('admin.module_firmas') }}">Modulo Firmas</a></li>
                                 </ul>
                             </li>
                         @endcan

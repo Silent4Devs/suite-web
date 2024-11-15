@@ -18,6 +18,7 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +31,7 @@ use Throwable;
 class RequisicionesEditComponent extends Component
 {
     use LivewireAlert;
+    use ObtenerOrganizacion;
     use WithFileUploads;
 
     public $editRequisicion = null;
@@ -190,7 +192,7 @@ class RequisicionesEditComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->editRequisicion->user;
         $this->user_area = $this->editRequisicion->area;
@@ -248,6 +250,7 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => null,
                 'url_contacto' => null,
                 'archivo' => null,
+                'cotizacion' => null,
                 'id_registro' => $prov_requisiciones->id ?? null,
                 'tabla_origen' => 'ProvedorRequisicionCatalogo',
             ];
@@ -267,6 +270,7 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => null,
                 'url_contacto' => null,
                 'archivo' => null,
+                'cotizacion' => null,
                 'id_registro' => $prov_indistintos_requisiciones->id ?? null,
                 'tabla_origen' => 'ProveedorIndistinto',
             ];
@@ -287,6 +291,7 @@ class RequisicionesEditComponent extends Component
                 'correo_contacto' => $prov_requisiciones_catalogo->contacto_correo,
                 'url_contacto' => $prov_requisiciones_catalogo->url,
                 'archivo' => $prov_requisiciones_catalogo->cotizacion,
+                'cotizacion' => null,
                 'id_registro' => $prov_requisiciones_catalogo->id ?? null,
                 'tabla_origen' => 'ProveedorRequisicion',
             ];
@@ -527,22 +532,42 @@ class RequisicionesEditComponent extends Component
                         }
                     }
 
-                    $dataProveedoresSugeridos[] = [
-                        'id_registro' => $proveedor['id_registro'],
-                        'proveedor' => $proveedor['proveedor_id'],
-                        'detalles' => $proveedor['detalles'],
-                        'tipo' => $proveedor['tipo'],
-                        'comentarios' => $proveedor['comentarios'],
-                        'contacto' => $proveedor['nombre_contacto'],
-                        'cel' => $proveedor['telefono_contacto'],
-                        'contacto_correo' => $proveedor['correo_contacto'],
-                        'url' => $proveedor['url_contacto'],
-                        'fecha_inicio' => $proveedor['fechaInicio'],
-                        'fecha_fin' => $proveedor['fechaFin'],
-                        'extArchivo' => $proveedor['archivo']->getClientOriginalExtension(),
-                        // 'cotizacion' => null,
-                        // 'requisiciones_id' => $proveedor[''],
-                    ];
+                    if ($proveedor['cotizacion'] != null) {
+                        $dataProveedoresSugeridos[] = [
+                            'id_registro' => $proveedor['id_registro'],
+                            'proveedor' => $proveedor['proveedor_id'],
+                            'detalles' => $proveedor['detalles'],
+                            'tipo' => $proveedor['tipo'],
+                            'comentarios' => $proveedor['comentarios'],
+                            'contacto' => $proveedor['nombre_contacto'],
+                            'cel' => $proveedor['telefono_contacto'],
+                            'contacto_correo' => $proveedor['correo_contacto'],
+                            'url' => $proveedor['url_contacto'],
+                            'fecha_inicio' => $proveedor['fechaInicio'],
+                            'fecha_fin' => $proveedor['fechaFin'],
+                            'extArchivo' => $proveedor['cotizacion']->getClientOriginalExtension(),
+                            'archivo' => $proveedor['cotizacion'],
+                            // 'cotizacion' => null,
+                            // 'requisiciones_id' => $proveedor[''],
+                        ];
+                    } else {
+                        $dataProveedoresSugeridos[] = [
+                            'id_registro' => $proveedor['id_registro'],
+                            'proveedor' => $proveedor['proveedor_id'],
+                            'detalles' => $proveedor['detalles'],
+                            'tipo' => $proveedor['tipo'],
+                            'comentarios' => $proveedor['comentarios'],
+                            'contacto' => $proveedor['nombre_contacto'],
+                            'cel' => $proveedor['telefono_contacto'],
+                            'contacto_correo' => $proveedor['correo_contacto'],
+                            'url' => $proveedor['url_contacto'],
+                            'fecha_inicio' => $proveedor['fechaInicio'],
+                            'fecha_fin' => $proveedor['fechaFin'],
+                            'extArchivo' => null,
+                            // 'cotizacion' => null,
+                            // 'requisiciones_id' => $proveedor[''],
+                        ];
+                    }
                 }
             } else {
                 $proveedor_catalogo = KatbolProveedorOC::where('id', $proveedor['proveedor_id'])->first();
@@ -655,27 +680,52 @@ class RequisicionesEditComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
-                KatbolProveedorRequisicion::updateOrCreate(
-                    [
-                        'id' => $provSug['id_registro'],
-                        'requisiciones_id' => $this->editRequisicion->id,
-                    ],
-                    [
-                        'requisiciones_id' => $this->editRequisicion->id,
-                        'proveedor' => $provSug['proveedor'],
-                        'detalles' => $provSug['detalles'],
-                        'tipo' => $provSug['tipo'],
-                        'comentarios' => $provSug['comentarios'],
-                        'contacto' => $provSug['contacto'],
-                        'cel' => $provSug['cel'],
-                        'contacto_correo' => $provSug['contacto_correo'],
-                        'url' => $provSug['url'],
-                        'fecha_inicio' => $provSug['fecha_inicio'],
-                        'fecha_fin' => $provSug['fecha_fin'],
-                        'cotizacion' => $name,
-                    ]
-                );
+                if ($provSug['extArchivo'] != null) {
+                    $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
+                    KatbolProveedorRequisicion::updateOrCreate(
+                        [
+                            'id' => $provSug['id_registro'],
+                            'requisiciones_id' => $this->editRequisicion->id,
+                        ],
+                        [
+                            'requisiciones_id' => $this->editRequisicion->id,
+                            'proveedor' => $provSug['proveedor'],
+                            'detalles' => $provSug['detalles'],
+                            'tipo' => $provSug['tipo'],
+                            'comentarios' => $provSug['comentarios'],
+                            'contacto' => $provSug['contacto'],
+                            'cel' => $provSug['cel'],
+                            'contacto_correo' => $provSug['contacto_correo'],
+                            'url' => $provSug['url'],
+                            'fecha_inicio' => $provSug['fecha_inicio'],
+                            'fecha_fin' => $provSug['fecha_fin'],
+                            'cotizacion' => $name,
+                        ]
+                    );
+
+                    $ruta_cotizacion = $provSug['archivo']->storeAs('public/cotizaciones_requisiciones_proveedores/', $name);
+                } else {
+                    KatbolProveedorRequisicion::updateOrCreate(
+                        [
+                            'id' => $provSug['id_registro'],
+                            'requisiciones_id' => $this->editRequisicion->id,
+                        ],
+                        [
+                            'requisiciones_id' => $this->editRequisicion->id,
+                            'proveedor' => $provSug['proveedor'],
+                            'detalles' => $provSug['detalles'],
+                            'tipo' => $provSug['tipo'],
+                            'comentarios' => $provSug['comentarios'],
+                            'contacto' => $provSug['contacto'],
+                            'cel' => $provSug['cel'],
+                            'contacto_correo' => $provSug['contacto_correo'],
+                            'url' => $provSug['url'],
+                            'fecha_inicio' => $provSug['fecha_inicio'],
+                            'fecha_fin' => $provSug['fecha_fin'],
+                            // 'cotizacion' => $name,
+                        ]
+                    );
+                }
             }
 
             foreach ($dataProvedoresCatalogo as $key => $provCat) {

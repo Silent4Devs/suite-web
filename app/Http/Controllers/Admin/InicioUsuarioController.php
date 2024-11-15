@@ -14,6 +14,7 @@ use App\Models\CalendarioOficial;
 use App\Models\Denuncias;
 use App\Models\Documento;
 use App\Models\Empleado;
+use App\Models\Escuela\CourseUser;
 use App\Models\EvaluacionDesempeno;
 use App\Models\EvidenciaDocumentoEmpleadoArchivo;
 use App\Models\EvidenciasDenuncia;
@@ -1312,5 +1313,14 @@ class InicioUsuarioController extends Controller
         $cambioED->update([
             'disponibilidad' => $request->cambiar,
         ]);
+    }
+
+    public function misCursos()
+    {
+        $user = User::getCurrentUser();
+
+        $cursosUser = CourseUser::where('user_id', $user->id)->get();
+
+        return view('admin.inicioUsuario.mis-cursos', compact('cursosUser', 'user'));
     }
 }

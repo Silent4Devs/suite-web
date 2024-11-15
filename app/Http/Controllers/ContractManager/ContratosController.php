@@ -429,6 +429,8 @@ class ContratosController extends AppBaseController
 
         event(new ContratoEvent($contrato, 'create', 'contratos', 'Contratos'));
 
+        session()->put('tipo_cambio', null);
+
         return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
@@ -899,6 +901,8 @@ class ContratosController extends AppBaseController
         ]);
 
         event(new ContratoEvent($contrato, 'update', 'contratos', 'Contratos'));
+
+        session()->put('tipo_cambio', null);
 
         return response()->json([
             'status' => 'success',

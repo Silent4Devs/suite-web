@@ -1,3 +1,5 @@
+@import './TbColorsGlobal.css';
+
 .tb-btn-primary{
     background-color: var(--color-primary);
     transition: 0.2s;
@@ -18,8 +20,8 @@
     transition: 0.2s;
     display: inline-block;
     text-align: center;
-    border: 1px solid var(--color-primary);
-    color: var(--color-primary);
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
     box-sizing: border-box;
     padding: 12px 25px !important;
     border-radius: 6px !important;
