@@ -99,8 +99,8 @@
                                     @php
                                         use App\Models\Organizacion;
                                         $organizacion = Organizacion::getFirst();
-                                        $logotipo = $organizacion->logotipo;
-                                        $empresa = $organizacion->empresa;
+                                        $logotipo = $organizacion->logotipo ?? '';
+                                        $empresa = $organizacion->empresa ?? '';
                                     @endphp
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
                                         {{ $empresa }}</h2>
