@@ -52,16 +52,16 @@ function getDiccionaryRequisionOrder($value)
         'facturacion' => 'Facturación',
         'direccion' => 'Dirección',
         'espesificaciones' => 'Especificaciones',
-        'fecha_fin' => 'Fecha de Finalización',
-        'fecha_inicio' => 'Fecha de Inicio',
-        'cotizacion' => 'Cotización',
         'detalles' => 'Detalles',
+        'tipo' => 'Tipo',
         'comentarios' => 'Comentarios',
         'contacto' => 'Contacto',
         'contacto_correo' => 'Correo del Contacto',
         'cel' => 'Celular',
-
-
+        'url' => 'Url',
+        'fecha_inicio' => 'Fecha de Inicio',
+        'fecha_fin' => 'Fecha de Finalización',
+        'cotizacion' => 'Cotización',
     ];
 
     $valor = array_key_exists($value, $diccionary) ? $diccionary[$value] : $value;
