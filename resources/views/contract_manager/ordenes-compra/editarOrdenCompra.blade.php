@@ -319,6 +319,8 @@
                                     <h3 class="sub-titulo-form">Producto o servicio</h3>
                                 </div>
                             </div>
+                            <input type="number" id="id_prod_{{ $count }}" name="id_prod{{ $count }}" class="form-control mod-id_prod"
+                            value="{{ $producto->id ?? null }}" hidden>
                             <div class="row">
                                 <div class="col s12 l4 ">
                                     <div class="anima-focus">
@@ -732,10 +734,9 @@
 
 <script>
     function addCard(tipo_card) {
-
         Swal.fire({
             title: 'Agregar Producto?',
-            text: "Estas seguro de agregar un  nuevo producto, no podras eliminar los campos!",
+            text: "Estas seguro de agregar un nuevo producto, no podrás eliminar los campos!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -743,97 +744,225 @@
             confirmButtonText: 'Si, Seguro!'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 if (tipo_card === 'servicio') {
-                    let card = document.querySelector('.card-product');
-                    let nueva_card = document.createElement("div");
-                    nueva_card.classList.add("card");
-                    nueva_card.classList.add("card-body");
-                    nueva_card.classList.add("card-product");
+                    // Obtén el conteo actual de cards
                     let cards_count = document.querySelectorAll('.card-product').length + 1;
+
+                    // Crea la nueva card
+                    let nueva_card = document.createElement("div");
+                    nueva_card.classList.add("card", "card-body", "card-product");
                     nueva_card.setAttribute("data-count", cards_count);
-                    let id_nueva_card = 'product-serv-' + cards_count;
-                    nueva_card.setAttribute('id', id_nueva_card);
+                    nueva_card.setAttribute('id', `product-serv-${cards_count}`);
 
-                    let caja_cards = document.querySelector('.caja-card-product');
-                    caja_cards.appendChild(nueva_card);
-                    document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+                    // Construye el HTML dinámicamente
+                    nueva_card.innerHTML = `
+                        <div>
+                            <input type="number" id="id_prod_${cards_count}" name="id_prod${cards_count}"
+                                class="form-control mod-id_prod" hidden>
+                            <div class="row">
+                                <div class="col s12 l4">
+                                    <div class="anima-focus">
+                                        <input type="text" id="cant_${cards_count}"
+                                            name="cantidad${cards_count}"
+                                            class="form-control mod-cantidad">
+                                        <label for="cant_${cards_count}">Cantidad <font class="asterisco">*</font></label>
+                                    </div>
+                                </div>
+                                <div class="col s12 l8">
+                                    <div class="anima-focus">
+                                        <select class="form-control mod-producto" id="prod_${cards_count}"
+                                                name="producto${cards_count}" required>
+                                            <option value="{{ $producto->producto->id }}" selected>
+                                                {{ $producto->producto->descripcion }}
+                                            </option>
+                                        </select>
+                                        <label for="prod_${cards_count}">Producto o servicio <font class="asterisco">*</font></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l12 ">
+                                    <div class="anima-focus">
+                                        <textarea class="mod-especificaciones form-control" id="espec_${cards_count}" placeholder=""
+                                            name="especificaciones${cards_count}"></textarea>
+                                        <label for="espec_${cards_count}">
+                                            Especificaciones del producto o servicio <font class="asterisco">*
+                                            </font>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l4 ">
+                                    <div class="anima-focus">
+                                        <select name="centro_costo${cards_count}" id="cen_cos" placeholder=""
+                                            class="form-control mod-centro_costo" id="" required>
+                                            @if ($producto->centro_costo_id)
+                                                <option selected value="{{ $producto->centro_costo->id }}">
+                                                    {{ $producto->centro_costo->clave }}</option>
+                                            @else
+                                                <option value="" selected disabled>Seleccione una opción de
+                                                    Centro de
+                                                    Costos</option>
+                                            @endif
+                                            @foreach ($centro_costos as $costo)
+                                                <option value="{{ $costo->id }}">
+                                                    {{ $costo->clave }}: {{ $costo->descripcion }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="cen_cos">
+                                            Centro de costos <font class="asterisco">*</font>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col s12 l4 ">
+                                    <div class="anima-focus">
+                                        <select required class="form-control mod-contrato"
+                                            id="cont_${cards_count}" placeholder=""
+                                            name="contrato${cards_count}">
+                                            @isset($contrato)
+                                                <option value="{{ $contrato->id }}">
+                                                    {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                    {{ $contrato->nombre_servicio }}
+                                                </option>
+                                            @endisset
+                                            @foreach ($contratos as $contrato)
+                                                <option value="{{ $contrato->id }}"
+                                                    data-no="{{ $contrato->no_contrato }}"
+                                                    data-servicio="{{ $contrato->nombre_servicio }}"
+                                                    {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
+                                                    {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                    {{ $contrato->nombre_servicio }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="cont_${cards_count}">
+                                            Proyecto <font class="asterisco">*</font>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col s12 l4 ">
+                                    <div class="anima-focus">
+                                        <input type="text" id="no_p_${cards_count}" placeholder=""
+                                            name="no_personas${cards_count}"
+                                            class="form-control mod-no_personas"
+                                            value="">
+                                        <label for="no_p_${cards_count}">
+                                            No. de Personas
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l4 ">
+                                    <div class="anima-focus">
+                                        <input type="text" id="porc_inv_${cards_count}"
+                                            name="porcentaje_involucramiento${cards_count}"
+                                            class="form-control mod-porcentaje_involucramiento"
+                                            value="" placeholder="">
+                                        <label for="porc_inv_${cards_count}">
+                                            Porcentaje de involucramiento
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-                    document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('name',
-                        'cantidad' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('name',
-                        'producto' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute('name',
-                        'especificaciones' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute('name',
-                        'centro_costo' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('name',
-                        'contrato' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('name',
-                        'no_personas' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento')
-                        .setAttribute('name', 'porcentaje_involucramiento' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('name',
-                        'sub_total' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('name',
-                        'descuento' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('name', 'iva' +
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute('name',
-                        'otro_impuesto' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute('name',
-                        'iva_retenido' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute('name',
-                        'isr_retenido' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('name', 'total' +
-                        cards_count);
+                            <div class="row">
+                                <div class="col s12">
+                                    <h3 class="sub-titulo-form">Subtotales</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        Sub total <font class="asterisco">*</font>
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="sub_total${cards_count}"
+                                            data-count="${cards_count}" class="mod-sub_total form-control"
+                                            required value="">
+                                    </div>
+                                </div>
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        IVA <font class="asterisco">*</font>
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="iva${cards_count}"
+                                            data-count="${cards_count}" class="mod-iva form-control" required
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        IVA retenido
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="iva_retenido${cards_count}"
+                                            data-count="${cards_count}" class="mod-iva_retenido form-control"
+                                            value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        Descuento
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="descuento${cards_count}"
+                                            data-count="${cards_count}" class="mod-descuento form-control"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        Otro impuesto
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="otro_impuesto${cards_count}"
+                                            data-count="${cards_count}" class="mod-otro_impuesto form-control"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        ISR retenido
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input type="text" name="isr_retenido${cards_count}"
+                                            data-count="${cards_count}" class="mod-isr_retenido form-control"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="col s12 l3 ">
+                                    <label for="">
+                                        Total <font class="asterisco">*</font>
+                                    </label>
+                                    <div class="caja-input-dinero">
+                                        <input id="input-total-serv${cards_count}" type="text"
+                                            name="total${cards_count}" data-count="${cards_count}"
+                                            class="mod-total form-control" required value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-bottom: 30px;">
+                            <!-- Aquí agrega el resto de los campos necesarios, siguiendo la misma estructura -->
+                        </div>
+                    `;
 
-                    document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute(
-                        'data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute(
-                        'data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento')
-                        .setAttribute('data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('data-count',
-                        cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute(
-                        'data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute(
-                        'data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute(
-                        'data-count', cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('data-count',
-                        cards_count);
+                    // Agrega la nueva card al contenedor
+                    document.querySelector('.caja-card-product').appendChild(nueva_card);
 
-                    document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('id',
-                        'input-total-serv' + cards_count);
-
-                    $('#' + id_nueva_card + ' input').val('');
-                    $('#' + id_nueva_card + ' select').innerHTML +=
-                        '<option value="" selected disabled></option>';
-                    $('#' + id_nueva_card + ' textarea').innerText = '';
-
+                    // Actualiza el contador global del formulario
                     document.querySelector('#input-count-prod').value = cards_count;
+
+                    console.log(`Nueva card añadida con el contador: ${cards_count}`);
                 }
-                Swal.fire(
-                    'Agregado!',
-                    'Producto agregado.',
-                    'success'
-                )
             }
-        })
+        });
     }
+
 </script>
 @endsection

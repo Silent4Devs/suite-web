@@ -378,6 +378,7 @@ class OrdenCompraController extends Controller
         // Procesar productos nuevos y detectar cambios
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $productosNuevos[] = [
+                'id_prod' => $request['id_prod'.$i] ?? null,
                 'cantidad' => $request['cantidad'.$i],
                 'producto_id' => $request['producto'.$i],
                 'centro_costo_id' => $request['centro_costo'.$i],
@@ -396,72 +397,84 @@ class OrdenCompraController extends Controller
         }
 
         // Detectar productos eliminados
-        foreach ($productosExistentes as $productoExistente) {
-            $encontrado = false;
-            foreach ($productosNuevos as $productoNuevo) {
-                if ($productoNuevo['producto_id'] == $productoExistente->producto_id) {
-                    $encontrado = true;
-                    break;
-                }
-            }
+        foreach ($productosExistentes as $keyPE => $productoExistente) {
+            foreach ($productosNuevos as $keyPN => $productoNuevo) {
+                if ($productoNuevo['id_prod'] == $productoExistente->id) {
+                    foreach ($productoNuevo as $campo => $nuevoValor) {
+                        $valorAnterior = $productoExistente->{$campo};
 
-            if (! $encontrado) {
-                // Registrar el cambio en el historial
-                HistorialEdicionesOC::create([
-                    'requisicion_id' => $ordenCompra->id,
-                    'registro_tipo' => KatbolProductoRequisicion::class,
-                    'id_empleado' => $idEmpleado,
-                    'campo' => 'producto',
-                    'valor_anterior' => $productoExistente->toJson(), // Estado anterior
-                    'valor_nuevo' => 'Eliminado', // Estado nuevo
-                    'version_id' => $versionOCId,
-                ]);
-                // Eliminar producto
-                $productoExistente->delete();
+                        if ($valorAnterior !== $nuevoValor && ($campo != "id_prod")) {
+                            // Registrar el cambio en el historial
+                            HistorialEdicionesOC::create([
+                                'requisicion_id' => $ordenCompra->id,
+                                'registro_tipo' => KatbolProductoRequisicion::class,
+                                'id_empleado' => $idEmpleado,
+                                'campo' => $campo,
+                                'valor_anterior' => $valorAnterior, // Valor anterior
+                                'valor_nuevo' => $nuevoValor, // Valor nuevo
+                                'version_id' => $versionOCId,
+                            ]);
+                        }
+                    }
+
+                    // Editar producto
+                    $productoExistente->update([
+                        'cantidad' => $productoNuevo['cantidad'],
+                        'producto_id' => $productoNuevo['producto_id'],
+                        'centro_costo_id' => $productoNuevo['centro_costo_id'],
+                        'espesificaciones' => $productoNuevo['espesificaciones'],
+                        'contrato_id' => $productoNuevo['contrato_id'],
+                        'no_personas' => $productoNuevo['no_personas'],
+                        'porcentaje_involucramiento' => $productoNuevo['porcentaje_involucramiento'],
+                        'sub_total' => $productoNuevo['sub_total'],
+                        'iva' => $productoNuevo['iva'],
+                        'iva_retenido' => $productoNuevo['iva_retenido'],
+                        'descuento' => $productoNuevo['descuento'],
+                        'otro_impuesto' => $productoNuevo['otro_impuesto'],
+                        'isr_retenido' => $productoNuevo['isr_retenido'],
+                        'total' => $productoNuevo['total'],
+                    ]);
+                }
             }
         }
 
-        // Guardar nuevos productos y registrar cambios
-        foreach ($productosNuevos as $productoNuevo) {
-            // Verificar si ya existe el producto
-            $productoExistente = KatbolProductoRequisicion::where('producto_id', $productoNuevo['producto_id'])
-                ->where('requisiciones_id', $ordenCompra->id)
-                ->first();
-
-            if (! $productoExistente) {
-                // Crear nuevo producto
-                $nuevoProducto = KatbolProductoRequisicion::create(array_merge($productoNuevo, [
-                    'requisiciones_id' => $ordenCompra->id,
-                ]));
-
-                // Registrar el cambio en el historial
-                HistorialEdicionesOC::create([
-                    'requisicion_id' => $ordenCompra->id,
-                    'registro_tipo' => KatbolProductoRequisicion::class,
-                    'id_empleado' => $idEmpleado,
-                    'campo' => 'producto',
-                    'valor_anterior' => 'Creado', // Estado anterior
-                    'valor_nuevo' => $nuevoProducto->toJson(), // Estado nuevo
-                    'version_id' => $versionOCId,
-                ]);
-            } else {
-                // Comparar y detectar cambios en los campos
+        foreach ($productosNuevos as $keyPN => $productoNuevo) {
+            if($productoNuevo['id_prod'] == null) {
                 foreach ($productoNuevo as $campo => $nuevoValor) {
                     $valorAnterior = $productoExistente->{$campo};
 
-                    if ($valorAnterior !== $nuevoValor) {
+                    if ($valorAnterior !== $nuevoValor && $campo != "id_prod") {
                         // Registrar el cambio en el historial
                         HistorialEdicionesOC::create([
                             'requisicion_id' => $ordenCompra->id,
                             'registro_tipo' => KatbolProductoRequisicion::class,
                             'id_empleado' => $idEmpleado,
                             'campo' => $campo,
-                            'valor_anterior' => $valorAnterior, // Valor anterior
+                            'valor_anterior' => 'Creado', // Estado anterior
                             'valor_nuevo' => $nuevoValor, // Valor nuevo
                             'version_id' => $versionOCId,
                         ]);
                     }
                 }
+
+                // Crear nuevo producto
+                $nuevoProducto = KatbolProductoRequisicion::create([
+                    'requisiciones_id' => $ordenCompra->id,
+                    'cantidad' => $productoNuevo['cantidad'],
+                    'producto_id' => $productoNuevo['producto_id'],
+                    'centro_costo_id' => $productoNuevo['centro_costo_id'],
+                    'espesificaciones' => $productoNuevo['espesificaciones'],
+                    'contrato_id' => $productoNuevo['contrato_id'],
+                    'no_personas' => $productoNuevo['no_personas'],
+                    'porcentaje_involucramiento' => $productoNuevo['porcentaje_involucramiento'],
+                    'sub_total' => $productoNuevo['sub_total'],
+                    'iva' => $productoNuevo['iva'],
+                    'iva_retenido' => $productoNuevo['iva_retenido'],
+                    'descuento' => $productoNuevo['descuento'],
+                    'otro_impuesto' => $productoNuevo['otro_impuesto'],
+                    'isr_retenido' => $productoNuevo['isr_retenido'],
+                    'total' => $productoNuevo['total'],
+                ]);
             }
         }
 
