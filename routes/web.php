@@ -88,20 +88,7 @@ Route::group(['middleware' => ['tenant']], function () {
     });
 
     Route::get('/tenant-cache-test', function () {
-        // $tenant = tenancy()->tenant;
-
-        // if (!$tenant) {
-        //     return response()->json(['error' => 'No se ha inicializado ningún inquilino.'], 404);
-        // }
-
-        // Cache::put('test_key', 'test_value', 60);
-
-        // return response()->json([
-        //     'tenant_id' => $tenant->id,
-        //     'cache_value' => Cache::get('test_key')
-        // ]);
         $currentGuard = Auth::getDefaultDriver();
-
         // Intenta obtener el usuario autenticado en el guard 'tenant'
         $user = Auth::guard('tenant')->user();
 

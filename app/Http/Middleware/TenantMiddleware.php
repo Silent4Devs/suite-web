@@ -35,9 +35,6 @@ class TenantMiddleware
         $this->tenantManager->setTenant($tenant);
         tenancy()->initialize($tenant);
 
-
-        Auth::shouldUse('tenant');
-
         return $next($request);
     }
 }

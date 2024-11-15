@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'tenant',
+        'passwords' => 'tenants',
     ],
 
     /*
@@ -104,6 +104,11 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'tenants' => [
+            'provider' => 'tenants',
             'table' => 'password_resets',
             'expire' => 60,
         ],

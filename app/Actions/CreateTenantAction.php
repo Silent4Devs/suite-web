@@ -10,6 +10,7 @@ use App\Services\TenantManager;
 use App\Models\Tenant;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Str;
 
 /**
  * Create a tenant with the necessary information for the application.
@@ -53,7 +54,13 @@ class CreateTenantAction
             'db_host' => 'localhost',
             'db_username' => 'postgres',
             'db_password' => '',
-            'user_data' => array_only($data, ['name', 'email', 'password', 'direccion', 'resumen']),
+            'user_data' => [
+                'name' => $data['name'] ?? null,
+                'email' => $data['email'] ?? null,
+                'password' => $data['password'] ?? null,
+                'direccion' => $data['direccion'] ?? null,
+                'resumen' => $data['resumen'] ?? null,
+            ],
         ]);
     }
 

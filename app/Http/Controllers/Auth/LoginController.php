@@ -26,7 +26,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers {
-        logout as performLogout;
+        guard as protected baseGuard;
     }
 
     /**
@@ -46,7 +46,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
+    protected function guard()
+    {
+        // Usa el guard del tenant
+        return Auth::guard('tenant');
+    }
 
     public function redirectTo()
     {

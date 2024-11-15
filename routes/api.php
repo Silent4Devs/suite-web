@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicit
 use App\Http\Controllers\Api\V1\Timesheet\TbTimesheetApiMobileController;
 
 
-Route::post('/register-tenant', [RegisterTenantController::class, 'submit']);
+Route::post('/rtenant', [RegisterTenantController::class, 'submit']);
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
