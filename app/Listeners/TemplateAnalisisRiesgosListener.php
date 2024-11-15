@@ -65,7 +65,7 @@ class TemplateAnalisisRiesgosListener
                     'action' => $event->tipo_consulta,
                     // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBQuestionTemplateAnalisisRiesgoModel':
@@ -76,7 +76,7 @@ class TemplateAnalisisRiesgosListener
                         'action' => $event->tipo_consulta,
                         // 'empleado_id' => 354,
                         'template_id' => $template_id,
-                        'empleado_id' =>  auth()->user()->empleado->id,
+                        'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 } catch (\Throwable $th) {
                     //throw $th;
@@ -89,7 +89,7 @@ class TemplateAnalisisRiesgosListener
                     'action' => $event->tipo_consulta,
                     // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBSettingsTemplateAR_TBFormulaTemplateARModel':
@@ -99,7 +99,7 @@ class TemplateAnalisisRiesgosListener
                     'action' => $event->tipo_consulta,
                     // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
                 break;
             case 'TBSettingsTemplateAR_TBQuestionTemplateARModel':
@@ -112,7 +112,7 @@ class TemplateAnalisisRiesgosListener
                     'action' => $event->tipo_consulta,
                     // 'empleado_id' => 354,
                     'template_id' => $template_id,
-                    'empleado_id' =>  auth()->user()->empleado->id,
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
                 break;
         }

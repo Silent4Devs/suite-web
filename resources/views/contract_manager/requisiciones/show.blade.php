@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
 @endsection
 @section('content')
 @section('titulo', 'Ver Requisición')
@@ -50,13 +50,8 @@
             <div class="card card-item doc-requisicion">
                 <div class="flex header-doc">
                     <div class="flex-item item-doc-img">
-                        @php
-                            $organizacion = App\Models\Organizacion::first();
-                            $logotipo = $organizacion->logotipo;
-                            $empresa = $organizacion->empresa;
-                        @endphp
-                        @if ($logotipo)
-                            <img src="{{ asset($logotipo) }}" style="width:100%; max-width:150px;">
+                        @if ($organizacion->logo)
+                            <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                         @else
                             <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                         @endif
@@ -363,7 +358,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_compras)
                                 <img src="{{ $requisicion->firma_compras }}" class="img-firma">
-                                <p>{{ $requisicion->comprador->user->name ?? '' }} </p>
+                                <p>{{ $firma_siguiente->comprador->name ?? '' }} </p>
                                 <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -383,9 +378,9 @@
                                     bueno de Gestión de talento.</i></small>
                         </div>
                         <div class="col-6 d-flex justify-content-center">
-                            <button class="btn tb-btn-secondary" ><a
-                                href="{{ route('contract_manager.requisiciones') }}"
-                                style="color: #EEEEEE">Regresar</a></button>
+                            <button class="btn tb-btn-secondary"><a
+                                    href="{{ route('contract_manager.requisiciones') }}"
+                                    style="color: #EEEEEE">Regresar</a></button>
                         </div>
                     </div>
                 </div>
@@ -501,11 +496,11 @@
 </div>
 
 <div class="card card-body">
-    <h4>Historial de Cambios:</h4>
+    <h4 style="margin-bottom: 20px;">Historial de Cambios:</h4>
 
     @if (!empty($resultadoRequisiciones))
         @foreach ($resultadoRequisiciones as $cambios)
-            <h5>Versión: {{ $cambios['version'] }}</h5>
+            <h5 style="margin-bottom: 10px;">Versión: {{ $cambios['version'] }}</h5>
             <table class="table">
                 <thead>
                     <tr>
@@ -519,7 +514,7 @@
                     @if (!empty($cambios['cambios']))
                         @foreach ($cambios['cambios'] as $cambio)
                             <tr>
-                                <td>{{ $cambio->campo }}</td>
+                                <td>{{ getDiccionaryRequisionOrder($cambio->campo) }}</td>
                                 <td>{{ $cambio->valor_anterior }}</td>
                                 <td>{{ $cambio->valor_nuevo }}</td>
                                 <td>{{ $cambio->empleado->name }}</td>
