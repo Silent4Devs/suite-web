@@ -21,8 +21,8 @@
             <button id="btnGuardarResumen" class="mr-3 btn btn-sm btn-success">Guardar</button>
         </div>
     </div>
-    {{-- @livewire('training.training', ['id' => $id]) --}}
-    <livewire:training.training :id={{ $id }} />
+    @livewire('training.training', ['id' => $id])
+    {{-- <livewire:training.training :id={{ $id }} /> --}}
 
     {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
