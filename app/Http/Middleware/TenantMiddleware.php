@@ -6,6 +6,7 @@ use Closure;
 use App\Models\Tenant;
 use App\Services\TenantManager;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TenantMiddleware
@@ -33,6 +34,9 @@ class TenantMiddleware
 
         $this->tenantManager->setTenant($tenant);
         tenancy()->initialize($tenant);
+
+
+        Auth::shouldUse('tenant');
 
         return $next($request);
     }

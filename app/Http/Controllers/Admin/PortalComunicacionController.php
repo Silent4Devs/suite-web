@@ -28,6 +28,7 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
+
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         Async::batchRun(

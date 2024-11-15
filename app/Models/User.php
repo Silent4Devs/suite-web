@@ -97,39 +97,38 @@ class User extends Authenticatable implements Auditable
         });
     }
 
-    // public static function getCurrentUser()
-    // {
-    //     if (! Auth::check()) {
-    //         return null; // or handle the unauthenticated case as needed
-    //     }
-
-    //     $cacheKey = 'Auth_user:user'.Auth::user()->id;
-
-    //     return Cache::remember($cacheKey, now()->addMinutes(60), function () {
-    //         return Auth::user();
-    //     });
-
-    // }
-
     public static function getCurrentUser()
     {
-        if (!Auth::check()) {
-            return null;
+        if (! Auth::check()) {
+            return null; // or handle the unauthenticated case as needed
         }
 
-        $tenant = tenancy()->tenant;
-        if (!$tenant) {
-            throw new \Exception('No tenant initialized.');
-        }
+        $cacheKey = 'Auth_user:user' . Auth::user()->id;
 
-        $tenantPrefix = $tenant->getTenantKey();
-        $cacheKey = $tenantPrefix . ':Auth_user:user' . Auth::user()->id;
-        $databaseName = DB::connection()->getDatabaseName();
-        //dd($cacheKey, $tenantPrefix, $tenant, Auth::user(), $databaseName);
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return Auth::user();
         });
     }
+
+    // public static function getCurrentUser()
+    // {
+    //     if (!Auth::check()) {
+    //         return null;
+    //     }
+
+    //     $tenant = tenancy()->tenant;
+    //     if (!$tenant) {
+    //         throw new \Exception('No tenant initialized.');
+    //     }
+
+    //     $tenantPrefix = $tenant->getTenantKey();
+    //     $cacheKey = $tenantPrefix . ':Auth_user:user' . Auth::user()->id;
+    //     $databaseName = DB::connection()->getDatabaseName();
+    //     //dd($cacheKey, $tenantPrefix, $tenant, Auth::user(), $databaseName);
+    //     return Cache::remember($cacheKey, now()->addMinutes(60), function () {
+    //         return Auth::user();
+    //     });
+    // }
 
     public function empleado()
     {

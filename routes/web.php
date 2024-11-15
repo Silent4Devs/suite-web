@@ -113,6 +113,7 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::resource('/', RegistroVisitantesController::class);
     });
 
+
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
     Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
