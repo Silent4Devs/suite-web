@@ -109,7 +109,7 @@ class InicioUsuarioController extends Controller
             },
         );
 
-        $usuario = User::getCurrentUser();
+        $usuario = User::first();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         // dd($empleado->estado_disponibilidad);

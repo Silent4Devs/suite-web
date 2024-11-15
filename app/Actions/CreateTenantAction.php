@@ -2,14 +2,17 @@
 
 namespace App\Actions;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant;
 use App\Services\TenantManager;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Log;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Jobs\{CreateDatabase, MigrateDatabase, SeedDatabase};
+use Str;
 
 /**
  * Create a tenant with the necessary information for the application.
@@ -87,7 +90,11 @@ class CreateTenantAction
             DB::connection('tenant')->table('users')->insert([
                 'name' => $userData['name'],
                 'email' => $userData['email'],
-                'password' => bcrypt($userData['password']), // Asegúrate de hashear la contraseña
+                'password' => bcrypt('#S3cur3P4$$w0Rd!'), // Asegúrate de hashear la contraseña
+                'remember_token' => null,
+                'verification_token' => '',
+                'two_factor_code' => '',
+                'empleado_id' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -96,10 +103,29 @@ class CreateTenantAction
             DB::connection('tenant')->table('empleados')->insert([
                 'name' => $userData['name'],
                 'email' => $userData['email'],
+                'foto' => null,
+                'puesto_id' => null,
+                'antiguedad' => Carbon::now(),
+                'estatus' => 'alta',
+                'area_id' => null,
+                'extension' => null,
+                'telefono_movil' => null,
+                'n_empleado' => 1,
+                'sede_id' =>  null,
                 'direccion'  => $userData['direccion'],
+                'n_registro' => null,
+                'genero' => null,
                 'resumen'  => $userData['resumen'],
                 'created_at' => now(),
                 'updated_at' => now(),
+            ]);
+
+
+            // Inserta los datos en la tabla `users`
+            DB::connection('tenant')->table('password_resets')->insert([
+                'email' => $userData['email'],
+                'token' => Str::random(60), // Token aleatorio de 60 caracteres
+                'created_at' => Carbon::now(),
             ]);
         } catch (Exception $e) {
             Log::error("Error al insertar datos iniciales en la base de datos del inquilino: " . $e->getMessage());
@@ -122,10 +148,10 @@ class CreateTenantAction
                 '--force' => true,
             ]);
 
-            Artisan::call('db:seed', [
-                '--database' => 'tenant',
-                '--force' => true,
-            ]);
+            // Artisan::call('db:seed', [
+            //     '--database' => 'tenant',
+            //     '--force' => true,
+            // ]);
         }
     }
 }
