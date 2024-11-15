@@ -1,4 +1,19 @@
 <div>
+    <style>
+        .pulse {
+                animation: pulse-animation 2s infinite;
+            }
+
+            @keyframes pulse-animation {
+                0% {
+                    box-shadow: 0 0 0 0px {{$contadorIntentos['contadorcolor']}};
+                }
+
+                100% {
+                    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+                }
+    }
+    </style>
     <div class="create-requisicion">
         <div class="card card-body caja-blue">
 
@@ -17,26 +32,51 @@
             </div>
         </div>
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active disable" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                    aria-controls="home" aria-selected="true" style="pointer-events: none"><i
-                        class="number-icon active-number">1</i> Servicios y
-                    Productos</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                    aria-controls="profile" aria-selected="false" style="pointer-events: none"><i
-                        class="number-icon">2</i>
-                    Proveedores</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                    aria-controls="contact" aria-selected="false" style="pointer-events: none"><i
-                        class="number-icon">3</i>
-                    Firma</a>
-            </li>
-        </ul>
+        <div class="">
+            <div class="card pulse" style="width: 156px; height: 68px; position: absolute;">
+                <div class="card-body d-flex flex-column align-items-center" >
+                    <p class="mb-0" style="font-size:12px; color:#4870B2;">Ediciones disponibles</p>
+                    <div class="card" style="width: 43px; height: 23px; margin-top:7px;">
+                        <div class="card-body d-flex justify-content-center align-items-center" style="padding:0px; background-color:{{$contadorIntentos['contadorcolor']}}; border-radius:16px;">
+                            <p class="mb-0" style="font-size:12px; color:#FFFFFF;">{{ $contadorIntentos['contadorEdit'] }}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- <h4>Tienes
+                    @if ($contadorEdit == 3 || $contadorEdit == 2)
+                        <div style="width: 100px;" class="pulse">{{ $contadorEdit }}</div>
+                    @elseif ($contadorEdit == 1)
+                        <span class="badge badge-pill badge-warning">{{ $contadorEdit }}</span>
+                    @else
+                        <span class="badge badge-pill badge-danger">{{ $contadorEdit }}</span>
+                    @endif
+                    ediciones disponibles:
+                </h4> --}}
+            </div>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active disable" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true" style="pointer-events: none"><i
+                            class="number-icon active-number">1</i> Servicios y
+                        Productos</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link disable" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false" style="pointer-events: none"><i
+                            class="number-icon">2</i>
+                        Proveedores</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                        aria-controls="contact" aria-selected="false" style="pointer-events: none"><i
+                            class="number-icon">3</i>
+                        Firma</a>
+                </li>
+            </ul>
+        </div>
 
         <div class="tab-content" id="myTabContent">
 
