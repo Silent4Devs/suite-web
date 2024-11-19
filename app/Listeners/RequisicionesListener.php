@@ -73,13 +73,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_jefe !== null) {
-                        $jefe_empleado = $requisicion->obtener_responsable_lider;
+                        $jefe_empleado = $firmas->jefe;
 
                         $user_jefe = User::where('empleado_id', $jefe_empleado->id)
                             ->first();
 
                         if ($user_jefe == null) {
-                            $user_jefe = User::where('email', $firmas->jefe->email)
+                            $user_jefe = User::where('email', $jefe_empleado->email)
                                 ->first();
                         }
 
@@ -87,13 +87,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_finanzas !== null) {
-                        $finanzas_empleado = $requisicion->obtener_responsable_finanzas;
+                        $finanzas_empleado = $firmas->responsableFinanzas;
 
                         $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
                             ->first();
 
                         if ($user_finanzas == null) {
-                            $user_finanzas = User::where('email', $firmas->responsableFinanzas->email)
+                            $user_finanzas = User::where('email', $finanzas_empleado->email)
                                 ->first();
                         }
 
@@ -101,13 +101,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_compras !== null) {
-                        $comprador_empleado = $requisicion->obtener_responsable_comprador;
+                        $comprador_empleado = $firmas->comprador;
 
                         $user_compras = User::where('empleado_id', $comprador_empleado->id)
                             ->first();
 
                         if ($user_compras == null) {
-                            $user_compras = User::where('email', $firmas->comprador->email)
+                            $user_compras = User::where('email', $comprador_empleado->email)
                                 ->first();
                         }
 
