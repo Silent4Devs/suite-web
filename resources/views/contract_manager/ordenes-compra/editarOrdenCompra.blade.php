@@ -5,9 +5,39 @@
 
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 <link rel="stylesheet" href="{{ asset('css/requisitions/jquery.signature.css') }}{{ config('app.cssVersion') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+<style>
+    .pulse {
+        animation: pulse-animation 2s infinite;
+    }
 
-<div class="card card-body">
-    <h4>Tienes
+    .pulse-0 {
+        animation: pulse-animation-0 2s infinite;
+    }
+
+    @keyframes pulse-animation {
+        0% {
+            box-shadow: 0 0 0 0px {{ $contadorIntentos['contadorColor'] }};
+        }
+
+        100% {
+            box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+        }
+    }
+
+    @keyframes pulse-animation-0 {
+        0% {
+            box-shadow: 0 0 0 0px #FF0000;
+        }
+
+        100% {
+            box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+        }
+    }
+</style>
+
+{{-- <div class="card card-body"> --}}
+{{-- <h4>Tienes
         @if ($contadorEdit == 3 || $contadorEdit == 2)
             <span class="badge badge-pill badge-success">{{ $contadorEdit }}</span>
         @elseif ($contadorEdit == 1)
@@ -16,8 +46,8 @@
             <span class="badge badge-pill badge-danger">{{ $contadorEdit }}</span>
         @endif
         ediciones disponibles:
-    </h4>
-</div>
+    </h4> --}}
+{{-- </div> --}}
 @if ($contadorEdit > 0)
     <div class="create-requisicion">
         <form method="POST"
@@ -32,6 +62,19 @@
                 <div>
                     <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
                     <h5 style="font-size: 17px;">En esta sección podrás modificar y procesar las Ordenes de Compra.</h5>
+                </div>
+            </div>
+
+            <div class="card pulse" style="width: 156px; height: 68px;">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <p class="mb-0" style="font-size:12px; color:#4870B2;">Ediciones disponibles</p>
+                    <div class="card" style="width: 43px; height: 23px; margin-top:7px;">
+                        <div class="card-body d-flex justify-content-center align-items-center"
+                            style="padding:0px; background-color:{{ $contadorIntentos['contadorColor'] }}; border-radius:16px;">
+                            <p class="mb-0" style="font-size:12px; color:#FFFFFF;">
+                                {{ $contadorIntentos['contadorEdit'] }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -319,8 +362,9 @@
                                     <h3 class="sub-titulo-form">Producto o servicio</h3>
                                 </div>
                             </div>
-                            <input type="number" id="id_prod_{{ $count }}" name="id_prod{{ $count }}" class="form-control mod-id_prod"
-                            value="{{ $producto->id ?? null }}" hidden>
+                            <input type="number" id="id_prod_{{ $count }}"
+                                name="id_prod{{ $count }}" class="form-control mod-id_prod"
+                                value="{{ $producto->id ?? null }}" hidden>
                             <div class="row">
                                 <div class="col s12 l4 ">
                                     <div class="anima-focus">
@@ -602,7 +646,7 @@
 
         @if (!empty($resultadoOrdenesCompra))
             @foreach ($resultadoOrdenesCompra as $cambios)
-                <h5>Versión: {{ $cambios['version'] }}</h5>
+                <h5 style="margin-bottom: 10px;">Versión: {{ $cambios['version'] }}</h5>
                 <table class="table">
                     <thead>
                         <tr>
@@ -616,7 +660,7 @@
                         @if (!empty($cambios['cambios']))
                             @foreach ($cambios['cambios'] as $cambio)
                                 <tr>
-                                    <td>{{ $cambio->campo }}</td>
+                                    <td>{{ getDiccionaryRequisionOrder($cambio->campo) }}</td>
                                     <td>{{ $cambio->valor_anterior }}</td>
                                     <td>{{ $cambio->valor_nuevo }}</td>
                                     <td>{{ $cambio->empleado->name }}</td>
@@ -636,8 +680,353 @@
         @endif
 
     </div> --}}
+
+@endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function mensaje() {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Registro guardado con éxito.',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+</script>
+@section('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        $('select').select2('destroy');
+
+        let option = $('#proveedor_id option:selected');
+        $('#proveedor-nombre').val(option.attr('data-nombre'));
+        $('#proveedor-rfc').val(option.attr('data-rfc'));
+        $('#proveedor-contacto').val(option.attr('data-contacto'));
+        // $('#proveedor-direccion').val(option.attr('data-direccion'));
+        // $('#proveedor-razon').val(option.attr('data-razon'));
+    });
+
+    document.getElementById('proveedor_id').addEventListener("change", function dataProveedor() {
+        let option = $('#proveedor_id option:selected');
+        $('#proveedor-nombre').val(option.attr('data-nombre'));
+        $('#proveedor-rfc').val(option.attr('data-rfc'));
+        $('#proveedor-contacto').val(option.attr('data-contacto'));
+        // $('#proveedor-direccion').val(option.attr('data-direccion'));
+        // $('#proveedor-razon').val(option.attr('data-razon'));
+    });
+
+    $('.productos-info').on('keyup', function(e) {
+        if (e.target.parentNode.classList.contains('caja-input-dinero')) {
+            let count_serv = e.target.name.split('')[e.target.name.length - 1];
+
+            let total_serv = parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' +
+                count_serv + '"]').value === "" ? 0 : document.querySelector(
+                '.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) + parseFloat(
+                document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]')
+                .value === "" ? 0 : document.querySelector('.productos-info .mod-iva[data-count="' +
+                    count_serv + '"]').value) - Array.from(document.querySelectorAll(
+                '.productos-info .caja-input-dinero input[data-count="' + count_serv +
+                '"]:not(.mod-total, .mod-sub_total, .mod-iva)')).reduce((acumulador, elemento) =>
+                acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0);
+
+
+            $('#input-total-serv' + count_serv).val(
+                parseFloat(total_serv).toFixed(4)
+            );
+
+            $('#sub_total_calculado').val(Array.from(document.querySelectorAll('.mod-sub_total')).reduce((
+                acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(
+                elemento.value)), 0));
+            $('#iva_calculado').val(Array.from(document.querySelectorAll('.mod-iva')).reduce((acumulador,
+                    elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)),
+                0));
+            $('#iva_retenido_calculado').val(Array.from(document.querySelectorAll('.mod-iva_retenido')).reduce((
+                acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(
+                elemento.value)), 0));
+            $('#descuento_calculado').val(Array.from(document.querySelectorAll('.mod-descuento')).reduce((
+                acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(
+                elemento.value)), 0));
+            $('#otro_impuesto_calculado').val(Array.from(document.querySelectorAll('.mod-otro_impuesto'))
+                .reduce((acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(
+                    elemento.value)), 0));
+            $('#isr_retenido_calculado').val(Array.from(document.querySelectorAll('.mod-isr_retenido')).reduce((
+                acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(
+                elemento.value)), 0));
+            $('#total_calculado').val(Array.from(document.querySelectorAll('.mod-total')).reduce((acumulador,
+                    elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)),
+                0));
+        }
+    });
+</script>
+
+    <script>
+        function addCard(tipo_card) {
+            Swal.fire({
+                title: 'Agregar Producto?',
+                text: "Estas seguro de agregar un nuevo producto, no podrás eliminar los campos!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Seguro!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (tipo_card === 'servicio') {
+                        // Obtén el conteo actual de cards
+                        let cards_count = document.querySelectorAll('.card-product').length + 1;
+
+                        // Crea la nueva card
+                        let nueva_card = document.createElement("div");
+                        nueva_card.classList.add("card", "card-body", "card-product");
+                        nueva_card.setAttribute("data-count", cards_count);
+                        nueva_card.setAttribute('id', `product-serv-${cards_count}`);
+
+                        // Construye el HTML dinámicamente
+                        nueva_card.innerHTML = `
+                            <div>
+                                <input type="number" id="id_prod_${cards_count}" name="id_prod${cards_count}"
+                                    class="form-control mod-id_prod" hidden>
+                                <div class="row">
+                                    <div class="col s12 l4">
+                                        <div class="anima-focus">
+                                            <input type="text" id="cant_${cards_count}"
+                                                name="cantidad${cards_count}"
+                                                class="form-control mod-cantidad">
+                                            <label for="cant_${cards_count}">Cantidad <font class="asterisco">*</font></label>
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l8">
+                                        <div class="anima-focus">
+                                            <select class="form-control mod-producto" id="prod_${cards_count}"
+                                                    name="producto${cards_count}" required>
+                                                <option value="{{ $producto->producto->id }}" selected>
+                                                    {{ $producto->producto->descripcion }}
+                                                </option>
+                                            </select>
+                                            <label for="prod_${cards_count}">Producto o servicio <font class="asterisco">*</font></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l12 ">
+                                        <div class="anima-focus">
+                                            <textarea class="mod-especificaciones form-control" id="espec_${cards_count}" placeholder=""
+                                                name="especificaciones${cards_count}"></textarea>
+                                            <label for="espec_${cards_count}">
+                                                Especificaciones del producto o servicio <font class="asterisco">*
+                                                </font>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l4 ">
+                                        <div class="anima-focus">
+                                            <select name="centro_costo${cards_count}" id="cen_cos" placeholder=""
+                                                class="form-control mod-centro_costo" id="" required>
+                                                @if ($producto->centro_costo_id)
+                                                    <option selected value="{{ $producto->centro_costo->id }}">
+                                                        {{ $producto->centro_costo->clave }}</option>
+                                                @else
+                                                    <option value="" selected disabled>Seleccione una opción de
+                                                        Centro de
+                                                        Costos</option>
+                                                @endif
+                                                @foreach ($centro_costos as $costo)
+                                                    <option value="{{ $costo->id }}">
+                                                        {{ $costo->clave }}: {{ $costo->descripcion }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label for="cen_cos">
+                                                Centro de costos <font class="asterisco">*</font>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l4 ">
+                                        <div class="anima-focus">
+                                            <select required class="form-control mod-contrato"
+                                                id="cont_${cards_count}" placeholder=""
+                                                name="contrato${cards_count}">
+                                                @isset($contrato)
+                                                    <option value="{{ $contrato->id }}">
+                                                        {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                        {{ $contrato->nombre_servicio }}
+                                                    </option>
+                                                @endisset
+                                                @foreach ($contratos as $contrato)
+                                                    <option value="{{ $contrato->id }}"
+                                                        data-no="{{ $contrato->no_contrato }}"
+                                                        data-servicio="{{ $contrato->nombre_servicio }}"
+                                                        {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
+                                                        {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
+                                                        {{ $contrato->nombre_servicio }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <label for="cont_${cards_count}">
+                                                Proyecto <font class="asterisco">*</font>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l4 ">
+                                        <div class="anima-focus">
+                                            <input type="text" id="no_p_${cards_count}" placeholder=""
+                                                name="no_personas${cards_count}"
+                                                class="form-control mod-no_personas"
+                                                value="">
+                                            <label for="no_p_${cards_count}">
+                                                No. de Personas
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l4 ">
+                                        <div class="anima-focus">
+                                            <input type="text" id="porc_inv_${cards_count}"
+                                                name="porcentaje_involucramiento${cards_count}"
+                                                class="form-control mod-porcentaje_involucramiento"
+                                                value="" placeholder="">
+                                            <label for="porc_inv_${cards_count}">
+                                                Porcentaje de involucramiento
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <h3 class="sub-titulo-form">Subtotales</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            Sub total <font class="asterisco">*</font>
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="sub_total${cards_count}"
+                                                data-count="${cards_count}" class="mod-sub_total form-control"
+                                                required value="">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            IVA <font class="asterisco">*</font>
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="iva${cards_count}"
+                                                data-count="${cards_count}" class="mod-iva form-control" required
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            IVA retenido
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="iva_retenido${cards_count}"
+                                                data-count="${cards_count}" class="mod-iva_retenido form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            Descuento
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="descuento${cards_count}"
+                                                data-count="${cards_count}" class="mod-descuento form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            Otro impuesto
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="otro_impuesto${cards_count}"
+                                                data-count="${cards_count}" class="mod-otro_impuesto form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            ISR retenido
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input type="text" name="isr_retenido${cards_count}"
+                                                data-count="${cards_count}" class="mod-isr_retenido form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l3 ">
+                                        <label for="">
+                                            Total <font class="asterisco">*</font>
+                                        </label>
+                                        <div class="caja-input-dinero">
+                                            <input id="input-total-serv${cards_count}" type="text"
+                                                name="total${cards_count}" data-count="${cards_count}"
+                                                class="mod-total form-control" required value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin-bottom: 30px;">
+                                <!-- Aquí agrega el resto de los campos necesarios, siguiendo la misma estructura -->
+                            </div>
+                        `;
+
+                        // Agrega la nueva card al contenedor
+                        document.querySelector('.caja-card-product').appendChild(nueva_card);
+
+                        // Actualiza el contador global del formulario
+                        document.querySelector('#input-count-prod').value = cards_count;
+
+                        console.log(`Nueva card añadida con el contador: ${cards_count}`);
+                    }
+                }
+            });
+        }
+    </script>
 @else
-    <div class="card-error">
+    <div class="card pulse-0" style="width: 156px; height: 68px;">
+        <div class="card-body d-flex flex-column align-items-center">
+            <p class="mb-0" style="font-size:12px; color:#4870B2;">Ediciones disponibles</p>
+            <div class="card" style="width: 43px; height: 23px; margin-top:7px;">
+                <div class="card-body d-flex justify-content-center align-items-center"
+                    style="padding:0px; background-color:#FF0000; border-radius:16px;">
+                    <p class="mb-0" style="font-size:12px; color:#FFFFFF;">{{ $contadorEdit }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="card" style="width: 350px;">
+            <div class="card-body d-flex jsutify-content-center flex-column align-items-center" st>
+                <div style="height: 200px;">
+                    <img src="{{ asset('img/welcome-blue.svg') }}" style="height: 100%;width:100%;" alt="Apoyo">
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <h5 style="font-size: 22px; font-weight: bolder; color: #474c6c;">
+                        Acceso Restringido
+                    </h5>
+                    <p>
+                        Ha alcanzado el limite de ediciones para esta Orden de Compra.
+                    </p>
+                    <a href="{{ route('contract_manager.orden-compra') }}" class="btn tb-btn-secondary">Regresar</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{-- <div class="card-error">
         <div>
             <img src="{{ asset('img/welcome-blue.svg') }}" alt="Apoyo">
         </div>
@@ -651,7 +1040,7 @@
             </p>
             <a href="{{ route('contract_manager.orden-compra') }}" class="btn">Regresar</a>
         </div>
-    </div>
+    </div> --}}
 @endif
 
 @endsection
@@ -733,237 +1122,4 @@
     });
 </script>
 
-<script>
-    function addCard(tipo_card) {
-        Swal.fire({
-            title: 'Agregar Producto?',
-            text: "Estas seguro de agregar un nuevo producto, no podrás eliminar los campos!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Seguro!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (tipo_card === 'servicio') {
-                    // Obtén el conteo actual de cards
-                    let cards_count = document.querySelectorAll('.card-product').length + 1;
-
-                    // Crea la nueva card
-                    let nueva_card = document.createElement("div");
-                    nueva_card.classList.add("card", "card-body", "card-product");
-                    nueva_card.setAttribute("data-count", cards_count);
-                    nueva_card.setAttribute('id', `product-serv-${cards_count}`);
-
-                    // Construye el HTML dinámicamente
-                    nueva_card.innerHTML = `
-                        <div>
-                            <input type="number" id="id_prod_${cards_count}" name="id_prod${cards_count}"
-                                class="form-control mod-id_prod" hidden>
-                            <div class="row">
-                                <div class="col s12 l4">
-                                    <div class="anima-focus">
-                                        <input type="text" id="cant_${cards_count}"
-                                            name="cantidad${cards_count}"
-                                            class="form-control mod-cantidad">
-                                        <label for="cant_${cards_count}">Cantidad <font class="asterisco">*</font></label>
-                                    </div>
-                                </div>
-                                <div class="col s12 l8">
-                                    <div class="anima-focus">
-                                        <select class="form-control mod-producto" id="prod_${cards_count}"
-                                                name="producto${cards_count}" required>
-                                            <option value="{{ $producto->producto->id }}" selected>
-                                                {{ $producto->producto->descripcion }}
-                                            </option>
-                                        </select>
-                                        <label for="prod_${cards_count}">Producto o servicio <font class="asterisco">*</font></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l12 ">
-                                    <div class="anima-focus">
-                                        <textarea class="mod-especificaciones form-control" id="espec_${cards_count}" placeholder=""
-                                            name="especificaciones${cards_count}"></textarea>
-                                        <label for="espec_${cards_count}">
-                                            Especificaciones del producto o servicio <font class="asterisco">*
-                                            </font>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l4 ">
-                                    <div class="anima-focus">
-                                        <select name="centro_costo${cards_count}" id="cen_cos" placeholder=""
-                                            class="form-control mod-centro_costo" id="" required>
-                                            @if ($producto->centro_costo_id)
-                                                <option selected value="{{ $producto->centro_costo->id }}">
-                                                    {{ $producto->centro_costo->clave }}</option>
-                                            @else
-                                                <option value="" selected disabled>Seleccione una opción de
-                                                    Centro de
-                                                    Costos</option>
-                                            @endif
-                                            @foreach ($centro_costos as $costo)
-                                                <option value="{{ $costo->id }}">
-                                                    {{ $costo->clave }}: {{ $costo->descripcion }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="cen_cos">
-                                            Centro de costos <font class="asterisco">*</font>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col s12 l4 ">
-                                    <div class="anima-focus">
-                                        <select required class="form-control mod-contrato"
-                                            id="cont_${cards_count}" placeholder=""
-                                            name="contrato${cards_count}">
-                                            @isset($contrato)
-                                                <option value="{{ $contrato->id }}">
-                                                    {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                                    {{ $contrato->nombre_servicio }}
-                                                </option>
-                                            @endisset
-                                            @foreach ($contratos as $contrato)
-                                                <option value="{{ $contrato->id }}"
-                                                    data-no="{{ $contrato->no_contrato }}"
-                                                    data-servicio="{{ $contrato->nombre_servicio }}"
-                                                    {{ $producto->contrato_id == $contrato->id ? 'selected' : '' }}>
-                                                    {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} -
-                                                    {{ $contrato->nombre_servicio }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="cont_${cards_count}">
-                                            Proyecto <font class="asterisco">*</font>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col s12 l4 ">
-                                    <div class="anima-focus">
-                                        <input type="text" id="no_p_${cards_count}" placeholder=""
-                                            name="no_personas${cards_count}"
-                                            class="form-control mod-no_personas"
-                                            value="">
-                                        <label for="no_p_${cards_count}">
-                                            No. de Personas
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l4 ">
-                                    <div class="anima-focus">
-                                        <input type="text" id="porc_inv_${cards_count}"
-                                            name="porcentaje_involucramiento${cards_count}"
-                                            class="form-control mod-porcentaje_involucramiento"
-                                            value="" placeholder="">
-                                        <label for="porc_inv_${cards_count}">
-                                            Porcentaje de involucramiento
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <h3 class="sub-titulo-form">Subtotales</h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        Sub total <font class="asterisco">*</font>
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="sub_total${cards_count}"
-                                            data-count="${cards_count}" class="mod-sub_total form-control"
-                                            required value="">
-                                    </div>
-                                </div>
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        IVA <font class="asterisco">*</font>
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="iva${cards_count}"
-                                            data-count="${cards_count}" class="mod-iva form-control" required
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        IVA retenido
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="iva_retenido${cards_count}"
-                                            data-count="${cards_count}" class="mod-iva_retenido form-control"
-                                            value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        Descuento
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="descuento${cards_count}"
-                                            data-count="${cards_count}" class="mod-descuento form-control"
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        Otro impuesto
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="otro_impuesto${cards_count}"
-                                            data-count="${cards_count}" class="mod-otro_impuesto form-control"
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        ISR retenido
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input type="text" name="isr_retenido${cards_count}"
-                                            data-count="${cards_count}" class="mod-isr_retenido form-control"
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="col s12 l3 ">
-                                    <label for="">
-                                        Total <font class="asterisco">*</font>
-                                    </label>
-                                    <div class="caja-input-dinero">
-                                        <input id="input-total-serv${cards_count}" type="text"
-                                            name="total${cards_count}" data-count="${cards_count}"
-                                            class="mod-total form-control" required value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <hr style="margin-bottom: 30px;">
-                            <!-- Aquí agrega el resto de los campos necesarios, siguiendo la misma estructura -->
-                        </div>
-                    `;
-
-                    // Agrega la nueva card al contenedor
-                    document.querySelector('.caja-card-product').appendChild(nueva_card);
-
-                    // Actualiza el contador global del formulario
-                    document.querySelector('#input-count-prod').value = cards_count;
-
-                    console.log(`Nueva card añadida con el contador: ${cards_count}`);
-                }
-            }
-        });
-    }
-
-</script>
 @endsection

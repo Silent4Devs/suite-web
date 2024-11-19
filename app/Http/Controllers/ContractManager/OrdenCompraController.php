@@ -318,7 +318,26 @@ class OrdenCompraController extends Controller
 
             $contadorEdit = 3 - $maximaVersion;
 
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit'));
+            $contadorIntentos = [
+                'contadorEdit' => $contadorEdit,
+                'contadorColor' => null,
+            ];
+
+            switch($contadorEdit){
+                case ($contadorEdit == 3 || $contadorEdit == 2):
+                    $contadorIntentos['contadorColor'] = '#17B265';
+                    break;
+                case ($contadorEdit == 1):
+                    $contadorIntentos['contadorColor'] = '#FFA621';
+                    break;
+                case ($contadorEdit == 0):
+                    $contadorIntentos['contadorColor'] = '#FF0000';
+                    break;
+                default:
+                break;
+            }
+
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit','contadorIntentos'));
         } catch (\Throwable $th) {
             abort(404);
         }
