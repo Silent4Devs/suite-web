@@ -323,21 +323,21 @@ class OrdenCompraController extends Controller
                 'contadorColor' => null,
             ];
 
-            switch($contadorEdit){
-                case ($contadorEdit == 3 || $contadorEdit == 2):
+            switch ($contadorEdit) {
+                case $contadorEdit == 3 || $contadorEdit == 2:
                     $contadorIntentos['contadorColor'] = '#17B265';
                     break;
-                case ($contadorEdit == 1):
+                case $contadorEdit == 1:
                     $contadorIntentos['contadorColor'] = '#FFA621';
                     break;
-                case ($contadorEdit == 0):
+                case $contadorEdit == 0:
                     $contadorIntentos['contadorColor'] = '#FF0000';
                     break;
                 default:
-                break;
+                    break;
             }
 
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit','contadorIntentos'));
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit', 'contadorIntentos'));
         } catch (\Throwable $th) {
             abort(404);
         }
@@ -883,7 +883,7 @@ class OrdenCompraController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
