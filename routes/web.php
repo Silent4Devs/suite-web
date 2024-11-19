@@ -76,16 +76,16 @@ Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@Aj
 Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 // Rutas de CertificatesController
-        Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
-            Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
-            Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
-            Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
+Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
+    Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
+    Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
+    Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
 
-            // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
-            Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
-            Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
-            Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
-        });
+    // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
+    Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
+    Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
+    Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
+});
 
 Auth::routes();
 

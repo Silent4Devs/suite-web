@@ -10,7 +10,7 @@ class RequisicionService
 
     public function __construct()
     {
-        $this->client = new Client();
+        $this->client = new Client;
     }
 
     public function postDataToPythonAPI($filename)
