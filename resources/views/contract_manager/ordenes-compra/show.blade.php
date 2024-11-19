@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+@endsection
 @section('content')
 @section('titulo', 'Ver Orden de Compra')
 
@@ -366,13 +369,17 @@
                     </div>
                 </div>
 
-                <div class="row print-none">
-                    <div class="col-12">
-                        <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
-                                bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info" style="position: relative;   left:40%;"><a
-                                href="{{ route('contract_manager.orden-compra') }}"
-                                style="color: #EEEEEE">Regresar</a></button>
+                <div class="print-none" style="margin-left: 30px; margin-bottom:30px;">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center pl-0">
+                            <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
+                                    bueno de Gestión de talento.</i></small>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end pr-0 ">
+                            <button class="btn tb-btn-secondary" style="margin-right: 30px;"><a
+                                    href="{{ route('contract_manager.requisiciones') }}"
+                                    style="color: #EEEEEE">Regresar</a></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -486,7 +493,8 @@
     @endsection
 </div>
 
-<div class="card card-body">
+@livewire('tabla-historico-ordenes-compra', ['idReq' => $requisicion->id])
+{{-- <div class="card card-body">
     <h4>Historial de Cambios:</h4>
 
     @if (!empty($resultadoOrdenesCompra))
@@ -524,6 +532,6 @@
         <h6>No hay cambios registrados</h6>
     @endif
 
-</div>
+</div> --}}
 
 @endsection

@@ -302,18 +302,18 @@ class RequisicionesEditComponent extends Component
             ];
         }
         $this->contadorIntentos['contadorEdit'] = $contadorEdit;
-        switch($contadorEdit){
-            case ($contadorEdit == 3 || $contadorEdit == 2):
+        switch ($contadorEdit) {
+            case $contadorEdit == 3 || $contadorEdit == 2:
                 $this->contadorIntentos['contadorcolor'] = '#17B265';
                 break;
-            case ($contadorEdit == 1):
+            case $contadorEdit == 1:
                 $this->contadorIntentos['contadorcolor'] = '#FFA621';
                 break;
-            case ($contadorEdit == 0):
+            case $contadorEdit == 0:
                 $this->contadorIntentos['contadorcolor'] = '#FF0000';
                 break;
             default:
-            break;
+                break;
         }
     }
 

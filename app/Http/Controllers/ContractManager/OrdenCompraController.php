@@ -407,7 +407,7 @@ class OrdenCompraController extends Controller
                     foreach ($productoNuevo as $campo => $nuevoValor) {
                         $valorAnterior = $productoExistente->{$campo};
 
-                        if ($valorAnterior !== $nuevoValor && ($campo != "id_prod")) {
+                        if ($valorAnterior !== $nuevoValor && ($campo != 'id_prod')) {
                             // Registrar el cambio en el historial
                             HistorialEdicionesOC::create([
                                 'requisicion_id' => $ordenCompra->id,
@@ -443,11 +443,11 @@ class OrdenCompraController extends Controller
         }
 
         foreach ($productosNuevos as $keyPN => $productoNuevo) {
-            if($productoNuevo['id_prod'] == null) {
+            if ($productoNuevo['id_prod'] == null) {
                 foreach ($productoNuevo as $campo => $nuevoValor) {
                     $valorAnterior = $productoExistente->{$campo};
 
-                    if ($valorAnterior !== $nuevoValor && $campo != "id_prod") {
+                    if ($valorAnterior !== $nuevoValor && $campo != 'id_prod') {
                         // Registrar el cambio en el historial
                         HistorialEdicionesOC::create([
                             'requisicion_id' => $ordenCompra->id,
@@ -611,10 +611,10 @@ class OrdenCompraController extends Controller
             $firmas_oc = FirmasOrdenesCompra::updateOrCreate([
                 'requisicion_id' => $requisicion->id,
             ],
-            [
-                'solicitante_id' => $user->empleado->id,
-                'responsable_finanzas_id' => $responsable->id,
-            ]);
+                [
+                    'solicitante_id' => $user->empleado->id,
+                    'responsable_finanzas_id' => $responsable->id,
+                ]);
 
             try {
                 Mail::to($this->removeUnicodeCharacters($userEmail))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
@@ -635,10 +635,10 @@ class OrdenCompraController extends Controller
             $firmas_oc = FirmasOrdenesCompra::updateOrCreate([
                 'requisicion_id' => $requisicion->id,
             ],
-            [
-                'comprador_id' => $user->empleado->id,
-                'solicitante_id' => $solicitante->id,
-            ]);
+                [
+                    'comprador_id' => $user->empleado->id,
+                    'solicitante_id' => $solicitante->id,
+                ]);
 
             // Correo de solicitante
             $userEmail = $requisicion->email;
@@ -661,9 +661,9 @@ class OrdenCompraController extends Controller
             $firmas_oc = FirmasOrdenesCompra::updateOrCreate([
                 'requisicion_id' => $requisicion->id,
             ],
-            [
-                'responsable_finanzas_id' => $user->empleado->id,
-            ]);
+                [
+                    'responsable_finanzas_id' => $user->empleado->id,
+                ]);
 
             if (isset($requisicion->contrato->proyectoConvergencia->tipo)) {
                 if ($requisicion->contrato->proyectoConvergencia->tipo == 'Interno') {
@@ -853,7 +853,7 @@ class OrdenCompraController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -875,13 +875,13 @@ class OrdenCompraController extends Controller
                     $tipo_firma = 'firma_solicitante_orden';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             } else {
 
-                $responsable = User::where('id',$requisicion->id_user)->first()->empleado;
+                $responsable = User::where('id', $requisicion->id_user)->first()->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante_orden';
@@ -901,7 +901,7 @@ class OrdenCompraController extends Controller
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }

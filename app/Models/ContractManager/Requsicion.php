@@ -1214,7 +1214,8 @@ class Requsicion extends Model implements Auditable
         return $contadorEdit;
     }
 
-    public function getObtenerResponsableLiderAttribute(){
+    public function getObtenerResponsableLiderAttribute()
+    {
 
         $requisicion = self::where('id', $this->id)->first();
 
@@ -1243,7 +1244,8 @@ class Requsicion extends Model implements Auditable
 
     }
 
-    public function getObtenerResponsableFinanzasAttribute(){
+    public function getObtenerResponsableFinanzasAttribute()
+    {
 
         $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
         $listaPart = $listaReq->participantes;
@@ -1263,7 +1265,8 @@ class Requsicion extends Model implements Auditable
 
     }
 
-    public function getObtenerResponsableCompradorAttribute(){
+    public function getObtenerResponsableCompradorAttribute()
+    {
 
         $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 

@@ -31,6 +31,6 @@ class HistorialEdicionesOC extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_empleado')->select('id', 'name'); // Asegúrate de que 'version_id' sea la clave foránea correcta
+        return $this->belongsTo(Empleado::class, 'id_empleado')->select('id', 'name', 'foto'); // Asegúrate de que 'version_id' sea la clave foránea correcta
     }
 }
