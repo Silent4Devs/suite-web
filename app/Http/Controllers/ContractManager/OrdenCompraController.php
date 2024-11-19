@@ -318,7 +318,26 @@ class OrdenCompraController extends Controller
 
             $contadorEdit = 3 - $maximaVersion;
 
-            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit'));
+            $contadorIntentos = [
+                'contadorEdit' => $contadorEdit,
+                'contadorColor' => null,
+            ];
+
+            switch ($contadorEdit) {
+                case $contadorEdit == 3 || $contadorEdit == 2:
+                    $contadorIntentos['contadorColor'] = '#17B265';
+                    break;
+                case $contadorEdit == 1:
+                    $contadorIntentos['contadorColor'] = '#FFA621';
+                    break;
+                case $contadorEdit == 0:
+                    $contadorIntentos['contadorColor'] = '#FF0000';
+                    break;
+                default:
+                    break;
+            }
+
+            return view('contract_manager.ordenes-compra.editarOrdenCompra', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato', 'resultadoOrdenesCompra', 'contadorEdit', 'contadorIntentos'));
         } catch (\Throwable $th) {
             abort(404);
         }
@@ -864,7 +883,7 @@ class OrdenCompraController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -899,7 +918,7 @@ class OrdenCompraController extends Controller
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_finanzas_orden';
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-                    $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
+                    // $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
@@ -1059,5 +1078,32 @@ class OrdenCompraController extends Controller
 
             return response()->json(['success' => false, 'message' => 'Error al cancelar la requisición.'], 500);
         }
+    }
+
+    public function validacionLista($tipo)
+    {
+        $user = User::getCurrentUser();
+        $alerta = false;
+        $responsable = null;
+
+        if ($tipo == 'firma_solicitante_orden') {
+            $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
+            $listaPart = $listaReq->participantes;
+
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+                    $userEmail = $responsable->email;
+
+                    break;
+                }
+            }
+            $alerta = empty($responsable);
+        }
+
+        return $alerta;
     }
 }
