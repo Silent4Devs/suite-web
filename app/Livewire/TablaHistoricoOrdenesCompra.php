@@ -2,16 +2,16 @@
 
 namespace App\Livewire;
 
-use App\Models\HistorialEdicionesReq;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\ContractManager\Producto;
+use App\Models\HistorialEdicionesOC;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TablaHistoricoRequisiciones extends Component
+class TablaHistoricoOrdenesCompra extends Component
 {
     use WithPagination; // Esto habilita la paginación en Livewire
 
@@ -39,7 +39,7 @@ class TablaHistoricoRequisiciones extends Component
     public function render()
     {
         // Obtener los historiales de la requisición específica
-        $historialesRequisicion = HistorialEdicionesReq::with('version', 'empleado')
+        $historialesRequisicion = HistorialEdicionesOC::with('version', 'empleado')
             ->where('requisicion_id', $this->id_req)
             ->get();
 

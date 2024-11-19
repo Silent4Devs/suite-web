@@ -596,7 +596,8 @@
         </form>
     </div>
 
-    <div class="card card-body">
+    @livewire('tabla-historico-ordenes-compra', ['idReq' => $requisicion->id])
+    {{-- <div class="card card-body">
         <h4>Historial de Cambios:</h4>
 
         @if (!empty($resultadoOrdenesCompra))
@@ -634,7 +635,7 @@
             <h6>No hay cambios registrados</h6>
         @endif
 
-    </div>
+    </div> --}}
 @else
     <div class="card-error">
         <div>
