@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Models\ContractManager\Comprador;
+use App\Models\ContractManager\Requsicion;
 use App\Models\Empleado;
+use App\Models\FirmasOrdenesCompra;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
@@ -42,11 +44,11 @@ class RequisicionesListener implements ShouldQueue
         try {
             $user = User::where('id', $event->requsicion->id_user)->first(); //Solicitante
             $empleado = Empleado::where('email', $user->email)->first();
+            $requisicion = Requsicion::where('id', $event->requsicion->id)->first();
         } catch (\Throwable $th) {
             dd($th);
         }
 
-        // $email = 'lourdes.abadia@silent4business.com'; //Finanzas (Cambiar por la lista)
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
                 try {
@@ -55,9 +57,7 @@ class RequisicionesListener implements ShouldQueue
                         'jefe',
                         'responsableFinanzas',
                         'comprador'
-                    )->where('requisicion_id', $event->requsicion->id)->first();
-
-                    $involucradosRQOC = collect();
+                    )->where('requisicion_id', $requisicion->id)->first();
 
                     // requisiciones
                     if ($event->requsicion->firma_solicitante !== null) {
@@ -73,11 +73,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_jefe !== null) {
-                        $user_jefe = User::where('empleado_id', $firmas->jefe->id)
+                        $jefe_empleado = $firmas->jefe;
+
+                        $user_jefe = User::where('empleado_id', $jefe_empleado->id)
                             ->first();
 
                         if ($user_jefe == null) {
-                            $user_jefe = User::where('email', $firmas->jefe->email)
+                            $user_jefe = User::where('email', $jefe_empleado->email)
                                 ->first();
                         }
 
@@ -85,11 +87,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_finanzas !== null) {
-                        $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
+                        $finanzas_empleado = $firmas->responsableFinanzas;
+
+                        $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
                             ->first();
 
                         if ($user_finanzas == null) {
-                            $user_finanzas = User::where('email', $firmas->responsableFinanzas->email)
+                            $user_finanzas = User::where('email', $finanzas_empleado->email)
                                 ->first();
                         }
 
@@ -97,11 +101,13 @@ class RequisicionesListener implements ShouldQueue
                     }
 
                     if ($event->requsicion->firma_compras !== null) {
-                        $user_compras = User::where('empleado_id', $firmas->comprador->id)
+                        $comprador_empleado = $firmas->comprador;
+
+                        $user_compras = User::where('empleado_id', $comprador_empleado->id)
                             ->first();
 
                         if ($user_compras == null) {
-                            $user_compras = User::where('email', $firmas->comprador->email)
+                            $user_compras = User::where('email', $comprador_empleado->email)
                                 ->first();
                         }
 
@@ -111,23 +117,22 @@ class RequisicionesListener implements ShouldQueue
                     dd($th);
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
-
-                $firmas = FirmasRequisiciones::where('requisicion_id', $event->requsicion->id)->first();
-
-                $involucradosRQOC = collect();
+                $firmas = FirmasOrdenesCompra::with(
+                    'solicitante',
+                    'responsableFinanzas',
+                    'comprador'
+                )->where('requisicion_id', $requisicion->id)->first();
 
                 // ordenes de compra
                 if ($event->requsicion->firma_comprador_orden !== null) {
 
-                    $responsableComprador = Comprador::with('user')->where('id', $event->requsicion->comprador_id)->first();
-                    $comprador = $this->obtenerComprador($responsableComprador);
-                    // dd($comprador);
+                    $comprador_empleado = $firmas->comprador;
 
-                    $user_compras = User::where('empleado_id', $firmas->comprador->id)
+                    $user_compras = User::where('empleado_id', $comprador_empleado->id)
                         ->first();
 
-                    if ($user_compras == null) {
-                        $user_compras = User::where('email', $firmas->comprador->email)
+                    if($user_compras == null){
+                        $user_compras = User::where('email', $comprador_empleado->email)
                             ->first();
                     }
 
@@ -135,6 +140,7 @@ class RequisicionesListener implements ShouldQueue
                 }
 
                 if ($event->requsicion->firma_solicitante_orden !== null) {
+
                     $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
                         ->first();
 
@@ -146,6 +152,7 @@ class RequisicionesListener implements ShouldQueue
                     Notification::send($user_solicitante, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
 
+                //Innecesario, es la ultima persona, si la aprueba ella, termina el ciclo.
                 // if ($event->requsicion->firma_finanzas_orden !== null) {
 
                 //     $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
@@ -174,23 +181,34 @@ class RequisicionesListener implements ShouldQueue
             } else {
 
                 try {
-                    $supervisor = $this->responsableJefe($empleado);
+                    $jefe_empleado = $requisicion->obtener_responsable_lider;
 
-                    $user_jefe = User::where('empleado_id', $supervisor->id)
+                    $user_jefe = User::where('empleado_id', $jefe_empleado->id)
                         ->first();
 
-                    $responsablefinanzas = $this->responsableFinanzas();
+                    if($user_jefe == null){
+                        $user_jefe = User::where('email', $jefe_empleado->email)
+                            ->first();
+                    }
 
-                    if ($supervisor->disponibilidad->disponibilidad === 1) {
+                    $finanzas_empleado = $requisicion->obtener_responsable_finanzas;
+
+                    $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
+                        ->first();
+
+                    if($user_finanzas == null){
+                        $user_finanzas = User::where('email', $finanzas_empleado->email)
+                            ->first();
+                    }
+
+                    if ($jefe_empleado->disponibilidad->disponibilidad === 1) {
                         try {
                             Notification::send($user_jefe, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
 
-                            $finanzas = User::where('email', $responsablefinanzas->email)->first();
-
-                            $disponibilidad_finanzas = $responsablefinanzas->disponibilidad;
+                            $disponibilidad_finanzas = $finanzas_empleado->disponibilidad;
 
                             if ($disponibilidad_finanzas->disponibilidad === 1) {
-                                Notification::send($finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                                Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                                 $comprador = Comprador::where('id', $event->requsicion->comprador_id)->first();
                                 $user_comprador = User::where('name', $comprador->nombre)->first();
                                 Notification::send($user_comprador, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
@@ -216,7 +234,7 @@ class RequisicionesListener implements ShouldQueue
                             // Obtén la lista y los IDs de los empleados
                             $lista = ListaDistribucion::with('participantes')->where('modelo', 'Empleado')->first();
 
-                            $participantes = ParticipantesListaDistribucion::where('modulo_id', $lista->id)->where('empleado_id', $supervisor->id)->first();
+                            $participantes = ParticipantesListaDistribucion::where('modulo_id', $lista->id)->where('empleado_id', $jefe_empleado->id)->first();
 
                             $participantes_notificados = ParticipantesListaDistribucion::where('nivel', $participantes->nivel)->get();
 
@@ -231,12 +249,10 @@ class RequisicionesListener implements ShouldQueue
 
                             Notification::send($users, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
 
-                            $finanzas = User::where('email', $responsablefinanzas->email)->first();
-
-                            $disponibilidad_finanzas = $responsablefinanzas->disponibilidad;
+                            $disponibilidad_finanzas = $finanzas_empleado->disponibilidad;
 
                             if ($disponibilidad_finanzas->disponibilidad === 1) {
-                                Notification::send($finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                                Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                                 $comprador = Comprador::where('id', $event->requsicion->comprador_id)->first();
                                 $user_comprador = User::where('name', $comprador->nombre)->first();
                                 Notification::send($user_comprador, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
@@ -248,7 +264,7 @@ class RequisicionesListener implements ShouldQueue
 
                                 $users_notificados_finanzas = User::whereIn('email', $empleados_email)->get();
 
-                                Notification::send($finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                                Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                                 Notification::send($users_notificados_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                                 $comprador = Comprador::where('id', $event->requsicion->comprador_id)->first();
                                 $user_comprador = User::where('name', $comprador->nombre)->first();
@@ -266,79 +282,5 @@ class RequisicionesListener implements ShouldQueue
         } catch (\Throwable $th) {
             dd($th);
         }
-    }
-
-    public function responsableJefe($empleado)
-    {
-        //Llamamos lista de lideres
-        $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-        //Traemos participantes
-        $listaPart = $listaReq->participantes;
-
-        $jefe = $empleado->supervisor;
-        //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
-
-        //Buscamos en que nivel se encuentra el supervisor
-        $nivel = $supList->nivel;
-
-        //traemos a todos los participantes correspondientes a ese nivel
-        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
-
-        //Buscamos 1 por 1 los participantes del nivel (area)
-        foreach ($participantesNivel as $key => $partNiv) {
-            //Si su estado esta activo se le manda el correo
-            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
-                $supervisor = $partNiv->empleado;
-
-                break;
-            }
-        }
-
-        return $supervisor;
-    }
-
-    public function responsableFinanzas()
-    {
-        $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
-        $listaPart = $listaReq->participantes;
-
-        for ($i = 0; $i <= $listaReq->niveles; $i++) {
-            $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
-
-            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                $responsable = $responsableNivel->empleado;
-
-                break;
-            }
-        }
-
-        return $responsable;
-    }
-
-    public function obtenerComprador($comprador)
-    {
-        $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
-        $listaPart = $listaReq->participantes;
-
-        $responsableOG = $listaPart->where('numero_orden', 1)->where('empleado_id', $comprador->user->id)->first();
-        $n_part_nivel = $listaPart->where('nivel', $responsableOG->nivel)->count();
-
-        for ($i = 1; $i <= $n_part_nivel; $i++) {
-            $responsableNivel = $listaPart->where('nivel', $responsableOG->nivel)->where('numero_orden', $i)->first();
-
-            if ($responsableNivel) {
-                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                    $responsable = $responsableNivel->empleado;
-
-                    break;
-                }
-            }
-        }
-
-        return $responsable;
     }
 }
