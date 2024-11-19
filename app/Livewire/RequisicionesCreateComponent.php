@@ -170,12 +170,12 @@ class RequisicionesCreateComponent extends Component
 
         return $result;
     }
+
     public function __construct()
     {
         // Instanciamos el servicio de la clase
         $this->requisicionService = app(RequisicionService::class);
     }
-
 
     public function postDataLoad()
     {
@@ -187,24 +187,28 @@ class RequisicionesCreateComponent extends Component
     public function postDataClean()
     {
         $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+
         return $result;
     }
 
     public function postDataScaned()
     {
         $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+
         return $result;
     }
 
     public function postDataExtract()
     {
         $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+
         return $result;
     }
 
     public function postDataText()
     {
         $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+
         return $result;
     }
 
@@ -237,7 +241,6 @@ class RequisicionesCreateComponent extends Component
 
         $this->askQuestion();
     }
-
 
     public function mount()
     {

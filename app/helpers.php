@@ -65,5 +65,6 @@ function getDiccionaryRequisionOrder($value)
     ];
 
     $valor = array_key_exists($value, $diccionary) ? $diccionary[$value] : $value;
+
     return $valor;
 }

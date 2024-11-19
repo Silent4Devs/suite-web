@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Producto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\ContractManager\Producto;
 use App\Models\HistorialEdicionesOC;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +16,9 @@ class TablaHistoricoOrdenesCompra extends Component
     use WithPagination; // Esto habilita la paginación en Livewire
 
     public $id_req; // ID de la requisición
+
     public $perPage = 5; // Número de cambios por página
+
     public $paginaPorVersion = []; // Página actual para cada versión
 
     public function mount($idReq)
@@ -88,8 +90,8 @@ class TablaHistoricoOrdenesCompra extends Component
         foreach ($cambios as $registro) {
             switch ($registro->campo) {
                 case 'contrato_id':
-                    $registro->valor_anterior = $contratos[$registro->valor_anterior] . ' - ' . $servicios[$registro->valor_anterior];
-                    $registro->valor_nuevo = $contratos[$registro->valor_nuevo] . ' - ' . $servicios[$registro->valor_nuevo];
+                    $registro->valor_anterior = $contratos[$registro->valor_anterior].' - '.$servicios[$registro->valor_anterior];
+                    $registro->valor_nuevo = $contratos[$registro->valor_nuevo].' - '.$servicios[$registro->valor_nuevo];
                     break;
 
                 case 'comprador_id':
@@ -109,8 +111,8 @@ class TablaHistoricoOrdenesCompra extends Component
 
                 case 'proveedor_id':
                 case 'proveedoroc_id':
-                    $registro->valor_anterior = $proveedores[$registro->valor_anterior]->razon_social . ' - ' . $proveedores[$registro->valor_anterior]->nombre;
-                    $registro->valor_nuevo = $proveedores[$registro->valor_nuevo]->razon_social . ' - ' . $proveedores[$registro->valor_nuevo]->nombre;
+                    $registro->valor_anterior = $proveedores[$registro->valor_anterior]->razon_social.' - '.$proveedores[$registro->valor_anterior]->nombre;
+                    $registro->valor_nuevo = $proveedores[$registro->valor_nuevo]->razon_social.' - '.$proveedores[$registro->valor_nuevo]->nombre;
                     break;
 
                 default:

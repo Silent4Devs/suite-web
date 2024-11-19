@@ -64,7 +64,7 @@ class RequisicionesListener implements ShouldQueue
                         $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
                             ->first();
 
-                        if($user_solicitante == null){
+                        if ($user_solicitante == null) {
                             $user_solicitante = User::where('email', $firmas->solicitante->email)
                                 ->first();
                         }
@@ -76,7 +76,7 @@ class RequisicionesListener implements ShouldQueue
                         $user_jefe = User::where('empleado_id', $firmas->jefe->id)
                             ->first();
 
-                        if($user_jefe == null){
+                        if ($user_jefe == null) {
                             $user_jefe = User::where('email', $firmas->jefe->email)
                                 ->first();
                         }
@@ -88,7 +88,7 @@ class RequisicionesListener implements ShouldQueue
                         $user_finanzas = User::where('empleado_id', $firmas->responsableFinanzas->id)
                             ->first();
 
-                        if($user_finanzas == null){
+                        if ($user_finanzas == null) {
                             $user_finanzas = User::where('email', $firmas->responsableFinanzas->email)
                                 ->first();
                         }
@@ -100,7 +100,7 @@ class RequisicionesListener implements ShouldQueue
                         $user_compras = User::where('empleado_id', $firmas->comprador->id)
                             ->first();
 
-                        if($user_compras == null){
+                        if ($user_compras == null) {
                             $user_compras = User::where('email', $firmas->comprador->email)
                                 ->first();
                         }
@@ -126,7 +126,7 @@ class RequisicionesListener implements ShouldQueue
                     $user_compras = User::where('empleado_id', $firmas->comprador->id)
                         ->first();
 
-                    if($user_compras == null){
+                    if ($user_compras == null) {
                         $user_compras = User::where('email', $firmas->comprador->email)
                             ->first();
                     }
@@ -136,9 +136,9 @@ class RequisicionesListener implements ShouldQueue
 
                 if ($event->requsicion->firma_solicitante_orden !== null) {
                     $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
-                    ->first();
+                        ->first();
 
-                    if($user_solicitante == null){
+                    if ($user_solicitante == null) {
                         $user_solicitante = User::where('email', $firmas->solicitante->email)
                             ->first();
                     }
