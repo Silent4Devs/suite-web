@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Models\ContractManager\Comprador;
 use App\Models\ContractManager\Requsicion;
 use App\Models\Empleado;
+use App\Models\FirmasOrdenesCompra;
 use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
@@ -116,13 +117,16 @@ class RequisicionesListener implements ShouldQueue
                     dd($th);
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
-
-                $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
+                $firmas = FirmasOrdenesCompra::with(
+                    'solicitante',
+                    'responsableFinanzas',
+                    'comprador'
+                )->where('requisicion_id', $requisicion->id)->first();
 
                 // ordenes de compra
                 if ($event->requsicion->firma_comprador_orden !== null) {
 
-                    $comprador_empleado = $requisicion->obtener_responsable_comprador;
+                    $comprador_empleado = $firmas->comprador;
 
                     $user_compras = User::where('empleado_id', $comprador_empleado->id)
                         ->first();
@@ -136,6 +140,7 @@ class RequisicionesListener implements ShouldQueue
                 }
 
                 if ($event->requsicion->firma_solicitante_orden !== null) {
+
                     $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
                     ->first();
 
