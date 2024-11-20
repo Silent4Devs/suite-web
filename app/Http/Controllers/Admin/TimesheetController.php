@@ -721,6 +721,8 @@ class TimesheetController extends Controller
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
+        dd($cliente, $sedes, $areas, $tipos);
+
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
     }
 
