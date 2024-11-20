@@ -129,34 +129,21 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Run each task individually using Async
-        $organizacion = Async::run(fn() => Organizacion::getFirst());
-        $timesheetCount = Async::run(fn() => Timesheet::count());
-        $time_viejo = Async::run(fn() => Timesheet::orderBy('fecha_dia')->first());
-        $rechazos_contador = Async::run(fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count());
-        $aprobar_contador = Async::run(fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
-            ->where('estatus', 'pendiente')
-            ->count());
+            $organizacion = Organizacion::getFirst();
+            $timesheetCount = Timesheet::count();
+            $time_viejo = Timesheet::orderBy('fecha_dia')->first();
+            $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
+            $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+                ->where('estatus', 'pendiente')
+                ->count();
 
-        // Wait for all results to finish
-        $results = [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador];
-        foreach ($results as $key => $result) {
-            $results[$key] = $result->get();
-        }
-
-        // Unpack the results
-        [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador] = $results;
-
-        // Check if there are any timesheets
         $time_exist = $timesheetCount > 0 ? true : false;
-
         if ($time_exist) {
             $time_viejo = $time_viejo->fecha_dia;
         } else {
             $time_viejo = null;
         }
 
-        // Return the view with the results
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
 
