@@ -714,10 +714,11 @@ class TimesheetController extends Controller
         $areas = Area::getAll();
 
 
+        $clientes = $clientesPromise->wait();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
-        dd($clientesPromise, $sedes, $areas, $tipos);
+        dd($clientes, $sedes, $areas, $tipos);
 
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
     }
