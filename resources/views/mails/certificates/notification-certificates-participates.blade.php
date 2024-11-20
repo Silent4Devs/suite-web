@@ -124,7 +124,7 @@
                                             <br>
                                             <div style="text-align:center;">
                                                 Da click en la siguiente liga para revisarla y aprobarla
-                                                <a href="{{ route('admin.user-catalogue-training', $certificate_id) }}"
+                                                <a href="{{ route('user-catalogue-training', $certificate_id) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Revisar tipo de capacitación
                                                 </a>

@@ -62,8 +62,10 @@ function getDiccionaryRequisionOrder($value)
         'fecha_inicio' => 'Fecha de Inicio',
         'fecha_fin' => 'Fecha de Finalización',
         'cotizacion' => 'Cotización',
+        'centro_costo_id' => 'Centro de Costos',
     ];
 
     $valor = array_key_exists($value, $diccionary) ? $diccionary[$value] : $value;
+
     return $valor;
 }
