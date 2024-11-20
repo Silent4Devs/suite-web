@@ -1279,14 +1279,19 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        $counters = $this->timesheetService->totalCounters();
-        $areas_array = $this->timesheetService->totalRegisterByAreas();
-        $proyectos = $this->timesheetService->getRegistersByProyects();
+        // Ejecutar las tareas asíncronamente
+        $results = Async::run([
+            fn() => $this->timesheetService->totalCounters(),
+            fn() => $this->timesheetService->totalRegisterByAreas(),
+            fn() => $this->timesheetService->getRegistersByProyects(),
+            fn() => TimesheetProyecto::getAll(),
+        ]);
 
-        $proyectos_array = TimesheetProyecto::getAll();
+        // Desestructurar los resultados
+        [$counters, $areas_array, $proyectos, $proyectos_array] = $results;
 
+        // Renderizar la vista
         return view(
-            // 'admin.timesheet.dashboard'
             'admin.timesheet.dashboard',
             compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
         );
