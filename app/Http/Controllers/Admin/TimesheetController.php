@@ -696,9 +696,15 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientes = TimesheetCliente::getAll();
+        // Run asynchronous tasks
+        $results = Async::run([
+            fn() => TimesheetCliente::getAll(),
+            fn() => $this->obtenerOrganizacion(),
+        ]);
 
-        $organizacion_actual = $this->obtenerOrganizacion();
+        [$clientes, $organizacion_actual] = $results;
+
+        // Extract data from the organization
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
@@ -708,9 +714,15 @@ class TimesheetController extends Controller
     public function createProyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientes = TimesheetCliente::getAll();
-        $sedes = Sede::getAll();
-        $areas = Area::getAll();
+
+        $results = Async::run([
+            fn() => TimesheetCliente::getAll(),
+            fn() => Sede::getAll(),
+            fn() => Area::getAll(),
+        ]);
+
+        [$clientes, $sedes, $areas] = $results;
+
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
@@ -874,19 +886,25 @@ class TimesheetController extends Controller
         if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
-        $areas = TimesheetProyectoArea::where('proyecto_id', $id)
-            ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
-            ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
-            ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
-            ->get('sedes.sede');
+        // Run asynchronous queries
+        $results = Async::run([
+            fn() => TimesheetProyectoArea::where('proyecto_id', $id)
+                ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
+                ->get('areas.area'),
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
-            ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
-            ->get('timesheet_clientes.nombre');
+            fn() => TimesheetProyecto::getAll('sedes_'.$id)
+                ->where('timesheet_proyectos.id', $id)
+                ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
+                ->get('sedes.sede'),
 
-        // dd($proyecto, $areas, $sedes);
+            fn() => TimesheetProyecto::getAll('clientes_'.$id)
+                ->where('timesheet_proyectos.id', $id)
+                ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
+                ->get('timesheet_clientes.nombre'),
+        ]);
+
+        [$areas, $sedes, $clientes] = $results;
 
         return view('admin.timesheet.show-proyectos', compact('proyecto', 'areas', 'sedes', 'clientes'));
     }
@@ -1276,13 +1294,16 @@ class TimesheetController extends Controller
 
     public function reportes()
     {
-        $clientes = TimesheetCliente::getAll();
+        $results = Async::run([
+            fn() => TimesheetCliente::getAll(),
+            fn() => TimesheetProyecto::getAll(),
+            fn() => TimesheetTarea::getAll(),
+            fn() => $this->obtenerOrganizacion(),
+        ]);
 
-        $proyectos = TimesheetProyecto::getAll();
+        [$clientes, $proyectos, $tareas, $organizacion_actual] = $results;
 
-        $tareas = TimesheetTarea::getAll();
-
-        $organizacion_actual = $this->obtenerOrganizacion();
+        // Extract organization details
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
