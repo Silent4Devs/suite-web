@@ -72,8 +72,8 @@
                     <i class="fas fa-file-excel icon" style="font-size: 1.5rem;color:#0f6935"></i>
                 </a> &nbsp;&nbsp;&nbsp;
                 <!-- <a class="boton-transparente boton-sin-borde" id="btnImport">
-                                                <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
-                                            </a> -->
+                                                    <img src="{{ asset('upload_file_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Importar" class="icon">
+                                                </a> -->
                 @include('csvImport.modalperfilpuesto', [
                     'model' => 'Vulnerabilidad',
                     'route' => 'admin.vulnerabilidads.parseCsvImport',

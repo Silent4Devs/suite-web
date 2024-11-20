@@ -6,8 +6,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 @section('content')
-
-
     <ol class="breadcrumb">
         {{-- <li class="breadcrumb-item">
             <a href="{!! route('admin.calendario-oficial.index') !!}">Amenaza</a>
@@ -17,12 +15,14 @@
     <h5 class="col-12 titulo_general_funcion">Registrar: Evento</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::open(['route' =>array('admin.calendario-oficial.update',$calendario),"method"=>"PUT"]) !!}
-            @method("PUT")
+            <form action="{{ route('admin.calendario-oficial.update', $calendario) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            @include('admin.calendario-oficial.fields')
+                @include('admin.calendario-oficial.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

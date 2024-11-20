@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -7,7 +9,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      # - 8080:8080
     volumes:
       - .:/var/www/html
       - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -38,35 +39,27 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
-      - tabantaj-db:/var/lib/postgresql/data
-      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - tabantaj-database:/var/lib/postgresql/data
     env_file:
       - .env
     ports:
       - "5432:5432"
-    # networks:
-    #   - tabantajnetwork
     networks:
       - tabantajnetwork
     mem_limit: 6g
 
   php:
-    #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
-    #     # target: php-production  # Specify the target build stage if applicable
-    #     # args:
-    #     # - BUILD_ENV=production  # Pass any necessary build arguments
-    # #container_name: php-tabantaj
-    #uncomment this if you will use only docker compose
-    #image: johnvo95/tabantaj_php-tabantaj:latest
+      context: .
+      dockerfile: Dockerfile.prod
     container_name: php-tabantaj
+    depends_on:
+      - postgres-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
       - .:/var/www/html
+    command: php artisan octane:start --server=frankenphp --host=192.168.9.78 --port=9000
     ports:
       - 9000:80
     networks:
@@ -74,8 +67,8 @@ services:
 
   queue-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.prod
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -92,8 +85,8 @@ services:
 
   schedule-worker:
     build:
-      context: "./infra/php/"
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.prod
     depends_on:
       - php
     restart: unless-stopped
@@ -114,12 +107,10 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
-    mem_limit: 2g
+    mem_limit: 3g
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
@@ -132,8 +123,6 @@ services:
       - .env
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
 
   rabbitmq-tabantaj:
     image: rabbitmq:3-management-alpine
@@ -147,8 +136,6 @@ services:
     tty: true
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
@@ -158,13 +145,11 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3300:3300"
+      - "3302:3302"
     volumes:
       - goservices_data:/goservices
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
 
   reportservice:
     image: ghcr.io/silent4devs/reportservice:latest
@@ -177,133 +162,24 @@ services:
       - reportservice_data:/reportservice
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
 
   mailhog-service:
-    image: mailhog/mailhog # Reemplaza "imagen:tag" con la imagen y etiqueta correctas de Maihog
-    container_name: maihog-container # El nombre del contenedor
+    image: mailhog/mailhog
+    container_name: mailhog-container
     restart: unless-stopped
     tty: true
     ports:
-      - "1025:1025" # Reemplaza "puerto_host" y "puerto_contenedor" con los puertos necesarios
+      - "1025:1025"
       - "8025:8025"
     volumes:
-      - mailhog_data:/mailhog_data # Reemplaza "./ruta/local" con la ruta local y "/ruta/contenedor" con la ruta dentro del contenedor
+      - mailhog_data:/mailhog_data
     networks:
       - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
-
-  # elasticsearch:
-  #   image: elasticsearch:8.11.1
-  #   container_name: elasticsearch
-  #   restart: always
-  #   volumes:
-  #     - elastic-data-vl:/usr/share/elasticsearch/data/
-  #   environment:
-  #     ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-  #     bootstrap.memory_lock: true
-  #     discovery.type: single-node
-  #     xpack.license.self_generated.type: basic
-  #     xpack.security.enabled: false
-  #   ports:
-  #     - "9200:9200"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   networks:
-  #     - tabantajnetwork
-  #   # networks:
-  #   #   - tabantajnetwork
-
-  # logstash:
-  #   image: logstash:8.11.1
-  #   container_name: logstash
-  #   restart: always
-  #   volumes:
-  #     - ./infra/logstash/:/logstash_dir
-  #   command: logstash -f /logstash_dir/logstash.conf
-  #   depends_on:
-  #     - elasticsearch
-  #   ports:
-  #     - "5044:5044"
-  #     - "9600:9600"
-  #   environment:
-  #     LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-  #   networks:
-  #     - tabantajnetwork
-  #   # networks:
-  #   #   - tabantajnetwork
-
-  # Kibana:
-  #   image: kibana:8.11.1
-  #   container_name: kibana
-  #   restart: always
-  #   ports:
-  #     - "5601:5601"
-  #   environment:
-  #     - ELASTICSEARCH_URL=http://elasticsearch:9200
-  #     - ELASTIC_PACKAGE_REGISTRY_URL=elastic-package-registry:8080
-  #   volumes:
-  #     - ./infra/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-  #   depends_on:
-  #     - elasticsearch
-  #   networks:
-  #     - tabantajnetwork
-
-  # filebeat:
-  #   image: elastic/filebeat:8.11.1
-  #   container_name: filebeat
-  #   user: root
-  #   platform: linux/amd64
-  #   volumes:
-  #     - ./infra/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-  #     - ./storage/logs:/var/log/ELK-log-manager #Be careful about this line if you put this file in another path this line maybe need change (in my case I put 'docker-compose.yml' in directory named 'elk' which placed in the root of Laravel app so to reach the path of log files I use '../storage/logs')
-  #   environment:
-  #     - monitoring.enabled= true
-  #   depends_on:
-  #     - logstash
-  #     - elasticsearch
-  #   command: ["--strict.perms=false"]
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   stdin_open: true
-  #   tty: true
-  #   deploy:
-  #     mode: global
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "12m"
-  #       max-file: "100"
-  #   networks:
-  #     - tabantajnetwork
-  #   # networks:
-  #   #   - tabantajnetwork
-
-  # elastic-package-registry:
-  #   image: docker.elastic.co/package-registry/distribution:8.11.1
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - tabantajnetwork
-  #   # networks:
-  #   #   - tabantajnetwork
 
 volumes:
-  tabantaj-db:
+  tabantaj-database:
     driver: local
-  # caddy_data:
-  #   driver: local
-  # caddy_config:
-  #   driver: local
   rabbitmq_data:
-    driver: local
-  pgadmin-data:
     driver: local
   goservices_data:
     driver: local
@@ -311,12 +187,6 @@ volumes:
     driver: local
   mailhog_data:
     driver: local
-  # elastic-data-vl:
-  #   driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
 
 networks:
   tabantajnetwork:

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @section('content')
     <div class="mt-3">
-        {{ Breadcrumbs::render('Vista-Global-Vacaciones') }}
+        {{-- {{ Breadcrumbs::render('Vista-Global-Vacaciones') }} --}}
     </div>
 
     <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Vacaciones</h5>

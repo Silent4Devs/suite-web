@@ -27,19 +27,22 @@
 
     <center>
 
-    <!-- Botón 4 -->
-    <button type="button" class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-    id="filtrarBtn3" style="position: relative; left: -2rem;">Filtrar OC pendientes compradores</button>
+        <!-- Botón 4 -->
+        <button type="button"
+            class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
+            id="filtrarBtn3" style="position: relative; left: -2rem;">Filtrar OC pendientes compradores</button>
 
 
-    <!-- Botón 1 -->
-    <button type="button" class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar OC pendientes solicitantes</button>
+        <!-- Botón 1 -->
+        <button type="button"
+            class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
+            id="filtrarBtn2" style="position: relative; left: 1rem;">Filtrar OC pendientes solicitantes</button>
 
 
-    <!-- Botón 3 -->
-    <button type="button" class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-        id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar OC pendientes finanzas</button>
+        <!-- Botón 3 -->
+        <button type="button"
+            class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
+            id="filtrarBtn" style="position: relative; left: 4rem;">Filtrar OC pendientes finanzas</button>
 
     </center>
 
@@ -68,9 +71,13 @@
                             <td>OC-00-00-{{ $requisicion->id }}</td>
                             <td>{{ $requisicion->fecha }}</td>
                             <td>{{ $requisicion->referencia }}</td>
-                            <td>{{$requisicion->proveedor_catalogo  ?? $requisicion->provedores_requisiciones->first()->contacto  ?? 'Indistinto'  }}</td>
+                            <td>{{ $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto') }}
+                            </td>
                             <td>
-                                @if (!$requisicion->firma_solicitante_orden && !$requisicion->firma_comprador_orden && !$requisicion->firma_finanzas_orden)
+                                @if (
+                                    !$requisicion->firma_solicitante_orden &&
+                                        !$requisicion->firma_comprador_orden &&
+                                        !$requisicion->firma_finanzas_orden)
                                     <h5><span class="badge badge-pill badge-primary">Por iniciar</span></h5>
                                 @elseif ($requisicion->firma_solicitante_orden && $requisicion->firma_comprador_orden && $requisicion->firma_finanzas_orden)
                                     <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
@@ -89,14 +96,17 @@
                             @endphp
                             <td>
                                 @switch(true)
-
                                     @case(is_null($requisicion->firma_comprador_orden))
-                                            @php
-                                                $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                    ->where('id', $requisicion->comprador_id)
-                                                    ->first();
-                                            @endphp
+                                        @php
+                                            $comprador = App\Models\ContractManager\Comprador::with('user')
+                                                ->where('id', $requisicion->comprador_id)
+                                                ->first();
+                                        @endphp
+                                        @if ($requisicion->obtener_responsable_comprador)
+                                            <p>Comprador: {{ $requisicion->obtener_responsable_comprador->name }}</p>
+                                        @else
                                             <p>Comprador: {{ $comprador->user->name }}</p>
+                                        @endif
                                     @break
 
                                     @case(is_null($requisicion->firma_solicitante_orden))
@@ -104,7 +114,11 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas_orden))
-                                        <p>Finanzas</p>
+                                        @if ($requisicion->obtener_responsable_finanzas_orden_compra)
+                                            <p>Finanzas: {{ $requisicion->obtener_responsable_finanzas_orden_compra->name }}</p>
+                                        @else
+                                            <p>Finanzas: {{ $comprador->user->name }}</p>
+                                        @endif
                                     @break
 
                                     @default
@@ -115,14 +129,16 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                <form
-                                    action="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"
-                                    method="GET">
-                                    @method('GET')
-                                    <a
-                                        href="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                </form>
+                                @if ($requisicion->estado_orden != 'rechazado_oc' && $requisicion->estado_orden != 'cancelada')
+                                    <form
+                                        action="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"
+                                        method="GET">
+                                        @method('GET')
+                                        <a
+                                            href="{{ route('contract_manager.orden-compra.firmarAprobadores', $requisicion->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

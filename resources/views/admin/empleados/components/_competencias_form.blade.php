@@ -2,10 +2,12 @@
     <div method="POST" action="{{ route('admin.empleados.storeResumen', [$empleado->id]) }}" id="formResumen">
         <div class="row">
             <div class="form-group col-sm-12 col-lg-12 col-md-12">
-                <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
+                {{-- <div class="mt-4 mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
                     <span style="font-size: 17px; font-weight: bold;">
                         Resumen</span>
-                </div>
+                </div> --}}
+                <h4 class="color-tbj">Resumen</h4>
+                <hr>
                 <textarea class="form-control {{ $errors->has('resumen') ? 'is-invalid' : '' }}" type="text" name="resumen"
                     id="resumen">{{ old('resumen', $empleado->resumen) }}</textarea>
                 @if ($errors->has('resumen'))
@@ -19,12 +21,16 @@
             <button id="btnGuardarResumen" class="mr-3 btn btn-sm btn-success">Guardar</button>
         </div>
     </div>
-    <livewire:training.training :id={{ $id }} />
+    @livewire('training.training', ['id' => $id])
+    {{-- <livewire:training.training :id={{ $id }} /> --}}
 
-    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
+    {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Experiencia Profesional</span>
-    </div>
+    </div> --}}
+
+    <h4 class="color-tbj">Experiencia Profesional</h4>
+    <hr>
 
     <div method="POST" action="{{ route('admin.empleados.storeExperiencia', [$empleado->id]) }}" id="formExperiencia"
         enctype="multipart/form-data">
@@ -122,10 +128,14 @@
     </div>
     <input type="hidden" name="experiencia" value="" id="experiencia">
 
-    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
+    {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Educación Académica</span>
-    </div>
+    </div> --}}
+
+    <h4 class="color-tbj">Educación Académica</h4>
+    <hr>
+
     <div method="POST" action="{{ route('admin.empleados.storeEducacion', [$empleado->id]) }}" id="formEducacion"
         enctype="multipart/form-data">
 
@@ -210,10 +220,14 @@
     <input type="hidden" name="educacion" value="" id="educacion">
 
     {{-- IDIOMAS --}}
-    <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
+    {{-- <div class="mb-3 w-100" style="border-bottom: solid 2px var(--color-tbj)">
         <span style="font-size: 17px; font-weight: bold;">
             Idiomas</span>
-    </div>
+    </div> --}}
+
+    <h4 class="color-tbj">Idiomas</h4>
+    <hr>
+
     <div method="POST" action="{{ route('admin.idiomas-empleados.store', [$empleado->id]) }}" id="formIdiomas"
         enctype="multipart/form-data">
         <input type="hidden" name="empleado_id" value="{{ $empleado->id }}" id="empleado_id_idioma" />

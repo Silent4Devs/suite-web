@@ -15,6 +15,7 @@ use App\Models\FirmaModule;
 use App\Models\Organizacion;
 use App\Models\Sede;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,6 +51,8 @@ class DenunciasController extends Controller
             'ubicacion.max' => 'El campo descripción no puede exceder los 255 caracteres.',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
             'empleado_denuncio_id' => User::getCurrentUser()->empleado->id,
@@ -60,6 +63,7 @@ class DenunciasController extends Controller
             'ubicacion' => $request->ubicacion,
             'fecha' => $request->fecha,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

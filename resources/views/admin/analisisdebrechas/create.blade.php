@@ -36,8 +36,7 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
-
+                    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
 
                     <div class="form-group col-md-4 col-lg-4 col-sm-12">
                         <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>

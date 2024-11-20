@@ -59,6 +59,10 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp \
     ftp
 
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install \
+      pcntl
+
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 

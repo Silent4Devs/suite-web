@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{config('app.cssVersion')}}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Reglas-Goce-Sueldo') }}
+    {{-- {{ Breadcrumbs::render('Reglas-Goce-Sueldo') }} --}}
 
     <h5 class="col-12 titulo_general_funcion">Lineamientos para Permisos</h5>
 

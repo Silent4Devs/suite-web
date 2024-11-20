@@ -148,6 +148,11 @@ class DatabaseSeeder extends Seeder
 
                 // Dashboard solicitudes
                 PermissionsDashboardSolicitudesSeeder::class,
+
+                //Lista Distribucion Compradores
+                ListaDistribucionCompradoresSeeder::class,
+
+                SentimentSeeder::class,
             ]
         );
     }

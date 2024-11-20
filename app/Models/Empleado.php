@@ -887,6 +887,16 @@ class Empleado extends Model implements Auditable
         return Carbon::parse($this->antiguedad)->format('d-m-Y');
     }
 
+    public static function listaSupervisores()
+    {
+        return self::alta()->select('supervisor_id', 'id')
+            ->get()
+            ->filter(function ($emp) {
+                return $emp->es_supervisor;
+            })
+            ->pluck('id');
+    }
+
     //declaraciones iso
 
     public function getDeclaracionesResponsable2022Attribute()
@@ -1001,9 +1011,4 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasOne(DisponibilidadEmpleados::class, 'empleado_id', 'id');
     }
-
-    // public function getDisposicionAttribute()
-    // {
-    //     return $this->disponibilidad->disposicion;
-    // }
 }

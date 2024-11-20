@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@include('layouts.instructor',['course'=>$course])
+    @include('layouts.instructor', ['course' => $course])
     {{-- <h1 class="mt-8 mb-2 text-2xl font-bold">Información del curso</h1>
     <hr class="mt-2 mb-6">
     @livewire('escuela.instructor.publicar-course', ['course' => $course])
@@ -80,5 +80,3 @@
             }
         </script>
 @endsection --}}
-
-

@@ -7,23 +7,24 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
-                        <select class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" required name="nombre">
+                        <select class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" required name="nombre" id="nombre">
                             <option value="" selected disabled></option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
-                        {!! Form::label('nombre', 'Nombre*', ['class' => 'asterisco']) !!}
+                        <label for="nombre" class="asterisco">Nombre*</label>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
                     </div>
+
                     <div class="form-group col-md-12 col-sm-12 anima-focus">
                         <input class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text"
                             name="estado" id="estado" required>
-                        {!! Form::label('descripcion', 'Descripción*', ['class' => 'asterisco']) !!}
+                        <label for="estado" class="asterisco">Descripción*</label>
                         @if ($errors->has('estado'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('estado') }}

@@ -53,141 +53,88 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        // if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
+        $ordenes_compra = KatbolRequsicion::ordenesCompraAprobadorMobile($user->empleado->id, 'general');
 
-            // $ordenes_compra = KatbolRequsicion::ordenesCompraAprobadorMobile($user->empleado->id,'general');
-
-            // if($ordenes_compra->isEmpty()){
-            //     return response(json_encode([
-            //     'ordenCompra' => [],
-            // ]), 200)->header('Content-Type', 'application/json');
-            // }
-
-            // foreach ($ordenes_compra as $keyOrd => $orden_compra) {
-            //     if ($orden_compra->id_user != null) {
-
-            //         if ($orden_compra->proveedor_catalogo_oc === null || isEmpty($orden_compra->proveedor_catalogo_oc) ) {
-            //             // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
-            //             if ($orden_compra->proveedores_requisiciones && ! empty($orden_compra->proveedores_requisiciones)) {
-            //                 $proveedor = $orden_compra->proveedores_requisiciones[0]->contacto;
-            //             } else {
-            //                 $proveedor = 'Pendiente';
-            //             }
-            //         } else {
-            //             $proveedor = $orden_compra->proveedor_catalogo_oc; // Valor no es null ni undefined
-            //         }
-
-            //         $estado = null;
-
-            //         if ($orden_compra->estatus == 'rechazado_oc') {
-            //             $estado = 'Rechazado';
-            //         } else {
-            //             if (! $orden_compra->firma_solicitante && ! $orden_compra->firma_comprador && ! $orden_compra->firma_finanzas) {
-            //                 $estado = 'Por iniciar';
-            //             } elseif ($orden_compra->firma_solicitante && $orden_compra->firma_comprador && $orden_compra->firma_finanzas) {
-            //                 $estado = 'Firmada';
-            //             } else {
-            //                 $estado = 'En curso';
-            //             }
-            //         }
-
-            //         $user = User::find($orden_compra->id_user);
-
-            //         // Validar si el usuario tiene relación empleado
-            //         if ($user && $user->empleado) {
-            //             $empleado = $user->empleado;
-            //         } else {
-            //             $empleado = null; // O asignar valores predeterminados aquí
-            //         }
-
-            //         $json_orden[$keyOrd] = [
-            //             'id'=> $orden_compra->id,
-            //             'folio' => $orden_compra->folio,
-            //             'fecha' => $orden_compra->fecha,
-            //             'referencia' => $orden_compra->referencia,
-            //             'estatus' => $estado,
-            //             'proveedor_catalogo_oc' => $proveedor,
-            //             'no_contrato' => $orden_compra->contrato->no_contrato ?? 'Campo Vacío',
-            //             'nombre_servicio' => $orden_compra->contrato->nombre_servicio ?? 'Campo Vacío',
-            //             'area' => $orden_compra->area,
-            //             'user' => $orden_compra->user,
-            //             // "sub_total" => $orden_compra->sub_total,
-            //             // "iva" => $orden_compra->iva,
-            //             // "total" => $orden_compra->total,
-            //         ];
-            //     }
-            // }
-
-            // return response(json_encode([
-            //     'ordenCompra' => $json_orden,
-            // ]), 200)->header('Content-Type', 'application/json');
-        // } else {
-            $ordenes_compra = KatbolRequsicion::ordenesCompraAprobadorMobile($user->empleado->id,'general');
-
-            if($ordenes_compra->isEmpty()){
-                return response(json_encode([
+        if ($ordenes_compra->isEmpty()) {
+            return response(json_encode([
                 'ordenCompra' => [],
             ]), 200)->header('Content-Type', 'application/json');
-            }
+        }
 
-            foreach ($ordenes_compra as $keyOrd => $orden_compra) {
-                if ($orden_compra->id_user != null) {
+        foreach ($ordenes_compra as $keyOrd => $orden_compra) {
 
-                    if ($orden_compra->proveedor_catalogo_oc === null || isEmpty($orden_compra->proveedor_catalogo_oc) ) {
-                        // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
-                        if ($orden_compra->proveedores_requisiciones && ! empty($orden_compra->proveedores_requisiciones)) {
-                            $proveedor = $orden_compra->proveedores_requisiciones[0]->contacto;
-                        } else {
-                            $proveedor = 'Pendiente';
-                        }
+            if ($orden_compra->id_user != null) {
+
+                if ($orden_compra->proveedor_catalogo_oc === null || isEmpty($orden_compra->proveedor_catalogo_oc)) {
+                    // Verifica si 'proveedores_requisiciones' está definido y tiene al menos un contacto
+                    if ($orden_compra->proveedores_requisiciones && ! empty($orden_compra->proveedores_requisiciones)) {
+                        $proveedor = $orden_compra->proveedores_requisiciones[0]->contacto;
                     } else {
-                        $proveedor = $orden_compra->proveedor_catalogo_oc; // Valor no es null ni undefined
+                        $proveedor = 'Pendiente';
                     }
-
-                    $estado = null;
-
-                    if ($orden_compra->estatus == 'rechazado_oc') {
-                        $estado = 'Rechazado';
-                    } else {
-                        if (! $orden_compra->firma_solicitante && ! $orden_compra->firma_comprador && ! $orden_compra->firma_finanzas) {
-                            $estado = 'Por iniciar';
-                        } elseif ($orden_compra->firma_solicitante && $orden_compra->firma_comprador && $orden_compra->firma_finanzas) {
-                            $estado = 'Firmada';
-                        } else {
-                            $estado = 'En curso';
-                        }
-                    }
-
-                    $user = User::find($orden_compra->id_user);
-
-                    // Validar si el usuario tiene relación empleado
-                    if ($user && $user->empleado) {
-                        $empleado = $user->empleado;
-                    } else {
-                        $empleado = null; // O asignar valores predeterminados aquí
-                    }
-
-                    $json_orden[$keyOrd] = [
-                        'id'=> $orden_compra->id,
-                        'folio' => $orden_compra->folio,
-                        'fecha' => $orden_compra->fecha,
-                        'referencia' => $orden_compra->referencia,
-                        'estatus' => $estado,
-                        'proveedor_catalogo_oc' => $proveedor,
-                        'no_contrato' => $orden_compra->contrato->no_contrato ?? 'Campo Vacío',
-                        'nombre_servicio' => $orden_compra->contrato->nombre_servicio ?? 'Campo Vacío',
-                        'area' => $orden_compra->area,
-                        'user' => $orden_compra->user,
-                        // "sub_total" => $orden_compra->sub_total,
-                        // "iva" => $orden_compra->iva,
-                        // "total" => $orden_compra->total,
-                    ];
+                } else {
+                    $proveedor = $orden_compra->proveedor_catalogo_oc; // Valor no es null ni undefined
                 }
+
+                $estado = null;
+
+                if ($orden_compra->estatus == 'rechazado_oc') {
+                    $estado = 'Rechazado';
+                } else {
+                    if (! $orden_compra->firma_solicitante && ! $orden_compra->firma_comprador && ! $orden_compra->firma_finanzas) {
+                        $estado = 'Por iniciar';
+                    } elseif ($orden_compra->firma_solicitante && $orden_compra->firma_comprador && $orden_compra->firma_finanzas) {
+                        $estado = 'Firmada';
+                    } else {
+                        $estado = 'En curso';
+                    }
+                }
+
+                $user = User::find($orden_compra->id_user);
+
+                // Validar si el usuario tiene relación empleado
+                if ($user && $user->empleado) {
+                    $empleado = $user->empleado;
+                } else {
+                    $empleado = null; // O asignar valores predeterminados aquí
+                }
+
+                $json_orden[$keyOrd] = [
+                    'id' => $orden_compra->id,
+                    'folio' => $orden_compra->folio,
+                    'fecha' => $orden_compra->fecha,
+                    'referencia' => $orden_compra->referencia,
+                    'estatus' => $estado,
+                    'proveedor_catalogo_oc' => $proveedor,
+                    'no_contrato' => $orden_compra->contrato->no_contrato ?? 'Campo Vacío',
+                    'nombre_servicio' => $orden_compra->contrato->nombre_servicio ?? 'Campo Vacío',
+                    'area' => $orden_compra->area,
+                    'user' => $orden_compra->user,
+                    // "sub_total" => $orden_compra->sub_total,
+                    // "iva" => $orden_compra->iva,
+                    // "total" => $orden_compra->total,
+                ];
             }
 
-            return response(json_encode([
-                'ordenCompra' => $json_orden,
-            ]), 200)->header('Content-Type', 'application/json');
+            $json_orden[$keyOrd] = [
+                'folio' => $orden_compra->folio,
+                'fecha' => $orden_compra->fecha,
+                'referencia' => $orden_compra->referencia,
+                'estatus' => $estado,
+                'proveedor_catalogo_oc' => $proveedor,
+                'no_contrato' => $orden_compra->contrato->no_contrato ?? 'Campo Vacío',
+                'nombre_servicio' => $orden_compra->contrato->nombre_servicio ?? 'Campo Vacío',
+                'area' => $orden_compra->area,
+                'user' => $orden_compra->user,
+                // "sub_total" => $orden_compra->sub_total,
+                // "iva" => $orden_compra->iva,
+                // "total" => $orden_compra->total,
+            ];
+        }
+
+        return response(json_encode([
+            'ordenCompra' => $json_orden,
+        ]), 200)->header('Content-Type', 'application/json');
         // }
         // else {
         //     $ordenes_compra_solicitante = KatbolRequsicion::getOCAll()->where('id_user', $user->id);
@@ -242,6 +189,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
         //         'ordenCompra' => $json_orden,
         //     ]), 200)->header('Content-Type', 'application/json');
         // }
+
     }
 
     public function firmarAprobadores($id)

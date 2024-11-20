@@ -119,7 +119,7 @@
         <h4>{{ $course->title }}</h4>
         <div class="d-flex align-items-start" wire:ignore>
             <div class="img-person" style="min-width: 40px; min-height: 40px;">
-                <img src="{{ isset($course->instructor->empleado->avatar_ruta) ? $course->instructor->empleado->avatar_ruta : '' }}"
+                <img src="{{ isset($course->instructor->profesor->avatar_ruta) ? $course->instructor->profesor->avatar_ruta : '' }}"
                     alt="{{ $course->instructor->name ?? 'Sin asignar' }}">
                 {{-- {{ $course->instructor->name ?? 'Sin asignar'  }} --}}
             </div>
@@ -130,6 +130,12 @@
 
             </div>
         </div>
+        @if ($cursoCompletado === 100)
+            <div class="">
+                <a href="{{ route('admin.inicioUsuario.mis-cursos') }}"
+                    style="color: #006DDB !important; text-decoration: underline !important;">Certificados</a>
+            </div>
+        @endif
 
         <div class="caja-info-card-mc">
             <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
@@ -245,6 +251,7 @@
                     }, 1500);
                 }
             }
+
             document.addEventListener('livewire:update', function() {
                 console.log('Componente Livewire actualizado');
                 initializeYouTubePlayer();
@@ -258,8 +265,6 @@
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             });
 
-
-
             function getYouTubeVideoId() {
                 var assignIdIframe = document.querySelector(".box-iframe-video-courses iframe");
                 assignIdIframe.id = 'videoYoutube';
@@ -268,6 +273,7 @@
                 var videoId = url.split('/embed/')[1].split('?')[0];
                 return videoId;
             }
+
             var videoId = getYouTubeVideoId();
 
             //esto siempre se tiene que ejecutar por la api de youtube
@@ -276,6 +282,7 @@
             }
 
             function initializeYouTubePlayer() {
+                console.log("aqui");
                 var videoId = getYouTubeVideoId(); // Obtener el ID del video desde el iframe
                 player = new YT.Player('player3', {
                     height: '460',
@@ -284,6 +291,7 @@
                     events: {
                         'onReady': onPlayerReady,
                         'onStateChange': onPlayerStateChange
+
                     }
                 });
             }
@@ -305,7 +313,10 @@
                         @this.completed();
                     }
                 }
+                initializeYouTubePlayer();
+
             }
+
             // Función para rastrear el progreso del video
             function startTrackingProgress() {
                 setInterval(function() {
@@ -318,6 +329,7 @@
                     // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
                 }, 1000); // Actualiza cada segundo
             }
+
             document.addEventListener('render', event => {
                 setTimeout(function() {
                     initializeYouTubePlayer();

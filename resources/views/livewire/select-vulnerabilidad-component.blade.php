@@ -42,10 +42,10 @@
 
                         <!-- Id Amenaza Field -->
                         <div class="form-group col-sm-12">
-                            <i class="fas fa-skull-crossbones iconos-crear"></i>{!! Form::label('id_amenaza', 'Amenaza:') !!}
-                            <select class="custom-select" id="valorAmenaza" name="valorAmenaza"
-                                wire:model="valorAmenaza">
-                                <option selected value="" >Seleccione una opción</option>
+                            <i class="fas fa-skull-crossbones iconos-crear"></i>
+                            <label for="valorAmenaza">Amenaza:</label>
+                            <select class="custom-select {{ $errors->has('valorAmenaza') ? 'is-invalid' : '' }}" id="valorAmenaza" name="valorAmenaza" wire:model="valorAmenaza">
+                                <option value="" disabled selected>Seleccione una opción</option>
                                 @forelse ($amenazas as $amenaza)
                                     <option value="{{ $amenaza->id }}">{{ $amenaza->nombre }}</option>
                                 @empty

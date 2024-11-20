@@ -9,14 +9,21 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 class Asistente extends Component
 {
     public $search = '';
+
     public $respuesta;
+
     public $lineas;
+
     public $filename;
+
     public $filePath;
+
     public $chatboxOpen = false;
-    
+
     public $preguntas = [];
+
     public $respuestas = [];
+
     public $firstMessageVisible = true;
 
     public function mount()
@@ -39,7 +46,7 @@ class Asistente extends Component
 
     public function toggleChatbox()
     {
-        $this->chatboxOpen = !$this->chatboxOpen;
+        $this->chatboxOpen = ! $this->chatboxOpen;
         $this->search = '';
         $this->respuesta = '';
         $this->firstMessageVisible = true;
@@ -48,11 +55,11 @@ class Asistente extends Component
     public function askAsisten()
     {
         $asistenService = app(AsistentService::class);
-        
+
         $this->preguntas[] = $this->search;
 
         $response = $asistenService->postQuestionToPythonAPI($this->search);
-        
+
         if (is_array($response) && isset($response['response'])) {
             $tr = new GoogleTranslate('es');
             $respuestaEnEspanol = $tr->translate($response['response']);

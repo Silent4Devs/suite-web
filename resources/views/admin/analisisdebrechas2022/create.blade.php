@@ -22,7 +22,8 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
+        <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
+
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 col-lg-6 col-sm-12">

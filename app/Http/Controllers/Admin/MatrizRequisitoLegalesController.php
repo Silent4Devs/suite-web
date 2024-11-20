@@ -106,6 +106,8 @@ class MatrizRequisitoLegalesController extends Controller
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
+        event(new MatrizRequisitosEvent($matrizRequisitoLegale, 'create', 'matriz_requisito_legales', 'Matriz'));
+
         return redirect()->route('admin.matriz-requisito-legales.index');
     }
 
@@ -192,6 +194,8 @@ class MatrizRequisitoLegalesController extends Controller
             $matrizRequisitoLegale->planes()->sync($request->plan_accion);
         }
 
+        event(new MatrizRequisitosEvent($matrizRequisitoLegale, 'update', 'matriz_requisito_legales', 'Matriz'));
+
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Editado con éxito');
     }
 
@@ -226,6 +230,7 @@ class MatrizRequisitoLegalesController extends Controller
         abort_if(Gate::denies('matriz_requisitos_legales_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $eliminado = $matrizRequisitoLegale->delete();
+            event(new MatrizRequisitosEvent($matrizRequisitoLegale, 'delete', 'matriz_requisito_legales', 'Matriz'));
             if ($eliminado) {
                 return response()->json(['success', true]);
             } else {

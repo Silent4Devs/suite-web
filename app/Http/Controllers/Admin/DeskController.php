@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Denuncias;
@@ -10,6 +10,7 @@ use App\Models\Quejas;
 use App\Models\QuejasCliente;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sugerencias;
+use App\Services\SentimentService;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -24,13 +25,204 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentesSeguridad = IncidentesSeguridad::getAll();
+
+        // $apiResponse = SentimentService::analyzeSentiment('hola amigo');
+
+        // dd($apiResponse,
+        //     $apiResponse['analisis_de_sentimientos'][0]['compound'],
+        //     $apiResponse['analisis_de_sentimientos'][0]['compound'],
+        // );
+
         $incidentes_seguridad = $incidentesSeguridad->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
         $riesgos_identificados = RiesgoIdentificado::getAll();
         $quejas = Quejas::getAll();
+        $quejasClientes = QuejasCliente::getAll();
         $denuncias = Denuncias::getAll();
         $mejoras = Mejoras::getAll();
         $sugerencias = Sugerencias::getAll();
-        $quejasClientes = QuejasCliente::getAll();
+
+        $seguridad_sentiment_5 = 0;
+        $seguridad_sentiment_4 = 0;
+        $seguridad_sentiment_3 = 0;
+        $seguridad_sentiment_2 = 0;
+        $seguridad_sentiment_1 = 0;
+        $riesgos_sentiment_5 = 0;
+        $riesgos_sentiment_4 = 0;
+        $riesgos_sentiment_3 = 0;
+        $riesgos_sentiment_2 = 0;
+        $riesgos_sentiment_1 = 0;
+        $quejas_sentiment_5 = 0;
+        $quejas_sentiment_4 = 0;
+        $quejas_sentiment_3 = 0;
+        $quejas_sentiment_2 = 0;
+        $quejas_sentiment_1 = 0;
+        $clientes_sentiment_5 = 0;
+        $clientes_sentiment_4 = 0;
+        $clientes_sentiment_3 = 0;
+        $clientes_sentiment_2 = 0;
+        $clientes_sentiment_1 = 0;
+        $denuncias_sentiment_5 = 0;
+        $denuncias_sentiment_4 = 0;
+        $denuncias_sentiment_3 = 0;
+        $denuncias_sentiment_2 = 0;
+        $denuncias_sentiment_1 = 0;
+        $mejoras_sentiment_5 = 0;
+        $mejoras_sentiment_4 = 0;
+        $mejoras_sentiment_3 = 0;
+        $mejoras_sentiment_2 = 0;
+        $mejoras_sentiment_1 = 0;
+        $sugerencias_sentiment_5 = 0;
+        $sugerencias_sentiment_4 = 0;
+        $sugerencias_sentiment_3 = 0;
+        $sugerencias_sentiment_2 = 0;
+        $sugerencias_sentiment_1 = 0;
+
+        foreach ($incidentes_seguridad as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $seguridad_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $seguridad_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $seguridad_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $seguridad_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $seguridad_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($riesgos_identificados as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $riesgos_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $riesgos_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $riesgos_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $riesgos_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $riesgos_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($quejas as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $quejas_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $quejas_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $quejas_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $quejas_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $quejas_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($quejasClientes as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $clientes_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $clientes_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $clientes_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $clientes_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $clientes_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($denuncias as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $denuncias_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $denuncias_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $denuncias_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $denuncias_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $denuncias_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($mejoras as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $mejoras_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $mejoras_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $mejoras_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $mejoras_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $mejoras_sentiment_1 += 1;
+                }
+            }
+        }
+
+        foreach ($sugerencias as $item) {
+            if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
+                $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
+                    $sugerencias_sentiment_5 += 1;
+                }
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
+                    $sugerencias_sentiment_4 += 1;
+                }
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
+                    $sugerencias_sentiment_3 += 1;
+                }
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
+                    $sugerencias_sentiment_2 += 1;
+                }
+                if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
+                    $sugerencias_sentiment_1 += 1;
+                }
+            }
+        }
 
         $total_seguridad = $incidentesSeguridad->count();
         $nuevos_seguridad = $incidentesSeguridad->where('estatus', 'Sin atender')->count();
@@ -91,6 +283,7 @@ class DeskController extends Controller
             'incidentes_seguridad',
             'riesgos_identificados',
             'quejas',
+            'quejasClientes',
             'denuncias',
             'mejoras',
             'sugerencias',
@@ -136,6 +329,41 @@ class DeskController extends Controller
             'en_espera_sugerencias',
             'cerrados_sugerencias',
             'cancelados_sugerencias',
+            'seguridad_sentiment_1',
+            'seguridad_sentiment_2',
+            'seguridad_sentiment_3',
+            'seguridad_sentiment_4',
+            'seguridad_sentiment_5',
+            'riesgos_sentiment_1',
+            'riesgos_sentiment_2',
+            'riesgos_sentiment_3',
+            'riesgos_sentiment_4',
+            'riesgos_sentiment_5',
+            'quejas_sentiment_1',
+            'quejas_sentiment_2',
+            'quejas_sentiment_3',
+            'quejas_sentiment_4',
+            'quejas_sentiment_5',
+            'clientes_sentiment_1',
+            'clientes_sentiment_2',
+            'clientes_sentiment_3',
+            'clientes_sentiment_4',
+            'clientes_sentiment_5',
+            'denuncias_sentiment_1',
+            'denuncias_sentiment_2',
+            'denuncias_sentiment_3',
+            'denuncias_sentiment_4',
+            'denuncias_sentiment_5',
+            'mejoras_sentiment_1',
+            'mejoras_sentiment_2',
+            'mejoras_sentiment_3',
+            'mejoras_sentiment_4',
+            'mejoras_sentiment_5',
+            'sugerencias_sentiment_1',
+            'sugerencias_sentiment_2',
+            'sugerencias_sentiment_3',
+            'sugerencias_sentiment_4',
+            'sugerencias_sentiment_5',
         ));
     }
 }

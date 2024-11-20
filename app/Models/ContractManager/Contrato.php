@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\Area;
 use App\Models\ConvergenciaContratos;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
@@ -183,6 +184,7 @@ class Contrato extends Model implements Auditable
         'updated_by',
         'identificador_privado',
         'firma1',
+        'razon_soc_id',
     ];
 
     /**
@@ -282,7 +284,12 @@ class Contrato extends Model implements Auditable
 
     public function dolares()
     {
-        return $this->hasMany(DolaresContrato::class, 'contrato_id');
+        return $this->hasOne(DolaresContrato::class, 'contrato_id', 'id');
+    }
+
+    public function razonSocial()
+    {
+        return $this->belongsTo(Sucursal::class, 'razon_soc_id', 'id');
     }
 
     public function getArchivoAttribute()

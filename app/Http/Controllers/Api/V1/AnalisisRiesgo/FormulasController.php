@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\AnalisisRiesgo;
+namespace App\Http\Controllers\Api\V1\AnalisisRiesgo;
 
 use App\Http\Controllers\Controller;
 use App\Models\TBFormulaTemplateAnalisisRiesgoModel;

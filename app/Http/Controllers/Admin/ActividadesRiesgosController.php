@@ -22,7 +22,7 @@ class ActividadesRiesgosController extends Controller
         // $incidente = IncidentesSeguridad::find(intval($riesgo_id));
 
         if ($request->ajax()) {
-            $actividades = ActividadRiesgo::with('responsables')->where('riesgo_id', $riesgo_id)->get();
+            $actividades = ActividadRiesgo::with('responsables:id,name,foto,email')->where('riesgo_id', $riesgo_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }

@@ -26,6 +26,7 @@ class CoursesEvent implements ShouldBroadcast
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
+
     }
 
     /**

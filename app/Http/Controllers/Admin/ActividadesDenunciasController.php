@@ -15,7 +15,7 @@ class ActividadesDenunciasController extends Controller
     public function index(Request $request, $denuncia_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadDenuncia::with('responsables')->where('denuncia_id', $denuncia_id)->get();
+            $actividades = ActividadDenuncia::with('responsables:id,name,foto,email')->where('denuncia_id', $denuncia_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }

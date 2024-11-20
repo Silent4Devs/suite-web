@@ -17,9 +17,8 @@ class AsistentService
         $this->baseUrl = 'http://192.168.9.77:8080'; // Definir URL base
     }
 
-
     // Función para normalizar el texto, removiendo acentos, espacios adicionales y caracteres especiales
-    function normalizeText($text)
+    public function normalizeText($text)
     {
         // Convertir a minúsculas
         $text = strtolower($text);
@@ -27,14 +26,12 @@ class AsistentService
         // Remover acentos y caracteres especiales
         $text = strtr($text, [
             'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u',
-            'ü' => 'u', 'ñ' => 'n', '¿' => '', '¡' => ''
+            'ü' => 'u', 'ñ' => 'n', '¿' => '', '¡' => '',
         ]);
 
         // Remover espacios innecesarios
         return trim(preg_replace('/\s+/', ' ', $text));
     }
-
-
 
     /**
      * Enviar pregunta a la API de Python.
@@ -42,7 +39,6 @@ class AsistentService
     public function postQuestionToPythonAPI($question)
     {
         $url = $this->baseUrl.'/ask-question/';
-
 
         $faq = [
             'hola' => 'Hola, ¿en qué puedo ayudarte?',
@@ -180,14 +176,14 @@ class AsistentService
             'como puedo contactarlos fuera del horario laboral' => 'Puedes enviar un correo electrónico a nuestro soporte, y te responderemos durante el siguiente día laborable.',
             'ofrecen asistencia para la configuracion inicial' => 'Sí, ofrecemos asistencia para la configuración inicial cuando te registras en nuestro servicio.',
         ];
-        
+
         // Normalizar la pregunta
         $normalizedQuestion = $this->normalizeText(strtolower(trim($question)));
 
         // Verificar si la pregunta exacta existe en el diccionario
         if (array_key_exists($normalizedQuestion, $faq)) {
             return [
-                'response' => $faq[$normalizedQuestion]
+                'response' => $faq[$normalizedQuestion],
             ];
         }
 
@@ -214,15 +210,14 @@ class AsistentService
         // Si encontramos una pregunta cercana, la devolvemos
         if ($closestQuestion && $shortestDistance <= 3) {  // Ajusta el umbral según tu necesidad
             return [
-                'response' => $faq[$closestQuestion]
+                'response' => $faq[$closestQuestion],
             ];
         }
 
-    
         try {
             $response = $this->client->post($url, [
                 'json' => ['user_question' => $question],
-                'headers' => ['Content-Type' => 'application/json','Accept-Language' => 'es'],
+                'headers' => ['Content-Type' => 'application/json', 'Accept-Language' => 'es'],
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
@@ -230,8 +225,8 @@ class AsistentService
             return ['error' => 'Request failed: '.$e->getMessage()];
         }
 
-         // Si no se encuentra respuesta en el diccionario ni en la API
-         return ['response' => 'Lo siento, no tengo una respuesta para esa pregunta.'];
+        // Si no se encuentra respuesta en el diccionario ni en la API
+        return ['response' => 'Lo siento, no tengo una respuesta para esa pregunta.'];
     }
 
     /**
