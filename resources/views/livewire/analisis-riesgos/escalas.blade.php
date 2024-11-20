@@ -164,7 +164,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("delete", (id, key) => {
+            Livewire.on("deleteEscala", (id, key) => {
                 Swal.fire({
                     title: "Eliminar registro",
                     text: "¿Esta seguro que desea eliminar?",
@@ -176,7 +176,7 @@
                     cancelButtonText: "Cancelar",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('analisis-riesgos.escalas', 'destroy', id, key);
+                        Livewire.emitTo('analisis-riesgos.escalas', 'destroyEscala', id, key);
                         Swal.fire({
                             title: "Eliminado",
                             text: "El análisis de brechas se elimino con éxito",

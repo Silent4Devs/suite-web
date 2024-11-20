@@ -19,6 +19,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use function PHPSTORM_META\type;
 
 class templateAnalisisRiesgoController extends Controller
 {
@@ -38,7 +41,6 @@ class templateAnalisisRiesgoController extends Controller
         $imagenes = $request->file('image');
         $templateId = $sections[0]->template_id;
         $sectionId = $sections[0]->id;
-
         if (! empty($imagenes)) {
             $this->saveImage($questions, $imagenes);
         }
@@ -172,6 +174,7 @@ class templateAnalisisRiesgoController extends Controller
             if (! $exist) {
                 DB::beginTransaction();
                 try {
+                    $uuid = $this->verifyUuidFormula($question);
                     $questionCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
                         'title' => $question->title,
                         'size' => $question->size,
@@ -179,6 +182,7 @@ class templateAnalisisRiesgoController extends Controller
                         'position' => $question->position,
                         'obligatory' => $question->obligatory,
                         'is_numeric' => $question->isNumeric,
+                        'uuid_formula' => $uuid ? $uuid : null,
                     ]);
 
                     TBSectionTemplateAr_QuestionTemplateArModel::create([
@@ -197,7 +201,6 @@ class templateAnalisisRiesgoController extends Controller
                 } catch (\Throwable $th) {
                     DB::rollback();
 
-                    // return json_encode(['error' => $th ], 500);
                     continue;
                 }
             } else {
@@ -566,6 +569,7 @@ class templateAnalisisRiesgoController extends Controller
 
     public function saveSelectDataQuestion($dataQuestions, $questionCreateId)
     {
+        // dd($dataQuestions);
         foreach ($dataQuestions as $dataQuestion) {
             DB::beginTransaction();
             try {
@@ -583,6 +587,7 @@ class templateAnalisisRiesgoController extends Controller
                 DB::commit();
             } catch (\Throwable $th) {
                 //throw $th;
+                // dd($th);
                 DB::rollback();
 
                 continue;
@@ -857,50 +862,50 @@ class templateAnalisisRiesgoController extends Controller
             $exists = $this->verifyInputsDefault($sections);
             $questions = [];
 
-            $optionId = ([
-                'id' => 'q-1',
-                'title' => 'ID',
-                'template' => $template->id,
-                'position' => 0,
-                'type' => '12',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionId = ([
+            //     'id' => 'q-1',
+            //     'title' => 'ID',
+            //     'template' => $template->id,
+            //     'position' => 0,
+            //     'type' => '12',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
-            $optionDescription = ([
-                'id' => 'q-2',
-                'title' => 'Descripcion del riesgo',
-                'template' => $template->id,
-                'position' => 1,
-                'type' => '12',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionDescription = ([
+            //     'id' => 'q-2',
+            //     'title' => 'Descripcion del riesgo',
+            //     'template' => $template->id,
+            //     'position' => 1,
+            //     'type' => '12',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
-            $optionOwner = ([
-                'id' => 'q-3',
-                'title' => 'Dueño del riesgo',
-                'template' => $template->id,
-                'position' => 2,
-                'type' => '13',
-                'size' => 3,
-                'obligatory' => true,
-                'data' => [],
-            ]);
+            // $optionOwner = ([
+            //     'id' => 'q-3',
+            //     'title' => 'Dueño del riesgo',
+            //     'template' => $template->id,
+            //     'position' => 2,
+            //     'type' => '13',
+            //     'size' => 3,
+            //     'obligatory' => true,
+            //     'data' => [],
+            // ]);
 
             if ($exists) {
                 foreach ($sections as $index => $section) {
                     $data = $section->questions;
                     $sectionId = $section->id;
-                    $newQuestions = $data->map(function ($itm) use ($sectionId, $index) {
-                        if ($index === 0) {
-                            $itm['type'] === '11' ? $itm['position'] = $itm['position'] + 5 : null;
-                            if ($itm['type'] !== '11' && $itm['type'] !== '12' && $itm['type'] !== '13' && $itm['type'] !== '14') {
-                                $itm['position'] = $itm['position'] + 6;
-                            }
-                        }
+                    $newQuestions = $data->map(function ($itm) use ($sectionId) {
+                        // if ($index === 0) {
+                        //     $itm['type'] === '11' ? $itm['position'] = $itm['position'] + 5 : null;
+                        //     if ($itm['type'] !== '10' && $itm['type'] !== '11' && $itm['type'] !== '12' && $itm['type'] !== '13' && $itm['type'] !== '14') {
+                        //         $itm['position'] = $itm['position'] + 5;
+                        //     }
+                        // }
                         Arr::forget($itm, 'created_at');
                         Arr::forget($itm, 'updated_at');
                         Arr::forget($itm, 'pivot');
@@ -1135,6 +1140,7 @@ class templateAnalisisRiesgoController extends Controller
             'size' => 3,
             'obligatory' => true,
             'data' => [],
+            'uuid_formula' => substr(Str::uuid(), 0, 5),
         ]);
 
         $optionImpa = ([
@@ -1144,6 +1150,7 @@ class templateAnalisisRiesgoController extends Controller
             'size' => 3,
             'obligatory' => true,
             'data' => [],
+            'uuid_formula' => substr(Str::uuid(), 0, 5),
         ]);
 
         $questionOptionId = TBQuestionTemplateAnalisisRiesgoModel::create($optionId);
@@ -1211,5 +1218,49 @@ class templateAnalisisRiesgoController extends Controller
             'is_show' => false,
         ]);
 
+    }
+
+    public function verifyUuidFormula($question)
+    {
+        switch ($question->type) {
+            case '3':
+                $uuid = Str::uuid();
+                $uuid = substr($uuid, 0, 5);
+
+                return $uuid;
+                break;
+            case '5':
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+
+                    return $uuid;
+                } else {
+                    return null;
+                }
+                break;
+            case '6':
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+
+                    return $uuid;
+                } else {
+                    return null;
+                }
+                break;
+            case '7':
+                if ($question->is_numeric) {
+                    $uuid = Str::uuid();
+                    $uuid = substr($uuid, 0, 5);
+
+                    return $uuid;
+                } else {
+                    return null;
+                }
+                break;
+            default:
+                return null;
+        }
     }
 }

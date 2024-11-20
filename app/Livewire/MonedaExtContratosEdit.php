@@ -10,7 +10,7 @@ class MonedaExtContratosEdit extends Component
 {
     public $divisas;
 
-    public $tipo_cambio = '';
+    public $tipo_cambio = 'MXN';
 
     public $valor_dolar = 0;
 
@@ -35,13 +35,12 @@ class MonedaExtContratosEdit extends Component
         // $currencies = CurrencyConverter::currencies()->get();
 
         $contratos = Contrato::where('id', $id_contrato)->first();
-        // dd($contratos);
 
-        if (! empty($contratos->dolares)) {
+        if (! empty($contratos->dolares->monto_dolares)) {
             // code...
             $this->moneda_extranjera = true;
 
-            $this->tipo_cambio = $contratos->tipo_cambio;
+            $this->tipo_cambio = $contratos->tipo_cambio ?? 'MXN';
 
             $this->valor_dolar = $contratos->dolares->valor_dolar ?? 0;
 
@@ -123,6 +122,8 @@ class MonedaExtContratosEdit extends Component
             $this->valor_dolar = floatval($convertedAmount);
 
             $this->valorManual($this->valor_dolar);
+        } else {
+            $this->valorManual($this->valor_dolar);
         }
     }
 
@@ -130,23 +131,30 @@ class MonedaExtContratosEdit extends Component
     {
         $valor = floatval($val);
 
-        $this->monto_pago = (floatval($this->monto_dolares) * $valor);
+        $this->valor_dolar = $val;
 
-        $this->maximo = (floatval($this->maximo_dolares) * $valor);
+        // Usa bcmul para multiplicar la cantidad por la tasa de cambio con 2 decimales
+        $this->monto_pago = bcmul($valor, (floatval($this->monto_dolares)), 2);
 
-        $this->minimo = (floatval($this->minimo_dolares) * $valor);
+        $this->maximo = bcmul($valor, (floatval($this->maximo_dolares)), 2);
+
+        $this->minimo = bcmul($valor, (floatval($this->minimo_dolares)), 2);
 
         $this->actualizarMontos();
     }
 
     public function convertirME($valor, $tipo)
     {
-        $convertirDolares = CurrencyConverter::convert(1)
-            ->from($this->tipo_cambio)
-            ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-            ->format();
+        if ($this->edit_moneda) {
+            $convertirDolares = $this->valor_dolar;
+        } else {
+            $convertirDolares = CurrencyConverter::convert(1)
+                ->from($this->tipo_cambio)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+        }
 
-        $conversion = floor(floatval($convertirDolares) * floatval($valor) * 100) / 100;
+        $conversion = floor(bcmul(floatval($convertirDolares), floatval($valor), 2) * 100) / 100;
         $conversion = number_format($conversion, 2, '.', '');
 
         switch ($tipo) {

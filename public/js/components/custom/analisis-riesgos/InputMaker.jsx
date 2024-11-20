@@ -240,7 +240,7 @@ export const InputMakerSettings = ({question}) => {
                     <label>
                         {question.title} {question.obligatory ? "*":null}
                     </label>
-                    <InputSimple title="" background="#EFEFEF" name={`input-disabled-${question.title}`} type="date" value=""/>
+                    <InputSimple title="" background="#EFEFEF" name={`input-disabled-${question.title}`} type="date" value="" required={false}/>
 
                 </>
             );
@@ -251,7 +251,7 @@ export const InputMakerSettings = ({question}) => {
                     <label>
                         {question.title} {question.obligatory ? "*":null}
                     </label>
-                    <InputSimple title="" background="#EFEFEF" name={`input-disabled-${question.title}`} type="time" value=""/>
+                    <InputSimple title="" background="#EFEFEF" name={`input-disabled-${question.title}`} type="time" value="" required={false}/>
                 </>
             );
             break;

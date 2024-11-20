@@ -48,9 +48,8 @@
     <div class="card card-item doc-requisicion">
         <div class="flex header-doc">
             <div class="flex-item item-doc-img">
-                @if ($requisicion->sucursal->mylogo)
-                    <img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                        style="width:100%; max-width:150px;">
+                @if ($organizacion->logo)
+                    <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                 @else
                     <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                 @endif
@@ -291,11 +290,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_jefe)
                         <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
-                        <p>
-                            @isset($firma_siguiente->jefe->name)
-                                {{ $firma_siguiente->jefe->name }}
-                            @endisset
-                        </p>
+                        <p>{{ $firma_siguiente->jefe->name ?? '' }}</p>
                         <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -323,7 +318,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_compras)
                         <img src="{{ $requisicion->firma_compras }}" class="img-firma">
-                        <p>{{ $requisicion->comprador->user->name }} </p>
+                        <p>{{ $requisicion->comprador->user->name ?? '' }} </p>
                         <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>

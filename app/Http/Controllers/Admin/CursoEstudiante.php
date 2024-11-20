@@ -52,14 +52,17 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            $results = Async::run([
-                fn() => Evaluation::where('course_id', $curso_id)->get(),
-                fn() => Course::where('id', $curso_id)->first(),
-            ]);
+            // $results = Async::run([
+            //     fn() => Evaluation::where('course_id', $curso_id)->get(),
+            //     fn() => Course::where('id', $curso_id)->first(),
+            // ]);
 
-            [$evaluacionesLeccion, $curso] = $results;
+            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->first();
+            $curso = Course::where('id', $curso_id)->first();
 
-            if (!$curso) {
+            // [$evaluacionesLeccion, $curso] = $results;
+
+            if (! $curso) {
                 abort(404);
             }
 
@@ -71,7 +74,6 @@ class CursoEstudiante extends Controller
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-        // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
 
