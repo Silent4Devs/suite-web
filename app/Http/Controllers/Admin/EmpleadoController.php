@@ -1495,7 +1495,8 @@ class EmpleadoController extends Controller
                 'foto' => $new_name_image,
             ]);
 
-            return response()->json(['success' => 'Imágen actualizada']);
+            // return response()->json(['success' => 'Imágen actualizada']);
+            return redirect()->back()->with(['success' => 'Foto actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
 
