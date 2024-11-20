@@ -9,13 +9,14 @@ use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use App\Mail\RequisicionOrdenCompraCancelada;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Producto;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\ContractManager\Producto;
 use App\Models\Empleado;
+use App\Models\FirmasOrdenesCompra;
 use App\Models\FirmasRequisiciones;
 use App\Models\HistorialEdicionesReq;
 use App\Models\ListaDistribucion;
@@ -155,8 +156,8 @@ class RequisicionesController extends Controller
                     $valor_anterior = KatbolContrato::where('id', $registro->valor_anterior)->first();
                     $valor_nuevo = KatbolContrato::where('id', $registro->valor_nuevo)->first();
 
-                    $va = $valor_anterior->no_contrato . ' - ' . $valor_anterior->nombre_servicio;
-                    $vn = $valor_nuevo->no_contrato . ' - ' . $valor_nuevo->nombre_servicio;
+                    $va = $valor_anterior->no_contrato.' - '.$valor_anterior->nombre_servicio;
+                    $vn = $valor_nuevo->no_contrato.' - '.$valor_nuevo->nombre_servicio;
 
                     $registro->valor_anterior = $va;
                     $registro->valor_nuevo = $vn;
@@ -201,8 +202,8 @@ class RequisicionesController extends Controller
                     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
                     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
 
-                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+                    $va = $valor_anterior->razon_social.' - '.$valor_anterior->nombre;
+                    $vn = $valor_nuevo->razon_social.' - '.$valor_nuevo->nombre;
 
                     $registro->valor_anterior = $va;
                     $registro->valor_nuevo = $vn;
@@ -212,8 +213,8 @@ class RequisicionesController extends Controller
                     $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
                     $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
 
-                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+                    $va = $valor_anterior->razon_social.' - '.$valor_anterior->nombre;
+                    $vn = $valor_nuevo->razon_social.' - '.$valor_nuevo->nombre;
 
                     $registro->valor_anterior = $va;
                     $registro->valor_nuevo = $vn;
@@ -222,7 +223,7 @@ class RequisicionesController extends Controller
                 default:
                     // Nada, no se modifica el registro
                     break;
-            };
+            }
         }
 
         return $cambios;
@@ -583,6 +584,18 @@ class RequisicionesController extends Controller
                 ]
             );
 
+            $solicitante_user = User::where('id', $requisicion->id_user)->first();
+
+            $solicitante = Empleado::select('id', 'email')->where('email', $solicitante_user->email)->first();
+
+            $firmas_oc = FirmasOrdenesCompra::updateOrCreate([
+                'requisicion_id' => $requisicion->id,
+            ],
+                [
+                    'solicitante_id' => $solicitante->id,
+                    'comprador_id' => $user->empleado->id,
+                ]);
+
             // correo de compras
             $userEmail = $requisicion->email;
             $requisicion->update([
@@ -670,13 +683,13 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             } else {
 
-                $responsable = User::where('id',$requisicion->id_user)->first()->empleado;
+                $responsable = User::where('id', $requisicion->id_user)->first()->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante';
@@ -689,16 +702,16 @@ class RequisicionesController extends Controller
         } elseif ($requisicion->firma_jefe === null) {
             if ($firma_siguiente && isset($firma_siguiente->jefe_id)) {
 
-                    $responsable = $requisicion->obtener_responsable_lider;
+                $responsable = $requisicion->obtener_responsable_lider;
 
-                    if ($user->empleado->id == $responsable->id) {
-                        $tipo_firma = 'firma_jefe';
-                        $alerta = $this->validacionLista($tipo_firma);
-                    } else {
-                        $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                if ($user->empleado->id == $responsable->id) {
+                    $tipo_firma = 'firma_jefe';
+                    $alerta = $this->validacionLista($tipo_firma);
+                } else {
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
-                        return view('contract_manager.requisiciones.error', compact('mensaje'));
-                    }
+                    return view('contract_manager.requisiciones.error', compact('mensaje'));
+                }
             } else {
 
                 $responsable = $requisicion->obtener_responsable_lider;
@@ -721,7 +734,7 @@ class RequisicionesController extends Controller
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -745,7 +758,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -756,7 +769,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }

@@ -174,12 +174,17 @@ class RequisicionesEditComponent extends Component
 
     public $alerta_jefes = false;
 
+    public $contadorIntentos = [
+        'contadorEdit' => 0,
+        'contadorColor' => null,
+    ];
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
     }
 
-    public function mount($id_requisiciondata)
+    public function mount($id_requisiciondata, $contadorEdit)
     {
         $this->editRequisicion = KatbolRequsicion::where('id', $id_requisiciondata)->first();
 
@@ -295,6 +300,20 @@ class RequisicionesEditComponent extends Component
                 'id_registro' => $prov_requisiciones_catalogo->id ?? null,
                 'tabla_origen' => 'ProveedorRequisicion',
             ];
+        }
+        $this->contadorIntentos['contadorEdit'] = $contadorEdit;
+        switch ($contadorEdit) {
+            case $contadorEdit == 3 || $contadorEdit == 2:
+                $this->contadorIntentos['contadorcolor'] = '#17B265';
+                break;
+            case $contadorEdit == 1:
+                $this->contadorIntentos['contadorcolor'] = '#FFA621';
+                break;
+            case $contadorEdit == 0:
+                $this->contadorIntentos['contadorcolor'] = '#FF0000';
+                break;
+            default:
+                break;
         }
     }
 

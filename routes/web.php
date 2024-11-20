@@ -57,28 +57,49 @@ use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Tenant;
 
+Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
+    Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+    Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
+    Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
+    Route::resource('/', RegistroVisitantesController::class);
+});
 
+Route::get('correotestqueue', [QueueCorreo::class, 'index']);
+Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
 
-Route::view('tenant', 'central.landing')->name('central.landing');
+Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Route::get('/register-tenant', [Controllers\RegisterTenantController::class, 'show'])->name('central.tenants.register');
-Route::post('/register/submit', [Controllers\RegisterTenantController::class, 'submit'])->name('central.tenants.register.submit');
+Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
+Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
+Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
+Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
-Route::group(['middleware' => ['tenant']], function () {
-    Route::get('/login-tenant', [Controllers\LoginTenantController::class, 'show'])->name('central.tenants.login');
-    Route::post('/login/submit', [Controllers\LoginTenantController::class, 'submit'])->name('central.tenants.login.submit');
+Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
+Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
+// Rutas de CertificatesController
+Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
+    Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
+    Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
+    Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
     Route::post('/home', [HomeController::class, 'index'])->name('tenant.home');
 
+    // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
+    Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
+    Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
+    Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
+});
+
+Auth::routes();
+
+// Tabla-Calendario
     Route::get('/redis-check', function () {
         Tenant::all()->each(function ($tenant) {
             tenancy()->initialize($tenant);
 
-            Redis::connection('sessionredis')->set('session:test', 'session_value');
-            Redis::connection('cache')->set('cache:test', 'cache_value');
-            Redis::connection('queues')->set('queue:test', 'queue_value');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
             echo "Tenant {$tenant->getTenantKey()} - Session: " . Redis::connection('sessionredis')->get('session:test') . "<br>";
             echo "Tenant {$tenant->getTenantKey()} - Cache: " . Redis::connection('cache')->get('cache:test') . "<br>";
@@ -414,28 +435,7 @@ Route::group(['middleware' => ['tenant']], function () {
 
             //Modulo Capital Humano
             // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-            Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-            // Puestos
-            Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
-            Route::post('puestos/delete-language', 'PuestosController@deleteLanguage')->name('puestos.deleteLanguage');
-            Route::post('puestos/parse-csv-import', 'PuestosController@parseCsvImport')->name('puestos.parseCsvImport');
-            Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
-            Route::resource('puestos', 'PuestosController');
-            Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
-
-            // Rutas de CertificatesController
-            Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
-                Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
-                Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
-                Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
-                Route::post('puestos-aprobacion/aprobacion-firma-puesto', 'PuestosController@aprobacionFirma')->name('puestos-aprobacion.aprobacion-firma-puesto');
-                Route::get('puestos-aprobacion/aprobacion-firma-puesto/historico', 'PuestosController@historicoAprobacion')->name('puestos-aprobacion.aprobacion-firma-puesto.historico');
-
-                // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
-                Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
-                Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
-                Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
-            });
+            Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
             // Rutas de AusenciasController
             Route::controller(AusenciasController::class)->group(function () {
@@ -2103,6 +2103,11 @@ Route::group(['middleware' => ['tenant']], function () {
                 Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
                 Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
                 Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+                Route::get('risk-analysis', [AnalisisdeRiesgosController::class, 'RiskAnalysis'])->name('risk-analysis-index');
+                Route::get('risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'ShowRiskAnalysis'])->name('show-risk-analysis');
+                Route::get('logs-template-risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'LogsTemplateRiskAnalysis'])->name('logs-template-risk-analysis');
+
+                Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
                 Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
                 Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
                 Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
@@ -2401,6 +2406,8 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::resource('levels', 'Escuela\Admin\LevelController');
         Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
         Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
+        Route::get('certificado-course', 'Escuela\Admin\CertificadoController@index');
+        Route::post('certificado-course-select', 'Escuela\Admin\CertificadoController@selectCertificado');
 
         Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
 

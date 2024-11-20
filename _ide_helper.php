@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.31.0.
+ * Generated for Laravel 11.32.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4243,7 +4243,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function lock($name, $seconds = 0, $owner = null)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->lock($name, $seconds, $owner);
         }
                     /**
@@ -4255,7 +4255,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function restoreLock($name, $owner)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->restoreLock($name, $owner);
         }
                     /**
@@ -4265,50 +4265,70 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function flush()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->flush();
         }
                     /**
-         * Get the full path for the given cache key.
+         * Remove all expired tag set entries.
          *
-         * @param string $key
-         * @return string 
+         * @return void 
          * @static 
-         */        public static function path($key)
+         */        public static function flushStaleTags()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->path($key);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->flushStaleTags();
         }
                     /**
-         * Get the Filesystem instance.
+         * Get the Redis connection instance.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
-         */        public static function getFilesystem()
+         */        public static function connection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getFilesystem();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->connection();
         }
                     /**
-         * Get the working directory of the cache.
+         * Get the Redis connection instance that should be used to manage locks.
          *
-         * @return string 
+         * @return \Illuminate\Redis\Connections\Connection 
          * @static 
-         */        public static function getDirectory()
+         */        public static function lockConnection()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getDirectory();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->lockConnection();
         }
                     /**
-         * Set the cache directory where locks should be stored.
+         * Specify the name of the connection that should be used to store data.
          *
-         * @param string|null $lockDirectory
-         * @return \Illuminate\Cache\FileStore 
+         * @param string $connection
+         * @return void 
          * @static 
-         */        public static function setLockDirectory($lockDirectory)
+         */        public static function setConnection($connection)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->setLockDirectory($lockDirectory);
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setConnection($connection);
+        }
+                    /**
+         * Specify the name of the connection that should be used to manage locks.
+         *
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore 
+         * @static 
+         */        public static function setLockConnection($connection)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->setLockConnection($connection);
+        }
+                    /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */        public static function getRedis()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the cache key prefix.
@@ -4317,8 +4337,19 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getPrefix()
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->getPrefix();
+        }
+                    /**
+         * Set the cache key prefix.
+         *
+         * @param string $prefix
+         * @return void 
+         * @static 
+         */        public static function setPrefix($prefix)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setPrefix($prefix);
         }
             }
             /**
@@ -4352,8 +4383,8 @@ namespace Illuminate\Support\Facades {
                     /**
          * Get many configuration values.
          *
-         * @param array $keys
-         * @return array 
+         * @param array<string|int,mixed> $keys
+         * @return array<string,mixed> 
          * @static 
          */        public static function getMany($keys)
         {
@@ -7607,6 +7638,16 @@ namespace Illuminate\Support\Facades {
                         return \Illuminate\Http\Client\Factory::response($body, $status, $headers);
         }
                     /**
+         * Create a new connection exception for use during stubbing.
+         *
+         * @param string|null $message
+         * @return \GuzzleHttp\Promise\PromiseInterface 
+         * @static 
+         */        public static function failedConnection($message = null)
+        {
+                        return \Illuminate\Http\Client\Factory::failedConnection($message);
+        }
+                    /**
          * Get an invokable object that returns a sequence of responses in order for use during stubbing.
          *
          * @param array $responses
@@ -7686,7 +7727,7 @@ namespace Illuminate\Support\Facades {
          * Record a request response pair.
          *
          * @param \Illuminate\Http\Client\Request $request
-         * @param \Illuminate\Http\Client\Response $response
+         * @param \Illuminate\Http\Client\Response|null $response
          * @return void 
          * @static 
          */        public static function recordRequestResponsePair($request, $response)
@@ -12544,7 +12585,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * Create a new redirect response to a named route.
          *
-         * @param string $route
+         * @param \BackedEnum|string $route
          * @param mixed $parameters
          * @param int $status
          * @param array $headers

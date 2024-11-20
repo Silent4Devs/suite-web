@@ -227,7 +227,57 @@
                                 no se brinde detalle suficiente que sustente la compra, esto no procedera </small>
                         </div>
                     </div>
-                    <table class="table-proveedor">
+                    <div class="row gy-4">
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Proveedor: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->razon_social }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Nombre Comercial: </strong> <br>
+                            @isset($proveedores)
+                                {{ $proveedores->nombre }}
+                            @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> RFC: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->rfc }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Nombre de Contacto: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->contacto }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Dirección: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->direccion }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Envio a: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->envio }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Facturación: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->facturacion }}
+                                @endisset
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <strong> Crédito Disponible: </strong> <br>
+                                @isset($proveedores)
+                                    {{ $proveedores->credito }}
+                                @endisset
+                        </div>
+                    </div>
+                    {{-- <table class="table-proveedor">
                         <tr>
                             <td>
                                 <strong> Proveedor: </strong> <br>
@@ -284,7 +334,7 @@
                                 @endisset
                             </td>
                         </tr>
-                    </table>
+                    </table> --}}
                 </div>
 
                 <div class="proveedores-doc" style="background-color: #EEEEEE;">
@@ -294,25 +344,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 l4">
+                        <div class="col-sm-12 col-lg-4">
                             <strong>Subtotal:</strong><br><br>
                             {{ $requisicion->sub_total }}
                         </div>
-                        <div class="col s12  l4">
+                        <div class="col-sm-12 col-lg-4">
                             <strong>IVA:</strong><br><br>
                             {{ $requisicion->iva }}
                         </div>
-                        <div class="col s12 l4">
+                        <div class="col-sm-12 col-lg-4">
                             <strong>IVA retenido:</strong><br><br>
                             {{ $requisicion->iva_retenido }}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 l4">
+                        <div class="col-sm-12 col-lg-4">
                             <strong>ISR retenido:</strong><br><br>
                             {{ $requisicion->isr_retenido }}
                         </div>
-                        <div class="col s12 l4">
+                        <div class="col-sm-12 col-lg-4">
                             <strong>Total:</strong><br><br>
                             {{ $requisicion->total }}
                         </div>
@@ -325,7 +375,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_solicitante_orden)
                                 <img src="{{ $requisicion->firma_solicitante_orden }}" class="img-firma">
-                                <p>{{ $requisicion->user }}</p>
+                                <p>{{ $firma_siguiente->solicitante->name ?? $requisicion->user }}</p>
                                 <p>{{ $requisicion->fecha_firma_solicitante_orden }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -340,7 +390,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas_orden)
                                 <img src="{{ $requisicion->firma_finanzas_orden }}" class="img-firma">
-                                <p> {{ $firma_finanzas_name ?? '' }} </p>
+                                <p> {{ $firma_siguiente->responsableFinanzas->name ?? $firma_finanzas_name ?? '' }} </p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -353,7 +403,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_comprador_orden)
                                 <img src="{{ $requisicion->firma_comprador_orden }}" class="img-firma">
-                                <p>{{ $requisicion->comprador->user->name }} </p>
+                                <p>{{ $firma_siguiente->comprador->name ?? $requisicion->comprador->user->name }} </p>
                                 <p>{{ $requisicion->fecha_firma_comprador_orden }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -486,7 +536,8 @@
     @endsection
 </div>
 
-<div class="card card-body">
+@livewire('tabla-historico-ordenes-compra', ['idReq' => $requisicion->id])
+{{-- <div class="card card-body">
     <h4>Historial de Cambios:</h4>
 
     @if (!empty($resultadoOrdenesCompra))
@@ -524,6 +575,6 @@
         <h6>No hay cambios registrados</h6>
     @endif
 
-</div>
+</div> --}}
 
 @endsection
