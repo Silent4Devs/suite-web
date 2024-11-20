@@ -709,16 +709,13 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Run asynchronous tasks individually
-        $clientesPromise = Async::run(fn() => TimesheetCliente::getAll());
+        $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
 
 
-        $clientes = $clientesPromise->wait();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
-
-        dd($clientes, $sedes, $areas, $tipos);
 
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
     }
