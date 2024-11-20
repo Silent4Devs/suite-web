@@ -10,7 +10,7 @@
                             <th>No. contrato</th>
                             <th>Vigencia</th>
                             <th>Fase</th>
-                            @if (!empty($contratos->dolares))
+                            @if (!empty($contratos->dolares->monto_dolares))
                                 <th>Valor (USD) del contrato</th>
                                 <th>IVA (USD)</th>
                                 <th>Subtotal (USD)</th>
@@ -30,7 +30,7 @@
                             <td>{{ $contratos->no_contrato }}</td>
                             <td>{{ $contratos->vigencia_contrato }}</td>
                             <td>{{ $contratos->fase }}</td>
-                            @if (!empty($contratos->dolares))
+                            @if (!empty($contratos->dolares->monto_dolares))
                                 <td>$ {{ number_format($contratos->dolares->valor_dolar, 2) }}</td>
                                 <td>$ {{ number_format(($contratos->dolares->monto_dolares / 1.16) * 0.16, 2) }}</td>
                                 <td>$ {{ number_format($contratos->dolares->monto_dolares / 1.16, 2) }}</td>

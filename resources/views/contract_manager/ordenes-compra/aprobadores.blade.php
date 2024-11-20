@@ -102,7 +102,11 @@
                                                 ->where('id', $requisicion->comprador_id)
                                                 ->first();
                                         @endphp
-                                        <p>Comprador: {{ $comprador->user->name }}</p>
+                                        @if ($requisicion->obtener_responsable_comprador)
+                                            <p>Comprador: {{ $requisicion->obtener_responsable_comprador->name }}</p>
+                                        @else
+                                            <p>Comprador: {{ $comprador->user->name }}</p>
+                                        @endif
                                     @break
 
                                     @case(is_null($requisicion->firma_solicitante_orden))
@@ -110,7 +114,11 @@
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas_orden))
-                                        <p>Finanzas</p>
+                                        @if ($requisicion->obtener_responsable_finanzas_orden_compra)
+                                            <p>Finanzas: {{ $requisicion->obtener_responsable_finanzas_orden_compra->name }}</p>
+                                        @else
+                                            <p>Finanzas: {{ $comprador->user->name }}</p>
+                                        @endif
                                     @break
 
                                     @default

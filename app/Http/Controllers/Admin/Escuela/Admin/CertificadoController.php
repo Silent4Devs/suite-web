@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Escuela\Course;
 use App\Models\Organizacion;
+use Illuminate\Http\Request;
 
 class CertificadoController extends Controller
 {
@@ -16,12 +15,13 @@ class CertificadoController extends Controller
         return view('admin.escuela.admin.certificado-select', compact('org'));
     }
 
-    public function selectCertificado(Request $request){
+    public function selectCertificado(Request $request)
+    {
 
         $org = Organizacion::first();
 
         $org->update([
-            'certificado'=>$request->certificado,
+            'certificado' => $request->certificado,
         ]);
 
         // dd($org);

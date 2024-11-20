@@ -418,7 +418,9 @@ export const useAnalisisRiesgo = (template) => {
         dataForm.append('sections', JSON.stringify(dataSections));
         dataForm.append('questions', JSON.stringify(dataQuestions));
         try {
-            const response = await instance.post(generateTemplateCreate,dataForm);
+            const response = await instance.post(generateTemplateCreate,dataForm,{headers: {
+                'Content-Type': 'multipart/form-data'
+            }});
             if(response.status === 200){
                 const event = new CustomEvent('advanceModuleTemplate', { detail: { message:true } });
                 window.dispatchEvent(event);
@@ -665,7 +667,7 @@ export const useFormulasAnalisisRiesgos = (template) => {
     }
 
     const addVariable = (item) => {
-        const id = `$fv${item.id}`
+        const id = `$fv${item.uuid_formula}`
         setFormula(`${formula}${id}`);
     }
 
@@ -953,7 +955,7 @@ export const useSettingsAnalisisRiesgos = (templateId) => {
 
                 dataSection.sort((a, b) => a.position - b.position);
                 dataQuestion.sort((a, b) => a.position - b.position);
-
+                console.log(dataQuestion);
                 setSections(dataSection);
                 setQuestions(dataQuestion);
             }

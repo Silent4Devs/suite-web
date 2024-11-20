@@ -80,16 +80,16 @@ class DeskController extends Controller
         foreach ($incidentes_seguridad as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $seguridad_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $seguridad_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $seguridad_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $seguridad_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -101,16 +101,16 @@ class DeskController extends Controller
         foreach ($riesgos_identificados as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $riesgos_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $riesgos_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $riesgos_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $riesgos_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -122,16 +122,16 @@ class DeskController extends Controller
         foreach ($quejas as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $quejas_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $quejas_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $quejas_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $quejas_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -143,16 +143,16 @@ class DeskController extends Controller
         foreach ($quejasClientes as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $clientes_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $clientes_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $clientes_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $clientes_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -164,16 +164,16 @@ class DeskController extends Controller
         foreach ($denuncias as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $denuncias_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $denuncias_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $denuncias_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $denuncias_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -185,16 +185,16 @@ class DeskController extends Controller
         foreach ($mejoras as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $mejoras_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $mejoras_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $mejoras_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $mejoras_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {
@@ -206,16 +206,16 @@ class DeskController extends Controller
         foreach ($sugerencias as $item) {
             if (isset($item->sentimientos_array['analisis_de_sentimientos'][0]['compound'])) {
                 $sentimentLevel = $item->sentimientos_array['analisis_de_sentimientos'][0]['compound'];
-                if ($sentimentLevel >= -1 && $sentimentLevel < -0.4) {
+                if ($sentimentLevel >= -1 && $sentimentLevel < -0.6) {
                     $sugerencias_sentiment_5 += 1;
                 }
-                if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8) {
+                if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05) {
                     $sugerencias_sentiment_4 += 1;
                 }
-                if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2) {
+                if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05) {
                     $sugerencias_sentiment_3 += 1;
                 }
-                if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6) {
+                if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6) {
                     $sugerencias_sentiment_2 += 1;
                 }
                 if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1) {

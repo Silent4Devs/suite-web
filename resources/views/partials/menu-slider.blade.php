@@ -1,7 +1,7 @@
 <div class="menu-global-tbj">
     <div class="title-page-global item-menu-slider">
         <div class="caja-logo-ltr-light">
-            <img src="{{ asset('img/logo-ltr-light.png') }}" alt="">
+            <img src="{{ asset($logotipo) }}">
         </div>
     </div>
     <div class="menu-slider item-menu-slider">
@@ -190,7 +190,7 @@
                             <a class="nav-link active" title="Incidentes de seguridad" data-toggle="tooltip"
                                 data-placement="bottom" id="incidentes-tab" data-bs-toggle="tab" href="#incidentes"
                                 role="tab" aria-controls="incidentes" aria-selected="true">
-                                <i class="fas fa-exclamation-triangle"></i>
+                                <i class="material-symbols-outlined">gpp_maybe</i>
                                 <span>Incidentes de seguridad</span>
                             </a>
                         </div>
@@ -200,7 +200,7 @@
                             <a class="nav-link" title="Riesgos" data-toggle="tooltip" data-placement="bottom"
                                 id="riesgos-tab" data-bs-toggle="tab" href="#riesgos" role="tab" aria-controls="riesgos"
                                 aria-selected="false">
-                                <i class="fas fa-shield-alt"></i>
+                                <i class="material-symbols-outlined">warning</i>
                                 <span>Riesgos</span>
                             </a>
                         </div>
@@ -210,7 +210,7 @@
                             <a class="nav-link" title=" Quejas" data-toggle="tooltip" data-placement="bottom"
                                 id="quejas-tab" data-bs-toggle="tab" href="#quejas" role="tab" aria-controls="quejas"
                                 aria-selected="false">
-                                <i class="fas fa-frown"></i>
+                                <i class="material-symbols-outlined">mood</i>
                                 <span> Quejas</span>
                             </a>
                         </div>
@@ -220,7 +220,7 @@
                             <a class="nav-link" title=" Quejas Clientes" data-toggle="tooltip" data-placement="bottom"
                                 id="quejasClientes-tab" data-bs-toggle="tab" href="#quejasClientes" role="tab"
                                 aria-controls="quejasClientes" aria-selected="false">
-                                <i class="fas fa-thumbs-down"></i>
+                                <i class="material-symbols-outlined">thumb_up</i>
                                 <span> Quejas Clientes</span>
                             </a>
                         </div>
@@ -230,7 +230,7 @@
                             <a class="nav-link" title=" Denuncias" data-toggle="tooltip" data-placement="bottom"
                                 id="denuncias-tab" data-bs-toggle="tab" href="#denuncias" role="tab"
                                 aria-controls="denuncias" aria-selected="false">
-                                <i class="fas fa-hand-paper"></i>
+                                <i class="material-symbols-outlined">flag</i>
                                 <span> Denuncias</span>
                             </a>
                         </div>
@@ -240,7 +240,7 @@
                             <a class="nav-link" title=" Mejoras" data-toggle="tooltip" data-placement="bottom"
                                 id="mejoras-tab" data-bs-toggle="tab" href="#mejoras" role="tab"
                                 aria-controls="mejoras" aria-selected="false">
-                                <i class="fas fa-rocket"></i>
+                                <i class="material-symbols-outlined">rocket</i>
                                 <span> Mejoras</span>
                             </a>
                         </div>
@@ -250,7 +250,7 @@
                             <a class="nav-link" title="Sugerencias" data-toggle="tooltip" data-placement="bottom"
                                 id="sugerencias-tab" data-bs-toggle="tab" href="#sugerencias" role="tab"
                                 aria-controls="sugerencias" aria-selected="false">
-                                <i class="fas fa-lightbulb"></i>
+                                <i class="material-symbols-outlined">lightbulb</i>
                                 <span> Sugerencias</span>
                             </a>
                         </div>

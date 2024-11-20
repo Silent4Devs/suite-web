@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
+@endsection
 @section('content')
 @section('titulo', 'Ver Requisición')
 
@@ -47,9 +50,8 @@
             <div class="card card-item doc-requisicion">
                 <div class="flex header-doc">
                     <div class="flex-item item-doc-img">
-                        @if ($requisicion->sucursal->mylogo)
-                            <img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                                style="width:100%; max-width:150px;">
+                        @if ($organizacion->logo)
+                            <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                         @else
                             <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                         @endif
@@ -133,90 +135,92 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s12 l6">
-                                <strong>Proveedor:</strong><br><br>
-                                {{ $provedores->proveedor }}
-                            </div>
-                            <div class="row">
-                                <div class="col s12 l4">
+                        <div class="row gy-4">
+
+                            <div class="row gy-4">
+                                <div class="col-sm-12 col-lg-12">
+                                    <strong>Proveedor:</strong><br><br>
+                                    {{ $provedores->proveedor }}
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
                                     <strong>Nombre del contacto:</strong><br><br>
                                     {{ $provedores->contacto }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <strong>Fecha Inicio:</strong><br><br>
-                                    {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
-                                </div>
-                                <div class="col s12 l4">
-                                    <strong>Teléfono:</strong><br><br>
-                                    {{ $provedores->cel }}
-                                </div>
-                                <div class="col s12 l4">
-                                    <br><br>
+                                <div class="col-sm-12 col-lg-4">
+                                    {{-- <br><br> --}}
                                     <strong>Correo Electrónico:</strong><br><br>
                                     {{ $provedores->contacto_correo }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <br><br>
-                                    <strong>Fecha Fin:</strong><br><br>
-                                    {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                                <div class="col-sm-12 col-lg-2">
+                                    <strong>Teléfono:</strong><br><br>
+                                    {{ $provedores->cel }}
                                 </div>
-                                <div class="col s12 l4">
-                                    <br><br>
+                                <div class="col-sm-12 col-lg-6">
+                                    {{-- <br><br> --}}
                                     <strong>URL:</strong><br><br>
                                     {{ $provedores->url }}
                                 </div>
-                                <div class="col s12 14">
+                                <div class="col-sm-12 col-lg-4">
+                                    <strong>Fecha Inicio:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
+                                </div>
+                                <div class="col-sm-12 col-lg-2">
+                                    {{-- <br><br> --}}
+                                    <strong>Fecha Fin:</strong><br><br>
+                                    {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
                                     <label for="" class="txt-tamaño">
-                                        Cotizaciones <font class="asterisco">*</font>
+                                        <strong>Cotizaciones: <font class="asterisco">*</font></strong><br><br>
+                                        {{-- Cotizaciones <font class="asterisco">*</font> --}}
                                     </label>
-                                    <div class="row" style="gap: 25px;">
-                                        <div style="min-width: 300px;">Cotizacion actual: <a
+                                    <div >
+                                        <div>Cotizacion actual: <a
                                                 href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                                                 style="text-decoration: underline; color: deepskyblue;"
                                                 target="_blank">Descargar cotización <i
                                                     class="fa-regular fa-circle-down"></i></a></div>
                                     </div>
                                 </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <strong>Comentarios:</strong><br><br>
+                                    {{ $provedores->comentarios }}
+                                </div>
                             </div>
-                            <div class="col s12 l6">
-                                <strong>Comentarios:</strong><br><br>
-                                {{ $provedores->comentarios }}
-                            </div>
-                            <div class="col s12 l6">
+                            {{-- <div class="col-sm-12 col-lg-4">
                                 <strong>Nombre del contacto:</strong><br><br>
                                 {{ $provedores->contacto }}
-                            </div>
-                            <div class="col s12 l6">
+                            </div> --}}
+                            {{-- <div class="col-sm-12 col-lg-4">
                                 Cotizacion actual: <a
                                     href="{{ asset('storage/cotizaciones_requisiciones_proveedores/' . $provedores->cotizacion) }}"
                                     style="text-decoration: underline; color: deepskyblue;" target="_blank">Descargar
                                     cotización <i class="fa-regular fa-circle-down"></i></a>
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <div class="row">
-                            <div class="col s12 l6">
+                        {{-- <div class="row gy-4">
+                            <div class="ccol-sm-12 col-lg-2">
                                 <strong>Fecha Inicio:</strong><br><br>
                                 {{ date('d-m-Y', strtotime($provedores->fecha_inicio)) }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>Teléfono:</strong><br><br>
                                 {{ $provedores->cel }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-3">
                                 <strong>Correo Electrónico:</strong><br><br>
                                 {{ $provedores->contacto_correo }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>Fecha Fin:</strong><br><br>
                                 {{ date('d-m-Y', strtotime($provedores->fecha_fin)) }}
                             </div>
-                            <div class="col s12 l6">
+                            <div class="col-sm-12 col-lg-2">
                                 <strong>URL:</strong><br><br>
                                 {{ $provedores->url }}
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 @endforeach
 
@@ -355,7 +359,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_compras)
                                 <img src="{{ $requisicion->firma_compras }}" class="img-firma">
-                                <p>{{ $requisicion->comprador->user->name ?? '' }} </p>
+                                <p>{{ $firma_siguiente->comprador->name ?? '' }} </p>
                                 <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -368,15 +372,20 @@
                     </div>
                 </div>
 
-                <div class="row print-none">
-                    <div class="col-12">
-                        <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
-                                bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info" style="position: relative;   left:40%;"><a
-                                href="{{ route('contract_manager.requisiciones') }}"
-                                style="color: #EEEEEE">Regresar</a></button>
+                <div class="print-none" style="margin-left: 30px; margin-bottom:30px;">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center pl-0">
+                            <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
+                                    bueno de Gestión de talento.</i></small>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end pr-0 ">
+                            <button class="btn tb-btn-secondary" style="margin-right: 30px;"><a
+                                    href="{{ route('contract_manager.requisiciones') }}"
+                                    style="color: #EEEEEE">Regresar</a></button>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -488,44 +497,6 @@
     @endsection
 </div>
 
-<div class="card card-body">
-    <h4>Historial de Cambios:</h4>
-
-    @if (!empty($resultadoRequisiciones))
-        @foreach ($resultadoRequisiciones as $cambios)
-            <h5>Versión: {{ $cambios['version'] }}</h5>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Campo</th>
-                        <th>Valor Anterior</th>
-                        <th>Valor Modificado</th>
-                        <th>Autor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($cambios['cambios']))
-                        @foreach ($cambios['cambios'] as $cambio)
-                            <tr>
-                                <td>{{ $cambio->campo }}</td>
-                                <td>{{ $cambio->valor_anterior }}</td>
-                                <td>{{ $cambio->valor_nuevo }}</td>
-                                <td>{{ $cambio->empleado->name }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="3">No hay cambios registrados para esta versión.</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-            <br> <!-- Espacio entre tablas -->
-        @endforeach
-    @else
-        <h6>No hay cambios registrados</h6>
-    @endif
-
-</div>
+    @livewire('tabla-historico-requisiciones', ['idReq' => $requisicion->id])
 
 @endsection

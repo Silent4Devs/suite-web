@@ -229,16 +229,16 @@
                                         <strong style="font-size: 16px;">{{ $item->titulo }}</strong><br>
                                         <span>Prioridad de atención:</span>
 
-                                        @if ($sentimentLevel >= -1 && $sentimentLevel < -0.4)
+                                        @if ($sentimentLevel >= -1 && $sentimentLevel < -0.6)
                                             <span class="span-sentiment-5">Muy Alta</span>
                                         @endif
-                                        @if ($sentimentLevel >= -0.4 && $sentimentLevel < -0.8)
+                                        @if ($sentimentLevel >= -0.6 && $sentimentLevel < -0.05)
                                             <span class="span-sentiment-4">Alta</span>
                                         @endif
-                                        @if ($sentimentLevel >= -0.8 && $sentimentLevel < 0.2)
+                                        @if ($sentimentLevel >= -0.05 && $sentimentLevel < 0.05)
                                             <span class="span-sentiment-3">Media</span>
                                         @endif
-                                        @if ($sentimentLevel >= 0.2 && $sentimentLevel < 0.6)
+                                        @if ($sentimentLevel >= 0.05 && $sentimentLevel < 0.6)
                                             <span class="span-sentiment-2">Baja</span>
                                         @endif
                                         @if ($sentimentLevel >= 0.6 && $sentimentLevel <= 1)

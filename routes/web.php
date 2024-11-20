@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalisisdeRiesgosController;
 use App\Http\Controllers\Admin\ArbolRiesgosOctaveController;
 use App\Http\Controllers\Admin\AreasController;
 use App\Http\Controllers\Admin\AusenciasController;
@@ -73,6 +74,18 @@ Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados
 
 Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
 Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
+
+// Rutas de CertificatesController
+Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
+    Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
+    Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
+    Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
+
+    // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
+    Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
+    Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
+    Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
+});
 
 Auth::routes();
 
@@ -274,18 +287,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         //Modulo Capital Humano
         // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
         Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-
-        // Rutas de CertificatesController
-        Route::prefix('certificates')->controller(CertificatesController::class)->group(function () {
-            Route::get('type-catalogue-training', 'TypeCatalogueTraining')->name('type-catalogue-training.index'); // Catálogo de tipos de capacitación
-            Route::get('catalogue-training', 'CatalogueTraining')->name('catalogue-training.index'); // Catálogo de capacitación
-            Route::get('user-training', 'UserTraining')->name('user-training.index'); // Capacitación de usuario
-
-            // Rutas para la revisión y acciones de aprobación o rechazo de capacitación del usuario
-            Route::get('user-catalogue-training/{id}', 'revision')->name('user-catalogue-training'); // Revisión de capacitación de usuario
-            Route::post('user-catalogue-training/{id}/aprobado', 'aprobado')->name('user-catalogue-training.aprobado'); // Aprobar capacitación
-            Route::post('user-catalogue-training/{id}/rechazado', 'rechazado')->name('user-catalogue-training.rechazado'); // Rechazar capacitación
-        });
 
         // Rutas de AusenciasController
         Route::controller(AusenciasController::class)->group(function () {
@@ -1646,6 +1647,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
         Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
         Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+        Route::get('risk-analysis', [AnalisisdeRiesgosController::class, 'RiskAnalysis'])->name('risk-analysis-index');
+        Route::get('risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'ShowRiskAnalysis'])->name('show-risk-analysis');
+        Route::get('logs-template-risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'LogsTemplateRiskAnalysis'])->name('logs-template-risk-analysis');
+
+        Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
         Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
         Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
         Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');

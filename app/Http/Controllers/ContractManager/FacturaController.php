@@ -122,7 +122,7 @@ class FacturaController extends Controller
         try {
             abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $contrato = Contrato::find($id);
+            $contrato = Contrato::where('id', $id)->first();
 
             if (! $contrato) {
                 abort(404);
