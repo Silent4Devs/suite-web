@@ -431,7 +431,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="estatus" class="txt-tamaño">Adjuntar
                     Contrato<font class="asterisco">*</font></label><br>
                 <div class="">
@@ -470,7 +470,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="vigencia_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
@@ -482,7 +482,18 @@
                     </div>
                 @endif
             </div>
-
+            <div class="form-group col-md-4">
+                <label for="no_pagos" class="txt-tamaño">
+                    &nbsp;No. Pagos<font class="asterisco">*</font>
+                </label><br>
+                <input type="number" name="no_pagos" id="no_pagos" value="{{ old('no_pagos', '') }}"
+                    class="form-control" required min="1">
+                @if ($errors->has('no_pagos'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_pagos') }}
+                    </div>
+                @endif
+            </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
@@ -529,21 +540,10 @@
                 @endif
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label for="no_pagos" class="txt-tamaño">
-                    &nbsp;No. Pagos<font class="asterisco">*</font>
-                </label><br>
-                <input type="number" name="no_pagos" id="no_pagos" value="{{ old('no_pagos', '') }}"
-                    class="form-control" required min="1">
-                @if ($errors->has('no_pagos'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_pagos') }}
-                    </div>
-                @endif
-            </div>
+
+        <div style="padding-left: 0%;">
+            @livewire('moneda-ext-contratos-create')
         </div>
-        @livewire('moneda-ext-contratos-create')
 
         <div class="col s12">
             <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
