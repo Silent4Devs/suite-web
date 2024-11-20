@@ -528,8 +528,7 @@
                                                         class="modal-cotizacion form-control-file"
                                                         wire:model='array_proveedores.{{ $keyP }}.archivo'
                                                         id="cotizacion_{{ $keyP }}"
-                                                        name="cotizacion_{{ $keyP }}"
-                                                        accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
+                                                        name="cotizacion_{{ $keyP }}">
                                                     <label for="cotizacion_{{ $keyP }}">
                                                         Carga de cotizaciones <font class="asterisco">*</font>
                                                     </label>
