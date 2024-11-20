@@ -84,6 +84,7 @@ class Requsicion extends Model implements Auditable
         'obtener_responsable_lider',
         'obtener_responsable_finanzas',
         'obtener_responsable_comprador',
+        'obtener_responsable_finanzas_orden_compra',
     ];
 
     public $table = 'requisiciones';
@@ -1240,7 +1241,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return false;
     }
 
     public function getObtenerResponsableFinanzasAttribute()
@@ -1260,7 +1261,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return false;
     }
 
     public function getObtenerResponsableCompradorAttribute()
@@ -1288,6 +1289,26 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return false;
+    }
+
+    public function getObtenerResponsableFinanzasOrdenCompraAttribute()
+    {
+
+        $listaReq = ListaDistribucion::where('modelo', 'OrdenCompra')->first();
+        $listaPart = $listaReq->participantes;
+
+        for ($i = 0; $i <= $listaReq->niveles; $i++) {
+            $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+
+            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                $responsable = $responsableNivel->empleado;
+
+                return $responsable;
+            }
+        }
+
+        return false;
     }
 }
