@@ -129,30 +129,21 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Ejecuta las tareas de forma asíncrona
-        $results = Async::run([
-            'organizacion' => fn() => Organizacion::getFirst(),
-            'timesheetCount' => fn() => Timesheet::count(),
-            'time_viejo' => fn() => Timesheet::orderBy('fecha_dia')->first(),
-            'rechazos_contador' => fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
-            'aprobar_contador' => fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+            $organizacion = Organizacion::getFirst();
+            $timesheetCount = Timesheet::count();
+            $time_viejo = Timesheet::orderBy('fecha_dia')->first();
+            $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
+            $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
                 ->where('estatus', 'pendiente')
-                ->count(),
-        ]);
+                ->count();
 
-        // Desestructurar los resultados de las tareas
-        [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador] = $results;
-
-        // Verificar si existe una hoja de tiempo
         $time_exist = $timesheetCount > 0 ? true : false;
-
         if ($time_exist) {
             $time_viejo = $time_viejo->fecha_dia;
         } else {
             $time_viejo = null;
         }
 
-        // Retornar la vista con los resultados
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
 
