@@ -468,6 +468,32 @@
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="distancia form-group col-md-4">
+                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
+                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
+                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
+                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('vigencia_contrato'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('vigencia_contrato') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
+                <input type="number" name="no_pagos" id="no_pagos"
+                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
+                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('no_pagos'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_pagos') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     inicio<font class="asterisco">*</font></label>
@@ -520,31 +546,6 @@
                 @if ($errors->has('fecha_firma'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('fecha_firma') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
-                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
-                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
-                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
-                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('vigencia_contrato'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('vigencia_contrato') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
-                <input type="number" name="no_pagos" id="no_pagos"
-                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
-                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('no_pagos'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_pagos') }}
                     </div>
                 @endif
             </div>
