@@ -696,13 +696,12 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $results = Async::pool([
-            'clientes' => fn() => TimesheetCliente::getAll(),
-            'organizacion' => fn() => $this->obtenerOrganizacion(),
-        ])->wait();
+        $clientesPromise = Async::run(fn() => TimesheetCliente::getAll());
+        $organizacionPromise = Async::run(fn() => $this->obtenerOrganizacion());
 
-        $clientes = $results['clientes'];
-        $organizacion_actual = $results['organizacion'];
+        // Wait for both promises to complete
+        $clientes = $clientesPromise->wait();
+        $organizacion_actual = $organizacionPromise->wait();
 
         // Extract data from the organization
         $logo_actual = $organizacion_actual->logo;
