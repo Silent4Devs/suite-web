@@ -1184,7 +1184,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }
@@ -1214,7 +1214,8 @@ class Requsicion extends Model implements Auditable
         return $contadorEdit;
     }
 
-    public function getObtenerResponsableLiderAttribute(){
+    public function getObtenerResponsableLiderAttribute()
+    {
 
         $requisicion = self::where('id', $this->id)->first();
 
@@ -1240,10 +1241,10 @@ class Requsicion extends Model implements Auditable
         }
 
         return abort(404);
-
     }
 
-    public function getObtenerResponsableFinanzasAttribute(){
+    public function getObtenerResponsableFinanzasAttribute()
+    {
 
         $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
         $listaPart = $listaReq->participantes;
@@ -1260,10 +1261,10 @@ class Requsicion extends Model implements Auditable
         }
 
         return abort(404);
-
     }
 
-    public function getObtenerResponsableCompradorAttribute(){
+    public function getObtenerResponsableCompradorAttribute()
+    {
 
         $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 
@@ -1288,6 +1289,5 @@ class Requsicion extends Model implements Auditable
         }
 
         return abort(404);
-
     }
 }

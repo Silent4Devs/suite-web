@@ -526,7 +526,7 @@
                                                 <div class="col s12 l12 anima-focus">
                                                     <input type="file" required
                                                         class="modal-cotizacion form-control-file"
-                                                        wire:model='array_proveedores.{{ $keyP }}.archivo'
+                                                        wire:model.lazy='array_proveedores.{{ $keyP }}.archivo'
                                                         id="cotizacion_{{ $keyP }}"
                                                         name="cotizacion_{{ $keyP }}"
                                                         accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
