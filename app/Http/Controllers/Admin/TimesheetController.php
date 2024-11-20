@@ -38,6 +38,8 @@ use Illuminate\Validation\Rule;
 use PDF;
 use Throwable;
 use VXM\Async\AsyncFacade as Async;
+ini_set('memory_limit', '1024M'); // Increase memory limit to 1GB
+
 
 class TimesheetController extends Controller
 {
@@ -1270,36 +1272,24 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        // Ejecutar las tareas asíncronamente
-        $results = Async::run([
-            fn() => $this->timesheetService->totalCounters(),
-            fn() => $this->timesheetService->totalRegisterByAreas(),
-            fn() => $this->timesheetService->getRegistersByProyects(),
-            fn() => TimesheetProyecto::getAll(),
-        ]);
+        $counters = $this->timesheetService->totalCounters();
+        $areas_array = $this->timesheetService->totalRegisterByAreas();
+        $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        // Desestructurar los resultados
-        [$counters, $areas_array, $proyectos, $proyectos_array] = $results;
+        $proyectos_array = TimesheetProyecto::get();
 
-        // Renderizar la vista
-        return view(
-            'admin.timesheet.dashboard',
-            compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
-        );
+        return view('admin.timesheet.dashboard', compact('counters', 'areas_array', 'proyectos', 'proyectos_array'));
     }
 
     public function reportes()
     {
-        $results = Async::run([
-            fn() => TimesheetCliente::getAll(),
-            fn() => TimesheetProyecto::getAll(),
-            fn() => TimesheetTarea::getAll(),
-            fn() => $this->obtenerOrganizacion(),
-        ]);
+        $clientes = TimesheetCliente::getAll();
 
-        [$clientes, $proyectos, $tareas, $organizacion_actual] = $results;
+        $proyectos = TimesheetProyecto::getAll();
 
-        // Extract organization details
+        $tareas = TimesheetTarea::getAll();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
@@ -1309,6 +1299,7 @@ class TimesheetController extends Controller
             'empresa_actual'
         ));
     }
+
 
     public function reportesRegistros()
     {

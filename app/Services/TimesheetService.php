@@ -88,7 +88,7 @@ class TimesheetService
     {
         $array = [];
         // $areas = $this->areaRepo->find(['id', 'area']);
-        $areas = Area::getIdNameAll();
+        $areas = Area::get();
         $participacion_total = 0;
         $hoy = $this->carbon->now();
         $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
@@ -190,7 +190,7 @@ class TimesheetService
     {
         // Obtenemos la lista de los proyectos
         // $proyectos = $this->timesheetProyectoRepo->find(['id', 'proyecto', 'estatus']);
-        $proyectos = TimesheetProyecto::getAllDashboard();
+        $proyectos = TimesheetProyecto::get();
 
         $proyectos_array = [];
         $cancelados = 0;
