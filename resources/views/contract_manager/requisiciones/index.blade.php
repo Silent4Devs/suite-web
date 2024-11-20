@@ -107,7 +107,7 @@
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $compradorName = $requisicion->obtener_responsable_comprador->name;
-                                            }else{
+                                            } else {
                                                 $compradorName = $requisicion->comprador->user->name;
                                             }
                                         @endphp
