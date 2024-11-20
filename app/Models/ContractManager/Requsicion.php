@@ -1241,7 +1241,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return false;
+        return $jefe;
     }
 
     public function getObtenerResponsableFinanzasAttribute()
@@ -1261,7 +1261,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return false;
+        return abort(404);
     }
 
     public function getObtenerResponsableCompradorAttribute()
@@ -1289,7 +1289,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return false;
+        return abort(404);
     }
 
     public function getObtenerResponsableFinanzasOrdenCompraAttribute()
@@ -1309,6 +1309,6 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return false;
+        return abort(404);
     }
 }
