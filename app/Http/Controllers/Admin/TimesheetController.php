@@ -129,21 +129,25 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Ejecuta las tareas de forma asíncrona
-        $results = Async::run([
-            'organizacion' => fn() => Organizacion::getFirst(),
-            'timesheetCount' => fn() => Timesheet::count(),
-            'time_viejo' => fn() => Timesheet::orderBy('fecha_dia')->first(),
-            'rechazos_contador' => fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
-            'aprobar_contador' => fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
-                ->where('estatus', 'pendiente')
-                ->count(),
-        ]);
+        // Run each task individually using Async
+        $organizacion = Async::run(fn() => Organizacion::getFirst());
+        $timesheetCount = Async::run(fn() => Timesheet::count());
+        $time_viejo = Async::run(fn() => Timesheet::orderBy('fecha_dia')->first());
+        $rechazos_contador = Async::run(fn() => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count());
+        $aprobar_contador = Async::run(fn() => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+            ->where('estatus', 'pendiente')
+            ->count());
 
-        // Desestructurar los resultados de las tareas
+        // Wait for all results to finish
+        $results = [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador];
+        foreach ($results as $key => $result) {
+            $results[$key] = $result->get();
+        }
+
+        // Unpack the results
         [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador] = $results;
 
-        // Verificar si existe una hoja de tiempo
+        // Check if there are any timesheets
         $time_exist = $timesheetCount > 0 ? true : false;
 
         if ($time_exist) {
@@ -152,7 +156,7 @@ class TimesheetController extends Controller
             $time_viejo = null;
         }
 
-        // Retornar la vista con los resultados
+        // Return the view with the results
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
     }
 
