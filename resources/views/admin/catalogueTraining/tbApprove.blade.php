@@ -205,7 +205,7 @@
             document.getElementById('aprobado').addEventListener('click', function(e) {
 
                 let aprobar =
-                    "{{ route('admin.user-catalogue-training.aprobado', $catalogueTraining) }}";
+                    "{{ route('user-catalogue-training.aprobado', $catalogueTraining) }}";
                 document.getElementById('formularioRevision').setAttribute('action',
                     aprobar);
 
@@ -222,7 +222,7 @@
                         'info');
                 } else {
                     let rechazar =
-                        "{{ route('admin.user-catalogue-training.rechazado', $catalogueTraining) }}";
+                        "{{ route('user-catalogue-training.rechazado', $catalogueTraining) }}";
                     document.getElementById('formularioRevision').setAttribute('action',
                         rechazar);
                 }
