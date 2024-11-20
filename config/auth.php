@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'tenant',
-        'passwords' => 'tenants',
+        'passwords' => 'tenant',
     ],
 
     /*
@@ -38,17 +38,17 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'tenants',
+            'provider' => 'tenant_users',
         ],
 
         'api' => [
             'driver' => 'passport',
-            'provider' => 'tenants',
+            'provider' => 'tenant_users',
             'hash' => false,
         ],
         'tenant' => [
             'driver' => 'session',
-            'provider' => 'tenants',
+            'provider' => 'tenant_users',
         ],
     ],
 
@@ -74,16 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'tenants' => [
+        'tenant_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
             'connection' => 'tenant',
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -107,11 +102,10 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
-        'tenants' => [
-            'provider' => 'tenants',
+        'tenant' => [
+            'provider' => 'tenant_users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
     ],
-
 ];

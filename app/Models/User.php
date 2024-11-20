@@ -25,6 +25,21 @@ class User extends Authenticatable implements Auditable
 
     public $table = 'users';
 
+    protected $connection;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        self::created(function (self $user) {
+            $registrationRole = config('panel.registration_default_role');
+
+            if ($registrationRole && !$user->roles()->get()->contains($registrationRole)) {
+                $user->roles()->attach($registrationRole);
+            }
+        });
+    }
+
     protected $hidden = [
         'remember_token',
         'two_factor_code',
@@ -125,8 +140,8 @@ class User extends Authenticatable implements Auditable
     //     $cacheKey = $tenantPrefix . ':Auth_user:user' . Auth::user()->id;
     //     $databaseName = DB::connection()->getDatabaseName();
     //     //dd($cacheKey, $tenantPrefix, $tenant, Auth::user(), $databaseName);
-    //     return Cache::remember($cacheKey, now()->addMinutes(60), function () {
-    //         return Auth::user();
+    //   h::  return Cache::remember($cacheKey, now()->addMinutes(60), function () {
+    //         return Autuser();
     //     });
     // }
 
@@ -163,18 +178,6 @@ class User extends Authenticatable implements Auditable
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
-    }
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        self::created(function (self $user) {
-            $registrationRole = config('panel.registration_default_role');
-
-            if (! $user->roles()->get()->contains($registrationRole)) {
-                $user->roles()->attach($registrationRole);
-            }
-        });
     }
 
     public function generateTwoFactorCode()

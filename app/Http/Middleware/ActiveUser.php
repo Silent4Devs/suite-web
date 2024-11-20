@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ActiveUser
 {
@@ -15,6 +16,7 @@ class ActiveUser
      */
     public function handle(Request $request, Closure $next)
     {
+        //dd(User::getCurrentUser(), DB::connection()->getDatabaseName());
         if (! User::getCurrentUser()->is_active) {
             return redirect()->route('users.usuario-bloqueado');
         }

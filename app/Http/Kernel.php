@@ -17,6 +17,10 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\Cors::class,
         //\App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
+    protected $middlewarePriority = [
+        \App\Http\Middleware\TenantMiddleware::class,
+        \App\Http\Middleware\AuthGates::class,
+    ];
 
     protected $middlewareGroups = [
         'web' => [
@@ -29,7 +33,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // \App\Http\Middleware\LazyLoadImages::class,
-            \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
             //laravel-page-speed
             // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
@@ -39,6 +42,7 @@ class Kernel extends HttpKernel
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
             \App\Http\Middleware\TenantMiddleware::class,
+            \App\Http\Middleware\AuthGates::class,
         ],
         'api' => [
             'throttle:200,1',

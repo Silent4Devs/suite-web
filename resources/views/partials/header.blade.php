@@ -4,7 +4,7 @@
         use App\Models\User;
         use App\Models\Empleado;
         $usuario = User::getCurrentUser();
-        $empleado = Empleado::getMyEmpleadodata($usuario->empleado_id);
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
@@ -168,8 +168,8 @@
                                     </button>
                                 </div>
                                 <div class="mt-3">
-                                    <a style="all: unset; color: #747474; cursor: pointer;"
-                                        href="{{ route('admin.inicioUsuario.mis-cursos') }}">
+                                    <a style="all: unset; color: #747474; cursor: pointer;" href="">
+                                        {{-- href="{{ route('admin.inicioUsuario.mis-cursos') }}"> --}}
                                         <i class="bi bi-trophy"></i>
                                         Mis logros
                                     </a>
