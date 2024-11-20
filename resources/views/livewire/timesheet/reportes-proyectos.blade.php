@@ -184,7 +184,7 @@
             <div class="col-md-2">
                 <label for="">&nbsp;</label>
                 <div>
-                    <button class="btn btn-secondary" wire:click="render()">Buscar</button>
+                    <button class="btn btn-secondary" wire:click="$refresh">Buscar</button>
                 </div>
             </div>
         </div>
