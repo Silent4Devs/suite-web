@@ -696,13 +696,11 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $results = Async::pool([
-            'clientes' => fn() => TimesheetCliente::getAll(),
-            'organizacion' => fn() => $this->obtenerOrganizacion(),
-        ])->wait();
+        $clientesPromise = Async::run(fn() => TimesheetCliente::getAll());
+        $organizacion_actual = $this->obtenerOrganizacion();
 
-        $clientes = $results['clientes'];
-        $organizacion_actual = $results['organizacion'];
+        // Wait for both promises to complete
+        $clientes = $clientesPromise->wait();
 
         // Extract data from the organization
         $logo_actual = $organizacion_actual->logo;
@@ -715,13 +713,15 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $results = Async::run([
-            fn() => TimesheetCliente::getAll(),
-            fn() => Sede::getAll(),
-            fn() => Area::getAll(),
-        ]);
+        // Run asynchronous tasks individually
+        $clientesPromise = Async::run(fn() => TimesheetCliente::getAll());
+        $sedesPromise = Async::run(fn() => Sede::getAll());
+        $areasPromise = Async::run(fn() => Area::getAll());
 
-        [$clientes, $sedes, $areas] = $results;
+        // Wait for all promises to resolve
+        $clientes = $clientesPromise->wait();
+        $sedes = $sedesPromise->wait();
+        $areas = $areasPromise->wait();
 
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
