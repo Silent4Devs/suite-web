@@ -505,13 +505,49 @@ class OrdenCompraController extends Controller
             }
         }
 
-        // Aquí puedes continuar con el resto de la lógica de la función updateOrdenCompra, si es necesario
         $proveedor = KatbolProveedorOC::where('id', $request->proveedor_id)->first();
 
+        // Actualizar el campo de la orden de compra
         $ordenCompra->update([
             'proveedor_catalogo_oc' => $proveedor->nombre,
         ]);
 
+        // Campos a comparar entre el proveedor y el request
+        $camposProveedor = [
+            'contacto',
+            'rfc',
+            'direccion',
+            'facturacion',
+            'envio' => 'direccion_envio', // Clave del proveedor => clave del request
+            'credito' => 'credito_proveedor',
+        ];
+
+        // Iterar sobre los campos y verificar cambios
+        foreach ($camposProveedor as $campoProveedor => $campoRequest) {
+            // Si es un índice numérico, significa que las claves son iguales
+            if (is_numeric($campoProveedor)) {
+                $campoProveedor = $campoRequest;
+            }
+
+            $valorAnterior = $proveedor->$campoProveedor;
+            $valorNuevo = $request->$campoRequest;
+
+            // Comparar valores
+            if ($valorAnterior != $valorNuevo) {
+                // Registrar el cambio en el historial
+                HistorialEdicionesOC::create([
+                    'requisicion_id' => $ordenCompra->id,
+                    'registro_tipo' => KatbolProductoRequisicion::class,
+                    'id_empleado' => $idEmpleado,
+                    'campo' => $campoProveedor,
+                    'valor_anterior' => $valorAnterior,
+                    'valor_nuevo' => $valorNuevo,
+                    'version_id' => $versionOCId,
+                ]);
+            }
+        }
+
+        // Actualizar los valores del proveedor
         $proveedor->update([
             'contacto' => $request->contacto,
             'rfc' => $request->rfc,
