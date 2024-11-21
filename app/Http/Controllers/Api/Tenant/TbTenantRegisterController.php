@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 
-
 class TbTenantRegisterController extends Controller
 {
     /**
@@ -82,16 +81,37 @@ class TbTenantRegisterController extends Controller
     protected function validateTenantData(Request $request): array
     {
         return $request->validate([
-            'domain' => 'required|string|unique:domains',
-            'company' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
+            'domain' => [
+                'required',
+                'string',
+                'unique:domains',
+                'regex:/^[a-zA-Z0-9-]+$/', // Solo permite letras, números y guiones
+                'max:50'
+            ],
+            'company' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9\s.,]+$/' // Permite letras, números, espacios, puntos y comas
+            ],
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/', // Solo letras y espacios
             'email' => 'required|email|max:255|unique:tenants',
-            'password' => 'required|string|confirmed|max:255',
-            'numero' => 'required|max:10',
-            'cargo' => 'required|string',
-            'sede' => 'required|string',
-            'direccion' => 'required|string',
-            'resumen' => 'required|string',
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                'min:8', // Longitud mínima de 8 caracteres
+                'max:255',
+                'regex:/[A-Z]/', // Al menos una letra mayúscula
+                'regex:/[a-z]/', // Al menos una letra minúscula
+                'regex:/[0-9]/', // Al menos un número
+                'regex:/[@$!%*?&]/' // Al menos un carácter especial
+            ],
+            'numero' => 'required|string|digits_between:8,10|regex:/^[0-9]+$/', // Solo números
+            'cargo' => 'required|string|max:100',
+            'sede' => 'required|string|max:150',
+            'direccion' => 'required|string|max:255',
+            'resumen' => 'required|string|min:10|max:500', // Longitud mínima y máxima
         ]);
     }
 
@@ -111,6 +131,7 @@ class TbTenantRegisterController extends Controller
         return $fullDomainUrl . $routePath;
     }
 }
+
 
 
 /**
