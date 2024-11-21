@@ -57,12 +57,10 @@ class CursoEstudiante extends Controller
             //     fn() => Course::where('id', $curso_id)->first(),
             // ]);
 
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->first();
-            $curso = Course::where('id', $curso_id)->first();
+            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+            $curso = Course::getAll()->where('id', $curso_id)->first();
 
-            // [$evaluacionesLeccion, $curso] = $results;
-
-            if (! $curso) {
+            if (!$curso) {
                 abort(404);
             }
 

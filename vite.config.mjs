@@ -11,6 +11,7 @@ export default defineConfig({
         "public/css/global/style.css",
         "public/css/global/admin.css",
         "public/css/rds.css",
+        "public/css/escuela/certificados.css",
 
         "resources/sass/app.scss",
         "resources/js/app.js",
