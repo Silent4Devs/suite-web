@@ -50,8 +50,8 @@ services:
 
   php:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     container_name: php-tabantaj
     depends_on:
       - postgres-tabantaj
@@ -67,8 +67,8 @@ services:
 
   queue-worker:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -85,8 +85,8 @@ services:
 
   schedule-worker:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
