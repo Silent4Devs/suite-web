@@ -151,33 +151,6 @@ class RequisicionesListener implements ShouldQueue
 
                     Notification::send($user_solicitante, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
-
-                //Innecesario, es la ultima persona, si la aprueba ella, termina el ciclo.
-                // if ($event->requsicion->firma_finanzas_orden !== null) {
-
-                //     $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
-                //     $listaPart = $listaReq->participantes;
-
-                //     for ($i = 0; $i <= $listaReq->niveles; $i++) {
-                //         $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
-
-                //         if ($responsableNivel) {
-                //             if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
-                //                 $responsable = $responsableNivel->empleado;
-                //                 $user_finanzas = User::where('empleado_id', $responsable->id)
-                //                     ->first();
-
-                //                 if($user_finanzas == null){
-                //                     $user_finanzas = User::where('email', $firmas->solicitante->email)
-                //                         ->first();
-                //                 }
-
-                //                 Notification::send($user_finanzas, new RequisicionesNotification($event->requsicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                //             }
-                //         }
-                //     }
-                // }
             } else {
 
                 try {
