@@ -17,10 +17,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\Cors::class,
         //\App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
-    protected $middlewarePriority = [
-        \App\Http\Middleware\TenantMiddleware::class,
-        \App\Http\Middleware\AuthGates::class,
-    ];
+
 
     protected $middlewareGroups = [
         'web' => [
@@ -41,13 +38,14 @@ class Kernel extends HttpKernel
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
-            \App\Http\Middleware\TenantMiddleware::class,
             \App\Http\Middleware\AuthGates::class,
+            \App\Http\Middleware\TenantMiddleware::class,
+
         ],
         'api' => [
             'throttle:200,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\AuthGates::class,
+            //\App\Http\Middleware\AuthGates::class,
         ],
         'universal' => [],
 

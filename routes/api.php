@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\RegisterTenantController;
+use App\Http\Controllers\Api\Tenant\TbTenantRegisterController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
@@ -16,9 +16,10 @@ use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDa
 use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\V1\Timesheet\TbTimesheetApiMobileController;
+use Illuminate\Support\Facades\Route;
 
 
-Route::post('/rtenant', [RegisterTenantController::class, 'submit']);
+Route::post('/rtenant', [TbTenantRegisterController::class, 'submit']);
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Tenant;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 use App\Actions\CreateTenantAction;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class RegisterTenantController extends Controller
+class TbTenantRegisterController extends Controller
 {
+   
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.
      *
