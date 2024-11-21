@@ -296,7 +296,6 @@ class OrdenCompraController extends Controller
             $centro_costos = KatbolCentroCosto::getAll();
             $monedas = KatbolMoneda::getAll();
             $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
-            // dd($requisicion);
 
             // En el controlador para órdenes de compra
             $historialesOrdenCompra = HistorialEdicionesOC::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
@@ -354,8 +353,13 @@ class OrdenCompraController extends Controller
             'moneda' => $request->moneda,
             'cambio' => $request->cambio,
             'proveedoroc_id' => $request->proveedor_id,
-            'direccion_envio_proveedor' => $request->direccion_envio,
-            'credito_proveedor' => $request->credito_proveedor,
+
+            'proveedor_id' => $request->proveedor_id,
+
+            "proveedor_catalogo" => $request->nombre,
+
+            'direccion_envio_proveedor' => $request->direccion_envio ?? null,
+            'credito_proveedor' => $request->credito_proveedor ?? null,
 
             'estado_orden' => 'curso',
 
@@ -509,6 +513,8 @@ class OrdenCompraController extends Controller
         ]);
 
         $proveedor->update([
+            'contacto' => $request->contacto,
+            'rfc' => $request->rfc,
             'direccion' => $request->direccion,
             'facturacion' => $request->facturacion,
             'envio' => $request->direccion_envio,
