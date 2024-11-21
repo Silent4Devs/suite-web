@@ -153,6 +153,11 @@ class CreateTenantAction
                 'created_at' => now(),
             ]);
 
+            Artisan::call('db:seed', [
+                '--database' => 'tenant',
+                '--force' => true,
+            ]);
+
             DB::connection('tenant')->commit();
         } catch (Exception $e) {
             DB::connection('tenant')->rollBack();
