@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
+
 
 class TbTenantRegisterController extends Controller
 {
-   
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.
      *
@@ -19,13 +21,13 @@ class TbTenantRegisterController extends Controller
      */
     public function submit(Request $request): JsonResponse
     {
-        $data = $this->validateTenantData($request);
-
-        $domain = $data['domain'];
-        $data['password'] = Hash::make($data['password']);
-        unset($data['domain']);
-
         try {
+            $data = $this->validateTenantData($request);
+
+            $domain = $data['domain'];
+            $data['password'] = Hash::make($data['password']);
+            unset($data['domain']);
+
             // Crear el inquilino
             $tenant = (new CreateTenantAction)($data, $domain);
 
@@ -38,13 +40,35 @@ class TbTenantRegisterController extends Controller
                 'tenant_id' => $tenant->id,
                 'tenant_url' => $tenantUrl
             ], 201);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Datos de validación incorrectos',
+                'errors' => $e->errors(),
+            ], 422);
+
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23000') { // Código para errores de constraint en bases de datos
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Los datos ya existen. Verifique los campos únicos.',
+                    'error' => $e->getMessage(),
+                ], 409);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error en la base de datos',
+                'error' => $e->getMessage(),
+            ], 500);
         } catch (\Exception $e) {
             \Log::error("Error en la creación del inquilino: " . $e->getMessage());
 
             return response()->json([
                 'success' => false,
                 'message' => 'No se pudo crear el inquilino',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -87,6 +111,7 @@ class TbTenantRegisterController extends Controller
         return $fullDomainUrl . $routePath;
     }
 }
+
 
 /**
  * Peticion de ejemplo para la api.
