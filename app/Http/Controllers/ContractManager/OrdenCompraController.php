@@ -296,7 +296,6 @@ class OrdenCompraController extends Controller
             $centro_costos = KatbolCentroCosto::getAll();
             $monedas = KatbolMoneda::getAll();
             $contrato = $contratos->where('id', $requisicion->contrato_id)->first();
-            // dd($requisicion);
 
             // En el controlador para órdenes de compra
             $historialesOrdenCompra = HistorialEdicionesOC::with('version', 'empleado')->where('requisicion_id', $requisicion->id)->get();
@@ -354,8 +353,13 @@ class OrdenCompraController extends Controller
             'moneda' => $request->moneda,
             'cambio' => $request->cambio,
             'proveedoroc_id' => $request->proveedor_id,
-            'direccion_envio_proveedor' => $request->direccion_envio,
-            'credito_proveedor' => $request->credito_proveedor,
+
+            'proveedor_id' => $request->proveedor_id,
+
+            "proveedor_catalogo" => $request->nombre,
+
+            'direccion_envio_proveedor' => $request->direccion_envio ?? null,
+            'credito_proveedor' => $request->credito_proveedor ?? null,
 
             'estado_orden' => 'curso',
 
@@ -501,14 +505,52 @@ class OrdenCompraController extends Controller
             }
         }
 
-        // Aquí puedes continuar con el resto de la lógica de la función updateOrdenCompra, si es necesario
         $proveedor = KatbolProveedorOC::where('id', $request->proveedor_id)->first();
 
+        // Actualizar el campo de la orden de compra
         $ordenCompra->update([
             'proveedor_catalogo_oc' => $proveedor->nombre,
         ]);
 
+        // Campos a comparar entre el proveedor y el request
+        $camposProveedor = [
+            'contacto',
+            'rfc',
+            'direccion',
+            'facturacion',
+            'envio' => 'direccion_envio', // Clave del proveedor => clave del request
+            'credito' => 'credito_proveedor',
+        ];
+
+        // Iterar sobre los campos y verificar cambios
+        foreach ($camposProveedor as $campoProveedor => $campoRequest) {
+            // Si es un índice numérico, significa que las claves son iguales
+            if (is_numeric($campoProveedor)) {
+                $campoProveedor = $campoRequest;
+            }
+
+            $valorAnterior = $proveedor->$campoProveedor;
+            $valorNuevo = $request->$campoRequest;
+
+            // Comparar valores
+            if ($valorAnterior != $valorNuevo) {
+                // Registrar el cambio en el historial
+                HistorialEdicionesOC::create([
+                    'requisicion_id' => $ordenCompra->id,
+                    'registro_tipo' => KatbolProductoRequisicion::class,
+                    'id_empleado' => $idEmpleado,
+                    'campo' => $campoProveedor,
+                    'valor_anterior' => $valorAnterior,
+                    'valor_nuevo' => $valorNuevo,
+                    'version_id' => $versionOCId,
+                ]);
+            }
+        }
+
+        // Actualizar los valores del proveedor
         $proveedor->update([
+            'contacto' => $request->contacto,
+            'rfc' => $request->rfc,
             'direccion' => $request->direccion,
             'facturacion' => $request->facturacion,
             'envio' => $request->direccion_envio,

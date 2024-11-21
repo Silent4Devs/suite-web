@@ -1167,6 +1167,11 @@ class Requsicion extends Model implements Auditable
         return $this->belongsTo(ProveedorOC::class, 'proveedor_id', 'id');
     }
 
+    public function proveedorOC()
+    {
+        return $this->belongsTo(ProveedorOC::class, 'proveedoroc_id', 'id');
+    }
+
     public function registroFirmas()
     {
         return $this->hasOne(FirmasRequisiciones::class, 'requisicion_id', 'id');
