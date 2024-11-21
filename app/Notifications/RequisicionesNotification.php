@@ -13,7 +13,7 @@ class RequisicionesNotification extends Notification
 {
     use Queueable;
 
-    public $requsicion;
+    public $requsicion_id;
 
     public $tipo_consulta;
 
@@ -26,9 +26,9 @@ class RequisicionesNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Requsicion $requsicion, $tipo_consulta, $tabla, $slug)
+    public function __construct($requsicion, $tipo_consulta, $tabla, $slug)
     {
-        $this->requsicion = $requsicion;
+        $this->requsicion_id = $requsicion;
         $this->tipo_consulta = $tipo_consulta;
         $this->tabla = $tabla;
         $this->slug = $slug;
@@ -68,15 +68,10 @@ class RequisicionesNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->requsicion->id,
-            'updated_at' => $this->requsicion->updated_at,
-            'deleted_at' => $this->requsicion->deleted_at,
-            'time' => Carbon::now(),
+            'id' => $this->requsicion_id,
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
-            // 'name' => Auth::user()->name,
-            // 'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }
