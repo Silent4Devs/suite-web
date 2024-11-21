@@ -1,5 +1,7 @@
 <div class="caja_anima_reporte">
     <div class="print-none" style="margin: 0 !important;">
+        <button class="btn btn-success d-none" wire:click="timeDuplicado()">Eliminar registros
+            duplicados</button>
         <div class="card card-body">
             <div class="row">
                 <x-loading-indicator />
