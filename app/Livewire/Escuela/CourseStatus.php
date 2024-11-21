@@ -72,7 +72,7 @@ class CourseStatus extends Component
         $fechaYHora = $this->fecha.' '.$this->hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
             ->where('user_id', $this->usuario->id)->first();
-        dd($cursoLastReview);
+        // dd($cursoLastReview);
 
         $this->updateLastReview($fechaYHora, $cursoLastReview);
 
