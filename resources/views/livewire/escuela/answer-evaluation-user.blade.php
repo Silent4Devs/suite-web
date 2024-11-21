@@ -49,7 +49,7 @@
                 </div>
             @endforeach
             @error('answer')
-                <span class="text-red-500">{{ $message }}</span>
+                <span class="badge badge-danger">{{ $message }}</span>
             @enderror
 
 
@@ -80,7 +80,7 @@
                             id="quiz-{{ $userEvaluationId }}" value="{{ round($percentage) }}" max="100">
                             {{ round($percentage) }} </progress> <span> {{ round($percentage) }}% </span>
                     </div>
-                    @if ($showRetry)
+                    @if ($showRetry && $userEvaluationId->number_of_attempts > 0)
                         <div class="items-center justify-center text-center mt-2">
                             <p>Tienes un total de <strong>{{ $userEvaluationId->number_of_attempts }}</strong>
                                 intentos para alcanzar el 100% en la evaluación. Independientemente de si apruebas o
@@ -98,7 +98,7 @@
                                 Cargando Evaluación.
                             </div>
                         </div>
-                    @elseif($percentage < 100)
+                    @elseif($percentage < 100 && $userEvaluationId->number_of_attempts == 0)
                         <div class="items-center justify-center text-center mt-2">
                             <div wire:poll.1s="updateContador">
                                 <h3>Tiempo hasta el siguiente intento: {{ $tiempoRestante }}</h3>
