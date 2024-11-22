@@ -150,79 +150,51 @@ class RequisicionesController extends Controller
 
     public function formatearValoresId($cambios)
     {
-        foreach ($cambios as $keyCambio => $registro) {
+        // Precargar datos relacionados para evitar múltiples consultas
+        $contratos = KatbolContrato::pluck('no_contrato', 'id');
+        $servicios = KatbolContrato::pluck('nombre_servicio', 'id');
+        $compradores = KatbolComprador::pluck('nombre', 'id');
+        $sucursales = KatbolSucursal::pluck('empresa', 'id');
+        $productos = Producto::pluck('descripcion', 'id');
+        $proveedores = KatbolProveedorOC::get()->keyBy('id');
 
+        foreach ($cambios as $registro) {
             switch ($registro->campo) {
                 case 'contrato_id':
-                    $valor_anterior = KatbolContrato::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = KatbolContrato::where('id', $registro->valor_nuevo)->first();
-
-                    $va = $valor_anterior->no_contrato . ' - ' . $valor_anterior->nombre_servicio;
-                    $vn = $valor_nuevo->no_contrato . ' - ' . $valor_nuevo->nombre_servicio;
-
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
-
+                    $registro->valor_anterior = isset($contratos[$registro->valor_anterior])
+                        ? $contratos[$registro->valor_anterior] . ' - ' . $servicios[$registro->valor_anterior]
+                        : 'Sin valor anterior registrado';
+                    $registro->valor_nuevo = isset($contratos[$registro->valor_nuevo])
+                        ? $contratos[$registro->valor_nuevo] . ' - ' . $servicios[$registro->valor_nuevo]
+                        : 'Sin valor nuevo registrado';
                     break;
 
                 case 'comprador_id':
-                    $valor_anterior = KatbolComprador::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = KatbolComprador::where('id', $registro->valor_nuevo)->first();
-
-                    $va = $valor_anterior->nombre;
-                    $vn = $valor_nuevo->nombre;
-
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
+                    $registro->valor_anterior = $compradores[$registro->valor_anterior] ?? 'Sin valor anterior registrado';
+                    $registro->valor_nuevo = $compradores[$registro->valor_nuevo] ?? 'Sin valor nuevo registrado';
                     break;
 
                 case 'sucursal_id':
-                    $valor_anterior = KatbolSucursal::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = KatbolSucursal::where('id', $registro->valor_nuevo)->first();
-
-                    $va = $valor_anterior->empresa;
-                    $vn = $valor_nuevo->empresa;
-
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
+                    $registro->valor_anterior = $sucursales[$registro->valor_anterior] ?? 'Sin valor anterior registrado';
+                    $registro->valor_nuevo = $sucursales[$registro->valor_nuevo] ?? 'Sin valor nuevo registrado';
                     break;
 
                 case 'producto_id':
-
-                    $valor_anterior = Producto::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = Producto::where('id', $registro->valor_nuevo)->first();
-
-                    $va = $valor_anterior->descripcion;
-                    $vn = $valor_nuevo->descripcion;
-
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
+                    $registro->valor_anterior = $productos[$registro->valor_anterior] ?? 'Sin valor anterior registrado';
+                    $registro->valor_nuevo = $productos[$registro->valor_nuevo] ?? 'Sin valor nuevo registrado';
                     break;
 
                 case 'proveedor_id':
-                    // $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    // $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
-
-                    // $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    // $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
-
-                    // $registro->valor_anterior = $va;
-                    // $registro->valor_nuevo = $vn;
-                    break;
-
                 case 'proveedoroc_id':
-                    // $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    // $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
-
-                    // $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    // $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
-
-                    // $registro->valor_anterior = $va;
-                    // $registro->valor_nuevo = $vn;
+                    $registro->valor_anterior = isset($proveedores[$registro->valor_anterior])
+                        ? $proveedores[$registro->valor_anterior]->razon_social . ' - ' . $proveedores[$registro->valor_anterior]->nombre
+                        : 'Sin valor anterior registrado';
+                    $registro->valor_nuevo = isset($proveedores[$registro->valor_nuevo])
+                        ? $proveedores[$registro->valor_nuevo]->razon_social . ' - ' . $proveedores[$registro->valor_nuevo]->nombre
+                        : 'Sin valor nuevo registrado';
                     break;
 
                 default:
-                    // Nada, no se modifica el registro
                     break;
             }
         }
