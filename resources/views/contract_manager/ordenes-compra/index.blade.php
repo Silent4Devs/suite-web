@@ -207,7 +207,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                Swal.fire('¡Cancelado!', 'La Orden de Compra ha sido cancelada.', 'success')
+                                Swal.fire('¡Cancelado!', 'La orden de compra ha sido cancelada.', 'success')
                                     .then(
                                         () => {
                                             window.location.reload(); // Refresca la página
