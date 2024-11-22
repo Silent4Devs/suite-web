@@ -60,7 +60,7 @@ class CursoEstudiante extends Controller
             $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
             $curso = Course::getAll()->where('id', $curso_id)->first();
 
-            if (!$curso) {
+            if (! $curso) {
                 abort(404);
             }
 

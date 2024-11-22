@@ -38,8 +38,8 @@ use Illuminate\Validation\Rule;
 use PDF;
 use Throwable;
 use VXM\Async\AsyncFacade as Async;
-ini_set('memory_limit', '1024M'); // Increase memory limit to 1GB
 
+ini_set('memory_limit', '1024M'); // Increase memory limit to 1GB
 
 class TimesheetController extends Controller
 {
@@ -131,13 +131,13 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $organizacion = Organizacion::getFirst();
-            $timesheetCount = Timesheet::count();
-            $time_viejo = Timesheet::orderBy('fecha_dia')->first();
-            $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
-            $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
-                ->where('estatus', 'pendiente')
-                ->count();
+        $organizacion = Organizacion::getFirst();
+        $timesheetCount = Timesheet::count();
+        $time_viejo = Timesheet::orderBy('fecha_dia')->first();
+        $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
+        $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+            ->where('estatus', 'pendiente')
+            ->count();
 
         $time_exist = $timesheetCount > 0 ? true : false;
         if ($time_exist) {
@@ -693,7 +693,7 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientesPromise = Async::run(fn() => TimesheetCliente::getAll());
+        $clientesPromise = Async::run(fn () => TimesheetCliente::getAll());
         $organizacion_actual = $this->obtenerOrganizacion();
 
         // Wait for both promises to complete
@@ -714,7 +714,6 @@ class TimesheetController extends Controller
         $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-
 
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -882,16 +881,16 @@ class TimesheetController extends Controller
 
         // Run asynchronous queries
         $results = Async::run([
-            fn() => TimesheetProyectoArea::where('proyecto_id', $id)
+            fn () => TimesheetProyectoArea::where('proyecto_id', $id)
                 ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
                 ->get('areas.area'),
 
-            fn() => TimesheetProyecto::getAll('sedes_'.$id)
+            fn () => TimesheetProyecto::getAll('sedes_'.$id)
                 ->where('timesheet_proyectos.id', $id)
                 ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
                 ->get('sedes.sede'),
 
-            fn() => TimesheetProyecto::getAll('clientes_'.$id)
+            fn () => TimesheetProyecto::getAll('clientes_'.$id)
                 ->where('timesheet_proyectos.id', $id)
                 ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
                 ->get('timesheet_clientes.nombre'),
@@ -1299,7 +1298,6 @@ class TimesheetController extends Controller
             'empresa_actual'
         ));
     }
-
 
     public function reportesRegistros()
     {
