@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
+
     <div class="mt-5 card">
         <div class="card-body">
             <form class="text-right" action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
@@ -170,6 +171,7 @@
             </table>
         </div>
     </div>
+    @dd('hola')
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
