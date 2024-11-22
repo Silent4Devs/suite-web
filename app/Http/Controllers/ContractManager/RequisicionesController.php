@@ -46,8 +46,6 @@ class RequisicionesController extends Controller
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        try {
-
             $organizacion_actual = $this->obtenerOrganizacion();
             $logo_actual = $organizacion_actual->logo;
             $empresa_actual = $organizacion_actual->empresa;
@@ -63,11 +61,6 @@ class RequisicionesController extends Controller
 
                 return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
             }
-        } catch (\Exception $e) {
-            dd($e);
-            abort(404);
-        }
-        dd("No existe");
     }
 
     /**
