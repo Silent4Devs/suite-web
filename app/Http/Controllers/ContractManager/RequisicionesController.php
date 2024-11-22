@@ -66,6 +66,7 @@ class RequisicionesController extends Controller
             dd($e);
             abort(404);
         }
+        dd("No existe");
     }
 
     /**
@@ -150,6 +151,7 @@ class RequisicionesController extends Controller
 
             return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'firma_siguiente', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas', 'resultadoRequisiciones'));
         } catch (\Exception $e) {
+            dd($e);
             abort(404);
         }
     }
