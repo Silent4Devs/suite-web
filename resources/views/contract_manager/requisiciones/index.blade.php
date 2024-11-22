@@ -97,22 +97,20 @@
                                         <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
-                                    {{-- @case(is_null($requisicion->firma_compras))
+                                    @case(is_null($requisicion->firma_compras))
                                         @php
                                             if ($requisicion->registroFirmas) {
-                                                $compradorName = $requisicion->obtener_responsable_comprador->name;
+                                                $compradorName =
+                                                    $requisicion->obtener_responsable_comprador->name ?? 'Append';
                                             } else {
-                                                $compradorName = $requisicion->comprador->user->name;
+                                                $compradorName = $requisicion->comprador->user->name ?? 'Relacion';
                                             }
                                         @endphp
                                         <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
                                     @default
-                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5> --}}
-
-                                    @default
-                                        <h5><span class="badge badge-pill badge-success">Son finanzas y compradores</span></h5>
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
                                 @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
