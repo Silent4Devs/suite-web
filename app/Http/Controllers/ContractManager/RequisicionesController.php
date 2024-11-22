@@ -45,26 +45,26 @@ class RequisicionesController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion_actual = $this->obtenerOrganizacion();
-        $logo_actual = $organizacion_actual->logo;
-        $empresa_actual = $organizacion_actual->empresa;
-        $user = User::getCurrentUser();
 
-        dump(
-            $organizacion_actual,
-            $logo_actual,
-            $empresa_actual,
-            $user
-        );
+        try {
+            $organizacion_actual = $this->obtenerOrganizacion();
+            $logo_actual = $organizacion_actual->logo;
+            $empresa_actual = $organizacion_actual->empresa;
+            $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
-            $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
-            dd($requisiciones);
-            return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
-        } else {
-            $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
-            dd($requisiciones_solicitante);
-            return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
+
+            if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
+                $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
+
+                return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
+            } else {
+                $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
+
+                return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
+            }
+        } catch (\Exception $e) {
+            dd($e);
+            abort(404);
         }
         dd("No existe");
     }
@@ -208,25 +208,25 @@ class RequisicionesController extends Controller
                     break;
 
                 case 'proveedor_id':
-                    $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+                    // $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    // $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
 
-                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+                    // $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    // $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
 
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
+                    // $registro->valor_anterior = $va;
+                    // $registro->valor_nuevo = $vn;
                     break;
 
                 case 'proveedoroc_id':
-                    $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
-                    $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
+                    // $valor_anterior = KatbolProveedorOC::where('id', $registro->valor_anterior)->first();
+                    // $valor_nuevo = KatbolProveedorOC::where('id', $registro->valor_nuevo)->first();
 
-                    $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
-                    $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
+                    // $va = $valor_anterior->razon_social . ' - ' . $valor_anterior->nombre;
+                    // $vn = $valor_nuevo->razon_social . ' - ' . $valor_nuevo->nombre;
 
-                    $registro->valor_anterior = $va;
-                    $registro->valor_nuevo = $vn;
+                    // $registro->valor_anterior = $va;
+                    // $registro->valor_nuevo = $vn;
                     break;
 
                 default:
