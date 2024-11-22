@@ -1,4 +1,3 @@
-@extends('layouts.admin')
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
@@ -172,4 +171,5 @@
         </div>
     </div>
 @endsection
+
 
