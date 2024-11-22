@@ -86,7 +86,7 @@
                                         <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
-                                    @case(is_null($requisicion->firma_finanzas))
+                                    {{-- @case(is_null($requisicion->firma_finanzas))
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $finanzasName = $requisicion->obtener_responsable_finanzas->name;
@@ -109,7 +109,10 @@
                                     @break
 
                                     @default
-                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
+                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5> --}}
+
+                                    @default
+                                        <h5><span class="badge badge-pill badge-success">Son finanzas y compradores</span></h5>
                                 @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
