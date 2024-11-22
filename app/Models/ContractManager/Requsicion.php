@@ -1196,7 +1196,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }
@@ -1272,7 +1272,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return 'Sin designar';
     }
 
     public function getObtenerResponsableCompradorAttribute()
@@ -1300,7 +1300,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return 'Sin designar';
     }
 
     public function getObtenerResponsableFinanzasOrdenCompraAttribute()
@@ -1320,6 +1320,6 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return abort(404);
+        return 'Sin designar';
     }
 }
