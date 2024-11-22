@@ -472,6 +472,5 @@ class ReportesEmpleados extends Component
             }
         })->get();
 
-        dd($duplicados);
     }
 }
