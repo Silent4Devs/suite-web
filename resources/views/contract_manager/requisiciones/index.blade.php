@@ -99,14 +99,9 @@
 
                                     @case(is_null($requisicion->firma_compras))
                                         @php
-                                            dd(
-                                                $requisicion->registroFirmas,
-                                                $requisicion->obtener_responsable_comprador,
-                                                $requisicion->comprador,
-                                            );
                                             if ($requisicion->registroFirmas) {
-                                                $compradorName =
-                                                    $requisicion->obtener_responsable_comprador->name ?? 'Append';
+                                                $compradorName = 'Append';
+                                                // $requisicion->obtener_responsable_comprador->name ?? 'Append';
                                             } else {
                                                 $compradorName = $requisicion->comprador->user->name ?? 'Relacion';
                                             }
