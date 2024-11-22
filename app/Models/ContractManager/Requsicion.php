@@ -1127,6 +1127,12 @@ class Requsicion extends Model implements Auditable
     }
 
     //relacion-comprador
+    public function userSolicitante()
+    {
+        return $this->hasOne(User::class, 'id', 'id_user');
+    }
+
+    //relacion-comprador
     public function comprador()
     {
         return $this->hasOne(Comprador::class, 'id', 'comprador_id');
