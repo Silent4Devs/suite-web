@@ -53,7 +53,7 @@ class RequisicionesController extends Controller
         if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::getArchivoFalseAll();
 
-            return view('contract_manager.requisiciones.indexp', compact('requisiciones', 'empresa_actual', 'logo_actual'));
+            return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
             $requisiciones_solicitante = KatbolRequsicion::getArchivoFalseAll()->where('id_user', $user->id);
 

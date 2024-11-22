@@ -19,7 +19,6 @@
                         <th style="vertical-align: top">Referencia</th>
                         <th style="vertical-align: top">Proveedor</th>
                         <th style="vertical-align: top">Estatus</th>
-                        <th style="vertical-align: top">Turno en firmar</th>
                         <th style="vertical-align: top">Proyecto</th>
                         <th style="vertical-align: top">Área que Solicita</th>
                         <th style="vertical-align: top">Solicitante</th>
@@ -65,58 +64,6 @@
                                         <h5><span class="badge badge-pill badge-info">Por iniciar</span></h5>
                                 @endswitch
 
-                            </td>
-                            @php
-                                $user = Illuminate\Support\Facades\DB::table('users')
-                                    ->select('id', 'name')
-                                    ->where('id', $requisicion->id_user)
-                                    ->first();
-                            @endphp
-                            <td>
-                                @switch(true)
-                                    @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
-                                    @break
-
-                                    @case(is_null($requisicion->firma_jefe))
-                                        @php
-                                            $employee = App\Models\User::find($requisicion->id_user)->empleado;
-                                            if ($requisicion->registroFirmas) {
-                                                $supervisorName = $requisicion->obtener_responsable_lider->name;
-                                            } elseif ($employee !== null && $employee->supervisor !== null) {
-                                                $supervisorName = $employee->supervisor->name;
-                                            } else {
-                                                $supervisorName = 'N/A'; // Or any default value you prefer
-                                            }
-                                        @endphp
-                                        <p>Jefe: {{ $supervisorName ?? '' }} </p>
-                                    @break
-
-                                    @case(is_null($requisicion->firma_finanzas))
-                                        @php
-                                            if ($requisicion->registroFirmas) {
-                                                $finanzasName = $requisicion->obtener_responsable_finanzas->name;
-                                            } else {
-                                                $finanzasName = 'Sin identificar'; // Or any default value you prefer
-                                            }
-                                        @endphp
-                                        <p>Finanzas: {{ $finanzasName }}</p>
-                                    @break
-
-                                    @case(is_null($requisicion->firma_compras))
-                                        @php
-                                            if ($requisicion->registroFirmas) {
-                                                $compradorName = $requisicion->obtener_responsable_comprador->name;
-                                            } else {
-                                                $compradorName = $requisicion->comprador->user->name;
-                                            }
-                                        @endphp
-                                        <p>Comprador: {{ $compradorName }}</p>
-                                    @break
-
-                                    @default
-                                        <h5><span class="badge badge-pill badge-success">Completado</span></h5>
-                                @endswitch
                             </td>
                             <td>{{ $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible' }}</td>
                             <td>{{ $requisicion->area }}</td>
@@ -523,3 +470,5 @@
         });
     </script>
 @endsection
+
+
