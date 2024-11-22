@@ -86,7 +86,7 @@
                                         <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
-                                    {{-- @case(is_null($requisicion->firma_finanzas))
+                                    @case(is_null($requisicion->firma_finanzas))
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $finanzasName = $requisicion->obtener_responsable_finanzas->name;
@@ -97,7 +97,7 @@
                                         <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
-                                    @case(is_null($requisicion->firma_compras))
+                                    {{-- @case(is_null($requisicion->firma_compras))
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $compradorName = $requisicion->obtener_responsable_comprador->name;
