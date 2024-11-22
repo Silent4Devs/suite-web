@@ -147,12 +147,6 @@ class CreateTenantAction
                 'updated_at' => now(),
             ]);
 
-            DB::connection('tenant')->table('password_resets')->insert([
-                'email' => $userData['email'],
-                'token' => Str::random(60),
-                'created_at' => now(),
-            ]);
-
             Artisan::call('db:seed', [
                 '--database' => 'tenant',
                 '--force' => true,
