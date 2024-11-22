@@ -59,7 +59,6 @@ services:
     tty: true
     volumes:
       - .:/var/www/html
-    command: php artisan octane:start --server=frankenphp --host=192.168.9.78 --port=9000
     ports:
       - 9000:80
     networks:
@@ -145,7 +144,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3302:3302"
+      - "3000:3000"
     volumes:
       - goservices_data:/goservices
     networks:
