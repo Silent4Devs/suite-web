@@ -223,7 +223,6 @@ class CourseStatus extends Component
         $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
-
         //calcular el porcentaje del curso
         $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());
 

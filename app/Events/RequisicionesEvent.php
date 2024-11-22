@@ -40,11 +40,11 @@ class RequisicionesEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         try {
-        \Log::debug('retorno notificacion');
+            \Log::debug('retorno notificacion');
 
-        return new Channel('notificaciones-campana');
-    } catch (\Throwable $th) {
-        dd($th);
-    }
+            return new Channel('notificaciones-campana');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }
