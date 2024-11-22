@@ -2090,8 +2090,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
 
     //requisiciones
-    // Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-    // Route::get('requisiciones-inicio', 'RequisicionesController@inicio')->name('requisiciones');
+    Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
     Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
     Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
