@@ -50,15 +50,23 @@ class RequisicionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
+        dump(
+            $organizacion_actual,
+            $logo_actual,
+            $empresa_actual,
+            $user
+        );
+
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
-
+            dd($requisiciones);
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
             $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
-
+            dd($requisiciones_solicitante);
             return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
         }
+        dd("No existe");
     }
 
     /**
