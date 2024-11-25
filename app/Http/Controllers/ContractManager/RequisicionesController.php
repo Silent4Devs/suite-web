@@ -1159,8 +1159,6 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::where('id', $request->id)->first();
 
-            event(new RequisicionesEvent($requisicion->id, 'cancelarRequisicion', 'requisiciones', 'Requisicion'));
-
             $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 
             $tipo = 'RQ';
@@ -1221,6 +1219,12 @@ class RequisicionesController extends Controller
 
             if (! empty($correosFirmas)) {
                 Mail::to($correosFirmas)->queue(new RequisicionOrdenCompraCancelada($requisicion, $organizacion, $tipo));
+            }
+
+            try {
+                event(new RequisicionesEvent($requisicion->id, 'cancelarRequisicion', 'requisiciones', 'Requisicion'));
+            } catch (\Throwable $th) {
+                //Throwable th
             }
 
             $requisicion->update([
