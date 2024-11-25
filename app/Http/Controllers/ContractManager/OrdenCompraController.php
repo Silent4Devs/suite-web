@@ -245,21 +245,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad'.$i],
-                'producto_id' => $data['producto'.$i],
-                'centro_costo_id' => $data['centro_costo'.$i],
-                'espesificaciones' => $data['especificaciones'.$i],
-                'contrato_id' => $data['contrato'.$i],
+                'cantidad' => $data['cantidad' . $i],
+                'producto_id' => $data['producto' . $i],
+                'centro_costo_id' => $data['centro_costo' . $i],
+                'espesificaciones' => $data['especificaciones' . $i],
+                'contrato_id' => $data['contrato' . $i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas'.$i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
-                'sub_total' => $data['sub_total'.$i],
-                'iva' => $data['iva'.$i],
-                'iva_retenido' => $data['iva_retenido'.$i],
-                'descuento' => $data['descuento'.$i],
-                'otro_impuesto' => $data['otro_impuesto'.$i],
-                'isr_retenido' => $data['isr_retenido'.$i],
-                'total' => $data['total'.$i],
+                'no_personas' => $data['no_personas' . $i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
+                'sub_total' => $data['sub_total' . $i],
+                'iva' => $data['iva' . $i],
+                'iva_retenido' => $data['iva_retenido' . $i],
+                'descuento' => $data['descuento' . $i],
+                'otro_impuesto' => $data['otro_impuesto' . $i],
+                'isr_retenido' => $data['isr_retenido' . $i],
+                'total' => $data['total' . $i],
             ]);
         }
 
@@ -346,6 +346,8 @@ class OrdenCompraController extends Controller
     {
         $ordenCompra = KatbolRequsicion::findOrFail($id);
 
+        $proveedor_anterior = KatbolProveedorOC::where('id', $ordenCompra->proveedor_id)->first();
+
         $ordenCompra->update([
             'fecha_entrega' => $request->fecha_entrega,
             'pago' => $request->pago,
@@ -405,21 +407,21 @@ class OrdenCompraController extends Controller
         // Procesar productos nuevos y detectar cambios
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $productosNuevos[] = [
-                'id_prod' => $request['id_prod'.$i] ?? null,
-                'cantidad' => $request['cantidad'.$i],
-                'producto_id' => $request['producto'.$i],
-                'centro_costo_id' => $request['centro_costo'.$i],
-                'espesificaciones' => $request['especificaciones'.$i],
-                'contrato_id' => $request['contrato'.$i],
-                'no_personas' => $request['no_personas'.$i],
-                'porcentaje_involucramiento' => $request['porcentaje_involucramiento'.$i],
-                'sub_total' => $request['sub_total'.$i],
-                'iva' => $request['iva'.$i],
-                'iva_retenido' => $request['iva_retenido'.$i],
-                'descuento' => $request['descuento'.$i],
-                'otro_impuesto' => $request['otro_impuesto'.$i],
-                'isr_retenido' => $request['isr_retenido'.$i],
-                'total' => $request['total'.$i],
+                'id_prod' => $request['id_prod' . $i] ?? null,
+                'cantidad' => $request['cantidad' . $i],
+                'producto_id' => $request['producto' . $i],
+                'centro_costo_id' => $request['centro_costo' . $i],
+                'espesificaciones' => $request['especificaciones' . $i],
+                'contrato_id' => $request['contrato' . $i],
+                'no_personas' => $request['no_personas' . $i],
+                'porcentaje_involucramiento' => $request['porcentaje_involucramiento' . $i],
+                'sub_total' => $request['sub_total' . $i],
+                'iva' => $request['iva' . $i],
+                'iva_retenido' => $request['iva_retenido' . $i],
+                'descuento' => $request['descuento' . $i],
+                'otro_impuesto' => $request['otro_impuesto' . $i],
+                'isr_retenido' => $request['isr_retenido' . $i],
+                'total' => $request['total' . $i],
             ];
         }
 
@@ -514,6 +516,7 @@ class OrdenCompraController extends Controller
 
         // Campos a comparar entre el proveedor y el request
         $camposProveedor = [
+            'nombre',
             'contacto',
             'rfc',
             'direccion',
@@ -544,6 +547,51 @@ class OrdenCompraController extends Controller
                     'valor_nuevo' => $valorNuevo,
                     'version_id' => $versionOCId,
                 ]);
+            } else {
+                if ($campoProveedor == "rfc") {
+                    if ($proveedor_anterior->rfc != $valorNuevo) {
+
+                        HistorialEdicionesOC::create([
+                            'requisicion_id' => $ordenCompra->id,
+                            'registro_tipo' => KatbolProveedorOC::class,
+                            'id_empleado' => $idEmpleado,
+                            'campo' => $campoProveedor,
+                            'valor_anterior' => $valorAnterior,
+                            'valor_nuevo' => $valorNuevo,
+                            'version_id' => $versionOCId,
+                        ]);
+                    }
+                }
+
+                if ($campoProveedor == "nombre") {
+                    if ($proveedor_anterior->nombre != $valorNuevo) {
+
+                        HistorialEdicionesOC::create([
+                            'requisicion_id' => $ordenCompra->id,
+                            'registro_tipo' => KatbolProveedorOC::class,
+                            'id_empleado' => $idEmpleado,
+                            'campo' => $campoProveedor,
+                            'valor_anterior' => $valorAnterior,
+                            'valor_nuevo' => $valorNuevo,
+                            'version_id' => $versionOCId,
+                        ]);
+                    }
+                }
+
+                if ($campoProveedor == "contacto") {
+                    if ($proveedor_anterior->contacto != $valorNuevo) {
+
+                        HistorialEdicionesOC::create([
+                            'requisicion_id' => $ordenCompra->id,
+                            'registro_tipo' => KatbolProveedorOC::class,
+                            'id_empleado' => $idEmpleado,
+                            'campo' => $campoProveedor,
+                            'valor_anterior' => $valorAnterior,
+                            'valor_nuevo' => $valorNuevo,
+                            'version_id' => $versionOCId,
+                        ]);
+                    }
+                }
             }
         }
 
@@ -920,7 +968,7 @@ class OrdenCompraController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -931,7 +979,7 @@ class OrdenCompraController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -942,7 +990,7 @@ class OrdenCompraController extends Controller
                     $tipo_firma = 'firma_solicitante_orden';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -968,7 +1016,7 @@ class OrdenCompraController extends Controller
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
                     // $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1105,13 +1153,12 @@ class OrdenCompraController extends Controller
                 Mail::to($correosFirmas)->queue(new RequisicionOrdenCompraCancelada($requisicion, $organizacion, $tipo));
             }
 
-            try {
-                //code...
-                event(new RequisicionesEvent($requisicion, 'cancelarOrdenCompra', 'requisiciones', 'Requisicion'));
-            } catch (\Throwable $th) {
-                //throw $th;
-                dd($th);
-            }
+            // try {
+            //     //code...
+            //     event(new RequisicionesEvent($requisicion, 'cancelarOrdenCompra', 'requisiciones', 'Requisicion'));
+            // } catch (\Throwable $th) {
+            //     //throw $th;
+            // }
 
             $oc->update([
                 'estado_orden' => 'cancelada',
