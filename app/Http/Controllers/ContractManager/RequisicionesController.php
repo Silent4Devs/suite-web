@@ -281,8 +281,7 @@ class RequisicionesController extends Controller
      */
     public function destroy($id)
     {
-        $requisicion = KatbolRequsicion::find($id);
-
+        $requisicion = KatbolRequsicion::where('id', $id)->first();
         if ($requisicion) {
             $requisicion->delete();
 
