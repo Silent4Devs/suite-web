@@ -1272,7 +1272,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return 'Sin designar';
+        return false;
     }
 
     public function getObtenerResponsableCompradorAttribute()
@@ -1300,7 +1300,7 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return 'Sin designar';
+        return false;
     }
 
     public function getObtenerResponsableFinanzasOrdenCompraAttribute()
@@ -1320,6 +1320,6 @@ class Requsicion extends Model implements Auditable
             }
         }
 
-        return 'Sin designar';
+        return false;
     }
 }
