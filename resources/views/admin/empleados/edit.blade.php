@@ -3192,5 +3192,14 @@
                 timer: 1500
             });
         });
+        document.addEventListener('repetError', event => {
+            Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Ya existe un registro con este nombre",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
     </script>
 @endsection

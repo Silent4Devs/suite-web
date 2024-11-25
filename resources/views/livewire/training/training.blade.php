@@ -113,6 +113,25 @@
 
     <div >
         {{-- <div class="card-body"> --}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <span>Mostrando</span>
+                            <select name="" id="" class="form-control ml-2" wire:model.live="perPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search"
+                            style="max-width: 150px;">
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCSV">
                 <thead class="thead-dark">
                     <tr>
@@ -193,6 +212,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div >
+                {{ $registers->links('pagination::TbPagination') }}
+            </div>
         {{-- </div> --}}
     </div>
 
@@ -236,17 +258,17 @@
                         </div>
                         <div class="form-group pl-0 anima-focus">
                             <input id="mark" class="form-control" placeholder="" name="mark" type="text"
-                                wire:model.live="modalForm.mark" required>
+                                wire:model.live="modalForm.mark" >
                             <label for="mark">Marca</label>
                         </div>
                         <div class="form-group pl-0 anima-focus">
                             <input id="manufacturer" class="form-control" placeholder="" name="manufacturer"
-                                type="text" wire:model.live="modalForm.manufacturer" required>
+                                type="text" wire:model.live="modalForm.manufacturer" >
                             <label for="manufacturer">Fabricante</label>
                         </div>
                         <div class="form-group pl-0 anima-focus">
                             <input id="norma" class="form-control" placeholder="" name="norma" type="text"
-                                wire:model.live="modalForm.norma" required>
+                                wire:model.live="modalForm.norma" >
                             <label for="norma">Norma</label>
                         </div>
                         <button class="btn btn-primary"
