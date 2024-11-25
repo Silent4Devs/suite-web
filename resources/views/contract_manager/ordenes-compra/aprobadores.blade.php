@@ -88,7 +88,7 @@
                             </td>
                             <td>
                                 @switch(true)
-                                    @case(is_null($requisicion->firma_compras))
+                                    @case(is_null($requisicion->firma_comprador_orden))
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $compradorName =
@@ -116,11 +116,11 @@
                                         <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
-                                    @case(is_null($requisicion->firma_solicitante))
+                                    @case(is_null($requisicion->firma_solicitante_orden))
                                         <p>Solicitante: {{ $requisicion->userSolicitante->name ?? '' }}</p>
                                     @break
 
-                                    @case(is_null($requisicion->firma_finanzas))
+                                    @case(is_null($requisicion->firma_finanzas_orden))
                                         @php
                                             if ($requisicion->registroFirmas) {
                                                 $finanzasName =
