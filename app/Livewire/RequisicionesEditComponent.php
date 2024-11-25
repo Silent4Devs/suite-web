@@ -799,7 +799,7 @@ class RequisicionesEditComponent extends Component
             $this->dispatch('cambiarTab', 'contact');
             $this->disabled = 'disabled';
         } else {
-            return redirect(route('contract_manager.requisiciones.firmarAprobadores'));
+            return redirect(route('contract_manager.requisiciones.firmarAprobadores', $this->requisicion_id));
         }
     }
 
