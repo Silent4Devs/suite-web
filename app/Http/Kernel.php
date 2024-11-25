@@ -74,7 +74,17 @@ class Kernel extends HttpKernel
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         'course' => \App\Http\Middleware\CourseMiddleware::class,
         'tenant' => \App\Http\Middleware\TenantMiddleware::class,
-        // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
+        'general_tabantaj' => \App\Http\Middleware\GeneralTabantajMiddleware::class,
+        'gestion_contractual' => \App\Http\Middleware\GestionContractualMiddleware::class,
+        'gestion_financiera' => \App\Http\Middleware\GestionFinancieraMiddleware::class,
+        'katbol' => \App\Http\Middleware\KatbolMiddleware::class,
+        'silent_4_university' => \App\Http\Middleware\Silent4UniversityMiddleware::class,
+        'gestion_talento' => \App\Http\Middleware\GestionTalentoMiddleware::class,
+        'gestion_normativa' => \App\Http\Middleware\GestionNormativaMiddleware::class,
+        'centro_atencion' => \App\Http\Middleware\CentroAtencionMiddleware::class,
+        'timesheet' => \App\Http\Middleware\TimesheetMiddleware::class,
+        'visitantes' => \App\Http\Middleware\VisitantesMiddleware::class,
+        'planes_trabajo' => \App\Http\Middleware\PlanesTrabajoMiddleware::class,
     ];
 
     protected $middlewareAliases = [
