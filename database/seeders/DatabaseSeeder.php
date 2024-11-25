@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
                 PuestoSeeder::class,
                 PerfilEmpleadosSeeder::class,
                 TipoContratosEmpleadoSeeder::class,
-                EmpleadosSeeder::class,
-                UsersTableSeeder::class,
+                // EmpleadosSeeder::class,
+                // UsersTableSeeder::class,
                 // MacroprocesoSeeder::class, // seeder no util
                 // DocumentoSeeder::class, // seeder no util
                 PlanImplementacionSeeder::class,  // Necesario se carga inicialmente el Diagrama Universal de Gantt
