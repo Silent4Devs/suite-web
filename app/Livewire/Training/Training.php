@@ -20,10 +20,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class Training extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     // use Http;
     public TrainingForm $form;
@@ -36,13 +38,27 @@ class Training extends Component
 
     public $empleado_id;
 
-    public $registers;
+    // public $registers;
 
     public $status = 'create';
 
     public $id;
 
     public $modelo = 'TBCatalogueTrainingModel';
+
+    public $perPage = 5;
+
+    public $search = '';
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function isValidDate($value)
+    {
+        return Carbon::hasFormat($value, 'd-m-Y');
+    }
 
     public function solicitudAprobacion($id)
     {
@@ -139,12 +155,20 @@ class Training extends Component
 
     public function saveModal()
     {
-        $succes = $this->modalForm->userStore();
-        if ($succes) {
-            $this->dispatch('requestApprove');
-            $this->solicitudAprobacion($succes);
-        } else {
-            $this->dispatch('error');
+        // dd($this->modalForm->name);
+        $existing = TBCatalogueTrainingModel::where('name', $this->modalForm->name)->where('type_id', $this->modalForm->type_id)->exists();
+        // dd($existing);
+
+        if($existing){
+            $this->dispatch('repetError');
+        }else{
+            $succes = $this->modalForm->userStore();
+            if ($succes) {
+                $this->dispatch('requestApprove');
+                $this->solicitudAprobacion($succes);
+            } else {
+                $this->dispatch('error');
+            }
         }
     }
 
@@ -198,7 +222,27 @@ class Training extends Component
     public function render()
     {
         $types = TBTypeCatalogueTrainingModel::orderBy('name', 'asc')->get();
-        $registers = TBUserTrainingModel::where('empleado_id', $this->empleado_id)->orderBy('id')->get();
+        $registers = TBUserTrainingModel::query()->where('empleado_id', $this->empleado_id)
+        ->when($this->search, function ($query) {
+            $query->where(function ($q) {
+                $q
+                // ->whereRaw('LOWER(start_date) LIKE ?', ['%' . $this->search . '%'])
+                //   ->orWhereRaw('LOWER(end_date) LIKE ?', ['%' . $this->search . '%'])
+                    ->orWhereHas('category', function ($query) {
+                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
+                    })
+                    ->orWhereHas('getName', function ($query) {
+                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
+                    });
+                    if ($this->isValidDate($this->search)) {
+                        $q->orWhereDate('start_date', $this->search);
+                    }
+
+            });
+        })
+        ->orderBy('id')
+        ->paginate($this->perPage);;
+
         $this->types = $types;
         foreach ($registers as $register) {
             $register->start_date = Carbon::parse($register->start_date)->format('d-m-Y');
@@ -207,8 +251,8 @@ class Training extends Component
                 $register->validity = Carbon::parse($register->validity)->format('d-m-Y');
             }
         }
-        $this->registers = $registers;
+        // $this->registers = $registers;
 
-        return view('livewire.training.training');
+        return view('livewire.training.training', compact('registers'));
     }
 }
