@@ -102,8 +102,8 @@
                             imageUrl: `{{ asset('img/errors/cara-roja-triste.svg') }}`, // Replace with the path to your image
                             imageWidth: 100, // Set the width of the image as needed
                             imageHeight: 100,
-                            html: `<h4 style="color:red;">Aun no es tu turno de revisar el Análisis FODA</h4>
-                <br><p>No es tu turno de revisar el flujo del Análisis FODA en la lista de aprobación.</p><br>`,
+                            html: `<h4 style="color:red;">Aun no es tu turno de revisar la Certificación</h4>
+                <br><p>No es tu turno de revisar el flujo de Certificaciones en la lista de aprobación.</p><br>`,
                             // icon: '{{ session('status') === 'success' ? 'success' : 'error' }}',
                             showCancelButton: false,
                             showConfirmButton: false,
@@ -217,7 +217,7 @@
                 if (comentario_if == '' || comentario_if == null) {
                     e.preventDefault();
                     Swal.fire(
-                        'Debe escribir comentarios de retroalimentacion al rechazar el Analisis',
+                        'Debe escribir comentarios de retroalimentacion al rechazar',
                         '',
                         'info');
                 } else {

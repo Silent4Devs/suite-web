@@ -5,19 +5,51 @@ namespace App\Livewire\CatalogueTraining;
 use App\Livewire\Forms\CatalogueTraining\CatalogueTrainingForm;
 use App\Models\TBCatalogueTrainingModel;
 use App\Models\TBTypeCatalogueTrainingModel;
+use App\Models\TBUserTrainingModel;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CatalogueTraining extends Component
 {
+    use WithPagination;
     public CatalogueTrainingForm $form;
 
-    public $registers;
+    // public $registers;
 
     public $typesCatalogue;
 
     public $status = 'create';
 
     public $id;
+
+    public $perPage = 5;
+
+    public $search = '';
+
+    public $deleteRegister;
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function delete()
+    {
+        if (TBUserTrainingModel::where('name_id', $this->deleteRegister->id)->exists()) {
+
+            $this->dispatch('useRegister');
+        } else {
+            $this->dispatch('registerDelete');
+            $this->deleteRegister->delete();
+        }
+    }
+
+    public function deleteMessage($id)
+    {
+        $register = TBCatalogueTrainingModel::findOrFail($id);
+        $this->deleteRegister = $register;
+        $this->dispatch('deleteMessage');
+    }
 
     public function edit()
     {
@@ -52,12 +84,28 @@ class CatalogueTraining extends Component
 
     public function render()
     {
-        $registers = TBCatalogueTrainingModel::where('status', 'approved')->orderBy('id')->get();
+        $registers = TBCatalogueTrainingModel::query()->
+        where('status', 'approved')
+        ->when($this->search, function ($query) {
+            $query->where(function ($q) {
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(issuing_company) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(mark) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(manufacturer) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(norma) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereRaw('LOWER(status) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                  ->orWhereHas('category', function ($query) {
+                    $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
+                });
+
+            });
+        })
+        ->orderBy('id')
+        ->paginate($this->perPage);
         $typesCatalogue = TBTypeCatalogueTrainingModel::orderBy('name')->get();
 
-        $this->registers = $registers;
         $this->typesCatalogue = $typesCatalogue;
 
-        return view('livewire.catalogue-training.catalogue-training');
+        return view('livewire.catalogue-training.catalogue-training', compact('registers'));
     }
 }
