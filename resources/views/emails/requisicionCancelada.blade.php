@@ -46,7 +46,7 @@
                             <table class="caja-info">
                                 <tr>
                                     @if ($tipo == 'RQ')
-                                        <td style="padding: 20px 30px 20px 30px;">
+                                        <td style="padding: 40px 30px 20px 30px;">
                                             <img class="img-firts" vspace="15" hspace="7" width="100"
                                                 height="70" src="{{ $logo }}"
                                                 style="margin: auto; margin-top: 30px;"><br><br>
@@ -64,7 +64,7 @@
 
                                         </td>
                                     @elseif($tipo == 'OC')
-                                        <td style="padding: 20px 30px 20px 30px;">
+                                        <td style="padding: 40px 30px 20px 30px;">
                                             <img class="img-firts" vspace="15" hspace="7" width="100"
                                                 height="70" src="{{ $logo }}"
                                                 style="margin: auto; margin-top: 30px;"><br><br>
