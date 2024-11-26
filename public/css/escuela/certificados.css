@@ -65,6 +65,11 @@
         align-items: baseline;
     }
 
+    .firma-instructor.sin-firma{
+        border-bottom: 50px solid #ffffff;
+        margin-bottom: -45px;
+    }
+
     .fecha-certificado{
         width: 220px;
         display: flex;
