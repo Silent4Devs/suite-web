@@ -17,7 +17,10 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\Cors::class,
         //\App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
-
+    protected $middlewarePriority = [
+        \App\Http\Middleware\TenantMiddleware::class,
+        \App\Http\Middleware\AuthGates::class,
+    ];
 
     protected $middlewareGroups = [
         'web' => [
@@ -38,14 +41,13 @@ class Kernel extends HttpKernel
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
-            \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\TenantMiddleware::class,
-
+            \App\Http\Middleware\AuthGates::class,
         ],
         'api' => [
             'throttle:200,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //\App\Http\Middleware\AuthGates::class,
+            \App\Http\Middleware\AuthGates::class,
         ],
         'universal' => [],
 
@@ -74,17 +76,7 @@ class Kernel extends HttpKernel
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         'course' => \App\Http\Middleware\CourseMiddleware::class,
         'tenant' => \App\Http\Middleware\TenantMiddleware::class,
-        'general_tabantaj' => \App\Http\Middleware\GeneralTabantajMiddleware::class,
-        'gestion_contractual' => \App\Http\Middleware\GestionContractualMiddleware::class,
-        'gestion_financiera' => \App\Http\Middleware\GestionFinancieraMiddleware::class,
-        'katbol' => \App\Http\Middleware\KatbolMiddleware::class,
-        'silent_4_university' => \App\Http\Middleware\Silent4UniversityMiddleware::class,
-        'gestion_talento' => \App\Http\Middleware\GestionTalentoMiddleware::class,
-        'gestion_normativa' => \App\Http\Middleware\GestionNormativaMiddleware::class,
-        'centro_atencion' => \App\Http\Middleware\CentroAtencionMiddleware::class,
-        'timesheet' => \App\Http\Middleware\TimesheetMiddleware::class,
-        'visitantes' => \App\Http\Middleware\VisitantesMiddleware::class,
-        'planes_trabajo' => \App\Http\Middleware\PlanesTrabajoMiddleware::class,
+        // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 
     protected $middlewareAliases = [

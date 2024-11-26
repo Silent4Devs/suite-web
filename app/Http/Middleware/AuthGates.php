@@ -38,7 +38,7 @@ class AuthGates
         $this->tenantManager->setTenant($tenant);
         tenancy()->initialize($tenant);
 
-        // dd($tenant, $user = Auth::guard('tenant'), DB::connection()->getDatabaseName());
+        //dd($tenant, $user = Auth::guard('tenant'), DB::connection()->getDatabaseName());
         $user = \Auth::user();
 
         if ($user) {
