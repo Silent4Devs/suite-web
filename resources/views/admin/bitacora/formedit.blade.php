@@ -576,7 +576,7 @@
                             <div class="inline input-field linea">
                                 <div class="switch" style="margin-top: -5px; margin-left: 8px;">
                                     @if (isset($contratos))
-                                        @if ($contrato->documento)
+                                        @if (isset($contrato->documento) || isset($contratos->folio))
                                             <div class="custom-control custom-switch form">
                                                 <input type="checkbox" class="custom-control-input" id="check_fianza"
                                                     name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}
@@ -630,13 +630,11 @@
                             <div class="ml-4 display-flex">
                                 <label class="red-text">{{ $errors->first('Type') }}</label>
                             </div>
+                        </td>
+                    </tbody>
+                </table>
             </div>
-            </td>
-
-            </tbody>
-            </table>
         </div>
-    </div>
 
     <div class="row">
         <br>
@@ -1016,19 +1014,26 @@
 
 <script>
     $(document).ready(function() {
+        // Verifica si los campos vienen del backend
+        let checkFianzaInicial = {{ $contratos->folio ? 'true' : 'false' }};
 
-        if ($('#check_fianza').checked) {
-            $(".td_fianza").fadeOut(0);
-        } else {
+        // Al cargar la página, ajusta la visibilidad según el valor inicial
+        if (checkFianzaInicial) {
             $(".td_fianza").fadeIn(0);
-        }
-    });
-    $(document).on('change', '#check_fianza', function(e) {
-        if (this.checked) {
-            $(".td_fianza").fadeIn(0);
+            $('#check_fianza').prop('checked', true);
         } else {
             $(".td_fianza").fadeOut(0);
+            $('#check_fianza').prop('checked', false);
         }
+
+        // Al cambiar el checkbox, ajusta la visibilidad
+        $(document).on('change', '#check_fianza', function(e) {
+            if (this.checked) {
+                $(".td_fianza").fadeIn(0);
+            } else {
+                $(".td_fianza").fadeOut(0);
+            }
+        });
     });
 </script>
 
@@ -1182,9 +1187,9 @@
     });
 </script>
 
-<script>
+{{-- <script>
     $("#dolares_filtro").select2('destroy');
-</script>
+</script> --}}
 
 {{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {
