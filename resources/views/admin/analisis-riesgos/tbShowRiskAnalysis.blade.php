@@ -90,7 +90,7 @@
 
 @section('scripts')
     @parent
-    <script>
+    {{-- <script>
         let cont = 0;
 
         function tablaLivewire(id_tabla) {
@@ -215,7 +215,7 @@
                 tablaLivewire('datatable-risk-analysis-controls');
             }, 200);
         });
-    </script>
+    </script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

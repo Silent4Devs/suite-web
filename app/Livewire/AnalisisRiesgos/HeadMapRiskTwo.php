@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;

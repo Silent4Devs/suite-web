@@ -95,5 +95,4 @@
         <button type="button" wire:click="saveTable" id="submitControls" class="btn tb-btn-primary">GUARDAR
             CONTROLES</button>
     </div>
-
 </div>

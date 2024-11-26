@@ -41,10 +41,12 @@
             </button>
         @endif
 
-        <button wire:click="$emit('finishPeriod',{{$period_id}})" type="button"
+        <button wire:click="$dispatch('finishPeriod',{{$period_id}})" type="button"
             style="width: 180px; height: 50px; background-color:#FA8E00; color:#FFFFFF;" class="btn">
             Finalizar
         </button>
+
+
     </div>
     <hr style="margin-top: 20px;">
 
@@ -91,8 +93,7 @@
                                     <ul class="dropdown-menu">
                                         @if (!$sheetTable->sheet->initial_risk_confirm)
                                             <li>
-                                                <a class="dropdown-item" type="button" data-toggle="modal"
-                                                    data-target="#formRiskAnalysis"
+                                                <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#formRiskAnalysis"
                                                     wire:click="chageStatusForm(1,{{ $sheetTable->sheet->id }})">
                                                     <p class="m-0">Evaluar/editar formulario</p>
                                                 </a>
@@ -130,10 +131,9 @@
     </div>
 
     {{-- Modal --}}
-    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" tabindex="-1"
-        aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-xl">
             <div wire:loading>
                 <div class="spinner-border text-primary" role="status">
                     <span class="sr-only">Loading...</span>
@@ -239,7 +239,6 @@
                                         </h6>
                                     @endif
                                 </div>
-                                {{-- @dump($risks['approveInitial'] ) --}}
                             </div>
 
                             <div class="d-flex flex-row align-items-center justify-content-center gap-6"
@@ -263,12 +262,13 @@
                         @endif
                     </div>
                     {{-- controls --}}
+                    {{-- @dump($sheetId) --}}
                     @if ($sheetId)
-                        <livewire:analisis-riesgos.controls-risk-analysis :riskAnalysisId="$riskAnalysisId" />
+                        @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
                     @endif
 
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="button" class="btn tb-btn-secondary" data-dismiss="modal"
+                        <button type="button" class="btn tb-btn-secondary" data-bs-dismiss="modal"
                             onclick="limpiarFormulario()">CANCELAR</button>
                         <button wire:click="riskConfirmMessage" class="btn tb-btn-primary">CONFIRMAR RIESGO
                             {{ $sheetForm['status'] === 2 ? 'RESIDUAL' : 'INICIAL' }}</button>
@@ -320,6 +320,7 @@
         </div>
     </div>
 
+</div>
     {{-- send form --}}
     <script>
         document.getElementById('submitButton').addEventListener('click', function(e) {
@@ -361,11 +362,11 @@
 
             });
 
-            Livewire.on('scriptTabla2', () => {
-                setTimeout(() => {
-                    tablaLivewire('datatable-risk-analysis-controls');
-                }, 200);
-            });
+            // Livewire.on('scriptTabla2', () => {
+            //     setTimeout(() => {
+            //         tablaLivewire('datatable-risk-analysis-controls');
+            //     }, 200);
+            // });
         });
     </script>
 
@@ -513,5 +514,3 @@
             })
         });
     </script>
-
-</div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\TBControlRiskAnalysisModel;
@@ -25,10 +25,11 @@ class ControlsRiskAnalysis extends Component
 
     public $folder;
 
-    protected $listeners = ['reload'];
+    protected $listeners = ['test' => 'test'];
 
-    public function reload($sheetId)
+    public function test($sheetId)
     {
+        dd("aaa");
         $this->sheetId = $sheetId;
         $this->getControlsSheet();
     }
@@ -112,7 +113,7 @@ class ControlsRiskAnalysis extends Component
             }
         }
 
-        $this->emit('responseTableControls');
+        $this->dispatch('responseTableControls');
         $this->getControlsSheet();
     }
 
@@ -186,8 +187,8 @@ class ControlsRiskAnalysis extends Component
 
     public function render()
     {
-        // $this->emit('ejecutarScript');
-        $this->emit('scriptTabla2');
+        // $this->dispatch('ejecutarScript');
+        // $this->dispatch('scriptTabla2');
 
         return view('livewire.analisis-riesgos.controls-risk-analysis');
     }

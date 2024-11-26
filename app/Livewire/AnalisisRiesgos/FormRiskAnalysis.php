@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\TBAnswerRASheetRAModel;
 use App\Models\TBAnswerSheetRiskAnalysisModel;
@@ -100,8 +100,8 @@ class FormRiskAnalysis extends Component
             $sheet->update([
                 'initial_risk_confirm' => true,
             ]);
-            $this->emitTo('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
-            $this->emitTo('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
+            $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
+            $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
 
         } else {
             $sheet->update([
@@ -112,7 +112,7 @@ class FormRiskAnalysis extends Component
 
     public function riskConfirmMessage()
     {
-        $this->emit('riskConfirmMessage');
+        $this->dispatch('riskConfirmMessage');
     }
 
     public function saveCoordinates($id)
@@ -236,6 +236,7 @@ class FormRiskAnalysis extends Component
 
     public function chageStatusForm($status, $id)
     {
+        // dd($id);
         $this->sheetId = $id;
 
         $this->sheetForm['status'] = $status;
@@ -246,9 +247,11 @@ class FormRiskAnalysis extends Component
         };
 
         $this->getQuestionsAnswer();
-        $this->getInitialResidualRisk();
-        $this->emitTo('analisis-riesgos.controls-risk-analysis', 'reload', $this->sheetId);
-        $this->emit('calculateScale');
+        // $this->getInitialResidualRisk();
+        // $this->dispatch('analisis-riesgos.controls-risk-analysis', 'reload', $this->sheetId);
+        $this->dispatch('test', $id);
+        // dd("a");
+        // $this->dispatch('calculateScale');
 
     }
 
@@ -305,7 +308,7 @@ class FormRiskAnalysis extends Component
 
         // $this->verifyPeriodProgress = true;
         $this->verifyAnswers = false;
-        $this->emitTo('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
+        $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
         $this->period_id = null;
 
     }
@@ -351,8 +354,8 @@ class FormRiskAnalysis extends Component
 
         $this->getInitialResidualRisk();
 
-        $this->emit('responseForm', $this->sheetForm['edit']);
-        $this->emit('calculateScale');
+        $this->dispatch('responseForm', $this->sheetForm['edit']);
+        $this->dispatch('calculateScale');
 
     }
 
@@ -374,8 +377,8 @@ class FormRiskAnalysis extends Component
             $this->saveInitialResidualRisks($index, $questionAnswer);
         }
 
-        $this->emit('responseForm', $this->sheetForm['edit']);
-        $this->emit('calculateScale');
+        $this->dispatch('responseForm', $this->sheetForm['edit']);
+        $this->dispatch('calculateScale');
         $this->sheetForm['edit'] = true;
         $this->getQuestionsAnswer();
         $this->getInitialResidualRisk();
@@ -493,9 +496,9 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
-        $this->emitTo('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
+        $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 
-        $this->emit('scriptTabla');
+        $this->dispatch('scriptTabla');
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }

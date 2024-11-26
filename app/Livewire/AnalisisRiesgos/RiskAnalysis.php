@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\Empleado;
 use App\Models\TBDataQuestionRiskAnalysisModel;
@@ -25,7 +25,7 @@ use App\Models\TBTemplateAnalisisRiesgoModel;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class RiskAnalysisComponent extends Component
+class RiskAnalysis extends Component
 {
     public $name;
 
@@ -232,9 +232,9 @@ class RiskAnalysisComponent extends Component
         if ($this->selectedCard) {
             $this->saveRegister();
             $this->resetInput();
-            $this->emit('limpiarNameInput');
+            $this->dispatch('limpiarNameInput');
         } else {
-            $this->emit('selectedCardAlert');
+            $this->dispatch('selectedCardAlert');
         }
     }
 
