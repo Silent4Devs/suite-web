@@ -548,39 +548,12 @@ class OrdenCompraController extends Controller
                     'version_id' => $versionOCId,
                 ]);
             } else {
-                if ($campoProveedor == "rfc") {
-                    if ($proveedor_anterior->rfc != $valorNuevo) {
+                if (in_array($campoProveedor, ['rfc', 'nombre', 'contacto'])) {
+                    // Obtén el valor de la propiedad dinámicamente
+                    $valorAnterior = $proveedor_anterior->{$campoProveedor} ?? null;
 
-                        HistorialEdicionesOC::create([
-                            'requisicion_id' => $ordenCompra->id,
-                            'registro_tipo' => KatbolProveedorOC::class,
-                            'id_empleado' => $idEmpleado,
-                            'campo' => $campoProveedor,
-                            'valor_anterior' => $valorAnterior,
-                            'valor_nuevo' => $valorNuevo,
-                            'version_id' => $versionOCId,
-                        ]);
-                    }
-                }
-
-                if ($campoProveedor == "nombre") {
-                    if ($proveedor_anterior->nombre != $valorNuevo) {
-
-                        HistorialEdicionesOC::create([
-                            'requisicion_id' => $ordenCompra->id,
-                            'registro_tipo' => KatbolProveedorOC::class,
-                            'id_empleado' => $idEmpleado,
-                            'campo' => $campoProveedor,
-                            'valor_anterior' => $valorAnterior,
-                            'valor_nuevo' => $valorNuevo,
-                            'version_id' => $versionOCId,
-                        ]);
-                    }
-                }
-
-                if ($campoProveedor == "contacto") {
-                    if ($proveedor_anterior->contacto != $valorNuevo) {
-
+                    // Realiza la comparación solo si el valor anterior es diferente del nuevo
+                    if ($valorAnterior != $valorNuevo) {
                         HistorialEdicionesOC::create([
                             'requisicion_id' => $ordenCompra->id,
                             'registro_tipo' => KatbolProveedorOC::class,
