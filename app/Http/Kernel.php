@@ -17,10 +17,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\Cors::class,
         //\App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
-    protected $middlewarePriority = [
-        \App\Http\Middleware\TenantMiddleware::class,
-        \App\Http\Middleware\AuthGates::class,
-    ];
 
     protected $middlewareGroups = [
         'web' => [
