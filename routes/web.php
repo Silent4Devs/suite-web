@@ -50,7 +50,7 @@ Auth::routes();
 // Tabla-Calendario
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
-    Route::group(['middleware' => ['general_tabantaj']], function () {
+    // Route::group(['middleware' => ['general_tabantaj']], function () {
         // Inicio usuario
         Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
         Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
@@ -266,7 +266,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('/revisiones/documentos-me-deben-aprobar', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobar')->name('revisiones.obtenerDocumentosMeDebenAprobar');
             Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
         });
-    });
+    // });
 
     // Firmas
     Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
@@ -1782,7 +1782,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 //KATBOL
-Route::group(['middleware' => ['general_tabantaj']], function () {
+ Route::group(['middleware' => ['general_tabantaj']], function () {
     Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
@@ -1925,6 +1925,6 @@ Route::group(['middleware' => ['general_tabantaj']], function () {
             });
         });
     });
-});
+ });
 
 });

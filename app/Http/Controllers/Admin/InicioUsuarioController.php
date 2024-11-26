@@ -110,8 +110,7 @@ class InicioUsuarioController extends Controller
             },
         );
 
-        $usuario = User::first();
-
+        $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
         $usuarioVinculadoConEmpleado = false;
