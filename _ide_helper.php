@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.32.0.
+ * Generated for Laravel 11.33.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5290,7 +5290,7 @@ namespace Illuminate\Support\Facades {
          * @param string $query
          * @param array $bindings
          * @param bool $useReadPdo
-         * @return \Generator 
+         * @return \Generator<int, \stdClass> 
          * @static 
          */        public static function cursor($query, $bindings = [], $useReadPdo = true)
         {            //Method inherited from \Illuminate\Database\Connection         
@@ -12088,6 +12088,19 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Http\Request $instance */
                         return $instance->enum($key, $enumClass);
+        }
+                    /**
+         * Retrieve input from the request as an array of enums.
+         *
+         * @template TEnum
+         * @param string $key
+         * @param \Illuminate\Http\class-string<TEnum> $enumClass
+         * @return \Illuminate\Http\TEnum[] 
+         * @static 
+         */        public static function enums($key, $enumClass)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->enums($key, $enumClass);
         }
                     /**
          * Retrieve input from the request as a collection.
@@ -22028,6 +22041,17 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->create($attributes);
+            }
+                            /**
+             * Save a new model and return the instance without raising model events.
+             *
+             * @param array $attributes
+             * @return \Illuminate\Database\Eloquent\TModel 
+             * @static 
+             */            public static function createQuietly($attributes = [])
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->createQuietly($attributes);
             }
                             /**
              * Save a new model and return the instance. Allow mass-assignment.
