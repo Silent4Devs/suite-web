@@ -34,8 +34,10 @@
                         <strong>{{ $user->empleado->name }}</strong>
                     </div>
                     <div class="firma-fecha">
-                        <div class="firma-instructor">
-                            <img src="{{ $cursoUser->curso->firma_instructor }}" alt="" style="width: 100%;">
+                        <div class="firma-instructor {{ $cursoUser->curso->firma_habilitar ? '' : 'sin-firma' }}">
+                            @if ($cursoUser->curso->firma_habilitar)
+                                <img src="{{ $cursoUser->curso->firma_instructor }}" alt="" style="width: 100%;">
+                            @endif
                         </div>
                         <div class="fecha-certificado">
                             {{ Carbon\Carbon::parse($cursoUser->curso->created_at)->format('d/m/Y') }}

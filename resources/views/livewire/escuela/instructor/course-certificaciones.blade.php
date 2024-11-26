@@ -79,18 +79,24 @@
             <div class="col-md-6 d-flex">
                 <div class="card card-body">
                     <div class="{{ $course->certificado ? '' : 'cert-null' }}">
-                        <h5 class="color-tbj">Firma</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="color-tbj">Firma</h5>
+
+                            <div class="btn btn-outline-secondary" wire:click="habilitarFirma()">
+                                {{ $course->firma_habilitar ? 'Ocultar' : 'Habilitar' }} firma
+                            </div>
+                        </div>
                         <hr>
                         <p class="text-center">
                             <strong>Firma del evaluador</strong>
                         </p>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center {{ $course->firma_habilitar ? '' : 'cert-null' }}">
                             @if ($course->firma_instructor)
                                 <img src="{{ $course->firma_instructor }}" alt="" style="width: 100%;">
                             @endif
                         </div>
                         <div class="text-center mt-3">
-                            @if ($course->certificado)
+                            @if ($course->certificado && $course->firma_habilitar)
                                 <div class="btn btn-secondary" disabled data-bs-toggle="modal"
                                     data-bs-target="#modal-firma">
                                     {{ $course->firma_instructor ? 'EDITAR' : 'AGREGAR' }} FIRMA
