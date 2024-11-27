@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\ContractManager\Requsicion;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -24,7 +25,7 @@ class RequisicionesNotification extends Notification
      *
      * @return void
      */
-    public function __construct($requsicion, $tipo_consulta, $tabla, $slug)
+    public function __construct(Requsicion $requsicion, $tipo_consulta, $tabla, $slug)
     {
         $this->requsicion = $requsicion;
         $this->tipo_consulta = $tipo_consulta;
