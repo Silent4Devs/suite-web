@@ -20,6 +20,7 @@ class Requsicion extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
+        'id',
         'fecha',
         'entrega',
         'estatus',
