@@ -78,9 +78,10 @@
     @if ($place == 'notificaciones-page')
         <div class="text-muted" style="flex-basis: calc(15% - 2px)">
             <i class="fas fa-clock"></i>
-            {{ optional($last_unread_notification)->data['time']
+            {{ isset($last_unread_notification->data['time'])
             ? \Carbon\Carbon::parse($last_unread_notification->data['time'])->diffForHumans()
             : 'Sin notificaciones' }}
+
         </div>
         @if (!$readed)
             <div style="flex-basis: calc(5% - 2px)">
