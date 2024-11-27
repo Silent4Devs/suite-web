@@ -78,7 +78,7 @@ class RequisicionesListener implements ShouldQueue
                                 ->first();
                         }
 
-                        Notification::send($user_jefe, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
+                        Notification::send($user_jefe, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
                     if ($requisicion->firma_finanzas !== null) {
@@ -92,7 +92,7 @@ class RequisicionesListener implements ShouldQueue
                                 ->first();
                         }
 
-                        Notification::send($user_finanzas, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
+                        Notification::send($user_finanzas, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
                     if ($requisicion->firma_compras !== null) {
@@ -106,7 +106,7 @@ class RequisicionesListener implements ShouldQueue
                                 ->first();
                         }
 
-                        Notification::send($user_compras, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
+                        Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
                 } catch (\Throwable $th) {
                     dd($th);
@@ -131,7 +131,7 @@ class RequisicionesListener implements ShouldQueue
                             ->first();
                     }
 
-                    Notification::send($user_compras, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
+                    Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
 
                 if ($requisicion->firma_solicitante_orden !== null) {
@@ -144,7 +144,7 @@ class RequisicionesListener implements ShouldQueue
                             ->first();
                     }
 
-                    Notification::send($user_solicitante, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
+                    Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
             } else {
 
