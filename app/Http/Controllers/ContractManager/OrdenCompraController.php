@@ -516,13 +516,13 @@ class OrdenCompraController extends Controller
 
         // Campos a comparar entre el proveedor y el request
         $camposProveedor = [
-            'nombre',
+            'proveedor_id',
             'contacto',
             'rfc',
             'direccion',
             'facturacion',
-            'envio' => 'direccion_envio', // Clave del proveedor => clave del request
-            'credito' => 'credito_proveedor',
+            // 'envio' => 'direccion_envio', // Clave del proveedor => clave del request
+            // 'credito' => 'credito_proveedor',
         ];
 
         // Iterar sobre los campos y verificar cambios
@@ -548,9 +548,14 @@ class OrdenCompraController extends Controller
                     'version_id' => $versionOCId,
                 ]);
             } else {
-                if (in_array($campoProveedor, ['rfc', 'nombre', 'contacto'])) {
+                if (in_array($campoProveedor, ['rfc', 'proveedor_id', 'contacto'])) {
                     // Obtén el valor de la propiedad dinámicamente
-                    $valorAnterior = $proveedor_anterior->{$campoProveedor} ?? null;
+
+                    if ($campoProveedor == 'proveedor_id') {
+                        $valorAnterior = $proveedor_anterior->id ?? null;
+                    } else {
+                        $valorAnterior = $proveedor_anterior->{$campoProveedor} ?? null;
+                    }
 
                     // Realiza la comparación solo si el valor anterior es diferente del nuevo
                     if ($valorAnterior != $valorNuevo) {
