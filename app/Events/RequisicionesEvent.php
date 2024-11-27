@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\ContractManager\Requsicion;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -20,7 +21,7 @@ class RequisicionesEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($requsicion, $tipo_consulta, $tabla, $slug)
+    public function __construct(Requsicion $requsicion, $tipo_consulta, $tabla, $slug)
     {
             $this->requsicion = $requsicion;
             $this->tipo_consulta = $tipo_consulta;
