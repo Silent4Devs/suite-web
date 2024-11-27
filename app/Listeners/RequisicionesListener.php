@@ -61,13 +61,8 @@ class RequisicionesListener implements ShouldQueue
 
                     // requisiciones
                     if ($requisicion->firma_solicitante !== null) {
-                        $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
+                        $user_solicitante = User::where('id', $event->requsicion->id_user)
                             ->first();
-
-                        if ($user_solicitante == null) {
-                            $user_solicitante = User::where('email', $firmas->solicitante->email)
-                                ->first();
-                        }
 
                         Notification::send($user_solicitante, new RequisicionesNotification($requisicion->id, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
