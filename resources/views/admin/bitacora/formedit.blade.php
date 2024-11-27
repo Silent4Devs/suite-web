@@ -174,11 +174,10 @@
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             @if ($convenios->count() > 0)
-                <div class="col s12 right-align">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#convenios_modificados">Visualizar
-                        Convenios
-                        Modificados</a>
-                </div>
+            <div class="col s12 right-align">
+                <!-- Botón para abrir el modal -->
+                <button id="openModal" class="waves-effect waves-light btn">Visualizar Convenios Modificados</button>
+            </div>
             @endif
         </div>
 
@@ -758,18 +757,23 @@
 {{-- nuevo diseño --}}
 
 <!-- Modal Structure -->
-<div id="convenios_modificados" class="modal">
+<div id="convenios_modificados" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
     <div class="modal-content">
-        <strong class=" txt-frm">Convenios Modificados</strong>
-        @foreach ($convenios as $convenio)
-            <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
-                {{ $convenio->no_convenio }}</label>
-        @endforeach
+        <strong class="txt-frm">Convenios Modificados</strong>
+        <ul>
+            @foreach ($convenios as $convenio)
+                <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
+                    {{ $convenio->no_convenio }}
+                </li>
+            @endforeach
+        </ul>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    <div class="modal-footer" style="text-align: right; margin-top: 10px;">
+        <button id="closeModal" class="modal-close waves-effect waves-green btn-flat">Cerrar</button>
     </div>
 </div>
+
+<div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
 
 @if ($aprobacionFirmaContrato->count())
     <div class="col-12">
@@ -861,6 +865,35 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener los elementos del modal y botones
+        const openModalButton = document.getElementById('openModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modal = document.getElementById('convenios_modificados');
+        const overlay = document.getElementById('modalOverlay');
+
+        // Abrir el modal
+        openModalButton.addEventListener('click', function () {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Cerrar el modal
+        closeModalButton.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Cerrar el modal al hacer clic en el overlay
+        overlay.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let no_contrato = document.getElementById('no_contrato');
