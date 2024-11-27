@@ -60,7 +60,7 @@ class RequisicionesListener implements ShouldQueue
                     )->where('requisicion_id', $requisicion->id)->first();
 
                     // requisiciones
-                    if ($requisicion->firma_solicitante !== null) {
+                    if ($event->requsicion->firma_solicitante !== null) {
                         $user_solicitante = User::where('id', $event->requsicion->id_user)
                             ->first();
 
