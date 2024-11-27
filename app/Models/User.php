@@ -114,6 +114,8 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
+        $tenantGuard = Auth::guard('tenant');
+        dd($tenantGuard);
         if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }

@@ -38,9 +38,8 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'tenant_users',
+            'provider' => 'users',
         ],
-
         'api' => [
             'driver' => 'passport',
             'provider' => 'tenant_users',
@@ -73,6 +72,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'connection' => 'pgsql',
         ],
         'tenant_users' => [
             'driver' => 'eloquent',
