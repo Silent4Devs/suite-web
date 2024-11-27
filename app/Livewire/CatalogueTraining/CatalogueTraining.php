@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 class CatalogueTraining extends Component
 {
     use WithPagination;
+
     public CatalogueTrainingForm $form;
 
     // public $registers;
@@ -86,22 +87,22 @@ class CatalogueTraining extends Component
     {
         $registers = TBCatalogueTrainingModel::query()->
         where('status', 'approved')
-        ->when($this->search, function ($query) {
-            $query->where(function ($q) {
-                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereRaw('LOWER(issuing_company) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereRaw('LOWER(mark) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereRaw('LOWER(manufacturer) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereRaw('LOWER(norma) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereRaw('LOWER(status) LIKE ?', ['%' . strtolower($this->search) . '%'])
-                  ->orWhereHas('category', function ($query) {
-                    $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
-                });
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereRaw('LOWER(issuing_company) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereRaw('LOWER(mark) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereRaw('LOWER(manufacturer) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereRaw('LOWER(norma) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereRaw('LOWER(status) LIKE ?', ['%'.strtolower($this->search).'%'])
+                        ->orWhereHas('category', function ($query) {
+                            $query->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%']);
+                        });
 
-            });
-        })
-        ->orderBy('id')
-        ->paginate($this->perPage);
+                });
+            })
+            ->orderBy('id')
+            ->paginate($this->perPage);
         $typesCatalogue = TBTypeCatalogueTrainingModel::orderBy('name')->get();
 
         $this->typesCatalogue = $typesCatalogue;

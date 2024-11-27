@@ -98,11 +98,11 @@ class TypeCatalogueTraining extends Component
     public function render()
     {
         $registers = TBTypeCatalogueTrainingModel::query()
-        ->when($this->search, function ($query) {
-            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
-        })
-        ->orderBy('name', 'asc')
-        ->paginate($this->perPage);
+            ->when($this->search, function ($query) {
+                $query->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%']);
+            })
+            ->orderBy('name', 'asc')
+            ->paginate($this->perPage);
 
         foreach ($registers as $register) {
             $date = Carbon::parse($register->created_at)->format('d-m-Y');

@@ -103,13 +103,13 @@ class Entregablecomponent extends Component
 
         $entregable_mensual =
             EntregaMensual::where('contrato_id', $this->contrato_id)
-            ->join('entregables_files', 'entregas_mensuales.id', '=', 'entregables_files.entregable_id')
-            ->where(function ($query) {
-                $query->where('nombre_entregable', 'like', '%' . $this->search . '%')
-                    ->orWhere('descripcion', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sort, $this->direction)
-            ->paginate(intval($this->pagination));
+                ->join('entregables_files', 'entregas_mensuales.id', '=', 'entregables_files.entregable_id')
+                ->where(function ($query) {
+                    $query->where('nombre_entregable', 'like', '%'.$this->search.'%')
+                        ->orWhere('descripcion', 'like', '%'.$this->search.'%');
+                })
+                ->orderBy($this->sort, $this->direction)
+                ->paginate(intval($this->pagination));
 
         $this->dispatch('paginador-entregables');
 
@@ -170,8 +170,8 @@ class Entregablecomponent extends Component
         $this->alert('success', 'Registro añadido!');
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         $entregableFile = EntregableFile::create([
@@ -182,9 +182,9 @@ class Entregablecomponent extends Component
             $entregables_filename = $this->pdf->getClientOriginalName();
 
             $entregableFile->update([
-                'pdf' => $entregableFile->id . $entregables_filename,
+                'pdf' => $entregableFile->id.$entregables_filename,
             ]);
-            $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf', $entregableFile->id . $entregables_filename);
+            $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entregableFile->id.$entregables_filename);
         }
 
         $this->dispatch('recargar-cumplimiento');
@@ -306,8 +306,8 @@ class Entregablecomponent extends Component
 
         // dd($entregableFile->get());
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-        if (! Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
-            Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
+        if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         if ($this->pdf != null) {
@@ -316,10 +316,10 @@ class Entregablecomponent extends Component
                 $mines = str_replace('.', '', $organizacion->formatos);
 
                 $entregables_filename = $this->pdf->getClientOriginalName();
-                $this->pdf->storeAs('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf', $entM->id . $entregables_filename);
+                $this->pdf->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf', $entM->id.$entregables_filename);
 
                 $entregableFile->update([
-                    'pdf' => $entM->id . $entregables_filename,
+                    'pdf' => $entM->id.$entregables_filename,
                 ]);
                 //   dd($entregableFile);
             }
@@ -384,8 +384,8 @@ class Entregablecomponent extends Component
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
-            if (is_file(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $pdf->pdf))) {
-                return response()->download(storage_path('app/public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $pdf->pdf));
+            if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf))) {
+                return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf));
             } else {
                 $this->alert('info', 'No se encontro el archivo!');
             }

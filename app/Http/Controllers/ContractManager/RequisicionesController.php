@@ -162,10 +162,10 @@ class RequisicionesController extends Controller
             switch ($registro->campo) {
                 case 'contrato_id':
                     $registro->valor_anterior = isset($contratos[$registro->valor_anterior])
-                        ? $contratos[$registro->valor_anterior] . ' - ' . $servicios[$registro->valor_anterior]
+                        ? $contratos[$registro->valor_anterior].' - '.$servicios[$registro->valor_anterior]
                         : 'Sin valor anterior registrado';
                     $registro->valor_nuevo = isset($contratos[$registro->valor_nuevo])
-                        ? $contratos[$registro->valor_nuevo] . ' - ' . $servicios[$registro->valor_nuevo]
+                        ? $contratos[$registro->valor_nuevo].' - '.$servicios[$registro->valor_nuevo]
                         : 'Sin valor nuevo registrado';
                     break;
 
@@ -187,10 +187,10 @@ class RequisicionesController extends Controller
                 case 'proveedor_id':
                 case 'proveedoroc_id':
                     $registro->valor_anterior = isset($proveedores[$registro->valor_anterior])
-                        ? $proveedores[$registro->valor_anterior]->razon_social . ' - ' . $proveedores[$registro->valor_anterior]->nombre
+                        ? $proveedores[$registro->valor_anterior]->razon_social.' - '.$proveedores[$registro->valor_anterior]->nombre
                         : 'Sin valor anterior registrado';
                     $registro->valor_nuevo = isset($proveedores[$registro->valor_nuevo])
-                        ? $proveedores[$registro->valor_nuevo]->razon_social . ' - ' . $proveedores[$registro->valor_nuevo]->nombre
+                        ? $proveedores[$registro->valor_nuevo]->razon_social.' - '.$proveedores[$registro->valor_nuevo]->nombre
                         : 'Sin valor nuevo registrado';
                     break;
 
@@ -657,7 +657,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -682,7 +682,7 @@ class RequisicionesController extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -708,7 +708,7 @@ class RequisicionesController extends Controller
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
                     $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -732,7 +732,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -743,7 +743,7 @@ class RequisicionesController extends Controller
                 if (($user->empleado->id == $responsable->id)) { //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $comprador->user->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$comprador->user->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
