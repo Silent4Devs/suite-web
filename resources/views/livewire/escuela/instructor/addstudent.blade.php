@@ -26,7 +26,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancelar" data-dismiss="modal"
                     wire:click.prevent="cancel()">Cerrar</button>
-                <button wire:click.prevent="save()" class="btn btn-primary close-modal"
+                <button wire:click.prevent="save()" data-dismiss="modal" class="btn btn-primary close-modal"
                     style="background-color: #345183">
                     Guardar
                 </button>

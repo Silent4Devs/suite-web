@@ -23,10 +23,10 @@ class RequisicionesEvent implements ShouldBroadcast
 
     public function __construct(Requsicion $requsicion, $tipo_consulta, $tabla, $slug)
     {
-            $this->requsicion = $requsicion;
-            $this->tipo_consulta = $tipo_consulta;
-            $this->tabla = $tabla;
-            $this->slug = $slug;
+        $this->requsicion = $requsicion;
+        $this->tipo_consulta = $tipo_consulta;
+        $this->tabla = $tabla;
+        $this->slug = $slug;
     }
 
     /**
@@ -36,8 +36,8 @@ class RequisicionesEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-            \Log::debug('retorno notificacion');
+        \Log::debug('retorno notificacion');
 
-            return new Channel('notificaciones-campana');
+        return new Channel('notificaciones-campana');
     }
 }

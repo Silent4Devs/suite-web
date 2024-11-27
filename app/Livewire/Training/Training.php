@@ -159,9 +159,9 @@ class Training extends Component
         $existing = TBCatalogueTrainingModel::where('name', $this->modalForm->name)->where('type_id', $this->modalForm->type_id)->exists();
         // dd($existing);
 
-        if($existing){
+        if ($existing) {
             $this->dispatch('repetError');
-        }else{
+        } else {
             $succes = $this->modalForm->userStore();
             if ($succes) {
                 $this->dispatch('requestApprove');
@@ -223,25 +223,25 @@ class Training extends Component
     {
         $types = TBTypeCatalogueTrainingModel::orderBy('name', 'asc')->get();
         $registers = TBUserTrainingModel::query()->where('empleado_id', $this->empleado_id)
-        ->when($this->search, function ($query) {
-            $query->where(function ($q) {
-                $q
-                // ->whereRaw('LOWER(start_date) LIKE ?', ['%' . $this->search . '%'])
-                //   ->orWhereRaw('LOWER(end_date) LIKE ?', ['%' . $this->search . '%'])
-                    ->orWhereHas('category', function ($query) {
-                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
-                    })
-                    ->orWhereHas('getName', function ($query) {
-                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
-                    });
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q
+                    // ->whereRaw('LOWER(start_date) LIKE ?', ['%' . $this->search . '%'])
+                    //   ->orWhereRaw('LOWER(end_date) LIKE ?', ['%' . $this->search . '%'])
+                        ->orWhereHas('category', function ($query) {
+                            $query->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%']);
+                        })
+                        ->orWhereHas('getName', function ($query) {
+                            $query->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%']);
+                        });
                     if ($this->isValidDate($this->search)) {
                         $q->orWhereDate('start_date', $this->search);
                     }
 
-            });
-        })
-        ->orderBy('id')
-        ->paginate($this->perPage);;
+                });
+            })
+            ->orderBy('id')
+            ->paginate($this->perPage);
 
         $this->types = $types;
         foreach ($registers as $register) {

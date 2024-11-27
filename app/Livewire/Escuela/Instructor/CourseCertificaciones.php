@@ -43,9 +43,10 @@ class CourseCertificaciones extends Component
         ]);
     }
 
-    public function habilitarFirma() {
+    public function habilitarFirma()
+    {
         $this->course->update([
-            'firma_habilitar' => !($this->course->firma_habilitar),
+            'firma_habilitar' => ! ($this->course->firma_habilitar),
         ]);
     }
 }

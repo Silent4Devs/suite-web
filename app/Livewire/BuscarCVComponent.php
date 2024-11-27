@@ -236,8 +236,8 @@ class BuscarCVComponent extends Component
     {
         $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
         // $this->documents = TBUserTrainingModel::where('empleado_id', $empleadoID)->get();
-        $certificates = TBUserTrainingModel::where('empleado_id', $empleadoID)->where('type_id',1)->get();
-        $capacitations = TBUserTrainingModel::where('empleado_id', $empleadoID)->where('type_id', '!=',1)->get();
+        $certificates = TBUserTrainingModel::where('empleado_id', $empleadoID)->where('type_id', 1)->get();
+        $capacitations = TBUserTrainingModel::where('empleado_id', $empleadoID)->where('type_id', '!=', 1)->get();
         $this->documents = [
             'certificates' => $certificates,
             'capacitations' => $capacitations,

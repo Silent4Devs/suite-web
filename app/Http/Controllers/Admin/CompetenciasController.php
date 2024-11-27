@@ -218,8 +218,8 @@ class CompetenciasController extends Controller
             $empleado->load('idiomas');
             $lista_docs = ListaDocumentoEmpleado::getAll();
             $empleadosCV = 1;
-            $certificates = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id',1)->get();
-            $capacitations = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id', '!=',1)->get();
+            $certificates = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id', 1)->get();
+            $capacitations = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id', '!=', 1)->get();
             // $documents = TBUserTrainingModel::where('empleado_id', $empleado->id)->get();
             $documents = [
                 'certificates' => $certificates,
