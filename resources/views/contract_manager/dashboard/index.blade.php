@@ -262,7 +262,7 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="card border-0">
-                <div class="card-body">
+                <div class="card-body" style="min-height: 560px;">
                     <h4 class="card-title graficas_titulos graficas_titulo1">Tipo de contrato</h4>
                     <!--<div id="bar-chart" class="center"></div>-->
                     <figure class="highcharts-figure" width="600">
@@ -273,7 +273,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="card border-0">
-                <div class="card-body">
+                <div class="card-body" style="min-height: 560px;">
                     <div class="row">
                         <div class="col-12">
                             <h4 class="card-title graficas_titulos graficas_titulo2">Contratos por fase </h4>
@@ -368,55 +368,61 @@
             <h4 style="font-size: 5px !important; text-align: center !important;margin-top:10px;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
             <h4 class="card-title graficas_titulos graficas_titulo2" style="padding-top: 6px;">Clientes</h4>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-10">
+            <div class="row mb-3" style="margin-top: 30px;">
+                <div class="col-12 col-lg-10">
                     {{-- @livewire('proveedores-dashboard.proveedores-component') --}}
-                    <select class="form-control" name="proveedor" id="proveedor">
-                        <option value="" selected disabled>Seleccione un Cliente</option>
-                        @forelse($clientes as $item)
-                            <option value="{{ $item->id }}">{{ $item->nombre }}</option>
-                        @empty
-                            <option value="">No hay Clientes registrados</option>
-                        @endforelse
-                    </select>
-                    <h4 style="font-size: 5px !important; text-align: center !important;margin-top:10px;">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                    <div class="d-flex align-items-center justify-content-start" style="height: 100%">
+                        <select class="form-control" name="proveedor" id="proveedor">
+                            <option value="" selected disabled>Seleccione un Cliente</option>
+                            @forelse($clientes as $item)
+                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                            @empty
+                                <option value="">No hay Clientes registrados</option>
+                            @endforelse
+                        </select>
+                    </div>
+                    {{-- <h4 style="font-size: 5px !important; text-align: center !important;margin-top:10px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4> --}}
                 </div>
-                <div class="col s2">
-                    <button type="submit" class="btn tb-btn-primary" id="buscar_proveedor" onclick="buscarproveedor($('#proveedor').val()); return false;" style="">
-                        Buscar
-                    </button>
+                <div class="col-12 col-lg-2">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <button type="submit" class="btn tb-btn-primary" id="buscar_proveedor" onclick="buscarproveedor($('#proveedor').val()); return false;" style="">
+                            Buscar
+                        </button>
+                    </div>
 
                 </div>
             </div>
-            <div id="resultado_proveedor" class="col-12"></div>
-            <div id="resultado_contrato" class="col-12"></div>
+            <div id="resultado_proveedor" ></div>
+            <div id="resultado_contrato" ></div>
             <div class="row" style="display: flex; flex-wrap: wrap;">
-                <div id="resultado_entregables" class="col-12 border rounded-3" style="display:none;"></div>
-                <div id="c_grafica_facturacion" class="col-12 border rounded-3" style="display: none;">
-                    <div id="titulo_grafica_facturacion" class="col-12" style="padding: 15px;"></div>
-                    <div id="c_facturas" class="table-responsive"
-                        style="display: flex; align-items: center; margin-top: -14px;">
-                        <div id="tbl_facturas" class="table-responsive" style="padding: 0;"></div>
-                        <div id="grafica_facturacion" class="col-1" style="display:none"></div>
+                <div id="resultado_entregables" class="col-12 border rounded-3 border border-0" style="display:none; border:none;"></div>
+                <div id="c_grafica_facturacion" class="col-12 border rounded-3 border border-0" style="display: none;">
+                    <div class="card border border-0">
+                        <div id="titulo_grafica_facturacion" class="col-12" style="padding: 15px;"></div>
+                        <div id="c_facturas" class="table-responsive"
+                            style="display: flex; align-items: center; margin-top: -14px;">
+                            <div id="tbl_facturas" class="table-responsive" style="padding: 0;"></div>
+                            <div id="grafica_facturacion" class="col-1" style="display:none"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="evaluaciones_servicio" class="table-responsive" style="display: none">
-                <div id="niveles_servicio" class="table-responsive" style="padding: 19px 50px;"></div>
+            <div id="evaluaciones_servicio" class="table-responsive border border-0" style="display: none">
+                <div id="niveles_servicio" class="table-responsive" ></div>
                 <div id="titulo_graficas_servicio" class="col-12" style="padding: 15px;"></div>
                 <div id="c_evaluaciones" class="col-12 border rounded-3">
                     <div id="grafica_promedio" class="col-12 col-md-6 col-lg-6"></div>
                     <div id="grafica_historico" class="col-12 col-md-6 col-lg-6"></div>
                 </div>
             </div>
-            <div id="cierre" class="col-12 border rounded-3" style="display: none;">
-                <div id="titulo_cierre" class="col-12" style="width: 100%; padding: 15px 15px 0 15px"></div>
+            <div id="cierre" class="col-12 border rounded-3 border border-0" style="display: none;">
+                <div id="titulo_cierre" class="col-12" style="width: 100%; padding: 0px;"></div>
                 <div id="c_cierre" class="col-12 row">
                     <div id="tabla_cierre" class="col-12 col-md-6 col-lg-6">
                         <!-- Contenido de la tabla de cierre aquí -->
                     </div>
-                    <div id="grafica_cierre" class="col-12 col-md-6 col-lg-6">
+                    <div id="grafica_cierre" class="col-12 col-md-6 col-lg-6 p-0">
                         <!-- Contenido de la gráfica de cierre aquí -->
                     </div>
                 </div>
