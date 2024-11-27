@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -67,6 +68,7 @@ class RequisicionesNotification extends Notification
         return [
             'id' => $this->requsicion_id,
             'type' => $this->tipo_consulta,
+            'time' => Carbon::now(),
             'tabla' => $this->tabla,
             'slug' => $this->slug,
         ];
