@@ -8,8 +8,8 @@
                 <label for="" class="txt-tamaño">Nombre entregable
                     <font class="asterisco">*</font>
                 </label>
-                <input type="text" maxlength="250" wire:model.live.debounce.800ms="nombre_entregable" class="form-control"
-                    required>
+                <input type="text" maxlength="250" wire:model.live.debounce.800ms="nombre_entregable"
+                    class="form-control" required>
                 @error('nombre_entregable')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -159,8 +159,8 @@
                         </label>
                     </div> --}}
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" wire:model.live="aplica_deductiva" class="custom-control-input"
-                            id="aplica_deductiva" name="aplica_deductiva" @change="show = !show">
+                        <input type="checkbox" wire:model="aplica_deductiva" class="custom-control-input"
+                            id="aplica_deductiva" name="aplica_deductiva">
                         <label class="custom-control-label" for="aplica_deductiva">No/Sí</label>
                     </div>
                 </div>
@@ -250,30 +250,7 @@
         });
     });
 </script>
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        $('.fechas').datepicker({
-            firstDay: true,
-            format: 'dd-mm-yyyy',
-            i18n: {
-                cancel: 'Cancelar',
-                clear: 'Limpar',
-                done: 'Ok',
-                months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
-                    "Septiembre", "Octubre", "Noviembre", "Diciembre"
-                ],
-                monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct",
-                    "Nov", "Dic"
-                ],
-                weekdays: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
-                    "Sábado"
-                ],
-                weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-                weekdaysAbbrev: ["D", "L", "M", "M", "J", "V", "S"]
-            },
-            //autoclose: false
-        });
-    })
+<script>
     window.addEventListener('contentChanged', event => {
         //Datepicker
         $('.fechas').datepicker({
@@ -320,5 +297,27 @@
         $('select').formSelect();
         //M.AutoInit();
     });
-
-</script> --}}
+</script>
+{{-- document.addEventListener('DOMContentLoaded', () => {
+    $('.fechas').datepicker({
+        firstDay: true,
+        format: 'dd-mm-yyyy',
+        i18n: {
+            cancel: 'Cancelar',
+            clear: 'Limpar',
+            done: 'Ok',
+            months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+                "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ],
+            monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct",
+                "Nov", "Dic"
+            ],
+            weekdays: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes",
+                "Sábado"
+            ],
+            weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+            weekdaysAbbrev: ["D", "L", "M", "M", "J", "V", "S"]
+        },
+        //autoclose: false
+    });
+}) --}}
