@@ -194,7 +194,6 @@
                                 wire:model="deductiva_factura_id">
                                 <option value="">Sin factura</option>
                                 @foreach ($facturas_entregables as $facturas)
-                                    }
                                     <option value="{{ $facturas->id }}">{{ $facturas->no_factura }}</option>
                                 @endforeach
                             </select>

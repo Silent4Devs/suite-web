@@ -238,8 +238,8 @@
                     </div>
                     <div class="col s12 l9 ">
                         <div class="anima-focus">
-                            <input type="text" id="proveedor-direccion" value="{{ $proveedor->direccion }}"
-                                placeholder="" name="direccion" class="form-control">
+                            <input type="text" id="proveedor-direccion" value="" placeholder=""
+                                name="direccion" class="form-control">
                             <label for="proveedor-direccion">
                                 Dirección
                             </label>
@@ -249,8 +249,8 @@
                 <div class="row">
                     <div class="col s12 l6 ">
                         <div class="anima-focus">
-                            <input type="text" id="envio" name="direccion_envio"
-                                value="{{ $proveedor->envio }}" placeholder="" class="form-control">
+                            <input type="text" id="envio" name="direccion_envio" value=""
+                                placeholder="" class="form-control">
                             <label for="envio">
                                 Envío a
                             </label>
@@ -258,8 +258,8 @@
                     </div>
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" id="proveedor-razon" value="{{ $proveedor->facturacion }}"
-                                placeholder="" name="facturacion" class="form-control">
+                            <input type="text" id="proveedor-razon" value="" placeholder=""
+                                name="facturacion" class="form-control">
                             <label for="proveedor-razon">
                                 Facturación a
                             </label>
@@ -267,8 +267,8 @@
                     </div>
                     <div class="col s12 l3 ">
                         <div class="anima-focus">
-                            <input type="text" value="{{ $proveedor->credito }}" name="credito_proveedor"
-                                placeholder="" id="cred_prov" class="form-control">
+                            <input type="text" value="" name="credito_proveedor" placeholder=""
+                                id="cred_prov" class="form-control">
                             <label for="cred_prov">
                                 Crédito disponible
                             </label>
