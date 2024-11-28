@@ -262,9 +262,22 @@ class AnswerEvaluationUser extends Component
                 $this->userEvaluationId->save();
             }
 
+            if ($this->userEvaluationId->score >= 80) {
+                $this->userEvaluationId->approved = true;
+                $this->userEvaluationId->save();
+            }
+
             $this->showRetry = true;
         } else {
             $this->showRetry = false;
+            if ($this->userEvaluationId->score == null) {
+                $this->userEvaluationId->score = $this->percentage;
+                $this->userEvaluationId->save();
+            }
+            if ($this->userEvaluationId->score >= 80) {
+                $this->userEvaluationId->approved = true;
+                $this->userEvaluationId->save();
+            }
         }
     }
 

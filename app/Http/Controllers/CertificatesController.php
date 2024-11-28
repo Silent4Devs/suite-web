@@ -227,6 +227,8 @@ class CertificatesController extends Controller
             Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new RejectionNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining, $comment));
         }
 
+        $catalogueTraining->delete();
+
         return redirect(route('admin.portal-comunicacion.index'));
     }
 
