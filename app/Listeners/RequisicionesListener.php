@@ -67,7 +67,7 @@ class RequisicionesListener implements ShouldQueue
                         Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
-                    if ($requisicion->firma_jefe !== null) {
+                    if ($event->requsicion->firma_jefe === null) {
                         $jefe_empleado = $firmas->jefe;
 
                         $user_jefe = User::where('empleado_id', $jefe_empleado->id)
@@ -81,7 +81,7 @@ class RequisicionesListener implements ShouldQueue
                         Notification::send($user_jefe, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
-                    if ($requisicion->firma_finanzas !== null) {
+                    if ($event->requsicion->firma_finanzas === null) {
                         $finanzas_empleado = $firmas->responsableFinanzas;
 
                         $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
@@ -95,7 +95,7 @@ class RequisicionesListener implements ShouldQueue
                         Notification::send($user_finanzas, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                     }
 
-                    if ($requisicion->firma_compras !== null) {
+                    if ($event->requsicion->firma_compras === null) {
                         $comprador_empleado = $firmas->comprador;
 
                         $user_compras = User::where('empleado_id', $comprador_empleado->id)
@@ -119,7 +119,7 @@ class RequisicionesListener implements ShouldQueue
                 )->where('requisicion_id', $requisicion->id)->first();
 
                 // ordenes de compra
-                if ($requisicion->firma_comprador_orden !== null) {
+                if ($event->requsicion->firma_comprador_orden === null) {
 
                     $comprador_empleado = $firmas->comprador;
 
@@ -134,7 +134,7 @@ class RequisicionesListener implements ShouldQueue
                     Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
 
-                if ($requisicion->firma_solicitante_orden !== null) {
+                if ($event->requsicion->firma_solicitante_orden === null) {
 
                     $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
                         ->first();
