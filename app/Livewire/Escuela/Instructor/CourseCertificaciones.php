@@ -21,7 +21,7 @@ class CourseCertificaciones extends Component
     public function habilitarCertificado()
     {
         $this->course->update([
-            'certificado' => !$this->course->certificado,
+            'certificado' => ! $this->course->certificado,
         ]);
     }
 
