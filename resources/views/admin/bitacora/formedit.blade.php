@@ -719,7 +719,7 @@
             @if (!$show_contrato)
                 <a href="{{ route('contract_manager.contratos-katbol.index') }}"
                     class="btn btn-outline-primary">Cancelar</a>
-                <button type="submit" class="btn btn-primary" id="guardar-btn">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             @endif
         </div>
     </div>
@@ -868,19 +868,6 @@
     });
 </script>
 
-<script>
-    document.getElementById('guardar-btn').addEventListener('click', function (event) {
-        // Previene el envío inmediato del formulario si no deseas recargar aún.
-        event.preventDefault();
-
-        // Aquí podrías hacer una validación o enviar el formulario con AJAX si es necesario.
-
-        // Espera un segundo y recarga la página.
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000); // 1000 milisegundos = 1 segundo
-    });
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let no_contrato = document.getElementById('no_contrato');
