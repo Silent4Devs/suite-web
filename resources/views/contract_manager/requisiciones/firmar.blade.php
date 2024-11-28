@@ -136,47 +136,42 @@
                             detalle suficiente que sustente la compra, es no procedera.s </small>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col s12 l4">
+                <div class="row gy-4">
+                    <div class="col-sm-12 col-lg-12">
                         <strong>Proveedor:</strong><br><br>
                         {{ $proveedor->proveedor }}
                     </div>
-                    <div class="col s12  l4">
-                        <strong>Detalle del producto:</strong><br><br>
-                        {{ $proveedor->detalles }}
-                    </div>
-                    <div class="col s12 l4">
-                        <strong>Comentarios:</strong><br><br>
-                        {{ $proveedor->comentarios }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l4">
+                    <div class="col-sm-12 col-lg-6">
                         <strong>Nombre del contacto:</strong><br><br>
                         {{ $proveedor->contacto }}
                     </div>
-                    <div class="col s12 l4">
-                        <strong>Fecha Inicio:</strong><br><br>
-                        {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
-                    </div>
-                    <div class="col s12 l4">
-                        <strong>Teléfono:</strong><br><br>
-                        {{ $proveedor->cel }}
-                    </div>
-                    <div class="col s12 l4">
-                        <br><br>
+                    <div class="col-sm-12 col-lg-4">
                         <strong>Correo Electrónico:</strong><br><br>
                         {{ $proveedor->contacto_correo }}
                     </div>
-                    <div class="col s12 l4">
-                        <br><br>
+                    <div class="col-sm-12 col-lg-2">
+                        <strong>Teléfono:</strong><br><br>
+                        {{ $proveedor->cel }}
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>URL:</strong><br><br>
+                        {{ $proveedor->url }}
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <strong>Fecha Inicio:</strong><br><br>
+                        {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
                         <strong>Fecha Fin:</strong><br><br>
                         {{ date('d-m-Y', strtotime($proveedor->fecha_fin)) }}
                     </div>
-                    <div class="col s12 l4">
-                        <br><br>
-                        <strong>URL:</strong><br><br>
-                        {{ $proveedor->url }}
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>Detalle del producto:</strong><br><br>
+                        {{ $proveedor->detalles }}
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>Comentarios:</strong><br><br>
+                        {{ $proveedor->comentarios }}
                     </div>
                 </div>
             </div>
