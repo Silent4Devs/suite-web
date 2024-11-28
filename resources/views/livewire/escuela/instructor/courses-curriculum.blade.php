@@ -54,7 +54,7 @@
                                 <h3 class="mb-0">{{ $item->name }}</h3>
                             </div>
                             <div>
-                                <i class="material-symbols-outlined" style="cursor: move;">
+                                <i class="material-symbols-outlined drag-handle" style="cursor: move;">
                                     apps
                                 </i>
                             </div>
@@ -88,6 +88,7 @@
     Sortable.create(lista, {
         animation: 150,
         choseClass: "seleccionado",
+        handle: '.drag-handle',
         dragClass: "fantasma",
 
         ondEnd: () => {
