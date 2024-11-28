@@ -124,7 +124,7 @@
 
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
-                                            $employee = $requisicion->userSolicitante->empleado;
+                                             $employee = $requisicion->userSolicitante?->empleado ?? null;
                                             if ($requisicion->registroFirmas) {
                                                 $supervisorName =
                                                     $requisicion->obtener_responsable_lider->name ?? false;
