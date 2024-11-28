@@ -149,7 +149,7 @@
                                 <span>Estado de la evaluación</span>
                             </div>
                             <div class="col-3">
-                                <span>{{ round($userEvaluationId->score) > 60 ? 'Aprobado' : 'Reprobado' }}</span>
+                                <span>{{ round($userEvaluationId->score) > 80 ? 'Aprobado' : 'Reprobado' }}</span>
                             </div>
                         </div>
 
