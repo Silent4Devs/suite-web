@@ -51,7 +51,7 @@ services:
   php:
     build:
       context: "./infra/php/"
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: php-tabantaj
     depends_on:
       - postgres-tabantaj
