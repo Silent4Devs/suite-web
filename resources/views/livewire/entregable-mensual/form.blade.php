@@ -138,9 +138,12 @@
                 </div>
 
                 @if ($document_entregable)
-                        <a href="{{ asset('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $document_entregable) }}" target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                            Descargar Entregable {{ $contrato->no_contrato }}
-                        </a>
+                    <a href="{{ asset('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $document_entregable) }}"
+                        target="_blank"
+                        class="descarga_archivo"
+                        style="margin-left:20px;">
+                        Descargar Entregable {{ $contrato->no_contrato }}
+                    </a>
                 @endif
             </div>
         </div>
