@@ -446,7 +446,10 @@
                 $usuario->can('configurar_soporte_acceder'))
             <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
                 style="background-color: #fff; min-width: 280px;">
-                <span class="title-item-menu-header">ADMINISTRACIÓN</span>
+                <div class="caja-logo-ltr-light">
+                    <img src="{{ asset($logotipo) }}" style="object-position: left center;">
+                </div>
+                <span class="title-item-menu-header mt-4">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
                         @if ($usuario->can('clausulas_auditorias_acceder') || $usuario->can('clasificaciones_auditorias_acceder'))

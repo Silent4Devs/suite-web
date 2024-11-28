@@ -150,7 +150,7 @@
                 <th style="min-width:80px;">Estatus</th>
                 <th>Prioridad</th>
                 <th style="min-width:150px;">Acción Correctiva</th>
-                <th>Opciones</th>
+                <th style="min-width: 250px;">Opciones</th>
             </tr>
         </thead>
     </table>

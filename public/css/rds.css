@@ -632,14 +632,22 @@ header.mostrar-menu {
 }
 
 .title-page-global{
+    padding: 0px 20px;
+    max-width: 200px;
+    min-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 30px;
 }
 
+.caja-logo-ltr-light{
+    width: 80%;
+    height: 50px;
+}
 .caja-logo-ltr-light img{
-    width: 50px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .options-global {
@@ -662,7 +670,24 @@ header.mostrar-menu {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
+.menu-slider::after,
+.menu-slider::before{
+    content: "";
+    position: absolute;
+    height: 50%;
+    top: 25%;
+    width: 1px;
+    background-color: #ccc;
+}
+.menu-slider::before{
+    left: 0;
+}
+.menu-slider::after{
+    right: 0;
+}
+
 .box-menu-slider{
     width: 100%;
     display: flex;
