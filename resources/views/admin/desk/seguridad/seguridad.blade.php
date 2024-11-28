@@ -1,3 +1,5 @@
+<h5 class="col-12 titulo_general_funcion">Centro de Atención: <span style="font-weight: lighter;">Incidentes de seguridad</span></h5>
+
 <div class="cards-status-centro-atencion">
     <div class="card-status-centro" style="background-color: #4A98FF !important;">
         <i class="material-symbols-outlined">warning</i>
