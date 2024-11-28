@@ -732,20 +732,19 @@
 
 <!-- Modal Structure -->
 <div id="convenios_modificados" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
-    <div class="modal-content">
-        <strong class="txt-frm">Convenios Modificados</strong>
-        <ul>
-            @foreach ($convenios as $convenio)
-                <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
-                    {{ $convenio->no_convenio }}
-                </li>
-            @endforeach
-        </ul>
-    </div>
+    <strong class="txt-frm">Convenios Modificados</strong>
+    <ul>
+        @foreach ($convenios as $convenio)
+            <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
+                {{ $convenio->no_convenio }}
+            </li>
+        @endforeach
+    </ul>
     <div class="modal-footer" style="text-align: right; margin-top: 10px;">
         <button id="closeModal" class="modal-close waves-effect waves-green btn-flat">Cerrar</button>
     </div>
 </div>
+
 
 <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
 
