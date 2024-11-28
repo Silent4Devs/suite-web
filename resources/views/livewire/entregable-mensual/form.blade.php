@@ -35,7 +35,7 @@
                         required>
                 </div>
                 @error('plazo_entrega_inicio')
-                    <span class="red-text">{{ $message }}</span>
+                    <span class="red-text" style="color: red;">{{ $message }}</span>
                 @enderror
             </div>
             <div class="distancia form-group col-md-4">
@@ -46,7 +46,7 @@
                         required>
                 </div>
                 @error('plazo_entrega_termina')
-                    <span class="red-text">{{ $message }}</span>
+                    <span class="red-text" style="color: red;">{{ $message }}</span>
                 @enderror
             </div>
             <div class="distancia form-group col-md-4">
