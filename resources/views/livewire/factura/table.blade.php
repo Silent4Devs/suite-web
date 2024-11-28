@@ -200,8 +200,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="destroy({{ $factura->id }})"
-                                    class="btn red">
+                                <button wire:click="destroy({{ $factura->id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>
@@ -237,7 +236,7 @@
     @endif
 
     <div class="col-12 d-flex justify-content-end">
-        {{ $facturas->links('livewire::simple-tailwind') }}
+        {{ $facturas->links('pagination::TbPagination') }}
     </div>
 </div>
 <script>
