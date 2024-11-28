@@ -58,11 +58,12 @@
                                 type="text" wire:model.live="form.credential_url" required>
                             <label for="credential_url">URL de la credencial*</label>
                         </div>
-                        <div class="d-flex align-items-center col-12 col-sm-2 " style="margin-bottom: 25px;">
-                            <input class="form-control mr-3" style="height: 18px; width:18px;" type="checkbox"
+
+                        <div class="d-flex align-items-center col-12 col-sm-2 " style="margin-bottom: 25px; margin-left:10px;">
+                            <input class="form-control mr-3 form-check-input" style="height: 18px; width:18px;" type="checkbox"
                                 value="" id="flexCheckDefault" {{ $form->isChecked ? 'checked' : null }}
                                 wire:change='chanceChecked'>
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault" style="margin-left: 10px;">
                                 ¿Aplica vigencia?
                             </label>
                         </div>
