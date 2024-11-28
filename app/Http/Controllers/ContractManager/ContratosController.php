@@ -669,8 +669,6 @@ class ContratosController extends AppBaseController
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
         ]);
 
-        dd('hola2');
-
         $resultado = null;
         $resultado2 = null;
         $resultado3 = null;
