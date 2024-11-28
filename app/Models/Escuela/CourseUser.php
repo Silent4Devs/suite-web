@@ -52,7 +52,7 @@ class CourseUser extends Model implements Auditable
         }
 
         $ids = $evaluaciones->pluck('id');
-        $results = UserEvaluation::where('user_id', $this->user_id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+        $results = UserEvaluation::where('user_id', $this->user_id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
         //calcular el porcentaje de la

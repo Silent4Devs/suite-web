@@ -220,7 +220,7 @@ class CourseStatus extends Component
         }
 
         $ids = $this->evaluacionesGenerales->pluck('id');
-        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
         //calcular el porcentaje del curso
