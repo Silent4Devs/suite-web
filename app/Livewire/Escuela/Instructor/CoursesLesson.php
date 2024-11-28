@@ -119,7 +119,6 @@ class CoursesLesson extends Component
             //throw $th;
         }
 
-
     }
 
     public function edit(Lesson $lesson)
@@ -199,8 +198,6 @@ class CoursesLesson extends Component
             'timerProgressBar' => true,
         ]);
     }
-
-
 
     public function closeCollapse()
     {
