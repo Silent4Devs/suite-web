@@ -26,6 +26,23 @@
             height: 60px;
             border-radius: 50%;
         }
+
+        #secciones-curso li {
+            font-size: 13px;
+            color: #585858;
+            margin-top: 10px;
+            line-height: 14px;
+            text-wrap: pretty;
+        }
+
+        #secciones-curso li:not(.seccion-li-orden) {
+            display: flex;
+            gap: 5px;
+        }
+
+        #secciones-curso li:not(.seccion-li-orden)::before {
+            content: " - ";
+        }
     </style>
 
     <x-loading-indicator />
@@ -185,9 +202,10 @@
         <ul id="secciones-curso" style="list-style: none; cursor: pointer;" class="p-0">
             @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
-                    <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
-                    </i>
-                    <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
+                    <div class="d-flex align-items-start">
+                        <i class=" fas fa-play-circle me-1"></i>
+                        <a><strong>{{ $section->name }}</strong></a>
+                    </div>
 
                     <ul style="list-style: none;" class="ps-3">
                         @foreach ($section->lessons as $lesson)
@@ -235,7 +253,7 @@
                                     ->count();
                             @endphp
                             @if ($totalLectionSection != $completedLessonsCount)
-                                <li style="list-style-type: disc;">
+                                <li style="list-style: none;">
                                     <div>
                                         <span class="inline-block rounded-full border-2 border-gray-500"></span>
                                         <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
@@ -247,7 +265,7 @@
                                     @php
                                         $completed = in_array($evaluation->id, $evaluationsUser);
                                     @endphp
-                                    <li style="list-style-type: disc;">
+                                    <li style="list-style: none;">
                                         <div>
                                             <span
                                                 class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
