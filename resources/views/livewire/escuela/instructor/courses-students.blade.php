@@ -74,48 +74,36 @@
 
     <script>
         document.addEventListener('livewire:init', function() {
-
-            document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
-                let checks = document.querySelectorAll('#datatable_students tbody td input');
-                checks.forEach(checkStudent => {
-                    checkStudent.checked = e.target.checked;
-                });
-            });
-            document.getElementById('btn-delete-students').addEventListener('click', () => {
-                let checksSelected = document.querySelectorAll(
-                    '#datatable_students tbody td input:checked');
-
-                let studentsIds = [];
-                checksSelected.forEach(item => {
-                    studentsIds.push(item.value);
-                });
-
-                Livewire.dispatch('clickDeleteAll', [studentsIds]);
-            });
-        });
-
-        document.addEventListener('livewire:update', function() {
-
-            document.querySelector('#seleccionar-todos-estudiantes').addEventListener("change", (e) => {
-                let checks = document.querySelectorAll('#datatable_students tbody td input');
-                checks.forEach(checkStudent => {
-                    checkStudent.checked = e.target.checked;
-                });
+            // Delegación para manejar el cambio en la casilla principal
+            document.addEventListener('change', (e) => {
+                if (e.target.matches('#seleccionar-todos-estudiantes')) {
+                    // Detecta todos los inputs dentro del tbody de la tabla actualizada
+                    let checks = document.querySelectorAll(
+                        '#datatable_students tbody input[type="checkbox"]');
+                    checks.forEach(checkStudent => {
+                        checkStudent.checked = e.target.checked;
+                    });
+                }
             });
 
-            document.getElementById('btn-delete-students').addEventListener('click', () => {
-                let checksSelected = document.querySelectorAll(
-                    '#datatable_students tbody td input:checked');
+            // Delegación para manejar el clic en el botón de eliminación
+            document.addEventListener('click', (e) => {
+                if (e.target.matches('#btn-delete-students')) {
+                    // Detecta solo los inputs marcados dentro del tbody
+                    let checksSelected = document.querySelectorAll(
+                        '#datatable_students tbody input[type="checkbox"]:checked'
+                    );
 
-                let studentsIds = [];
-                checksSelected.forEach(item => {
-                    studentsIds.push(item.value);
-                });
+                    // Recopila los IDs de los estudiantes seleccionados
+                    let studentsIds = Array.from(checksSelected).map(item => item.value);
 
-                Livewire.dispatch('clickDeleteAll', [studentsIds]);
+                    // Dispara el evento de Livewire
+                    Livewire.dispatch('clickDeleteAll', [studentsIds]);
+                }
             });
         });
     </script>
+
 
     {{-- @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
