@@ -118,7 +118,7 @@
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             @if ($this->next)
-                                <div  wire:click="changeLesson({{ $this->next }}, 'next')" class="d-flex align-items-center gap-2" style="color: #3b8ddf;">
+                                <div  wire:click="changeLesson({{ $this->next }}, 'next')" class="d-flex align-items-center gap-2" style="color: #3b8ddf;" style="cursor: pointer;">
                                     <span>Siguiente tema</span>
                                     <i class="material-icons-outlined">arrow_forward_ios</i>
                                 </div>
