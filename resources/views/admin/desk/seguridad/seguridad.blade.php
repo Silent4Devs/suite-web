@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="card card-body box-sentimientos mt-4">
+{{-- <div class="card card-body box-sentimientos mt-4">
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
@@ -79,7 +79,7 @@
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
-</div>
+</div> --}}
 
 <div class="row">
     <div class="col-6 col-md-2">
@@ -568,7 +568,7 @@
                 				<a href="/admin/desk/${data}/seguridad-edit/"><i class="fas fa-edit"></i></a>
                                 @endcan
 
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-seguridad-${data}">
+                                <button type="button" class="btn d-none" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-seguridad-${data}">
                                     <i class="fa-regular fa-face-smile"></i>
                                 </button>
                                 `;

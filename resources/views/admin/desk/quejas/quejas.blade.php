@@ -152,7 +152,7 @@
                 <th style="min-width:200px;">Ubicación</th>
                 <th style="min-width:200px;">Externos</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th>Opciones</th>
+                <th style="min-width: 250px;">Opciones</th>
             </tr>
         </thead>
     </table>

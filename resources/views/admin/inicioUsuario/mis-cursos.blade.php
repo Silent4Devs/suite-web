@@ -8,6 +8,11 @@
     <h6>Mis Certificaciones</h6>
 
     @foreach ($cursosUser as $cursoUser)
+        <div class="d-none">
+            {{ $cursoUser->curso->title }} <br>
+            {{ $cursoUser->completado }} <br>
+            {{ $cursoUser->curso->certificado }}
+        </div>
         @if ($cursoUser->completado == 100 && $cursoUser->curso->certificado)
             <div class="card card-body mt-4">
                 <div class="d-flex justify-content-between align-items-center">

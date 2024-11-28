@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="card card-body box-sentimientos mt-4">
+{{-- <div class="card card-body box-sentimientos mt-4">
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
@@ -79,7 +79,7 @@
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
-</div>
+</div> --}}
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
@@ -166,8 +166,7 @@
             <div class="modal-content">
                 <div class="modal-body p-4">
                     <div class="text-end">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="row mt-4">
                         <div class="col-6">
@@ -577,7 +576,7 @@
                 				<a href="/admin/desk/${data}/denuncias-edit/"><i class="fas fa-edit"></i></a>
                                 @endcan
 
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-denuncias-${data}">
+                                <button type="button" class="btn d-none" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-denuncias-${data}">
                                     <i class="fa-regular fa-face-smile"></i>
                                 </button>
                                 `;
