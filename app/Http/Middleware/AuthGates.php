@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Tenant;
 use App\Services\TenantManager;
 use Closure;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -23,24 +24,25 @@ class AuthGates
 
     public function handle($request, Closure $next)
     {
-        $domain = $request->getHost();
-        $parts = explode('.', $domain);
-        if (count($parts) > 1) {
-            $subdomain = $parts[0];
-        } else {
-            $subdomain = $domain;
+        try {
+            $subdomain = explode('.', $request->getHost(), 2)[0];
+
+            $tenant = Tenant::whereHas(
+                'domains',
+                fn($query) =>
+                $query->where('domain', $subdomain)
+            )->firstOrFail();
+
+            $this->tenantManager->setTenant($tenant);
+            tenancy()->initialize($tenant);
+
+            $cuts = $tenant->stripe_id;
+        } catch (ModelNotFoundException) {
+            abort(404, 'Tenant not found for the given subdomain.');
+        } catch (\Exception $e) {
+            abort(500, 'An unexpected error occurred.');
         }
-
-        $tenant = Tenant::whereHas('domains', function ($query) use ($subdomain) {
-            $query->where('domain', $subdomain);
-        })->firstOrfail();
-
-        $this->tenantManager->setTenant($tenant);
-        tenancy()->initialize($tenant);
-        app()->instance('tenant', $tenant);
-        Auth::shouldUse('tenant');
-
-        //dd($tenant, $user = Auth::guard('tenant'), DB::connection()->getDatabaseName());
+        //dd(Auth::user(), User::getAll(), DB::connection());
         $user = \Auth::user();
 
         if ($user) {

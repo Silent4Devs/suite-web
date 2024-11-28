@@ -5,6 +5,9 @@ namespace App\Services;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Config;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TenantManager
 {
@@ -14,6 +17,7 @@ class TenantManager
     {
         $this->tenant = $tenant;
         $this->configureTenantConnection($tenant);
+        $this->conigurateAuthTenant($tenant);
     }
 
     public function getTenant()
@@ -23,6 +27,7 @@ class TenantManager
 
     protected function configureTenantConnection($tenant)
     {
+
         config([
             'database.connections.tenant.host' => $tenant->db_host,
             'database.connections.tenant.database' => $tenant->db_name,
@@ -38,5 +43,10 @@ class TenantManager
         }
         Schema::connection('tenant')->getConnection()->reconnect();
         DB::setDefaultConnection('tenant');
+    }
+
+    protected function conigurateAuthTenant($tenant)
+    {
+        Config::set('auth.providers.tenant_users.connection', 'tenant');
     }
 }

@@ -25,7 +25,7 @@ class User extends Authenticatable implements Auditable
 
     public $table = 'users';
 
-    protected $connection;
+    protected $guard = 'tenants';
 
     public function __construct(array $attributes = [])
     {
@@ -114,8 +114,8 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
-        $tenantGuard = Auth::guard('tenant');
-        dd($tenantGuard);
+        $tenantGuard = Auth::guard('tenants');
+        dd($tenantGuard, User::getAll());
         if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }
@@ -125,26 +125,6 @@ class User extends Authenticatable implements Auditable
             return Auth::user();
         });
     }
-
-    // public static function getCurrentUser()
-    // {
-    //     if (!Auth::check()) {
-    //         return null;
-    //     }
-
-    //     $tenant = tenancy()->tenant;
-    //     if (!$tenant) {
-    //         throw new \Exception('No tenant initialized.');
-    //     }
-
-    //     $tenantPrefix = $tenant->getTenantKey();
-    //     $cacheKey = $tenantPrefix . ':Auth_user:user' . Auth::user()->id;
-    //     $databaseName = DB::connection()->getDatabaseName();
-    //     //dd($cacheKey, $tenantPrefix, $tenant, Auth::user(), $databaseName);
-    //   h::  return Cache::remember($cacheKey, now()->addMinutes(60), function () {
-    //         return Autuser();
-    //     });
-    // }
 
     public function empleado()
     {

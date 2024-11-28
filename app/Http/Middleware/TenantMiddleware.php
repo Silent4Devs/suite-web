@@ -4,38 +4,47 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\Tenant;
+use App\Services\TbStripeService;
 use App\Services\TenantManager;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class TenantMiddleware
 {
     protected $tenantManager;
 
-    public function __construct(TenantManager $tenantManager)
+    protected $stripeService;
+
+    public function __construct(TenantManager $tenantManager, TbStripeService $stripeService)
     {
         $this->tenantManager = $tenantManager;
+        $this->stripeService = $stripeService;
     }
 
     public function handle($request, Closure $next)
     {
-        $domain = $request->getHost();
-        $parts = explode('.', $domain);
-        if (count($parts) > 1) {
-            $subdomain = $parts[0];
-        } else {
-            $subdomain = $domain;
+        try {
+            $subdomain = explode('.', $request->getHost(), 2)[0];
+
+            $tenant = Tenant::whereHas(
+                'domains',
+                fn($query) =>
+                $query->where('domain', $subdomain)
+            )->firstOrFail();
+
+            $this->tenantManager->setTenant($tenant);
+            tenancy()->initialize($tenant);
+
+            $cuts = $tenant->stripe_id;
+
+            $cliente = $this->stripeService->getCustomerById($cuts);
+
+            $suscripciones = $this->stripeService->getCustomerSubscriptions($cuts);
+        } catch (ModelNotFoundException) {
+            abort(404, 'Tenant not found for the given subdomain.');
+        } catch (\Exception $e) {
+            abort(500, 'An unexpected error occurred.');
         }
-
-        $tenant = Tenant::whereHas('domains', function ($query) use ($subdomain) {
-            $query->where('domain', $subdomain);
-        })->firstOrfail();
-
-        $this->tenantManager->setTenant($tenant);
-        tenancy()->initialize($tenant);
-
         return $next($request);
     }
 }
