@@ -50,7 +50,7 @@
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_recepcion')
-                        <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+                        <span class="red-text" style="margin-left: 9px; color: red;" >{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -63,7 +63,7 @@
                             class="form-control" style="margin-bottom: 0" required>
                     </div>
                     @error('fecha_liberacion')
-                        <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+                        <span class="red-text"  style="margin-left: 9px; color: red;">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
