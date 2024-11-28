@@ -2,6 +2,8 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\Escuela\Instructor\UserAnswer;
+use App\Models\Escuela\Evaluation;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +36,7 @@ class UserEvaluation extends Model implements Auditable
 
     public function evaluations()
     {
-        return $this->belongsToMany('App\Models\Evaluation');
+        return $this->hasOne(Evaluation::class,'id', 'evaluation_id');
     }
 
     public function userAnswers()
