@@ -176,7 +176,7 @@
             @if ($convenios->count() > 0)
             <div class="col s12 right-align">
                 <!-- Botón para abrir el modal -->
-                <button id="openModal" class="waves-effect waves-light btn">Visualizar Convenios Modificados</button>
+                <a id="openModal" class="waves-effect waves-light btn">Visualizar Convenios Modificados</a>
             </div>
             @endif
         </div>
