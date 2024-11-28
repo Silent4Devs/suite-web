@@ -656,8 +656,8 @@ class ContratosController extends AppBaseController
             'monto_dolares' => 'nullable|numeric|max:99999999999.99',
             'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
             'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
-            'valor_dolar' => 'nullable|numeric|max:99999999999.99',
-            'razon_soc_id' => 'required|integer',
+            // 'valor_dolar' => 'nullable|numeric|max:99999999999.99',
+            // 'razon_soc_id' => 'required|integer',
         ], [
             'monto_pago.max' => 'El monto total debe ser menor a 99,999,999,999.99',
             'maximo.max' => 'El monto total debe ser menor a 99,999,999,999.99',
@@ -668,6 +668,8 @@ class ContratosController extends AppBaseController
             'valor_dolar.max' => 'El valor del dolar no puede superar 99,999,999,999.99',
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
         ]);
+
+        dd('hola2');
 
         $resultado = null;
         $resultado2 = null;

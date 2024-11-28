@@ -713,32 +713,6 @@
                 </div>
             @endif
         </div>
-        {{-- <div class="row"></div>
-    <div class="row">
-        <br>
-        <label class="txt-tamaño" for="firma">
-            Firma:</label>
-        <br/>
-        <br>
-        @if ($contratos->firma1 != null)
-            <p>Ya existe una firma registrada para este contrato</p>
-            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                firme el espacio.</p><br>
-            <label class="txt-tamaño">Actualizar firma </label>
-            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-            onclick="var input = document.getElementById('signature64');
-            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-        @endif
-    </div>
-    <div class="col s12 m3 distancia"></div>
-    <div class="distancia form-group col-md-4">
-        <div id="signaturePad" >
-            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-        </div>
-        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
-        <br/>
-    </div> --}}
-
     </div>
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 right-align btn-grd distancia">
