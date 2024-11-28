@@ -37,7 +37,7 @@ class CourseUser extends Model implements Auditable
     {
         $sections = Section::where('course_id', $this->course_id)->get();
 
-        $evaluaciones = Evaluation::getAll()->where('course_id', 24);
+        $evaluaciones = Evaluation::getAll()->where('course_id', $this->course_id);
 
         $i = 0;
         $i_less = 0;
