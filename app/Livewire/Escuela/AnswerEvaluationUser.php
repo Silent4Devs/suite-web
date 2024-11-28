@@ -119,6 +119,10 @@ class AnswerEvaluationUser extends Component
                     $this->userEvaluationId->score = $this->percentage;
                 }
 
+                if ($this->userEvaluationId->score >= 80) {
+                    $this->userEvaluationId->approved = true;
+                }
+
                 $this->userEvaluationId->quiz_size = $this->totalQuizQuestions;
                 $this->userEvaluationId->number_of_attempts = $this->userEvaluationId->number_of_attempts - 1;
                 $this->userEvaluationId->last_attempt = Carbon::now();
@@ -157,6 +161,10 @@ class AnswerEvaluationUser extends Component
 
                 if (($this->userEvaluationId->score < $this->percentage)) {
                     $this->userEvaluationId->score = $this->percentage;
+                }
+
+                if ($this->userEvaluationId->score >= 80) {
+                    $this->userEvaluationId->approved = true;
                 }
 
                 $this->userEvaluationId->quiz_size = $this->totalQuizQuestions;
