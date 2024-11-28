@@ -69,6 +69,7 @@ function getDiccionaryRequisionOrder($value)
         'otro_impuesto' => 'Otro impuesto',
         'envio' => 'Envío',
         'credito' => 'Crédito',
+        'rfc' => 'RFC',
     ];
 
     $valor = array_key_exists($value, $diccionary) ? $diccionary[$value] : $value;
