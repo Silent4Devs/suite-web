@@ -74,10 +74,6 @@
                                 <p>No current data available</p>
                             @endif
                         </div>
-                        @if ($cursoCompletado)
-                            <span
-                                style="padding: 5px 20px; background-color: #4cd587; color: #fff; border-radius: 100px;">Completado</span>
-                        @endif
                     </div>
 
                 </div>
