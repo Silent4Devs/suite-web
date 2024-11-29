@@ -35,6 +35,15 @@ class RequisicionesObserver
         $this->forgetCache();
     }
 
+     /**
+     * Handle the Requsicion "deleted" event.
+     */
+    public function cancelarRequisicion(Requsicion $requsicion): void
+    {
+        event(new RequisicionesEvent($requsicion, 'cancelarRequisicion', 'requisiciones', 'Requisicion'));
+        $this->forgetCache();
+    }
+
     /**
      * Handle the Requsicion "restored" event.
      */
