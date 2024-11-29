@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@section('titulo', 'Ver Orden de Compra')
+{{-- @section('titulo', 'Ver Orden de Compra') --}}
 
 @include('layouts.datatables_css')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">

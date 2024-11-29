@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@section('titulo', 'Actualizar Requisicion')
+{{-- @section('titulo', 'Actualizar Requisicion') --}}
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 <link rel="stylesheet" href="{{ asset('css/requisitions/jquery.signature.css') }}{{ config('app.cssVersion') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">

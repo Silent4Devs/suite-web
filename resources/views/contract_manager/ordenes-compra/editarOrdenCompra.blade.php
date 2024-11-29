@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@section('titulo', 'Actualizar Orden de Compra')
+{{-- @section('titulo', 'Actualizar Orden de Compra') --}}
 
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 <link rel="stylesheet" href="{{ asset('css/requisitions/jquery.signature.css') }}{{ config('app.cssVersion') }}">
