@@ -1158,7 +1158,7 @@ class RequisicionesController extends Controller
 
             $requisicion = KatbolRequsicion::where('id', $request->id)->first();
 
-            event(new RequisicionesEvent($requisicion, 'cancelarRequisicion', 'requisiciones', 'Requisición'));
+            event(new RequisicionesEvent($requisicion, 'cancelarRequisicion', 'requisiciones', 'Requisicion'));
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 

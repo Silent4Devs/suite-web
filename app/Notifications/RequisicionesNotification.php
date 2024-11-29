@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class RequisicionesNotification extends Notification
 {
@@ -68,10 +69,12 @@ class RequisicionesNotification extends Notification
     {
         return [
             'id' => $this->requsicion->id,
-            'type' => $this->tipo_consulta,
+            'updated_at' => $this->requsicion->updated_at,
+            'deleted_at' => $this->requsicion->deleted_at,
             'time' => Carbon::now(),
+            'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
-            'slug' => $this->slug,
+            'slug' => $this->slug
         ];
     }
 }
