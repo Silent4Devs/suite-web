@@ -314,11 +314,7 @@ class RequisicionesCreateComponent extends Component
 
             $supervisor = User::find($this->nueva_requisicion->id_user)->empleado->supervisor->email;
 
-            $requsicion = $this->requisicion = KatbolRequsicion::with('comprador.user', 'sucursal')->where('id',$this->requisicion_id)->first();
-
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->queue(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
-
-            event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
 
             return redirect(route('contract_manager.requisiciones'));
         }
