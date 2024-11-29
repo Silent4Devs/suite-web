@@ -282,6 +282,7 @@ class RequisicionesController extends Controller
     public function destroy($id)
     {
         $requisicion = KatbolRequsicion::where('id', $id)->first();
+        event(new RequisicionesEvent($requisicion, 'destroy', 'requisiciones', 'Requisicion'));
         if ($requisicion) {
             $requisicion->delete();
 
