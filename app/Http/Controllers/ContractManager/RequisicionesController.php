@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Events\RequisicionesEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionesFirmaDuplicadaEmail;
@@ -1156,6 +1157,8 @@ class RequisicionesController extends Controller
             $organizacion = $this->obtenerOrganizacion();
 
             $requisicion = KatbolRequsicion::where('id', $request->id)->first();
+
+            event(new RequisicionesEvent($requisicion, 'cancelarRequisicion', 'requisiciones', 'Requisición'));
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 

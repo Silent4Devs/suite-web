@@ -47,7 +47,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
@@ -63,7 +63,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
