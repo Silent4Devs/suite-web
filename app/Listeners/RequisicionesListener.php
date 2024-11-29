@@ -60,20 +60,11 @@ class RequisicionesListener implements ShouldQueue
                     dd($th);
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
-                $firmas = FirmasOrdenesCompra::with(
-                    'solicitante',
-                    'responsableFinanzas',
-                    'comprador'
-                )->where('requisicion_id', $requisicion->id)->first();
 
-                // ordenes de compra
-                    $comprador_empleado = $firmas->comprador;
+                $user_solicitante = User::where('id', $event->requsicion->id_user)
+                ->first();
 
-                    $user_compras = User::where('email', $comprador_empleado->email)
-                    ->first();
-
-                    Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-
+                Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
 
             } else {
 
