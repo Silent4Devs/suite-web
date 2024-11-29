@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@section('titulo', 'Firmar Requisicion')
+{{-- @section('titulo', 'Firmar Requisicion') --}}
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
 @if ($alerta)
