@@ -1080,7 +1080,7 @@ class OrdenCompraController extends Controller
 
             $requisicion = KatbolRequsicion::where('id',$request->id)->first();
 
-            event(new RequisicionesEvent($requisicion, 'cancelarOrdenCompra', 'requisiciones', 'Requisicion'));
+            event(new RequisicionesEvent($requisicion, 'cancelarOrdenCompra', 'requisiciones', 'Orden de compra'));
 
             $firmas = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 
