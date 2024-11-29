@@ -83,7 +83,6 @@ class RequisicionesListener implements ShouldQueue
 
                     if ($event->requsicion->firma_finanzas !== null) {
                         $finanzas_empleado = $firmas->responsableFinanzas;
-                        dd($finanzas_empleado);
                         $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
                             ->first();
 
