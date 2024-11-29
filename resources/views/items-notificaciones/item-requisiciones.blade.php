@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada solicita su firma</p>
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada: {{ $last_unread_notification->data['id'] }} solicita su firma</p>
                     </div>
                 @break
 
@@ -47,7 +47,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La requisicion: {{ $last_unread_notification->data['slug'] }}
+                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
                         ha
                         sido cancelada
                     </div>
@@ -63,7 +63,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La orden de compra correspondiente: {{ $last_unread_notification->data['slug'] }}
+                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
                         ha
                         sido cancelada
                     </div>
