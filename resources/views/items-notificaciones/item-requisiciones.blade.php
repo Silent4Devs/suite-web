@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada: {{ $last_unread_notification->data['id'] }} solicita su firma</p>
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada solicita su firma</p>
                     </div>
                 @break
 
