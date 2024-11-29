@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Tenant;
 
-use App\Actions\CreateTenantAction;
+use App\Actions\Tenant\TBTenantCreateTenantAction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 
-class TbTenantRegisterController extends Controller
+class TBTenantRegisterController extends Controller
 {
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.
@@ -28,7 +28,7 @@ class TbTenantRegisterController extends Controller
             unset($data['domain']);
 
             // Crear el inquilino
-            $tenant = (new CreateTenantAction)($data, $domain);
+            $tenant = (new TBTenantCreateTenantAction)($data, $domain);
 
             // Generar la URL completa del tenant
             $tenantUrl = $this->generateTenantUrl($domain, 'admin.inicio-Usuario.index');
@@ -39,14 +39,12 @@ class TbTenantRegisterController extends Controller
                 'tenant_id' => $tenant->id,
                 'tenant_url' => $tenantUrl
             ], 201);
-
         } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Datos de validación incorrectos',
                 'errors' => $e->errors(),
             ], 422);
-
         } catch (QueryException $e) {
             if ($e->getCode() === '23000') { // Código para errores de constraint en bases de datos
                 return response()->json([

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tenant;
 
 use App\Http\Controllers\Api\tbApiPanelControlController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class VisitantesMiddleware
+class TBTenantVisitantesMiddleware
 {
     /**
      * Handle an incoming request.

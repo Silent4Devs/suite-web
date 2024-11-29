@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tenant;
+
+use Closure;
 
 use App\Http\Controllers\Api\tbApiPanelControlController;
-use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GestionTalentoMiddleware
+class TBTenantCentroAtencionMiddleware
 {
     /**
      * Handle an incoming request.
@@ -36,7 +37,7 @@ class GestionTalentoMiddleware
             if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
                 // Filtrar el módulo que cumpla con las condiciones deseadas
                 $modulo = array_filter($client["modulos"], function ($modulo) {
-                    return $modulo["nombre_catalogo"] == "Gestión de Talento" && $modulo["estatus"] == true;
+                    return $modulo["nombre_catalogo"] == "Centro de Atención" && $modulo["estatus"] == true;
                 });
 
                 // Verificar si existe un módulo que cumpla con la condición

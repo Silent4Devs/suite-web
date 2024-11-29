@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Auth;
 
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Tenant;
-use App\Services\TenantManager;
+use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class AuthGates
 {
     protected $tenantManager;
 
-    public function __construct(TenantManager $tenantManager)
+    public function __construct(TBTenantTenantManager $tenantManager)
     {
         $this->tenantManager = $tenantManager;
     }

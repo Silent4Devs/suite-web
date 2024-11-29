@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tenant;
 
 use App\Http\Controllers\Api\tbApiPanelControlController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GestionFinancieraMiddleware
+class TBTenantKatbolMiddleware
 {
     /**
      * Handle an incoming request.
@@ -34,12 +34,15 @@ class GestionFinancieraMiddleware
             $client = $response->original[0];
 
             if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
-                // Filtrar el módulo que cumpla con las condiciones deseadas
-                $modulo = array_filter($client["modulos"], function ($modulo) {
-                    return $modulo["nombre_catalogo"] == "Gestión Financiera" && $modulo["estatus"] == true;
+                // Definir los nombres de los módulos que son válidos
+                $modulosValidos = ["Gestión Contractual", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
+
+                // Filtrar los módulos que cumplan con las condiciones deseadas
+                $modulo = array_filter($client["modulos"], function ($modulo) use ($modulosValidos) {
+                    return in_array($modulo["nombre_catalogo"], $modulosValidos) && $modulo["estatus"] == true;
                 });
 
-                // Verificar si existe un módulo que cumpla con la condición
+                // Verificar si existe algún módulo que cumpla con la condición
                 $estatus = !empty($modulo);
                 return $estatus ? true : false;
             } else {

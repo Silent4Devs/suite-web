@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Tenant;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use App\Services\TenantManager;
 use App\Models\Tenant;
+use App\Services\Tenant\TBTenantTenantManager;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  * We don't use a listener here, because we want to be able to create "simplified" tenants in tests.
  * This action is only used when we need to create the tenant properly (with billing logic etc).
  */
-class CreateTenantAction
+class TBTenantCreateTenantAction
 {
     /**
      * Crea un nuevo inquilino con el dominio especificado, datos de usuario y cliente en Stripe si es necesario.
@@ -87,7 +87,7 @@ class CreateTenantAction
     protected function initializeTenantDatabase(Tenant $tenant, array $userData)
     {
         $this->createDatabaseForTenant($tenant);
-        app(TenantManager::class)->setTenant($tenant);
+        app(TBTenantTenantManager::class)->setTenant($tenant);
 
         $this->runMigrations();
         $this->seedInitialData($userData);

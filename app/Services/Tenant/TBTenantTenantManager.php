@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Tenant;
 
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class TenantManager
+class TBTenantTenantManager
 {
     protected $tenant;
 
@@ -48,5 +49,18 @@ class TenantManager
     protected function conigurateAuthTenant($tenant)
     {
         Config::set('auth.providers.tenant_users.connection', 'tenant');
+    }
+
+    public function getTenantFromRequest($request)
+    {
+        $subdomain = explode('.', $request->getHost(), 2)[0];
+
+        $tenant = Tenant::whereHas(
+            'domains',
+            fn($query) =>
+            $query->where('domain', $subdomain)
+        )->firstOrFail();
+
+        return $tenant->stripe_id;
     }
 }

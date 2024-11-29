@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Tenant;
 
 use Exception;
 use Stripe\StripeClient;
@@ -9,7 +9,7 @@ use Stripe\Customer;
 use Stripe\Product;
 use Stripe\Stripe;
 
-class TbStripeService
+class TBTenantStripeService
 {
     protected $stripeClient;
 

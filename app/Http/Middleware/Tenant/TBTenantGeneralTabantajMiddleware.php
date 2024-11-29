@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tenant;
 
 use App\Http\Controllers\Api\tbApiPanelControlController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GestorDocumentalMiddleware
+class TBTenantGeneralTabantajMiddleware
 {
     /**
      * Handle an incoming request.
@@ -35,13 +35,7 @@ class GestorDocumentalMiddleware
 
             if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
                 // Filtrar el módulo que cumpla con las condiciones deseadas
-                $modulo = array_filter($client["modulos"], function ($modulo) {
-                    return $modulo["nombre_catalogo"] == "Gestor Documental" && $modulo["estatus"] == true;
-                });
-
-                // Verificar si existe un módulo que cumpla con la condición
-                $estatus = !empty($modulo);
-                return $estatus ? true : false;
+                return true;
             } else {
                 // Procesa la respuesta según sea necesario
                 return false;

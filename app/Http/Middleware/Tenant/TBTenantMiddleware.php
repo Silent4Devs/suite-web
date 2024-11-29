@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tenant;
 
 use Closure;
 use App\Models\Tenant;
-use App\Services\TbStripeService;
-use App\Services\TenantManager;
+use App\Services\Tenant\TBTenantStripeService;
+use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
-class TenantMiddleware
+class TBTenantMiddleware
 {
     protected $tenantManager;
 
     protected $stripeService;
 
-    public function __construct(TenantManager $tenantManager, TbStripeService $stripeService)
+    public function __construct(TBTenantTenantManager $tenantManager, TBTenantStripeService $stripeService)
     {
         $this->tenantManager = $tenantManager;
         $this->stripeService = $stripeService;
@@ -34,12 +34,6 @@ class TenantMiddleware
 
             $this->tenantManager->setTenant($tenant);
             tenancy()->initialize($tenant);
-
-            $cuts = $tenant->stripe_id;
-
-            $cliente = $this->stripeService->getCustomerById($cuts);
-
-            $suscripciones = $this->stripeService->getCustomerSubscriptions($cuts);
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
         } catch (\Exception $e) {
