@@ -14,7 +14,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} : {{ $last_unread_notification->data['id'] }} creada solicita su firma</p>
+                        <p class="p-0 m-0">Nueva {{ $last_unread_notification->data['slug'] }} creada solicita su firma</p>
                     </div>
                 @break
 
@@ -47,7 +47,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
@@ -63,15 +63,13 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La {{ $last_unread_notification->data['slug'] }}: {{ $last_unread_notification->data['id'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
                 @break
 
                 @default
-
-                <p>prueba test</p>
             @endswitch
         </a>
     </div>
