@@ -25,6 +25,7 @@ use App\Models\ListaInformativa;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
 use DB;
 use Gate;
 use Illuminate\Http\Request;
@@ -71,6 +72,10 @@ class OrdenCompraController extends Controller
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
                 ->get();
+        }
+
+        foreach($requisiciones as $requisicion){
+            $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
         $organizacion_actual = $this->obtenerOrganizacion();
