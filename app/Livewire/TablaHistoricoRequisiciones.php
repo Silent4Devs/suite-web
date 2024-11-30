@@ -8,6 +8,7 @@ use App\Models\ContractManager\Producto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\HistorialEdicionesReq;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -122,7 +123,18 @@ class TablaHistoricoRequisiciones extends Component
                         ? $proveedores[$registro->valor_nuevo]->razon_social.' - '.$proveedores[$registro->valor_nuevo]->nombre
                         : 'Sin valor nuevo registrado';
                     break;
-
+                case 'fecha':
+                    $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    break;
+                case 'fecha_inicio':
+                    $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    break;
+                case 'fecha_fin':
+                    $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                        break;
                 default:
                     break;
             }
