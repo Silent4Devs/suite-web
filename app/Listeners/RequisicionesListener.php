@@ -50,102 +50,22 @@ class RequisicionesListener implements ShouldQueue
 
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
-
                 try {
-                    $firmas = FirmasRequisiciones::with(
-                        'solicitante',
-                        'jefe',
-                        'responsableFinanzas',
-                        'comprador'
-                    )->where('requisicion_id', $requisicion->id)->first();
-
-                    // requisiciones
-                    if ($event->requsicion->firma_solicitante === null) {
                         $user_solicitante = User::where('id', $event->requsicion->id_user)
                             ->first();
 
                         Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                    }
 
-                    if ($event->requsicion->firma_jefe === null) {
-                        $jefe_empleado = $firmas->jefe;
-
-                        $user_jefe = User::where('empleado_id', $jefe_empleado->id)
-                            ->first();
-
-                        if ($user_jefe == null) {
-                            $user_jefe = User::where('email', $jefe_empleado->email)
-                                ->first();
-                        }
-
-                        Notification::send($user_jefe, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                    }
-
-                    if ($event->requsicion->firma_finanzas === null) {
-                        $finanzas_empleado = $firmas->responsableFinanzas;
-
-                        $user_finanzas = User::where('empleado_id', $finanzas_empleado->id)
-                            ->first();
-
-                        if ($user_finanzas == null) {
-                            $user_finanzas = User::where('email', $finanzas_empleado->email)
-                                ->first();
-                        }
-
-                        Notification::send($user_finanzas, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                    }
-
-                    if ($event->requsicion->firma_compras === null) {
-                        $comprador_empleado = $firmas->comprador;
-
-                        $user_compras = User::where('empleado_id', $comprador_empleado->id)
-                            ->first();
-
-                        if ($user_compras == null) {
-                            $user_compras = User::where('email', $comprador_empleado->email)
-                                ->first();
-                        }
-
-                        Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                    }
                 } catch (\Throwable $th) {
                     dd($th);
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
-                $firmas = FirmasOrdenesCompra::with(
-                    'solicitante',
-                    'responsableFinanzas',
-                    'comprador'
-                )->where('requisicion_id', $requisicion->id)->first();
 
-                // ordenes de compra
-                if ($event->requsicion->firma_comprador_orden === null) {
+                $user_solicitante = User::where('id', $event->requsicion->id_user)
+                ->first();
 
-                    $comprador_empleado = $firmas->comprador;
+                Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
 
-                    $user_compras = User::where('empleado_id', $comprador_empleado->id)
-                        ->first();
-
-                    if ($user_compras == null) {
-                        $user_compras = User::where('email', $comprador_empleado->email)
-                            ->first();
-                    }
-
-                    Notification::send($user_compras, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                }
-
-                if ($event->requsicion->firma_solicitante_orden === null) {
-
-                    $user_solicitante = User::where('empleado_id', $firmas->solicitante->id)
-                        ->first();
-
-                    if ($user_solicitante == null) {
-                        $user_solicitante = User::where('email', $firmas->solicitante->email)
-                            ->first();
-                    }
-
-                    Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
-                }
             } else {
 
                 try {

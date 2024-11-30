@@ -35,6 +35,7 @@ class RequisicionesObserver
         $this->forgetCache();
     }
 
+
     /**
      * Handle the Requsicion "restored" event.
      */
