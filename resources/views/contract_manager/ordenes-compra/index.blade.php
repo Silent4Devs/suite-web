@@ -150,7 +150,7 @@
                                                 </a>
                                             @endif
 
-                                            @if ($req->estado_orden == 'curso')
+                                            @if ($req->estado_orden == 'curso' || $req->estado_orden == 'fin')
                                                 <a href="#"
                                                     onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})"
                                                     class="dropdown-item" title="Cancelar Orden">
