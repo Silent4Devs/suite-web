@@ -1240,20 +1240,27 @@ class Requsicion extends Model implements Auditable
         $jefe = $user->empleado->supervisor;
         $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-        $nivel = $supList->nivel;
+        $nivel = $supList->nivel ?? null; // Asignar null si no está definido
 
+        // Validar si $nivel es nulo
+        if (is_null($nivel)) {
+            return $jefe; // Retornar $jefe si $nivel no está definido
+        }
+
+        // Filtrar participantes por nivel
         $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
+        // Recorrer los participantes filtrados
         foreach ($participantesNivel as $key => $partNiv) {
             if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
                 $responsable = $partNiv->empleado;
-
-                return $responsable;
+                return $responsable; // Retornar el responsable si se encuentra disponible
             }
         }
 
+        // Si no se encuentra responsable disponible, retornar $jefe
         return $jefe;
+
     }
 
     public function getObtenerResponsableFinanzasAttribute()
