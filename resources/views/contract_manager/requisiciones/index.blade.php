@@ -200,7 +200,7 @@
                                                 class="dropdown-item">
                                                 <span class="material-symbols-outlined">cancel</span> Cancelar
                                             </a>
-                                        @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada')
+                                        @elseif($requisicion->estado == 'aprobado' || $requisicion->estado == 'firmada' || $requisicion->estado == 'firmada_final')
                                             <a onclick="mostrarAlerta3('{{ route('contract_manager.requisiciones.cancelarRequisicion', $requisicion->id) }}', 2, {{ $requisicion->id }})"
                                                 class="dropdown-item">
                                                 <span class="material-symbols-outlined">cancel</span> Cancelar

@@ -23,6 +23,7 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -52,6 +53,9 @@ class RequisicionesController extends Controller
 
         if ($user->roles->contains('title', 'Admin')) {
             $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
@@ -143,7 +147,6 @@ class RequisicionesController extends Controller
 
             return view('contract_manager.requisiciones.show', compact('requisicion', 'organizacion', 'firma_siguiente', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas', 'resultadoRequisiciones'));
         } catch (\Exception $e) {
-            dd($e);
             abort(404);
         }
     }
@@ -618,6 +621,10 @@ class RequisicionesController extends Controller
             $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
+        }
+
+        foreach($requisiciones as $requisicion){
+            $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
         $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
