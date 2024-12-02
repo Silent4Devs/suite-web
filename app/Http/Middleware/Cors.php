@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Cors
 {
@@ -32,6 +35,7 @@ class Cors
         if ($request->getMethod() == 'OPTIONS') {
             return response()->json('ok', 200, $headers);
         }
+        
         $response = $next($request);
         if ($response instanceof $IlluminateResponse) {
             foreach ($headers as $key => $value) {

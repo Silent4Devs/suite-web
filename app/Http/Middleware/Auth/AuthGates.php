@@ -24,6 +24,7 @@ class AuthGates
 
     public function handle($request, Closure $next)
     {
+        
         try {
             $subdomain = explode('.', $request->getHost(), 2)[0];
 
@@ -35,14 +36,12 @@ class AuthGates
 
             $this->tenantManager->setTenant($tenant);
             tenancy()->initialize($tenant);
-
-            $cuts = $tenant->stripe_id;
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
         } catch (\Exception $e) {
             abort(500, 'An unexpected error occurred.');
         }
-        //dd(Auth::user(), User::getAll(), DB::connection());
+
         $user = \Auth::user();
 
         if ($user) {

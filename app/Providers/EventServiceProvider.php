@@ -259,10 +259,12 @@ use App\Observers\UsersObserver;
 use App\Observers\UsuariosListaInformativaObserver;
 use App\Observers\VersionesIsoObserver;
 use App\Observers\VulnerabilidadObserver;
+use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider

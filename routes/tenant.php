@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Tenant as Controllers;
-use App\Http\Middleware\CheckSubscription;
+
 use App\Http\Middleware\OwnerOnly;
+use App\Http\Middleware\Tenant\CheckSubscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;

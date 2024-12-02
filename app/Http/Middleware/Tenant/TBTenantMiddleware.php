@@ -7,7 +7,7 @@ use App\Models\Tenant;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Auth;
 
 class TBTenantMiddleware
 {
@@ -34,6 +34,8 @@ class TBTenantMiddleware
 
             $this->tenantManager->setTenant($tenant);
             tenancy()->initialize($tenant);
+            $request->merge(['tenant' => $tenant]);
+            
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
         } catch (\Exception $e) {

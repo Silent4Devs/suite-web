@@ -30,10 +30,12 @@ class TBTenantTimesheetMiddleware
     {
         $stripeId = $this->tenantManager->getTenantFromRequest($request);
 
-        $suscripciones = $this->stripeService->getProductsByCustomer($stripeId);
+        $suscripciones = $this->stripeService->getProductsByCustomer ($stripeId);
 
-        dd($suscripciones);
-        $estado = $this->consultaApi();
+        $modulosValidos = ["Gestión de Talento", "Gestión Financiera"];
+
+        $estado = $this->getTenantConsultaEstatus($suscripciones,$modulosValidos);
+        dd($estado);    
         if ($estado) {
             return $next($request);
         } else {
@@ -41,32 +43,23 @@ class TBTenantTimesheetMiddleware
         }
     }
 
-    public function consultaApi()
+    public function getTenantConsultaEstatus($suscripciones, $modulosValidos)
     {
         try {
-            $apiController = new tbApiPanelControlController();
-            $response = $apiController->getData();
+            if (!empty($suscripciones) && is_array($suscripciones)) {
 
-            $client = $response->original[0];
-
-            if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
-                // Definir los nombres de los módulos que son válidos
-                $modulosValidos = ["Gestión de Talento", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
-
-                // Filtrar los módulos que cumplan con las condiciones deseadas
-                $modulo = array_filter($client["modulos"], function ($modulo) use ($modulosValidos) {
-                    return in_array($modulo["nombre_catalogo"], $modulosValidos) && $modulo["estatus"] == true;
-                });
-
-                // Verificar si existe algún módulo que cumpla con la condición
-                $estatus = !empty($modulo);
-                return $estatus ? true : false;
+                foreach ($suscripciones as $suscription) {
+                    if (in_array($suscription->name, $modulosValidos) && $suscription->active === true) {
+                        return $suscription->active ? true : false;
+                    } else {
+                        return false;
+                    }
+                }
+                
             } else {
-                // Procesa la respuesta según sea necesario
                 return false;
             }
         } catch (\Throwable $th) {
-            //throw $th;
             abort(403);
         }
     }
