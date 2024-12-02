@@ -44,6 +44,7 @@ class TBTenantTenantManager
         }
         Schema::connection('tenant')->getConnection()->reconnect();
         DB::setDefaultConnection('tenant');
+        app()->instance('tenant', $tenant);
     }
 
     protected function conigurateAuthTenant($tenant)

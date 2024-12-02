@@ -27,6 +27,7 @@ class User extends Authenticatable implements Auditable
 
     protected $guard = 'tenants';
 
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

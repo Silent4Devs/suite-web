@@ -35,8 +35,7 @@ class AuthGates
 
             $this->tenantManager->setTenant($tenant);
             tenancy()->initialize($tenant);
-
-            $cuts = $tenant->stripe_id;
+            app()->instance('currentTenant', $tenant);
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
         } catch (\Exception $e) {

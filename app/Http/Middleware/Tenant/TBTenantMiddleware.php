@@ -34,6 +34,7 @@ class TBTenantMiddleware
 
             $this->tenantManager->setTenant($tenant);
             tenancy()->initialize($tenant);
+            app()->instance('currentTenant', $tenant);
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
         } catch (\Exception $e) {

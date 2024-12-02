@@ -54,7 +54,6 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-
         if (auth()->user()->is_admin) {
             return '/admin/portal-comunicacion';
         }
@@ -64,6 +63,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        $tenant = $user->tenant;
         if ($user->two_factor) {
             $user->generateTwoFactorCode();
             $user->notify(new TwoFactorCodeNotification);
