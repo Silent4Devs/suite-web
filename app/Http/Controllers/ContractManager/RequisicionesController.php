@@ -51,7 +51,7 @@ class RequisicionesController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $user = User::getCurrentUser();
 
-        if ($user->roles->contains('title', 'Admin')) {
+        if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
             foreach($requisiciones as $requisicion){
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
