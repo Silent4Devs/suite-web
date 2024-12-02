@@ -252,7 +252,6 @@ class SolicitudVacacionesController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
             'empleado_id' => 'required|int',
-            'dias_solicitados' => 'required|int',
             'año' => 'required|int',
             'autoriza' => 'required|int',
         ]);
