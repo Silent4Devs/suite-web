@@ -623,6 +623,10 @@ class RequisicionesController extends Controller
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
         }
 
+        foreach($requisiciones as $requisicion){
+            $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+        }
+
         $LD = ListaDistribucion::where('modelo', $this->modelo)->first();
         $participantes = $LD->participantes;
         $sustitutosLD = [];
