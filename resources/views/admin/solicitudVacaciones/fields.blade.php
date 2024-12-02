@@ -153,7 +153,7 @@
             <div class="form-group col-sm-12">
                 <i class="bi bi-calendar-week-fill iconos-crear"></i>
                 <label for="dias_solicitados" class="required">Días solicitados:</label>
-                <input type="number" name="dias_solicitados" class="form-control" placeholder="0" readonly id="dias_solicitados" style="text-align:center">
+                <input type="number" name="dias_solicitados" class="form-control" placeholder="0"  id="dias_solicitados" style="text-align:center">
                 @error('dias_solicitados')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
