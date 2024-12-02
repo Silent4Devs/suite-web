@@ -15,6 +15,7 @@ use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicio
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\FirmasRequisiciones;
+use App\Models\HistorialEdicionesReq;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
@@ -179,6 +180,8 @@ class RequisicionesEditComponent extends Component
         'contadorColor' => null,
     ];
 
+    public $versionReqId = null;
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
@@ -223,6 +226,30 @@ class RequisicionesEditComponent extends Component
         $this->descripcion = $this->editRequisicion->referencia;
         $this->comprador_id = $this->editRequisicion->comprador_id;
         $this->contrato_id = $this->editRequisicion->contrato_id;
+
+        $this->versionReqId = DB::table('versiones_requisicion')
+            ->where('requisicion_id', $this->editRequisicion->id)
+            ->where('last_updated_at', '>=', now()->subMinutes(1))
+            ->value('id');
+
+        // Si no existe, crear una nueva versión
+        if (! $this->versionReqId) {
+            $ultimaVersionOrdenCompra = DB::table('versiones_requisicion')
+                ->where('requisicion_id', $this->editRequisicion->id)
+                ->orderBy('version', 'desc')
+                ->first();
+
+            $nuevaVersion = $ultimaVersionOrdenCompra ? $ultimaVersionOrdenCompra->version + 1 : 1;
+
+            // Crear la nueva versión
+            $this->versionReqId = DB::table('versiones_requisicion')->insertGetId([
+                'requisicion_id' => $this->editRequisicion->id,
+                'version' => $nuevaVersion,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'last_updated_at' => now(),
+            ]);
+        }
 
         foreach ($this->editRequisicion->productos_requisiciones as $keyProducto => $producto) {
             if ($keyProducto == 0) {
@@ -339,7 +366,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -420,12 +447,37 @@ class RequisicionesEditComponent extends Component
 
             switch ($this->array_proveedores[$keyP]['tabla_origen']) {
                 case 'ProvedorRequisicionCatalogo':
+
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProvedorRequisicionCatalogo::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => 'proveedor_id',
+                        'valor_anterior' => $this->array_proveedores[$keyP]['id_registro'],
+                        'valor_nuevo' => "Eliminado",
+                        'version_id' => $this->versionReqId,
+                    ]);
+
+                    // ProvedorRequisicionCatalogo
+                    // ProveedorIndistinto
+                    // ProveedorRequisicion
+
                     KatbolProvedorRequisicionCatalogo::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
                     // code...
                     $this->alert('success', 'Registro Eliminado');
 
                     break;
                 case 'ProveedorIndistinto':
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProveedorIndistinto::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => 'Proveedor Indistinto',
+                        'valor_anterior' => "Indistinto",
+                        'valor_nuevo' => "Eliminado",
+                        'version_id' => $this->versionReqId,
+                    ]);
+
                     KatbolProveedorIndistinto::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
                     // code...
                     $this->alert('success', 'Registro Eliminado');
@@ -433,6 +485,19 @@ class RequisicionesEditComponent extends Component
                     break;
 
                 case 'ProveedorRequisicion':
+
+                    $PRS = KatbolProveedorRequisicion::where('id', $this->array_proveedores[$keyP]['id_registro'])->first();
+
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProveedorRequisicion::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => 'proveedor_id',
+                        'valor_anterior' => $PRS->proveedor,
+                        'valor_nuevo' => "Eliminado",
+                        'version_id' => $this->versionReqId,
+                    ]);
+
                     KatbolProveedorRequisicion::where('id', $this->array_proveedores[$keyP]['id_registro'])->delete();
                     // code...
                     $this->alert('success', 'Registro Eliminado');
@@ -497,13 +562,32 @@ class RequisicionesEditComponent extends Component
                     if ($proveedor['tabla_origen'] != 'ProveedorIndistinto') {
                         switch ($proveedor['tabla_origen']) {
                             case 'ProvedorRequisicionCatalogo':
+
+                                $prov_cat =  KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->first();
+
+                                $dataProvedoresIndistintoCatalogo[$keyProv] = [
+                                    'proveedor_anterior' => $prov_cat->proveedor_id,
+                                    'fecha_inicio_anterior' => $prov_cat->fechaInicio,
+                                    'fecha_fin_anterior' => $prov_cat->fechaFin,
+                                    'tabla_origen' => 'ProvedorRequisicionCatalogo'
+                                ];
                                 KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
                                 // code...
+
                                 $this->alert('success', 'Registro Eliminado');
 
                                 break;
 
                             case 'ProveedorRequisicion':
+
+                                $prov_sug =  KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->first();
+
+                                $dataProvedoresIndistintoCatalogo[$keyProv] = [
+                                    'proveedor_anterior' => $prov_sug->proveedor,
+                                    'fecha_inicio_anterior' => $prov_sug->fecha_inicio,
+                                    'fecha_fin_anterior' => $prov_sug->fecha_fin,
+                                    'tabla_origen' => 'ProveedorRequisicion'
+                                ];
                                 KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
                                 // code...
                                 $this->alert('success', 'Registro Eliminado');
@@ -516,18 +600,11 @@ class RequisicionesEditComponent extends Component
                         }
                     }
 
-                    $dataProvedoresIndistintoCatalogo[] = [
-                        // 'requisicion_id' => $this->nueva_requisicion->id,
+                    $dataProvedoresIndistintoCatalogo[$keyProv] += [
                         'id_registro' => $proveedor['id_registro'],
                         'fecha_inicio' => $proveedor['fechaInicio'],
                         'fecha_fin' => $proveedor['fechaFin'],
                     ];
-
-                    // $this->dataProvedoresIndistintoCatalogo = KatbolProveedorIndistinto::create([
-                    //     // 'requisicion_id' => $this->nueva_requisicion->id,
-                    //     'fecha_inicio' => $data['fechaInicio'],
-                    //     'fecha_fin' => $data['fechaFin'],
-                    // ]);
                 } elseif ($proveedor['select_otro'] == 'sugerido') {
                     // KatbolProveedorRequisicion
                     // $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $proveedor['archivo']->getClientOriginalExtension();
@@ -536,11 +613,29 @@ class RequisicionesEditComponent extends Component
                     if ($proveedor['tabla_origen'] != 'ProveedorRequisicion') {
                         switch ($proveedor['tabla_origen']) {
                             case 'ProvedorRequisicionCatalogo':
+
+                                $prov_cat =  KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->first();
+
+                                $dataProveedoresSugeridos[$keyProv] = [
+                                    'proveedor_anterior' => $prov_cat->proveedor_id,
+                                    'fecha_inicio_anterior' => $prov_cat->fechaInicio,
+                                    'fecha_fin_anterior' => $prov_cat->fechaFin,
+                                    'tabla_origen' => 'ProvedorRequisicionCatalogo'
+                                ];
                                 KatbolProvedorRequisicionCatalogo::where('id', $proveedor['id_registro'])->delete();
                                 // code...
                                 break;
 
                             case 'ProveedorIndistinto':
+
+                                $prov_ind =  KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->first();
+
+                                $dataProveedoresSugeridos[$keyProv] = [
+                                    'proveedor_anterior' => 'Indistinto',
+                                    'fecha_inicio_anterior' => $prov_ind->fecha_inicio,
+                                    'fecha_fin_anterior' => $prov_ind->fecha_fin,
+                                    'tabla_origen' => 'ProveedorIndistinto'
+                                ];
                                 KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
                                 // code...
                                 break;
@@ -552,7 +647,7 @@ class RequisicionesEditComponent extends Component
                     }
 
                     if ($proveedor['cotizacion'] != null) {
-                        $dataProveedoresSugeridos[] = [
+                        $dataProveedoresSugeridos[$keyProv] += [
                             'id_registro' => $proveedor['id_registro'],
                             'proveedor' => $proveedor['proveedor_id'],
                             'detalles' => $proveedor['detalles'],
@@ -570,7 +665,7 @@ class RequisicionesEditComponent extends Component
                             // 'requisiciones_id' => $proveedor[''],
                         ];
                     } else {
-                        $dataProveedoresSugeridos[] = [
+                        $dataProveedoresSugeridos[$keyProv] += [
                             'id_registro' => $proveedor['id_registro'],
                             'proveedor' => $proveedor['proveedor_id'],
                             'detalles' => $proveedor['detalles'],
@@ -594,11 +689,29 @@ class RequisicionesEditComponent extends Component
                 if ($proveedor['tabla_origen'] != 'ProvedorRequisicionCatalogo') {
                     switch ($proveedor['tabla_origen']) {
                         case 'ProveedorIndistinto':
+
+                            $prov_ind =  KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->first();
+
+                            $dataProvedoresCatalogo[$keyProv] = [
+                                'proveedor_anterior' => 'Indistinto',
+                                'fecha_inicio_anterior' => $prov_ind->fecha_inicio,
+                                'fecha_fin_anterior' => $prov_ind->fecha_fin,
+                                'tabla_origen' => 'ProveedorIndistinto'
+                            ];
                             KatbolProveedorIndistinto::where('id', $proveedor['id_registro'])->delete();
                             // code...
                             break;
 
                         case 'ProveedorRequisicion':
+
+                            $prov_sug =  KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->first();
+
+                            $dataProvedoresCatalogo[$keyProv] = [
+                                'proveedor_anterior' => $prov_sug->proveedor,
+                                'fecha_inicio_anterior' => $prov_sug->fecha_inicio,
+                                'fecha_fin_anterior' => $prov_sug->fecha_fin,
+                                'tabla_origen' => 'ProveedorRequisicion'
+                            ];
                             KatbolProveedorRequisicion::where('id', $proveedor['id_registro'])->delete();
                             // code...
                             break;
@@ -608,7 +721,7 @@ class RequisicionesEditComponent extends Component
                     }
                 }
 
-                $dataProvedoresCatalogo[] = [
+                $dataProvedoresCatalogo[$keyProv] += [
                     // 'requisicion_id' => $this->nueva_requisicion->id,
                     'id_registro' => $proveedor['id_registro'],
                     'proveedor_id' => $proveedor['proveedor_id'],
@@ -685,13 +798,82 @@ class RequisicionesEditComponent extends Component
                 );
             }
 
-            foreach ($dataProvedoresIndistintoCatalogo as $key => $provInd) {
+            foreach ($dataProvedoresIndistintoCatalogo as $provInd) {
+                $PRI = KatbolProveedorIndistinto::find($provInd['id_registro']);
+
+                // Función para registrar cambios en el historial
+                $createHistorial = function ($campo, $valorAnterior, $valorNuevo) use ($provInd) {
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProveedorIndistinto::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => $campo,
+                        'valor_anterior' => $valorAnterior,
+                        'valor_nuevo' => $valorNuevo,
+                        'version_id' => $this->versionReqId,
+                    ]);
+                };
+
+                // Si existe el registro, comparar y registrar cambios
+                if (!empty($PRI)) {
+                    if ($PRI->fecha_inicio != $provInd['fecha_inicio']) {
+                        $createHistorial('fecha_inicio', $PRI->fecha_inicio, $provInd['fecha_inicio']);
+                    }
+
+                    if ($PRI->fecha_fin != $provInd['fecha_fin']) {
+                        $createHistorial('fecha_fin', $PRI->fecha_fin, $provInd['fecha_fin']);
+                    }
+                } elseif ($provInd['tabla_origen'] != null) {
+
+                    switch ($provInd['tabla_origen']) {
+                        case 'ProveedorRequisicion':
+                            # code...
+
+                            $createHistorial('nombre_proveedor', $provInd['proveedor_anterior'], 'Indistinto');
+
+                            if ($provInd['fecha_inicio'] != $provInd['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provInd['fecha_inicio_anterior'], $provInd['fecha_inicio']);
+                            }
+
+                            if ($provInd['fecha_fin'] != $provInd['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provInd['fecha_fin_anterior'], $provInd['fecha_fin']);
+                            }
+
+                            break;
+
+                        case 'ProvedorRequisicionCatalogo':
+                            # code...
+
+                            $createHistorial('proveedor_id', $provInd['proveedor_anterior'], 'Indistinto');
+
+                            if ($provInd['fecha_inicio'] != $provInd['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provInd['fecha_inicio_anterior'], $provInd['fecha_inicio']);
+                            }
+
+                            if ($provInd['fecha_fin'] != $provInd['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provInd['fecha_fin_anterior'], $provInd['fecha_fin']);
+                            }
+
+                            break;
+
+                        default:
+                            # code...
+                            break;
+                    }
+                } else {
+                    // Si no existe, registrar como "Sin registrar"
+                    $createHistorial('fecha_inicio', 'Sin registrar', $provInd['fecha_inicio']);
+                    $createHistorial('fecha_fin', 'Sin registrar', $provInd['fecha_fin']);
+                }
+
+
+                // Actualizar o crear el registro
                 KatbolProveedorIndistinto::updateOrCreate(
                     [
                         'id' => $provInd['id_registro'],
-                        'requisicion_id' => $this->editRequisicion->id,
                     ],
                     [
+                        'requisicion_id' => $this->editRequisicion->id,
                         'fecha_inicio' => $provInd['fecha_inicio'],
                         'fecha_fin' => $provInd['fecha_fin'],
                     ]
@@ -699,62 +881,191 @@ class RequisicionesEditComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                if ($provSug['extArchivo'] != null) {
-                    $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key + 1 .'_'.uniqid().'.'.$provSug['extArchivo'];
-                    KatbolProveedorRequisicion::updateOrCreate(
-                        [
-                            'id' => $provSug['id_registro'],
-                            'requisiciones_id' => $this->editRequisicion->id,
-                        ],
-                        [
-                            'requisiciones_id' => $this->editRequisicion->id,
-                            'proveedor' => $provSug['proveedor'],
-                            'detalles' => $provSug['detalles'],
-                            'tipo' => $provSug['tipo'],
-                            'comentarios' => $provSug['comentarios'],
-                            'contacto' => $provSug['contacto'],
-                            'cel' => $provSug['cel'],
-                            'contacto_correo' => $provSug['contacto_correo'],
-                            'url' => $provSug['url'],
-                            'fecha_inicio' => $provSug['fecha_inicio'],
-                            'fecha_fin' => $provSug['fecha_fin'],
-                            'cotizacion' => $name,
-                        ]
-                    );
+                $PR = KatbolProveedorRequisicion::find($provSug['id_registro']);
 
-                    $ruta_cotizacion = $provSug['archivo']->storeAs('public/cotizaciones_requisiciones_proveedores/', $name);
-                } else {
-                    KatbolProveedorRequisicion::updateOrCreate(
-                        [
-                            'id' => $provSug['id_registro'],
-                            'requisiciones_id' => $this->editRequisicion->id,
-                        ],
-                        [
-                            'requisiciones_id' => $this->editRequisicion->id,
-                            'proveedor' => $provSug['proveedor'],
-                            'detalles' => $provSug['detalles'],
-                            'tipo' => $provSug['tipo'],
-                            'comentarios' => $provSug['comentarios'],
-                            'contacto' => $provSug['contacto'],
-                            'cel' => $provSug['cel'],
-                            'contacto_correo' => $provSug['contacto_correo'],
-                            'url' => $provSug['url'],
-                            'fecha_inicio' => $provSug['fecha_inicio'],
-                            'fecha_fin' => $provSug['fecha_fin'],
-                            // 'cotizacion' => $name,
-                        ]
-                    );
+                // Función para registrar cambios en el historial
+                $createHistorial = function ($campo, $valorAnterior, $valorNuevo) use ($provSug) {
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProveedorIndistinto::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => $campo,
+                        'valor_anterior' => $valorAnterior,
+                        'valor_nuevo' => $valorNuevo,
+                        'version_id' => $this->versionReqId,
+                    ]);
+                };
+
+                $data = [
+                    'requisiciones_id' => $this->editRequisicion->id,
+                    'proveedor' => $provSug['proveedor'],
+                    'detalles' => $provSug['detalles'],
+                    'tipo' => $provSug['tipo'],
+                    'comentarios' => $provSug['comentarios'],
+                    'contacto' => $provSug['contacto'],
+                    'cel' => $provSug['cel'],
+                    'contacto_correo' => $provSug['contacto_correo'],
+                    'url' => $provSug['url'],
+                    'fecha_inicio' => $provSug['fecha_inicio'],
+                    'fecha_fin' => $provSug['fecha_fin'],
+                ];
+
+                if (!empty($provSug['extArchivo'])) {
+                    $name = 'requisicion_' . $this->requisicion_id . '_cotizacion_' . ($key + 1) . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                    $data['cotizacion'] = $name;
+
+                    // Guardar el archivo en el sistema
+                    $provSug['archivo']->storeAs('public/cotizaciones_requisiciones_proveedores/', $name);
                 }
+
+                // Registrar en el historial si hay cambios
+                if ($PR) {
+                    foreach ($data as $campo => $nuevoValor) {
+                        $valorAnterior = $PR->$campo;
+
+                        if ($valorAnterior != $nuevoValor) {
+                            HistorialEdicionesReq::create([
+                                'requisicion_id' => $this->editRequisicion->id,
+                                'registro_tipo' => KatbolProveedorRequisicion::class,
+                                'id_empleado' => $this->currentUser->empleado->id,
+                                'campo' => $campo,
+                                'valor_anterior' => $valorAnterior ?? 'Sin registrar',
+                                'valor_nuevo' => $nuevoValor,
+                                'version_id' => $this->versionReqId,
+                            ]);
+                        }
+                    }
+                } elseif ($provSug['tabla_origen'] != null) {
+
+                    switch ($provSug['tabla_origen']) {
+
+                        case 'ProvedorRequisicionCatalogo':
+                            # code...
+
+                            $createHistorial('proveedor_id', $provSug['proveedor_anterior'], $provSug['proveedor']);
+
+                            if ($provSug['fecha_inicio'] != $provSug['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provSug['fecha_inicio_anterior'], $provSug['fecha_inicio']);
+                            }
+
+                            if ($provSug['fecha_fin'] != $provSug['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provSug['fecha_fin_anterior'], $provSug['fecha_fin']);
+                            }
+
+                            break;
+
+                        case 'ProveedorIndistinto':
+                            # code...
+
+                            $createHistorial('nombre_proveedor', 'Indistinto', $provSug['proveedor']);
+
+                            if ($provSug['fecha_inicio'] != $provSug['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provSug['fecha_inicio_anterior'], $provSug['fecha_inicio']);
+                            }
+
+                            if ($provSug['fecha_fin'] != $provSug['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provSug['fecha_fin_anterior'], $provSug['fecha_fin']);
+                            }
+
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                }
+
+                // Crear o actualizar el registro
+                KatbolProveedorRequisicion::updateOrCreate(
+                    [
+                        'id' => $provSug['id_registro'],
+                        'requisiciones_id' => $this->editRequisicion->id,
+                    ],
+                    $data
+                );
             }
 
-            foreach ($dataProvedoresCatalogo as $key => $provCat) {
+
+            foreach ($dataProvedoresCatalogo as $provCat) {
+                $PRC = KatbolProvedorRequisicionCatalogo::find($this->producto['id_registro']);
+
+                // Función para registrar cambios en el historial
+                $createHistorial = function ($campo, $valorAnterior, $valorNuevo) use ($provCat) {
+                    HistorialEdicionesReq::create([
+                        'requisicion_id' => $this->editRequisicion->id,
+                        'registro_tipo' => KatbolProvedorRequisicionCatalogo::class,
+                        'id_empleado' => $this->currentUser->empleado->id,
+                        'campo' => $campo,
+                        'valor_anterior' => $valorAnterior,
+                        'valor_nuevo' => $valorNuevo,
+                        'version_id' => $this->versionReqId,
+                    ]);
+                };
+
+                // Si existe el registro, comparar valores
+                if (!empty($PRC)) {
+                    if ($PRC->id != $provCat['proveedor_id']) {
+                        $createHistorial('proveedor_id', $PRC->id, $provCat['proveedor_id']);
+                    }
+
+                    if ($PRC->fecha_inicio != $provCat['fecha_inicio']) {
+                        $createHistorial('fecha_inicio', $PRC->fecha_inicio, $provCat['fecha_inicio']);
+                    }
+
+                    if ($PRC->fecha_fin != $provCat['fecha_fin']) {
+                        $createHistorial('fecha_fin', $PRC->fecha_fin, $provCat['fecha_fin']);
+                    }
+                } elseif ($provCat['tabla_origen'] != null) {
+
+                    switch ($provCat['tabla_origen']) {
+
+                        case 'ProveedorRequisicion':
+                            # code...
+
+                            $createHistorial('nombre_proveedor', $provCat['proveedor_anterior'], $provCat['proveedor_id']);
+
+                            if ($provCat['fecha_inicio'] != $provCat['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provCat['fecha_inicio_anterior'], $provCat['fecha_inicio']);
+                            }
+
+                            if ($provCat['fecha_fin'] != $provCat['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provCat['fecha_fin_anterior'], $provCat['fecha_fin']);
+                            }
+
+                            break;
+
+
+                        case 'ProveedorIndistinto':
+                            # code...
+
+                            $createHistorial('proveedor_id', 'Indistinto', $provCat['proveedor_id']);
+
+                            if ($provCat['fecha_inicio'] != $provCat['fecha_inicio_anterior']) {
+                                $createHistorial('fecha_inicio', $provCat['fecha_inicio_anterior'], $provCat['fecha_inicio']);
+                            }
+
+                            if ($provCat['fecha_fin'] != $provCat['fecha_fin_anterior']) {
+                                $createHistorial('fecha_fin', $provCat['fecha_fin_anterior'], $provCat['fecha_fin']);
+                            }
+
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                } else {
+                    // Si no existe, registrar como "Sin registrar"
+                    $createHistorial('proveedor_id', 'Sin registrar', $provCat['proveedor_id']);
+                    $createHistorial('fecha_inicio', 'Sin registrar', $provCat['fecha_inicio']);
+                    $createHistorial('fecha_fin', 'Sin registrar', $provCat['fecha_fin']);
+                }
+
+                // Actualizar o crear el registro
                 KatbolProvedorRequisicionCatalogo::updateOrCreate(
                     [
                         'id' => $provCat['id_registro'],
                         'requisicion_id' => $this->editRequisicion->id,
                     ],
                     [
-                        'requisicion_id' => $this->editRequisicion->id,
                         'proveedor_id' => $provCat['proveedor_id'],
                         'fecha_inicio' => $provCat['fecha_inicio'],
                         'fecha_fin' => $provCat['fecha_fin'],
