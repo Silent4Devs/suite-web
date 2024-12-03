@@ -251,7 +251,7 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
