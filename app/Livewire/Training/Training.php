@@ -213,10 +213,10 @@ class Training extends Component
         }
     }
 
-    public function mount($id)
+    public function mount($idTraining)
     {
         $this->names = collect();
-        $this->empleado_id = $id;
+        $this->empleado_id = $idTraining;
     }
 
     public function render()
