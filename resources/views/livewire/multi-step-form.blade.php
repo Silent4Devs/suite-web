@@ -575,7 +575,7 @@
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                                 <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
-                                                    <select class="form-control" name="catalogoObjetivos"
+                                                    <select class="form-control" required name="catalogoObjetivos"
                                                         id="catalogoObjetivos" wire:model="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
                                                             de

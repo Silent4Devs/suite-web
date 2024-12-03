@@ -58,11 +58,11 @@ class MultiStepForm extends Component
 
     public $showPesoGeneralCompetencias = false;
 
-    public $pesoGeneralCompetencias = 50;
+    public $pesoGeneralCompetencias = 0;
 
     public $showPesoGeneralObjetivos = false;
 
-    public $pesoGeneralObjetivos = 50;
+    public $pesoGeneralObjetivos = 0;
 
     public $sumaTotalPesoGeneral;
 
@@ -224,88 +224,121 @@ class MultiStepForm extends Component
 
     public function increaseStep()
     {
-        $this->resetErrorBag();
-        $this->validateData();
-        $this->dispatch('increaseStep');
-        $this->currentStep++;
-        if ($this->currentStep == 3) {
-            $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
-            // dd($this->listaEvaluados[0]['evaluado']);
+
+          // Verificar si el peso general por competencias es válido (≤ 100)
+          if ($this->pesoGeneralCompetencias > 100) {
+            $this->alert('error', 'Excede el peso general por competencias!');
+            return;
         }
-        if ($this->currentStep == 4) {
-            $this->listaEmpleadosSinCompetencias = collect();
-            $this->listaIDSinCompetencias = collect();
-            $this->listaEmpleadosSinObjetivos = collect();
-            $this->listaIDSinObjetivos = collect();
-            $this->listaEmpleadosObjetivosPendiente = collect();
-            $this->listaIDObjetivosPendiente = collect();
-            $this->totalEmpleadosSinCompetencias = 0;
-            $this->totalEmpleadosSinObjetivos = 0;
-            $this->totalEmpleadosObjetivosPendiente = 0;
-            $this->hayEmpleadosSinCompetencias = false;
-            $this->hayEmpleadosSinObjetivos = false;
-            $this->hayEmpleadosObjetivosPendiente = false;
-            foreach ($this->listaEvaluados as $evaluadoL) {
-                // dd($evaluadoL['evaluado']);
-                if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
-                    // dd($evaluadoL['evaluado']['id']);
-                    $this->hayEmpleadosSinCompetencias = true;
-                    $this->totalEmpleadosSinCompetencias++;
-                    $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
-                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['cuenta'] == 0) {
-                    $this->hayEmpleadosSinObjetivos = true;
-                    $this->totalEmpleadosSinObjetivos++;
-                    $this->listaEmpleadosSinObjetivos->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDSinObjetivos->push($evaluadoL['evaluado']['id']);
-                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['pendientes'] == true) {
-                    $this->hayEmpleadosObjetivosPendiente = true;
-                    $this->totalEmpleadosObjetivosPendiente++;
-                    $this->listaEmpleadosObjetivosPendiente->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDObjetivosPendiente->push($evaluadoL['evaluado']['id']);
+
+        // Verificar si el peso general por objetivos es válido (≤ 100)
+        if ($this->pesoGeneralObjetivos > 100) {
+            $this->alert('error', 'Excede el peso general por objetivos!');
+            return;
+        }
+
+        // Verificar si ambos pesos han sido completados y no son insuficientes
+        if ($this->pesoGeneralCompetencias < 100 && $this->pesoGeneralObjetivos === 0) {
+            $this->alert('error', 'Falta completar el peso general por objetivos!');
+            return;
+        }
+
+        if ($this->pesoGeneralObjetivos < 100 && $this->pesoGeneralCompetencias === 0) {
+            $this->alert('error', 'Falta completar el peso general por competencias!');
+            return;
+        }
+
+        // Calcular la suma total de los pesos generales
+        $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
+
+        // Verificar si la suma total es igual a 100
+        if ($this->sumaTotalPesoGeneral === 100) {
+            $this->resetErrorBag();
+            $this->validateData();
+            $this->dispatch('increaseStep');
+            $this->currentStep++;
+            if ($this->currentStep == 3) {
+                $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
+                // dd($this->listaEvaluados[0]['evaluado']);
+            }
+            if ($this->currentStep == 4) {
+                $this->listaEmpleadosSinCompetencias = collect();
+                $this->listaIDSinCompetencias = collect();
+                $this->listaEmpleadosSinObjetivos = collect();
+                $this->listaIDSinObjetivos = collect();
+                $this->listaEmpleadosObjetivosPendiente = collect();
+                $this->listaIDObjetivosPendiente = collect();
+                $this->totalEmpleadosSinCompetencias = 0;
+                $this->totalEmpleadosSinObjetivos = 0;
+                $this->totalEmpleadosObjetivosPendiente = 0;
+                $this->hayEmpleadosSinCompetencias = false;
+                $this->hayEmpleadosSinObjetivos = false;
+                $this->hayEmpleadosObjetivosPendiente = false;
+                foreach ($this->listaEvaluados as $evaluadoL) {
+                    // dd($evaluadoL['evaluado']);
+                    if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
+                        // dd($evaluadoL['evaluado']['id']);
+                        $this->hayEmpleadosSinCompetencias = true;
+                        $this->totalEmpleadosSinCompetencias++;
+                        $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
+                    } elseif ($evaluadoL['evaluado']['objetivos_asignados']['cuenta'] == 0) {
+                        $this->hayEmpleadosSinObjetivos = true;
+                        $this->totalEmpleadosSinObjetivos++;
+                        $this->listaEmpleadosSinObjetivos->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDSinObjetivos->push($evaluadoL['evaluado']['id']);
+                    } elseif ($evaluadoL['evaluado']['objetivos_asignados']['pendientes'] == true) {
+                        $this->hayEmpleadosObjetivosPendiente = true;
+                        $this->totalEmpleadosObjetivosPendiente++;
+                        $this->listaEmpleadosObjetivosPendiente->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDObjetivosPendiente->push($evaluadoL['evaluado']['id']);
+                    }
+                }
+
+                if ($this->totalEmpleadosSinCompetencias > 0) {
+                    $this->alert('warning', 'Sin Competencias', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } elseif ($this->totalEmpleadosSinObjetivos > 0) {
+                    $this->alert('warning', 'Sin Objetivos', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
+                    $this->alert('warning', 'Objetivos Pendientes', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } else {
+                    $this->bloquear_evaluacion = false;
                 }
             }
 
-            if ($this->totalEmpleadosSinCompetencias > 0) {
-                $this->alert('warning', 'Sin Competencias', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } elseif ($this->totalEmpleadosSinObjetivos > 0) {
-                $this->alert('warning', 'Sin Objetivos', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
-                $this->alert('warning', 'Objetivos Pendientes', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } else {
-                $this->bloquear_evaluacion = false;
+            if ($this->currentStep > $this->totalSteps) {
+                $this->currentStep = $this->totalSteps;
             }
-        }
-
-        if ($this->currentStep > $this->totalSteps) {
-            $this->currentStep = $this->totalSteps;
+        } else {
+            $this->alert('error', 'La suma total no alcanza 100. Verifique que ambos valores sumen 100.!');
+            return;
         }
     }
 
