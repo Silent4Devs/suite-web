@@ -19,6 +19,7 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Services\RequisicionService;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +31,7 @@ use Throwable;
 
 class RequisicionesCreateComponent extends Component
 {
+    use ObtenerOrganizacion;
     use LivewireAlert;
     use WithFileUploads;
 
@@ -310,7 +312,7 @@ class RequisicionesCreateComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -531,7 +533,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key.'_'.uniqid().'.'.$provSug['extArchivo'];
+                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key . '_' . uniqid() . '.' . $provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],
