@@ -34,12 +34,10 @@ class TimesheetListener implements ShouldQueue
     public function handle($event)
     {
 
-
         try {
             $empleado = Empleado::where('id', $event->timesheet->empleado_id)->first();
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleado->email)))->first();
-
 
             if ($user) {
                 // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario

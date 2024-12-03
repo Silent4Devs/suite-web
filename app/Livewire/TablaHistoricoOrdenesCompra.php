@@ -134,7 +134,7 @@ class TablaHistoricoOrdenesCompra extends Component
                 case 'fecha_fin':
                     $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
                     $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
-                        break;
+                    break;
 
                 default:
                     break;

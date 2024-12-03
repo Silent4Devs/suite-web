@@ -5,8 +5,6 @@ namespace App\Listeners;
 use App\Models\ContractManager\Comprador;
 use App\Models\ContractManager\Requsicion;
 use App\Models\Empleado;
-use App\Models\FirmasOrdenesCompra;
-use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\ParticipantesListaDistribucion;
 use App\Models\User;
@@ -51,10 +49,10 @@ class RequisicionesListener implements ShouldQueue
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
                 try {
-                        $user_solicitante = User::where('id', $event->requsicion->id_user)
-                            ->first();
+                    $user_solicitante = User::where('id', $event->requsicion->id_user)
+                        ->first();
 
-                        Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
+                    Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
 
                 } catch (\Throwable $th) {
                     dd($th);
@@ -62,7 +60,7 @@ class RequisicionesListener implements ShouldQueue
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
 
                 $user_solicitante = User::where('id', $event->requsicion->id_user)
-                ->first();
+                    ->first();
 
                 Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
 

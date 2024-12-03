@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Events\RequisicionesEvent;
 use App\Mail\RequisicionesEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;

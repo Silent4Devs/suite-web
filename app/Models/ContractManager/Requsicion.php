@@ -1254,6 +1254,7 @@ class Requsicion extends Model implements Auditable
         foreach ($participantesNivel as $key => $partNiv) {
             if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
                 $responsable = $partNiv->empleado;
+
                 return $responsable; // Retornar el responsable si se encuentra disponible
             }
         }

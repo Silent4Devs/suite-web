@@ -203,22 +203,22 @@ class CursoEstudiante extends Controller
 
     public function porcentageCourses()
     {
-        $evaluationUsers = UserEvaluation::where('completed',true)->where('score',0)->where('last_attempt',null)->get();
-        $approve = false ;
+        $evaluationUsers = UserEvaluation::where('completed', true)->where('score', 0)->where('last_attempt', null)->get();
+        $approve = false;
         // dd($evaluationUsers);
-        foreach($evaluationUsers as $userEvaluation){
-            $approve = false ;
-            $correctAnswers = $userEvaluation->userAnswers->where('is_correct',true)->count();
+        foreach ($evaluationUsers as $userEvaluation) {
+            $approve = false;
+            $correctAnswers = $userEvaluation->userAnswers->where('is_correct', true)->count();
             $totalAnswers = $userEvaluation->userAnswers->count();
-            $score = ($correctAnswers/$totalAnswers) * 100;
+            $score = ($correctAnswers / $totalAnswers) * 100;
             $sizeQuiz = $userEvaluation->evaluations;
 
-            if($totalAnswers != $sizeQuiz->questions->count()){
-                switch($score){
-                    case ($score >=100):
+            if ($totalAnswers != $sizeQuiz->questions->count()) {
+                switch ($score) {
+                    case $score >= 100:
                         $score = 100;
                         break;
-                    case ($score >=80 && $score<100):
+                    case $score >= 80 && $score < 100:
                         $score = $score;
                         break;
                     default:
@@ -228,13 +228,13 @@ class CursoEstudiante extends Controller
                 }
             }
 
-            if($score>=80){
+            if ($score >= 80) {
                 $approve = true;
             }
 
             $userEvaluation->update([
                 'approved' => $approve,
-                'score' => $score
+                'score' => $score,
             ]);
 
         }

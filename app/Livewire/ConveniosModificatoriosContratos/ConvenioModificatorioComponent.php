@@ -111,7 +111,7 @@ class ConvenioModificatorioComponent extends Component
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-                Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
+            Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
 
         if (isset($this->convenios_file)) {

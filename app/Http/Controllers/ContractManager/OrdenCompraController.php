@@ -74,7 +74,7 @@ class OrdenCompraController extends Controller
                 ->get();
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -861,14 +861,14 @@ class OrdenCompraController extends Controller
                 ['firma_finanzas', '!=', null],
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->where('firma_comprador_orden', null)->orderByDesc('id')
-            ->get();
+                ->get();
             toast('Filtro compradores aplicado!', 'success');
         } else {
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'comprador');
             toast('Filtro compradores aplicado!', 'success');
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -892,14 +892,14 @@ class OrdenCompraController extends Controller
                 ['firma_finanzas', '!=', null],
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->whereNotNull('firma_comprador_orden')->where('firma_solicitante_orden', null)->orderByDesc('id')
-            ->get();
+                ->get();
             toast('Filtro solicitante aplicado!', 'success');
         } else {
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'solicitante');
             toast('Filtro solicitante aplicado!', 'success');
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -924,14 +924,14 @@ class OrdenCompraController extends Controller
                 ['firma_finanzas', '!=', null],
                 ['firma_compras', '!=', null],
             ])->where('archivo', false)->whereNotNull('firma_solicitante_orden')->whereNotNull('firma_comprador_orden')->where('firma_finanzas_orden', null)->orderByDesc('id')
-            ->get();
+                ->get();
             toast('Filtro finanzas aplicado!', 'success');
         } else {
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'finanzas');
             toast('Filtro finanzas aplicado!', 'success');
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -960,7 +960,7 @@ class OrdenCompraController extends Controller
             $requisiciones = KatbolRequsicion::ordenesCompraAprobador($empleadoActual->id, 'general');
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -1099,7 +1099,7 @@ class OrdenCompraController extends Controller
 
             $tipo = 'OC';
 
-            $requisicion = KatbolRequsicion::where('id',$request->id)->first();
+            $requisicion = KatbolRequsicion::where('id', $request->id)->first();
 
             event(new RequisicionesEvent($requisicion, 'cancelarOrdenCompra', 'requisiciones', 'Orden de compra'));
 
