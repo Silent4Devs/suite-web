@@ -114,7 +114,7 @@ class Requsicion extends Model implements Auditable
             'archivo',
             'proveedor_id',
             'id_user',
-            'proveedor_catalogo',
+            // 'proveedor_catalogo',
             'proveedor_catalogo_oc',
             'proveedor_catalogo_id',
             'ids_proveedores',
@@ -1197,7 +1197,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }
@@ -1261,7 +1261,6 @@ class Requsicion extends Model implements Auditable
 
         // Si no se encuentra responsable disponible, retornar $jefe
         return $jefe;
-
     }
 
     public function getObtenerResponsableFinanzasAttribute()
