@@ -60,6 +60,9 @@ class RequisicionesController extends Controller
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
             $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
+            foreach($requisiciones_solicitante as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.index_solicitante', compact('requisiciones_solicitante', 'empresa_actual', 'logo_actual'));
         }
@@ -959,6 +962,10 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
 
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'solicitante');
@@ -977,6 +984,10 @@ class RequisicionesController extends Controller
             $buttonFinanzas = false;
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
+
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonFinanzas', 'buttonSolicitante', 'buttonJefe', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         }
@@ -1003,6 +1014,10 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por jefe aplicado!', 'success');
 
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         } else {
             // $requisiciones = KatbolRequsicion::whereNotNull('firma_solicitante')->where('firma_jefe', null)->where('id_user', $user->id)->get();
@@ -1020,6 +1035,10 @@ class RequisicionesController extends Controller
             $buttonFinanzas = false;
             $buttonCompras = false;
             toast('Filtro por jefe aplicado!', 'success');
+
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonJefe', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         }
@@ -1046,6 +1065,10 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por finanzas aplicado!', 'success');
 
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'finanzas');
@@ -1062,6 +1085,10 @@ class RequisicionesController extends Controller
             $buttonFinanzas = true;
             $buttonCompras = false;
             toast('Filtro por finanzas aplicado!', 'success');
+
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
         }
@@ -1088,6 +1115,10 @@ class RequisicionesController extends Controller
             $buttonCompras = true;
             toast('Filtro por compras aplicado!', 'success');
 
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
+
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'empleadoActual', 'sustitutosLD'));
         } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'comprador');
@@ -1104,6 +1135,10 @@ class RequisicionesController extends Controller
             $buttonFinanzas = false;
             $buttonCompras = true;
             toast('Filtro por compras aplicado!', 'success');
+
+            foreach($requisiciones as $requisicion){
+                $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
+            }
 
             return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'buttonCompras', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'empleadoActual', 'sustitutosLD'));
         }
