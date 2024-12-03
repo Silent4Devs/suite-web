@@ -864,6 +864,9 @@ header.mostrar-menu {
 .menu-global-position-left .btn-menu-global-show {
     transform: rotate(-90deg);
 }
+.menu-global-position-left .title-menu-centro-atencion{
+    display: none;
+}
 
 /* menu right */
 .menu-global-position-right .c-wrapper {
@@ -922,6 +925,9 @@ header.mostrar-menu {
 }
 .menu-global-position-right .btn-menu-global-show {
     transform: rotate(90deg);
+}
+.menu-global-position-right .title-menu-centro-atencion{
+    display: none;
 }
 
 /* menu top */
