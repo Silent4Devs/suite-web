@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class SolicitudVacacionesListener implements ShouldQueue
@@ -35,12 +34,10 @@ class SolicitudVacacionesListener implements ShouldQueue
     public function handle($event)
     {
 
-
         try {
             $empleado = Empleado::where('id', $event->solicitud_vacation->empleado_id)->first();
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleado->email)))->first();
-
 
             if ($user) {
                 // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario

@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
@@ -38,7 +37,6 @@ class SolicitudPermisoListener implements ShouldQueue
             $empleado = Empleado::where('id', $event->permiso->empleado_id)->first();
 
             $user = User::where('email', trim(removeUnicodeCharacters($empleado->email)))->first();
-
 
             if ($user) {
                 // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario

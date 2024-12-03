@@ -18,7 +18,7 @@ class SentimentService
             $response = Http::post($apiEndpoint, [
                 'texts' => $texts, // Enviar como un array bajo la clave 'texts'
             ]);
-    
+
             if ($response->successful()) {
                 return $response->json();
             } else {

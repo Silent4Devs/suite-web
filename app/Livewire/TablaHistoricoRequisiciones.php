@@ -92,10 +92,10 @@ class TablaHistoricoRequisiciones extends Component
             switch ($registro->campo) {
                 case 'contrato_id':
                     $registro->valor_anterior = isset($contratos[$registro->valor_anterior])
-                        ? $contratos[$registro->valor_anterior] . ' - ' . $servicios[$registro->valor_anterior]
+                        ? $contratos[$registro->valor_anterior].' - '.$servicios[$registro->valor_anterior]
                         : 'Sin valor anterior registrado';
                     $registro->valor_nuevo = isset($contratos[$registro->valor_nuevo])
-                        ? $contratos[$registro->valor_nuevo] . ' - ' . $servicios[$registro->valor_nuevo]
+                        ? $contratos[$registro->valor_nuevo].' - '.$servicios[$registro->valor_nuevo]
                         : 'Sin valor nuevo registrado';
                     break;
 
@@ -121,7 +121,7 @@ class TablaHistoricoRequisiciones extends Component
                         $registro->valor_anterior = 'Indistinto';
                     } else {
                         $registro->valor_anterior = isset($proveedores[$registro->valor_anterior])
-                            ? $proveedores[$registro->valor_anterior]->razon_social . ' - ' . $proveedores[$registro->valor_anterior]->nombre
+                            ? $proveedores[$registro->valor_anterior]->razon_social.' - '.$proveedores[$registro->valor_anterior]->nombre
                             : 'Sin valor anterior registrado';
                     }
 
@@ -129,7 +129,7 @@ class TablaHistoricoRequisiciones extends Component
                         $registro->valor_nuevo = 'Indistinto';
                     } else {
                         $registro->valor_nuevo = isset($proveedores[$registro->valor_nuevo])
-                            ? $proveedores[$registro->valor_nuevo]->razon_social . ' - ' . $proveedores[$registro->valor_nuevo]->nombre
+                            ? $proveedores[$registro->valor_nuevo]->razon_social.' - '.$proveedores[$registro->valor_nuevo]->nombre
                             : 'Sin valor nuevo registrado';
                     }
                     break;

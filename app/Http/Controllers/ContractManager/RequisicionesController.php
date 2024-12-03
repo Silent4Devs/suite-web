@@ -53,14 +53,14 @@ class RequisicionesController extends Controller
 
         if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
             $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('archivo', false)->orderByDesc('id')->get();
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
             return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         } else {
             $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo', 'registroFirmas')->where('id_user', $user->id)->where('archivo', false)->orderByDesc('id')->get();
-            foreach($requisiciones_solicitante as $requisicion){
+            foreach ($requisiciones_solicitante as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -626,7 +626,7 @@ class RequisicionesController extends Controller
             $requisiciones = KatbolRequsicion::requisicionesAprobador($empleadoActual->id, 'general');
         }
 
-        foreach($requisiciones as $requisicion){
+        foreach ($requisiciones as $requisicion) {
             $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
         }
 
@@ -962,7 +962,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -985,7 +985,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por solicitante aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1014,7 +1014,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por jefe aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1036,7 +1036,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por jefe aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1065,7 +1065,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por finanzas aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1086,7 +1086,7 @@ class RequisicionesController extends Controller
             $buttonCompras = false;
             toast('Filtro por finanzas aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1115,7 +1115,7 @@ class RequisicionesController extends Controller
             $buttonCompras = true;
             toast('Filtro por compras aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
@@ -1136,7 +1136,7 @@ class RequisicionesController extends Controller
             $buttonCompras = true;
             toast('Filtro por compras aplicado!', 'success');
 
-            foreach($requisiciones as $requisicion){
+            foreach ($requisiciones as $requisicion) {
                 $requisicion->fecha = Carbon::parse($requisicion->fecha)->format('d-m-Y');
             }
 
