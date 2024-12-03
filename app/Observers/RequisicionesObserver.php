@@ -31,8 +31,8 @@ class RequisicionesObserver
      */
     public function deleted(Requsicion $requsicion): void
     {
-        $this->forgetCache();
         event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
+        $this->forgetCache();
     }
 
     /**

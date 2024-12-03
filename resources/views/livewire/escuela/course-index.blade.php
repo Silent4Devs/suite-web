@@ -110,31 +110,36 @@
                                         <p>Sin lección previa</p>
                                     @endif
                                 </div>
-                                <h5 class="title-modal"><strong>{{ $c->title }}</strong></h5>
-                                @if ($instructor)
-                                    <p class="instructor-modal">Un curso de {{ $instructor->name }}</p>
-                                @else
-                                    <p class="instructor-modal">Instructor no asignado</p>
-                                @endif
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="title-modal color-tbj"><strong>{{ $c->title }}</strong></h5>
+                                        @if ($instructor)
+                                            <p class="instructor-modal">Un curso de {{ $instructor->name }}</p>
+                                        @else
+                                            <p class="instructor-modal">Instructor no asignado</p>
+                                        @endif
+                                    </div>
+                                    <a href="{{ route('admin.courses.show', $c) }}" class="btn btn-outline-primary">
+                                        Más información
+                                        <span class="material-symbols-outlined"
+                                            style="vertical-align: middle;">more_horiz</span>
+                                    </a>
+                                </div>
                                 <p class="aprendizaje-modal"><strong>Lo que aprenderás</strong></p>
                                 @if ($c->goals->isNotEmpty())
-                                    <ul style="list-style: none;">
+                                    <ul style="list-style: none;" class="p-0 m-0">
                                         @foreach ($c->goals as $goal)
-                                            <li class="mr-2 subtitle-aprendizaje"><i
-                                                    class="mr-3 text-gray-600 fas fa-check"></i>{{ $goal->name }}
+                                            <li class=" mt-2 subtitle-aprendizaje">
+                                                <div class="d-flex gap-3 align-items-center">
+                                                    <small><i class="fas fa-check color-tbj"></i></small>
+                                                    <span>{{ $goal->name }}</span>
+                                                </div>
                                             </li>
                                         @endforeach
                                     </ul>
                                 @else
                                     <p class="subtitle-aprendizaje">Metas no asignadas</p>
                                 @endif
-
-                                <a href="{{ route('admin.courses.show', $c) }}"
-                                    style="display: inline-block; vertical-align: middle; color:var(--color-tbj); margin-bottom:81px; margin-top:21px;">
-                                    Más información
-                                    <span class="material-symbols-outlined"
-                                        style="vertical-align: middle;">more_horiz</span>
-                                </a>
                             </div>
                         </div>
                     </div>

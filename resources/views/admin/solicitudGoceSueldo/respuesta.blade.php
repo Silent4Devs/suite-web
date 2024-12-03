@@ -10,10 +10,9 @@
     <h5 class="col-12 titulo_general_funcion">Aprobar: Solicitud de Permiso</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($vacacion, [
-                'route' => ['admin.solicitud-permiso-goce-sueldo.update', $vacacion->id],
-                'method' => 'patch',
-            ]) !!}
+            <form action="{{ route('admin.solicitud-permiso-goce-sueldo.update', $vacacion->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
 
             <div class="row">
                 <!-- Categoria Enabled-->
@@ -110,8 +109,9 @@
                     <!-- Descripcion Field -->
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
+                            <label for="edescripcion">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del solicitante:
+                            </label>
                             <textarea class="form-control" id="edescripcion" name="descripcion" rows="2" disabled>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
@@ -134,11 +134,13 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
-                            <textarea class="form-control" name="comentarios_aprobador" rows="2">{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
+                            <label for="comentarios_aprobador">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del aprobador:
+                            </label>
+                            <textarea class="form-control" id="comentarios_aprobador" name="comentarios_aprobador" rows="2">{{ old('comentarios_aprobador', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>
+
                     <input type="hidden" value="{{ $vacacion->empleado_id }}" name="empleado_id">
                     <input type="hidden" value="{{ $vacacion->autoriza }}" name="autoriza">
                     <!-- Submit Field -->
@@ -152,9 +154,7 @@
                 </div>
             </div>
 
-
-
-            {!! Form::close() !!}
+            </form>
         </div>
     </div>
 @endsection

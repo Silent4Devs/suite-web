@@ -136,9 +136,9 @@
 
                                             @if (in_array($tipo_firma_siguiente, $orderSignatures))
                                                 <a class="link"
-                                                    href="{{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}"
+                                                    href="{{ route('contract_manager.orden-compra.firmarAprobadores', ['id' => $requisicion->id]) }}"
                                                     style="display: block; font-size: 13px;">
-                                                    {{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente, 'id' => $requisicion->id]) }}
+                                                    {{ route('contract_manager.orden-compra.firmarAprobadores', ['id' => $requisicion->id]) }}
                                                 </a>
                                             @endif
 

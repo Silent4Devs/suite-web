@@ -26,7 +26,8 @@
             <form method="POST" action="{{ route('admin.partes-interesadas.store') }}" enctype="multipart/form-data"
                 class="row">
                 @csrf
-                {{ Form::hidden('pdf-value', 'PartesInt') }}
+                <input type="hidden" name="pdf-value" value="PartesInt" id="pdf-value">
+
                 <div class="form-group col-md-12">
                     <label class="required" for="parteinteresada"> <i class="fas fa-user-tie iconos-crear"></i>
                         {{ trans('cruds.partesInteresada.fields.parteinteresada') }}</label>

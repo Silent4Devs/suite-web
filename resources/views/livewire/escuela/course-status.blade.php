@@ -26,6 +26,23 @@
             height: 60px;
             border-radius: 50%;
         }
+
+        #secciones-curso li {
+            font-size: 13px;
+            color: #585858;
+            margin-top: 10px;
+            line-height: 14px;
+            text-wrap: pretty;
+        }
+
+        #secciones-curso li:not(.seccion-li-orden) {
+            display: flex;
+            gap: 5px;
+        }
+
+        #secciones-curso li:not(.seccion-li-orden)::before {
+            content: " - ";
+        }
     </style>
 
     <x-loading-indicator />
@@ -47,12 +64,18 @@
             </div>
 
             <div class="row" style="margin-top: 36px;">
-                <div class="col-md-6">
-                    @if ($current)
-                        <h4>{{ $current->name }}</h4>
-                    @else
-                        <p>No current data available</p>
-                    @endif
+                <div class="col-12">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            @if ($current)
+                                <h4>{{ $current->name }}</h4>
+                            @else
+                                <p>No current data available</p>
+                            @endif
+                        </div>
+                    </div>
+
                 </div>
                 {{-- <div class="col-md-6">
                     <div class="cursor-pointer d-flex justify-content-end align-items-center" wire:click="completed"
@@ -70,29 +93,42 @@
                 </div> --}}
             </div>
 
-            <div class="mt-2 card pb-5">
-                <div class="card-body">
+            <div class="mt-2 card">
+                <div class="card-body p-4">
                     <div class="row">
                         <div class="col-6">
                             @if ($this->previous)
                                 <a wire:click="changeLesson({{ $this->previous }}, 'previous')" class=" text-primary"
                                     style="cursor: pointer;" onclick="refreshPage('boton')">
-                                    < Tema anterior </a>
-                                    @else
-                                        <a href="#" id="test" class="text-muted">
-                                            < Tema anterior</a>
+                                    <div class="d-flex align-items-center gap-2" style="color: #3b8ddf;">
+                                        <i class="material-icons-outlined">arrow_back_ios</i>
+                                        <span>Tema anterior</span>
+                                    </div>
+                                </a>
+                            @else
+                                <a href="#" id="test" class="text-muted">
+                                    <div class="d-flex align-items-center gap-2" style="color: #3b8ddf;">
+                                        <i class="material-icons-outlined">arrow_back_ios</i>
+                                        <span>Tema anterior</span>
+                                    </div>
+                                </a>
                             @endif
                             <div wire:target="changeLesson({{ $this->previous }})">
                             </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             @if ($this->next)
-                                <a wire:click="changeLesson({{ $this->next }})" class="text-primary"
-                                    style="cursor: pointer;" onclick="refreshPage()">
-                                    Siguiente tema >
-                                </a>
+                                <div  wire:click="changeLesson({{ $this->next }}, 'next')" class="d-flex align-items-center gap-2" style="color: #3b8ddf; cursor: pointer;">
+                                    <span>Siguiente tema </span>
+                                    <i class="material-icons-outlined">arrow_forward_ios</i>
+                                </div>
                             @else
-                                <a href="#" id="test" class="text-muted"> Siguiente tema > </a>
+                                <a href="#" id="test" class="text-muted">
+                                    <div class="d-flex align-items-center gap-2" style="color: #3b8ddf; cursor: pointer;">
+                                        <span>Siguiente tema</span>
+                                        <i class="material-icons-outlined">arrow_forward_ios</i>
+                                    </div>
+                                </a>
                             @endif
                             <div wire:target="changeLesson({{ $this->next }})">
                             </div>
@@ -132,11 +168,25 @@
         </div>
 
         <div class="caja-info-card-mc">
-            <p class="mt-2 text-primary">{{ $this->advance . '%' }} completado</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mt-2 text-primary">{{ $this->advance . '%' }}</p>
+                @if ($this->advance == 100)
+                    <span
+                        style="padding: 5px 20px; background-color: #4cd587; color: #fff; border-radius: 100px;">Completado</span>
+                @endif
+            </div>
+
             <div class="curso-progreso-barra">
                 <div class="indicador-progreso-barra" style="width: {{ $this->advance . '%' }};"></div>
             </div>
         </div>
+
+        @if ($this->advance == 100)
+            <div class="mt-3">
+                <a href="{{ route('admin.inicioUsuario.mis-cursos') }}"
+                    style="color: #006DDB !important; text-decoration: underline !important;">Lista de Certificados</a>
+            </div>
+        @endif
         <div class="relative pt-1">
             <div class="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
                 <div style="width:{{ $this->advance . '%' }}"
@@ -145,14 +195,15 @@
             </div>
         </div>
 
-        <ul id="secciones-curso" style="list-style: none; cursor: pointer;">
+        <ul id="secciones-curso" style="list-style: none; cursor: pointer;" class="p-0">
             @foreach ($course->sections_order as $section)
                 <li class="seccion-li-orden" id="seccion-{{ $section->id }}">
-                    <i style="font-size:10pt; cursor: pointer;" class="d-inline text-black-500 fas fa-play-circle">
-                    </i>
-                    <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
+                    <div class="d-flex align-items-start">
+                        <i class=" fas fa-play-circle me-1"></i>
+                        <a><strong>{{ $section->name }}</strong></a>
+                    </div>
 
-                    <ul style="list-style: none;">
+                    <ul style="list-style: none;" class="ps-3">
                         @foreach ($section->lessons as $lesson)
                             <li>
                                 <div>
@@ -198,7 +249,7 @@
                                     ->count();
                             @endphp
                             @if ($totalLectionSection != $completedLessonsCount)
-                                <li style="list-style-type: disc;">
+                                <li style="list-style: none;">
                                     <div>
                                         <span class="inline-block rounded-full border-2 border-gray-500"></span>
                                         <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
@@ -210,7 +261,7 @@
                                     @php
                                         $completed = in_array($evaluation->id, $evaluationsUser);
                                     @endphp
-                                    <li style="list-style-type: disc;">
+                                    <li style="list-style: none;">
                                         <div>
                                             <span
                                                 class="inline-block rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>

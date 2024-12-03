@@ -1,9 +1,10 @@
-FROM dunglas/frankenphp:latest-builder-php8.2-alpine
+# Usa una imagen base PHP FPM
+FROM php:8.2-fpm-alpine
 
-# Add docker-php-extension-installer script
+# Añadir el script docker-php-extension-installer
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# Install dependencies
+# Instalar dependencias
 RUN apk add --no-cache \
     bash \
     curl \
@@ -31,7 +32,7 @@ RUN apk add --no-cache \
     unzip \
     libsodium-dev
 
-# Install php extensions
+# Instalar extensiones de PHP
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
     @composer \
@@ -50,29 +51,26 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     sockets \
     sodium \
     excimer \
-    pcntl \
     posix \
     amqp \
     ftp
 
-COPY composer.json ./
-COPY composer.lock ./
-#RUN composer update
-RUN composer install --no-dev --no-interaction --no-autoloader --no-scripts
-#RUN composer dump-autoload
+# Establecer el directorio de trabajo
+WORKDIR /var/www/html
 
-# Set working directory
-WORKDIR /app
+# Copiar los archivos de tu proyecto Laravel al contenedor
+COPY . /var/www/html
 
-# Copy application files
-COPY . /app
+# Crear los directorios de almacenamiento y dar permisos
+RUN mkdir -p storage/framework/cache storage/framework/views \
+    && chown -R www-data:www-data storage bootstrap/cache
 
-# Ensure permissions are correct
-RUN chown -R www-data:www-data /app \
-    && chmod 755 -R /app
+# Instalar Laravel Octane y Frankephp usando Composer
+RUN composer require laravel/octane
 
-EXPOSE 80 443 8000
+# Instalar Laravel Octane
+RUN php artisan octane:install
 
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+# Exponer el puerto para Frankephp
+EXPOSE 9000
+

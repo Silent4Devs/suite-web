@@ -118,22 +118,22 @@
                 </li>
             @endcan
             <li><a href="{{ route('admin.empleados.baja') }}">
-                <div>
-                    <i class="bi bi-arrow-down"></i>
-                    <br>
-                    Baja Empleados
-                </div>
-            </a>
+                    <div>
+                        <i class="bi bi-arrow-down"></i>
+                        <br>
+                        Baja Empleados
+                    </div>
+                </a>
             </li>
 
             <li><a href="{{ route('admin.empleados.historial') }}">
-                <div>
-                    <i class="bi bi-clock-history"></i>
-                    <br>
-                    Historial Empleados
-                </div>
-            </a>
-           </li>
+                    <div>
+                        <i class="bi bi-clock-history"></i>
+                        <br>
+                        Historial Empleados
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -155,45 +155,45 @@
                     Perfiles Profesionales
                 </div>
             </a></li> --}}
-            <li><a href="#" data-ventana="profesional" data-ruta="Capacitaciones" class="btn_ventana_menu">
+        <li><a href="#" data-ventana="profesional" data-ruta="Capacitaciones" class="btn_ventana_menu">
                 <div>
                     <i class="bi bi-person-rolodex"></i>
                     <br>
                     Perfiles Profesionales
                 </div>
             </a></li>
-            <div class="ventana_menu" id="profesional" style="color:#008186 !important">
-                <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
-                    style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-                <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
-                <ul>
-                    @can('admin_type_catalogue_training')
-                        <li><a href="{{ route('admin.type-catalogue-training.index') }}">
-                                <div>
-                                    <i class="bi bi-briefcase"></i>
-                                    <br>
-                                    Catálogo Tipo de Capacitaciones
-                                </div>
-                            </a></li>
-                    @endcan
-                    @can('admin_catalogue_training')
-                        <li><a href="{{ route('admin.catalogue-training.index') }}">
+        <div class="ventana_menu" id="profesional" style="color:#008186 !important">
+            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
+                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
+            <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
+            <ul>
+                @can('admin_type_catalogue_training')
+                    <li><a href="{{ route('type-catalogue-training.index') }}">
+                            <div>
+                                <i class="bi bi-briefcase"></i>
+                                <br>
+                                Catálogo Tipo de Capacitaciones
+                            </div>
+                        </a></li>
+                @endcan
+                @can('admin_catalogue_training')
+                    <li><a href="{{ route('catalogue-training.index') }}">
                             <div>
                                 <i class="bi bi-briefcase"></i>
                                 <br>
                                 Catálogo de Capacitaciones
                             </div>
                         </a></li>
-                    @endcan
-                    <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
+                @endcan
+                <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
                         <div>
                             <i class="bi bi-person-rolodex"></i>
                             <br>
                             Perfiles Profesionales
                         </div>
                     </a></li>
-                    {{-- @can('competencias_por_puesto_acceder') --}}
-                        {{-- <li>
+                {{-- @can('competencias_por_puesto_acceder') --}}
+                {{-- <li>
                             <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
                                 <div>
                                     <i class="bi bi-bookmark-star"></i><br>
@@ -201,8 +201,8 @@
                                 </div>
                             </a>
                         </li> --}}
-                    {{-- @endcan --}}
-                    {{-- @can('consulta_perfiles_de_puesto_acceder')
+                {{-- @endcan --}}
+                {{-- @can('consulta_perfiles_de_puesto_acceder')
                         <li><a href="{{ route('admin.consulta-puestos') }}">
                                 <div>
                                     <i class="bi bi-person-video2"></i>
@@ -211,8 +211,8 @@
                                 </div>
                             </a></li>
                     @endcan --}}
-                </ul>
-            </div>
+            </ul>
+        </div>
     @endcan
     @can('organigrama_acceder')
         <li><a href="{{ route('admin.organigrama.index') }}">
@@ -295,12 +295,20 @@
                     </a>
                 </li>
 
+                <li><a href="{{ asset('admin/certificado-course') }}">
+                        <div>
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <br>
+                            Certificaciones
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
     @endcan
 
     <li>
-        <a href="Ausencias">
+        <a href="ausencias">
             <div>
                 <i class="bi bi-chat-square-dots"></i>
                 <br>

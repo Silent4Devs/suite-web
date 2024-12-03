@@ -16,6 +16,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use VXM\Async\AsyncFacade as Async;
 
 class PortalComunicacionController extends Controller
 {
@@ -27,24 +28,33 @@ class PortalComunicacionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $hoy = Carbon::now();
 
-        $politica_existe = PoliticaSgsi::getAll()->count();
+        Async::batchRun(
+            function () use (&$hoy) {
+                // Check if the result is already cached
+                $hoy = Carbon::now();
+            },
+            function () use (&$politica_existe) {
+                $politica_existe = PoliticaSgsi::getAll()->count();
+            },
+            function () use (&$comite_existe) {
+                $comite_existe = Comiteseguridad::getAll()->count();
+            },
+            function () use (&$nuevos) {
+                $nuevos = Empleado::getNuevos();
+            },
+            function () use (&$cumpleaños) {
+                $cumpleaños = Empleado::getCumpleanos();
+            },
+        );
+
         $user = User::getCurrentUser();
-
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-        $comite_existe = Comiteseguridad::getAll()->count();
-
-        $nuevos = Empleado::getNuevos();
-        $cumpleaños = Empleado::getCumpleanos();
-
-
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
         //     return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         // });

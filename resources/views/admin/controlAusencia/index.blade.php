@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('Ausencias') }}
+    {{-- {{ Breadcrumbs::render('admin.ausencias') }} --}}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -133,7 +133,7 @@
                         @endcan
                         @can('dashboard_solicitudes_directivo')
                             <li>
-                                <a href="{{ route('admin.dashboardPermisos.dashboardOrg', 'all') }}">
+                                <a href="{{ route('admin.dashboard-permisos.dashboard-org', 'all') }}">
                                     <div>
                                         <i class="bi bi-bar-chart-line-fill"></i><br>
                                         Dashboard Solicitudes

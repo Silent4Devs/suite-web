@@ -1,21 +1,23 @@
 <!-- Nombre Field -->
 <div class="form-group">
-    {!! Form::label('nombre', 'Nombre:') !!}
+    <label for="nombre">Nombre:</label>
     <p>{{ $fecha->nombre }}</p>
 </div>
-<!-- Categoria Field -->
+
+<!-- Fecha Field -->
 <div class="form-group">
-    {!! Form::label('fecha', 'Fecha:') !!}
+    <label for="fecha">Fecha:</label>
     <p>{{ $fecha->fecha }}</p>
 </div>
+
 <!-- Categoria Field -->
 <div class="form-group">
-    {!! Form::label('categoria', 'Categoria:') !!}
+    <label for="categoria">Categoría:</label>
     <p>{{ $fecha->categoria }}</p>
 </div>
+
 <!-- Descripcion Field -->
 <div class="form-group">
-    {!! Form::label('descripcion', 'Descripción:') !!}
+    <label for="descripcion">Descripción:</label>
     <p>{{ $fecha->descripcion }}</p>
 </div>
-

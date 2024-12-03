@@ -15,7 +15,7 @@ class ActividadesSugerenciasController extends Controller
     public function index(Request $request, $sugerencia_id)
     {
         if ($request->ajax()) {
-            $actividades = ActividadSugerencia::with('responsables')->where('sugerencia_id', $sugerencia_id)->get();
+            $actividades = ActividadSugerencia::with('responsables:id,name,foto,email')->where('sugerencia_id', $sugerencia_id)->get();
 
             return datatables()->of($actividades)->toJson();
         }

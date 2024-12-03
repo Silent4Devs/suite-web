@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
 
 class RequisicionesNotification extends Notification
 {
@@ -75,8 +74,6 @@ class RequisicionesNotification extends Notification
             'type' => $this->tipo_consulta,
             'tabla' => $this->tabla,
             'slug' => $this->slug,
-            // 'name' => Auth::user()->name,
-            // 'avatar_ruta' => Auth::user()->empleado->avatar_ruta,
         ];
     }
 }

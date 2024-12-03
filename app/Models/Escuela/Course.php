@@ -2,8 +2,8 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\Organizacion;
 use App\Traits\ClearsResponseCache;
-use Chelout\RelationshipEvents\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +22,7 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
-    protected $append = ['sections_order', 'rating', 'last_finished_lesson'];
+    protected $append = ['sections_order', 'rating', 'last_finished_lesson', 'certificado_ruta'];
 
     const BORRADOR = 1;
 
@@ -193,5 +193,21 @@ class Course extends Model implements Auditable
         }
 
         return null;
+    }
+
+    public function getCertificadoRutaAttribute()
+    {
+        $certificado_general = Organizacion::select('certificado')->first()->certificado;
+
+        return asset('img/escuela/certificaciones/certificado'.$certificado_general.'.png');
+    }
+
+    public function getFirmaInstructorRutaAttribute()
+    {
+        if ($this->firma_instructor) {
+            return asset('storage/cursos/firmas-instructores/'.$this->firma_instructor);
+        } else {
+            return null;
+        }
     }
 }

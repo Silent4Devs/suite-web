@@ -5,21 +5,17 @@
             <div class="card-body">
                 <h1 class="text-2xl font-bold">Crear nuevo curso</h1>
                 <hr class="mt-2 mb-6">
-                {!! Form::open([
-                    'route' => 'admin.courses.store',
-                    'files' => true,
-                    'autocomplete' => 'off',
-                    'enctype' => 'multipart/form-data',
-                ]) !!}
-                {!! Form::hidden('user_id', auth()->user()->id) !!}
-                @include('admin.escuela.instructor.courses.partials.form')
-                <div class="flex justify-end">
-                    {!! Form::submit('Crear curso', [
-                        'class' => 'inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none
-                                            focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 cursor-pointer',
-                    ]) !!}
-                </div>
-                {!! Form::close() !!}
+                <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data"
+                    autocomplete="off">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    @include('admin.escuela.instructor.courses.partials.form')
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn btn-primary">
+                            Crear curso
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

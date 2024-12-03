@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\TBRiskAnalysisGeneralModel;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -201,8 +203,35 @@ class AnalisisdeRiesgosController extends Controller
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
     }
 
+    //new design
     public function inicioRiesgos()
     {
         return view('admin.analisis-riesgos.inicio-riesgos');
+    }
+
+    public function RiskAnalysis()
+    {
+        return view('admin.analisis-riesgos.tbAltaAnalisisRiesgos');
+    }
+
+    public function LogsTemplateRiskAnalysis($id)
+    {
+        return view('admin.analisis-riesgos.tbLogTemplateRiskAnalysis', compact('id'));
+    }
+
+    public function ShowRiskAnalysis($id)
+    {
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        $riskAnalysis = TBRiskAnalysisGeneralModel::FindOrFail($id);
+        // dd($riskAnalysis->riskAnalysis->id);
+        $newDate = Carbon::createFromFormat('Y-m-d', $riskAnalysis->fecha)->format('d-m-Y');
+        $riskAnalysis->fecha = $newDate;
+        $riskAnalysisId = $riskAnalysis->riskAnalysis->id;
+        // dd($riskAnalysis);
+
+        return view('admin.analisis-riesgos.tbShowRiskAnalysis', compact('riskAnalysis', 'riskAnalysisId', 'logo_actual', 'empresa_actual'));
     }
 }

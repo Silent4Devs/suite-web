@@ -3,6 +3,7 @@
 namespace App\Livewire\Escuela;
 
 use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
@@ -38,6 +39,8 @@ class CourseStatus extends Component
 
     public $render;
 
+    public $cursoCompletado;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
     {
@@ -64,12 +67,14 @@ class CourseStatus extends Component
         // dd($this->course);
         // dd($this->course->lessons->where('completed', true)->count());
         // dd($this->current);
-        // $fechaYHora = $this->fecha.' '.$this->hora;
-        // $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
-        //     ->where('user_id', $this->usuario->id)->first();
+
+        // lastReview
+        $fechaYHora = $this->fecha.' '.$this->hora;
+        $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
+            ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
 
-        // $this->updateLastReview($fechaYHora, $cursoLastReview);
+        $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
         $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
@@ -105,6 +110,8 @@ class CourseStatus extends Component
         //     $this->current = $this->course->lastfinishedlesson;
         // }
         $this->dispatch('render');
+
+        $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
         return view('livewire.escuela.course-status');
 
@@ -213,9 +220,8 @@ class CourseStatus extends Component
         }
 
         $ids = $this->evaluacionesGenerales->pluck('id');
-        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
-
 
         //calcular el porcentaje del curso
         $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());

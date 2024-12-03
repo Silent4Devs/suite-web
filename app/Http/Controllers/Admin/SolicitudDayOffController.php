@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
@@ -95,7 +95,6 @@ class SolicitudDayOffController extends Controller
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
-
 
     public function create()
     {

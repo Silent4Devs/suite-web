@@ -115,10 +115,11 @@ class Puesto extends Model implements Auditable
         return $this->hasMany(Empleado::class, 'puesto_id', 'id')->alta()->select('id', 'name', 'puesto_id');
     }
 
-    public function empleados()
-    {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');
-    }
+    // Causa error, función indeterminada.
+    // public function empleados()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');
+    // }
 
     public function elaboro()
     {
@@ -191,5 +192,4 @@ class Puesto extends Model implements Auditable
     {
         return $this->empleados ? $this->empleados->count() > 0 : false;
     }
-
 }

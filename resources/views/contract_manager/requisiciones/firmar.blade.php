@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@section('titulo', 'Firmar Requisicion')
+{{-- @section('titulo', 'Firmar Requisicion') --}}
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 
 @if ($alerta)
@@ -48,9 +48,8 @@
     <div class="card card-item doc-requisicion">
         <div class="flex header-doc">
             <div class="flex-item item-doc-img">
-                @if ($requisicion->sucursal->mylogo)
-                    <img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                        style="width:100%; max-width:150px;">
+                @if ($organizacion->logo)
+                    <img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;">
                 @else
                     <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                 @endif
@@ -137,47 +136,42 @@
                             detalle suficiente que sustente la compra, es no procedera.s </small>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col s12 l4">
+                <div class="row gy-4">
+                    <div class="col-sm-12 col-lg-12">
                         <strong>Proveedor:</strong><br><br>
                         {{ $proveedor->proveedor }}
                     </div>
-                    <div class="col s12  l4">
-                        <strong>Detalle del producto:</strong><br><br>
-                        {{ $proveedor->detalles }}
-                    </div>
-                    <div class="col s12 l4">
-                        <strong>Comentarios:</strong><br><br>
-                        {{ $proveedor->comentarios }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12 l4">
+                    <div class="col-sm-12 col-lg-6">
                         <strong>Nombre del contacto:</strong><br><br>
                         {{ $proveedor->contacto }}
                     </div>
-                    <div class="col s12 l4">
-                        <strong>Fecha Inicio:</strong><br><br>
-                        {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
-                    </div>
-                    <div class="col s12 l4">
-                        <strong>Teléfono:</strong><br><br>
-                        {{ $proveedor->cel }}
-                    </div>
-                    <div class="col s12 l4">
-                        <br><br>
+                    <div class="col-sm-12 col-lg-4">
                         <strong>Correo Electrónico:</strong><br><br>
                         {{ $proveedor->contacto_correo }}
                     </div>
-                    <div class="col s12 l4">
-                        <br><br>
+                    <div class="col-sm-12 col-lg-2">
+                        <strong>Teléfono:</strong><br><br>
+                        {{ $proveedor->cel }}
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>URL:</strong><br><br>
+                        {{ $proveedor->url }}
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <strong>Fecha Inicio:</strong><br><br>
+                        {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
                         <strong>Fecha Fin:</strong><br><br>
                         {{ date('d-m-Y', strtotime($proveedor->fecha_fin)) }}
                     </div>
-                    <div class="col s12 l4">
-                        <br><br>
-                        <strong>URL:</strong><br><br>
-                        {{ $proveedor->url }}
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>Detalle del producto:</strong><br><br>
+                        {{ $proveedor->detalles }}
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <strong>Comentarios:</strong><br><br>
+                        {{ $proveedor->comentarios }}
                     </div>
                 </div>
             </div>
@@ -291,11 +285,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_jefe)
                         <img src="{{ $requisicion->firma_jefe }}" class="img-firma">
-                        <p>
-                            @isset($firma_siguiente->jefe->name)
-                                {{ $firma_siguiente->jefe->name }}
-                            @endisset
-                        </p>
+                        <p>{{ $firma_siguiente->jefe->name ?? '' }}</p>
                         <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -323,7 +313,7 @@
                 <div class="flex-item">
                     @if ($requisicion->firma_compras)
                         <img src="{{ $requisicion->firma_compras }}" class="img-firma">
-                        <p>{{ $requisicion->comprador->user->name }} </p>
+                        <p>{{ $requisicion->comprador->user->name ?? '' }} </p>
                         <p>{{ $requisicion->fecha_firma_comprador_requi }}</p>
                     @else
                         <div style="height: 137px;"></div>
@@ -601,5 +591,26 @@
             return !pixelBuffer.some(color => color !== 0);
         }
     });
+</script>
+
+<script>
+    const firmaCanvas = document.getElementById('firma_requi');
+
+    function disableScroll() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function enableScroll() {
+        document.body.style.overflow = '';
+    }
+
+    firmaCanvas.addEventListener('mousedown', disableScroll);
+    firmaCanvas.addEventListener('touchstart', disableScroll);
+
+    firmaCanvas.addEventListener('mouseup', enableScroll);
+    firmaCanvas.addEventListener('touchend', enableScroll);
+
+    document.addEventListener('mouseup', enableScroll);
+    document.addEventListener('touchend', enableScroll);
 </script>
 @endsection

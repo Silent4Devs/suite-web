@@ -22,11 +22,13 @@ use App\Models\QuejasCliente;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
+use App\Services\SentimentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
+
 class QuejasClienteController extends Controller
 {
     public function quejasClientes()
@@ -52,7 +54,7 @@ class QuejasClienteController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejasClientes = QuejasCliente::where('archivado', false)->get();
+        $quejasClientes = QuejasCliente::select('id', 'cliente_id', 'nombre', 'puesto', 'telefono', 'fecha_cierre', 'estatus', 'fecha', 'titulo', 'accion_correctiva_id')->where('archivado', false)->get();
 
         return datatables()->of($quejasClientes)->toJson();
     }
@@ -82,6 +84,8 @@ class QuejasClienteController extends Controller
         //     ]);
         // }
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejasClientes = QuejasCliente::create([
             'cliente_id' => $request->cliente_id,
             'proyectos_id' => $request->proyectos_id,
@@ -104,7 +108,7 @@ class QuejasClienteController extends Controller
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
-
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisQuejasClientes::create([

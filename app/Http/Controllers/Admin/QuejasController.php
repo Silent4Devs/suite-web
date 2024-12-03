@@ -18,6 +18,7 @@ use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\Sede;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -63,6 +64,8 @@ class QuejasController extends Controller
             'descripcion.max' => 'El campo descripción no puede exceder los 550 caracteres.',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
             'empleado_quejo_id' => User::getCurrentUser()->empleado->id,
@@ -78,6 +81,7 @@ class QuejasController extends Controller
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -115,7 +119,7 @@ class QuejasController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejas = Quejas::select('empleado_quejo_id','id','titulo','fecha','fecha_cierre','estatus','sede','ubicacion','descripcion','area_quejado','colaborador_quejado','proceso_quejado','externo_quejado')->with('quejo:id,name,foto')->where('archivado', false)->get();
+        $quejas = Quejas::select('empleado_quejo_id', 'id', 'titulo', 'fecha', 'fecha_cierre', 'estatus', 'sede', 'ubicacion', 'descripcion', 'area_quejado', 'colaborador_quejado', 'proceso_quejado', 'externo_quejado')->with('quejo:id,name,foto')->where('archivado', false)->get();
 
         return datatables()->of($quejas)->toJson();
     }

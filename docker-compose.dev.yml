@@ -1,23 +1,4 @@
 services:
-  postgres-tabantaj:
-    image: postgres:16-alpine
-    container_name: postgres-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
-      - tabantaj-database:/var/lib/postgresql/data
-      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
-    ports:
-      - "5432:5432"
-    networks:
-      - tabantajnetwork
-    mem_limit: 6g
-
   php:
     #uncomment this if you will use only docker compose
     build:

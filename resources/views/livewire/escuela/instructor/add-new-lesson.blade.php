@@ -15,7 +15,7 @@
                 <div class="card-body" style="border-top: 1px solid #D8D8D8;">
                     <div class="row text-primary">
                         <div class="form-group col-8 anima-focus">
-                            <input wire:model.blur="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text" placeholder=""
+                            <input wire:model="name" id="name-{{ $section->id }}" x-ref="lessonName" type="text" placeholder=""
                                 class="w-full form-control @if ($errors->has('name')) invalid @endif">
                             @error('name')
                                 <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="form-group col-4 anima-focus">
-                            <select wire:model.blur="platform_id" id="platform-{{ $section->id }}" type="text"
+                            <select wire:model="platform_id" id="platform-{{ $section->id }}" type="text"
                                 class=" w-full form-control @if ($errors->has('platform_id')) invalid @endif">
                                 @foreach ($platforms as $platform)
                                     <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -37,7 +37,7 @@
 
                         </div>
                         <div class="form-group col-12 mt-4 anima-focus">
-                            <input wire:model.blur="url" id="url-{{ $section->id }}" type="text" placeholder=""
+                            <input wire:model="url" id="url-{{ $section->id }}" type="text" placeholder=""
                                 class=" w-full form-control @if ($errors->has('url')) invalid @endif">
                             @error('url')
                                 <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
@@ -46,7 +46,7 @@
 
                         </div>
                         <div class="form-group col-12 anima-focus">
-                            <textarea wire:model.blur="description" id="description-{{ $section->id }}" type="text" placeholder=""
+                            <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
                                 class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
                             <label for="url-{{ $section->id }}">Descripción</label>
 

@@ -23,19 +23,21 @@
         </div>
     </div>
 
-    {!! Form::model($vacacion, ['route' => ['admin.incidentes-dayoff.update', $vacacion->id], 'method' => 'patch']) !!}
-    <div class="mt-4 card card-body">
-        <h5>Creación de excepciones</h5>
-        <hr>
-        @include('admin.incidentesDayoff.fields')
+    <form action="{{ route('admin.incidentes-dayoff.update', $vacacion->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
+        <div class="mt-4 card card-body">
+            <h5>Creación de excepciones</h5>
+            <hr>
+            @include('admin.incidentesDayoff.fields')
+        </div>
+        <!-- Submit Field -->
+        <div class="text-right">
+            <a href="{{ route('admin.incidentes-dayoff.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-submit" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
 
-    </div>
-    <!-- Submit Field -->
-    <div class="text-right">
-        <a href="{{ route('admin.incidentes-dayoff.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-submit" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
 @endsection

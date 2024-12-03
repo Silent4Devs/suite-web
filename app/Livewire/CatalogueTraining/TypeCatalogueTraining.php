@@ -7,19 +7,31 @@ use App\Models\TBTypeCatalogueTrainingModel;
 use Carbon\Carbon;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TypeCatalogueTraining extends Component
 {
+    use WithPagination;
+
     #[Validate('required')]
     public $name = '';
 
-    public $registers;
+    // public $registers;
 
     public $status = true;
 
     public $editRegister;
 
     public $deleteRegister;
+
+    public $perPage = 5;
+
+    public $search = '';
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
 
     public function registersRestore()
     {
@@ -85,13 +97,21 @@ class TypeCatalogueTraining extends Component
 
     public function render()
     {
-        $registers = TBTypeCatalogueTrainingModel::orderBy('id')->get();
+        $registers = TBTypeCatalogueTrainingModel::query()
+            ->when($this->search, function ($query) {
+                $query->whereRaw('LOWER(name) LIKE ?', ['%'.strtolower($this->search).'%']);
+            })
+            ->orderBy('name', 'asc')
+            ->paginate($this->perPage);
+
         foreach ($registers as $register) {
             $date = Carbon::parse($register->created_at)->format('d-m-Y');
             $register->date = $date;
         }
-        $this->registers = $registers;
 
-        return view('livewire.catalogue-training.type-catalogue-training');
+        // $registers = $registers->fastPaginate($this->perPage);
+        // $registers = $registers;
+
+        return view('livewire.catalogue-training.type-catalogue-training', compact('registers'));
     }
 }
