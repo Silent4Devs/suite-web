@@ -366,7 +366,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -558,7 +558,7 @@ class RequisicionesEditComponent extends Component
 
             if ($proveedor['proveedor_id'] == 'otro') {
                 if ($proveedor['select_otro'] == 'indistinto') {
-
+                    $dataProvedoresIndistintoCatalogo[$keyProv] = [];
                     if ($proveedor['tabla_origen'] != 'ProveedorIndistinto') {
                         switch ($proveedor['tabla_origen']) {
                             case 'ProvedorRequisicionCatalogo':
@@ -606,6 +606,8 @@ class RequisicionesEditComponent extends Component
                         'fecha_fin' => $proveedor['fechaFin'],
                     ];
                 } elseif ($proveedor['select_otro'] == 'sugerido') {
+                    $dataProveedoresSugeridos[$keyProv] = [];
+
                     // KatbolProveedorRequisicion
                     // $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $cotizacion_count . '_' . uniqid() . '.' . $proveedor['archivo']->getClientOriginalExtension();
                     // dd($proveedor);
@@ -685,6 +687,7 @@ class RequisicionesEditComponent extends Component
                 }
             } else {
                 $proveedor_catalogo = KatbolProveedorOC::where('id', $proveedor['proveedor_id'])->first();
+                $dataProvedoresCatalogo[$keyProv] = [];
 
                 if ($proveedor['tabla_origen'] != 'ProvedorRequisicionCatalogo') {
                     switch ($proveedor['tabla_origen']) {
@@ -722,7 +725,6 @@ class RequisicionesEditComponent extends Component
                 }
 
                 $dataProvedoresCatalogo[$keyProv] += [
-                    // 'requisicion_id' => $this->nueva_requisicion->id,
                     'id_registro' => $proveedor['id_registro'],
                     'proveedor_id' => $proveedor['proveedor_id'],
                     'fecha_inicio' => $proveedor['fechaInicio'],
@@ -910,7 +912,7 @@ class RequisicionesEditComponent extends Component
                 ];
 
                 if (! empty($provSug['extArchivo'])) {
-                    $name = 'requisicion_'.$this->requisicion_id.'_cotizacion_'.($key + 1).'_'.uniqid().'.'.$provSug['extArchivo'];
+                    $name = 'requisicion_' . $this->requisicion_id . '_cotizacion_' . ($key + 1) . '_' . uniqid() . '.' . $provSug['extArchivo'];
                     $data['cotizacion'] = $name;
 
                     // Guardar el archivo en el sistema
