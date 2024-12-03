@@ -29,24 +29,23 @@ class PortalComunicacionController extends Controller
     {
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Async::batchRun(
-            function () use (&$hoy) {
-                // Check if the result is already cached
-                $hoy = Carbon::now();
-            },
-            function () use (&$politica_existe) {
-                $politica_existe = PoliticaSgsi::getAll()->count();
-            },
-            function () use (&$comite_existe) {
-                $comite_existe = Comiteseguridad::getAll()->count();
-            },
-            function () use (&$nuevos) {
-                $nuevos = Empleado::getNuevos();
-            },
-            function () use (&$cumpleaños) {
-                $cumpleaños = Empleado::getCumpleanos();
-            },
-        );
+
+        $hoy = Carbon::now();
+
+        $politicas = PoliticaSgsi::select('id', 'nombre_politica', 'politicasgsi', 'estatus', 'mostrar')
+            ->with('reviso:id,name,foto,email')
+            ->get();
+
+        $politica_existe = $politicas->count(); // Cuenta el total de registros en la colección obtenida
+
+        $comite = Comiteseguridad::get();
+
+        $comite_existe = $comite->count();
+
+        $nuevos = Empleado::select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->alta()->get();
+
+        $cumpleaños = Empleado::select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->alta()->get();
+
 
         $user = User::getCurrentUser();
         $empleado_asignado = $user->n_empleado;
