@@ -7,39 +7,40 @@ use App\Models\Tenant;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Auth;
 
 class TBTenantMiddleware
 {
-    protected $tenantManager;
+    protected $tbTenantManager;
 
-    protected $stripeService;
+    protected $tbStripeService;
 
-    public function __construct(TBTenantTenantManager $tenantManager, TBTenantStripeService $stripeService)
+    public function __construct(TBTenantTenantManager $tbTenantManager, TBTenantStripeService $tbStripeService)
     {
-        $this->tenantManager = $tenantManager;
-        $this->stripeService = $stripeService;
+        $this->tbTenantManager = $tbTenantManager;
+        $this->tbStripeService = $tbStripeService;
     }
 
-    public function handle($request, Closure $next)
+    public function handle($tbRequest, Closure $tbNext)
     {
         try {
-            $subdomain = explode('.', $request->getHost(), 2)[0];
+            $tbSubdomain = explode('.', $tbRequest->getHost(), 2)[0];
 
-            $tenant = Tenant::whereHas(
+            $tbTenant = Tenant::whereHas(
                 'domains',
-                fn($query) =>
-                $query->where('domain', $subdomain)
+                fn($tbQuery) =>
+                $tbQuery->where('domain', $tbSubdomain)
             )->firstOrFail();
 
-            $this->tenantManager->setTenant($tenant);
-            tenancy()->initialize($tenant);
-            app()->instance('currentTenant', $tenant);
+            $this->tbTenantManager->tbSetTenant($tbTenant);
+            tenancy()->initialize($tbTenant);
+            app()->instance('tbCurrentTenant', $tbTenant);
         } catch (ModelNotFoundException) {
             abort(404, 'Tenant not found for the given subdomain.');
-        } catch (\Exception $e) {
+        } catch (\Exception $tbException) {
             abort(500, 'An unexpected error occurred.');
         }
-        return $next($request);
+
+        return $tbNext($tbRequest);
     }
 }

@@ -28,6 +28,8 @@ class User extends Authenticatable implements Auditable
     protected $guard = 'tenants';
 
 
+    protected $connection = 'tenant';
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -115,6 +117,7 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
+
         if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }

@@ -12,56 +12,58 @@ use Illuminate\Support\Facades\Auth;
 
 class TBTenantTenantManager
 {
-    protected $tenant;
+    protected $tbTenant;
 
-    public function setTenant($tenant)
+    public function tbSetTenant($tbTenant)
     {
-        $this->tenant = $tenant;
-        $this->configureTenantConnection($tenant);
-        $this->conigurateAuthTenant($tenant);
+        $this->tbTenant = $tbTenant;
+        $this->tbConfigureTenantConnection($tbTenant);
+        $this->tbConfigureAuthTenant($tbTenant);
     }
 
-    public function getTenant()
+    public function tbGetTenant()
     {
-        return $this->tenant;
+        return $this->tbTenant;
     }
 
-    protected function configureTenantConnection($tenant)
+    protected function tbConfigureTenantConnection($tbTenant)
     {
-
         config([
-            'database.connections.tenant.host' => $tenant->db_host,
-            'database.connections.tenant.database' => $tenant->db_name,
-            'database.connections.tenant.username' => $tenant->db_username,
-            'database.connections.tenant.password' => $tenant->db_password,
+            'database.connections.tenant.host' => $tbTenant->db_host,
+            'database.connections.tenant.database' => $tbTenant->db_name,
+            'database.connections.tenant.username' => $tbTenant->db_username,
+            'database.connections.tenant.password' => $tbTenant->db_password,
         ]);
+
         DB::purge('tenant');
         DB::reconnect('tenant');
+
         try {
-            $pdo = DB::connection('tenant')->getPdo();
-        } catch (\Exception $e) {
-            dd("Connection failed: " . $e->getMessage());
+            DB::connection('tenant')->getPdo();
+        } catch (\Exception $tbException) {
+            dd("Connection failed: " . $tbException->getMessage());
         }
+
         Schema::connection('tenant')->getConnection()->reconnect();
         DB::setDefaultConnection('tenant');
-        app()->instance('tenant', $tenant);
+        app()->instance('tbTenant', $tbTenant);
     }
 
-    protected function conigurateAuthTenant($tenant)
+    protected function tbConfigureAuthTenant($tbTenant)
     {
-        Config::set('auth.providers.tenant_users.connection', 'tenant');
+        Config::set('auth.providers.tb_tenant_users.connection', 'tenant');
     }
 
-    public function getTenantFromRequest($request)
+    public function tbGetTenantFromRequest($tbRequest)
     {
-        $subdomain = explode('.', $request->getHost(), 2)[0];
+        $tbSubdomain = explode('.', $tbRequest->getHost(), 2)[0];
 
-        $tenant = Tenant::whereHas(
+        $tbTenant = Tenant::whereHas(
             'domains',
-            fn($query) =>
-            $query->where('domain', $subdomain)
+            fn($tbQuery) =>
+            $tbQuery->where('domain', $tbSubdomain)
         )->firstOrFail();
 
-        return $tenant->stripe_id;
+        return $tbTenant->stripe_id;
     }
 }

@@ -12,62 +12,37 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantTimesheetMiddleware
 {
-    protected $tenantManager;
+    protected $tbTenantManager;
 
-    protected $stripeService;
+    protected $tbStripeService;
 
-    public function __construct(TBTenantTenantManager $tenantManager, TBTenantStripeService $stripeService)
+    public function __construct(TBTenantTenantManager $tbTenantManager, TBTenantStripeService $tbStripeService)
     {
-        $this->tenantManager = $tenantManager;
-        $this->stripeService = $stripeService;
+        $this->tbTenantManager = $tbTenantManager;
+        $this->tbStripeService = $tbStripeService;
     }
+
     /**
-     * Handle an incoming request.
+     * Maneja una solicitud entrante.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Illuminate\Http\Request $tbRequest
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $tbNext
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $stripeId = $this->tenantManager->getTenantFromRequest($request);
+        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
 
-        $suscripciones = $this->stripeService->getProductsByCustomer($stripeId);
+        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        dd($suscripciones);
-        $estado = $this->consultaApi();
-        if ($estado) {
-            return $next($request);
+        $tbModulosValidos = ["Gestión de Talento", "Gestión Financiera"];
+
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
+
+        if ($tbEstado) {
+            return $tbNext($tbRequest);
         } else {
-            abort(403);
-        }
-    }
-
-    public function consultaApi()
-    {
-        try {
-            $apiController = new tbApiPanelControlController();
-            $response = $apiController->getData();
-
-            $client = $response->original[0];
-
-            if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
-                // Definir los nombres de los módulos que son válidos
-                $modulosValidos = ["Gestión de Talento", "Gestión Financiera"]; // Agrega todos los nombres de módulos válidos aquí
-
-                // Filtrar los módulos que cumplan con las condiciones deseadas
-                $modulo = array_filter($client["modulos"], function ($modulo) use ($modulosValidos) {
-                    return in_array($modulo["nombre_catalogo"], $modulosValidos) && $modulo["estatus"] == true;
-                });
-
-                // Verificar si existe algún módulo que cumpla con la condición
-                $estatus = !empty($modulo);
-                return $estatus ? true : false;
-            } else {
-                // Procesa la respuesta según sea necesario
-                return false;
-            }
-        } catch (\Throwable $th) {
-            //throw $th;
-            abort(403);
+            abort(403, 'Acceso denegado: Suscripción no válida.');
         }
     }
 }

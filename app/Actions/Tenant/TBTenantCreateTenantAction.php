@@ -23,43 +23,43 @@ class TBTenantCreateTenantAction
     /**
      * Crea un nuevo inquilino con el dominio especificado, datos de usuario y cliente en Stripe si es necesario.
      *
-     * @param array $data Datos del inquilino.
-     * @param string $domain Dominio del inquilino.
-     * @param bool $createStripeCustomer Indica si se debe crear un cliente en Stripe.
+     * @param array $tbData Datos del inquilino.
+     * @param string $tbDomain Dominio del inquilino.
+     * @param bool $tbCreateStripeCustomer Indica si se debe crear un cliente en Stripe.
      * @return Tenant
      */
-    public function __invoke(array $data, string $domain, bool $createStripeCustomer = true): Tenant
+    public function __invoke(array $tbData, string $tbDomain, bool $tbCreateStripeCustomer = true): Tenant
     {
-        $data = $this->prepareTenantData($data, $domain);
+        $tbData = $this->tbPrepareTenantData($tbData, $tbDomain);
 
-        $tenant = $this->createTenant($data, $domain);
+        $tbTenant = $this->tbCreateTenant($tbData, $tbDomain);
 
-        if ($createStripeCustomer) {
-            $tenant->createAsStripeCustomer();
+        if ($tbCreateStripeCustomer) {
+            $tbTenant->createAsStripeCustomer();
         }
 
-        $this->initializeTenantDatabase($tenant, $data['user_data']);
-        tenancy()->initialize($tenant);
+        $this->tbInitializeTenantDatabase($tbTenant, $tbData['tb_user_data']);
+        tenancy()->initialize($tbTenant);
 
-        return $tenant;
+        return $tbTenant;
     }
 
     /**
      * Prepara los datos del inquilino.
      */
-    protected function prepareTenantData(array $data, string $domain): array
+    protected function tbPrepareTenantData(array $tbData, string $tbDomain): array
     {
-        return array_merge($data, [
-            'db_name' => $domain ?? 'default_db_name',
+        return array_merge($tbData, [
+            'db_name' => $tbDomain ?? 'default_db_name',
             'db_host' => 'localhost',
             'db_username' => 'postgres',
             'db_password' => '',
-            'user_data' => [
-                'name' => $data['name'] ?? null,
-                'email' => $data['email'] ?? null,
-                'password' => $data['password'] ?? null,
-                'direccion' => $data['direccion'] ?? null,
-                'resumen' => $data['resumen'] ?? null,
+            'tb_user_data' => [
+                'name' => $tbData['name'] ?? null,
+                'email' => $tbData['email'] ?? null,
+                'password' => $tbData['password'] ?? null,
+                'direccion' => $tbData['direccion'] ?? null,
+                'resumen' => $tbData['resumen'] ?? null,
             ],
         ]);
     }
@@ -67,47 +67,47 @@ class TBTenantCreateTenantAction
     /**
      * Crea el inquilino y el dominio asociado.
      */
-    protected function createTenant(array $data, string $domain): Tenant
+    protected function tbCreateTenant(array $tbData, string $tbDomain): Tenant
     {
-        $tenant = Tenant::create($data + [
+        $tbTenant = Tenant::create($tbData + [
             'ready' => false,
             'trial_ends_at' => now()->addDays(config('saas.trial_days')),
         ]);
 
-        $tenant->createDomain(['domain' => $domain])
+        $tbTenant->createDomain(['domain' => $tbDomain])
             ->makePrimary()
             ->makeFallback();
 
-        return $tenant;
+        return $tbTenant;
     }
 
     /**
      * Configura y ejecuta la creación de la base de datos del inquilino.
      */
-    protected function initializeTenantDatabase(Tenant $tenant, array $userData)
+    protected function tbInitializeTenantDatabase(Tenant $tbTenant, array $tbUserData)
     {
-        $this->createDatabaseForTenant($tenant);
-        app(TBTenantTenantManager::class)->setTenant($tenant);
+        $this->tbCreateDatabaseForTenant($tbTenant);
+        app(TBTenantTenantManager::class)->tbSetTenant($tbTenant);
 
-        $this->runMigrations();
-        $this->seedInitialData($userData);
+        $this->tbRunMigrations();
+        $this->tbSeedInitialData($tbUserData);
     }
 
     /**
      * Crea la base de datos del inquilino.
      */
-    protected function createDatabaseForTenant(Tenant $tenant)
+    protected function tbCreateDatabaseForTenant(Tenant $tbTenant)
     {
-        $databaseName = 'tenant_' . str_replace('-', '_', $tenant->id);
-        $tenant->update(['db_name' => $databaseName]);
+        $tbDatabaseName = 'tenant_' . str_replace('-', '_', $tbTenant->id);
+        $tbTenant->update(['db_name' => $tbDatabaseName]);
 
-        DB::statement("CREATE DATABASE $databaseName");
+        DB::statement("CREATE DATABASE $tbDatabaseName");
     }
 
     /**
      * Ejecuta las migraciones para la base de datos del inquilino.
      */
-    protected function runMigrations()
+    protected function tbRunMigrations()
     {
         if (DB::connection('tenant')->getPdo()) {
             Artisan::call('migrate', [
@@ -123,26 +123,26 @@ class TBTenantCreateTenantAction
     /**
      * Inserta datos iniciales en la base de datos del inquilino.
      */
-    protected function seedInitialData(array $userData)
+    protected function tbSeedInitialData(array $tbUserData)
     {
         DB::connection('tenant')->beginTransaction();
 
         try {
             DB::connection('tenant')->table('users')->insert([
-                'name' => $userData['name'],
-                'email' => $userData['email'],
-                'password' => Hash::make($userData['password']),
+                'name' => $tbUserData['name'],
+                'email' => $tbUserData['email'],
+                'password' => Hash::make($tbUserData['password']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             DB::connection('tenant')->table('empleados')->insert([
-                'name' => $userData['name'],
-                'email' => $userData['email'],
+                'name' => $tbUserData['name'],
+                'email' => $tbUserData['email'],
                 'antiguedad' => Carbon::now(),
                 'estatus' => 'alta',
-                'direccion' => $userData['direccion'],
-                'resumen' => $userData['resumen'],
+                'direccion' => $tbUserData['direccion'],
+                'resumen' => $tbUserData['resumen'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -153,10 +153,10 @@ class TBTenantCreateTenantAction
             ]);
 
             DB::connection('tenant')->commit();
-        } catch (Exception $e) {
+        } catch (Exception $tbException) {
             DB::connection('tenant')->rollBack();
-            Log::error("Error al insertar datos iniciales: " . $e->getMessage());
-            throw $e;
+            Log::error("Error al insertar datos iniciales: " . $tbException->getMessage());
+            throw $tbException;
         }
     }
 }
