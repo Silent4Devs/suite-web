@@ -323,14 +323,6 @@
                             <span>Gestión Contractual</span>
                         </a>
                     @endif
-                    @can('planes_de_accion_acceder')
-                        <a href="{{ asset('admin/planes-de-accion') }}">
-                            <div class="caja-icon-mod-header" style="background: #B1C6FF;">
-                                <i class="material-symbols-outlined">shield_person</i>
-                            </div>
-                            <span>Planes de Trabajo</span>
-                        </a>
-                    @endcan
                     @can('control_documentar_acceder')
                         <a href="{{ asset('admin/documentos') }}">
                             <div class="caja-icon-mod-header" style="background: #FFFDC4;">

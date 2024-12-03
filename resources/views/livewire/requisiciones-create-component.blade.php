@@ -545,21 +545,23 @@
                                             </button>
                                             <br>
                                             @if ($bandera)
-                                            <div>
-                                                <label for="question">Pregunta:</label>
-                                                <input type="text" id="question" wire:model.debounce="question">
-                                                <button type="submit" wire:click.prevent="askQuestion">Enviar Pregunta</button>
-                                                <span wire:loading wire:target="askQuestion">
-                                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                </span>
-                                            </div>
-                                            <br>
-                                            @if ($respuesta = $this->respuesta['response'] ?? null)
-                                                <div class="response">
-                                                    <h3>Respuesta:</h3>
-                                                    <p>{{ $respuesta }}</p>
+                                                <div>
+                                                    <label for="question">Pregunta:</label>
+                                                    <input type="text" id="question"
+                                                        wire:model.debounce="question">
+                                                    <button type="submit" wire:click.prevent="askQuestion">Enviar
+                                                        Pregunta</button>
+                                                    <span wire:loading wire:target="askQuestion">
+                                                        <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                    </span>
                                                 </div>
-                                            @endif
+                                                <br>
+                                                @if ($respuesta = $this->respuesta['response'] ?? null)
+                                                    <div class="response">
+                                                        <h3>Respuesta:</h3>
+                                                        <p>{{ $respuesta }}</p>
+                                                    </div>
+                                                @endif
                                             @endif
                                         @endif
                                     @endif
@@ -606,12 +608,11 @@
                         <div class="card card-item doc-requisicion">
                             <div class="flex header-doc">
                                 <div class="flex-item item-doc-img">
-                                    @if ($requisicion->sucursal->mylogo)
-                                        <td><img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                                                style="width:100%; max-width:150px;" alt=""></td>
+                                    @if ($organizacion->logo)
+                                        <img src="{{ asset($organizacion->logo) }}"
+                                            style="width:100%; max-width:150px;">
                                     @else
-                                        <td><img src="{{ asset('sinLogo.png') }}"
-                                                style="width:100%; max-width:150px;" alt=""></td>
+                                        <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                                     @endif
                                 </div>
                                 <div class="flex-item info-med-doc-header">

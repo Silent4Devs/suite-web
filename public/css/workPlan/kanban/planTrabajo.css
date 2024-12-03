@@ -80,25 +80,25 @@ table.gdfTable thead>tr:nth-child(1n) {
 }
 
 .botones_vistas_gantt a:hover {
-    border: 0px solid #6F8FB8;
-    background-color: #6F8FB8;
+    border: 0px solid var(--color-tbj);
+    background-color: var(--color-tbj);
     color: #fff;
 }
 
 .caja_botones_menu a:hover {
-    background-color: #6F8FB8;
+    background-color: var(--color-tbj);
 }
 
 .caja_botones_menu a.btn_activo,
 .caja_botones_menu a.btn_activo:hover {
-    background-color: #6F8FB8;
+    background-color: var(--color-tbj);
     box-shadow: 0px 0px 0px 0px;
     color: #fff;
 }
 
 .boton_activo {
-    border: 1px solid #6F8FB8 !important;
-    background-color: #6F8FB8 !important;
+    border: 1px solid var(--color-tbj) !important;
+    background-color: var(--color-tbj) !important;
     color: #fff !important;
 }
 
@@ -194,7 +194,7 @@ select::-ms-expand {
 
 .navNew {
     height: 68px;
-    background-color: #6F8FB8;
+    background-color: var(--color-tbj);
     border-radius: 10px 10px 0 0;
     margin-left: 45px;
     margin-right: 45px;
@@ -521,7 +521,7 @@ input::file-selector-button {
 }
 
 .blue-menu-header-plan {
-    background-color: #6F8FB8;
+    background-color: var(--color-tbj);
     width: 90%;
     height: 75px;
     margin: auto;
