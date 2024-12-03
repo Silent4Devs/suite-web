@@ -131,12 +131,12 @@
                     @else
                         <div class="mt-3 text-center dropdown-menu dropdown-menu-right hide py-0"
                             style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                            <div class="d-flex align-items-center justify-content-center gap-2 py-3"
+                            <div class="d-flex align-items-center justify-content-center gap-2 py-3 px-4"
                                 style=" background-color: #cfdbe4;">
                                 <div class="img-person">
                                     <img src="{{ $empleado->avatar_ruta }}" alt="{{ $empleado->name }}">
                                 </div>
-                                <span style="font-size:18px;" class="color-tbj">
+                                <span style="font-size:18px; text-wrap: balance;" class="color-tbj">
                                     <strong>{{ $empleado->name }}</strong>
                                 </span>
                             </div>

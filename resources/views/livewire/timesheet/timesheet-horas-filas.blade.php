@@ -298,8 +298,8 @@
                                         <div title="Rechazar" class="btn btn-outline-primary" data-dismiss="modal">
                                             Cancelar
                                         </div>
-                                        <button data-dismiss="modal" onclick="this.disabled = true;"
-                                            id="enviar_aprobacion_time" class="btn_enviar_formulario btn btn-info"
+                                        <button data-dismiss="modal" id="enviar_aprobacion_time"
+                                            class="btn_enviar_formulario btn btn-info"
                                             style="border:none; background-color:#2F96EB;">
                                             Enviar a Aprobación
                                         </button>
@@ -364,9 +364,11 @@
                             });
                             select.innerHTML = html;
                             document.getElementById('loaderComponent').style.display = 'none';
+                            $('.modal-backdrop').hide();
                         },
                         error: function(error) {
                             document.getElementById('loaderComponent').style.display = 'none';
+                            $('.modal-backdrop').hide();
                         }
                     });
                 }
@@ -394,6 +396,7 @@
                     contentType: false,
                     success: function(response) {
                         document.getElementById('loaderComponent').style.display = 'none';
+                        $('.modal-backdrop').hide();
                         console.log(response.status);
                         if (response.status == 200) {
                             Swal.fire(
@@ -414,8 +417,8 @@
                                         '{{ route('admin.timesheet-create') }}';
                                 });
                             } else {
-                                toastr.error(
-                                    '!Error al enviar valide  que la semana  laboral no este vacia y/o que al menos una fila este llena!'
+                                Swal.fire(
+                                    'Valide  que la semana  laboral no este vacia y/o que al menos una fila este llena',
                                 );
                             }
                         }
