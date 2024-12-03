@@ -230,26 +230,7 @@ class RequisicionesEditComponent extends Component
         $this->versionReqId = DB::table('versiones_requisicion')
             ->where('requisicion_id', $this->editRequisicion->id)
             ->where('last_updated_at', '>=', now()->subMinutes(1))
-            ->value('id');
-
-        // Si no existe, crear una nueva versión
-        if (! $this->versionReqId) {
-            $ultimaVersionOrdenCompra = DB::table('versiones_requisicion')
-                ->where('requisicion_id', $this->editRequisicion->id)
-                ->orderBy('version', 'desc')
-                ->first();
-
-            $nuevaVersion = $ultimaVersionOrdenCompra ? $ultimaVersionOrdenCompra->version + 1 : 1;
-
-            // Crear la nueva versión
-            $this->versionReqId = DB::table('versiones_requisicion')->insertGetId([
-                'requisicion_id' => $this->editRequisicion->id,
-                'version' => $nuevaVersion,
-                'created_at' => now(),
-                'updated_at' => now(),
-                'last_updated_at' => now(),
-            ]);
-        }
+            ->value('id') ?? 0;
 
         foreach ($this->editRequisicion->productos_requisiciones as $keyProducto => $producto) {
             if ($keyProducto == 0) {
@@ -767,6 +748,25 @@ class RequisicionesEditComponent extends Component
     {
         DB::beginTransaction();
         try {
+
+            // Si no existe, crear una nueva versión
+            if (! $this->versionReqId || $this->versionReqId == 0) {
+                $ultimaVersionOrdenCompra = DB::table('versiones_requisicion')
+                    ->where('requisicion_id', $this->editRequisicion->id)
+                    ->orderBy('version', 'desc')
+                    ->first();
+
+                $nuevaVersion = $ultimaVersionOrdenCompra ? $ultimaVersionOrdenCompra->version + 1 : 1;
+
+                // Crear la nueva versión
+                $this->versionReqId = DB::table('versiones_requisicion')->insertGetId([
+                    'requisicion_id' => $this->editRequisicion->id,
+                    'version' => $nuevaVersion,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'last_updated_at' => now(),
+                ]);
+            }
 
             $this->editRequisicion->update(
                 [
