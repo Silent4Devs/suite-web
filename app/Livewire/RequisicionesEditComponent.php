@@ -986,7 +986,7 @@ class RequisicionesEditComponent extends Component
 
 
             foreach ($dataProvedoresCatalogo as $provCat) {
-                $PRC = KatbolProvedorRequisicionCatalogo::find($this->provCat['id_registro']);
+                $PRC = KatbolProvedorRequisicionCatalogo::find($provCat['id_registro']);
 
                 // Función para registrar cambios en el historial
                 $createHistorial = function ($campo, $valorAnterior, $valorNuevo) use ($provCat) {
