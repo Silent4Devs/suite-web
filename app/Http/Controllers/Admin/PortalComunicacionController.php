@@ -32,20 +32,13 @@ class PortalComunicacionController extends Controller
 
         $hoy = Carbon::now();
 
-        $politicas = PoliticaSgsi::select('id', 'nombre_politica', 'politicasgsi', 'estatus', 'mostrar')
-            ->with('reviso:id,name,foto,email')
-            ->get();
+        $politica_existe = PoliticaSgsi::getAll()->count();
 
-        $politica_existe = $politicas->count(); // Cuenta el total de registros en la colección obtenida
+        $comite_existe = Comiteseguridad::getAll()->count();
 
-        $comite = Comiteseguridad::get();
+        $nuevos = Empleado::getNuevos();
 
-        $comite_existe = $comite->count();
-
-        $nuevos = Empleado::select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->alta()->get();
-
-        $cumpleaños = Empleado::select('id', 'area_id', 'name', 'puesto_id', 'foto', 'genero', 'cumpleaños', 'antiguedad')->with('puestoRelacionado')->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->alta()->get();
-
+        $cumpleaños = Empleado::getCumpleanos();
 
         $user = User::getCurrentUser();
         $empleado_asignado = $user->n_empleado;
