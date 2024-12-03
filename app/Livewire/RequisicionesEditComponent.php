@@ -347,7 +347,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -912,7 +912,7 @@ class RequisicionesEditComponent extends Component
                 ];
 
                 if (! empty($provSug['extArchivo'])) {
-                    $name = 'requisicion_' . $this->requisicion_id . '_cotizacion_' . ($key + 1) . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                    $name = 'requisicion_'.$this->requisicion_id.'_cotizacion_'.($key + 1).'_'.uniqid().'.'.$provSug['extArchivo'];
                     $data['cotizacion'] = $name;
 
                     // Guardar el archivo en el sistema
