@@ -13,8 +13,11 @@
         }
     </style>
 @endsection
+@section('tituloMenu')
+    <span>Centro de Atención </span>
+    <span><small class="title-auto-centro-atencion">Incidentes de seguridad</small></span>
+@endsection
 @section('content')
-
     @include('partials.flashMessages')
     <div class="">
 
@@ -187,9 +190,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-        setTimeout(() => {
+            setTimeout(() => {
                 document.querySelector('body').classList.remove('menu-global-hidden');
             }, 1000);
+        });
+    </script>
+    <script>
+        $('.nav-link').click(function() {
+            document.querySelector('.title-auto-centro-atencion').innerHTML = document.querySelector(
+                '.nav-link:hover span').innerHTML;
         });
     </script>
 @endsection
