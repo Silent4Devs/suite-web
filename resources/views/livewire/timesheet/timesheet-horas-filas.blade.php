@@ -287,7 +287,7 @@
                         <div class="modal-body">
                             <div class="delete">
                                 <div class="text-center">
-                                    <i class="fa-solid fa-calendar-plus" style="color: #2F96EB; font-size:60pt;"></i>
+                                    <i class="fa-solid fa-calendar-plus color-tbj" style="font-size:60pt;"></i>
                                     <h1 class="my-4" style="font-size:14pt;">Registrar Jornada Laboral</h1>
                                     <p class="parrafo">¿Está seguro que desea enviar a aprobación este registro?
                                     </p>
@@ -299,8 +299,7 @@
                                             Cancelar
                                         </div>
                                         <button data-dismiss="modal" id="enviar_aprobacion_time"
-                                            class="btn_enviar_formulario btn btn-info"
-                                            style="border:none; background-color:#2F96EB;">
+                                            class="btn_enviar_formulario btn btn-primary">
                                             Enviar a Aprobación
                                         </button>
                                     </div>
