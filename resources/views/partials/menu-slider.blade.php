@@ -1,8 +1,8 @@
 <div class="menu-global-tbj">
     <div class="title-page-global item-menu-slider">
         <div class="caja-logo-ltr-light">
-            @hasSection('titulo')
-                @yield('titulo')
+            @hasSection('tituloMenu')
+                @yield('tituloMenu')
             @else
                 <img src="{{ asset($logotipo) }}" alt="logo organizacional">
             @endif
