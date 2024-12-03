@@ -106,8 +106,18 @@ class EV360ObjetivosController extends Controller
                     abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
                     $objetivo = new Objetivo;
 
-                    $empleado = Empleado::getAllDataObjetivosEmpleado()
-                        ->find(intval($empleado));
+                    $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
+                    ->with([
+                        'objetivos' => function ($query) {
+                            $query->with([
+                                'objetivo' => function ($nestedQuery) {
+                                    $nestedQuery->with(['tipo', 'metrica']);
+                                }
+                            ]);
+                        }
+                    ])->where('estatus', 'alta')
+                    ->find(intval($empleado));
+
 
                     if ($request->ajax()) {
                         $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
@@ -124,11 +134,11 @@ class EV360ObjetivosController extends Controller
                     return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
                 }
             } catch (\Throwable $th) {
-                abort(404);
+                dd( $th);
             }
         } else {
             // El valor no es válido, maneja el error
-            abort(404);
+            dd('error');
         }
     }
 

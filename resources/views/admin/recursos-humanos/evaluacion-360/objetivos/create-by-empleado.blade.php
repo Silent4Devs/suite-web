@@ -200,10 +200,6 @@
 
 
             let dtButtons = [];
-            let empleado = @json($empleado);
-            let auth = @json(Auth::user()->empleado);
-            let permiso = @json($permiso);
-            let supervisor = @json($empleado->supervisor);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -292,78 +288,7 @@
             };
             window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
 
-            window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
-                console.log(objetivo, empleado, estaAprobado);
-                let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
-                let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
-                // let ruta_aux =
-                //     '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
-                let urlAprobacion =
-                    '{{ route('admin.ev360-objetivos-empleado.aprobarRechazarObjetivo', ['empleado' => ':idEmpleado', 'objetivo' => ':idObjetivo']) }}';
 
-                urlAprobacion = urlAprobacion.replace(':idEmpleado', empleado);
-                urlAprobacion = urlAprobacion.replace(':idObjetivo', objetivo);
-                console.log(urlAprobacion);
-                Swal.fire({
-                    title: `¿Está seguro de ${textoAprobacion.toLowerCase()} este objetivo estratégico?`,
-                    html: '<i class="fas fa-question-circle mr-2"></i> Razón de aceptación o rechazo',
-                    input: 'textarea',
-                    inputValidator: (value) => {
-                        if (!estaAprobado) {
-                            if (value.trim().length < 3) {
-                                return 'El campo debe tener al menos 3 caracteres'
-                            }
-                        }
-
-                    },
-                    inputAttributes: {
-                        'maxlength': 100,
-                        'autocapitalize': 'off',
-                        'autocorrect': 'off',
-                        'required': estaAprobado,
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: textoAprobacion,
-                    cancelButtonText: 'Cancelar',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (comentarios_aprobacion) => {
-                        return fetch(urlAprobacion, {
-                                method: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content'),
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    esta_aprobado: estaAprobado,
-                                    objetivo,
-                                    empleado,
-                                    comentarios_aprobacion
-                                })
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                }
-                                return response.json()
-                            })
-                            .catch(error => {
-                                Swal.showValidationMessage(
-                                    `Request failed: ${error}`
-                                )
-                            })
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
-                            () => {
-                                tblObjetivos.ajax.reload();
-                            });
-                    }
-                })
-
-            }
         });
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
