@@ -818,12 +818,12 @@ class RequisicionesEditComponent extends Component
 
                 // Si existe el registro, comparar y registrar cambios
                 if (! empty($PRI)) {
-                    if ($PRI->fecha_inicio != $provInd['fecha_inicio']) {
-                        $createHistorial('fecha_inicio', $PRI->fecha_inicio, $provInd['fecha_inicio']);
+                    if ($provInd['fecha_inicio_anterior'] != $provInd['fecha_inicio']) {
+                        $createHistorial('fecha_inicio', $provInd['fecha_inicio_anterior'], $provInd['fecha_inicio']);
                     }
 
-                    if ($PRI->fecha_fin != $provInd['fecha_fin']) {
-                        $createHistorial('fecha_fin', $PRI->fecha_fin, $provInd['fecha_fin']);
+                    if ($provInd['fecha_fin_anterior'] != $provInd['fecha_fin']) {
+                        $createHistorial('fecha_fin', $provInd['fecha_fin_anterior'], $provInd['fecha_fin']);
                     }
                 } elseif ($provInd['tabla_origen'] != null) {
 
@@ -1007,12 +1007,12 @@ class RequisicionesEditComponent extends Component
                         $createHistorial('proveedor_id', $PRC->id, $provCat['proveedor_id']);
                     }
 
-                    if ($PRC->fecha_inicio != $provCat['fecha_inicio']) {
-                        $createHistorial('fecha_inicio', $PRC->fecha_inicio, $provCat['fecha_inicio']);
+                    if ($provCat['fecha_inicio_anterior'] != $provCat['fecha_inicio']) {
+                        $createHistorial('fecha_inicio', $provCat['fecha_inicio_anterior'], $provCat['fecha_inicio']);
                     }
 
-                    if ($PRC->fecha_fin != $provCat['fecha_fin']) {
-                        $createHistorial('fecha_fin', $PRC->fecha_fin, $provCat['fecha_fin']);
+                    if ($provCat['fecha_fin_anterior'] != $provCat['fecha_fin']) {
+                        $createHistorial('fecha_fin', $provCat['fecha_fin_anterior'], $provCat['fecha_fin']);
                     }
                 } elseif ($provCat['tabla_origen'] != null) {
 
@@ -1090,9 +1090,6 @@ class RequisicionesEditComponent extends Component
                 ],
                 [
                     'solicitante_id' => $this->user->empleado->id,
-                    // 'jefe_id' => $responsable->id,
-                    // 'responsable_finanzas_id' => $responsable->id,
-                    // 'comprador_id' => $comprador->user->empleado->id,
                 ]
             );
 
