@@ -14,8 +14,10 @@
     </style>
 @endsection
 @section('tituloMenu')
-    <span>Centro de Atención </span>
-    <span><small class="title-auto-centro-atencion">Incidentes de seguridad</small></span>
+    <div class="title-menu-centro-atencion">
+        <span>Centro de Atención </span>
+        <span><small class="title-auto-centro-atencion">Incidentes de seguridad</small></span>
+    </div>
 @endsection
 @section('content')
     @include('partials.flashMessages')
