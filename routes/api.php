@@ -1,21 +1,21 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\UserAuthController;
+use App\Http\Controllers\Mobile\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\Tenant\TBTenantRegisterController;
-use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
-use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
-use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
-use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
-use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
-use App\Http\Controllers\Api\V1\OrdenesCompra\tbApiMobileControllerOrdenesCompra;
-use App\Http\Controllers\Api\V1\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
-use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
-use App\Http\Controllers\Api\V1\Requisiciones\tbApiMobileControllerRequisiciones;
-use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
-use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
-use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
-use App\Http\Controllers\Api\V1\Timesheet\TbTimesheetApiMobileController;
+use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\FormulasController;
+use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\Mobile\Comunicados\tbApiMobileControllerComunicados;
+use App\Http\Controllers\Api\Mobile\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
+use App\Http\Controllers\Api\Mobile\Documentos\tbApiMobileControllerDocumentos;
+use App\Http\Controllers\Api\Mobile\OrdenesCompra\tbApiMobileControllerOrdenesCompra;
+use App\Http\Controllers\Api\Mobile\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
+use App\Http\Controllers\Api\Mobile\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
+use App\Http\Controllers\Api\Mobile\Requisiciones\tbApiMobileControllerRequisiciones;
+use App\Http\Controllers\Api\Mobile\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
+use App\Http\Controllers\Api\Mobile\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
+use App\Http\Controllers\Api\Mobile\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
+use App\Http\Controllers\Api\Mobile\Timesheet\TbTimesheetApiMobileController;
 use Illuminate\Support\Facades\Route;
 
 

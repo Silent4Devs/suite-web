@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DashboardPermisosController;
 use App\Http\Controllers\Admin\DayOffController;
@@ -27,30 +28,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('tenant', 'central.landing')->name('central.landing');
 
-Route::get('/register-tenant', [RegisterTenantController::class, 'show'])->name('central.tenants.register');
-Route::post('/register/submit', [RegisterTenantController::class, 'submit'])->name('central.tenants.register.submit');
-
 Route::group(['middleware' => ['tenant']], function () {
 
-Route::get('correotestqueue', [QueueCorreo::class, 'index']);
-Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
+    Route::get('correotestqueue', [QueueCorreo::class, 'index']);
+    Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
 
-Route::get('/', [LoginController::class, 'showLoginForm']);
-Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
+    Route::get('/', [LoginController::class, 'showLoginForm']);
+    Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
-Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
-Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
+    Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
+    Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
+    Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
 
-Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
-Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
+    Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
+    Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
-Auth::routes();
+    Auth::routes();
 
-// Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    // Tabla-Calendario
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
 
-    // Route::group(['middleware' => ['general_tabantaj']], function () {
+        // Route::group(['middleware' => ['general_tabantaj']], function () {
         // Inicio usuario
         Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
         Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
@@ -266,1665 +264,1664 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('/revisiones/documentos-me-deben-aprobar', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobar')->name('revisiones.obtenerDocumentosMeDebenAprobar');
             Route::post('/revisiones/documentos-me-deben-aprobar-archivo', 'RevisionDocumentoController@obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
         });
-    // });
+        // });
+
+        // Firmas
+        Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
+        Route::get('firmas_module/create', 'FirmasModuleController@create')->name('module_firmas.create');
+        Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
+        Route::get('firmas_module/edit/{id}', 'FirmasModuleController@edit')->name('module_firmas.edit');
+        Route::post('firmas_module/update/{id}', 'FirmasModuleController@update')->name('module_firmas.update');
+        Route::post('firmas_module/seguridad/{id}', 'FirmasModuleController@seguridad')->name('module_firmas.seguridad');
+        Route::post('firmas_module/riesgos/{id}', 'FirmasModuleController@riesgos')->name('module_firmas.riesgos');
+        Route::post('firmas_module/quejas/{id}', 'FirmasModuleController@quejas')->name('module_firmas.quejas');
+        Route::post('firmas_module/mejoras/{id}', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
+        Route::post('firmas_module/denuncias/{id}', 'FirmasModuleController@denuncias')->name('module_firmas.denuncias');
+        Route::post('firmas_module/sugerencia/{id}', 'FirmasModuleController@sugerencias')->name('module_firmas.sugerencias');
+        Route::post('firmas_module/minutas/{id}', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
 
-    // Firmas
-    Route::get('firmas_module', 'FirmasModuleController@index')->name('module_firmas');
-    Route::get('firmas_module/create', 'FirmasModuleController@create')->name('module_firmas.create');
-    Route::post('firmas_module/store', 'FirmasModuleController@store')->name('module_firmas.store');
-    Route::get('firmas_module/edit/{id}', 'FirmasModuleController@edit')->name('module_firmas.edit');
-    Route::post('firmas_module/update/{id}', 'FirmasModuleController@update')->name('module_firmas.update');
-    Route::post('firmas_module/seguridad/{id}', 'FirmasModuleController@seguridad')->name('module_firmas.seguridad');
-    Route::post('firmas_module/riesgos/{id}', 'FirmasModuleController@riesgos')->name('module_firmas.riesgos');
-    Route::post('firmas_module/quejas/{id}', 'FirmasModuleController@quejas')->name('module_firmas.quejas');
-    Route::post('firmas_module/mejoras/{id}', 'FirmasModuleController@mejoras')->name('module_firmas.mejoras');
-    Route::post('firmas_module/denuncias/{id}', 'FirmasModuleController@denuncias')->name('module_firmas.denuncias');
-    Route::post('firmas_module/sugerencia/{id}', 'FirmasModuleController@sugerencias')->name('module_firmas.sugerencias');
-    Route::post('firmas_module/minutas/{id}', 'FirmasModuleController@minutas')->name('module_firmas.minutas');
-
-    Route::group(['middleware' => 'primeros.pasos'], function () {
-
-        Route::group(['middleware' => ['timesheet']], function () {
-            // Timesheet
-            Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
-            Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
-            Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
-            Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
-            Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
-            Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
-            Route::get('timesheet/reporte-aprobador/{id}', 'TimesheetController@reporteAprobador')->name('timesheet-reporte-aprobador');
-            Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
-            Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
-            Route::get('timesheet/aprobados', 'TimesheetController@aprobados')->name('timesheet-aprobados');
-            Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
-            Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
-            Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
-            Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
-            Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
-            Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
-            Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
-
-            Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
-            Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
-            Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
-            Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
-            Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
-            // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
-            Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
-            Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
-            Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
-            Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
-            Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
-            Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
-            Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
-            Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
-
-            Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
-            Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-            Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
-            Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
-            Route::get('timesheet/clientes/edit/{id}', 'TimesheetController@clientesEdit')->name('timesheet-clientes-edit');
-            Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
-            Route::post('timesheet/clientes/update/{id}', 'TimesheetController@clientesUpdate')->name('timesheet-clientes-update');
-            Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-cliente-delete');
-            Route::post('timesheet/clientes/pdf', 'TimesheetController@pdfClientes')->name('timesheet-cliente.pdf');
-
-            Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
-            Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
-
-            Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
-
-            Route::post('timesheet/creacionContratoProyecto', 'TimesheetController@creacionContratoProyecto')->name('timesheet.creacionContratoProyecto');
-
-            Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
-        });
-
-        Route::group(['middleware' => ['proyectos']], function () {
-            Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
-            Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
-            Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
-            Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
-            Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
-            // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
-            Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
-            Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
-            Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
-            Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
-            Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
-            Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
-            Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
-            Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
-
-            Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
-            Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-        });
-
-        // Comunicacion Sgis
-        Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
-        Route::post('comunicacion-sgis/media', 'ComunicacionSgiController@storeMedia')->name('comunicacion-sgis.storeMedia');
-        Route::post('comunicacion-sgis/ckmedia', 'ComunicacionSgiController@storeCKEditorImages')->name('comunicacion-sgis.storeCKEditorImages');
-        Route::resource('comunicacion-sgis', 'ComunicacionSgiController');
-
-        Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
-        Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
-        Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
-        Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.edit');
-
-        Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
-        Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
-        Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
-        Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
-
-        //Se puso aqui debido a problema de cross-origin
-        Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
-
-        Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
-        Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
-        Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
-        Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
-
-        Route::get('octave/arbol-riesgos/{matriz}', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
-        Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
-        Route::get('contenedores/{matriz}', 'ContenedorMatrizOctaveController@index')->name('contenedores.index');
-        Route::get('contenedores/create/{matriz}', 'ContenedorMatrizOctaveController@create')->name('contenedores.create');
-        Route::get('contenedores/{contenedor}/edit/{matriz}', 'ContenedorMatrizOctaveController@edit')->name('contenedores.edit');
-        Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
-        Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
-
-        Route::group(['middleware' => ['gestion_talento']], function () {
-            //Modulo Capital Humano
-            // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-            Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-
-            //Control de Ausencias
-            Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
-            Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
-            Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
-            Route::resource('Ausencias', 'AusenciasController');
-
-            Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
-                'create' => 'incidentes-vacaciones.create',
-                'store' => 'incidentes-vacaciones.store',
-                'show' => 'incidentes-vacaciones.show',
-                'edit' => 'incidentes-vacaciones.edit',
-                'update' => 'incidentes-vacaciones.update',
-                'destroy' => 'incidentes-vacaciones.destroy',
-            ]);
-
-            Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
-                'index' => 'incidentes-dayoff.index',
-                'create' => 'incidentes-dayoff.create',
-                'store' => 'incidentes-dayoff.store',
-                'show' => 'incidentes-dayoff.show',
-                'edit' => 'incidentes-dayoff.edit',
-                'update' => 'incidentes-dayoff.update',
-                'destroy' => 'incidentes-dayoff.destroy',
-            ]);
-
-            //Control de Ausencias- Vacaciones
-            Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
-            Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
-            Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
-            Route::resource('vacaciones', 'VacacionesController')->names([
-                'create' => 'vacaciones.create',
-                'store' => 'vacaciones.store',
-                'show' => 'vacaciones.show',
-                'edit' => 'vacaciones.edit',
-                'update' => 'vacaciones.update',
-                'destroy' => 'vacaciones.destroy',
-            ]);
-
-            //Control de Ausencias- Day-Off
-            Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
-            Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
-            Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
-            Route::resource('dayOff', 'DayOffController')->names([
-                'create' => 'dayOff.create',
-                'store' => 'dayOff.store',
-                'show' => 'dayOff.show',
-                'edit' => 'dayOff.edit',
-                'update' => 'dayOff.update',
-                'destroy' => 'dayOff.destroy',
-            ]);
-
-            //Control de Ausencias Permisos de Goce de Sueldo
-            Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
-            Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
-            Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
-                'index' => 'permisos-goce-sueldo.index',
-                'create' => 'permisos-goce-sueldo.create',
-                'store' => 'permisos-goce-sueldo.store',
-                'show' => 'permisos-goce-sueldo.show',
-                'edit' => 'permisos-goce-sueldo.edit',
-                'update' => 'permisos-goce-sueldo.update',
-                'destroy' => 'permisos-goce-sueldo.destroy',
-            ]);
-
-            //Control de Solicitud- Vacaciones
-            Route::get('solicitud-vacaciones/perido-adicional/create', 'SolicitudVacacionesController@periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
-            Route::get('solicitud-vacaciones/{id}/archivoShow', 'SolicitudVacacionesController@archivoShow')->name('solicitud-vacaciones.archivoShow');
-            Route::get('solicitud-vacaciones/{id}/vistaGlobal', 'SolicitudVacacionesController@showVistaGlobal')->name('solicitud-vacaciones.vistaGlobal');
-            Route::get('solicitud-vacaciones/menu', 'SolicitudVacacionesController@aprobacionMenu')->name('solicitud-vacaciones.menu');
-            Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
-            Route::get('solicitud-vacaciones/aprobacion', 'SolicitudVacacionesController@aprobacion')->name('solicitud-vacaciones.aprobacion');
-            Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
-            Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
-            Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
-            Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
-                'create' => 'solicitud-vacaciones.create',
-                'store' => 'solicitud-vacaciones.store',
-                'show' => 'solicitud-vacaciones.show',
-                'edit' => 'solicitud-vacaciones.edit',
-                'update' => 'solicitud-vacaciones.update',
-                'destroy' => 'solicitud-vacaciones.destroy',
-            ])->except(['show', 'destroy']);
-
-            //Control de Solicitud- Day Off
-            Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
-            Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
-            Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
-            Route::get('solicitud-dayoff/archivo', 'SolicitudDayOffController@archivo')->name('solicitud-dayoff.archivo');
-            Route::get('solicitud-dayoff/aprobacion', 'SolicitudDayOffController@aprobacion')->name('solicitud-dayoff.aprobacion');
-            Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
-            Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
-            Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
-            Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
-                'create' => 'solicitud-dayoff.create',
-                'store' => 'solicitud-dayoff.store',
-                'show' => 'solicitud-dayoff.show',
-                'edit' => 'solicitud-dayoff.edit',
-                'update' => 'solicitud-dayoff.update',
-                'destroy' => 'solicitud-dayoff.destroy',
-            ])->except(['show', 'destroy']);
-
-            //Control de Solicitud - Permiso Goce Sueldo
-            Route::get('solicitud-permiso-goce-sueldo/{id}/showArchivo', 'SolicitudPermisoGoceSueldoController@showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
-            Route::get('solicitud-permiso-goce-sueldo/{id}/vistaGlobal', 'SolicitudPermisoGoceSueldoController@showVistaGlobal')->name('solicitud-permiso-goce-sueldo.vistaGlobal');
-            Route::get('solicitud-permiso-goce-sueldo/menu', 'SolicitudPermisoGoceSueldoController@aprobacionMenu')->name('solicitud-permiso-goce-sueldo.menu');
-            Route::get('solicitud-permiso-goce-sueldo/archivo', 'SolicitudPermisoGoceSueldoController@archivo')->name('solicitud-permiso-goce-sueldo.archivo');
-            Route::get('solicitud-permiso-goce-sueldo/aprobacion', 'SolicitudPermisoGoceSueldoController@aprobacion')->name('solicitud-permiso-goce-sueldo.aprobacion');
-            Route::get('solicitud-permiso-goce-sueldo/{id}/respuesta', 'SolicitudPermisoGoceSueldoController@respuesta')->name('solicitud-permiso-goce-sueldo.respuesta');
-            Route::get('solicitud-permiso-goce-sueldo/{id}/show', 'SolicitudPermisoGoceSueldoController@show')->name('solicitud-permiso-goce-sueldo.show');
-            Route::post('solicitud-permiso-goce-sueldo/destroy', 'SolicitudPermisoGoceSueldoController@destroy')->name('solicitud-permiso-goce-sueldo.destroy');
-            Route::resource('solicitud-permiso-goce-sueldo', 'SolicitudPermisoGoceSueldoController')->names([
-                'create' => 'solicitud-permiso-goce-sueldo.create',
-                'store' => 'solicitud-permiso-goce-sueldo.store',
-                'show' => 'solicitud-permiso-goce-sueldo.show',
-                'edit' => 'solicitud-permiso-goce-sueldo.edit',
-                'update' => 'solicitud-permiso-goce-sueldo.update',
-                'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
-            ])->except(['show', 'destroy']);
-
-            //Evaluaciones 360
-            Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
-
-            Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluado}/mis-evaluaciones', 'RH\EV360EvaluacionesController@misEvaluaciones')->name('ev360-evaluaciones.misEvaluaciones');
-            Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluador}/evaluaciones-mi-equipo', 'RH\EV360EvaluacionesController@evaluacionesDeMiEquipo')->name('ev360-evaluaciones.evaluacionesDeMiEquipo');
-
-            Route::post('recursos-humanos/evaluacion-360/{evaluacion}/recordatorio', 'RH\EV360EvaluacionesController@enviarCorreoAEvaluadores')->name('ev360-evaluaciones.recordatorio');
-            Route::post('recursos-humanos/evaluacion-360/invitacion-reunion-evaluacion', 'RH\EV360EvaluacionesController@enviarInvitacionDeEvaluacion')->name('ev360-evaluaciones.invitacion-reunion-evaluacion');
-
-            Route::get('recursos-humanos/evaluacion-360/{empleado}/evaluaciones-del-empleado', 'RH\EV360EvaluacionesController@evaluacionesDelEmpleado')->name('ev360-evaluaciones.evaluacionesDelEmpleado');
-            Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', 'RH\EV360EvaluacionesController@relatedObjetivoWithEvaluacion')->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
-            Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
-            Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
-            Route::get('recursos-humanos/evaluacion-360/vista-evaluador/{evaluacion}/evaluacion/{evaluador}/evaluador', 'RH\EV360EvaluacionesController@vistaevaluador')->name('ev360-evaluaciones.vistaevaluador');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', 'RH\EV360EvaluacionesController@finalizarEvaluacion')->name('ev360-evaluaciones.finalizarEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzadaDescripcion')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzada')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/calificacion-persepcion/store', 'RH\EV360EvaluacionesController@saveCalificacionPersepcion')->name('ev360-evaluaciones.objetivos.saveCalificacionPersepcion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
-            Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
-            Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
-            // Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}', 'RH\EV360EvaluacionesController@reactivarPorEvaluado')->name('ev360-evaluaciones.reactivarPorEvaluado');
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@reactivarPorEvaluador')->name('ev360-evaluaciones.reactivarPorEvaluador');
-            Route::post('recursos-humanos/evaluacion-360/normalizar/objetivo', 'RH\EV360EvaluacionesController@normalizarCalificacionObjetivo')->name('ev360-evaluaciones.normalizar.objetivo');
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/jefe/{empleado}', 'RH\EV360EvaluacionesController@resumenJefe')->name('ev360-evaluaciones.consulta.resumenJefe');
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/empleado/{empleado}', 'RH\EV360EvaluacionesController@resumenEmpleado')->name('ev360-evaluaciones.consulta.resumenEmpleado');
-            Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
-                'index' => 'ev360-evaluaciones.index',
-                'create' => 'ev360-evaluaciones.create',
-                'store' => 'ev360-evaluaciones.store',
-                // 'show' => 'ev360-evaluaciones.show',
-                'edit' => 'ev360-evaluaciones.edit',
-                'update' => 'ev360-evaluaciones.update',
-            ]);
-
-            Route::get('recursos-humanos/evaluacion-360/evaluacion/objetivostmp', 'RH\EV360EvaluacionesController@objetivostemporal')->name('ev360-evaluaciones.objetivostmp');
-
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
-            Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
-            Route::post('recursos-humanos/evaluacion-360/pdf', 'RH\EV360EvaluacionesController@pdf')->name('ev360-evaluaciones.pdf');
-
-            Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
-            Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
-            Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
-            Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
-
-            Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
-            Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/aprobar', 'RH\EV360ObjetivosController@aprobarRechazarObjetivo')->name('ev360-objetivos-empleado.aprobarRechazarObjetivo');
-            Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
-            Route::get('recursos-humanos/evaluacion-360/objetivos/{empleado}/copiar', 'RH\EV360ObjetivosController@indexCopiar')->name('ev360-objetivos-empleado.indexCopiar');
-            Route::post('recursos-humanos/evaluacion-360/objetivos/definir-nuevos', 'RH\EV360ObjetivosController@definirNuevosObjetivos')->name('ev360-objetivos-empleado.definir-nuevos');
-            Route::post('recursos-humanos/evaluacion-360/objetivos/copiar', 'RH\EV360ObjetivosController@storeCopiaObjetivos')->name('ev360-objetivos-empleado.storeCopiaObjetivos');
-            Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
-
-            Route::get('recursos-humanos/evaluacion-360/objetivos/{objetivo}/edit', 'RH\EV360ObjetivosController@edit')->name('ev360-objetivos-empleado.edit');
-            Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}', 'RH\EV360ObjetivosController@destroyByEmpleado')->name('ev360-objetivos-empleado.destroyByEmpleado');
-            Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/editByEmpleado', 'RH\EV360ObjetivosController@editByEmpleado')->name('ev360-objetivos-empleado.editByEmpleado');
-            Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}/empleado', 'RH\EV360ObjetivosController@updateByEmpleado')->name('ev360-objetivos-empleado.updateByEmpleado');
-            Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
-                'index' => 'ev360-objetivos.index',
-                'destroy' => 'ev360-objetivos.destroy',
-            ])->except(['show']);
-            Route::resource('recursos-humanos/evaluacion-360/objetivos/rangos', 'RH\CatalogoRangosObjetivosController');
-
-            // Evaluaciones 360
-            Route::post('recursos-humanos/evaluacion-360/normalizar/{evaluacion}/resultados', 'RH\EV360EvaluacionesController@normalizarResultados')->name('ev360-normalizar-resultados');
-            Route::get('recursos-humanos/evaluacion-360', 'RH\EV360EvaluacionesController@index')->name('rh-evaluacion360.index');
-
-            // Evaluaciones Desempeño
-            Route::prefix('recursos-humanos/evaluacion-desempeno')->name('rh.evaluaciones-desempeno.')->group(function () {
-                Route::get('index', 'RH\EvaluacionesDesempenoController@index')->name('index');
-                Route::delete('{evaluacion}/destroy', 'RH\EvaluacionesDesempenoController@destroy')->name('borrar');
-                Route::get('dashboard-general', 'RH\EvaluacionesDesempenoController@dashboardGeneral')->name('dashboard-general');
-                Route::get('dashboard-personal', 'RH\EvaluacionesDesempenoController@dashboardPersonal')->name('dashboard-personal');
-                Route::get('{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempenoController@dashboardEvaluacion')->name('dashboard-evaluacion');
-                Route::get('{evaluacion}/dashboard-evaluacion/{evaluado}/evaluado', 'RH\EvaluacionesDesempenoController@dashboardEvaluado')->name('dashboard-evaluado');
-                Route::get('{evaluacion}/dashboard-area/{area}', 'RH\EvaluacionesDesempenoController@dashboardArea')->name('dashboard-area');
-                Route::get('descargaEvaluacion/{evaluacion}', 'RH\EvaluacionesDesempenoController@descargaEvaluacion')->name('descargaEvaluacion');
-                Route::get('dashboard-global', 'RH\EvaluacionesDesempenoController@dashboardGlobal')->name('dashboard-global');
-
-                Route::get('config-evaluaciones', 'RH\EvaluacionesDesempenoController@configEvaluaciones')->name('config-evaluaciones');
-
-                Route::get('create-evaluacion', 'RH\EvaluacionesDesempenoController@createEvaluacion')->name('create-evaluacion');
-                Route::get('edit-borrador/{evaluacion}', 'RH\EvaluacionesDesempenoController@editBorrador')->name('edit-borrador');
-                Route::get('evaluacion/{evaluacion}/cuestionario/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@cuestionarioEvaluacionDesempeno')->name('cuestionario');
-
-                Route::post('evaluacion/{evaluacion}/storeFirmaEvaluacion/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@storeFirmasEvaluacion')->name('storeFirmasEvaluacion');
-
-                Route::get('mis-evaluaciones', 'RH\EvaluacionesDesempenoController@misEvaluaciones')->name('mis-evaluaciones');
-
-                Route::get('{empleado}/carga-objetivos-empleado', 'RH\EvaluacionesDesempenoController@cargaObjetivosEmpleado')->name('carga-objetivos-empleado');
-                Route::get('{area}/carga-objetivos-area', 'RH\EvaluacionesDesempenoController@cargaObjetivosArea')->name('carga-objetivos-area');
-                Route::get('objetivos-importar', 'RH\EvaluacionesDesempenoController@objetivosImportar')->name('objetivos-importar');
-                Route::get('{empleado}/objetivos-papelera', 'RH\EvaluacionesDesempenoController@objetivosPapelera')->name('objetivos-papelera');
-                Route::get('objetivos-exportar', 'RH\EvaluacionesDesempenoController@objetivosExportar')->name('objetivos-exportar');
-                Route::get('test', 'RH\EvaluacionesDesempenoController@test')->name('test');
-            });
-
-            // Objetivos Periodo
-            Route::prefix('recursos-humanos/evaluacion-desempeno')->name('ev360-objetivos-periodo.')->group(function () {
-                Route::get('configuracion', 'RH\ObjetivosPeriodoController@config')->name('config');
-            });
-
-            // Perfiles
-            Route::prefix('perfiles')->name('perfiles.')->group(function () {
-                Route::delete('destroy', 'PerfilController@massDestroy')->name('massDestroy');
-                Route::post('parse-csv-import', 'PerfilController@parseCsvImport')->name('parseCsvImport');
-                Route::post('process-csv-import', 'PerfilController@processCsvImport')->name('processCsvImport');
-                Route::resource('/', 'PerfilController');
-            });
-
-            Route::get(
-                'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
-                'RH\CompetenciasPorPuestoController@create'
-            )->name('ev360-competencias-por-puesto.create');
-            Route::get(
-                'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',
-                'RH\CompetenciasPorPuestoController@indexCompetenciasPorPuesto'
-            )->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
-            Route::post(
-                'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}',
-                'RH\CompetenciasPorPuestoController@store'
-            )->name('ev360-competencias-por-puesto.store');
-            Route::resource('recursos-humanos/evaluacion-360/competencias-por-puesto', 'RH\CompetenciasPorPuestoController')->names([
-                'index' => 'ev360-competencias-por-puesto.index',
-                'show' => 'ev360-competencias-por-puesto.show',
-                'edit' => 'ev360-competencias-por-puesto.edit',
-                'update' => 'ev360-competencias-por-puesto.update',
-                'destroy' => 'ev360-competencias-por-puesto.destroy',
-            ])->except('create', 'store');
-
-            // Route::get('recursos-humanos/evaluacion-360/competencias/{id}', 'RH\EV360CompetenciasController@show')->name('ev360-competencias.show');
-
-            Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');
-
-            Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
-
-            Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
-
-            Route::post('recursos-humanos/evaluacion-360/competencias/obtener-ultimo-nivel', 'RH\EV360CompetenciasController@obtenerUltimoNivel')->name('ev360-competencias.obtenerUltimoNivel');
-
-            Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/edit', 'RH\EV360CompetenciasController@edit')->name('ev360-competencias.edit');
-
-            Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
-
-            Route::post('recursos-humanos/evaluacion-360/competencias/{competencia}/repuesta', 'RH\EV360CompetenciasController@guardarRespuestaCompetencia')->name('ev360-competencias.guardarRespuestaCompetencia');
-
-            Route::resource('recursos-humanos/evaluacion-360/competencias', 'RH\EV360CompetenciasController')->names([
-                'index' => 'ev360-competencias.index',
-                'create' => 'ev360-competencias.create',
-                'store' => 'ev360-competencias.store',
-                'show' => 'ev360-competencias.show',
-                'update' => 'ev360-competencias.update',
-                'destroy' => 'ev360-competencias.destroy',
-            ])->except(['edit']);
-
-            // Competencia
-            Route::get('competencia/{empleado}/idiomas', 'IdiomasEmpleadosController@index')->name('idiomas-empleados.index');
-            Route::post('competencia/{idiomaEmpleado}/idiomas', 'IdiomasEmpleadosController@update')->name('idiomas-empleados.update');
-            Route::delete('competencia/{idiomaEmpleado}/idiomas-delete-certificado', 'IdiomasEmpleadosController@deleteCertificado')->name('idiomas-empleados.deleteCertificado');
-            Route::resource('competencia/idiomas-empleados', 'IdiomasEmpleadosController')->except(['index', 'update', 'show']);
-            Route::delete('competencia/destroy', 'CompetenciasController@massDestroy')->name('competencia.massDestroy');
-            Route::post('competencia/media', 'CompetenciasController@storeMedia')->name('competencia.storeMedia');
-            Route::post('competencia/ckmedia', 'CompetenciasController@storeCKEditorImages')->name('competencia.storeCKEditorImages');
-            Route::resource('competencia', 'CompetenciasController');
-            Route::get('buscarCV', 'CompetenciasController@buscarcv')->name('buscarCV');
-            Route::get('expedientes-profesionales', 'CompetenciasController@expedientesProfesionales')->name('capital.expedientes-profesionales');
-            Route::post('competencias/{empleado}/documentos-carga', 'CompetenciasController@cargarDocumentos')->name('cargarDocumentos');
-            Route::post('competencias/{empleado}/capacitacion-carga', 'CompetenciasController@cargarCapacitaciones')->name('cargarCapacitacion');
-            Route::post('competencias/{empleado}/certificacion-carga', 'CompetenciasController@cargarCertificacion')->name('cargarCertificacion');
-            Route::get('competencias/{empleado}/edit', 'CompetenciasController@editarCompetencias')->name('editarCompetencias');
-            Route::post('competencias/pdf', 'CompetenciasController@pdf')->name('competencias.pdf');
-
-            //Dias festivos
-            // Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
-            Route::resource('recursos-humanos/calendario-oficial', 'CalendarioOficialController')->names([
-                'create' => 'calendario-oficial.create',
-                'store' => 'calendario-oficial.store',
-                'show' => 'calendario-oficial.show',
-                'edit' => 'calendario-oficial.edit',
-                'update' => 'calendario-oficial.update',
-                'destroy' => 'calendario-oficial.destroy',
-            ]);
-
-            //Eventos
-            Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
-            Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
-                'create' => 'tabla-calendario.create',
-                'store' => 'tabla-calendario.store',
-                'show' => 'tabla-calendario.show',
-                'edit' => 'tabla-calendario.edit',
-                'update' => 'tabla-calendario.update',
-                'destroy' => 'tabla-calendario.destroy',
-            ]);
-
-            //Comunicados
-            Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
-
-            // Recursos
-            Route::post('recursos/{recurso}/asistencia-capacitacion', 'RecursosController@guardarAsistenciaCapacitacion')->name('recursos.guardarAsistenciaCapacitacion');
-            Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');
-            // Route::post('recursos/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
-            Route::post('recursos/{recurso}/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
-            Route::post('recursos/{recurso}/cancelar-capacitacion', 'RecursosController@cancelarCapacitacion')->name('recursos.cancelarCapacitacion');
-            Route::post('recursos/{recurso}/enviar-invitaciones-capacitacion', 'RecursosController@enviarInvitacionPorCorreoAhora')->name('recursos.enviarInvitacionPorCorreoAhora');
-            Route::post('recursos/capacitaciones-principales', 'RecursosController@obtenerCapacitacionesPrincipales')->name('recursos.obtenerCapacitacionesPrincipales');
-            Route::post('recursos/capacitaciones-archivadas', 'RecursosController@obtenerCapacitacionesArchivadas')->name('recursos.obtenerCapacitacionesArchivadas');
-            Route::post('recursos/capacitacion/respuesta', 'RecursosController@respuestaCapacitacion')->name('recursos.respuestaCapacitacion');
-            Route::post('recursos/capacitacion/archivar', 'RecursosController@archivarCapacitacion')->name('recursos.archivarCapacitacion');
-            Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
-            Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
-            Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
-            Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
-            Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
-            Route::post('recursos/suscribir/', 'RecursosController@suscribir')->name('recursos.suscribir');
-            Route::post('recursos/cancelar/', 'RecursosController@eliminarParticipante')->name('recursos.cancelar');
-            Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
-            Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
-            Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
-            Route::resource('recursos', 'RecursosController')->except(['update']);
-
-            Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
-        });
-
-        Route::group(['middleware' => ['gestion_normativa']], function () {
-
-            Route::get('obtener-clausula-id/{incumplimiento}', [DashboardAuditoriasSGIController::class, 'obtenerClausulaId'])->name('obtener-clausula-id');
-            Route::get('/dashboard-auditorias-sgi', 'DashboardAuditoriasSGIController@index')->name('dashboard_auditorias');
-
-            //Template Analisis de Brechas
-            Route::get('templates', 'TemplateController@index')->name('templates');
-            Route::get('templates/create', 'TemplateController@create')->name('templates.create');
-            Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
-            Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
-            // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
-
-            Route::group(['middleware' => ['version_iso_2013']], function () {
-                //Analisis brechas
-                //Route::resource('analisis-brechas', 'AnalisisBController');
-                Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
-                Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
-                Route::post('analisis-brechas/update', 'AnalisisBController@update');
-                Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
-                Route::resource('analisisdebrechas', 'AnalisisBrechaController');
-                Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
-
-                // Declaracion de Aplicabilidad
-                Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
-                Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
-                Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
-                Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
-                Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
-                Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
-                Route::post('declaracion-aplicabilidad/enviar-correo', 'DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
-                Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
-
-                Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
-                Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
-                Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
-                Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
-                Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
-                Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
-                Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
-                Route::resource('paneldeclaracion', 'PanelDeclaracionController');
-            });
-
-            Route::group(['middleware' => ['version_iso_2022']], function () {
-                // Analisis brechas 2022
-                // Template Analisis de Brechas
-                Route::post('templates/store', 'TemplateController@store')->name('templates.store');
-                Route::get('/top', 'TopController@index')->name('top');
-                Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
-                Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
-                Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
-                Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
-                Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
-                Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
-
-                // Gap Uno 2022
-                Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
-                Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
-
-                // Gap Dos 2022
-                Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
-
-                // Gap Tres 2022
-                Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
-
-                // Declaracion de Aplicabilidad 2022
-                Route::get('declaracion-aplicabilidad-2022/descargar', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@download')->name('declaracion-aplicabilidad-2022.descargar');
-                Route::get('declaracion-aplicabilidad-2022/dashboard', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@dashboard')->name('declaracion-aplicabilidad-2022.dashboard');
-                Route::get('declaracion-aplicabilidad-2022/tabla', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@tabla')->name('declaracion-aplicabilidad-2022.tabla');
-                Route::put('declaracion-aplicabilidad-2022/tabla/{control}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@updateTabla')->name('declaracion-aplicabilidad-2022.updateTabla');
-                Route::get('declaracion-aplicabilidad-2022/{id}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@index')->name('declaracion-aplicabilidad-2022');
-                Route::delete('declaracion-aplicabilidad-2022/destroy', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@massDestroy')->name('declaracion-aplicabilidad-2022.massDestroy');
-                Route::resource('declaracion-aplicabilidad-2022', 'iso27\DeclaracionAplicabilidadConcentradoIsoController');
-                Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
-
-                // Panel declaracion 2022
-                Route::post('paneldeclaracion-2022/controles', 'PanelDeclaracionIsoController@controles')->name('paneldeclaracion-2022.controles');
-                Route::post('paneldeclaracion-2022/responsables-quitar', 'PanelDeclaracionIsoController@quitarRelacionResponsable')->name('paneldeclaracion-2022.responsables.quitar');
-                Route::post('paneldeclaracion-2022/responsables', 'PanelDeclaracionIsoController@relacionarResponsable')->name('paneldeclaracion-2022.responsables');
-                Route::post('paneldeclaracion-2022/enviar-correo', 'PanelDeclaracionIsoController@enviarCorreo')->name('paneldeclaracion-2022.enviarcorreo');
-                Route::post('paneldeclaracion-2022/aprobadores-quitar', 'PanelDeclaracionIsoController@quitarRelacionAprobador')->name('paneldeclaracion-2022.aprobadores.quitar');
-                Route::post('paneldeclaracion-2022/aprobadores', 'PanelDeclaracionIsoController@relacionarAprobador')->name('paneldeclaracion-2022.aprobadores');
-                Route::delete('paneldeclaracion-2022/destroy', 'PanelDeclaracionIsoController@massDestroy')->name('paneldeclaracion-2022.massDestroy');
-                Route::resource('paneldeclaracion-2022', 'PanelDeclaracionIsoController');
-
-                // Analisis de Brechas adicionales
-                Route::get('analisis/{id}/dashboard', 'FormularioAnalisisBrechasController@index')->name('formulario');
-                Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
-
-                //niveles de impacto
-                Route::get('niveles-impacto/get-niveles/{id?}', 'NivelesImpactoController@getNivelesImpactos')->name('niveles.getNivelesImpactos');
-                Route::resource('niveles-impacto', 'NivelesImpactoController');
-
-                // Matriz Riesgos
-                Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
-                Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
-                Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-                Route::resource('matriz-riesgos', 'MatrizRiesgosController');
-                Route::post('matriz-riesgo/octave', 'MatrizRiesgosController@storeOctave')->name('matriz-riesgos.octave.store');
-                Route::post('matriz-riesgo/octave/delete-activo', 'MatrizRiesgosController@deleteActivoOctave')->name('matriz-riesgo.octave.activo.delete');
-                Route::put('matriz-riesgo/{id}/octave', 'MatrizRiesgosController@updateOctave')->name('matriz-riesgos.octave.update');
-                Route::get('matriz-riesgo/{id}/octave/edit', 'MatrizRiesgosController@octaveEdit')->name('matriz-riesgos.octave.edit');
-                Route::get('matriz-riesgo/octave', 'MatrizRiesgosController@octave')->name('matriz-riesgos.octave');
-                Route::get('getEmployeeDataOctaveNomActivoInfo', 'MatrizRiesgosController@getEmployeeDataOctaveNomActivoInfo')->name('getEmployeeDataOctaveNomActivoInfo');
-
-                Route::get('matriz-seguridad/octave/index', 'MatrizRiesgosController@octaveIndex')->name('matriz-seguridad.octaveIndex');
-                Route::get('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000')->name('matriz-seguridad.ISO31000');
-                Route::post('matriz-riesgo/ISO31000/delete-activo', 'MatrizRiesgosController@deleteActivoISO31000')->name('matriz-seguridad.ISO31000.activo.delete');
-                Route::get('matriz-seguridad/ISO31000/create', 'MatrizRiesgosController@ISO31000Create')->name('matriz-seguridad.ISO31000Create');
-                Route::get('matriz-seguridad/ISO31000/{id}/edit', 'MatrizRiesgosController@ISO31000Edit')->name('matriz-seguridad.ISO31000.edit');
-                Route::post('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000Store')->name('matriz-seguridad.ISO31000.store');
-                Route::put('matriz-seguridad/{id}/ISO31000', 'MatrizRiesgosController@ISO31000Update')->name('matriz-seguridad.ISO31000.update');
-                Route::get('matriz-seguridad/NIST', 'MatrizRiesgosController@NIST')->name('matriz-seguridad.NIST');
-                Route::get('matriz-seguridad/NIST/create', 'MatrizRiesgosController@NISTCreate')->name('matriz-seguridad.NISTCreate');
-                Route::get('matriz-seguridad/NIST/{id}/edit', 'MatrizRiesgosController@NISTEdit')->name('matriz-seguridad.NIST.edit');
-                Route::post('matriz-seguridad/NIST', 'MatrizRiesgosController@NISTStore')->name('matriz-seguridad.NIST.store');
-                Route::put('matriz-seguridad/{id}/NIST', 'MatrizRiesgosController@NISTUpdate')->name('matriz-seguridad.NIST.update');
-                Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
-                Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
-
-                Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
-                Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
-                Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
-                Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
-
-                // Matriz de riesgos -- Sistema de Gestion
-                Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
-                Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
-                Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
-                Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
-                Route::post('matriz-riesgos/sistema-gestion/store', 'MatrizRiesgosController@storeSistemaGestion')->name('matriz-riesgos.sistema-gestion.store');
-                Route::get('matriz-riesgos/sistema-gestion/edit/{id}', 'MatrizRiesgosController@editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
-                Route::put('matriz-seguridad/sistema-gestion/update/{id}', 'MatrizRiesgosController@updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
-                Route::get('matriz-seguridad/sistema-gestion/show/{id}', 'MatrizRiesgosController@showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
-                Route::delete('matriz-seguridad/sistema-gestion/{riesgo}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
-                Route::get('matriz-seguridad/sistema-gestion/seguridadMapa', 'MatrizRiesgosController@MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
-
-                //ProcesosOctave
-                Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
-                // Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-                Route::get('procesos-octave/{matriz}', 'ProcesosOctaveController@index')->name('procesos-octave.index');
-                Route::get('procesos-octave/{matriz}/create', 'ProcesosOctaveController@create')->name('procesos-octave.create');
-                Route::delete('procesos-octave/{proceso}', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
-                Route::get('procesos-octave/{matriz}/edit/{proceso}', 'ProcesosOctaveController@edit')->name('procesos-octave.edit');
-                Route::resource('procesos-octave', 'ProcesosOctaveController')->except(['index', 'create', 'edit', 'destroy']);
-
-                //Servicios
-                Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
-                Route::resource('servicios', 'ServiciosController')->except('destroy');
-            });
-
-            //Amenazas
-            Route::resource('amenazas', 'AmenazaController');
-            Route::delete('amenazas/destroy', 'AmenazaController@massDestroy')->name('amenazas.massDestroy');
-            Route::post('amenazas/parse-csv-import', 'AmenazaController@parseCsvImport')->name('amenazas.parseCsvImport');
-            Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
-
-            //vulnerabilidades
-            // Route::post('CargaAmenaza', 'SubidaExcel@Vulnerabilidad')->name('cargaExcel-vulnerabilidad');
-            Route::resource('vulnerabilidads', 'VulnerabilidadController');
-            Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
-            Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
-            Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
-
-            //Analisis Riesgos
-            Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
-            Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
-            Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
-            Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
-            Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
-            Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
-            Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
-            Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
-
-            Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
-            Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
-            Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
-
-            Route::get('analisis-impacto/ajustes', 'AnalisisdeImpactoController@ajustes')->name('analisis-impacto.ajustes');
-            Route::put('analisis-impacto/{id}/updateAjustesBIA', 'AnalisisdeImpactoController@updateAjustesBIA')->name('analisis-impacto.updateAjustesBIA');
-            Route::get('analisis-impacto/matriz', 'AnalisisdeImpactoController@matriz')->name('analisis-impacto.matriz');
-            Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
-
-            Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
-            Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
-            Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
-                'index' => 'analisis-impacto.index',
-                'create' => 'analisis-impacto.create',
-                'store' => 'analisis-impacto.store',
-                'show' => 'analisis-impacto.show',
-                'update' => 'analisis-impacto.update',
-            ])->except(['edit']);
-
-            Route::get('analisis-aia/ajustes', 'AnalisisAIAController@ajustes')->name('analisis-aia.ajustes');
-            Route::put('analisis-aia/{id}/updateAjustesBIA', 'AnalisisAIAController@updateAjustesAIA')->name('analisis-aia.updateAjustesAIA');
-            Route::get('analisis-aia/{id}/edit', 'AnalisisAIAController@edit')->name('analisis-aia.edit');
-            Route::get('analisis-aia/matriz', 'AnalisisAIAController@matriz')->name('analisis-aia.matriz');
-            Route::delete('analisis-aia/destroy', 'AnalisisdeAIAController@massDestroy')->name('analisis-aia.massDestroy');
-            Route::resource('analisis-aia', 'AnalisisAIAController')->names([
-                'index' => 'analisis-aia.index',
-                'create' => 'analisis-aia.create',
-                'store' => 'analisis-aia.store',
-                'show' => 'analisis-aia.show',
-                'update' => 'analisis-aia.update',
-            ])->except(['edit']);
-
-            // Entendimiento Organizacions
-            Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
-            Route::post('entendimiento-organizacions/copiar', 'EntendimientoOrganizacionController@duplicarFoda')->name('entendimiento-organizacions.duplicarFoda');
-            Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
-            Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
-            Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
-            Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
-            route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
-            Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
-            Route::get('entendimiento-organizacions-foda-revision/{id}', 'EntendimientoOrganizacionController@revision')->name('foda.revision');
-            Route::post('entendimiento-organizacions-foda-revision/{id}/aprobado', 'EntendimientoOrganizacionController@aprobado')->name('foda-organizacions.aprobado');
-            Route::post('entendimiento-organizacions-foda-revision/{id}/rechazado', 'EntendimientoOrganizacionController@rechazado')->name('foda-organizacions.rechazado');
-            Route::post('entendimiento-organizacions/{id}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
-
-            Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
-            Route::get('partes-interesadas/{id}/edit', 'PartesInteresadasController@edit')->name('partes-interesadas.edit');
-            Route::post('partes-interesadas/{id}/update', 'PartesInteresadasController@update')->name('partes-interesadas.update');
-            Route::resource('partes-interesadas', 'PartesInteresadasController')->except(['edit', 'update']);
-
-            //Configuración Consultores
-            // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
-            // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
-
-            // Matriz Requisito Legales
-            Route::get('matriz-requisito-legales/{id}/evaluar', 'MatrizRequisitoLegalesController@evaluar')->name('matriz-requisito-legales.evaluar');
-            Route::post('matriz-requisito-legales/{id}/store', 'MatrizRequisitoLegalesController@evaluarStore')->name('matriz-requisito-legales.evaluarStore');
-            Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');
-            Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', 'MatrizRequisitoLegalesController@storePlanAccion')->name('matriz-requisito-legales.storePlanAccion');
-            Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
-            Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
-
-            // Alcance Sgsis
-            Route::get('alcance-sgsis/visualizacion', 'AlcanceSgsiController@visualizacion')->name('alcance-sgsis/visualizacion');
-            Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
-            Route::resource('alcance-sgsis', 'AlcanceSgsiController');
-            Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
-            Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
-            Route::post('alcance-sgsis/pdf/show/{id}', 'AlcanceSgsiController@pdfShow')->name('alcance-sgsis-show.pdf');
-            Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
-            Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
-            Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
-
-            // Comiteseguridads
-            Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
-            Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion')->name('comiteseguridads.visualizacion');
-            Route::get('comiteseguridads/{comiteseguridad}/edit', 'ComiteseguridadController@edit')->name('comiteseguridads.edit');
-            Route::post('comiteseguridads/saveMember/{id_comite}', 'ComiteseguridadController@saveMember')->name('comiteseguridads.saveMember');
-            Route::get('comiteseguridads/deleteMember/{id}', 'ComiteseguridadController@deleteMember')->name('comiteseguridads.deleteMember');
-            Route::resource('comiteseguridads', 'ComiteseguridadController')->except('edit');
-
-            // Minutasaltadireccions
-            Route::get('minutasaltadireccions/descargar/{name}', 'MinutasaltadireccionController@DescargaFormato')->name('minutasaltadireccions.descargar');
-            Route::get('minutasaltadireccions/{minuta}/minuta-documento', 'MinutasaltadireccionController@renderViewDocument')->name('documentos.renderViewMinuta');
-            Route::get('minutasaltadireccions/{minuta}/historial-revisiones', 'MinutasaltadireccionController@renderHistoryReview')->name('documentos.renderHistoryReviewMinuta');
-            Route::get('minutasaltadireccions/planes-de-accion/create/{id}', 'MinutasaltadireccionController@createPlanAccion')->name('minutasaltadireccions.createPlanAccion');
-            Route::get('minutasaltadireccions/{id}/edit', 'MinutasaltadireccionController@edit')->name('minutasaltadireccions.edit');
-            Route::patch('minutasaltadireccions/{minuta}/update-and-review', 'MinutasaltadireccionController@updateAndReview')->name('minutasaltadireccions.updateAndReview');
-            Route::post('minutasaltadireccions/planes-de-accion/store/{id}', 'MinutasaltadireccionController@storePlanAccion')->name('minutasaltadireccions.storePlanAccion');
-            Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
-            Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
-            Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
-            Route::get('minutasaltadireccions/{id}/show', 'MinutasaltadireccionController@show')->name('minutasaltadireccions.show');
-            Route::get('minutasaltadireccions-revision/{id}', 'MinutasaltadireccionController@revision')->name('minutasaltadireccions.revision');
-            Route::post('minutasaltadireccions/{minuta}/aprobado', 'MinutasaltadireccionController@aprobado')->name('minutasaltadireccions.aprobado');
-            Route::post('minutasaltadireccions/{minuta}/rechazado', 'MinutasaltadireccionController@rechazado')->name('minutasaltadireccions.rechazado');
-            Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');
-            Route::post('minutasaltadireccions/pdf/{id}', 'MinutasaltadireccionController@pdf')->name('minutasaltadireccions.pdf');
-
-            // Evidencias Sgsis
-            Route::delete('evidencias-sgsis/destroy', 'EvidenciasSgsiController@massDestroy')->name('evidencias-sgsis.massDestroy');
-            Route::post('evidencias-sgsis/media', 'EvidenciasSgsiController@storeMedia')->name('evidencias-sgsis.storeMedia');
-            Route::post('evidencias-sgsis/ckmedia', 'EvidenciasSgsiController@storeCKEditorImages')->name('evidencias-sgsis.storeCKEditorImages');
-            Route::resource('evidencias-sgsis', 'EvidenciasSgsiController');
-
-            // Politica Sgsis
-            Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
-            Route::resource('politica-sgsis', 'PoliticaSgsiController');
-            Route::get('politica-sgsis-visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis.visualizacion');
-            Route::post('politica-sgsis/cambioMostrar', 'PoliticaSgsiController@cambioMostrar')->name('politica-sgsis.cambio-mostrar');
-            Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
-            Route::post('politica-sgsis/pdf/show/{id}', 'PoliticaSgsiController@pdf_show')->name('politica-sgsis.pdf_show');
-            Route::get('politica-sgsis-revision/{id}', 'PoliticaSgsiController@revision')->name('politica-sgsis.revision');
-            Route::post('politica-sgsis/{id}/aprobado', 'PoliticaSgsiController@aprobado')->name('politica-sgsis.aprobado');
-            Route::post('politica-sgsis/{id}/rechazado', 'PoliticaSgsiController@rechazado')->name('politica-sgsis.rechazado');
-
-            // Riesgosoportunidades
-            Route::delete('riesgosoportunidades/destroy', 'RiesgosoportunidadesController@massDestroy')->name('riesgosoportunidades.massDestroy');
-            Route::resource('riesgosoportunidades', 'RiesgosoportunidadesController');
-
-            // Objetivosseguridads
-            Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
-            Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
-            Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
-            Route::get('objetivos/dashboard', 'ObjetivosseguridadController@objetivosDashboard')->name('objetivos-seguridad-dashboard');
-            Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
-            Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
-        });
-
-        // Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
-        Route::get('envio-documentos/atencion', 'EnvioDocumentosController@atencion')->name('envio-documentos.atencion');
-        Route::get('envio-documentos/atencion/{id}/seguimiento', 'EnvioDocumentosController@seguimiento')->name('envio-documentos.seguimiento');
-        Route::put('envio-documentos/{id}/seguimientoUpdate', 'EnvioDocumentosController@seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
-        Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
-        Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
-        Route::resource('envio-documentos', 'EnvioDocumentosController');
-
-        //Consulta de evaluación
-        Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
-        Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
-
-        Route::get('Metrica/edit/{metrica}', 'RH\ObjetivoUnidadMedidaController@edit')->name('metrica.edit');
-        Route::resource('Metrica', 'RH\ObjetivoUnidadMedidaController', ['except' => ['edit']]);
-
-        Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
-        Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
-        Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
-
-        // Definición de la ruta
-        Route::get('iso27001/inicio-guia', function () {
-            // Verifica si la sesión 'visited_first_link' está definida
-            if (session()->has('visited_first_link')) {
-                // Si ya se ha visitado el primer enlace, redirige a la tercera ruta
-                return redirect()->route('admin.iso27001.guia');
-            } else {
-                // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
-                session(['visited_first_link' => true]);
-
-                // Retorna la vista del primer enlace
-                return view('admin.iso27001.inicio-guia');
-            }
-        })->name('iso27001.inicio-guia');
-
-        Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
-        Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
-        Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
-        Route::get('inicioUsuario/solicitud', [InicioUsuarioController::class, 'solicitud'])->name('solicitud');
-
-        //procesos
-
-        Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
-        Route::get('procesos/{documento?}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
-        Route::resource('procesos', 'ProcesoController');
-        // Route::post('procesos/{id}', 'ProcesoController@destroy')->name('procesos.destroy');
-        Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
-        Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
-
-        //macroprocesos
-        Route::resource('macroprocesos', 'MacroprocesoController');
-
-        //Competencia Tipo
-
-        Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
-        Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
-
-        // Dashboards
-        Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-        // Implementacions
-
-        Route::resource('implementacions', 'ImplementacionController');
-
-        // Planes de Acción
-        Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
-        Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
-        Route::get('planes-de-accion/create-plan-trabajo-base', 'PlanesAccionController@createPlanTrabajoBase')->name('planes-de-accion.createPlanTrabajoBase');
-        Route::resource('planes-de-accion', 'PlanesAccionController');
-
-        // Glosarios
-        Route::get('glosario/acervo', 'GlosarioController@render')->name('glosarios.render');
-        // Route::get('glosario/{glosarios}/glosario-edit', 'GlosarioController@edit')->name('glosario.edit');
-        Route::get('glosarios/edit/{glosarios}', 'GlosarioController@edit')->name('glosarios.edit');
-        // Route::delete('glosarios/destroy', 'GlosarioController@destroy')->name('glosarios.destroy');
-        Route::resource('glosarios', 'GlosarioController', ['except' => ['edit']]);
-
-        // Plan Base Actividades
-        Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
-        Route::post('plan-base-actividades/media', 'PlanBaseActividadesController@storeMedia')->name('plan-base-actividades.storeMedia');
-        Route::post('plan-base-actividades/ckmedia', 'PlanBaseActividadesController@storeCKEditorImages')->name('plan-base-actividades.storeCKEditorImages');
-        Route::resource('plan-base-actividades', 'PlanBaseActividadesController');
-
-        // User Alerts
-        Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-        Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
-        Route::post('tipos-objetivos/datatables', 'TiposObjetivosSistemaController@getDataForDataTable')->name('tipos-objetivos.getDataForDataTable');
-        Route::resource('tipos-objetivos', 'TiposObjetivosSistemaController');
-
-        // Adquirirveintidostrecientosunos
-        Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-        // Adquirirtreintaunmils
-        Route::resource('adquirirtreintaunmils', 'AdquirirtreintaunmilController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-        // Concientizacion Sgis
-        Route::delete('concientizacion-sgis/destroy', 'ConcientizacionSgiController@massDestroy')->name('concientizacion-sgis.massDestroy');
-        Route::post('concientizacion-sgis/media', 'ConcientizacionSgiController@storeMedia')->name('concientizacion-sgis.storeMedia');
-        Route::post('concientizacion-sgis/ckmedia', 'ConcientizacionSgiController@storeCKEditorImages')->name('concientizacion-sgis.storeCKEditorImages');
-        Route::resource('concientizacion-sgis', 'ConcientizacionSgiController');
-
-        // Material Sgsis
-        Route::delete('material-sgsis/destroy', 'MaterialSgsiController@massDestroy')->name('material-sgsis.massDestroy');
-        Route::post('material-sgsis/media', 'MaterialSgsiController@storeMedia')->name('material-sgsis.storeMedia');
-        Route::post('material-sgsis/ckmedia', 'MaterialSgsiController@storeCKEditorImages')->name('material-sgsis.storeCKEditorImages');
-        Route::resource('material-sgsis', 'MaterialSgsiController');
-
-        // Material Iso Veinticientes
-        Route::delete('material-iso-veinticientes/destroy', 'MaterialIsoVeinticienteController@massDestroy')->name('material-iso-veinticientes.massDestroy');
-        Route::post('material-iso-veinticientes/media', 'MaterialIsoVeinticienteController@storeMedia')->name('material-iso-veinticientes.storeMedia');
-        Route::post('material-iso-veinticientes/ckmedia', 'MaterialIsoVeinticienteController@storeCKEditorImages')->name('material-iso-veinticientes.storeCKEditorImages');
-        Route::resource('material-iso-veinticientes', 'MaterialIsoVeinticienteController');
-
-        // Politica Del Sgsi Soportes
-        Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-        // Control Accesos
-        Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
-        Route::post('control-accesos/media', 'ControlAccesoController@storeMedia')->name('control-accesos.storeMedia');
-        Route::post('control-accesos/ckmedia', 'ControlAccesoController@storeCKEditorImages')->name('control-accesos.storeCKEditorImages');
-        Route::resource('control-accesos', 'ControlAccesoController');
-
-        // Informacion Documetadas
-        Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');
-        Route::post('informacion-documetadas/media', 'InformacionDocumetadaController@storeMedia')->name('informacion-documetadas.storeMedia');
-        Route::post('informacion-documetadas/ckmedia', 'InformacionDocumetadaController@storeCKEditorImages')->name('informacion-documetadas.storeCKEditorImages');
-        Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
-
-        // Planificacion Controls
-        Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
-        Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
-        Route::resource('planificacion-controls', 'PlanificacionControlController');
-
-        // Activos
-
-        // Route::post('activos/create', 'ActivosController@create');
-        Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
-        Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
-        Route::resource('activos', 'ActivosController');
-
-        Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
-        Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
-        Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
-        Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
-        Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
-        Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-        Route::resource('activosInformacion', 'ActivosInformacionController')->names([
-            'store' => 'activosInformacion.store',
-            'show' => 'activosInformacion.show',
-            'update' => 'activosInformacion.update',
-        ])->except(['edit', 'create', 'index']);
-
-        // Marca
-        Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
-        Route::resource('marcas', 'MarcaController');
-
-        // Modelo
-        Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
-        Route::resource('modelos', 'ModeloController');
-
-        // Tratamiento Riesgos
-        Route::post('tratamiento-riesgos/firma', 'TratamientoRiesgosController@guardarFirmaAprobacion')->name('tratamiento-riesgos.firma-aprobacion');
-        Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
-        Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
-
-        // Auditoria Internas
-        Route::delete('auditoria-internas/destroy', 'AuditoriaInternaController@massDestroy')->name('auditoria-internas.massDestroy');
-        Route::post('auditoria-internas/media', 'AuditoriaInternaController@storeMedia')->name('auditoria-internas.storeMedia');
-        Route::post('auditoria-internas/ckmedia', 'AuditoriaInternaController@storeCKEditorImages')->name('auditoria-internas.storeCKEditorImages');
-        Route::get('auditoria-internas/{auditoriaInterna}/edit', 'AuditoriaInternaController@edit')->name('auditoria-internas.edit');
-        Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
-        Route::get('auditoria-internas/{auditoriaInterna}/reporteIndividual', 'AuditoriaInternaController@indexReporteIndividual')->name('auditoria-internas.reporteIndividual');
-        Route::get('auditoria-internas/{auditoriaInterna}/createReporteIndividual', 'AuditoriaInternaController@createReporte')->name('auditoria-internas.createReporteIndividual');
-        Route::post('auditoria-internas/{reporteid}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
-        Route::post('auditoria-internas/reporte-rechazado/{reporteid}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
-        Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
-        Route::post('auditoria-internas/{id}/pdf', 'AuditoriaInternaController@pdf')->name('auditoria-internas.pdf');
-
-        Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
-
-        //Clasificacion Auditorias
-        Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
-        Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
-        Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
-        Route::get('auditorias/clasificacion-auditorias/edit/{id}', 'ClasificacionesAuditoriasController@edit')->name('auditoria-clasificacion.edit');
-        Route::post('auditorias/clasificacion-auditorias/update/{id}', 'ClasificacionesAuditoriasController@update')->name('auditoria-clasificacion.update');
-        Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
-        Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
-
-        //Clausulas Auditorias
-        Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
-        Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
-        Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
-        Route::get('auditorias/clausulas-auditorias/edit/{id}', 'ClausulasAuditoriasController@edit')->name('auditoria-clausula.edit');
-        Route::post('auditorias/clausulas-auditorias/update/{id}', 'ClausulasAuditoriasController@update')->name('auditoria-clausula.update');
-        Route::get('auditorias/clausulas-auditorias/delete/{id}', 'ClausulasAuditoriasController@destroy')->name('auditoria-clausula.destroy');
-        Route::get('auditorias/clausulas-auditorias/datatable', 'ClausulasAuditoriasController@datatable')->name('auditoria-clausula.datatable');
-
-        // Revision Direccions
-        Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
-        Route::resource('revision-direccions', 'RevisionDireccionController');
-
-        // Controles
-        Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');
-        Route::post('controles/parse-csv-import', 'ControlesController@parseCsvImport')->name('controles.parseCsvImport');
-        Route::post('controles/process-csv-import', 'ControlesController@processCsvImport')->name('controles.processCsvImport');
-        Route::resource('controles', 'ControlesController');
-
-        // Tipoactivos
-        Route::get('tipoactivos/get-tipos', 'TipoactivoController@getTipos')->name('tipoactivos.getTipos');
-        Route::delete('tipoactivos/destroy', 'TipoactivoController@massDestroy')->name('tipoactivos.massDestroy');
-        Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
-        Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
-        Route::resource('tipoactivos', 'TipoactivoController');
-
-        // Subtipo Activos
-        Route::get('subtipoactivos/get-subtipos', 'SubcategoriaActivoContoller@getSubtipos')->name('subtipoactivos.getSubtipos');
-        Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
-        Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
-        Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
-        Route::resource('subtipoactivos', 'SubcategoriaActivoContoller')->names([
-            'index' => 'subtipoactivos.index',
-            'create' => 'subtipoactivos.create',
-            'store' => 'subtipoactivos.store',
-            'show' => 'subtipoactivos.show',
-            'edit' => 'subtipoactivos.edit',
-            'update' => 'subtipoactivos.update',
-        ]);
-
-        // Route::resource('consulta-puesto', 'ConsultaPuestoController');
-
-        // Indicadores Sgsis
-        Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
-        Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
-        Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
-        Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
-        Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
-        Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
-        Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
-        Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
-        // Indicadorincidentessis
-        Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-        // Auditoria Anuals
-        Route::delete('auditoria-anuals/destroy', 'AuditoriaAnualController@massDestroy')->name('auditoria-anuals.massDestroy');
-        Route::resource('auditoria-anuals', 'AuditoriaAnualController');
-        Route::get('auditoria-anuals/{id}/programa', 'AuditoriaAnualController@programa')->name('auditoria-anuals-programa');
-        Route::post('auditoria-anuals/programa/documentos', 'AuditoriaAnualController@programaDocumentos')->name('auditoria-anuals.programaDocumentos');
-
-        // Plan Auditoria
-        Route::delete('plan-auditoria/destroy', 'PlanAuditoriaController@massDestroy')->name('plan-auditoria.massDestroy');
-        Route::get('plan-auditoria/{planAuditorium}/edit', 'PlanAuditoriaController@edit')->name('plan-auditoria.edit');
-        Route::resource('plan-auditoria', 'PlanAuditoriaController')->except('edit');
-
-        // Accion Correctivas
-        Route::get('accion-correctiva-actividades/{accion_correctiva_id}', 'ActividadAccionCorrectivaController@index')->name('accion-correctiva-actividades.index');
-        Route::resource('accion-correctiva-actividades', 'ActividadAccionCorrectivaController')->except(['index']);
-        Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
-        Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
-        Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
-        Route::post('accion-correctivas/{accion}/analisis/store', 'AccionCorrectivaController@storeAnalisis')->name('accion-correctivas.storeAnalisis');
-        Route::resource('accion-correctivas', 'AccionCorrectivaController');
-        Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
-        Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
-        Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
-        Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
-
-        // Accion Correctiva Aprobaciones
-        Route::post('accion-correctivas/obtener', 'AccionCorrectivaController@obtenerAccionesCorrectivasSinAprobacion')->name('accion-correctivas.obtenerAprobaciones');
-        Route::post('accion-correctivas/aprobar', 'AccionCorrectivaController@aprobaroRechazarAc')->name('accion-correctivas.aprobarRechazar');
-
-        // Plan Accion Correctivas
-        Route::post('accion-correctivas/planes', 'AccionCorrectivaController@planesAccionCorrectiva')->name('accion-correctivas.planes');
-        Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
-        Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
-
-        // Registromejoras
-        Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
-        Route::resource('registromejoras', 'RegistromejoraController');
-
-        // Dmaics
-        Route::delete('dmaics/destroy', 'DmaicController@massDestroy')->name('dmaics.massDestroy');
-        Route::resource('dmaics', 'DmaicController');
-
-        // Plan Mejoras
-        Route::delete('plan-mejoras/destroy', 'PlanMejoraController@massDestroy')->name('plan-mejoras.massDestroy');
-        Route::resource('plan-mejoras', 'PlanMejoraController');
-
-        // Enlaces Ejecutars
-        Route::delete('enlaces-ejecutars/destroy', 'EnlacesEjecutarController@massDestroy')->name('enlaces-ejecutars.massDestroy');
-        Route::resource('enlaces-ejecutars', 'EnlacesEjecutarController');
-
-        // Teams
-        Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
-        Route::resource('teams', 'TeamController');
-
-        // Incidentes De Seguridads
-        Route::delete('incidentes-de-seguridads/destroy', 'IncidentesDeSeguridadController@massDestroy')->name('incidentes-de-seguridads.massDestroy');
-        Route::resource('incidentes-de-seguridads', 'IncidentesDeSeguridadController');
-
-        // Estado Incidentes
-        Route::delete('estado-incidentes/destroy', 'EstadoIncidentesController@massDestroy')->name('estado-incidentes.massDestroy');
-        Route::resource('estado-incidentes', 'EstadoIncidentesController');
-
-        // Carpeta
-        Route::delete('carpeta/destroy', 'CarpetasController@massDestroy')->name('carpeta.massDestroy');
-        Route::resource('carpeta', 'CarpetasController');
-
-        // Archivos
-        Route::delete('archivos/destroy', 'ArchivosController@massDestroy')->name('archivos.massDestroy');
-        Route::post('archivos/media', 'ArchivosController@storeMedia')->name('archivos.storeMedia');
-        Route::post('archivos/ckmedia', 'ArchivosController@storeCKEditorImages')->name('archivos.storeCKEditorImages');
-        Route::resource('archivos', 'ArchivosController');
-
-        // Estado Documentos
-        Route::delete('estado-documentos/destroy', 'EstadoDocumentoController@massDestroy')->name('estado-documentos.massDestroy');
-        Route::resource('estado-documentos', 'EstadoDocumentoController');
-
-        // Faq Categories
-        Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
-        Route::resource('faq-categories', 'FaqCategoryController');
-
-        // Faq Questions
-        Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
-        Route::resource('faq-questions', 'FaqQuestionController');
-
-        //Carta de Aceptación
-        // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
-        Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
-        Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
-        Route::post('carta-aceptacion/aprobacion', 'CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
-        //Tabla de impactos
-        Route::resource('tabla-impacto', 'TablaImpactoController');
-
-        // Control Documentos
-        Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
-        Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['create']]);
-
-        Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
-        Route::get('user-alerts/read', 'UserAlertsController@read');
-        Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
-        Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
-
-        //REPORTES CONTEXTO 27001
-        Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
-        Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
-
-        Route::resource('panel-inicio', 'PanelInicioRuleController');
-        Route::resource('panel-organizacion', 'PanelOrganizacionController');
-
-        //Calendario Corporativo
-        Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
-    });
-
-    Route::group(['middleware' => ['silent_4_university']], function () {
-        //Escuela cursos instructor
-        Route::get('capacitaciones-inicio', [CapacitacionesController::class, 'capacitacionesInicio']);
-
-        Route::resource('courses', 'Escuela\Instructor\CourseController');
-
-        Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
-        Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
-        Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
-        Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
-        Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
-        Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
-        Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
-
-        Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
-        Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
-        Route::get('courses-inscribed', 'CursoEstudiante@coursesInscribed')->name('courses-inscribed');
-
-        Route::get('panel-cursos', 'PanelCursosController@index')->name('panel-cursos');
-
-        //categorias para el administrador de escuela
-        Route::resource('categories', 'Escuela\Admin\CategoryController');
-        Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
-        Route::resource('levels', 'Escuela\Admin\LevelController');
-        Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
-        Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
-
-        Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
-
-        // Capacitaciones
-        Route::get('TypeCatalogueTraining', [CertificatesController::class, 'TypeCatalogueTraining'])->name('type-catalogue-training.index');
-        Route::get('catalogueTraining', [CertificatesController::class, 'CatalogueTraining'])->name('catalogue-training.index');
-        Route::get('userTraining', [CertificatesController::class, 'UserTraining'])->name('user-training.index');
-        Route::get('userCatalogueTraining/{id}', [CertificatesController::class, 'revision'])->name('user-catalogue-training');
-        Route::post('userCatalogueTraining/{id}/aprobado', [CertificatesController::class, 'aprobado'])->name('user-catalogue-training.aprobado');
-        Route::post('userCatalogueTraining/{id}/rechazado', [CertificatesController::class, 'rechazado'])->name('user-catalogue-training.rechazado');
-    });
-
-
-
-    Route::group(['middleware' => ['gestor_documental']], function () {
-        //Documentos
-        Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
-        Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
-        Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
-        Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
-        Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
-        Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
-        Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
-        Route::get('documentos/{documento}/document-versions', 'DocumentosController@renderHistoryVersions')->name('documentos.renderHistoryVersions');
-        Route::post('documentos/dependencies', 'DocumentosController@getDocumentDependencies')->name('documentos.getDocumentDependencies');
-        Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
-        Route::resource('documentos', 'DocumentosController');
-    });
-
-    Route::group(['middleware' => ['centro_atencion']], function () {
-
-        // TODO Quejas
-        Route::get('inicioUsuario/reportes/quejas', [QuejasController::class, 'quejas'])->name('reportes-quejas');
-        Route::post('inicioUsuario/reportes/quejas', [QuejasController::class, 'storeQuejas'])->name('reportes-quejas-store');
-
-        Route::get('desk/quejas', 'QuejasController@indexQueja')->name('desk.queja-index');
-        Route::post('desk/{quejas}/analisis_queja-update', 'QuejasController@updateAnalisisQuejas')->name('reportes-quejas-update');
-        Route::get('desk/{quejas}/quejas-edit', 'QuejasController@editQuejas')->name('desk.quejas-edit');
-        Route::post('desk/{quejas}/quejas-update', 'QuejasController@updateQuejas')->name('desk.quejas-update');
-        //  ARCHIVADO QUEJAS
-        Route::post('desk/{incidente}/archivarQuejas', 'QuejasController@archivadoQueja')->name('desk.queja-archivar');
-        Route::get('desk/quejas-archivo', 'QuejasController@archivoQueja')->name('desk.queja-archivo');
-        Route::post('desk/quejas-archivo/recuperar/{id}', 'QuejasController@recuperarArchivadoQueja')->name('desk.queja-archivo.recuperar');
-
-        // TODO QuejasCliente
-        // Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
-        Route::get('desk/quejas-clientes', [QuejasClienteController::class, 'quejasClientes'])->name('desk.quejas-clientes');
-        Route::post('desk/reportes/quejas-clientes', [QuejasClienteController::class, 'storeQuejasClientes'])->name('desk.quejasClientes-store');
-        Route::post('desk/{quejas}/analisis_quejaCliente-update', 'QuejasClienteController@updateAnalisisQuejasClientes')->name('desk.analisis_quejasClientes-update');
-        Route::post('desk/queja-cliente/validate', 'QuejasClienteController@validateFormQuejaCliente')->name('desk.quejasClientes.validateFormQuejaCliente');
-        Route::post('desk/queja-cliente/correo-responsable', 'QuejasClienteController@correoResponsableQuejaCliente')->name('desk.quejas-clientes.correoResponsable');
-        Route::post('desk/queja-cliente/correo-solicitar-cierre-queja', 'QuejasClienteController@correoSolicitarCierreQuejaCliente')->name('desk.quejas-clientes.correoSolicitarCierreQueja');
-        Route::post('desk/queja-cliente/show', 'QuejasClienteController@showQuejaClientes')->name('desk.quejas-clientes.show');
-        Route::get('desk/quejas-clientes/index', 'QuejasClienteController@indexQuejasClientes')->name('desk.quejasClientes-index');
-        Route::get('desk/{quejas}/quejas-clientes-edit', 'QuejasClienteController@editQuejasClientes')->name('desk.quejasClientes-edit');
-        Route::delete('desk/{quejas}/quejas-clientes-delete', 'QuejasClienteController@destroyQuejasClientes')->name('desk.quejasClientes-destroy');
-        Route::post('desk/{quejas}/quejas-clientes-update', 'QuejasClienteController@updateQuejasClientes')->name('desk.quejasClientes-update');
-        Route::post('desk/planes/quejas-clientes', 'QuejasClienteController@planesQuejasClientes')->name('desk.planesQuejasClientes');
-
-        //Dashboard Queja Cliente
-        Route::get('desk/quejas-clientes/dashboard', 'QuejasClienteController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
-
-        //Archivo QuejaCliente
-        Route::post('desk/{incidente}/archivarQuejasClientes', 'QuejasClienteController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
-        Route::get('desk/quejas-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
-        Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'QuejasClienteController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
-
-        // TODO SOBRE Denuncias
-        Route::get('inicioUsuario/reportes/denuncias', [DenunciasController::class, 'denuncias'])->name('reportes-denuncias');
-        Route::post('inicioUsuario/reportes/denuncias', [DenunciasController::class, 'storeDenuncias'])->name('reportes-denuncias-store');
-        Route::get('desk/{denuncias}/denuncias-edit', 'DenunciasController@editDenuncias')->name('desk.denuncias-edit');
-        Route::post('desk/{denuncias}/denuncias-update', 'DenunciasController@updateDenuncias')->name('desk.denuncias-update');
-        Route::post('desk/{denuncias}/analisis_denuncia-update', 'DenunciasController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
-
-        //flujo de archivado denuncias
-        Route::get('desk/denuncias', 'DenunciasController@indexDenuncia')->name('desk.denuncia-index');
-        Route::post('desk/{incidente}/archivarDenuncias', 'DenunciasController@archivadoDenuncia')->name('desk.denuncia-archivar');
-        Route::get('desk/denuncias-archivo', 'DenunciasController@archivoDenuncia')->name('desk.denuncia-archivo');
-        Route::post('desk/denuncias-archivo/recuperar/{id}', 'DenunciasController@recuperarArchivadoDenuncia')->name('desk.denuncia-archivo.recuperar');
-
-        // TODO SOBRE Mejoras
-        Route::get('inicioUsuario/reportes/mejoras', [MejorasController::class, 'mejoras'])->name('reportes-mejoras');
-        Route::post('inicioUsuario/reportes/mejoras', [MejorasController::class, 'storeMejoras'])->name('reportes-mejoras-store');
-        Route::post('desk/{mejoras}/analisis_mejora-update', 'MejorasController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
-        Route::get('desk/{mejoras}/mejoras-edit', 'MejorasController@editMejoras')->name('desk.mejoras-edit');
-        Route::post('desk/{mejoras}/mejoras-update', 'MejorasController@updateMejoras')->name('desk.mejoras-update');
-
-        //flujo de archivado mejoras
-        Route::get('desk/mejoras', 'MejorasController@indexMejora')->name('desk.mejora-index');
-        Route::post('desk/{incidente}/archivarMejoras', 'MejorasController@archivadoMejora')->name('desk.mejora-archivar');
-        Route::get('desk/mejoras-archivo', 'MejorasController@archivoMejora')->name('desk.mejora-archivo');
-        Route::post('desk/mejoras-archivo/recuperar/{id}', 'MejorasController@recuperarArchivadoMejora')->name('desk.mejora-archivo.recuperar');
-
-        // TODO SOBRE Sugerencias
-        Route::get('inicioUsuario/reportes/sugerencias', [SugerenciasController::class, 'sugerencias'])->name('reportes-sugerencias');
-        Route::post('inicioUsuario/reportes/sugerencias', [SugerenciasController::class, 'storeSugerencias'])->name('reportes-sugerencias-store');
-        Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'SugerenciasController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
-        Route::get('desk/{sugerencias}/sugerencias-edit', 'SugerenciasController@editSugerencias')->name('desk.sugerencias-edit');
-        Route::post('desk/{sugerencias}/sugerencias-update', 'SugerenciasController@updateSugerencias')->name('desk.sugerencias-update');
-        Route::get('desk/sugerencias', 'SugerenciasController@indexSugerencia')->name('desk.sugerencia-index');
-
-        //flujo de archivado Sugerencias
-        Route::post('desk/{incidente}/archivarSugerencia', 'SugerenciasController@archivadoSugerencia')->name('desk.sugerencia-archivar');
-        Route::get('desk/sugerencia-archivo', 'SugerenciasController@archivoSugerencia')->name('desk.sugerencia-archivo');
-        Route::post('desk/sugerencia-archivo/recuperar/{id}', 'SugerenciasController@recuperarArchivadoSugerencia')->name('desk.sugerencia-archivo.recuperar');
-
-        // TODO SOBRE Seguridad
-        Route::get('inicioUsuario/reportes/seguridad', [SeguridadController::class, 'seguridad'])->name('reportes-seguridad');
-        Route::post('inicioUsuario/reportes/seguridad/media', [SeguridadController::class, 'storeMedia'])->name('reportes-seguridad.storeMedia');
-        Route::post('inicioUsuario/reportes/seguridad', [SeguridadController::class, 'storeSeguridad'])->name('reportes-seguridad-store');
-        Route::post('desk/{seguridad}/analisis_seguridad-update', 'SeguridadController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
-        Route::get('desk/{seguridad}/seguridad-edit', 'SeguridadController@editSeguridad')->name('desk.seguridad-edit');
-        Route::post('desk/{seguridad}/seguridad-update', 'SeguridadController@updateSeguridad')->name('desk.seguridad-update');
-
-        //flujo de archivado seguridad
-        Route::post('desk/{incidente}/archivar', 'SeguridadController@archivadoSeguridad')->name('desk.seguridad-archivar');
-        Route::get('desk/seguridad-archivo', 'SeguridadController@archivoSeguridad')->name('desk.seguridad-archivo');
-        Route::post('desk/seguridad-archivo/recuperar/{id}', 'SeguridadController@recuperarArchivadoSeguridad')->name('desk.seguridad-archivo.recuperar');
-        Route::get('desk/seguridad', 'SeguridadController@indexSeguridad')->name('desk.seguridad-index');
-
-        // TODO SOBRE Riesgos
-        Route::get('inicioUsuario/reportes/riesgos', [RiesgosController::class, 'riesgos'])->name('reportes-riesgos');
-        Route::post('inicioUsuario/reportes/riesgos', [RiesgosController::class, 'storeRiesgos'])->name('reportes-riesgos-store');
-        Route::post('desk/{riesgos}/analisis_riesgo-update', 'RiesgosController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
-        Route::get('desk/{riesgos}/riesgos-edit', 'RiesgosController@editRiesgos')->name('desk.riesgos-edit');
-        Route::post('desk/{riesgos}/riesgos-update', 'RiesgosController@updateRiesgos')->name('desk.riesgos-update');
-        //flujo de archivado riesgos
-        Route::post('desk/{incidente}/archivarRiesgos', 'RiesgosController@archivadoRiesgo')->name('desk.riesgo-archivar');
-        Route::get('desk/riesgos-archivo', 'RiesgosController@archivoRiesgo')->name('desk.riesgo-archivo');
-        Route::post('desk/riesgos-archivo/recuperar/{id}', 'RiesgosController@recuperarArchivadoRiesgo')->name('desk.riesgo-archivo.recuperar');
-        Route::get('desk/riesgos', 'RiesgosController@indexRiesgo')->name('desk.riesgo-index');
-
-        //
-        Route::post('inicioUsuario/capacitaciones/archivar/{id}', [InicioUsuarioController::class, 'archivarCapacitacion'])->name('inicio-Usuario.capacitaciones.archivar');
-        Route::post('inicioUsuario/capacitaciones/recuperar/{id}', [InicioUsuarioController::class, 'recuperarCapacitacion'])->name('inicio-Usuario.capacitaciones.recuperar');
-        Route::get('inicioUsuario/capacitaciones/archivo', [InicioUsuarioController::class, 'archivoCapacitacion'])->name('inicio-Usuario.capacitaciones.archivo');
-
-        Route::post('inicioUsuario/aprobacion/archivar/{id}', [InicioUsuarioController::class, 'archivarAprobacion'])->name('inicio-Usuario.aprobacion.archivar');
-        Route::post('inicioUsuario/aprobacion/recuperar/{id}', [InicioUsuarioController::class, 'recuperarAprobacion'])->name('inicio-Usuario.aprobacion.recuperar');
-        Route::get('inicioUsuario/aprobacion/archivo', [InicioUsuarioController::class, 'archivoAprobacion'])->name('inicio-Usuario.aprobacion.archivo');
-
-        Route::post('inicioUsuario/actividades/archivar', [InicioUsuarioController::class, 'archivarActividades'])->name('inicio-Usuario.actividades.archivar');
-        Route::post('inicioUsuario/actividades/cambiar-estatus', [InicioUsuarioController::class, 'cambiarEstatusActividad'])->name('inicio-Usuario.actividades.cambiarEstatusActividad');
-        Route::post('inicioUsuario/actividades/recuperar', [InicioUsuarioController::class, 'recuperarActividades'])->name('inicio-Usuario.actividades.recuperar');
-        Route::get('inicioUsuario/actividades/archivo', [InicioUsuarioController::class, 'archivoActividades'])->name('inicio-Usuario.acctividades.archivo');
-
-        Route::get('desk', 'DeskController@index')->name('desk.index');
-
-        // Actividades DESK - Plan Accion
-        Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
-        Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
-
-        Route::get('desk-riesgos-actividades/{riesgo_id}', 'ActividadesRiesgosController@index')->name('desk-riesgos-actividades.index');
-        Route::resource('desk-riesgos-actividades', 'ActividadesRiesgosController')->except(['index']);
-
-        Route::get('desk-quejas-actividades/{queja_id}', 'ActividadesQuejasController@index')->name('desk-quejas-actividades.index');
-        Route::resource('desk-quejas-actividades', 'ActividadesQuejasController')->except(['index']);
-
-        Route::get('desk-denuncias-actividades/{denuncia_id}', 'ActividadesDenunciasController@index')->name('desk-denuncias-actividades.index');
-        Route::resource('desk-denuncias-actividades', 'ActividadesDenunciasController')->except(['index']);
-
-        Route::get('desk-mejoras-actividades/{mejora_id}', 'ActividadesMejorasController@index')->name('desk-mejoras-actividades.index');
-        Route::resource('desk-mejoras-actividades', 'ActividadesMejorasController')->except(['index']);
-
-        Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
-        Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
-    });
-
-    Route::group(['middleware' => ['planes_trabajo']], function () {
-        //gantt
-        Route::get('gantt', 'GanttController@index');
-        Route::post('gantt/update', 'GanttController@update');
-
-        Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
-        Route::post('plantTrabajoBase/listaDataTables', 'PlanTrabajoBaseController@listaDataTables')->name('plantTrabajoBase.listaDataTables');
-        Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
-        Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
-
-        Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
-        Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
-        Route::post('planTrabajoBase/save/status', 'PlanTrabajoBaseController@saveStatus')->name('planTrabajoBase.saveStatus');
-        Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
-        Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
-        Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
-
-        // Estatus Plan Trabajos
-        Route::delete('estatus-plan-trabajos/destroy', 'EstatusPlanTrabajoController@massDestroy')->name('estatus-plan-trabajos.massDestroy');
-        Route::resource('estatus-plan-trabajos', 'EstatusPlanTrabajoController');
-    });
-    // pasarela de pago
-    Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
-    Route::get('pasarela-pago/planes-precios', 'PasarelaPagoController@planesPrecios')->name('pasarela-pago.planes-precios');
-    Route::get('pasarela-pago/pre-pago', 'PasarelaPagoController@prePago')->name('pasarela-pago.pre-pago');
-    Route::match(['post', 'get'], 'pasarela-pago/pago', 'PasarelaPagoController@pago')->name('pasarela-pago.pago'); ///{plan}
-    Route::post('subscription', 'PasarelaPagoController@subscription')->name("pasarela-pago.create");
-    Route::get('pasarela-pago/pago-confirmacion', 'PasarelaPagoController@pagoConfirmado')->name('pasarela-pago.pago-confirmado');
-    Route::post('pasarela-pago/bolsa', 'PasarelaPagoController@bolsa')->name('pasarela-pago.bolsa');
-
-
-    Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');
-    Route::get('pasarela-pago/apps/gestion-normativa', 'PasarelaPagoAppsController@gestionNormativa')->name('pasarela-pago.apps.gestion-normativa');
-    Route::get('pasarela-pago/apps/planes-trabajo', 'PasarelaPagoAppsController@planesTrabajo')->name('pasarela-pago.apps.planes-trabajo');
-    Route::get('pasarela-pago/apps/gestion-documental', 'PasarelaPagoAppsController@gestionDocumental')->name('pasarela-pago.apps.gestion-documental');
-    Route::get('pasarela-pago/apps/gestion-talento', 'PasarelaPagoAppsController@gestionTalento')->name('pasarela-pago.apps.gestion-talento');
-    Route::get('pasarela-pago/apps/gestion-contractual', 'PasarelaPagoAppsController@gestionContractual')->name('pasarela-pago.apps.gestion-contractual');
-    Route::get('pasarela-pago/apps/gestion-riesgos', 'PasarelaPagoAppsController@gestionRiesgos')->name('pasarela-pago.apps.gestion-riesgos');
-    Route::get('pasarela-pago/apps/visitantes', 'PasarelaPagoAppsController@visitantes')->name('pasarela-pago.apps.visitantes');
-});
-
-Route::group(['middleware' => ['visitantes']], function () {
-
-    Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
-    Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
-    Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
-    Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
-    Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
-    Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
-    Route::resource('visitantes', 'VisitantesController');
-
-    Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
-        Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
-        Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
-        Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
-        Route::resource('/', RegistroVisitantesController::class);
-        Route::resource('/', MejorasController::class);
-    });
-    // Fin visitantes
-});
-
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
-    // Change password
-    if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
-        Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
-        Route::post('password', 'ChangePasswordController@update')->name('password.update');
-        Route::post('profile', 'ChangePasswordController@updateProfile')->name('password.updateProfile');
-        Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
-        Route::post('profile/two-factor', 'ChangePasswordController@toggleTwoFactor')->name('password.toggleTwoFactor');
-    }
-});
-
-Route::group(['prefix' => 'iso9001'], function () {
-    Route::get('planTrabajobase', 'iso9001\PlanImplementacionNueveUnoController@showTarea');
-    Route::post('plantTrabajoBase/bloqueo/mostrar', 'iso9001\LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
-    Route::post('plantTrabajoBase/bloqueo/quitar', 'iso9001\LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
-    Route::post('plantTrabajoBase/bloqueo/is-locked', 'iso9001\LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
-    Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
-});
-
-//#######################
-//### NOTIFICACIONES ###
-//#####################
-//Util?
-// Route::get('/notificaciones', [\App\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
-Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
-Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
-
-Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-    // Two Factor Authentication
-    if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
-        Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
-        Route::post('two-factor', 'TwoFactorController@check')->name('twoFactor.check');
-        Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
-    }
-});
-
-Route::group(['middleware' => ['auth', '2fa']], function () {
-    //Ruta ImportExcel
-    Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
-    Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
-    Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
-    Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
-    Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
-    Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
-    Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
-    Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
-    Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
-    Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
-    Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
-    Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
-    Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
-    Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
-    Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
-    Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
-    Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
-    Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
-    Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
-    Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
-    Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
-    Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
-    Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
-    Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
-    Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
-    Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
-    Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
-    // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
-
-    //Ruta ExportExcel
-    Route::controller(ExportExcelReport::class)->group(function () {
-        Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
-        Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
-        Route::get('ExportRoles', 'Roles')->name('descarga-roles');
-        Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
-        Route::get('ExportEmpleado', 'Empleado')->name('descarga-empleado');
-        Route::get('ExportSede', 'Sede')->name('descarga-sedes');
-        Route::get('ExportNivelJerarquico', 'NivelJerarquico')->name('descarga-nivel-jerarquico');
-        Route::get('ExportRegistroArea', 'RegistroArea')->name('descarga-registro-area');
-        Route::get('ExportMacroproceso', 'Macroproceso')->name('descarga-macroproceso');
-        Route::get('ExportProceso', 'Proceso')->name('descarga-proceso');
-        Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
-        Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
-        Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
-        Route::get('ExportCategoriasCapacitaciones', 'categoriasCapacitaciones')->name('descarga-categoria-capacitaciones');
-        Route::get('ExportVisualizarLogs', 'visualizarLogs')->name('descarga-visualizar-logs');
-        Route::get('ExportSolicitudesDayOff', 'solicitudesDayOff')->name('descarga-solicitudes-day-off');
-        Route::get('ExportSolicitudesVacaciones', 'solicitudesVacaciones')->name('descarga-solicitudes-vacaciones');
-        Route::get('ExportEvaluaciones360', 'evaluaciones360')->name('descarga-evaluaciones-360');
-        Route::post('ExportRegistrosTimesheet', 'registrosTimesheet')->name('descarga-registro-timesheet');
-        Route::post('ExportTimesheetAreas', 'timesheetAreas')->name('descarga-timesheet-areas');
-        Route::post('ExportTimesheetProyectos', 'timesheetProyectos')->name('descarga-timesheet-proyectos');
-    });
-
-    Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
-    Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
-    Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
-    Route::get('ExportPartesInteresadas', 'ExportExcelReport@PartesInteresadas')->name('descarga-partes_interesadas');
-    Route::get('ExportMatrizRequisitosLegales', 'ExportExcelReport@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
-    Route::get('ExportFoda', 'ExportExcelReport@Foda')->name('descarga-foda');
-    Route::get('ExportDeterminacionAlcance', 'ExportExcelReport@DeterminacionAlcance')->name('descarga-determinacion_alcance');
-    Route::get('ExportComiteSeguridad', 'ExportExcelReport@ComiteSeguridad')->name('descarga-comite_seguridad');
-    Route::get('ExportAltaDireccion', 'ExportExcelReport@AltaDireccion')->name('descarga-alta_direccion');
-    Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
-    Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
-    // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
-
-    // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
-    Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
-    Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
-});
-
-Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-    Route::view('sitemap', 'admin.sitemap.index');
-    // Route::view('stepper', 'stepper');
-    //Route::view('admin/gantt', 'admin.gantt.grap');
-
-    //URL::forceScheme('https');
-
-    Route::view('post_register', 'auth.post_register');
-});
-
-//KATBOL
- Route::group(['middleware' => ['general_tabantaj']], function () {
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
-            Route::group(['middleware' => ['katbol']], function () {
-                Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+            Route::group(['middleware' => ['timesheet']], function () {
+                // Timesheet
+                Route::get('timesheet/', 'TimesheetController@index')->name('timesheet');
+                Route::get('timesheet/mis-registros/{estatus?}', 'TimesheetController@misRegistros')->name('timesheet-mis-registros');
+                Route::get('timesheet/show/{id}', 'TimesheetController@show')->name('timesheet-show');
+                Route::get('timesheet/create-copia/{id}', 'TimesheetController@createCopia')->name('timesheet-create-copia');
+                Route::get('timesheet/edit/{id}', 'TimesheetController@edit')->name('timesheet-edit');
+                Route::get('timesheet/papelera', 'TimesheetController@papelera')->name('timesheet-papelera');
+                Route::get('timesheet/reporte-aprobador/{id}', 'TimesheetController@reporteAprobador')->name('timesheet-reporte-aprobador');
+                Route::get('timesheet/eliminar/{id}', 'TimesheetController@eliminar')->name('timesheet-eliminar');
+                Route::get('timesheet/aprobaciones', 'TimesheetController@aprobaciones')->name('timesheet-aprobaciones');
+                Route::get('timesheet/aprobados', 'TimesheetController@aprobados')->name('timesheet-aprobados');
+                Route::get('timesheet/rechazos', 'TimesheetController@rechazos')->name('timesheet-rechazos');
+                Route::post('timesheet/aprobar/{id}', 'TimesheetController@aprobar')->name('timesheet-aprobar');
+                Route::post('timesheet/rechazar/{id}', 'TimesheetController@rechazar')->name('timesheet-rechazar');
+                Route::get('timesheet/inicio', 'TimesheetController@timesheetInicio')->name('timesheet-inicio');
+                Route::post('timesheet/actualizarDia', 'TimesheetController@actualizarDia')->name('timesheet-actualizarDia');
+                Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
+                Route::post('timesheet/pdf/{id}', 'TimesheetController@pdf')->name('timesheet.pdf');
 
-                Route::group(['middleware' => ['gestion_contractual']], function () {
+                Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+                Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
+                Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
+                Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
+                Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
+                // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
+                Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
+                Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+                Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+                Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
+                Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
+                Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
+                Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
+                Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
 
-                    //Proveedores
-                    Route::resource('proveedor', 'ProveedoresController');
+                Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
+                Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
+                Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
+                Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
+                Route::get('timesheet/clientes/edit/{id}', 'TimesheetController@clientesEdit')->name('timesheet-clientes-edit');
+                Route::post('timesheet/clientes/store', 'TimesheetController@clientesStore')->name('timesheet-clientes-store');
+                Route::post('timesheet/clientes/update/{id}', 'TimesheetController@clientesUpdate')->name('timesheet-clientes-update');
+                Route::post('timesheet/clientes/delete/{id}', 'TimesheetController@clientesDelete')->name('timesheet-cliente-delete');
+                Route::post('timesheet/clientes/pdf', 'TimesheetController@pdfClientes')->name('timesheet-cliente.pdf');
 
-                    //Contratos
-                    //## API - Revisar en tiempo real si contrato ya existe ###
-                    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
-                    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
-                    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
-                    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
-                    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
-                    // Route::get('download/{file}', 'ContratosController@getDownload');
-                    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
-                    Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
-                    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
-                    Route::post('selectProveedor', 'DashboardController@AjaxRequestClientes')->name('selectCliente');
-                    Route::post('selectContrato', 'DashboardController@AjaxRequestContratos')->name('selectContrato');
-                    Route::post('selectEvaluacionesServicio', 'DashboardController@AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
-                    Route::get('dashboard-contratos-katbol', 'DashboardController@index')->name('dashboard.katbol');
-                    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
-                    Route::resource('contratos-katbol', 'ContratosController');
-                    Route::get('contratos-katbol/destroy/{id}', 'ContratosController@destroy')->name('contratos-katbol.delete');
-                    Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
-                    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
-                    Route::get('contratos-katbol/contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
-                    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
-                    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
+                Route::get('timesheet/reportes', 'TimesheetController@reportes')->name('timesheet-reportes');
+                Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
 
-                    Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
+                Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
 
-                    Route::post('contratos-katbol/aprobacion-firma-contrato', 'ContratosController@aprobacionFirma')->name('contratos-katbol.aprobacion-firma-contrato');
-                    Route::get('contratos-katbol/aprobacion-firma-contrato/historico', 'ContratosController@historicoAprobacion')->name('contratos-katbol.aprobacion-firma-contrato.historico');
+                Route::post('timesheet/creacionContratoProyecto', 'TimesheetController@creacionContratoProyecto')->name('timesheet.creacionContratoProyecto');
 
-                    Route::resource('bitacoras', 'BitacoraController');
+                Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
+            });
 
-                    Route::resource('facturas', 'FacturaController');
-                    Route::get('facturas/exportar', 'FacturaController@exportTo')->name('adeudoproveedor.exportar');
+            Route::group(['middleware' => ['proyectos']], function () {
+                Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+                Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
+                Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
+                Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
+                Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
+                // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
+                Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
+                Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
+                Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+                Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
+                Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
+                Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
+                Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
+                Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
 
-                    Route::get('cedula/{id_cedula}/historico', 'HistoricoCedulaController@index')->name('cedula.historico');
+                Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
+                Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
+            });
 
-                    //Reportes
-                    Route::resource('reportes', 'ReporteRequisicionController');
-                    Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
+            // Comunicacion Sgis
+            Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
+            Route::post('comunicacion-sgis/media', 'ComunicacionSgiController@storeMedia')->name('comunicacion-sgis.storeMedia');
+            Route::post('comunicacion-sgis/ckmedia', 'ComunicacionSgiController@storeCKEditorImages')->name('comunicacion-sgis.storeCKEditorImages');
+            Route::resource('comunicacion-sgis', 'ComunicacionSgiController');
+
+            Route::get('lista-distribucion', 'ListaDistribucionController@index')->name('lista-distribucion.index');
+            Route::get('lista-distribucion/{id}/edit', 'ListaDistribucionController@edit')->name('lista-distribucion.edit');
+            Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
+            Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.edit');
+
+            Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
+            Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
+            Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
+            Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
+
+            //Se puso aqui debido a problema de cross-origin
+            Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
+
+            Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
+            Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
+            Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+            Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
+
+            Route::get('octave/arbol-riesgos/{matriz}', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
+            Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
+            Route::get('contenedores/{matriz}', 'ContenedorMatrizOctaveController@index')->name('contenedores.index');
+            Route::get('contenedores/create/{matriz}', 'ContenedorMatrizOctaveController@create')->name('contenedores.create');
+            Route::get('contenedores/{contenedor}/edit/{matriz}', 'ContenedorMatrizOctaveController@edit')->name('contenedores.edit');
+            Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
+            Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
+
+            Route::group(['middleware' => ['gestion_talento']], function () {
+                //Modulo Capital Humano
+                // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+                Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
+
+                //Control de Ausencias
+                Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
+                Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
+                Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
+                Route::resource('Ausencias', 'AusenciasController');
+
+                Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
+                    'create' => 'incidentes-vacaciones.create',
+                    'store' => 'incidentes-vacaciones.store',
+                    'show' => 'incidentes-vacaciones.show',
+                    'edit' => 'incidentes-vacaciones.edit',
+                    'update' => 'incidentes-vacaciones.update',
+                    'destroy' => 'incidentes-vacaciones.destroy',
+                ]);
+
+                Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
+                    'index' => 'incidentes-dayoff.index',
+                    'create' => 'incidentes-dayoff.create',
+                    'store' => 'incidentes-dayoff.store',
+                    'show' => 'incidentes-dayoff.show',
+                    'edit' => 'incidentes-dayoff.edit',
+                    'update' => 'incidentes-dayoff.update',
+                    'destroy' => 'incidentes-dayoff.destroy',
+                ]);
+
+                //Control de Ausencias- Vacaciones
+                Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
+                Route::get('ExportVacaciones', 'VacacionesController@exportExcel')->name('descarga-vacaciones');
+                Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
+                Route::resource('vacaciones', 'VacacionesController')->names([
+                    'create' => 'vacaciones.create',
+                    'store' => 'vacaciones.store',
+                    'show' => 'vacaciones.show',
+                    'edit' => 'vacaciones.edit',
+                    'update' => 'vacaciones.update',
+                    'destroy' => 'vacaciones.destroy',
+                ]);
+
+                //Control de Ausencias- Day-Off
+                Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
+                Route::get('ExportDayOff', 'DayOffController@exportExcel')->name('descarga-dayOff');
+                Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
+                Route::resource('dayOff', 'DayOffController')->names([
+                    'create' => 'dayOff.create',
+                    'store' => 'dayOff.store',
+                    'show' => 'dayOff.show',
+                    'edit' => 'dayOff.edit',
+                    'update' => 'dayOff.update',
+                    'destroy' => 'dayOff.destroy',
+                ]);
+
+                //Control de Ausencias Permisos de Goce de Sueldo
+                Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
+                Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
+                Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
+                    'index' => 'permisos-goce-sueldo.index',
+                    'create' => 'permisos-goce-sueldo.create',
+                    'store' => 'permisos-goce-sueldo.store',
+                    'show' => 'permisos-goce-sueldo.show',
+                    'edit' => 'permisos-goce-sueldo.edit',
+                    'update' => 'permisos-goce-sueldo.update',
+                    'destroy' => 'permisos-goce-sueldo.destroy',
+                ]);
+
+                //Control de Solicitud- Vacaciones
+                Route::get('solicitud-vacaciones/perido-adicional/create', 'SolicitudVacacionesController@periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
+                Route::get('solicitud-vacaciones/{id}/archivoShow', 'SolicitudVacacionesController@archivoShow')->name('solicitud-vacaciones.archivoShow');
+                Route::get('solicitud-vacaciones/{id}/vistaGlobal', 'SolicitudVacacionesController@showVistaGlobal')->name('solicitud-vacaciones.vistaGlobal');
+                Route::get('solicitud-vacaciones/menu', 'SolicitudVacacionesController@aprobacionMenu')->name('solicitud-vacaciones.menu');
+                Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
+                Route::get('solicitud-vacaciones/aprobacion', 'SolicitudVacacionesController@aprobacion')->name('solicitud-vacaciones.aprobacion');
+                Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
+                Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
+                Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
+                Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
+                    'create' => 'solicitud-vacaciones.create',
+                    'store' => 'solicitud-vacaciones.store',
+                    'show' => 'solicitud-vacaciones.show',
+                    'edit' => 'solicitud-vacaciones.edit',
+                    'update' => 'solicitud-vacaciones.update',
+                    'destroy' => 'solicitud-vacaciones.destroy',
+                ])->except(['show', 'destroy']);
+
+                //Control de Solicitud- Day Off
+                Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
+                Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
+                Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
+                Route::get('solicitud-dayoff/archivo', 'SolicitudDayOffController@archivo')->name('solicitud-dayoff.archivo');
+                Route::get('solicitud-dayoff/aprobacion', 'SolicitudDayOffController@aprobacion')->name('solicitud-dayoff.aprobacion');
+                Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
+                Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
+                Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
+                Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
+                    'create' => 'solicitud-dayoff.create',
+                    'store' => 'solicitud-dayoff.store',
+                    'show' => 'solicitud-dayoff.show',
+                    'edit' => 'solicitud-dayoff.edit',
+                    'update' => 'solicitud-dayoff.update',
+                    'destroy' => 'solicitud-dayoff.destroy',
+                ])->except(['show', 'destroy']);
+
+                //Control de Solicitud - Permiso Goce Sueldo
+                Route::get('solicitud-permiso-goce-sueldo/{id}/showArchivo', 'SolicitudPermisoGoceSueldoController@showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
+                Route::get('solicitud-permiso-goce-sueldo/{id}/vistaGlobal', 'SolicitudPermisoGoceSueldoController@showVistaGlobal')->name('solicitud-permiso-goce-sueldo.vistaGlobal');
+                Route::get('solicitud-permiso-goce-sueldo/menu', 'SolicitudPermisoGoceSueldoController@aprobacionMenu')->name('solicitud-permiso-goce-sueldo.menu');
+                Route::get('solicitud-permiso-goce-sueldo/archivo', 'SolicitudPermisoGoceSueldoController@archivo')->name('solicitud-permiso-goce-sueldo.archivo');
+                Route::get('solicitud-permiso-goce-sueldo/aprobacion', 'SolicitudPermisoGoceSueldoController@aprobacion')->name('solicitud-permiso-goce-sueldo.aprobacion');
+                Route::get('solicitud-permiso-goce-sueldo/{id}/respuesta', 'SolicitudPermisoGoceSueldoController@respuesta')->name('solicitud-permiso-goce-sueldo.respuesta');
+                Route::get('solicitud-permiso-goce-sueldo/{id}/show', 'SolicitudPermisoGoceSueldoController@show')->name('solicitud-permiso-goce-sueldo.show');
+                Route::post('solicitud-permiso-goce-sueldo/destroy', 'SolicitudPermisoGoceSueldoController@destroy')->name('solicitud-permiso-goce-sueldo.destroy');
+                Route::resource('solicitud-permiso-goce-sueldo', 'SolicitudPermisoGoceSueldoController')->names([
+                    'create' => 'solicitud-permiso-goce-sueldo.create',
+                    'store' => 'solicitud-permiso-goce-sueldo.store',
+                    'show' => 'solicitud-permiso-goce-sueldo.show',
+                    'edit' => 'solicitud-permiso-goce-sueldo.edit',
+                    'update' => 'solicitud-permiso-goce-sueldo.update',
+                    'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
+                ])->except(['show', 'destroy']);
+
+                //Evaluaciones 360
+                Route::get('recursos-humanos/evaluacion-360', 'RH\Evaluacion360Controller@index')->name('rh-evaluacion360.index');
+
+                Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluado}/mis-evaluaciones', 'RH\EV360EvaluacionesController@misEvaluaciones')->name('ev360-evaluaciones.misEvaluaciones');
+                Route::get('recursos-humanos/evaluacion-360/{evaluacion}/{evaluador}/evaluaciones-mi-equipo', 'RH\EV360EvaluacionesController@evaluacionesDeMiEquipo')->name('ev360-evaluaciones.evaluacionesDeMiEquipo');
+
+                Route::post('recursos-humanos/evaluacion-360/{evaluacion}/recordatorio', 'RH\EV360EvaluacionesController@enviarCorreoAEvaluadores')->name('ev360-evaluaciones.recordatorio');
+                Route::post('recursos-humanos/evaluacion-360/invitacion-reunion-evaluacion', 'RH\EV360EvaluacionesController@enviarInvitacionDeEvaluacion')->name('ev360-evaluaciones.invitacion-reunion-evaluacion');
+
+                Route::get('recursos-humanos/evaluacion-360/{empleado}/evaluaciones-del-empleado', 'RH\EV360EvaluacionesController@evaluacionesDelEmpleado')->name('ev360-evaluaciones.evaluacionesDelEmpleado');
+                Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/participantes', 'RH\EV360EvaluacionesController@getParticipantes')->name('ev360-evaluaciones.getParticipantes');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia', 'RH\EV360EvaluacionesController@relatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.relatedCompetenciaWithEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/competencia/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedCompetenciaWithEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo', 'RH\EV360EvaluacionesController@relatedObjetivoWithEvaluacion')->name('ev360-evaluaciones.relatedObjetivoWithEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/objetivo/delete', 'RH\EV360EvaluacionesController@deleteRelatedCompetenciaWithEvaluacion')->name('ev360-evaluaciones.deleteRelatedObjetivoWithEvaluacion');
+                Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion', 'RH\EV360EvaluacionesController@evaluacion')->name('ev360-evaluaciones.evaluacion');
+                Route::get('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@contestarCuestionario')->name('ev360-evaluaciones.contestarCuestionario');
+                Route::get('recursos-humanos/evaluacion-360/vista-evaluador/{evaluacion}/evaluacion/{evaluador}/evaluador', 'RH\EV360EvaluacionesController@vistaevaluador')->name('ev360-evaluaciones.vistaevaluador');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/evaluacion/{evaluado}/{evaluador}/cerrar', 'RH\EV360EvaluacionesController@finalizarEvaluacion')->name('ev360-evaluaciones.finalizarEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada-descripcion/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzadaDescripcion')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/meta-alcanzada/store', 'RH\EV360EvaluacionesController@storeMetaAlcanzada')->name('ev360-evaluaciones.objetivos.storeMetaAlcanzada');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/objetivo/calificacion-persepcion/store', 'RH\EV360EvaluacionesController@saveCalificacionPersepcion')->name('ev360-evaluaciones.objetivos.saveCalificacionPersepcion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/iniciar', 'RH\EV360EvaluacionesController@iniciarEvaluacion')->name('ev360-evaluaciones.iniciarEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/postergar', 'RH\EV360EvaluacionesController@postergarEvaluacion')->name('ev360-evaluaciones.postergarEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/{evaluacion}/cerrar', 'RH\EV360EvaluacionesController@cerrarEvaluacion')->name('ev360-evaluaciones.cerrarEvaluacion');
+                Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
+                Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
+                // Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}', 'RH\EV360EvaluacionesController@reactivarPorEvaluado')->name('ev360-evaluaciones.reactivarPorEvaluado');
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@reactivarPorEvaluador')->name('ev360-evaluaciones.reactivarPorEvaluador');
+                Route::post('recursos-humanos/evaluacion-360/normalizar/objetivo', 'RH\EV360EvaluacionesController@normalizarCalificacionObjetivo')->name('ev360-evaluaciones.normalizar.objetivo');
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/jefe/{empleado}', 'RH\EV360EvaluacionesController@resumenJefe')->name('ev360-evaluaciones.consulta.resumenJefe');
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/empleado/{empleado}', 'RH\EV360EvaluacionesController@resumenEmpleado')->name('ev360-evaluaciones.consulta.resumenEmpleado');
+                Route::resource('recursos-humanos/evaluacion-360/evaluaciones', 'RH\EV360EvaluacionesController')->names([
+                    'index' => 'ev360-evaluaciones.index',
+                    'create' => 'ev360-evaluaciones.create',
+                    'store' => 'ev360-evaluaciones.store',
+                    // 'show' => 'ev360-evaluaciones.show',
+                    'edit' => 'ev360-evaluaciones.edit',
+                    'update' => 'ev360-evaluaciones.update',
+                ]);
+
+                Route::get('recursos-humanos/evaluacion-360/evaluacion/objetivostmp', 'RH\EV360EvaluacionesController@objetivostemporal')->name('ev360-evaluaciones.objetivostmp');
+
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
+                Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
+                Route::post('recursos-humanos/evaluacion-360/pdf', 'RH\EV360EvaluacionesController@pdf')->name('ev360-evaluaciones.pdf');
+
+                Route::post('recursos-humanos/evaluacion-360/conductas/store', 'RH\EV360ConductasController@store')->name('ev360-conductas.store');
+                Route::get('recursos-humanos/evaluacion-360/conductas/{conducta}/edit', 'RH\EV360ConductasController@edit')->name('ev360-conductas.edit');
+                Route::patch('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@update')->name('ev360-conductas.update');
+                Route::delete('recursos-humanos/evaluacion-360/conductas/{conducta}', 'RH\EV360ConductasController@destroy')->name('ev360-conductas.destroy');
+
+                Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@createByEmpleado')->name('ev360-objetivos-empleado.create');
+                Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/aprobar', 'RH\EV360ObjetivosController@aprobarRechazarObjetivo')->name('ev360-objetivos-empleado.aprobarRechazarObjetivo');
+                Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/lista', 'RH\EV360ObjetivosController@show')->name('ev360-objetivos-empleado.show');
+                Route::get('recursos-humanos/evaluacion-360/objetivos/{empleado}/copiar', 'RH\EV360ObjetivosController@indexCopiar')->name('ev360-objetivos-empleado.indexCopiar');
+                Route::post('recursos-humanos/evaluacion-360/objetivos/definir-nuevos', 'RH\EV360ObjetivosController@definirNuevosObjetivos')->name('ev360-objetivos-empleado.definir-nuevos');
+                Route::post('recursos-humanos/evaluacion-360/objetivos/copiar', 'RH\EV360ObjetivosController@storeCopiaObjetivos')->name('ev360-objetivos-empleado.storeCopiaObjetivos');
+                Route::post('recursos-humanos/evaluacion-360/{empleado}/objetivos', 'RH\EV360ObjetivosController@storeByEmpleado')->name('ev360-objetivos-empleado.store');
+
+                Route::get('recursos-humanos/evaluacion-360/objetivos/{objetivo}/edit', 'RH\EV360ObjetivosController@edit')->name('ev360-objetivos-empleado.edit');
+                Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}', 'RH\EV360ObjetivosController@destroyByEmpleado')->name('ev360-objetivos-empleado.destroyByEmpleado');
+                Route::get('recursos-humanos/evaluacion-360/{empleado}/objetivos/{objetivo}/editByEmpleado', 'RH\EV360ObjetivosController@editByEmpleado')->name('ev360-objetivos-empleado.editByEmpleado');
+                Route::post('recursos-humanos/evaluacion-360/objetivos/{objetivo}/empleado', 'RH\EV360ObjetivosController@updateByEmpleado')->name('ev360-objetivos-empleado.updateByEmpleado');
+                Route::resource('recursos-humanos/evaluacion-360/objetivos', 'RH\EV360ObjetivosController')->names([
+                    'index' => 'ev360-objetivos.index',
+                    'destroy' => 'ev360-objetivos.destroy',
+                ])->except(['show']);
+                Route::resource('recursos-humanos/evaluacion-360/objetivos/rangos', 'RH\CatalogoRangosObjetivosController');
+
+                // Evaluaciones 360
+                Route::post('recursos-humanos/evaluacion-360/normalizar/{evaluacion}/resultados', 'RH\EV360EvaluacionesController@normalizarResultados')->name('ev360-normalizar-resultados');
+                Route::get('recursos-humanos/evaluacion-360', 'RH\EV360EvaluacionesController@index')->name('rh-evaluacion360.index');
+
+                // Evaluaciones Desempeño
+                Route::prefix('recursos-humanos/evaluacion-desempeno')->name('rh.evaluaciones-desempeno.')->group(function () {
+                    Route::get('index', 'RH\EvaluacionesDesempenoController@index')->name('index');
+                    Route::delete('{evaluacion}/destroy', 'RH\EvaluacionesDesempenoController@destroy')->name('borrar');
+                    Route::get('dashboard-general', 'RH\EvaluacionesDesempenoController@dashboardGeneral')->name('dashboard-general');
+                    Route::get('dashboard-personal', 'RH\EvaluacionesDesempenoController@dashboardPersonal')->name('dashboard-personal');
+                    Route::get('{evaluacion}/dashboard-evaluacion', 'RH\EvaluacionesDesempenoController@dashboardEvaluacion')->name('dashboard-evaluacion');
+                    Route::get('{evaluacion}/dashboard-evaluacion/{evaluado}/evaluado', 'RH\EvaluacionesDesempenoController@dashboardEvaluado')->name('dashboard-evaluado');
+                    Route::get('{evaluacion}/dashboard-area/{area}', 'RH\EvaluacionesDesempenoController@dashboardArea')->name('dashboard-area');
+                    Route::get('descargaEvaluacion/{evaluacion}', 'RH\EvaluacionesDesempenoController@descargaEvaluacion')->name('descargaEvaluacion');
+                    Route::get('dashboard-global', 'RH\EvaluacionesDesempenoController@dashboardGlobal')->name('dashboard-global');
+
+                    Route::get('config-evaluaciones', 'RH\EvaluacionesDesempenoController@configEvaluaciones')->name('config-evaluaciones');
+
+                    Route::get('create-evaluacion', 'RH\EvaluacionesDesempenoController@createEvaluacion')->name('create-evaluacion');
+                    Route::get('edit-borrador/{evaluacion}', 'RH\EvaluacionesDesempenoController@editBorrador')->name('edit-borrador');
+                    Route::get('evaluacion/{evaluacion}/cuestionario/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@cuestionarioEvaluacionDesempeno')->name('cuestionario');
+
+                    Route::post('evaluacion/{evaluacion}/storeFirmaEvaluacion/{evaluado}/{periodo}', 'RH\EvaluacionesDesempenoController@storeFirmasEvaluacion')->name('storeFirmasEvaluacion');
+
+                    Route::get('mis-evaluaciones', 'RH\EvaluacionesDesempenoController@misEvaluaciones')->name('mis-evaluaciones');
+
+                    Route::get('{empleado}/carga-objetivos-empleado', 'RH\EvaluacionesDesempenoController@cargaObjetivosEmpleado')->name('carga-objetivos-empleado');
+                    Route::get('{area}/carga-objetivos-area', 'RH\EvaluacionesDesempenoController@cargaObjetivosArea')->name('carga-objetivos-area');
+                    Route::get('objetivos-importar', 'RH\EvaluacionesDesempenoController@objetivosImportar')->name('objetivos-importar');
+                    Route::get('{empleado}/objetivos-papelera', 'RH\EvaluacionesDesempenoController@objetivosPapelera')->name('objetivos-papelera');
+                    Route::get('objetivos-exportar', 'RH\EvaluacionesDesempenoController@objetivosExportar')->name('objetivos-exportar');
+                    Route::get('test', 'RH\EvaluacionesDesempenoController@test')->name('test');
                 });
 
-                Route::group(['middleware' => ['gestion_financiera']], function () {
-                    // Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+                // Objetivos Periodo
+                Route::prefix('recursos-humanos/evaluacion-desempeno')->name('ev360-objetivos-periodo.')->group(function () {
+                    Route::get('configuracion', 'RH\ObjetivosPeriodoController@config')->name('config');
+                });
 
-                    //requisiciones
-                    Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-                    Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
-                    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
-                    Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
-                    // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
-                    // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
-                    Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
-                    Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
-                    Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
-                    Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
-                    Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
-                    Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
-                    Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
-                    Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
-                    Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
-                    Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
-                    Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
-                    Route::get('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
-                    Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
-                    Route::get('requisiciones/filtrar', 'RequisicionesController@filtrarPorEstado')->name('requisiciones.filtrarPorEstado');
-                    Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
-                    Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
-                    Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
-                    Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
+                // Perfiles
+                Route::prefix('perfiles')->name('perfiles.')->group(function () {
+                    Route::delete('destroy', 'PerfilController@massDestroy')->name('massDestroy');
+                    Route::post('parse-csv-import', 'PerfilController@parseCsvImport')->name('parseCsvImport');
+                    Route::post('process-csv-import', 'PerfilController@processCsvImport')->name('processCsvImport');
+                    Route::resource('/', 'PerfilController');
+                });
 
-                    // ordenes de compra
-                    Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
-                    Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
-                    Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
-                    Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
-                    Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
-                    Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
-                    Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
-                    Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
-                    Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
-                    Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
-                    Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
-                    Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
-                    Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
-                    Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
-                    Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
+                Route::get(
+                    'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
+                    'RH\CompetenciasPorPuestoController@create'
+                )->name('ev360-competencias-por-puesto.create');
+                Route::get(
+                    'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/obtener',
+                    'RH\CompetenciasPorPuestoController@indexCompetenciasPorPuesto'
+                )->name('ev360-competencias-por-puesto.indexCompetenciasPorPuesto');
+                Route::post(
+                    'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}',
+                    'RH\CompetenciasPorPuestoController@store'
+                )->name('ev360-competencias-por-puesto.store');
+                Route::resource('recursos-humanos/evaluacion-360/competencias-por-puesto', 'RH\CompetenciasPorPuestoController')->names([
+                    'index' => 'ev360-competencias-por-puesto.index',
+                    'show' => 'ev360-competencias-por-puesto.show',
+                    'edit' => 'ev360-competencias-por-puesto.edit',
+                    'update' => 'ev360-competencias-por-puesto.update',
+                    'destroy' => 'ev360-competencias-por-puesto.destroy',
+                ])->except('create', 'store');
 
-                    //Proveedores
-                    Route::resource('proveedor', 'ProveedoresController');
+                // Route::get('recursos-humanos/evaluacion-360/competencias/{id}', 'RH\EV360CompetenciasController@show')->name('ev360-competencias.show');
 
-                    //Productos
-                    Route::resource('productos', 'ProductoController');
-                    Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
-                    Route::post('productos/list/get/archivados', 'ProductoController@getArchivadosIndex')->name('productos.getArchivadosIndex');
-                    Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
-                    Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
+                Route::post('recursos-humanos/evaluacion-360/competencias/obtener-niveles', 'RH\EV360CompetenciasController@obtenerNiveles')->name('ev360-competencias.obtenerNiveles');
 
-                    //Proveedores Ordenes Compra
-                    Route::resource('proveedores', 'ProveedoresOController');
-                    Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
-                    Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
-                    Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
-                    Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
+                Route::post('recursos-humanos/evaluacion-360/competencias/store-redirect', 'RH\EV360CompetenciasController@storeAndRedirect')->name('ev360-competencias.conductas');
 
-                    //Compradores
-                    Route::resource('compradores', 'CompradoresController');
-                    Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
-                    Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
-                    Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
-                    Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
-                    Route::post('compradores/pdf', 'CompradoresController@pdfCompradores')->name('compradores.pdf');
+                Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/conductas', 'RH\EV360CompetenciasController@conductas')->name('ev360-competencias.obtenerConductas');
 
-                    //Centro Costos
-                    Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
-                    Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
-                    Route::resource('centro-costos', 'CentroCostosController');
-                    Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
-                    Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
+                Route::post('recursos-humanos/evaluacion-360/competencias/obtener-ultimo-nivel', 'RH\EV360CompetenciasController@obtenerUltimoNivel')->name('ev360-competencias.obtenerUltimoNivel');
 
-                    //Razon Social - Sucursales
-                    Route::resource('sucursales', 'SucursalController');
-                    Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
-                    Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
-                    Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
-                    Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
+                Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/edit', 'RH\EV360CompetenciasController@edit')->name('ev360-competencias.edit');
 
-                    //Timesheet tambien
+                Route::get('recursos-humanos/evaluacion-360/competencias/{competencia}/informacion', 'RH\EV360CompetenciasController@informacionCompetencia')->name('ev360-competencias.informacionCompetencia');
+
+                Route::post('recursos-humanos/evaluacion-360/competencias/{competencia}/repuesta', 'RH\EV360CompetenciasController@guardarRespuestaCompetencia')->name('ev360-competencias.guardarRespuestaCompetencia');
+
+                Route::resource('recursos-humanos/evaluacion-360/competencias', 'RH\EV360CompetenciasController')->names([
+                    'index' => 'ev360-competencias.index',
+                    'create' => 'ev360-competencias.create',
+                    'store' => 'ev360-competencias.store',
+                    'show' => 'ev360-competencias.show',
+                    'update' => 'ev360-competencias.update',
+                    'destroy' => 'ev360-competencias.destroy',
+                ])->except(['edit']);
+
+                // Competencia
+                Route::get('competencia/{empleado}/idiomas', 'IdiomasEmpleadosController@index')->name('idiomas-empleados.index');
+                Route::post('competencia/{idiomaEmpleado}/idiomas', 'IdiomasEmpleadosController@update')->name('idiomas-empleados.update');
+                Route::delete('competencia/{idiomaEmpleado}/idiomas-delete-certificado', 'IdiomasEmpleadosController@deleteCertificado')->name('idiomas-empleados.deleteCertificado');
+                Route::resource('competencia/idiomas-empleados', 'IdiomasEmpleadosController')->except(['index', 'update', 'show']);
+                Route::delete('competencia/destroy', 'CompetenciasController@massDestroy')->name('competencia.massDestroy');
+                Route::post('competencia/media', 'CompetenciasController@storeMedia')->name('competencia.storeMedia');
+                Route::post('competencia/ckmedia', 'CompetenciasController@storeCKEditorImages')->name('competencia.storeCKEditorImages');
+                Route::resource('competencia', 'CompetenciasController');
+                Route::get('buscarCV', 'CompetenciasController@buscarcv')->name('buscarCV');
+                Route::get('expedientes-profesionales', 'CompetenciasController@expedientesProfesionales')->name('capital.expedientes-profesionales');
+                Route::post('competencias/{empleado}/documentos-carga', 'CompetenciasController@cargarDocumentos')->name('cargarDocumentos');
+                Route::post('competencias/{empleado}/capacitacion-carga', 'CompetenciasController@cargarCapacitaciones')->name('cargarCapacitacion');
+                Route::post('competencias/{empleado}/certificacion-carga', 'CompetenciasController@cargarCertificacion')->name('cargarCertificacion');
+                Route::get('competencias/{empleado}/edit', 'CompetenciasController@editarCompetencias')->name('editarCompetencias');
+                Route::post('competencias/pdf', 'CompetenciasController@pdf')->name('competencias.pdf');
+
+                //Dias festivos
+                // Route::get('calendario-oficial/index', 'CalendarioOficialController@index')->name('calendario-oficial.index');
+                Route::resource('recursos-humanos/calendario-oficial', 'CalendarioOficialController')->names([
+                    'create' => 'calendario-oficial.create',
+                    'store' => 'calendario-oficial.store',
+                    'show' => 'calendario-oficial.show',
+                    'edit' => 'calendario-oficial.edit',
+                    'update' => 'calendario-oficial.update',
+                    'destroy' => 'calendario-oficial.destroy',
+                ]);
+
+                //Eventos
+                Route::get('tabla-calendario/index', 'TablaCalendarioController@index')->name('tabla-calendario.index');
+                Route::resource('recursos-humanos/calendario', 'TablaCalendarioController')->names([
+                    'create' => 'tabla-calendario.create',
+                    'store' => 'tabla-calendario.store',
+                    'show' => 'tabla-calendario.show',
+                    'edit' => 'tabla-calendario.edit',
+                    'update' => 'tabla-calendario.update',
+                    'destroy' => 'tabla-calendario.destroy',
+                ]);
+
+                //Comunicados
+                Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
+
+                // Recursos
+                Route::post('recursos/{recurso}/asistencia-capacitacion', 'RecursosController@guardarAsistenciaCapacitacion')->name('recursos.guardarAsistenciaCapacitacion');
+                Route::post('recursos/capacitacion-evaluacion', 'RecursosController@guardarEvaluacionCapacitacion')->name('recursos.guardarEvaluacionCapacitacion');
+                // Route::post('recursos/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+                Route::post('recursos/{recurso}/reprogramar-capacitacion', 'RecursosController@reprogramarCapacitacion')->name('recursos.reprogramarCapacitacion');
+                Route::post('recursos/{recurso}/cancelar-capacitacion', 'RecursosController@cancelarCapacitacion')->name('recursos.cancelarCapacitacion');
+                Route::post('recursos/{recurso}/enviar-invitaciones-capacitacion', 'RecursosController@enviarInvitacionPorCorreoAhora')->name('recursos.enviarInvitacionPorCorreoAhora');
+                Route::post('recursos/capacitaciones-principales', 'RecursosController@obtenerCapacitacionesPrincipales')->name('recursos.obtenerCapacitacionesPrincipales');
+                Route::post('recursos/capacitaciones-archivadas', 'RecursosController@obtenerCapacitacionesArchivadas')->name('recursos.obtenerCapacitacionesArchivadas');
+                Route::post('recursos/capacitacion/respuesta', 'RecursosController@respuestaCapacitacion')->name('recursos.respuestaCapacitacion');
+                Route::post('recursos/capacitacion/archivar', 'RecursosController@archivarCapacitacion')->name('recursos.archivarCapacitacion');
+                Route::post('recursos/validate', 'RecursosController@validateForm')->name('recursos.validateForm');
+                Route::post('recursos/{recurso}/update', 'RecursosController@update')->name('recursos.update');
+                Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
+                Route::post('recursos/media', 'RecursosController@storeMedia')->name('recursos.storeMedia');
+                Route::post('recursos/ckmedia', 'RecursosController@storeCKEditorImages')->name('recursos.storeCKEditorImages');
+                Route::post('recursos/suscribir/', 'RecursosController@suscribir')->name('recursos.suscribir');
+                Route::post('recursos/cancelar/', 'RecursosController@eliminarParticipante')->name('recursos.cancelar');
+                Route::post('recursos/calificar/', 'RecursosController@calificarParticipante')->name('recursos.calificar');
+                Route::get('recursos/{recurso}/participantes/', 'RecursosController@participantes')->name('recursos.participantes');
+                Route::get('recursos/{recurso}/participantes/get', 'RecursosController@getParticipantes')->name('recursos.getParticipantes');
+                Route::resource('recursos', 'RecursosController')->except(['update']);
+
+                Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
+            });
+
+            Route::group(['middleware' => ['gestion_normativa']], function () {
+
+                Route::get('obtener-clausula-id/{incumplimiento}', [DashboardAuditoriasSGIController::class, 'obtenerClausulaId'])->name('obtener-clausula-id');
+                Route::get('/dashboard-auditorias-sgi', 'DashboardAuditoriasSGIController@index')->name('dashboard_auditorias');
+
+                //Template Analisis de Brechas
+                Route::get('templates', 'TemplateController@index')->name('templates');
+                Route::get('templates/create', 'TemplateController@create')->name('templates.create');
+                Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
+                Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario');
+                // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+
+                Route::group(['middleware' => ['version_iso_2013']], function () {
+                    //Analisis brechas
+                    //Route::resource('analisis-brechas', 'AnalisisBController');
+                    Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
+                    Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
+                    Route::post('analisis-brechas/update', 'AnalisisBController@update');
+                    Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
+                    Route::resource('analisisdebrechas', 'AnalisisBrechaController');
+                    Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+
+                    // Declaracion de Aplicabilidad
+                    Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+                    Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
+                    Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
+                    Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
+                    Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
+                    Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+                    Route::post('declaracion-aplicabilidad/enviar-correo', 'DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
+                    Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
+
+                    Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
+                    Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
+                    Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+                    Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
+                    Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
+                    Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
+                    Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
+                    Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+                });
+
+                Route::group(['middleware' => ['version_iso_2022']], function () {
+                    // Analisis brechas 2022
+                    // Template Analisis de Brechas
+                    Route::post('templates/store', 'TemplateController@store')->name('templates.store');
+                    Route::get('/top', 'TopController@index')->name('top');
+                    Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+                    Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+                    Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+                    Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+                    Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+                    Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
+
+                    // Gap Uno 2022
+                    Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+                    Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
+
+                    // Gap Dos 2022
+                    Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
+
+                    // Gap Tres 2022
+                    Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+
+                    // Declaracion de Aplicabilidad 2022
+                    Route::get('declaracion-aplicabilidad-2022/descargar', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@download')->name('declaracion-aplicabilidad-2022.descargar');
+                    Route::get('declaracion-aplicabilidad-2022/dashboard', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@dashboard')->name('declaracion-aplicabilidad-2022.dashboard');
+                    Route::get('declaracion-aplicabilidad-2022/tabla', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@tabla')->name('declaracion-aplicabilidad-2022.tabla');
+                    Route::put('declaracion-aplicabilidad-2022/tabla/{control}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@updateTabla')->name('declaracion-aplicabilidad-2022.updateTabla');
+                    Route::get('declaracion-aplicabilidad-2022/{id}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@index')->name('declaracion-aplicabilidad-2022');
+                    Route::delete('declaracion-aplicabilidad-2022/destroy', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@massDestroy')->name('declaracion-aplicabilidad-2022.massDestroy');
+                    Route::resource('declaracion-aplicabilidad-2022', 'iso27\DeclaracionAplicabilidadConcentradoIsoController');
+                    Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
+
+                    // Panel declaracion 2022
+                    Route::post('paneldeclaracion-2022/controles', 'PanelDeclaracionIsoController@controles')->name('paneldeclaracion-2022.controles');
+                    Route::post('paneldeclaracion-2022/responsables-quitar', 'PanelDeclaracionIsoController@quitarRelacionResponsable')->name('paneldeclaracion-2022.responsables.quitar');
+                    Route::post('paneldeclaracion-2022/responsables', 'PanelDeclaracionIsoController@relacionarResponsable')->name('paneldeclaracion-2022.responsables');
+                    Route::post('paneldeclaracion-2022/enviar-correo', 'PanelDeclaracionIsoController@enviarCorreo')->name('paneldeclaracion-2022.enviarcorreo');
+                    Route::post('paneldeclaracion-2022/aprobadores-quitar', 'PanelDeclaracionIsoController@quitarRelacionAprobador')->name('paneldeclaracion-2022.aprobadores.quitar');
+                    Route::post('paneldeclaracion-2022/aprobadores', 'PanelDeclaracionIsoController@relacionarAprobador')->name('paneldeclaracion-2022.aprobadores');
+                    Route::delete('paneldeclaracion-2022/destroy', 'PanelDeclaracionIsoController@massDestroy')->name('paneldeclaracion-2022.massDestroy');
+                    Route::resource('paneldeclaracion-2022', 'PanelDeclaracionIsoController');
+
+                    // Analisis de Brechas adicionales
+                    Route::get('analisis/{id}/dashboard', 'FormularioAnalisisBrechasController@index')->name('formulario');
+                    Route::get('analisis-brechas-2022-inicio', 'AnalisisBrechaIsoController@inicioBrechas')->name('analisis-brechas-inicio');
+
+                    //niveles de impacto
+                    Route::get('niveles-impacto/get-niveles/{id?}', 'NivelesImpactoController@getNivelesImpactos')->name('niveles.getNivelesImpactos');
+                    Route::resource('niveles-impacto', 'NivelesImpactoController');
+
+                    // Matriz Riesgos
+                    Route::get('matriz-riesgos/planes-de-accion/create/{id}', 'MatrizRiesgosController@createPlanAccion')->name('matriz-riesgos.createPlanAccion');
+                    Route::post('matriz-riesgos/planes-de-accion/store/{id}', 'MatrizRiesgosController@storePlanAccion')->name('matriz-riesgos.storePlanAccion');
+                    Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
+                    Route::resource('matriz-riesgos', 'MatrizRiesgosController');
+                    Route::post('matriz-riesgo/octave', 'MatrizRiesgosController@storeOctave')->name('matriz-riesgos.octave.store');
+                    Route::post('matriz-riesgo/octave/delete-activo', 'MatrizRiesgosController@deleteActivoOctave')->name('matriz-riesgo.octave.activo.delete');
+                    Route::put('matriz-riesgo/{id}/octave', 'MatrizRiesgosController@updateOctave')->name('matriz-riesgos.octave.update');
+                    Route::get('matriz-riesgo/{id}/octave/edit', 'MatrizRiesgosController@octaveEdit')->name('matriz-riesgos.octave.edit');
+                    Route::get('matriz-riesgo/octave', 'MatrizRiesgosController@octave')->name('matriz-riesgos.octave');
+                    Route::get('getEmployeeDataOctaveNomActivoInfo', 'MatrizRiesgosController@getEmployeeDataOctaveNomActivoInfo')->name('getEmployeeDataOctaveNomActivoInfo');
+
+                    Route::get('matriz-seguridad/octave/index', 'MatrizRiesgosController@octaveIndex')->name('matriz-seguridad.octaveIndex');
+                    Route::get('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000')->name('matriz-seguridad.ISO31000');
+                    Route::post('matriz-riesgo/ISO31000/delete-activo', 'MatrizRiesgosController@deleteActivoISO31000')->name('matriz-seguridad.ISO31000.activo.delete');
+                    Route::get('matriz-seguridad/ISO31000/create', 'MatrizRiesgosController@ISO31000Create')->name('matriz-seguridad.ISO31000Create');
+                    Route::get('matriz-seguridad/ISO31000/{id}/edit', 'MatrizRiesgosController@ISO31000Edit')->name('matriz-seguridad.ISO31000.edit');
+                    Route::post('matriz-seguridad/ISO31000', 'MatrizRiesgosController@ISO31000Store')->name('matriz-seguridad.ISO31000.store');
+                    Route::put('matriz-seguridad/{id}/ISO31000', 'MatrizRiesgosController@ISO31000Update')->name('matriz-seguridad.ISO31000.update');
+                    Route::get('matriz-seguridad/NIST', 'MatrizRiesgosController@NIST')->name('matriz-seguridad.NIST');
+                    Route::get('matriz-seguridad/NIST/create', 'MatrizRiesgosController@NISTCreate')->name('matriz-seguridad.NISTCreate');
+                    Route::get('matriz-seguridad/NIST/{id}/edit', 'MatrizRiesgosController@NISTEdit')->name('matriz-seguridad.NIST.edit');
+                    Route::post('matriz-seguridad/NIST', 'MatrizRiesgosController@NISTStore')->name('matriz-seguridad.NIST.store');
+                    Route::put('matriz-seguridad/{id}/NIST', 'MatrizRiesgosController@NISTUpdate')->name('matriz-seguridad.NIST.update');
+                    Route::post('matriz-riesgos/parse-csv-import', 'MatrizRiesgosController@parseCsvImport')->name('matriz-riesgos.parseCsvImport');
+                    Route::get('matriz-seguridad', 'MatrizRiesgosController@SeguridadInfo')->name('matriz-seguridad');
+
+                    Route::get('matriz-seguridadMapa', 'MatrizRiesgosController@MapaCalor')->name('matriz-mapa');
+                    Route::get('matriz-octavemapa', 'MatrizRiesgosController@MapaCalorOctave')->name('matriz-octavemapa');
+                    Route::get('controles-get', 'MatrizRiesgosController@ControlesGet')->name('controles-get');
+                    Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
+
+                    // Matriz de riesgos -- Sistema de Gestion
+                    Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
+                    Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
+                    Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
+                    Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
+                    Route::post('matriz-riesgos/sistema-gestion/store', 'MatrizRiesgosController@storeSistemaGestion')->name('matriz-riesgos.sistema-gestion.store');
+                    Route::get('matriz-riesgos/sistema-gestion/edit/{id}', 'MatrizRiesgosController@editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
+                    Route::put('matriz-seguridad/sistema-gestion/update/{id}', 'MatrizRiesgosController@updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
+                    Route::get('matriz-seguridad/sistema-gestion/show/{id}', 'MatrizRiesgosController@showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
+                    Route::delete('matriz-seguridad/sistema-gestion/{riesgo}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
+                    Route::get('matriz-seguridad/sistema-gestion/seguridadMapa', 'MatrizRiesgosController@MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
+
+                    //ProcesosOctave
+                    Route::post('procesos-octave/activos', 'ProcesosOctaveController@activos')->name('procesos.octave.activos');
+                    // Route::delete('procesos-octave/destroy', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+                    Route::get('procesos-octave/{matriz}', 'ProcesosOctaveController@index')->name('procesos-octave.index');
+                    Route::get('procesos-octave/{matriz}/create', 'ProcesosOctaveController@create')->name('procesos-octave.create');
+                    Route::delete('procesos-octave/{proceso}', 'ProcesosOctaveController@destroy')->name('procesos-octave.destroy');
+                    Route::get('procesos-octave/{matriz}/edit/{proceso}', 'ProcesosOctaveController@edit')->name('procesos-octave.edit');
+                    Route::resource('procesos-octave', 'ProcesosOctaveController')->except(['index', 'create', 'edit', 'destroy']);
+
+                    //Servicios
+                    Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
+                    Route::resource('servicios', 'ServiciosController')->except('destroy');
+                });
+
+                //Amenazas
+                Route::resource('amenazas', 'AmenazaController');
+                Route::delete('amenazas/destroy', 'AmenazaController@massDestroy')->name('amenazas.massDestroy');
+                Route::post('amenazas/parse-csv-import', 'AmenazaController@parseCsvImport')->name('amenazas.parseCsvImport');
+                Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
+
+                //vulnerabilidades
+                // Route::post('CargaAmenaza', 'SubidaExcel@Vulnerabilidad')->name('cargaExcel-vulnerabilidad');
+                Route::resource('vulnerabilidads', 'VulnerabilidadController');
+                Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
+                Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
+                Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
+
+                //Analisis Riesgos
+                Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
+                Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
+                Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
+                Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
+                Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+                Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+                Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
+                Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
+
+                Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+                Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
+                Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
+
+                Route::get('analisis-impacto/ajustes', 'AnalisisdeImpactoController@ajustes')->name('analisis-impacto.ajustes');
+                Route::put('analisis-impacto/{id}/updateAjustesBIA', 'AnalisisdeImpactoController@updateAjustesBIA')->name('analisis-impacto.updateAjustesBIA');
+                Route::get('analisis-impacto/matriz', 'AnalisisdeImpactoController@matriz')->name('analisis-impacto.matriz');
+                Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+
+                Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
+                Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
+                Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
+                    'index' => 'analisis-impacto.index',
+                    'create' => 'analisis-impacto.create',
+                    'store' => 'analisis-impacto.store',
+                    'show' => 'analisis-impacto.show',
+                    'update' => 'analisis-impacto.update',
+                ])->except(['edit']);
+
+                Route::get('analisis-aia/ajustes', 'AnalisisAIAController@ajustes')->name('analisis-aia.ajustes');
+                Route::put('analisis-aia/{id}/updateAjustesBIA', 'AnalisisAIAController@updateAjustesAIA')->name('analisis-aia.updateAjustesAIA');
+                Route::get('analisis-aia/{id}/edit', 'AnalisisAIAController@edit')->name('analisis-aia.edit');
+                Route::get('analisis-aia/matriz', 'AnalisisAIAController@matriz')->name('analisis-aia.matriz');
+                Route::delete('analisis-aia/destroy', 'AnalisisdeAIAController@massDestroy')->name('analisis-aia.massDestroy');
+                Route::resource('analisis-aia', 'AnalisisAIAController')->names([
+                    'index' => 'analisis-aia.index',
+                    'create' => 'analisis-aia.create',
+                    'store' => 'analisis-aia.store',
+                    'show' => 'analisis-aia.show',
+                    'update' => 'analisis-aia.update',
+                ])->except(['edit']);
+
+                // Entendimiento Organizacions
+                Route::delete('entendimiento-organizacions/destroy', 'EntendimientoOrganizacionController@massDestroy')->name('entendimiento-organizacions.massDestroy');
+                Route::post('entendimiento-organizacions/copiar', 'EntendimientoOrganizacionController@duplicarFoda')->name('entendimiento-organizacions.duplicarFoda');
+                Route::resource('entendimiento-organizacions', 'EntendimientoOrganizacionController');
+                Route::post('entendimiento-organizacions/parse-csv-import', 'EntendimientoOrganizacionController@parseCsvImport')->name('entendimiento-organizacions.parseCsvImport');
+                Route::post('areas/process-csv-import', 'AreasController@processCsvImport')->name('areas.processCsvImport');
+                Route::get('entendimiento-organizacions-foda-organizacions', 'EntendimientoOrganizacionController@cardFoda')->name('foda-organizacions');
+                route::get('entendimiento-organizacions-foda-edit/{id}', 'EntendimientoOrganizacionController@foda')->name('foda-organizacions.edit');
+                Route::get('entendimiento-organizacions-foda-general', 'EntendimientoOrganizacionController@cardFodaGeneral')->name('foda-general');
+                Route::get('entendimiento-organizacions-foda-revision/{id}', 'EntendimientoOrganizacionController@revision')->name('foda.revision');
+                Route::post('entendimiento-organizacions-foda-revision/{id}/aprobado', 'EntendimientoOrganizacionController@aprobado')->name('foda-organizacions.aprobado');
+                Route::post('entendimiento-organizacions-foda-revision/{id}/rechazado', 'EntendimientoOrganizacionController@rechazado')->name('foda-organizacions.rechazado');
+                Route::post('entendimiento-organizacions/{id}/solicitud-aprobacion', 'EntendimientoOrganizacionController@solicitudAprobacion')->name('foda-organizacions.solicitudAprobacion');
+
+                Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
+                Route::get('partes-interesadas/{id}/edit', 'PartesInteresadasController@edit')->name('partes-interesadas.edit');
+                Route::post('partes-interesadas/{id}/update', 'PartesInteresadasController@update')->name('partes-interesadas.update');
+                Route::resource('partes-interesadas', 'PartesInteresadasController')->except(['edit', 'update']);
+
+                //Configuración Consultores
+                // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
+                // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
+
+                // Matriz Requisito Legales
+                Route::get('matriz-requisito-legales/{id}/evaluar', 'MatrizRequisitoLegalesController@evaluar')->name('matriz-requisito-legales.evaluar');
+                Route::post('matriz-requisito-legales/{id}/store', 'MatrizRequisitoLegalesController@evaluarStore')->name('matriz-requisito-legales.evaluarStore');
+                Route::get('matriz-requisito-legales/planes-de-accion/create/{id}', 'MatrizRequisitoLegalesController@createPlanAccion')->name('matriz-requisito-legales.createPlanAccion');
+                Route::post('matriz-requisito-legales/planes-de-accion/store/{id}', 'MatrizRequisitoLegalesController@storePlanAccion')->name('matriz-requisito-legales.storePlanAccion');
+                Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
+                Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
+
+                // Alcance Sgsis
+                Route::get('alcance-sgsis/visualizacion', 'AlcanceSgsiController@visualizacion')->name('alcance-sgsis/visualizacion');
+                Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
+                Route::resource('alcance-sgsis', 'AlcanceSgsiController');
+                Route::get('alcance-sgsis/{id}/aprove', 'AlcanceSgsiController@aprove')->name('admin.alcanceSgsis.aprove');
+                Route::post('alcance-sgsis/pdf', 'AlcanceSgsiController@pdf')->name('alcance-sgsis.pdf');
+                Route::post('alcance-sgsis/pdf/show/{id}', 'AlcanceSgsiController@pdfShow')->name('alcance-sgsis-show.pdf');
+                Route::get('alcance-sgsis-revision/{id}', 'AlcanceSgsiController@revision')->name('alcance-sgsis.revision');
+                Route::post('alcance-sgsis/{id}/aprobado', 'AlcanceSgsiController@aprobado')->name('alcance-sgsis.aprobado');
+                Route::post('alcance-sgsis/{id}/rechazado', 'AlcanceSgsiController@rechazado')->name('alcance-sgsis.rechazado');
+
+                // Comiteseguridads
+                Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
+                Route::get('comiteseguridads/visualizacion', 'ComiteseguridadController@visualizacion')->name('comiteseguridads.visualizacion');
+                Route::get('comiteseguridads/{comiteseguridad}/edit', 'ComiteseguridadController@edit')->name('comiteseguridads.edit');
+                Route::post('comiteseguridads/saveMember/{id_comite}', 'ComiteseguridadController@saveMember')->name('comiteseguridads.saveMember');
+                Route::get('comiteseguridads/deleteMember/{id}', 'ComiteseguridadController@deleteMember')->name('comiteseguridads.deleteMember');
+                Route::resource('comiteseguridads', 'ComiteseguridadController')->except('edit');
+
+                // Minutasaltadireccions
+                Route::get('minutasaltadireccions/descargar/{name}', 'MinutasaltadireccionController@DescargaFormato')->name('minutasaltadireccions.descargar');
+                Route::get('minutasaltadireccions/{minuta}/minuta-documento', 'MinutasaltadireccionController@renderViewDocument')->name('documentos.renderViewMinuta');
+                Route::get('minutasaltadireccions/{minuta}/historial-revisiones', 'MinutasaltadireccionController@renderHistoryReview')->name('documentos.renderHistoryReviewMinuta');
+                Route::get('minutasaltadireccions/planes-de-accion/create/{id}', 'MinutasaltadireccionController@createPlanAccion')->name('minutasaltadireccions.createPlanAccion');
+                Route::get('minutasaltadireccions/{id}/edit', 'MinutasaltadireccionController@edit')->name('minutasaltadireccions.edit');
+                Route::patch('minutasaltadireccions/{minuta}/update-and-review', 'MinutasaltadireccionController@updateAndReview')->name('minutasaltadireccions.updateAndReview');
+                Route::post('minutasaltadireccions/planes-de-accion/store/{id}', 'MinutasaltadireccionController@storePlanAccion')->name('minutasaltadireccions.storePlanAccion');
+                Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
+                Route::post('minutasaltadireccions/media', 'MinutasaltadireccionController@storeMedia')->name('minutasaltadireccions.storeMedia');
+                Route::post('minutasaltadireccions/ckmedia', 'MinutasaltadireccionController@storeCKEditorImages')->name('minutasaltadireccions.storeCKEditorImages');
+                Route::get('minutasaltadireccions/{id}/show', 'MinutasaltadireccionController@show')->name('minutasaltadireccions.show');
+                Route::get('minutasaltadireccions-revision/{id}', 'MinutasaltadireccionController@revision')->name('minutasaltadireccions.revision');
+                Route::post('minutasaltadireccions/{minuta}/aprobado', 'MinutasaltadireccionController@aprobado')->name('minutasaltadireccions.aprobado');
+                Route::post('minutasaltadireccions/{minuta}/rechazado', 'MinutasaltadireccionController@rechazado')->name('minutasaltadireccions.rechazado');
+                Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');
+                Route::post('minutasaltadireccions/pdf/{id}', 'MinutasaltadireccionController@pdf')->name('minutasaltadireccions.pdf');
+
+                // Evidencias Sgsis
+                Route::delete('evidencias-sgsis/destroy', 'EvidenciasSgsiController@massDestroy')->name('evidencias-sgsis.massDestroy');
+                Route::post('evidencias-sgsis/media', 'EvidenciasSgsiController@storeMedia')->name('evidencias-sgsis.storeMedia');
+                Route::post('evidencias-sgsis/ckmedia', 'EvidenciasSgsiController@storeCKEditorImages')->name('evidencias-sgsis.storeCKEditorImages');
+                Route::resource('evidencias-sgsis', 'EvidenciasSgsiController');
+
+                // Politica Sgsis
+                Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
+                Route::resource('politica-sgsis', 'PoliticaSgsiController');
+                Route::get('politica-sgsis-visualizacion', 'PoliticaSgsiController@visualizacion')->name('politica-sgsis.visualizacion');
+                Route::post('politica-sgsis/cambioMostrar', 'PoliticaSgsiController@cambioMostrar')->name('politica-sgsis.cambio-mostrar');
+                Route::post('politica-sgsis/pdf', 'PoliticaSgsiController@pdf')->name('politica-sgsis.pdf');
+                Route::post('politica-sgsis/pdf/show/{id}', 'PoliticaSgsiController@pdf_show')->name('politica-sgsis.pdf_show');
+                Route::get('politica-sgsis-revision/{id}', 'PoliticaSgsiController@revision')->name('politica-sgsis.revision');
+                Route::post('politica-sgsis/{id}/aprobado', 'PoliticaSgsiController@aprobado')->name('politica-sgsis.aprobado');
+                Route::post('politica-sgsis/{id}/rechazado', 'PoliticaSgsiController@rechazado')->name('politica-sgsis.rechazado');
+
+                // Riesgosoportunidades
+                Route::delete('riesgosoportunidades/destroy', 'RiesgosoportunidadesController@massDestroy')->name('riesgosoportunidades.massDestroy');
+                Route::resource('riesgosoportunidades', 'RiesgosoportunidadesController');
+
+                // Objetivosseguridads
+                Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
+                Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
+                Route::get('objetivosseguridadsInsertar', 'ObjetivosseguridadController@ObjetivoInsert')->name('objetivos-seguridadsInsertar');
+                Route::get('objetivos/dashboard', 'ObjetivosseguridadController@objetivosDashboard')->name('objetivos-seguridad-dashboard');
+                Route::get('evaluaciones-objetivosInsertar', 'ObjetivosseguridadController@evaluacionesInsert')->name('evaluacionesobjetivosInsert');
+                Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
+            });
+
+            // Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
+            Route::get('envio-documentos/atencion', 'EnvioDocumentosController@atencion')->name('envio-documentos.atencion');
+            Route::get('envio-documentos/atencion/{id}/seguimiento', 'EnvioDocumentosController@seguimiento')->name('envio-documentos.seguimiento');
+            Route::put('envio-documentos/{id}/seguimientoUpdate', 'EnvioDocumentosController@seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
+            Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
+            Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
+            Route::resource('envio-documentos', 'EnvioDocumentosController');
+
+            //Consulta de evaluación
+            Route::get('Perspectiva/edit/{perspectivas}', 'RH\ObejetivoPerspectivaController@edit')->name('perspectivas.edit');
+            Route::resource('Perspectiva', 'RH\ObejetivoPerspectivaController', ['except' => ['edit']]);
+
+            Route::get('Metrica/edit/{metrica}', 'RH\ObjetivoUnidadMedidaController@edit')->name('metrica.edit');
+            Route::resource('Metrica', 'RH\ObjetivoUnidadMedidaController', ['except' => ['edit']]);
+
+            Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+            Route::view('iso27001/guia', 'admin.iso27001.guia')->name('iso27001.guia');
+            Route::view('iso27001/normas-guia', 'admin.iso27001.normas-guia')->name('iso27001.normas-guia');
+
+            // Definición de la ruta
+            Route::get('iso27001/inicio-guia', function () {
+                // Verifica si la sesión 'visited_first_link' está definida
+                if (session()->has('visited_first_link')) {
+                    // Si ya se ha visitado el primer enlace, redirige a la tercera ruta
+                    return redirect()->route('admin.iso27001.guia');
+                } else {
+                    // Si es la primera vez que se accede, establece la sesión 'visited_first_link'
+                    session(['visited_first_link' => true]);
+
+                    // Retorna la vista del primer enlace
+                    return view('admin.iso27001.inicio-guia');
+                }
+            })->name('iso27001.inicio-guia');
+
+            Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
+            Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
+            Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
+            Route::get('inicioUsuario/solicitud', [InicioUsuarioController::class, 'solicitud'])->name('solicitud');
+
+            //procesos
+
+            Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
+            Route::get('procesos/{documento?}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
+            Route::resource('procesos', 'ProcesoController');
+            // Route::post('procesos/{id}', 'ProcesoController@destroy')->name('procesos.destroy');
+            Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
+            Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
+
+            //macroprocesos
+            Route::resource('macroprocesos', 'MacroprocesoController');
+
+            //Competencia Tipo
+
+            Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
+            Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
+
+            // Dashboards
+            Route::resource('dashboards', 'DashboardController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+            // Implementacions
+
+            Route::resource('implementacions', 'ImplementacionController');
+
+            // Planes de Acción
+            Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
+            Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
+            Route::get('planes-de-accion/create-plan-trabajo-base', 'PlanesAccionController@createPlanTrabajoBase')->name('planes-de-accion.createPlanTrabajoBase');
+            Route::resource('planes-de-accion', 'PlanesAccionController');
+
+            // Glosarios
+            Route::get('glosario/acervo', 'GlosarioController@render')->name('glosarios.render');
+            // Route::get('glosario/{glosarios}/glosario-edit', 'GlosarioController@edit')->name('glosario.edit');
+            Route::get('glosarios/edit/{glosarios}', 'GlosarioController@edit')->name('glosarios.edit');
+            // Route::delete('glosarios/destroy', 'GlosarioController@destroy')->name('glosarios.destroy');
+            Route::resource('glosarios', 'GlosarioController', ['except' => ['edit']]);
+
+            // Plan Base Actividades
+            Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
+            Route::post('plan-base-actividades/media', 'PlanBaseActividadesController@storeMedia')->name('plan-base-actividades.storeMedia');
+            Route::post('plan-base-actividades/ckmedia', 'PlanBaseActividadesController@storeCKEditorImages')->name('plan-base-actividades.storeCKEditorImages');
+            Route::resource('plan-base-actividades', 'PlanBaseActividadesController');
+
+            // User Alerts
+            Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
+            Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
+
+            Route::post('tipos-objetivos/datatables', 'TiposObjetivosSistemaController@getDataForDataTable')->name('tipos-objetivos.getDataForDataTable');
+            Route::resource('tipos-objetivos', 'TiposObjetivosSistemaController');
+
+            // Adquirirveintidostrecientosunos
+            Route::resource('adquirirveintidostrecientosunos', 'AdquirirveintidostrecientosunoController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+            // Adquirirtreintaunmils
+            Route::resource('adquirirtreintaunmils', 'AdquirirtreintaunmilController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+            // Concientizacion Sgis
+            Route::delete('concientizacion-sgis/destroy', 'ConcientizacionSgiController@massDestroy')->name('concientizacion-sgis.massDestroy');
+            Route::post('concientizacion-sgis/media', 'ConcientizacionSgiController@storeMedia')->name('concientizacion-sgis.storeMedia');
+            Route::post('concientizacion-sgis/ckmedia', 'ConcientizacionSgiController@storeCKEditorImages')->name('concientizacion-sgis.storeCKEditorImages');
+            Route::resource('concientizacion-sgis', 'ConcientizacionSgiController');
+
+            // Material Sgsis
+            Route::delete('material-sgsis/destroy', 'MaterialSgsiController@massDestroy')->name('material-sgsis.massDestroy');
+            Route::post('material-sgsis/media', 'MaterialSgsiController@storeMedia')->name('material-sgsis.storeMedia');
+            Route::post('material-sgsis/ckmedia', 'MaterialSgsiController@storeCKEditorImages')->name('material-sgsis.storeCKEditorImages');
+            Route::resource('material-sgsis', 'MaterialSgsiController');
+
+            // Material Iso Veinticientes
+            Route::delete('material-iso-veinticientes/destroy', 'MaterialIsoVeinticienteController@massDestroy')->name('material-iso-veinticientes.massDestroy');
+            Route::post('material-iso-veinticientes/media', 'MaterialIsoVeinticienteController@storeMedia')->name('material-iso-veinticientes.storeMedia');
+            Route::post('material-iso-veinticientes/ckmedia', 'MaterialIsoVeinticienteController@storeCKEditorImages')->name('material-iso-veinticientes.storeCKEditorImages');
+            Route::resource('material-iso-veinticientes', 'MaterialIsoVeinticienteController');
+
+            // Politica Del Sgsi Soportes
+            Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+            // Control Accesos
+            Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
+            Route::post('control-accesos/media', 'ControlAccesoController@storeMedia')->name('control-accesos.storeMedia');
+            Route::post('control-accesos/ckmedia', 'ControlAccesoController@storeCKEditorImages')->name('control-accesos.storeCKEditorImages');
+            Route::resource('control-accesos', 'ControlAccesoController');
+
+            // Informacion Documetadas
+            Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');
+            Route::post('informacion-documetadas/media', 'InformacionDocumetadaController@storeMedia')->name('informacion-documetadas.storeMedia');
+            Route::post('informacion-documetadas/ckmedia', 'InformacionDocumetadaController@storeCKEditorImages')->name('informacion-documetadas.storeCKEditorImages');
+            Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
+
+            // Planificacion Controls
+            Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
+            Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
+            Route::resource('planificacion-controls', 'PlanificacionControlController');
+
+            // Activos
+
+            // Route::post('activos/create', 'ActivosController@create');
+            Route::get('activos/descargar', 'ActivosController@DescargaFormato')->name('activos.descargar');
+            Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
+            Route::resource('activos', 'ActivosController');
+
+            Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
+            Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
+            Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
+            Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
+            Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
+            Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
+            Route::resource('activosInformacion', 'ActivosInformacionController')->names([
+                'store' => 'activosInformacion.store',
+                'show' => 'activosInformacion.show',
+                'update' => 'activosInformacion.update',
+            ])->except(['edit', 'create', 'index']);
+
+            // Marca
+            Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
+            Route::resource('marcas', 'MarcaController');
+
+            // Modelo
+            Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
+            Route::resource('modelos', 'ModeloController');
+
+            // Tratamiento Riesgos
+            Route::post('tratamiento-riesgos/firma', 'TratamientoRiesgosController@guardarFirmaAprobacion')->name('tratamiento-riesgos.firma-aprobacion');
+            Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
+            Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
+
+            // Auditoria Internas
+            Route::delete('auditoria-internas/destroy', 'AuditoriaInternaController@massDestroy')->name('auditoria-internas.massDestroy');
+            Route::post('auditoria-internas/media', 'AuditoriaInternaController@storeMedia')->name('auditoria-internas.storeMedia');
+            Route::post('auditoria-internas/ckmedia', 'AuditoriaInternaController@storeCKEditorImages')->name('auditoria-internas.storeCKEditorImages');
+            Route::get('auditoria-internas/{auditoriaInterna}/edit', 'AuditoriaInternaController@edit')->name('auditoria-internas.edit');
+            Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
+            Route::get('auditoria-internas/{auditoriaInterna}/reporteIndividual', 'AuditoriaInternaController@indexReporteIndividual')->name('auditoria-internas.reporteIndividual');
+            Route::get('auditoria-internas/{auditoriaInterna}/createReporteIndividual', 'AuditoriaInternaController@createReporte')->name('auditoria-internas.createReporteIndividual');
+            Route::post('auditoria-internas/{reporteid}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
+            Route::post('auditoria-internas/reporte-rechazado/{reporteid}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
+            Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
+            Route::post('auditoria-internas/{id}/pdf', 'AuditoriaInternaController@pdf')->name('auditoria-internas.pdf');
+
+            Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
+
+            //Clasificacion Auditorias
+            Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
+            Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
+            Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
+            Route::get('auditorias/clasificacion-auditorias/edit/{id}', 'ClasificacionesAuditoriasController@edit')->name('auditoria-clasificacion.edit');
+            Route::post('auditorias/clasificacion-auditorias/update/{id}', 'ClasificacionesAuditoriasController@update')->name('auditoria-clasificacion.update');
+            Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
+            Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
+
+            //Clausulas Auditorias
+            Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
+            Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
+            Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
+            Route::get('auditorias/clausulas-auditorias/edit/{id}', 'ClausulasAuditoriasController@edit')->name('auditoria-clausula.edit');
+            Route::post('auditorias/clausulas-auditorias/update/{id}', 'ClausulasAuditoriasController@update')->name('auditoria-clausula.update');
+            Route::get('auditorias/clausulas-auditorias/delete/{id}', 'ClausulasAuditoriasController@destroy')->name('auditoria-clausula.destroy');
+            Route::get('auditorias/clausulas-auditorias/datatable', 'ClausulasAuditoriasController@datatable')->name('auditoria-clausula.datatable');
+
+            // Revision Direccions
+            Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
+            Route::resource('revision-direccions', 'RevisionDireccionController');
+
+            // Controles
+            Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');
+            Route::post('controles/parse-csv-import', 'ControlesController@parseCsvImport')->name('controles.parseCsvImport');
+            Route::post('controles/process-csv-import', 'ControlesController@processCsvImport')->name('controles.processCsvImport');
+            Route::resource('controles', 'ControlesController');
+
+            // Tipoactivos
+            Route::get('tipoactivos/get-tipos', 'TipoactivoController@getTipos')->name('tipoactivos.getTipos');
+            Route::delete('tipoactivos/destroy', 'TipoactivoController@massDestroy')->name('tipoactivos.massDestroy');
+            Route::post('tipoactivos/parse-csv-import', 'TipoactivoController@parseCsvImport')->name('tipoactivos.parseCsvImport');
+            Route::post('tipoactivos/process-csv-import', 'TipoactivoController@processCsvImport')->name('tipoactivos.processCsvImport');
+            Route::resource('tipoactivos', 'TipoactivoController');
+
+            // Subtipo Activos
+            Route::get('subtipoactivos/get-subtipos', 'SubcategoriaActivoContoller@getSubtipos')->name('subtipoactivos.getSubtipos');
+            Route::delete('subtipoactivos/destroy', 'SubcategoriaActivoContoller@massDestroy')->name('subtipoactivos.massDestroy');
+            Route::post('subtipoactivos/parse-csv-import', 'SubcategoriaActivoContoller@parseCsvImport')->name('subtipoactivos.parseCsvImport');
+            Route::post('subtipoactivos/process-csv-import', 'SubcategoriaActivoContoller@processCsvImport')->name('subtipoactivos.processCsvImport');
+            Route::resource('subtipoactivos', 'SubcategoriaActivoContoller')->names([
+                'index' => 'subtipoactivos.index',
+                'create' => 'subtipoactivos.create',
+                'store' => 'subtipoactivos.store',
+                'show' => 'subtipoactivos.show',
+                'edit' => 'subtipoactivos.edit',
+                'update' => 'subtipoactivos.update',
+            ]);
+
+            // Route::resource('consulta-puesto', 'ConsultaPuestoController');
+
+            // Indicadores Sgsis
+            Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
+            Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
+            Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
+            Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
+            Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
+            Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
+            Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
+            Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
+            // Indicadorincidentessis
+            Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+            // Auditoria Anuals
+            Route::delete('auditoria-anuals/destroy', 'AuditoriaAnualController@massDestroy')->name('auditoria-anuals.massDestroy');
+            Route::resource('auditoria-anuals', 'AuditoriaAnualController');
+            Route::get('auditoria-anuals/{id}/programa', 'AuditoriaAnualController@programa')->name('auditoria-anuals-programa');
+            Route::post('auditoria-anuals/programa/documentos', 'AuditoriaAnualController@programaDocumentos')->name('auditoria-anuals.programaDocumentos');
+
+            // Plan Auditoria
+            Route::delete('plan-auditoria/destroy', 'PlanAuditoriaController@massDestroy')->name('plan-auditoria.massDestroy');
+            Route::get('plan-auditoria/{planAuditorium}/edit', 'PlanAuditoriaController@edit')->name('plan-auditoria.edit');
+            Route::resource('plan-auditoria', 'PlanAuditoriaController')->except('edit');
+
+            // Accion Correctivas
+            Route::get('accion-correctiva-actividades/{accion_correctiva_id}', 'ActividadAccionCorrectivaController@index')->name('accion-correctiva-actividades.index');
+            Route::resource('accion-correctiva-actividades', 'ActividadAccionCorrectivaController')->except(['index']);
+            Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
+            Route::post('accion-correctivas/media', 'AccionCorrectivaController@storeMedia')->name('accion-correctivas.storeMedia');
+            Route::post('accion-correctivas/ckmedia', 'AccionCorrectivaController@storeCKEditorImages')->name('accion-correctivas.storeCKEditorImages');
+            Route::post('accion-correctivas/{accion}/analisis/store', 'AccionCorrectivaController@storeAnalisis')->name('accion-correctivas.storeAnalisis');
+            Route::resource('accion-correctivas', 'AccionCorrectivaController');
+            Route::get('plan-correctiva', 'PlanaccionCorrectivaController@planformulario')->name('plantest');
+            Route::post('accion-correctivas/editarplan', 'PlanaccionCorrectivaController@update');
+            Route::post('plan-correctivas-storeedit', 'PlanaccionCorrectivaController@storeEdit');
+            Route::post('planaccion-storered', 'PlanaccionCorrectivaController@storeRedirect')->name('storered');
+
+            // Accion Correctiva Aprobaciones
+            Route::post('accion-correctivas/obtener', 'AccionCorrectivaController@obtenerAccionesCorrectivasSinAprobacion')->name('accion-correctivas.obtenerAprobaciones');
+            Route::post('accion-correctivas/aprobar', 'AccionCorrectivaController@aprobaroRechazarAc')->name('accion-correctivas.aprobarRechazar');
+
+            // Plan Accion Correctivas
+            Route::post('accion-correctivas/planes', 'AccionCorrectivaController@planesAccionCorrectiva')->name('accion-correctivas.planes');
+            Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
+            Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
+
+            // Registromejoras
+            Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
+            Route::resource('registromejoras', 'RegistromejoraController');
+
+            // Dmaics
+            Route::delete('dmaics/destroy', 'DmaicController@massDestroy')->name('dmaics.massDestroy');
+            Route::resource('dmaics', 'DmaicController');
+
+            // Plan Mejoras
+            Route::delete('plan-mejoras/destroy', 'PlanMejoraController@massDestroy')->name('plan-mejoras.massDestroy');
+            Route::resource('plan-mejoras', 'PlanMejoraController');
+
+            // Enlaces Ejecutars
+            Route::delete('enlaces-ejecutars/destroy', 'EnlacesEjecutarController@massDestroy')->name('enlaces-ejecutars.massDestroy');
+            Route::resource('enlaces-ejecutars', 'EnlacesEjecutarController');
+
+            // Teams
+            Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
+            Route::resource('teams', 'TeamController');
+
+            // Incidentes De Seguridads
+            Route::delete('incidentes-de-seguridads/destroy', 'IncidentesDeSeguridadController@massDestroy')->name('incidentes-de-seguridads.massDestroy');
+            Route::resource('incidentes-de-seguridads', 'IncidentesDeSeguridadController');
+
+            // Estado Incidentes
+            Route::delete('estado-incidentes/destroy', 'EstadoIncidentesController@massDestroy')->name('estado-incidentes.massDestroy');
+            Route::resource('estado-incidentes', 'EstadoIncidentesController');
+
+            // Carpeta
+            Route::delete('carpeta/destroy', 'CarpetasController@massDestroy')->name('carpeta.massDestroy');
+            Route::resource('carpeta', 'CarpetasController');
+
+            // Archivos
+            Route::delete('archivos/destroy', 'ArchivosController@massDestroy')->name('archivos.massDestroy');
+            Route::post('archivos/media', 'ArchivosController@storeMedia')->name('archivos.storeMedia');
+            Route::post('archivos/ckmedia', 'ArchivosController@storeCKEditorImages')->name('archivos.storeCKEditorImages');
+            Route::resource('archivos', 'ArchivosController');
+
+            // Estado Documentos
+            Route::delete('estado-documentos/destroy', 'EstadoDocumentoController@massDestroy')->name('estado-documentos.massDestroy');
+            Route::resource('estado-documentos', 'EstadoDocumentoController');
+
+            // Faq Categories
+            Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+            Route::resource('faq-categories', 'FaqCategoryController');
+
+            // Faq Questions
+            Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
+            Route::resource('faq-questions', 'FaqQuestionController');
+
+            //Carta de Aceptación
+            // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
+            Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
+            Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
+            Route::post('carta-aceptacion/aprobacion', 'CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
+            //Tabla de impactos
+            Route::resource('tabla-impacto', 'TablaImpactoController');
+
+            // Control Documentos
+            Route::delete('control-documentos/destroy', 'ControlDocumentosController@massDestroy')->name('control-documentos.massDestroy');
+            Route::resource('control-documentos', 'ControlDocumentosController', ['except' => ['create']]);
+
+            Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+            Route::get('user-alerts/read', 'UserAlertsController@read');
+            Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
+            Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
+            //REPORTES CONTEXTO 27001
+            Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
+            Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
+
+            Route::resource('panel-inicio', 'PanelInicioRuleController');
+            Route::resource('panel-organizacion', 'PanelOrganizacionController');
+
+            //Calendario Corporativo
+            Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+        });
+
+        Route::group(['middleware' => ['silent_4_university']], function () {
+            //Escuela cursos instructor
+            Route::get('capacitaciones-inicio', [CapacitacionesController::class, 'capacitacionesInicio']);
+
+            Route::resource('courses', 'Escuela\Instructor\CourseController');
+
+            Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
+            Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+            Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
+            Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
+            Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
+            Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
+            Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
+
+            Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
+            Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
+            Route::get('courses-inscribed', 'CursoEstudiante@coursesInscribed')->name('courses-inscribed');
+
+            Route::get('panel-cursos', 'PanelCursosController@index')->name('panel-cursos');
+
+            //categorias para el administrador de escuela
+            Route::resource('categories', 'Escuela\Admin\CategoryController');
+            Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
+            Route::resource('levels', 'Escuela\Admin\LevelController');
+            Route::get('levels/destroy/{id}', 'Escuela\Admin\LevelController@destroy');
+            Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
+
+            Route::get('courses-reportes-individuales/{id}', 'Escuela\Admin\ReportesIndividualesController@index')->name('courses-reportes-individuales');
+
+            // Capacitaciones
+            Route::get('TypeCatalogueTraining', [CertificatesController::class, 'TypeCatalogueTraining'])->name('type-catalogue-training.index');
+            Route::get('catalogueTraining', [CertificatesController::class, 'CatalogueTraining'])->name('catalogue-training.index');
+            Route::get('userTraining', [CertificatesController::class, 'UserTraining'])->name('user-training.index');
+            Route::get('userCatalogueTraining/{id}', [CertificatesController::class, 'revision'])->name('user-catalogue-training');
+            Route::post('userCatalogueTraining/{id}/aprobado', [CertificatesController::class, 'aprobado'])->name('user-catalogue-training.aprobado');
+            Route::post('userCatalogueTraining/{id}/rechazado', [CertificatesController::class, 'rechazado'])->name('user-catalogue-training.rechazado');
+        });
+
+
+
+        Route::group(['middleware' => ['gestor_documental']], function () {
+            //Documentos
+            Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
+            Route::patch('documentos/{documento}/update-when-publish', 'DocumentosController@updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
+            Route::post('documentos/store-when-publish', 'DocumentosController@storeDocumentWhenPublish')->name('documentos.storeDocumentWhenPublish');
+            Route::post('documentos/publish', 'DocumentosController@publish')->name('documentos.publish');
+            Route::post('documentos/check-code', 'DocumentosController@checkCode')->name('documentos.checkCode');
+            Route::get('documentos/{documento}/view-document', 'DocumentosController@renderViewDocument')->name('documentos.renderViewDocument');
+            Route::get('documentos/{documento}/history-reviews', 'DocumentosController@renderHistoryReview')->name('documentos.renderHistoryReview');
+            Route::get('documentos/{documento}/document-versions', 'DocumentosController@renderHistoryVersions')->name('documentos.renderHistoryVersions');
+            Route::post('documentos/dependencies', 'DocumentosController@getDocumentDependencies')->name('documentos.getDocumentDependencies');
+            Route::delete('documentos/{documento}/', 'DocumentosController@destroy')->name('documentos.destroy');
+            Route::resource('documentos', 'DocumentosController');
+        });
+
+        Route::group(['middleware' => ['centro_atencion']], function () {
+
+            // TODO Quejas
+            Route::get('inicioUsuario/reportes/quejas', [QuejasController::class, 'quejas'])->name('reportes-quejas');
+            Route::post('inicioUsuario/reportes/quejas', [QuejasController::class, 'storeQuejas'])->name('reportes-quejas-store');
+
+            Route::get('desk/quejas', 'QuejasController@indexQueja')->name('desk.queja-index');
+            Route::post('desk/{quejas}/analisis_queja-update', 'QuejasController@updateAnalisisQuejas')->name('reportes-quejas-update');
+            Route::get('desk/{quejas}/quejas-edit', 'QuejasController@editQuejas')->name('desk.quejas-edit');
+            Route::post('desk/{quejas}/quejas-update', 'QuejasController@updateQuejas')->name('desk.quejas-update');
+            //  ARCHIVADO QUEJAS
+            Route::post('desk/{incidente}/archivarQuejas', 'QuejasController@archivadoQueja')->name('desk.queja-archivar');
+            Route::get('desk/quejas-archivo', 'QuejasController@archivoQueja')->name('desk.queja-archivo');
+            Route::post('desk/quejas-archivo/recuperar/{id}', 'QuejasController@recuperarArchivadoQueja')->name('desk.queja-archivo.recuperar');
+
+            // TODO QuejasCliente
+            // Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
+            Route::get('desk/quejas-clientes', [QuejasClienteController::class, 'quejasClientes'])->name('desk.quejas-clientes');
+            Route::post('desk/reportes/quejas-clientes', [QuejasClienteController::class, 'storeQuejasClientes'])->name('desk.quejasClientes-store');
+            Route::post('desk/{quejas}/analisis_quejaCliente-update', 'QuejasClienteController@updateAnalisisQuejasClientes')->name('desk.analisis_quejasClientes-update');
+            Route::post('desk/queja-cliente/validate', 'QuejasClienteController@validateFormQuejaCliente')->name('desk.quejasClientes.validateFormQuejaCliente');
+            Route::post('desk/queja-cliente/correo-responsable', 'QuejasClienteController@correoResponsableQuejaCliente')->name('desk.quejas-clientes.correoResponsable');
+            Route::post('desk/queja-cliente/correo-solicitar-cierre-queja', 'QuejasClienteController@correoSolicitarCierreQuejaCliente')->name('desk.quejas-clientes.correoSolicitarCierreQueja');
+            Route::post('desk/queja-cliente/show', 'QuejasClienteController@showQuejaClientes')->name('desk.quejas-clientes.show');
+            Route::get('desk/quejas-clientes/index', 'QuejasClienteController@indexQuejasClientes')->name('desk.quejasClientes-index');
+            Route::get('desk/{quejas}/quejas-clientes-edit', 'QuejasClienteController@editQuejasClientes')->name('desk.quejasClientes-edit');
+            Route::delete('desk/{quejas}/quejas-clientes-delete', 'QuejasClienteController@destroyQuejasClientes')->name('desk.quejasClientes-destroy');
+            Route::post('desk/{quejas}/quejas-clientes-update', 'QuejasClienteController@updateQuejasClientes')->name('desk.quejasClientes-update');
+            Route::post('desk/planes/quejas-clientes', 'QuejasClienteController@planesQuejasClientes')->name('desk.planesQuejasClientes');
+
+            //Dashboard Queja Cliente
+            Route::get('desk/quejas-clientes/dashboard', 'QuejasClienteController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
+
+            //Archivo QuejaCliente
+            Route::post('desk/{incidente}/archivarQuejasClientes', 'QuejasClienteController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
+            Route::get('desk/quejas-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
+            Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'QuejasClienteController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
+
+            // TODO SOBRE Denuncias
+            Route::get('inicioUsuario/reportes/denuncias', [DenunciasController::class, 'denuncias'])->name('reportes-denuncias');
+            Route::post('inicioUsuario/reportes/denuncias', [DenunciasController::class, 'storeDenuncias'])->name('reportes-denuncias-store');
+            Route::get('desk/{denuncias}/denuncias-edit', 'DenunciasController@editDenuncias')->name('desk.denuncias-edit');
+            Route::post('desk/{denuncias}/denuncias-update', 'DenunciasController@updateDenuncias')->name('desk.denuncias-update');
+            Route::post('desk/{denuncias}/analisis_denuncia-update', 'DenunciasController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
+
+            //flujo de archivado denuncias
+            Route::get('desk/denuncias', 'DenunciasController@indexDenuncia')->name('desk.denuncia-index');
+            Route::post('desk/{incidente}/archivarDenuncias', 'DenunciasController@archivadoDenuncia')->name('desk.denuncia-archivar');
+            Route::get('desk/denuncias-archivo', 'DenunciasController@archivoDenuncia')->name('desk.denuncia-archivo');
+            Route::post('desk/denuncias-archivo/recuperar/{id}', 'DenunciasController@recuperarArchivadoDenuncia')->name('desk.denuncia-archivo.recuperar');
+
+            // TODO SOBRE Mejoras
+            Route::get('inicioUsuario/reportes/mejoras', [MejorasController::class, 'mejoras'])->name('reportes-mejoras');
+            Route::post('inicioUsuario/reportes/mejoras', [MejorasController::class, 'storeMejoras'])->name('reportes-mejoras-store');
+            Route::post('desk/{mejoras}/analisis_mejora-update', 'MejorasController@updateAnalisisMejoras')->name('desk.analisis_mejora-update');
+            Route::get('desk/{mejoras}/mejoras-edit', 'MejorasController@editMejoras')->name('desk.mejoras-edit');
+            Route::post('desk/{mejoras}/mejoras-update', 'MejorasController@updateMejoras')->name('desk.mejoras-update');
+
+            //flujo de archivado mejoras
+            Route::get('desk/mejoras', 'MejorasController@indexMejora')->name('desk.mejora-index');
+            Route::post('desk/{incidente}/archivarMejoras', 'MejorasController@archivadoMejora')->name('desk.mejora-archivar');
+            Route::get('desk/mejoras-archivo', 'MejorasController@archivoMejora')->name('desk.mejora-archivo');
+            Route::post('desk/mejoras-archivo/recuperar/{id}', 'MejorasController@recuperarArchivadoMejora')->name('desk.mejora-archivo.recuperar');
+
+            // TODO SOBRE Sugerencias
+            Route::get('inicioUsuario/reportes/sugerencias', [SugerenciasController::class, 'sugerencias'])->name('reportes-sugerencias');
+            Route::post('inicioUsuario/reportes/sugerencias', [SugerenciasController::class, 'storeSugerencias'])->name('reportes-sugerencias-store');
+            Route::post('desk/{sugerencias}/analisis_sugerencia-update', 'SugerenciasController@updateAnalisisSugerencias')->name('desk.analisis_sugerencia-update');
+            Route::get('desk/{sugerencias}/sugerencias-edit', 'SugerenciasController@editSugerencias')->name('desk.sugerencias-edit');
+            Route::post('desk/{sugerencias}/sugerencias-update', 'SugerenciasController@updateSugerencias')->name('desk.sugerencias-update');
+            Route::get('desk/sugerencias', 'SugerenciasController@indexSugerencia')->name('desk.sugerencia-index');
+
+            //flujo de archivado Sugerencias
+            Route::post('desk/{incidente}/archivarSugerencia', 'SugerenciasController@archivadoSugerencia')->name('desk.sugerencia-archivar');
+            Route::get('desk/sugerencia-archivo', 'SugerenciasController@archivoSugerencia')->name('desk.sugerencia-archivo');
+            Route::post('desk/sugerencia-archivo/recuperar/{id}', 'SugerenciasController@recuperarArchivadoSugerencia')->name('desk.sugerencia-archivo.recuperar');
+
+            // TODO SOBRE Seguridad
+            Route::get('inicioUsuario/reportes/seguridad', [SeguridadController::class, 'seguridad'])->name('reportes-seguridad');
+            Route::post('inicioUsuario/reportes/seguridad/media', [SeguridadController::class, 'storeMedia'])->name('reportes-seguridad.storeMedia');
+            Route::post('inicioUsuario/reportes/seguridad', [SeguridadController::class, 'storeSeguridad'])->name('reportes-seguridad-store');
+            Route::post('desk/{seguridad}/analisis_seguridad-update', 'SeguridadController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
+            Route::get('desk/{seguridad}/seguridad-edit', 'SeguridadController@editSeguridad')->name('desk.seguridad-edit');
+            Route::post('desk/{seguridad}/seguridad-update', 'SeguridadController@updateSeguridad')->name('desk.seguridad-update');
+
+            //flujo de archivado seguridad
+            Route::post('desk/{incidente}/archivar', 'SeguridadController@archivadoSeguridad')->name('desk.seguridad-archivar');
+            Route::get('desk/seguridad-archivo', 'SeguridadController@archivoSeguridad')->name('desk.seguridad-archivo');
+            Route::post('desk/seguridad-archivo/recuperar/{id}', 'SeguridadController@recuperarArchivadoSeguridad')->name('desk.seguridad-archivo.recuperar');
+            Route::get('desk/seguridad', 'SeguridadController@indexSeguridad')->name('desk.seguridad-index');
+
+            // TODO SOBRE Riesgos
+            Route::get('inicioUsuario/reportes/riesgos', [RiesgosController::class, 'riesgos'])->name('reportes-riesgos');
+            Route::post('inicioUsuario/reportes/riesgos', [RiesgosController::class, 'storeRiesgos'])->name('reportes-riesgos-store');
+            Route::post('desk/{riesgos}/analisis_riesgo-update', 'RiesgosController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
+            Route::get('desk/{riesgos}/riesgos-edit', 'RiesgosController@editRiesgos')->name('desk.riesgos-edit');
+            Route::post('desk/{riesgos}/riesgos-update', 'RiesgosController@updateRiesgos')->name('desk.riesgos-update');
+            //flujo de archivado riesgos
+            Route::post('desk/{incidente}/archivarRiesgos', 'RiesgosController@archivadoRiesgo')->name('desk.riesgo-archivar');
+            Route::get('desk/riesgos-archivo', 'RiesgosController@archivoRiesgo')->name('desk.riesgo-archivo');
+            Route::post('desk/riesgos-archivo/recuperar/{id}', 'RiesgosController@recuperarArchivadoRiesgo')->name('desk.riesgo-archivo.recuperar');
+            Route::get('desk/riesgos', 'RiesgosController@indexRiesgo')->name('desk.riesgo-index');
+
+            //
+            Route::post('inicioUsuario/capacitaciones/archivar/{id}', [InicioUsuarioController::class, 'archivarCapacitacion'])->name('inicio-Usuario.capacitaciones.archivar');
+            Route::post('inicioUsuario/capacitaciones/recuperar/{id}', [InicioUsuarioController::class, 'recuperarCapacitacion'])->name('inicio-Usuario.capacitaciones.recuperar');
+            Route::get('inicioUsuario/capacitaciones/archivo', [InicioUsuarioController::class, 'archivoCapacitacion'])->name('inicio-Usuario.capacitaciones.archivo');
+
+            Route::post('inicioUsuario/aprobacion/archivar/{id}', [InicioUsuarioController::class, 'archivarAprobacion'])->name('inicio-Usuario.aprobacion.archivar');
+            Route::post('inicioUsuario/aprobacion/recuperar/{id}', [InicioUsuarioController::class, 'recuperarAprobacion'])->name('inicio-Usuario.aprobacion.recuperar');
+            Route::get('inicioUsuario/aprobacion/archivo', [InicioUsuarioController::class, 'archivoAprobacion'])->name('inicio-Usuario.aprobacion.archivo');
+
+            Route::post('inicioUsuario/actividades/archivar', [InicioUsuarioController::class, 'archivarActividades'])->name('inicio-Usuario.actividades.archivar');
+            Route::post('inicioUsuario/actividades/cambiar-estatus', [InicioUsuarioController::class, 'cambiarEstatusActividad'])->name('inicio-Usuario.actividades.cambiarEstatusActividad');
+            Route::post('inicioUsuario/actividades/recuperar', [InicioUsuarioController::class, 'recuperarActividades'])->name('inicio-Usuario.actividades.recuperar');
+            Route::get('inicioUsuario/actividades/archivo', [InicioUsuarioController::class, 'archivoActividades'])->name('inicio-Usuario.acctividades.archivo');
+
+            Route::get('desk', 'DeskController@index')->name('desk.index');
+
+            // Actividades DESK - Plan Accion
+            Route::get('desk-seguridad-actividades/{seguridad_id}', 'ActividadesIncidentesController@index')->name('desk-seguridad-actividades.index');
+            Route::resource('desk-seguridad-actividades', 'ActividadesIncidentesController')->except(['index']);
+
+            Route::get('desk-riesgos-actividades/{riesgo_id}', 'ActividadesRiesgosController@index')->name('desk-riesgos-actividades.index');
+            Route::resource('desk-riesgos-actividades', 'ActividadesRiesgosController')->except(['index']);
+
+            Route::get('desk-quejas-actividades/{queja_id}', 'ActividadesQuejasController@index')->name('desk-quejas-actividades.index');
+            Route::resource('desk-quejas-actividades', 'ActividadesQuejasController')->except(['index']);
+
+            Route::get('desk-denuncias-actividades/{denuncia_id}', 'ActividadesDenunciasController@index')->name('desk-denuncias-actividades.index');
+            Route::resource('desk-denuncias-actividades', 'ActividadesDenunciasController')->except(['index']);
+
+            Route::get('desk-mejoras-actividades/{mejora_id}', 'ActividadesMejorasController@index')->name('desk-mejoras-actividades.index');
+            Route::resource('desk-mejoras-actividades', 'ActividadesMejorasController')->except(['index']);
+
+            Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
+            Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
+        });
+
+        Route::group(['middleware' => ['planes_trabajo']], function () {
+            //gantt
+            Route::get('gantt', 'GanttController@index');
+            Route::post('gantt/update', 'GanttController@update');
+
+            Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
+            Route::post('plantTrabajoBase/listaDataTables', 'PlanTrabajoBaseController@listaDataTables')->name('plantTrabajoBase.listaDataTables');
+            Route::post('plantTrabajoBase/bloqueo/mostrar', 'LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
+            Route::post('plantTrabajoBase/bloqueo/quitar', 'LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
+            Route::post('plantTrabajoBase/bloqueo/is-locked', 'LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
+            Route::post('plantTrabajoBase/bloqueo/registrar', 'LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
+
+            Route::get('planTrabajoBase', 'PlanTrabajoBaseController@index')->name('planTrabajoBase.index');
+            Route::post('planTrabajoBase/save/current', 'PlanTrabajoBaseController@saveCurrentProyect')->name('planTrabajoBase.saveCurrentProyect');
+            Route::post('planTrabajoBase/save/status', 'PlanTrabajoBaseController@saveStatus')->name('planTrabajoBase.saveStatus');
+            Route::post('planTrabajoBase/check/changes', 'PlanTrabajoBaseController@checkChanges')->name('planTrabajoBase.checkChanges');
+            Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
+            Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
+
+            // Estatus Plan Trabajos
+            Route::delete('estatus-plan-trabajos/destroy', 'EstatusPlanTrabajoController@massDestroy')->name('estatus-plan-trabajos.massDestroy');
+            Route::resource('estatus-plan-trabajos', 'EstatusPlanTrabajoController');
+        });
+        // pasarela de pago
+        Route::get('pasarela-pago/', 'PasarelaPagoController@index')->name('pasarela-pago.inicio');
+        Route::get('pasarela-pago/planes-precios', 'PasarelaPagoController@planesPrecios')->name('pasarela-pago.planes-precios');
+        Route::get('pasarela-pago/pre-pago', 'PasarelaPagoController@prePago')->name('pasarela-pago.pre-pago');
+        Route::match(['post', 'get'], 'pasarela-pago/pago', 'PasarelaPagoController@pago')->name('pasarela-pago.pago'); ///{plan}
+        Route::post('subscription', 'PasarelaPagoController@subscription')->name("pasarela-pago.create");
+        Route::get('pasarela-pago/pago-confirmacion', 'PasarelaPagoController@pagoConfirmado')->name('pasarela-pago.pago-confirmado');
+        Route::post('pasarela-pago/bolsa', 'PasarelaPagoController@bolsa')->name('pasarela-pago.bolsa');
+
+
+        Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');
+        Route::get('pasarela-pago/apps/gestion-normativa', 'PasarelaPagoAppsController@gestionNormativa')->name('pasarela-pago.apps.gestion-normativa');
+        Route::get('pasarela-pago/apps/planes-trabajo', 'PasarelaPagoAppsController@planesTrabajo')->name('pasarela-pago.apps.planes-trabajo');
+        Route::get('pasarela-pago/apps/gestion-documental', 'PasarelaPagoAppsController@gestionDocumental')->name('pasarela-pago.apps.gestion-documental');
+        Route::get('pasarela-pago/apps/gestion-talento', 'PasarelaPagoAppsController@gestionTalento')->name('pasarela-pago.apps.gestion-talento');
+        Route::get('pasarela-pago/apps/gestion-contractual', 'PasarelaPagoAppsController@gestionContractual')->name('pasarela-pago.apps.gestion-contractual');
+        Route::get('pasarela-pago/apps/gestion-riesgos', 'PasarelaPagoAppsController@gestionRiesgos')->name('pasarela-pago.apps.gestion-riesgos');
+        Route::get('pasarela-pago/apps/visitantes', 'PasarelaPagoAppsController@visitantes')->name('pasarela-pago.apps.visitantes');
+    });
+
+    Route::group(['middleware' => ['visitantes']], function () {
+
+        Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
+        Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
+        Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
+        Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
+        Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
+        Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
+        Route::resource('visitantes', 'VisitantesController');
+
+        Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
+            Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+            Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
+            Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
+            Route::resource('/', RegistroVisitantesController::class);
+            Route::resource('/', MejorasController::class);
+        });
+        // Fin visitantes
+    });
+
+    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
+        // Change password
+        if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
+            Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
+            Route::post('password', 'ChangePasswordController@update')->name('password.update');
+            Route::post('profile', 'ChangePasswordController@updateProfile')->name('password.updateProfile');
+            Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
+            Route::post('profile/two-factor', 'ChangePasswordController@toggleTwoFactor')->name('password.toggleTwoFactor');
+        }
+    });
+
+    Route::group(['prefix' => 'iso9001'], function () {
+        Route::get('planTrabajobase', 'iso9001\PlanImplementacionNueveUnoController@showTarea');
+        Route::post('plantTrabajoBase/bloqueo/mostrar', 'iso9001\LockedPlanTrabajoController@getLockedToPlanTrabajo')->name('lockedPlan.getLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/quitar', 'iso9001\LockedPlanTrabajoController@removeLockedToPlanTrabajo')->name('lockedPlan.removeLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/is-locked', 'iso9001\LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
+        Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
+    });
+
+    //#######################
+    //### NOTIFICACIONES ###
+    //#####################
+    //Util?
+    // Route::get('/notificaciones', [\App\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
+    Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
+    Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
+
+    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+        // Two Factor Authentication
+        if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
+            Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
+            Route::post('two-factor', 'TwoFactorController@check')->name('twoFactor.check');
+            Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
+        }
+    });
+
+    Route::group(['middleware' => ['auth', '2fa']], function () {
+        //Ruta ImportExcel
+        Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
+        Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
+        Route::post('CargaVulnerabilidad', 'SubidaExcel@Vulnerabilidad')->name('carga-vulnerabilidad');
+        Route::post('CargaUsuario', 'SubidaExcel@Usuario')->name('carga-usuario');
+        Route::post('CargaPuesto', 'SubidaExcel@Puesto')->name('carga-puesto');
+        Route::post('CargaControl', 'SubidaExcel@Control')->name('carga-control');
+        Route::post('CargaEjecutarenlace', 'SubidaExcel@Ejecutarenlace')->name('carga-ejecutarenlace');
+        Route::post('CargaTeam', 'SubidaExcel@Team')->name('carga-team');
+        Route::post('CargaEstadoIncidente', 'SubidaExcel@EstadoIncidente')->name('carga-estadoincidente');
+        Route::post('CargaRole', 'SubidaExcel@Roles')->name('carga-roles');
+        Route::post('CargaCompetencia', 'SubidaExcel@Competencia')->name('carga-competencia');
+        Route::post('CargaEvaluacion', 'SubidaExcel@Evaluacion')->name('carga-evaluacion');
+        Route::post('CargaCategoriaCapacitacion', 'SubidaExcel@CategoriaCapacitacion')->name('carga-categoriacapacitacion');
+        Route::post('CargaRevisionDireccion', 'SubidaExcel@RevisionDireccion')->name('carga-revisiondireccion');
+        Route::post('CargaAnalisisRiesgo', 'SubidaExcel@AnalisisRiesgo')->name('carga-analisis_riego');
+        Route::post('CargaPartesInteresadas', 'SubidaExcel@PartesInteresadas')->name('carga-partes_interesadas');
+        Route::post('CargaMatrizRequisitosLegales', 'SubidaExcel@MatrizRequisitosLegales')->name('carga-matriz_requisitos_legales');
+        Route::post('CargaFoda', 'SubidaExcel@Foda')->name('carga-foda');
+        Route::post('CargaDeterminacionAlcance', 'SubidaExcel@DeterminacionAlcance')->name('carga-determinacion_alcance');
+        Route::post('CargaComiteSeguridad', 'SubidaExcel@ComiteSeguridad')->name('carga-comite_seguridad');
+        Route::post('CargaAltaDireccion', 'SubidaExcel@AltaDireccion')->name('carga-alta_direccion');
+        Route::post('CargaEvidenciaRecursos', 'SubidaExcel@EvidenciaRecursos')->name('carga-evidencia_recursos');
+        Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
+        Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
+        Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
+        Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+        Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
+        // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
+
+        //Ruta ExportExcel
+        Route::controller(ExportExcelReport::class)->group(function () {
+            Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
+            Route::get('ExportPuesto', 'Puesto')->name('descarga-puesto');
+            Route::get('ExportRoles', 'Roles')->name('descarga-roles');
+            Route::get('ExportSoporte', 'Soporte')->name('descarga-soporte');
+            Route::get('ExportEmpleado', 'Empleado')->name('descarga-empleado');
+            Route::get('ExportSede', 'Sede')->name('descarga-sedes');
+            Route::get('ExportNivelJerarquico', 'NivelJerarquico')->name('descarga-nivel-jerarquico');
+            Route::get('ExportRegistroArea', 'RegistroArea')->name('descarga-registro-area');
+            Route::get('ExportMacroproceso', 'Macroproceso')->name('descarga-macroproceso');
+            Route::get('ExportProceso', 'Proceso')->name('descarga-proceso');
+            Route::get('ExportTipoActivo', 'TipoActivo')->name('descarga-tipo-activo');
+            Route::get('ExportInventarioActivos', 'InventarioActivos')->name('descarga-inventario-activos');
+            Route::get('ExportGlosarios', 'Glosarios')->name('descarga-glosarios');
+            Route::get('ExportCategoriasCapacitaciones', 'categoriasCapacitaciones')->name('descarga-categoria-capacitaciones');
+            Route::get('ExportVisualizarLogs', 'visualizarLogs')->name('descarga-visualizar-logs');
+            Route::get('ExportSolicitudesDayOff', 'solicitudesDayOff')->name('descarga-solicitudes-day-off');
+            Route::get('ExportSolicitudesVacaciones', 'solicitudesVacaciones')->name('descarga-solicitudes-vacaciones');
+            Route::get('ExportEvaluaciones360', 'evaluaciones360')->name('descarga-evaluaciones-360');
+            Route::post('ExportRegistrosTimesheet', 'registrosTimesheet')->name('descarga-registro-timesheet');
+            Route::post('ExportTimesheetAreas', 'timesheetAreas')->name('descarga-timesheet-areas');
+            Route::post('ExportTimesheetProyectos', 'timesheetProyectos')->name('descarga-timesheet-proyectos');
+        });
+
+        Route::get('ExportAmenaza', 'ExportExcelReport@Amenaza')->name('descarga-amenaza');
+        Route::get('ExportVulnerabilidad', 'ExportExcelReport@Vulnerabilidad')->name('descarga-vulnerabilidad');
+        Route::get('ExportAnalisisRiesgo', 'ExportExcelReport@AnalisisRiesgo')->name('descarga-analisis_riego');
+        Route::get('ExportPartesInteresadas', 'ExportExcelReport@PartesInteresadas')->name('descarga-partes_interesadas');
+        Route::get('ExportMatrizRequisitosLegales', 'ExportExcelReport@MatrizRequisitosLegales')->name('descarga-matriz_requisitos_legales');
+        Route::get('ExportFoda', 'ExportExcelReport@Foda')->name('descarga-foda');
+        Route::get('ExportDeterminacionAlcance', 'ExportExcelReport@DeterminacionAlcance')->name('descarga-determinacion_alcance');
+        Route::get('ExportComiteSeguridad', 'ExportExcelReport@ComiteSeguridad')->name('descarga-comite_seguridad');
+        Route::get('ExportAltaDireccion', 'ExportExcelReport@AltaDireccion')->name('descarga-alta_direccion');
+        Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
+        Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
+        // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
+
+        // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
+        Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');
+        Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
+    });
+
+    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+        Route::view('sitemap', 'admin.sitemap.index');
+        // Route::view('stepper', 'stepper');
+        //Route::view('admin/gantt', 'admin.gantt.grap');
+
+        //URL::forceScheme('https');
+
+        Route::view('post_register', 'auth.post_register');
+    });
+
+    //KATBOL
+    Route::group(['middleware' => ['general_tabantaj']], function () {
+        Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
+            Route::group(['middleware' => 'primeros.pasos'], function () {
+
+                Route::group(['middleware' => ['katbol']], function () {
+                    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+
+                    Route::group(['middleware' => ['gestion_contractual']], function () {
+
+                        //Proveedores
+                        Route::resource('proveedor', 'ProveedoresController');
+
+                        //Contratos
+                        //## API - Revisar en tiempo real si contrato ya existe ###
+                        Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
+                        Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
+                        Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
+                        // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
+                        Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
+                        // Route::get('download/{file}', 'ContratosController@getDownload');
+                        Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
+                        Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
+                        // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
+                        Route::post('selectProveedor', 'DashboardController@AjaxRequestClientes')->name('selectCliente');
+                        Route::post('selectContrato', 'DashboardController@AjaxRequestContratos')->name('selectContrato');
+                        Route::post('selectEvaluacionesServicio', 'DashboardController@AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
+                        Route::get('dashboard-contratos-katbol', 'DashboardController@index')->name('dashboard.katbol');
+                        Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
+                        Route::resource('contratos-katbol', 'ContratosController');
+                        Route::get('contratos-katbol/destroy/{id}', 'ContratosController@destroy')->name('contratos-katbol.delete');
+                        Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
+                        Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
+                        Route::get('contratos-katbol/contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
+                        Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
+                        Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
+
+                        Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
+
+                        Route::post('contratos-katbol/aprobacion-firma-contrato', 'ContratosController@aprobacionFirma')->name('contratos-katbol.aprobacion-firma-contrato');
+                        Route::get('contratos-katbol/aprobacion-firma-contrato/historico', 'ContratosController@historicoAprobacion')->name('contratos-katbol.aprobacion-firma-contrato.historico');
+
+                        Route::resource('bitacoras', 'BitacoraController');
+
+                        Route::resource('facturas', 'FacturaController');
+                        Route::get('facturas/exportar', 'FacturaController@exportTo')->name('adeudoproveedor.exportar');
+
+                        Route::get('cedula/{id_cedula}/historico', 'HistoricoCedulaController@index')->name('cedula.historico');
+
+                        //Reportes
+                        Route::resource('reportes', 'ReporteRequisicionController');
+                        Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
+                    });
+
+                    Route::group(['middleware' => ['gestion_financiera']], function () {
+                        // Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+
+                        //requisiciones
+                        Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
+                        Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
+                        Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
+                        Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
+                        // Route::post('requisiciones-aprobadores/list/get', 'RequisicionesController@getRequisicionIndexAprobador')->name('requisiciones.getRequisicionIndexAprobador');
+                        // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
+                        Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
+                        Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
+                        Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
+                        Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
+                        Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
+                        Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
+                        Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
+                        Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
+                        Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
+                        Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
+                        Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
+                        Route::get('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
+                        Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
+                        Route::get('requisiciones/filtrar', 'RequisicionesController@filtrarPorEstado')->name('requisiciones.filtrarPorEstado');
+                        Route::get('requisiciones/filtrar_jefe', 'RequisicionesController@filtrarPorEstado1')->name('requisiciones.filtrarPorEstado1');
+                        Route::get('requisiciones/filtrar_solicitante', 'RequisicionesController@filtrarPorEstado2')->name('requisiciones.filtrarPorEstado2');
+                        Route::get('requisiciones/filtrar_compras', 'RequisicionesController@filtrarPorEstado3')->name('requisiciones.filtrarPorEstado3');
+                        Route::post('requisiciones/cambiarResponsable', 'RequisicionesController@cambiarResponsable')->name('requisiciones.cambiarResponsable');
+
+                        // ordenes de compra
+                        Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
+                        Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
+                        Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
+                        Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
+                        Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
+                        Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
+                        Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
+                        Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
+                        Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
+                        Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
+                        Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
+                        Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
+                        Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
+                        Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
+                        Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
+
+                        //Proveedores
+                        Route::resource('proveedor', 'ProveedoresController');
+
+                        //Productos
+                        Route::resource('productos', 'ProductoController');
+                        Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
+                        Route::post('productos/list/get/archivados', 'ProductoController@getArchivadosIndex')->name('productos.getArchivadosIndex');
+                        Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
+                        Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
+
+                        //Proveedores Ordenes Compra
+                        Route::resource('proveedores', 'ProveedoresOController');
+                        Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
+                        Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
+                        Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
+                        Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
+
+                        //Compradores
+                        Route::resource('compradores', 'CompradoresController');
+                        Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
+                        Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
+                        Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
+                        Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
+                        Route::post('compradores/pdf', 'CompradoresController@pdfCompradores')->name('compradores.pdf');
+
+                        //Centro Costos
+                        Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
+                        Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
+                        Route::resource('centro-costos', 'CentroCostosController');
+                        Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
+                        Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
+
+                        //Razon Social - Sucursales
+                        Route::resource('sucursales', 'SucursalController');
+                        Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
+                        Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
+                        Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
+                        Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
+
+                        //Timesheet tambien
+                    });
                 });
             });
         });
     });
- });
-
 });
