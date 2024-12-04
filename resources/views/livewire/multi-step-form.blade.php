@@ -533,8 +533,8 @@
                                                             {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
                                                             {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
                                                             <input type="checkbox" type="checkbox"
-                                                                wire:model.blur="includeCompetencias"
-                                                                wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
+                                                                wire:model.lazy="includeCompetencias"
+                                                                wire:click="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -559,9 +559,9 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model.blur="includeObjetivos"
+                                                            <input type="checkbox" wire:model.lazy="includeObjetivos"
                                                                 class="form-check-input" type="checkbox"
-                                                                wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
+                                                                wire:click="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>

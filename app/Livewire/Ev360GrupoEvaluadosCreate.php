@@ -10,9 +10,7 @@ use Livewire\Component;
 class Ev360GrupoEvaluadosCreate extends Component
 {
     public $open = false;
-
     public $empleados = [];
-
     public $nombreGrupo;
 
     protected $rules = [
@@ -20,14 +18,21 @@ class Ev360GrupoEvaluadosCreate extends Component
         'empleados' => 'required',
     ];
 
-    protected $mesages = [
+    protected $messages = [
         'nombreGrupo.required' => 'Debes agregar un nombre para el grupo',
         'nombreGrupo.max' => 'El nombre no debe exceder los 255 carácteres',
     ];
 
     public function openModal()
     {
-        $this->dispatch('openModalClick');
+        $this->open = true;
+        $this->dispatch('openModal'); // Usamos dispatch para emitir el evento
+    }
+
+    public function closeModal()
+    {
+        $this->open = false;
+        $this->dispatch('closeModal'); // Usamos dispatch para emitir el evento
     }
 
     public function save()
@@ -47,7 +52,6 @@ class Ev360GrupoEvaluadosCreate extends Component
     public function render()
     {
         $lista_empleados = Empleado::getaltaAll();
-
         return view('livewire.ev360-grupo-evaluados-create', ['lista_empleados' => $lista_empleados]);
     }
 
