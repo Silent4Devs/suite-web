@@ -22,7 +22,7 @@ class Objetivo extends Model implements Auditable
 
     protected $fillable = [
         'nombre',
-        'descripcion',
+        'descripcion_meta',
         'tipo_id',
         'KPI',
         'metrica_id',
