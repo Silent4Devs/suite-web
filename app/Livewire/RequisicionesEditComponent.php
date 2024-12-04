@@ -347,7 +347,7 @@ class RequisicionesEditComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
+            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -818,13 +818,13 @@ class RequisicionesEditComponent extends Component
 
                 // Si existe el registro, comparar y registrar cambios
                 if (! empty($PRI)) {
-                    if ($PRI->fecha_inicio != $provInd['fecha_inicio']) {
-                        $createHistorial('fecha_inicio', $PRI->fecha_inicio, $provInd['fecha_inicio']);
-                    }
+                    // if ($PRI->fecha_inicio != $provInd['fecha_inicio']) {
+                    //     $createHistorial('fecha_inicio', $PRI->fecha_inicio, $provInd['fecha_inicio']);
+                    // }
 
-                    if ($PRI->fecha_fin != $provInd['fecha_fin']) {
-                        $createHistorial('fecha_fin', $PRI->fecha_fin, $provInd['fecha_fin']);
-                    }
+                    // if ($PRI->fecha_fin != $provInd['fecha_fin']) {
+                    //     $createHistorial('fecha_fin', $PRI->fecha_fin, $provInd['fecha_fin']);
+                    // }
                 } elseif ($provInd['tabla_origen'] != null) {
 
                     switch ($provInd['tabla_origen']) {
@@ -912,7 +912,7 @@ class RequisicionesEditComponent extends Component
                 ];
 
                 if (! empty($provSug['extArchivo'])) {
-                    $name = 'requisicion_'.$this->requisicion_id.'_cotizacion_'.($key + 1).'_'.uniqid().'.'.$provSug['extArchivo'];
+                    $name = 'requisicion_' . $this->requisicion_id . '_cotizacion_' . ($key + 1) . '_' . uniqid() . '.' . $provSug['extArchivo'];
                     $data['cotizacion'] = $name;
 
                     // Guardar el archivo en el sistema
@@ -921,21 +921,21 @@ class RequisicionesEditComponent extends Component
 
                 // Registrar en el historial si hay cambios
                 if ($PR) {
-                    foreach ($data as $campo => $nuevoValor) {
-                        $valorAnterior = $PR->$campo;
+                    // foreach ($data as $campo => $nuevoValor) {
+                    //     $valorAnterior = $PR->$campo;
 
-                        if ($valorAnterior != $nuevoValor) {
-                            HistorialEdicionesReq::create([
-                                'requisicion_id' => $this->editRequisicion->id,
-                                'registro_tipo' => KatbolProveedorRequisicion::class,
-                                'id_empleado' => $this->currentUser->empleado->id,
-                                'campo' => $campo,
-                                'valor_anterior' => $valorAnterior ?? 'Sin registrar',
-                                'valor_nuevo' => $nuevoValor,
-                                'version_id' => $this->versionReqId,
-                            ]);
-                        }
-                    }
+                    //     if ($valorAnterior != $nuevoValor) {
+                    //         HistorialEdicionesReq::create([
+                    //             'requisicion_id' => $this->editRequisicion->id,
+                    //             'registro_tipo' => KatbolProveedorRequisicion::class,
+                    //             'id_empleado' => $this->currentUser->empleado->id,
+                    //             'campo' => $campo,
+                    //             'valor_anterior' => $valorAnterior ?? 'Sin registrar',
+                    //             'valor_nuevo' => $nuevoValor,
+                    //             'version_id' => $this->versionReqId,
+                    //         ]);
+                    //     }
+                    // }
                 } elseif ($provSug['tabla_origen'] != null) {
 
                     switch ($provSug['tabla_origen']) {
@@ -1003,17 +1003,17 @@ class RequisicionesEditComponent extends Component
 
                 // Si existe el registro, comparar valores
                 if (! empty($PRC)) {
-                    if ($PRC->id != $provCat['proveedor_id']) {
-                        $createHistorial('proveedor_id', $PRC->id, $provCat['proveedor_id']);
-                    }
+                    // if ($PRC->id != $provCat['proveedor_id']) {
+                    //     $createHistorial('proveedor_id', $PRC->id, $provCat['proveedor_id']);
+                    // }
 
-                    if ($PRC->fecha_inicio != $provCat['fecha_inicio']) {
-                        $createHistorial('fecha_inicio', $PRC->fecha_inicio, $provCat['fecha_inicio']);
-                    }
+                    // if ($PRC->fecha_inicio != $provCat['fecha_inicio']) {
+                    //     $createHistorial('fecha_inicio', $PRC->fecha_inicio, $provCat['fecha_inicio']);
+                    // }
 
-                    if ($PRC->fecha_fin != $provCat['fecha_fin']) {
-                        $createHistorial('fecha_fin', $PRC->fecha_fin, $provCat['fecha_fin']);
-                    }
+                    // if ($PRC->fecha_fin != $provCat['fecha_fin']) {
+                    //     $createHistorial('fecha_fin', $PRC->fecha_fin, $provCat['fecha_fin']);
+                    // }
                 } elseif ($provCat['tabla_origen'] != null) {
 
                     switch ($provCat['tabla_origen']) {
