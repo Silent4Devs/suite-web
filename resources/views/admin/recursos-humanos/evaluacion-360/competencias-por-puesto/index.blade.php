@@ -8,16 +8,18 @@
             clip-path: circle(10px at 50% 50%);
             height: 20px;
         }
+
         .boton-sin-borde {
-        border: none;
-        outline: none; /* Esto elimina el contorno al hacer clic */
+            border: none;
+            outline: none;
+            /* Esto elimina el contorno al hacer clic */
         }
+
         .boton-transparente {
-        background-color: transparent;
-        border: none; /* Elimina el borde del botón si lo deseas */
+            background-color: transparent;
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
         }
-
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Asignar competencias por puesto</h5>
     <div class="mt-5 card">
@@ -90,6 +92,45 @@
                             </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach ($puestos as $puesto)
+                            <tr>
+                                <td>{{ $puesto->puesto }}</td>
+                                <td>{{ $puesto->area->area ?? 'Sin asignar' }}</td>
+                                <td>
+                                    @foreach ($puesto->competencias as $competencia)
+                                        @php
+                                            if ($competencia->competencia?->existe_imagen_en_servidor) {
+                                                $titulo = $competencia->competencia?->nombre;
+                                            } else {
+                                                $titulo = 'No se encontró el recurso para esta competencia';
+                                            }
+                                        @endphp
+                                        <div>
+                                            <img class="imagen-responsiva"
+                                                src="{{ $competencia->competencia?->imagen_ruta }}"
+                                                title="{{ $titulo }}" />
+                                        </div>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @if ($puesto->competencias->count() > 0)
+                                        <span class="badge badge-success">{{ $puesto->competencias->count() }}
+                                            competencia(s) asignada(s)</span>
+                                    @else
+                                        <span class="badge badge-primary">Sin competencias asignadas</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @can('competencias_por_puesto_agregar')
+                                        <a class="btn btn-sm btn-editar tb-btn-primary" title="Agregar competencias"
+                                            href="/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/{{ $puesto->id }}/create"><i
+                                                class="mr-2 fas fa-user-tag"></i> Agregar</a>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
 
@@ -100,9 +141,9 @@
     @parent
     <script>
         $('#btnImport').on('click', function(e) {
-        e.preventDefault();
-        $('#xlsxImportModal').modal('show');
-     });
+            e.preventDefault();
+            $('#xlsxImportModal').modal('show');
+        });
     </script>
     <script>
         $(function() {
@@ -179,62 +220,7 @@
                 processing: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
-                columns: [{
-                    data: 'puesto',
-                    width: '30%',
-                }, {
-                    data: 'area',
-                    render: function(data, type, row, meta) {
-                        if(row.area){
-                            return row.area.area;
-                        }
-                        return 'Sin asignar';
-                    }
-                }, {
-                    data: 'competencias',
-                    render: function(data, type, row, meta) {
-                        console.log(data);
-                        let html = '<div>';
-                        let titulo = "";
-                        data.forEach(competencia => {
-                            if (competencia.competencia?.existe_imagen_en_servidor) {
-                                titulo = competencia.competencia?.nombre;
-                            } else {
-                                titulo = "No se encontró el recurso para esta competencia";
-                            }
-                            html += `
-                                <img class="imagen-responsiva" src="${competencia.competencia?.imagen_ruta}" title="${titulo}"/>
-                                `;
-                        });
-                        html += '</div>';
-                        return html;
-                    },
-                    width: '30%',
-                }, {
-                    data: 'competencias',
-                    render: function(data, type, row, meta) {
-                        return data.length > 0 ?
-                            `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
-                            '<span class="badge badge-primary">Sin competencias asignadas</span>';
-                    },
-                    width: '25%'
-                }, {
-                    data: 'id',
-                    render: function(data, type, row, meta) {
-                        let urlBtnAsignarCompetencias =
-                            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
-                        let botones =
-                            `
-                            @can('competencias_por_puesto_agregar')
-                                <a class="btn btn-sm btn-editar tb-btn-primary" title="Agregar competencias" href="${urlBtnAsignarCompetencias}"><i
-                                        class="mr-2 fas fa-user-tag"></i> Agregar</a>
-                            @endcan
-                            `;
-                        return botones;
-                    },
-                    width: '15%'
-                }],
+
                 orderCellsTop: true,
                 order: [
                     [0, 'desc']
@@ -258,7 +244,63 @@
 
         });
     </script>
-
+    {{-- 
+    ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
+    columns: [{
+    data: 'puesto',
+    width: '30%',
+}, {
+    data: 'area',
+    render: function(data, type, row, meta) {
+        if (row.area) {
+            return row.area.area;
+        }
+        return 'Sin asignar';
+    }
+}, {
+    data: 'competencias',
+    render: function(data, type, row, meta) {
+        console.log(data);
+        let html = '<div>';
+        let titulo = "";
+        data.forEach(competencia => {
+            if (competencia.competencia?.existe_imagen_en_servidor) {
+                titulo = competencia.competencia?.nombre;
+            } else {
+                titulo = "No se encontró el recurso para esta competencia";
+            }
+            html += `
+                <img class="imagen-responsiva" src="${competencia.competencia?.imagen_ruta}" title="${titulo}"/>
+                `;
+        });
+        html += '</div>';
+        return html;
+    },
+    width: '30%',
+}, {
+    data: 'competencias',
+    render: function(data, type, row, meta) {
+        return data.length > 0 ?
+            `<span class="badge badge-success">${data.length} competencia(s) asignada(s)</span>` :
+            '<span class="badge badge-primary">Sin competencias asignadas</span>';
+    },
+    width: '25%'
+}, {
+    data: 'id',
+    render: function(data, type, row, meta) {
+        let urlBtnAsignarCompetencias =
+            `/admin/recursos-humanos/evaluacion-360/competencias-por-puesto/${data}/create`;
+        let botones =
+            `
+            @can('competencias_por_puesto_agregar')
+                <a class="btn btn-sm btn-editar tb-btn-primary" title="Agregar competencias" href="${urlBtnAsignarCompetencias}"><i
+                        class="mr-2 fas fa-user-tag"></i> Agregar</a>
+            @endcan
+            `;
+        return botones;
+    },
+    width: '15%'
+}], --}}
     {{-- <script src="{{ asset('js/datatablefilter.js') }}"></script>
        <script>
         $('#myTable').ddTableFilter();
