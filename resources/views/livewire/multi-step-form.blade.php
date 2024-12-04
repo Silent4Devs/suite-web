@@ -785,9 +785,7 @@
                                                             {{ $errors->first('by_manual') }}
                                                         </div>
                                                     @endif
-                                                    <small class="form-text text-muted">Importante: No se creará un
-                                                        nuevo grupo,esta opción es recomendada para selecciones de una
-                                                        sola vez</small>
+                                                    <small class="form-text text-muted">Importante: Para seleccionar más de un estudiante, debe mantener oprimido el botón Ctrl</small>
                                                 @endif
                                             </div>
                                             <div class="col-3" style="margin-top: 0;">
