@@ -92,10 +92,10 @@ class TablaHistoricoRequisiciones extends Component
             switch ($registro->campo) {
                 case 'contrato_id':
                     $registro->valor_anterior = isset($contratos[$registro->valor_anterior])
-                        ? $contratos[$registro->valor_anterior].' - '.$servicios[$registro->valor_anterior]
+                        ? $contratos[$registro->valor_anterior] . ' - ' . $servicios[$registro->valor_anterior]
                         : 'Sin valor anterior registrado';
                     $registro->valor_nuevo = isset($contratos[$registro->valor_nuevo])
-                        ? $contratos[$registro->valor_nuevo].' - '.$servicios[$registro->valor_nuevo]
+                        ? $contratos[$registro->valor_nuevo] . ' - ' . $servicios[$registro->valor_nuevo]
                         : 'Sin valor nuevo registrado';
                     break;
 
@@ -114,37 +114,42 @@ class TablaHistoricoRequisiciones extends Component
                     $registro->valor_nuevo = $productos[$registro->valor_nuevo] ?? 'Sin valor nuevo registrado';
                     break;
 
+                case 'nombre_proveedor':
                 case 'proveedor_id':
                 case 'proveedoroc_id':
                     // Verifica si el valor es 'Indistinto'. Si es así, conserva el texto.
                     if ($registro->valor_anterior === 'Indistinto') {
                         $registro->valor_anterior = 'Indistinto';
+                    } elseif ($registro->valor_anterior === 'otro') {
+                        $registro->valor_anterior = 'Sugerido';
                     } else {
                         $registro->valor_anterior = isset($proveedores[$registro->valor_anterior])
-                            ? $proveedores[$registro->valor_anterior]->razon_social.' - '.$proveedores[$registro->valor_anterior]->nombre
+                            ? $proveedores[$registro->valor_anterior]->razon_social . ' - ' . $proveedores[$registro->valor_anterior]->nombre
                             : 'Sin valor anterior registrado';
                     }
 
                     if ($registro->valor_nuevo === 'Indistinto') {
                         $registro->valor_nuevo = 'Indistinto';
+                    } elseif ($registro->valor_nuevo === 'otro') {
+                        $registro->valor_nuevo = 'Sugerido';
                     } else {
                         $registro->valor_nuevo = isset($proveedores[$registro->valor_nuevo])
-                            ? $proveedores[$registro->valor_nuevo]->razon_social.' - '.$proveedores[$registro->valor_nuevo]->nombre
+                            ? $proveedores[$registro->valor_nuevo]->razon_social . ' - ' . $proveedores[$registro->valor_nuevo]->nombre
                             : 'Sin valor nuevo registrado';
                     }
                     break;
 
                 case 'fecha':
                     $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
-                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_nuevo)->format('d-m-Y');
                     break;
                 case 'fecha_inicio':
                     $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
-                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_nuevo)->format('d-m-Y');
                     break;
                 case 'fecha_fin':
                     $registro->valor_anterior = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
-                    $registro->valor_nuevo = Carbon::parse($registro->valor_anterior)->format('d-m-Y');
+                    $registro->valor_nuevo = Carbon::parse($registro->valor_nuevo)->format('d-m-Y');
                     break;
                 default:
                     break;
