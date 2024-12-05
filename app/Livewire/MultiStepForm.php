@@ -249,7 +249,8 @@ class MultiStepForm extends Component
         }
 
         // Calcular la suma total de los pesos generales
-        $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
+        $this->sumaTotalPesoGeneral = ((float) $this->pesoGeneralCompetencias ?: 0) + ((float) $this->pesoGeneralObjetivos ?: 0);
+
 
         // Verificar si la suma total es igual a 100
         if ($this->sumaTotalPesoGeneral === 100) {
