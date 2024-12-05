@@ -570,7 +570,7 @@
                                                 <!-- Aquí nos aseguramos de que los campos solo se muestren si `includeObjetivos` es verdadero -->
                                                 <div class="col-3 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
+                                                        wire:model.lazy="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
                                                         class="form-control" type="text" pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
@@ -580,7 +580,7 @@
                                                 <div class="col-4 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <br>
                                                     <select class="form-control" required name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model="catalogoObjetivos">
+                                                        id="catalogoObjetivos" wire:model.lazy="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo de Parametros que utilizara la Evaluacion</option>
                                                         @foreach ($catalogo_rangos_objetivos as $c)
                                                             <option value="{{ $c->id }}">
