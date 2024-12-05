@@ -311,7 +311,7 @@ class CreateEvaluacionDesempeno extends Component
 
             for ($i = 1; $i <= $cantidad_periodos; $i++) {
                 $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T'.$i,
+                    'nombre_evaluacion' => 'T' . $i,
                     'fecha_inicio' => null,
                     'fecha_fin' => null,
                     'habilitar' => ($i === 1), // Solo el primer periodo habilitado
@@ -325,7 +325,7 @@ class CreateEvaluacionDesempeno extends Component
         $numeroDePeriodos = count($this->arreglo_periodos) + 1; // Obtener el número actual de períodos y agregar 1
 
         $this->arreglo_periodos[] = [
-            'nombre_evaluacion' => 'T'.$numeroDePeriodos,
+            'nombre_evaluacion' => 'T' . $numeroDePeriodos,
             'fecha_inicio' => null,
             'fecha_fin' => null,
             'habilitar' => false, // Solo el primer periodo habilitado
@@ -917,18 +917,18 @@ class CreateEvaluacionDesempeno extends Component
             // Comienza o continúa el borrador de la evaluación
             $evaluacion = EvaluacionDesempeno::create([
                 'nombre' => $this->datosPaso1['nombre'] ?? $this->nombre_evaluacion,
-                'descripcion' => $this->datosPaso1['descripcion'] ?? '',
-                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? 0,
-                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? 0,
-                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? 0,
-                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? 0,
+                'descripcion' => $this->datosPaso1['descripcion'] ?? $this->descripcion_evaluacion ?? '',
+                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? $this->activar_objetivos ?? 0,
+                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? $this->porcentaje_objetivos ?? 0,
+                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? $this->activar_competencias ?? 0,
+                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? $this->porcentaje_competencias ?? 0,
                 'tipo_periodo' => $this->periodo_evaluacion ?? null,
                 'estatus' => 0, // Estatus de borrador
                 'autor_id' => User::getCurrentUser()->empleado->id,
             ]);
 
             // Guardar el paso actual en la evaluación (por ejemplo, paso 1, 2, 3, etc.)
-            $evaluacion->update(['paso_actual' => $this->paso]);
+            // $evaluacion->update(['paso_actual' => $this->paso]);
 
             // Guardar los datos del paso actual
             switch ($this->paso) {
