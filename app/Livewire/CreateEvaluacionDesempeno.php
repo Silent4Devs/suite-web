@@ -270,38 +270,38 @@ class CreateEvaluacionDesempeno extends Component
         $this->paso = 2;
     }
 
-    public function seleccionPeriodo($periodo, $valor)
+    public function seleccionPeriodo($periodo)
     {
         $this->arreglo_periodos = [];
         $this->periodo_evaluacion = $periodo;
 
         // Desactivar todos los períodos
-        $this->mensual = $this->bimestral = $this->trimestral = $this->semestral = $this->anualmente = $this->abierta = false;
+        // $this->mensual = $this->bimestral = $this->trimestral = $this->semestral = $this->anualmente = $this->abierta = false;
 
         // Configurar el período seleccionado
         $cantidad_periodos = 0;
-        if ($valor) {
+        // if ($valor) {
             switch ($periodo) {
                 case 'mensual':
-                    $this->mensual = true;
+                    // $this->mensual = true;
                     $cantidad_periodos = 12;
                     break;
                 case 'bimestral':
-                    $this->bimestral = true;
+                    // $this->bimestral = true;
                     $cantidad_periodos = 6;
                     break;
                 case 'trimestral':
-                    $this->trimestral = true;
+                    // $this->trimestral = true;
                     $cantidad_periodos = 4;
                     break;
                 case 'semestral':
-                    $this->semestral = true;
+                    // $this->semestral = true;
                     $cantidad_periodos = 2;
                     break;
                 case 'anualmente':
                 case 'abierta':
-                    $this->anualmente = ($periodo == 'anualmente');
-                    $this->abierta = ($periodo == 'abierta');
+                    // $this->anualmente = ($periodo == 'anualmente');
+                    // $this->abierta = ($periodo == 'abierta');
                     $cantidad_periodos = 1;
                     break;
                 default:
@@ -311,13 +311,13 @@ class CreateEvaluacionDesempeno extends Component
 
             for ($i = 1; $i <= $cantidad_periodos; $i++) {
                 $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T'.$i,
+                    'nombre_evaluacion' => 'T' . $i,
                     'fecha_inicio' => null,
                     'fecha_fin' => null,
                     'habilitar' => ($i === 1), // Solo el primer periodo habilitado
                 ];
             }
-        }
+        // }
     }
 
     public function agregarPeriodo()
@@ -325,7 +325,7 @@ class CreateEvaluacionDesempeno extends Component
         $numeroDePeriodos = count($this->arreglo_periodos) + 1; // Obtener el número actual de períodos y agregar 1
 
         $this->arreglo_periodos[] = [
-            'nombre_evaluacion' => 'T'.$numeroDePeriodos,
+            'nombre_evaluacion' => 'T' . $numeroDePeriodos,
             'fecha_inicio' => null,
             'fecha_fin' => null,
             'habilitar' => false, // Solo el primer periodo habilitado
@@ -908,7 +908,7 @@ class CreateEvaluacionDesempeno extends Component
         // Validar antes de guardar
         if (! $this->validarPasoActual()) {
             if ($this->paso > 1) {
-                // $this->guardarHastaPasoAnterior();
+                $this->guardarHastaPasoAnterior();
                 return redirect(route('admin.rh.evaluaciones-desempeno.dashboard-general'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
             }
         }
@@ -917,18 +917,18 @@ class CreateEvaluacionDesempeno extends Component
             // Comienza o continúa el borrador de la evaluación
             $evaluacion = EvaluacionDesempeno::create([
                 'nombre' => $this->datosPaso1['nombre'] ?? $this->nombre_evaluacion,
-                'descripcion' => $this->datosPaso1['descripcion'] ?? '',
-                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? 0,
-                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? 0,
-                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? 0,
-                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? 0,
+                'descripcion' => $this->datosPaso1['descripcion'] ?? $this->descripcion_evaluacion ?? '',
+                'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? $this->activar_objetivos ?? 0,
+                'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? $this->porcentaje_objetivos ?? 0,
+                'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? $this->activar_competencias ?? 0,
+                'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? $this->porcentaje_competencias ?? 0,
                 'tipo_periodo' => $this->periodo_evaluacion ?? null,
                 'estatus' => 0, // Estatus de borrador
                 'autor_id' => User::getCurrentUser()->empleado->id,
             ]);
 
             // Guardar el paso actual en la evaluación (por ejemplo, paso 1, 2, 3, etc.)
-            $evaluacion->update(['paso_actual' => $this->paso]);
+            // $evaluacion->update(['paso_actual' => $this->paso]);
 
             // Guardar los datos del paso actual
             switch ($this->paso) {
@@ -937,6 +937,7 @@ class CreateEvaluacionDesempeno extends Component
                     break;
 
                 case 2:
+
                     $this->guardarPaso2($evaluacion);
                     break;
 
@@ -966,6 +967,46 @@ class CreateEvaluacionDesempeno extends Component
                 'timerProgressBar' => true,
             ]);
         }
+    }
+
+    public function guardarHastaPasoAnterior()
+    {
+        // Comienza o continúa el borrador de la evaluación
+        $evaluacion = EvaluacionDesempeno::create([
+            'nombre' => $this->datosPaso1['nombre'] ?? $this->nombre_evaluacion,
+            'descripcion' => $this->datosPaso1['descripcion'] ?? $this->descripcion_evaluacion ?? '',
+            'activar_objetivos' => $this->datosPaso1['activar_objetivos'] ?? $this->activar_objetivos ?? 0,
+            'porcentaje_objetivos' => $this->datosPaso1['porcentaje_objetivos'] ?? $this->porcentaje_objetivos ?? 0,
+            'activar_competencias' => $this->datosPaso1['activar_competencias'] ?? $this->activar_competencias ?? 0,
+            'porcentaje_competencias' => $this->datosPaso1['porcentaje_competencias'] ?? $this->porcentaje_competencias ?? 0,
+            'tipo_periodo' => $this->periodo_evaluacion ?? null,
+            'estatus' => 0, // Estatus de borrador
+            'autor_id' => User::getCurrentUser()->empleado->id,
+        ]);
+
+        // Guardar los datos del paso actual
+        switch ($this->paso) {
+            case 1:
+                // Paso 1 ya guardado arriba
+                break;
+
+            case 2:
+                // Paso 2 ya guardado arriba
+                break;
+
+            case 3:
+                $this->guardarPaso2($evaluacion);
+                break;
+
+            case 4:
+                $this->guardarPaso2($evaluacion);
+                $this->guardarPaso3($evaluacion);
+                break;
+        }
+
+        // Redirigir a la vista de índice con un mensaje de éxito
+        return redirect(route('admin.rh.evaluaciones-desempeno.dashboard-general'))
+            ->with('success', 'Borrador guardado correctamente.');
     }
 
     private function validarPasoActual()
@@ -1042,6 +1083,7 @@ class CreateEvaluacionDesempeno extends Component
 
                         return false;
                     }
+                    $this->porcentaje_competencias = 0;
                 } elseif (! $this->activar_objetivos && $this->activar_competencias) {
                     if ($this->porcentaje_competencias != 100) {
                         $this->alert('warning', 'Porcentaje Incorrecto', [
@@ -1056,10 +1098,13 @@ class CreateEvaluacionDesempeno extends Component
 
                         return false;
                     }
+                    $this->porcentaje_objetivos = 0;
                 }
                 break;
 
             case 2:
+                $this->segundoPaso();
+                $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
                 if (empty($this->datosPaso2)) {
                     $this->alert('warning', 'Debe seleccionar un periodo de evaluación.', [
                         'position' => 'center',
@@ -1104,7 +1149,36 @@ class CreateEvaluacionDesempeno extends Component
                 break;
 
             case 3:
-                // Agrega las validaciones del tercer paso aquí
+                // dd($this->select_evaluados);
+                if($this->select_evaluados != null){
+                    // Agrega las validaciones del tercer paso aquí
+                    if($this->select_evaluados == 'manualmente'){
+                        if(empty($this->array_evaluados)){
+                            $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
+                                'position' => 'center',
+                                'timer' => 6000,
+                                'toast' => false,
+                                'text' => 'Se deberan seleccionar los colaboradores que seran evaluados con esta evaluación.',
+                                'showConfirmButton' => true,
+                                'confirmButtonText' => 'Entendido',
+                                'timerProgressBar' => true,
+                            ]);
+
+                            return false;
+                        }
+                    }
+                }else{
+                    $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Se debe seleccionar el publico que realizara la evaluación.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
+                    return false;
+                }
                 break;
 
             case 4:
@@ -1122,7 +1196,7 @@ class CreateEvaluacionDesempeno extends Component
 
             foreach ($this->datosPaso2 as $p) {
                 if (! empty($p['nombre_evaluacion'])) {
-                    PeriodosEvaluacionDesempeno::updateOrCreate(
+                    PeriodosEvaluacionDesempeno::create(
                         ['evaluacion_desempeno_id' => $evaluacion->id],
                         [
                             'nombre_evaluacion' => $p['nombre_evaluacion'],
