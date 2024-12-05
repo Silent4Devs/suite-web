@@ -225,6 +225,7 @@ class MultiStepForm extends Component
     public function increaseStep()
     {
 
+           $this->dispatch('increaseStep');
 
           // Verificar si el peso general por competencias es válido (≤ 100)
           if ($this->pesoGeneralCompetencias > 100) {

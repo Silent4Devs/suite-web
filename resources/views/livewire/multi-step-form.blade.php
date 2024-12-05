@@ -1309,7 +1309,7 @@
                                 class="mr-2 fas fa-arrow-circle-left"></i>Atrás</button>
                     @endif
                     @if ($currentStep == 1 || $currentStep == 2 || $currentStep == 3)
-                        <button type="button" class="btn btn-md btn-success" wire:click="increaseStep()"><i
+                        <button type="button" class="btn btn-md btn-success" wire:click.prevent="increaseStep()"><i
                                 class="mr-2 fas fa-arrow-circle-right"></i>Siguiente</button>
                     @endif
                     @if ($currentStep == 4)

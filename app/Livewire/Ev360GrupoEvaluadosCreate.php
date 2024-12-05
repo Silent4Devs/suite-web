@@ -6,9 +6,11 @@ use App\Models\Empleado;
 use App\Models\RH\GruposEvaluado;
 use Carbon\Carbon;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Ev360GrupoEvaluadosCreate extends Component
 {
+    use LivewireAlert;
     public $open = false;
     public $empleados = [];
     public $nombreGrupo;
@@ -44,6 +46,8 @@ class Ev360GrupoEvaluadosCreate extends Component
         ]);
 
         $grupo->empleados()->sync($this->empleados);
+
+        $this->alert('success', '¡Excelente! El grupo ha sido creado con éxito.');
 
         $this->dispatch('grupoEvaluadosSaved');
         $this->dispatch('select2');
