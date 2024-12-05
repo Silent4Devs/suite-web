@@ -570,8 +570,9 @@
                                                 <!-- Aquí nos aseguramos de que los campos solo se muestren si `includeObjetivos` es verdadero -->
                                                 <div class="col-3 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model.lazy="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
-                                                        class="form-control" type="text" pattern="[0-9]*"
+                                                        wire:model.defer="pesoGeneralObjetivos"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
+                                                        pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
@@ -579,13 +580,14 @@
 
                                                 <div class="col-4 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <br>
-                                                    <select class="form-control" required name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model.lazy="catalogoObjetivos">
-                                                        <option value="" selected>Seleccione el Catalogo de Parametros que utilizara la Evaluacion</option>
+                                                    <select class="form-control" name="catalogoObjetivos"
+                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
+                                                        <option value="" selected>Seleccione el Catalogo
+                                                            de
+                                                            Parametros que utilizara la Evaluacion</option>
                                                         @foreach ($catalogo_rangos_objetivos as $c)
                                                             <option value="{{ $c->id }}">
-                                                                {{ $c->nombre_catalogo }}
-                                                            </option>
+                                                                {{ $c->nombre_catalogo }}</option>
                                                         @endforeach
                                                         @if ($errors->has('catalogoObjetivos'))
                                                             <small class="text-danger">
