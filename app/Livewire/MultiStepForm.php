@@ -1052,6 +1052,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
                     return $item !== $rev_emp_comp->name;
                 });
+            }else{
+                $this->alert('error', 'Existen niveles de competencia no mayores a 0!');
             }
         }
 
@@ -1088,6 +1090,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->filter(function ($item) use ($rev_emp_obj) {
                     return $item !== $rev_emp_obj->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos de cuenta no mayores a 0!');
             }
         }
         $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
@@ -1124,6 +1128,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->filter(function ($item) use ($rev_emp_obj_pend) {
                     return $item !== $rev_emp_obj_pend->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos  pendientes no mayores a 0!');
             }
         }
         $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();
