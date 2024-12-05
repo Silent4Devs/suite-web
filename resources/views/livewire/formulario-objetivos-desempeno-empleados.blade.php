@@ -290,7 +290,22 @@
             @endif
 
         </div>
-    @endif
+        @else
+        <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #FFFBCE; border-top:solid 1px #FFFBCE;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="bi bi-info mr-3" style="color: #818181; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="align-items-center d-flex" style="font-size: 16px; font-weight: bold; color: #818181">
+                        No es posible cargar objetivos porque no hay un periodo activo para hacerlo.</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        @endif
 
     <div class="card card-body">
         <div class="info-first-config">
