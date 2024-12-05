@@ -225,6 +225,7 @@ class MultiStepForm extends Component
     public function increaseStep()
     {
 
+
           // Verificar si el peso general por competencias es válido (≤ 100)
           if ($this->pesoGeneralCompetencias > 100) {
             $this->alert('error', 'Excede el peso general por competencias!');
@@ -249,7 +250,8 @@ class MultiStepForm extends Component
         }
 
         // Calcular la suma total de los pesos generales
-        $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
+        $this->sumaTotalPesoGeneral = intval(((float) $this->pesoGeneralCompetencias ?: 0) + ((float) $this->pesoGeneralObjetivos ?: 0));
+
 
         // Verificar si la suma total es igual a 100
         if ($this->sumaTotalPesoGeneral === 100) {
@@ -1050,6 +1052,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
                     return $item !== $rev_emp_comp->name;
                 });
+            }else{
+                $this->alert('error', 'Existen niveles de competencia no mayores a 0!');
             }
         }
 
@@ -1086,6 +1090,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->filter(function ($item) use ($rev_emp_obj) {
                     return $item !== $rev_emp_obj->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos de cuenta no mayores a 0!');
             }
         }
         $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
@@ -1122,6 +1128,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->filter(function ($item) use ($rev_emp_obj_pend) {
                     return $item !== $rev_emp_obj_pend->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos  pendientes no mayores a 0!');
             }
         }
         $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();

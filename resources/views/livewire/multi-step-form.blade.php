@@ -559,25 +559,29 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model.lazy="includeObjetivos"
-                                                                class="form-check-input" type="checkbox"
-                                                                wire:click="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
+                                                            <input type="checkbox"
+                                                                wire:model.lazy="includeObjetivos"
+                                                                class="form-check-input">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+
+                                                <!-- Aquí nos aseguramos de que los campos solo se muestren si `includeObjetivos` es verdadero -->
+                                                <div class="col-3 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
-                                                        class="form-control" type="text" pattern="[0-9]*"
+                                                        wire:model.defer="pesoGeneralObjetivos"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
+                                                        pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
-                                                <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+
+                                                <div class="col-4 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <br>
-                                                    <select class="form-control" required name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model="catalogoObjetivos">
+                                                    <select class="form-control" name="catalogoObjetivos"
+                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
                                                             de
                                                             Parametros que utilizara la Evaluacion</option>
@@ -591,9 +595,11 @@
                                                             </small>
                                                         @endif
                                                     </select>
-                                                  &nbsp;<small class="text-muted" style="color: red;">Importante: Seleccione Un Catalogo</small>
+                                                    &nbsp;<small class="text-muted" style="color: red;">Importante: Seleccione Un Catalogo</small>
                                                 </div>
                                             </div>
+
+
                                         </div>
                                         @if ($errors->has('sumaTotalPesoGeneral'))
                                             <p style="font-size:12px;" class="m-0 text-center text-danger">
