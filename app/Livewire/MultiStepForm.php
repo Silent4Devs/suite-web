@@ -772,10 +772,17 @@ class MultiStepForm extends Component
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
         //se modifico el codigo para no generar consultas de mas y hacer cargas batch
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
-        // dd($empleado);
+        $empleado = Empleado::select(
+            'id',
+            'name',
+            'area_id',
+            'supervisor_id',
+            'puesto_id',
+            'estatus',
+        )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->where('estatus', 'alta')->where('id',intval($evaluado))->first();
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
+
 
         if ($includeObjetivos) {
             // Add empleado and supervisor as evaluadores_objetivos
@@ -966,7 +973,7 @@ class MultiStepForm extends Component
                 $empleado = Empleado::with([
                     'objetivos', 'children:id,name', 'supervisor:id,name',
                     'area:id,area', 'puestoRelacionado:id,puesto'
-                ])->find(intval($evaluado));
+                ])->where('estatus', 'alta')->find(intval($evaluado));
 
                 if (!$empleado) {
                     // Si no se encuentra en la base de datos, maneja el caso
