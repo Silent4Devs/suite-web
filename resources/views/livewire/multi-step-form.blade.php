@@ -575,6 +575,7 @@
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
                                                 <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+                                                    <br>
                                                     <select class="form-control" required name="catalogoObjetivos"
                                                         id="catalogoObjetivos" wire:model="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
@@ -590,6 +591,7 @@
                                                             </small>
                                                         @endif
                                                     </select>
+                                                  &nbsp;<small class="text-muted" style="color: red;">Importante: Seleccione Un Catalogo</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -599,68 +601,6 @@
                                             </p>
                                         @endif
                                     </div>
-                                    {{-- @if ($showContentTable)
-                                        <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-                                            <label for="descripcion">
-                                                <i class="mr-2 fab fa-discourse iconos-evaluacion"></i>
-                                                Selecciona las competencias a evaluar
-                                            </label>
-                                            <div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-8">
-                                                        <input class="form-control" type="text" wire:model.live="search"
-                                                            placeholder="Buscar competencia...">
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <select wire:model.live="filter" class="form-control">
-                                                            @foreach ($tipos as $tipo)
-                                                                <option value="{{ $tipo->id }}">
-                                                                    {{ $tipo->nombre }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                @if ($competencias->isNotEmpty())
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>Competencia</th>
-                                                                <th>Tipo</th>
-                                                                <th>Descripción</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($competencias as $competencia)
-                                                                <tr>
-                                                                    <th scope="row"><input wire:model.live.prevent="selected"
-                                                                            value="{{ $competencia->id }}"
-                                                                            type="checkbox">
-                                                                    </th>
-                                                                    <td>{{ $competencia->nombre }}</td>
-                                                                    <td>{{ $competencia->tipo->nombre }}</td>
-                                                                    <td>{{ $competencia->descripcion }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                    @if ($errors->has('selected'))
-                                                        <small
-                                                            class="text-danger">{{ $errors->first('selected') }}</small>
-                                                    @endif
-                                                    {!! $competencias->links() !!}
-                                                @else
-                                                    <p class="text-center "><i
-                                                            class="mr-2 fas fa-exclamation-triangle"></i>Opps...
-                                                        No hemos
-                                                        encontrado ninguna
-                                                        competencia</p>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif --}}
-
                                 </div>
                             </div>
                         </div>

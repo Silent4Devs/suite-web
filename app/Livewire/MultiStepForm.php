@@ -772,10 +772,17 @@ class MultiStepForm extends Component
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
         //se modifico el codigo para no generar consultas de mas y hacer cargas batch
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
-        // dd($empleado);
+        $empleado = Empleado::select(
+            'id',
+            'name',
+            'area_id',
+            'supervisor_id',
+            'puesto_id',
+            'estatus',
+        )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->where('estatus', 'alta')->where('id',intval($evaluado))->first();
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
+
 
         if ($includeObjetivos) {
             // Add empleado and supervisor as evaluadores_objetivos
@@ -949,26 +956,43 @@ class MultiStepForm extends Component
             'name',
             'area_id',
             'supervisor_id',
-            'puesto_id',
-        )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
+            'puesto_id'
+        )
+        ->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
+        ->where('estatus', 'alta')
+        ->whereNull('deleted_at')
+        ->get();
 
-        // $emps = Empleado::alta()->select(
-        //     'id',
-        //     'name',
-        //     'area_id',
-        //     'supervisor_id',
-        //     'puesto_id',
-        // )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->get();
-        // dd($emps);
-        // dd($evaluados);
+        $validIds = $emps->pluck('id')->toArray();
+
         foreach ($evaluados as $evaluado) {
-            // dd($emps[0], $evaluado);
-            $empleado = $emps->find($evaluado);
+            $empleado = $emps->firstWhere('id', intval($evaluado));
+
+            if (!$empleado) {
+                // Intenta buscar directamente en la base de datos
+                $empleado = Empleado::with([
+                    'objetivos', 'children:id,name', 'supervisor:id,name',
+                    'area:id,area', 'puestoRelacionado:id,puesto'
+                ])->where('estatus', 'alta')->find(intval($evaluado));
+
+                if (!$empleado) {
+                    // Si no se encuentra en la base de datos, maneja el caso
+                    dd("Empleado no encontrado para evaluado: {$evaluado}");
+                }
+
+                // Agrega el empleado encontrado a la colección para evitar búsquedas repetidas
+                $emps->push($empleado);
+            }
+
             $evaluadores = collect();
-            // dd($empleado);
+
             try {
-                //code...
-                $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+                $evaluadores->put('autoevaluacion', [
+                    'id' => intval($empleado->id),
+                    'peso' => $this->pesoAutoevaluacion,
+                    'tipo' => EvaluadoEvaluador::AUTOEVALUACION,
+                ]);
+
                 $evaluadores->put('jefe', [
                     'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getAltaEmpleados()->unique()->random()->id,
                     'peso' => $this->pesoEvaluacionJefe,
@@ -976,16 +1000,29 @@ class MultiStepForm extends Component
                 ]);
 
                 $equipo = $empleado->children->isEmpty() ? [Empleado::getAltaEmpleados()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
-                $evaluadores->put('subordinado', ['id' => $equipo[array_rand($equipo)], 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                $evaluadores->put('subordinado', [
+                    'id' => $equipo[array_rand($equipo)],
+                    'peso' => $this->pesoEvaluacionEquipo,
+                    'tipo' => EvaluadoEvaluador::EQUIPO,
+                ]);
 
-                $evaluadores->put('par', ['id' => Empleado::getAltaEmpleados()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                $evaluadores->put('par', [
+                    'id' => Empleado::getAltaEmpleados()->unique()->random()->id,
+                    'peso' => $this->pesoEvaluacionArea,
+                    'tipo' => EvaluadoEvaluador::MISMA_AREA,
+                ]);
 
-                $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
+                $evaluadosEvaluadores->push([
+                    'evaluado' => $empleado,
+                    'evaluadores' => $evaluadores,
+                ]);
             } catch (\Throwable $th) {
-                //throw $th;
+                // Captura errores y muestra información relevante
                 dd($th, $empleado, $evaluado);
             }
         }
+
+
         $this->time_elapsed_secs
             =
             microtime(true) -
