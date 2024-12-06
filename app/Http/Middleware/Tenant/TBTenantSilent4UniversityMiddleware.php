@@ -36,8 +36,6 @@ class TBTenantSilent4UniversityMiddleware
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 
-        dd($tbEstado);
-
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {
