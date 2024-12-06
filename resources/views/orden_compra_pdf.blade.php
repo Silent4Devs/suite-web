@@ -16,11 +16,11 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    @if ($requisiciones->sucursal->mylogo)
-                        <img src="{{ public_path('razon_social/' . trim($requisiciones->sucursal->mylogo)) }}">
-                    @else
-                        <img src="{{ public_path('sinLogo.png') }}">
-                    @endif
+                    @if ($organizacion->logo)
+                    <td><img src="{{ asset($organizacion->logo) }}"></td>
+                @else
+                    <td><img src="{{ asset('sinLogo.png') }}"></td>
+                @endif
                 </td>
                 <td class="info-header">
                     {{ $requisiciones->sucursal->empresa }} <br>
