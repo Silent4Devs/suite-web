@@ -16,10 +16,10 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                @if ($organizacion->logo)
-                    <td><img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px;"></td>
+                    @if ($organizacion->logo)
+                    <td><img src="{{ asset($organizacion->logo) }}"></td>
                 @else
-                    <td><img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;"></td>
+                    <td><img src="{{ asset('sinLogo.png') }}"></td>
                 @endif
                 </td>
                 <td class="info-header">
