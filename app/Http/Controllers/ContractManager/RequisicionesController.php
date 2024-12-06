@@ -925,7 +925,7 @@ class RequisicionesController extends Controller
             $firma_finanzas_name = null;
         }
 
-        $organizacion = Organizacion::getLogo();
+        $organizacion = $this->obtenerOrganizacion();
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
