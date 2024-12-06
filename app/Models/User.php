@@ -123,6 +123,8 @@ class User extends Authenticatable implements Auditable
         }
         $cacheKey = 'Auth_user:user' . Auth::user()->id;
 
+        \Artisan::call('cache:clear');
+
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
             return \App\Models\User::on('tenant')->find(Auth::id());
         });

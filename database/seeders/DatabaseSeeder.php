@@ -128,7 +128,7 @@ class DatabaseSeeder extends Seeder
                 PermisoTimesheetFinanciero::class,
                 PermisosTimesheetFaltantes::class,
 
-                // DisponibilidadEmpleadosSeeder::class,
+                DisponibilidadEmpleadosSeeder::class,
                 PermisosListasSeeder::class,
                 ListaDistribucionRequisicionOrdenCompraSeeder::class,
                 ListaDistribucionSuplentesLideresSeeder::class,
