@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-principal">
-        <canvas id="graf-proyectos-area"></canvas>
+        <canvas id="graf-proyectos-area" width="300 !important" height="400 !important"></canvas>
     </div>
     <div class="row">
         <div class=" col-lg-6">
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-empleados">
-        <canvas id="graf-proyectos-empleado"></canvas>
+        <canvas id="graf-proyectos-empleado" width="400" height="400"></canvas>
     </div>
 </div>
 
@@ -69,9 +69,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        Livewire.on('renderAreas', (datos_areas, datos_empleados) => {
-            // console.log(datos_areas);
-            // console.log(datos_empleados);
+        Livewire.on('renderAreas', (data) => {
+
+            let datos_areas = data[0]['datos_areas'];
+            let datos_empleados = data[0]['datos_empleados'];
 
             document.getElementById('graf-proyectos-area').remove();
 
