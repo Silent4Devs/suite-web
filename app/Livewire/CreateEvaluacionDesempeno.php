@@ -79,7 +79,7 @@ class CreateEvaluacionDesempeno extends Component
 
     public $evaluados_manual;
 
-    public $empleados_seleccionados;
+    public $empleados_seleccionados = [];
 
     public $evaluados_grupos = '';
 
@@ -140,6 +140,7 @@ class CreateEvaluacionDesempeno extends Component
             return [
                 'id' => $empleado['id'],
                 'name' => $empleado['name'],
+                'foto' => $empleado['foto'],
             ];
         })->sortBy('name')->values()->toArray();
 
@@ -430,6 +431,41 @@ class CreateEvaluacionDesempeno extends Component
         $this->tercerPaso();
     }
 
+    public function asignacionEmpleados($id_empleado, $name_empleado)
+    {
+        // Verificar si el empleado ya está registrado
+        $existe = collect($this->empleados_seleccionados)->firstWhere('id', $id_empleado);
+
+        if ($existe) {
+            // Mostrar alerta si el empleado ya está registrado
+            $this->alert('warning', 'Empleado ya registrado', [
+                'text' => "El empleado {$name_empleado} ya se encuentra asignado.",
+                'toast' => true,
+                'position' => 'top-end',
+                'timer' => 3000,
+            ]);
+        } else {
+            // Registrar al empleado si no existe
+            $this->empleados_seleccionados[] = [
+                'id' => $id_empleado,
+                'name' => $name_empleado,
+            ];
+
+            // Mostrar alerta de éxito
+            $this->alert('success', 'Empleado asignado', [
+                'text' => "El empleado {$name_empleado} ha sido asignado correctamente.",
+                'toast' => true,
+                'position' => 'top-end',
+                'timer' => 3000,
+            ]);
+        }
+    }
+
+
+    public function desasignarColaborador($key){
+        unset($this->empleados_seleccionados[$key]);
+    }
+
     public function tercerPaso()
     {
         $evld = [];
@@ -446,12 +482,11 @@ class CreateEvaluacionDesempeno extends Component
                 break;
 
             case 'manualmente':
-                // $ev_query = Empleado::getIDaltaAll()->sortBy('name');
+                $ev_query = Empleado::getIDaltaAll()->sortBy('name');
 
-                // foreach ($this->empleados_seleccionados as $id_emp_sel) {
-                //     $evld = $ev_query->find($id_emp_sel)->pluck('id');
-                // }
-                $evld = collect($this->empleados_seleccionados);
+                foreach ($this->empleados_seleccionados as $emp_sel) {
+                    $evld[] = intval($emp_sel["id"]);
+                }
 
                 break;
 
@@ -459,8 +494,11 @@ class CreateEvaluacionDesempeno extends Component
                 $ev_query = GruposEvaluado::with('empleadosEvaluacion')->find($this->evaluados_grupos);
                 $evld = $ev_query->empleados->pluck('id');
                 break;
+
+            default:
+
+            break;
         }
-        // dd($ev);
 
         $this->asignarEvaluadoresAEvaluados($evld);
 
