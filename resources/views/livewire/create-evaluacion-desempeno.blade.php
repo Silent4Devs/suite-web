@@ -23,7 +23,7 @@
     </div>
 
     @switch($paso)
-        @case('1')
+        @case(1)
             <div class="tab-content" id="nav-create-1" role="tabpanel" aria-labelledby="nav-create-1">
                 <div>
                     <div class="card card-body">
@@ -104,7 +104,7 @@
             </div>
         @break
 
-        @case('2')
+        @case(2)
             <div class="tab-content" id="nav-create-2" role="tabpanel" aria-labelledby="nav-create-2">
                 {{-- <form wire:submit="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
                 <div class="card card-body">
@@ -237,7 +237,7 @@
             </div>
         @break
 
-        @case('3')
+        @case(3)
             <div class="tab-content" id="nav-create-3" role="tabpanel" aria-labelledby="nav-create-3">
                 <div class="card card-body">
                     <div class="info-first-config">
@@ -328,12 +328,58 @@
                             @break
 
                             @case('manualmente')
-                                <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
-                                    wire:model.live="evaluados_manual" multiple wire:ignore>
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="w-100">
+                                    <!-- Dropdown -->
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <select class="form-control"
+                                                    wire:change="asignacionEmpleados($event.target.value, $event.target.options[$event.target.selectedIndex].text)">
+                                                <option value="" disabled selected>Seleccione un empleado</option>
+                                                @foreach ($empleados as $empleado)
+                                                    <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Tabla -->
+                                    <div class="row mt-3">
+                                        <div class="col-12">
+                                            <table id="tabla_time_poyect_empleados" class="table w-100 tabla-animada">
+                                                <thead class="w-100">
+                                                    <tr>
+                                                        <th>Nombre </th>
+                                                        <th style="max-width:150px !important; width:150px ;">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="position:relative;">
+                                                    @forelse ($empleados_seleccionados as $keySelect => $empleado)
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{{ asset('storage/empleados/imagenes/' . ($empleado['foto'] ?? 'usuario_no_cargado.png')) }}"
+                                                                     alt="{{ $empleado['name'] }}"
+                                                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                                                                {{ $empleado['name'] }}
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-primary" type="button" wire:click.prevent="desasignarColaborador({{ $keySelect }})">
+                                                                    Desasignar
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2" class="text-center">
+                                                                <h4>Sin colaboradores seleccionados</h4>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             @break
 
                             @case('grupo')
@@ -353,20 +399,20 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" type="button" class="btn btn-primary"
+                        <a wire:click.prevent="guardarBorrador" type="button" class="btn btn-primary"
                             style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
                         <a wire:click.prevent="retroceder" type="button" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <button id="btn-paso3" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</button>
+                        <button wire:click.prevent="tercerPaso" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</button>
                     </div>
                 </div>
             </div>
         @break
 
-        @case('4')
+        @case(4)
             <div class="tab-content" id="nav-create-4" role="tabpanel" aria-labelledby="nav-create-4">
                 <div class="card card-body">
                     <div class="info-first-config">
