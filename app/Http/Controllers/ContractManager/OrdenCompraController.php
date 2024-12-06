@@ -833,7 +833,7 @@ class OrdenCompraController extends Controller
             $firma_finanzas_name = null;
         }
 
-        $organizacion = Organizacion::getLogo();
+        $organizacion = $this->obtenerOrganizacion();
 
         $f = new NumberFormatter('es', NumberFormatter::SPELLOUT);
         $numero = $requisiciones->total;
