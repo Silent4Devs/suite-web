@@ -17,10 +17,10 @@
             <tr>
                 <td class="td-img-doc">
                     @if ($organizacion->logo)
-                    <td><img src="{{ asset($organizacion->logo) }}"></td>
-                @else
-                    <td><img src="{{ asset('sinLogo.png') }}"></td>
-                @endif
+                    <td><img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px; position: relative; right: 6rem;"></td>
+                    @else
+                        <td><img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px; position: relative; right: 6rem;"></td>
+                    @endif
                 </td>
                 <td class="info-header">
                     {{ $requisiciones->sucursal->empresa }} <br>
