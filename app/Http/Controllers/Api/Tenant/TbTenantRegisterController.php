@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 
-class TBTenantRegisterController extends Controller
+class TbTenantRegisterController extends Controller
 {
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.
@@ -18,7 +18,7 @@ class TBTenantRegisterController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function tbSubmit(Request $request): JsonResponse
+    public function submit(Request $request): JsonResponse
     {
         try {
             $tbData = $this->tbValidateTenantData($request);
@@ -31,7 +31,7 @@ class TBTenantRegisterController extends Controller
             $tbTenant = (new TBTenantCreateTenantAction)($tbData, $tbDomain);
 
             // Generar la URL completa del tenant
-            $tbTenantUrl = $this->tbGenerateTenantUrl($tbDomain, '');
+            $tbTenantUrl = $this->tbGenerateTenantUrl($tbDomain, 'users.login');
 
             return $this->tbSuccessResponse('Inquilino generado correctamente', [
                 'tenant_id' => $tbTenant->id,
