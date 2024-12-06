@@ -128,9 +128,23 @@ class TBTenantCreateTenantAction
         DB::connection('tenant')->beginTransaction();
 
         try {
+
+            DB::connection('tenant')->table('empleados')->insert([
+                'name' => $tbUserData['name'],
+                'email' => $tbUserData['email'],
+                'antiguedad' => Carbon::now(),
+                'estatus' => 'alta',
+                'direccion' => $tbUserData['direccion'],
+                'resumen' => $tbUserData['resumen'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+
             DB::connection('tenant')->table('users')->insert([
                 'name' => $tbUserData['name'],
                 'email' => $tbUserData['email'],
+                'empleado_id'  => 1,
                 'password' => Hash::make($tbUserData['password']),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -146,6 +160,8 @@ class TBTenantCreateTenantAction
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+
 
             Artisan::call('db:seed', [
                 '--database' => 'tenant',

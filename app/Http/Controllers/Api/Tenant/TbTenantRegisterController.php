@@ -83,7 +83,6 @@ class TbTenantRegisterController extends Controller
                 'regex:/[0-9]/',
                 'regex:/[@$!%*?&]/'
             ],
-            'numero' => 'required|string|digits_between:8,10|regex:/^[0-9]+$/',
             'cargo' => 'required|string|max:100',
             'sede' => 'required|string|max:150',
             'direccion' => 'required|string|max:255',
@@ -185,7 +184,6 @@ class TbTenantRegisterController extends Controller
 //     "email": "johndoe@example.com",
 //     "password": "securepassword",
 //     "password_confirmation": "securepassword",
-//     "numero": "1234567890",
 //     "cargo": "CEO",
 //     "sede": "Sede Central",
 //     "direccion": "123 Calle Falsa",
