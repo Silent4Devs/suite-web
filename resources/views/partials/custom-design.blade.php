@@ -69,6 +69,20 @@
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff; background-color: #fff;"></div>
         </div>
     </div>
+
+    <p class="mt-5">
+        Menus
+    </p>
+
+    <div class="d-flex gap-4">
+        <img src="{{ asset('img/custom/menu-1.png') }}" alt="Menu ejemplo" class="example-menu-position"
+            style="width: 50px; ">
+        <img src="{{ asset('img/custom/menu-2.png') }}" alt="Menu ejemplo" class="example-menu-position"
+            style="width: 50px; ">
+        <img src="{{ asset('img/custom/menu-3.png') }}" alt="Menu ejemplo" class="example-menu-position"
+            style="width: 50px; ">
+    </div>
+
 </div>
 
 <script>
