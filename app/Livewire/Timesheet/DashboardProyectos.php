@@ -125,7 +125,7 @@ class DashboardProyectos extends Component
                     $total_h = round($total_h, 2);
                     $total_he = round($total_he, 2);
 
-                    $tareas = TimesheetTarea::where('proyecto_id', $this->proy_id);
+                    $tareas = TimesheetTarea::where('proyecto_id', $this->proy_id)->get();
 
                     foreach ($tareas as $tar) {
                         if ($tar->todos == true) {
