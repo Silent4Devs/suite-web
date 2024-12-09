@@ -61,16 +61,6 @@ class DashboardProyectos extends Component
     {
         $this->datos_areas = collect();
 
-        // Async::batchRun(
-        //     function () use (&$time_getall) {
-        //         // Check if the result is already cached
-        //         $time_getall = TimesheetProyecto::getIdNameAll();
-        //         $time_getall = $time_getall->sortByDesc('is_num');
-        //     },
-        //     function () use (&$time_area) {
-        //         $time_area = TimesheetProyectoArea::getWithArea();
-        //     },
-        // );
         $time_getall = TimesheetProyecto::getIdNameAll();
         $time_getall = $time_getall->sortByDesc('is_num');
         $time_area = TimesheetProyectoArea::getWithArea();
@@ -135,7 +125,7 @@ class DashboardProyectos extends Component
                     $total_h = round($total_h, 2);
                     $total_he = round($total_he, 2);
 
-                    $tareas = TimesheetTarea::where('proyecto_id', $this->proy_id);
+                    $tareas = TimesheetTarea::where('proyecto_id', $this->proy_id)->get();
 
                     foreach ($tareas as $tar) {
                         if ($tar->todos == true) {
@@ -157,8 +147,9 @@ class DashboardProyectos extends Component
                         ->where('estatus', 'aprobado')
                         ->whereHas('horas', function ($query) {
                             $query->where('proyecto_id', $this->proy_id);
-                        })->distinct('empleado_id')->get();
-
+                        })->distinct('empleado_id')
+                        ->get();
+                    //     dd($empproyectos);
                     // $empproyectos = Timesheet::select('timesheets.id', 'timesheets.empleado_id', 'timesheets.estatus')
                     //     ->join('horas', 'timesheets.id', '=', 'horas.timesheet_id')
                     //     ->with(['horas', 'empleado'])
@@ -166,7 +157,7 @@ class DashboardProyectos extends Component
                     //     ->where('horas.proyecto_id', $this->proy_id)
                     //     ->distinct('timesheets.empleado_id')
                     //     ->get();
-                    // dd($empproyectos);
+                    // dump($empproyectos);
 
                     $this->datos_empleados = collect();
                     foreach ($empproyectos as $ep) {
@@ -197,8 +188,11 @@ class DashboardProyectos extends Component
                         ]);
                     }
                 }
-                // dd($this->datos_areas);
-                $this->dispatch('renderAreas', datos_areas: $this->datos_areas, datos_empleados: $this->datos_empleados);
+
+                $this->dispatch('renderAreas', [
+                    'datos_areas' => $this->datos_areas->toArray(),
+                    'datos_empleados' => $this->datos_empleados->toArray(),
+                ]);
             } else {
                 $datos_dash = TimesheetProyecto::getAll($this->proy_id)->where('id', '=', $this->proy_id);
                 $area_individual = Area::select('area')->where('id', '=', $this->area_id);
@@ -299,8 +293,12 @@ class DashboardProyectos extends Component
                     ]);
                 }
 
-                // dd($this->datos_areas);
-                $this->dispatch('renderAreas', datos_areas: $this->datos_areas, datos_empleados: $this->datos_empleados);
+                // dd($this->datos_areas->toArray(), $this->datos_empleados);
+                // $this->dispatch('renderAreas', datos_areas: $this->datos_areas, datos_empleados: $this->datos_empleados);
+                $this->dispatch('renderAreas', [
+                    'datos_areas' => $this->datos_areas->toArray(),
+                    'datos_empleados' => $this->datos_empleados->toArray(),
+                ]);
             }
         }
         // dd($datos_areas);
