@@ -34,9 +34,9 @@
             </div>
         </div>
     </div>
-    <div class="card card-body" style="height: 600px; width:1200px;">
-        <div style="height:750px; width:1100px;" id="contenedor-principal">
-            <canvas id="graf-proyectos-area" width="1100" height="750"></canvas>
+    <div class="card card-body" style="height: 800px; width:1600px;">
+        <div style="height:750px; width:1400px;" id="contenedor-principal">
+            <canvas id="graf-proyectos-area" width="1400" height="750"></canvas>
         </div>
     </div>
     <div class="row">
@@ -57,9 +57,9 @@
             </div>
         </div>
     </div>
-    <div class="card card-body" style="height:600px; width:1200px;" >
-        <div id="contenedor-empleados" style="height:750px; width:1100px;" >
-            <canvas id="graf-proyectos-empleado" width="1100" height="750"></canvas>
+    <div class="card card-body" style="height:800px; width:1600px;" >
+        <div id="contenedor-empleados" style="height:750px; width:1400px;" >
+            <canvas id="graf-proyectos-empleado" width="1400" height="750"></canvas>
         </div>
     </div>
 </div>
