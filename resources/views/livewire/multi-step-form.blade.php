@@ -595,7 +595,7 @@
                                                             </small>
                                                         @endif
                                                     </select>
-                                                    &nbsp;<small class="text-muted" style="color: red;">Importante: Seleccione Un Catalogo</small>
+                                                    &nbsp;<small style="color: red;">Importante: Seleccione Un Catalogo</small>
                                                 </div>
                                             </div>
 
