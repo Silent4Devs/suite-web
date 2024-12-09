@@ -34,27 +34,33 @@
             </div>
         </div>
     </div>
-    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-principal">
-        <canvas id="graf-proyectos-area" width="300 !important" height="400 !important"></canvas>
+    <div class="card card-body" style="height: 600px; width:1200px;">
+        <div style="height:750px; width:1100px;" id="contenedor-principal">
+            <canvas id="graf-proyectos-area" width="1100" height="750"></canvas>
+        </div>
     </div>
     <div class="row">
         <div class=" col-lg-6">
-            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;"
-                id="contenedor-areas">
+            <div class="card card-body" style="height:600px;">
                 <h3>Horas Invertidas en el Proyecto por Área</h3>
-                <canvas id="graf-participacion-areas" width="600" height="600"></canvas>
+                <div style="height:550px; width:550px;" id="contenedor-areas">
+                    <canvas id="graf-participacion-areas" width="550" height="550"></canvas>
+                </div>
             </div>
         </div>
         <div class=" col-lg-6">
-            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;"
-                id="contenedor-tareas">
+            <div class="card card-body" style="height:600px;">
                 <h3>Tareas en el Proyecto por Área</h3>
-                <canvas id="graf-participacion-tareas" width="600" height="600"></canvas>
+                <div style="height:550px; width:550px;" id="contenedor-tareas">
+                    <canvas id="graf-participacion-tareas" width="550" height="550"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-empleados">
-        <canvas id="graf-proyectos-empleado" width="400" height="400"></canvas>
+    <div class="card card-body" style="height:600px; width:1200px;" >
+        <div id="contenedor-empleados" style="height:750px; width:1100px;" >
+            <canvas id="graf-proyectos-empleado" width="1100" height="750"></canvas>
+        </div>
     </div>
 </div>
 
