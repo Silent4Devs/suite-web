@@ -254,12 +254,12 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="anima-focus">
-                                                                    <select class="form-control" name="nuevo_responsable"
-                                                                        id="nuevo_responsable-{{ $requisicion->id }}">
-                                                                        @foreach ($requisicion->lista_sustitutos as $key => $sustituto)
-                                                                            <option value="{{ $sustituto->id }}">
-                                                                                {{ $sustituto->name }}</option>
-                                                                        @endforeach
+                                                                    <select name="sustituto_id" id="sustituto_id">
+                                                                        @forelse ($requisicion->lista_sustitutos ?? [] as $sustituto)
+                                                                            <option value="{{ $sustituto->id }}">{{ $sustituto->name }}</option>
+                                                                        @empty
+                                                                            <option value="">Sin Sustitutos disponibles</option>
+                                                                        @endforelse
                                                                     </select>
                                                                     <label
                                                                         for="nuevo_responsable-{{ $requisicion->id }}">Responsable</label>
