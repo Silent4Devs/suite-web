@@ -86,6 +86,7 @@ class Requsicion extends Model implements Auditable
         'obtener_responsable_finanzas',
         'obtener_responsable_comprador',
         'obtener_responsable_finanzas_orden_compra',
+        'lista_sustitutos',
     ];
 
     public $table = 'requisiciones';
@@ -1232,83 +1233,171 @@ class Requsicion extends Model implements Auditable
 
         $requisicion = self::where('id', $this->id)->first();
 
-        $user = User::where('id', $requisicion->id_user)->first();
+        if (isset($requisicion->registroFirmas->delegado_jefe_id)) {
 
-        $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-        $listaPart = $listaReq->participantes;
+            $responsable = $requisicion->registroFirmas->delegadoJefe;
 
-        $jefe = $user->empleado->supervisor;
-        $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
+            return $responsable; // Retornar el responsable si se encuentra disponible
+        }else{
+            $user = User::where('id', $requisicion->id_user)->first();
 
-        $nivel = $supList->nivel ?? null; // Asignar null si no está definido
+            $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+            $listaPart = $listaReq->participantes;
 
-        // Validar si $nivel es nulo
-        if (is_null($nivel)) {
-            return $jefe; // Retornar $jefe si $nivel no está definido
-        }
+            $jefe = $user->empleado->supervisor;
+            $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-        // Filtrar participantes por nivel
-        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+            $nivel = $supList->nivel ?? null; // Asignar null si no está definido
 
-        // Recorrer los participantes filtrados
-        foreach ($participantesNivel as $key => $partNiv) {
-            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-                $responsable = $partNiv->empleado;
-
-                return $responsable; // Retornar el responsable si se encuentra disponible
+            // Validar si $nivel es nulo
+            if (is_null($nivel)) {
+                return $jefe; // Retornar $jefe si $nivel no está definido
             }
-        }
 
-        // Si no se encuentra responsable disponible, retornar $jefe
-        return $jefe;
+            // Filtrar participantes por nivel
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            // Recorrer los participantes filtrados
+            foreach ($participantesNivel as $key => $partNiv) {
+                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+                    $responsable = $partNiv->empleado;
+
+                    return $responsable; // Retornar el responsable si se encuentra disponible
+                }
+            }
+
+            // Si no se encuentra responsable disponible, retornar $jefe
+            return $jefe;
+        }
     }
 
     public function getObtenerResponsableFinanzasAttribute()
     {
+        $requisicion = self::where('id', $this->id)->first();
 
-        $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
-        $listaPart = $listaReq->participantes;
+        if (isset($requisicion->registroFirmas->delegado_finanzas_id)) {
 
-        for ($i = 0; $i <= $listaReq->niveles; $i++) {
-            $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
+            $responsable = $requisicion->registroFirmas->delegadoResponsableFinanzas;
 
-            if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+            return $responsable; // Retornar el responsable si se encuentra disponible
+        }else{
+            $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+            $listaPart = $listaReq->participantes;
 
-                $responsable = $responsableNivel->empleado;
+            for ($i = 0; $i <= $listaReq->niveles; $i++) {
+                $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
-                return $responsable;
+                if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $responsableNivel->empleado;
+
+                    return $responsable;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     public function getObtenerResponsableCompradorAttribute()
     {
+        $requisicion = self::where('id', $this->id)->first();
 
-        $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
+        if (isset($requisicion->registroFirmas->delegado_comprador_id)) {
 
-        $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
-        $listaPart = $listaReq->participantes;
+            $responsable = $requisicion->registroFirmas->delegadoComprador;
 
-        $supList = $listaPart->where('empleado_id', $comprador->user->id)->where('numero_orden', 1)->first();
+            return $responsable; // Retornar el responsable si se encuentra disponible
+        }else{
 
-        $nivel = $supList->nivel;
+            $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 
-        $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+            $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+            $listaPart = $listaReq->participantes;
 
-        foreach ($participantesNivel as $key => $partNiv) {
-            if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+            $supList = $listaPart->where('empleado_id', $comprador->user->id)->where('numero_orden', 1)->first();
 
-                $responsable = $partNiv->empleado;
+            $nivel = $supList->nivel;
 
-                return $responsable;
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-                break;
+            foreach ($participantesNivel as $key => $partNiv) {
+                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
+
+                    $responsable = $partNiv->empleado;
+
+                    return $responsable;
+
+                    break;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
+    }
+
+    public function getListaSustitutosAttribute(){
+
+        $requisicion = self::where('id', $this->id)->first();
+
+        $empleadoActual = User::getCurrentUser()->empleado;
+
+        if ($requisicion->firma_jefe === null) {
+
+            $user = User::where('id', $requisicion->id_user)->first();
+
+            $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
+            $listaPart = $listaReq->participantes;
+
+            $jefe = $user->empleado->supervisor;
+            $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
+
+            $nivel = $supList->nivel ?? null; // Asignar null si no está definido
+
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            $sustitutosLD = [];
+            foreach ($participantesNivel as $key => $participante) {
+                if ($participante->empleado->disponibilidad->disponibilidad == 1 && $participante->empleado->id != $empleadoActual->id) {
+                    $sustitutosLD[] = $participante->empleado;
+                }
+            }
+
+            return $sustitutosLD;
+       } elseif ($requisicion->firma_finanzas === null) {
+
+            $LD = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
+            $participantes = $LD->participantes;
+            $sustitutosLD = [];
+            foreach ($participantes as $key => $participante) {
+                if ($participante->empleado->disponibilidad->disponibilidad == 1 && $participante->empleado->id != $empleadoActual->id) {
+                    $sustitutosLD[] = $participante->empleado;
+                }
+            }
+
+            return $sustitutosLD;
+        } elseif ($requisicion->firma_compras === null) {
+
+            $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
+
+            $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+            $listaPart = $listaReq->participantes;
+
+            $supList = $listaPart->where('empleado_id', $comprador->user->id)->where('numero_orden', 1)->first();
+
+            $nivel = $supList->nivel;
+
+            $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
+
+            $sustitutosLD = [];
+            foreach ($participantesNivel as $key => $participante) {
+                if ($participante->empleado->disponibilidad->disponibilidad == 1 && $participante->empleado->id != $empleadoActual->id) {
+                    $sustitutosLD[] = $participante->empleado;
+                }
+            }
+
+            return $sustitutosLD;
+        }
     }
 
     public function getObtenerResponsableFinanzasOrdenCompraAttribute()

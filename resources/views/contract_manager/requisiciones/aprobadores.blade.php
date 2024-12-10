@@ -256,7 +256,7 @@
                                                                 <div class="anima-focus">
                                                                     <select class="form-control" name="nuevo_responsable"
                                                                         id="nuevo_responsable-{{ $requisicion->id }}">
-                                                                        @foreach ($sustitutosLD as $key => $sustituto)
+                                                                        @foreach ($requisicion->lista_sustitutos as $key => $sustituto)
                                                                             <option value="{{ $sustituto->id }}">
                                                                                 {{ $sustituto->name }}</option>
                                                                         @endforeach
