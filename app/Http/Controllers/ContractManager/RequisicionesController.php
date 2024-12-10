@@ -1157,22 +1157,18 @@ class RequisicionesController extends Controller
             $requisicion = KatbolRequsicion::find($request->requisicion_id);
             $firmasRequisicion = $requisicion->registroFirmas;
 
-            if ($firmasRequisicion->solicitante_id == $idEmpleadoActual) {
-                $posicion = 'solicitante_id';
-            }
-
             if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
-                $posicion = 'jefe_id';
+                $posicion = 'delegado_jefe_id';
                 $posicion_firma = 'firma_solicitante';
             }
 
             if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
-                $posicion = 'responsable_finanzas_id';
+                $posicion = 'delegado_finanzas_id';
                 $posicion_firma = 'firma_jefe';
             }
 
             if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
-                $posicion = 'comprador_id';
+                $posicion = 'delegado_comprador_id';
                 $posicion_firma = 'firma_finanzas';
             }
 
