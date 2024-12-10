@@ -219,7 +219,7 @@
                                             icon: 'info',
                                             allowOutsideClick: false,
                                             showConfirmButton: false,
-                                            timer: 1000, // Tiempo en milisegundos (5 segundos)
+                                            timer: 10000, // Tiempo en milisegundos (5 segundos)
                                             didOpen: () => {
                                                 Swal.showLoading(); // Muestra un indicador de carga
                                             },
