@@ -26,6 +26,9 @@ class FirmasRequisiciones extends Model
         'comprador_id',
         'firma_comprador',
         'fecha_firma_comprador_requi',
+        'delegado_jefe_id',
+        'delegado_finanzas_id',
+        'delegado_comprador_id',
     ];
 
     public function requisicion()
@@ -51,6 +54,21 @@ class FirmasRequisiciones extends Model
     public function comprador()
     {
         return $this->belongsTo(Empleado::class, 'comprador_id', 'id');
+    }
+
+    public function delegadoJefe()
+    {
+        return $this->belongsTo(Empleado::class, 'delegado_jefe_id', 'id');
+    }
+
+    public function delegadoResponsableFinanzas()
+    {
+        return $this->belongsTo(Empleado::class, 'delegado_finanzas_id', 'id');
+    }
+
+    public function delegadoComprador()
+    {
+        return $this->belongsTo(Empleado::class, 'delegado_comprador_id', 'id');
     }
 
     public function duplicados($id_empleado)

@@ -133,7 +133,8 @@
             <div class="form-group col-sm-6">
                 <i class="fa-solid fa-file-circle-check iconos-crear"></i>
                 <label for="fecha_inicio" class="required">Fecha de inicio:</label>
-                <input type="date" name="fecha_inicio" class="form-control" placeholder="Ingrese la fecha en que inician sus vacaciones..." id="fecha_inicio">
+                <input type="date" name="fecha_inicio" class="form-control"
+                    placeholder="Ingrese la fecha en que inician sus vacaciones..." id="fecha_inicio">
                 @error('fecha_inicio')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -142,7 +143,8 @@
             <div class="form-group col-sm-6">
                 <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
                 <label for="fecha_fin" class="required">Fecha de fin:</label>
-                <input type="date" name="fecha_fin" class="form-control" placeholder="Ingrese la fecha en que terminan sus vacaciones..." id="fecha_fin">
+                <input type="date" name="fecha_fin" class="form-control"
+                    placeholder="Ingrese la fecha en que terminan sus vacaciones..." id="fecha_fin">
                 @error('fecha_fin')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -153,7 +155,8 @@
             <div class="form-group col-sm-12">
                 <i class="bi bi-calendar-week-fill iconos-crear"></i>
                 <label for="dias_solicitados" class="required">Días solicitados:</label>
-                <input type="number" name="dias_solicitados" class="form-control" placeholder="0" readonly id="dias_solicitados" style="text-align:center">
+                <input type="number" name="dias_solicitados" class="form-control dias_solicitados" placeholder="0"
+                    readonly style="text-align:center">
                 @error('dias_solicitados')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -204,13 +207,15 @@
             <div class="form-group col-sm-6">
                 <i class="fa-solid fa-file-circle-check iconos-crear"></i>
                 <label for="fecha_inicio" class="required">Día de inicio:</label>
-                <input type="date" name="fecha_inicio" class="form-control" placeholder="Ingrese la fecha en que inician sus vacaciones..." disabled id="fecha_inicio">
+                <input type="date" name="fecha_inicio" class="form-control"
+                    placeholder="Ingrese la fecha en que inician sus vacaciones..." disabled id="fecha_inicio">
             </div>
 
             <div class="form-group col-sm-6">
                 <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
                 <label for="fecha_fin" class="required">Día de fin:</label>
-                <input type="date" name="fecha_fin" class="form-control" placeholder="Ingrese la fecha en que terminan sus vacaciones..." disabled id="fecha_fin">
+                <input type="date" name="fecha_fin" class="form-control"
+                    placeholder="Ingrese la fecha en que terminan sus vacaciones..." disabled id="fecha_fin">
             </div>
 
         </div>
@@ -219,7 +224,8 @@
             <div class="form-group col-sm-12">
                 <i class="bi bi-calendar-week-fill iconos-crear"></i>
                 <label for="dias_solicitados" class="required">Días solicitados:</label>
-                <input type="number" name="dias_solicitados" class="form-control" placeholder="0" readonly style="text-align:center" id="dias_solicitados">
+                <input type="number" name="dias_solicitados" class="form-control dias_solicitados" placeholder="0"
+                    readonly style="text-align:center">
             </div>
 
         </div>
@@ -235,6 +241,7 @@
 
 
 @section('scripts')
+    @parent
     <script>
         function getBusinessDatesCount(startDate, endDate) {
             let count = 0;
@@ -275,15 +282,15 @@
             if (!isNaN(dias)) {
                 if (dias > 0) {
                     if (dias <= limite) {
-                        $("#dias_solicitados").attr("value", dias);
+                        $(".dias_solicitados").attr("value", dias);
                     } else {
                         alert("Los dias solicitados no pueden ser mayores a los disponibles, ¡Intentalo de nuevo!");
-                        $("#dias_solicitados").attr("value", 0);
+                        $(".dias_solicitados").attr("value", 0);
                         document.getElementById("fecha_inicio").value = "";
                     }
                 } else {
                     alert("La fecha de fin no puede ser menor a la de incio, ¡Intentalo de nuevo!");
-                    $("#dias_solicitados").attr("value", 0);
+                    $(".dias_solicitados").attr("value", 0);
                     document.getElementById("fecha_inicio").value = "";
                 }
             }
@@ -314,16 +321,16 @@
             if (!isNaN(dias)) {
                 if (dias > 0) {
                     if (dias <= limite) {
-                        $("#dias_solicitados").attr("value", dias);
+                        $(".dias_solicitados").attr("value", dias);
                     } else {
                         alert("Los dias solicitados no pueden ser mayores a los disponibles, ¡Intentalo de nuevo!");
-                        $("#dias_solicitados").attr("value", 0);
+                        $(".dias_solicitados").attr("value", 0);
                         document.getElementById("fecha_fin").value = "";
                     }
 
                 } else {
                     alert("La fecha de fin no puede ser menor a la de incio, ¡Intentalo de nuevo!");
-                    $("#dias_solicitados").attr("value", 0);
+                    $(".dias_solicitados").attr("value", 0);
                     document.getElementById("fecha_fin").value = "";
                 }
             }
