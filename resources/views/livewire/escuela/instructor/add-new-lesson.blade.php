@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="form-group col-4 anima-focus">
-                            <select wire:model="platform_id" id="platform-{{ $section->id }}" type="text"
+                            <select wire:change="updateTypeFormat" wire:model="platform_id" id="platform-{{ $section->id }}" type="text"
                                 class=" w-full form-control @if ($errors->has('platform_id')) invalid @endif">
                                 @foreach ($platforms as $platform)
                                     <option value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -36,32 +36,95 @@
                             <label for="platform-{{ $section->id }}">Plataforma*</label>
 
                         </div>
-                        <div class="form-group col-12 mt-4 anima-focus">
-                            <input wire:model="url" id="url-{{ $section->id }}" type="text" placeholder=""
-                                class=" w-full form-control @if ($errors->has('url')) invalid @endif">
-                            @error('url')
-                                <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
-                            @enderror
-                            <label for="url-{{ $section->id }}">URL*</label>
 
-                        </div>
-                        <div class="form-group col-12 anima-focus">
-                            <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
-                                class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
-                            <label for="url-{{ $section->id }}">Descripción</label>
+                        @switch($formatType)
+                            @case('Youtube')
+                                <div class="form-group col-12 mt-4 anima-focus">
+                                    <input wire:model="url" id="url-{{ $section->id }}" type="text" placeholder=""
+                                        class=" w-full form-control @if ($errors->has('url')) invalid @endif">
+                                    @error('url')
+                                        <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                    @enderror
+                                    <label for="url-{{ $section->id }}">URL*</label>
 
-                        </div>
-                        <div class="col-12">
-                            <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
-                                <input wire:model.live="file" type="file" class="flex-1 form-input">
-                            </div>
-                            <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
-                                Cargando ...
-                            </div>
-                            @error('file')
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            @enderror
-                        </div>
+                                </div>
+                                <div class="form-group col-12 anima-focus">
+                                    <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
+                                        class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
+                                    <label for="url-{{ $section->id }}">Descripción</label>
+
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
+                                        <input wire:model.live="file" type="file" class="flex-1 form-input">
+                                    </div>
+                                    <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
+                                        Cargando ...
+                                    </div>
+                                    @error('file')
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            @break
+
+                            @case('Vimeo')
+                                <div class="form-group col-12 mt-4 anima-focus">
+                                    <input wire:model="url" id="url-{{ $section->id }}" type="text" placeholder=""
+                                        class=" w-full form-control @if ($errors->has('url')) invalid @endif">
+                                    @error('url')
+                                        <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                    @enderror
+                                    <label for="url-{{ $section->id }}">URL*</label>
+
+                                </div>
+                                <div class="form-group col-12 anima-focus">
+                                    <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
+                                        class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
+                                    <label for="url-{{ $section->id }}">Descripción</label>
+
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
+                                        <input wire:model.live="file" type="file" class="flex-1 form-input">
+                                    </div>
+                                    <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
+                                        Cargando ...
+                                    </div>
+                                    @error('file')
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            @break
+
+                            @case('Texto')
+
+                                <div class="form-group col-12 anima-focus">
+                                    <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
+                                        class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
+                                    <label for="url-{{ $section->id }}">Texto</label>
+
+                                </div>
+
+                            @break
+
+
+                            @case('Documento')
+                                <div class="col-12">
+                                    <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
+                                        <input wire:model.live="file" type="file" class="flex-1 form-input">
+                                    </div>
+                                    <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
+                                        Cargando ...
+                                    </div>
+                                    @error('file')
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            @break
+
+                            @default
+                                <h1>Default</h1>
+                        @endswitch
                     </div>
                     <div class="d-flex justify-content-end mt-4">
                         <button wire:click="cancel" @click="open = false" type="button" style="background-color:white; min-width:140px;"
