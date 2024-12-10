@@ -166,7 +166,7 @@
                     beforeSend: function() {
                         Swal.fire({
                             title: 'Recuperando información',
-                            text: "De la conducta, espere unos instantes...",
+                            text: "Espere unos instantes...",
                             icon: 'info',
                             allowOutsideClick: false,
                             showConfirmButton: false,
@@ -213,15 +213,30 @@
                                     data: data,
                                     dataType: "JSON",
                                     beforeSend: function() {
-                                        toastr.info(
-                                            'Cambiando el nivel esperado, espere un momento...'
-                                        )
+                                        Swal.fire({
+                                            title: 'Cambiando el nivel esperado',
+                                            text: "espere unos instantes...",
+                                            icon: 'info',
+                                            allowOutsideClick: false,
+                                            showConfirmButton: false,
+                                            timer: 1000, // Tiempo en milisegundos (5 segundos)
+                                            didOpen: () => {
+                                                Swal.showLoading(); // Muestra un indicador de carga
+                                            },
+                                            willClose: () => {
+                                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                                            }
+                                        });
                                     },
                                     success: function(response) {
                                         if (response.success) {
-                                            toastr.success(
-                                                'Nivel esperado cambiado con éxito'
-                                            );
+                                            Swal.fire({
+                                                title: 'Nivel esperado',
+                                                text: "Cambiado con éxito",
+                                                icon: 'success',
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'Aceptar'
+                                            });
                                             tblCompetenciasPorPuesto.ajax.reload();
                                             $('#modalEditarCompetencia').modal(
                                                 'hide');

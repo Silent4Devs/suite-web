@@ -247,7 +247,7 @@
                 beforeSend: function() {
                     Swal.fire({
                             title: 'Recuperando información',
-                            text: "De la conducta, espere unos instantes...",
+                            text: "Espere unos instantes...",
                             icon: 'info',
                             allowOutsideClick: false,
                             showConfirmButton: false,
