@@ -398,6 +398,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             ])->except(['show', 'destroy']);
         });
 
+        Route::post('solicitudAprobacionVacacion/updateAprobacion/{id}', 'SolicitudVacacionesController@updateAprobacion')->name('solicitud-vacaciones.updateAprobacion');
+
         Route::prefix('solicitud-dayoff')->group(function () {
             Route::controller(SolicitudDayOffController::class)->group(function () {
                 Route::get('{id}/showArchivo', 'showArchivo')->name('solicitud-dayoff.showArchivo');
