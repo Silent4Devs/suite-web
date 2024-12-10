@@ -63,7 +63,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
         </div>
-        <div class="form-group">
+        <div class="form-group text-end mt-5">
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
             <button class="btn btn-primary" type="submit" id="btnEnviarPermisos">
                 {{ trans('global.save') }}
