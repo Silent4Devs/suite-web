@@ -164,7 +164,20 @@
                     },
                     dataType: "JSON",
                     beforeSend: function() {
-                        toastr.info('Recuperando información, espere un momento...');
+                        Swal.fire({
+                            title: 'Recuperando información',
+                            text: "De la conducta, espere unos instantes...",
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 10000, // Tiempo en milisegundos (5 segundos)
+                            didOpen: () => {
+                                Swal.showLoading(); // Muestra un indicador de carga
+                            },
+                            willClose: () => {
+                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                            }
+                        });
                     },
                     success: function(response) {
                         console.log(response);
