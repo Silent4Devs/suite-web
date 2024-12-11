@@ -88,7 +88,7 @@
                                     <img src="{{ asset('storage/empleados/imagenes') }}/{{ $sol->empleado->avatar }}"
                                         title="{{ $sol->empleado->avatar }}" class="rounded-circle"
                                         style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                                    <span>{{ $sol->empleado->avatar }}</span>
+                                    <span>{{ $sol->empleado->name }}</span>
                                 </td>
                                 <td style="min-width: 110px;">
                                     {{ $sol->dias_solicitados }}
