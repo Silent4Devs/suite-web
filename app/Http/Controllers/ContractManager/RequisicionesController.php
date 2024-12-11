@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Events\RequisicionesEvent;
-use App\Http\Controllers\Controller;
-use App\Mail\RequisicionesEmail;
-use App\Mail\RequisicionesFirmaDuplicadaEmail;
-use App\Mail\RequisicionOrdenCompraCancelada;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\Producto;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use Log;
+use PDF;
+use Gate;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Empleado;
+use App\Models\Organizacion;
+use Illuminate\Http\Request;
+use App\Mail\RequisicionesEmail;
+use App\Models\ListaDistribucion;
+use App\Events\RequisicionesEvent;
 use App\Models\FirmasOrdenesCompra;
 use App\Models\FirmasRequisiciones;
-use App\Models\HistorialEdicionesReq;
-use App\Models\ListaDistribucion;
-use App\Models\Organizacion;
-use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
-use Carbon\Carbon;
-use Gate;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use PDF;
+use App\Models\HistorialEdicionesReq;
+use App\Models\ContractManager\Producto;
+use App\Mail\RequisicionOrdenCompraCancelada;
+use App\Mail\RequisicionesFirmaDuplicadaEmail;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -1145,49 +1146,63 @@ class RequisicionesController extends Controller
     }
 
     public function cambiarResponsable(Request $request)
-    {
-        try {
-            $idEmpleadoActual = User::getCurrentUser()->empleado->id;
+{
+    try {
 
-            $request->validate([
-                'requisicion_id' => 'required',
-                'nuevo_responsable' => 'required',
-            ]);
+        $idEmpleadoActual = User::getCurrentUser()->empleado->id;
 
-            $requisicion = KatbolRequsicion::find($request->requisicion_id);
-            $firmasRequisicion = $requisicion->registroFirmas;
+        $request->validate([
+            'requisicion_id' => 'required',
+            'nuevo_responsable' => 'required',
+        ]);
 
-            if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
-                $posicion = 'delegado_jefe_id';
-                $posicion_firma = 'firma_solicitante';
-            }
+        $requisicion = KatbolRequsicion::find($request->requisicion_id);
 
-            if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
-                $posicion = 'delegado_finanzas_id';
-                $posicion_firma = 'firma_jefe';
-            }
+        $firmasRequisicion = $requisicion->registroFirmas;
 
-            if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
-                $posicion = 'delegado_comprador_id';
-                $posicion_firma = 'firma_finanzas';
-            }
+        $posicion = null;
+        $posicion_firma = null;
 
-            $nuevoResponsableId = $request->nuevo_responsable;
-            $emailNuevoResponsable = Empleado::find($nuevoResponsableId);
-
-            $firmasRequisicion->update([
-                $posicion => $nuevoResponsableId,
-            ]);
-
-            $organizacion = Organizacion::getFirst();
-
-            Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(new RequisicionesEmail($requisicion, $organizacion, $posicion_firma));
-
-            return response()->json(['success' => true]);
-        } catch (\Throwable $th) {
-            toast('Error al modificar al colaborador responsable.', 'error');
+        if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
+            $posicion = 'delegado_jefe_id';
+            $posicion_firma = 'firma_solicitante';
         }
+
+        if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
+            $posicion = 'delegado_finanzas_id';
+            $posicion_firma = 'firma_jefe';
+        }
+
+        if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
+            $posicion = 'delegado_comprador_id';
+            $posicion_firma = 'firma_finanzas';
+        }
+
+        $nuevoResponsableId = $request->nuevo_responsable;
+
+        $emailNuevoResponsable = Empleado::find($nuevoResponsableId);
+
+        $firmasRequisicion->update([
+            $posicion => $nuevoResponsableId,
+        ]);
+
+        $organizacion = Organizacion::getFirst();
+
+        try {
+            //code...
+            Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(
+                new RequisicionesEmail($requisicion, $organizacion, $posicion_firma)
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return response()->json(['success' => true]);
+    } catch (\Throwable $th) {
+        toast('Error al modificar al colaborador responsable.', 'error');
+        return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
     }
+}
 
     public function cancelarRequisicion(Request $request)
     {
