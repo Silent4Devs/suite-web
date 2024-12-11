@@ -112,6 +112,7 @@ class CourseStatus extends Component
         $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
+
         // dd($this->current);
         return view('livewire.escuela.course-status');
 
@@ -126,6 +127,7 @@ class CourseStatus extends Component
             $this->current = $lesson;
             $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render'); // Renderizar la vista correctamente
+
             return;
         }
 
@@ -134,6 +136,7 @@ class CourseStatus extends Component
             $this->current = $lesson;
             $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render');
+
             // dd('aqui');
             return;
         }
@@ -142,6 +145,7 @@ class CourseStatus extends Component
         if (! $this->current->completed) {
             $this->alertaEmergente('Es necesario terminar esta lección antes de avanzar.');
             $this->dispatch('render'); // Asegurarse de renderizar la lección actual
+
             // dd('aqui2');
             return;
         }

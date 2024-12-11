@@ -282,42 +282,42 @@ class CreateEvaluacionDesempeno extends Component
         // Configurar el período seleccionado
         $cantidad_periodos = 0;
         // if ($valor) {
-            switch ($periodo) {
-                case 'mensual':
-                    // $this->mensual = true;
-                    $cantidad_periodos = 12;
-                    break;
-                case 'bimestral':
-                    // $this->bimestral = true;
-                    $cantidad_periodos = 6;
-                    break;
-                case 'trimestral':
-                    // $this->trimestral = true;
-                    $cantidad_periodos = 4;
-                    break;
-                case 'semestral':
-                    // $this->semestral = true;
-                    $cantidad_periodos = 2;
-                    break;
-                case 'anualmente':
-                case 'abierta':
-                    // $this->anualmente = ($periodo == 'anualmente');
-                    // $this->abierta = ($periodo == 'abierta');
-                    $cantidad_periodos = 1;
-                    break;
-                default:
-                    // Periodo no válido
-                    return;
-            }
+        switch ($periodo) {
+            case 'mensual':
+                // $this->mensual = true;
+                $cantidad_periodos = 12;
+                break;
+            case 'bimestral':
+                // $this->bimestral = true;
+                $cantidad_periodos = 6;
+                break;
+            case 'trimestral':
+                // $this->trimestral = true;
+                $cantidad_periodos = 4;
+                break;
+            case 'semestral':
+                // $this->semestral = true;
+                $cantidad_periodos = 2;
+                break;
+            case 'anualmente':
+            case 'abierta':
+                // $this->anualmente = ($periodo == 'anualmente');
+                // $this->abierta = ($periodo == 'abierta');
+                $cantidad_periodos = 1;
+                break;
+            default:
+                // Periodo no válido
+                return;
+        }
 
-            for ($i = 1; $i <= $cantidad_periodos; $i++) {
-                $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T' . $i,
-                    'fecha_inicio' => null,
-                    'fecha_fin' => null,
-                    'habilitar' => ($i === 1), // Solo el primer periodo habilitado
-                ];
-            }
+        for ($i = 1; $i <= $cantidad_periodos; $i++) {
+            $this->arreglo_periodos[] = [
+                'nombre_evaluacion' => 'T'.$i,
+                'fecha_inicio' => null,
+                'fecha_fin' => null,
+                'habilitar' => ($i === 1), // Solo el primer periodo habilitado
+            ];
+        }
         // }
     }
 
@@ -326,7 +326,7 @@ class CreateEvaluacionDesempeno extends Component
         $numeroDePeriodos = count($this->arreglo_periodos) + 1; // Obtener el número actual de períodos y agregar 1
 
         $this->arreglo_periodos[] = [
-            'nombre_evaluacion' => 'T' . $numeroDePeriodos,
+            'nombre_evaluacion' => 'T'.$numeroDePeriodos,
             'fecha_inicio' => null,
             'fecha_fin' => null,
             'habilitar' => false, // Solo el primer periodo habilitado
@@ -461,8 +461,8 @@ class CreateEvaluacionDesempeno extends Component
         }
     }
 
-
-    public function desasignarColaborador($key){
+    public function desasignarColaborador($key)
+    {
         unset($this->empleados_seleccionados[$key]);
     }
 
@@ -485,7 +485,7 @@ class CreateEvaluacionDesempeno extends Component
                 $ev_query = Empleado::getIDaltaAll()->sortBy('name');
 
                 foreach ($this->empleados_seleccionados as $emp_sel) {
-                    $evld[] = intval($emp_sel["id"]);
+                    $evld[] = intval($emp_sel['id']);
                 }
 
                 break;
@@ -497,7 +497,7 @@ class CreateEvaluacionDesempeno extends Component
 
             default:
 
-            break;
+                break;
         }
 
         $this->asignarEvaluadoresAEvaluados($evld);
@@ -947,6 +947,7 @@ class CreateEvaluacionDesempeno extends Component
         if (! $this->validarPasoActual()) {
             if ($this->paso > 1) {
                 $this->guardarHastaPasoAnterior();
+
                 return redirect(route('admin.rh.evaluaciones-desempeno.dashboard-general'))->with('warning', 'Datos incompletos, borrador guardado hasta el paso anterior.');
             }
         }
@@ -1188,10 +1189,10 @@ class CreateEvaluacionDesempeno extends Component
 
             case 3:
                 // dd($this->select_evaluados);
-                if($this->select_evaluados != null){
+                if ($this->select_evaluados != null) {
                     // Agrega las validaciones del tercer paso aquí
-                    if($this->select_evaluados == 'manualmente'){
-                        if(empty($this->array_evaluados)){
+                    if ($this->select_evaluados == 'manualmente') {
+                        if (empty($this->array_evaluados)) {
                             $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
                                 'position' => 'center',
                                 'timer' => 6000,
@@ -1205,7 +1206,7 @@ class CreateEvaluacionDesempeno extends Component
                             return false;
                         }
                     }
-                }else{
+                } else {
                     $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
                         'position' => 'center',
                         'timer' => 6000,
@@ -1215,6 +1216,7 @@ class CreateEvaluacionDesempeno extends Component
                         'confirmButtonText' => 'Entendido',
                         'timerProgressBar' => true,
                     ]);
+
                     return false;
                 }
                 break;

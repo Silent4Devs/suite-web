@@ -10,7 +10,6 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use Livewire\Component;
-use VXM\Async\AsyncFacade as Async;
 
 class DashboardProyectos extends Component
 {
