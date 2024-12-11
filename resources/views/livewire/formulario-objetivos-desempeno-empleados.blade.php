@@ -312,20 +312,15 @@
             <div class="col-6">
                 <h4 class="title-config">Objetivos Estrategicos del Colaborador</h4>
             </div>
-            <div class="col-2">
+            <div class="d-flex justify-content-end">
                 @if ($cuentaObjPend > 0)
-                    <button class="btn btn-primary" wire:click.prevent=enviarCorreo>
+                    <button class="btn btn-primary me-2" wire:click.prevent="enviarCorreo">
                         Notificar Lider
                     </button>
                 @endif
-            </div>
-            <div class="col-2">
-                <a href="{{ route('admin.rh.evaluaciones-desempeno.objetivos-papelera', $id_emp) }}">
+                <a class="btn btn-primary" href="{{ route('admin.rh.evaluaciones-desempeno.objetivos-papelera', $id_emp) }}">
                     Papelera
                 </a>
-            </div>
-            <div class="col-2">
-
             </div>
             <hr class="my-4">
         </div>
