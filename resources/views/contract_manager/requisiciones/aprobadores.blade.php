@@ -25,7 +25,7 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-6">
             <!-- Botón 1 -->
             <button type="button"
@@ -41,7 +41,7 @@
                 id="filtrarBtn1" style="width: 100%;">Filtrar requisiciones pendientes jefes</button>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-6">
             <!-- Botón 3 -->
             <button type="button"
