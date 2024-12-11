@@ -24,8 +24,7 @@
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
                                         class="fa-solid fa-calendar-check iconos-crear"></i>Colaborador</label>
-                                <input type="text" class="form-control" value="{{ $vacacion->empleado->name }}"
-                                    style="text-align: center">
+                                <div class="form-control bg-gray-100">{{ $vacacion->empleado->name }}</div>
                             </fieldset>
                         </div>
                     </div>
@@ -34,17 +33,16 @@
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
                                         class="fa-solid fa-calendar-check iconos-crear"></i>Puesto</label>
-                                <input type="text" class="form-control" value="{{ $vacacion->empleado->puesto }}"
-                                    style="text-align: center">
+                                <div class="form-control bg-gray-100">{{ $vacacion->empleado->puesto }}</div>
                             </fieldset>
                         </div>
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
                                         class="fa-solid fa-calendar-check iconos-crear"></i>Área</label>
-                                <input type="text" class="form-control" value="{{ $vacacion->empleado->area->area }}"
-                                    style="text-align: center">
+                                <div class="form-control bg-gray-100">{{ $vacacion->empleado->area->area }}</div>
                             </fieldset>
+
                         </div>
                     </div>
                     <div class="row">
@@ -52,8 +50,7 @@
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
                                         class="fa-solid fa-calendar-check iconos-crear"></i>Antiguedad (Años)</label>
-                                <input type="text" id="disabledTextInput" class="form-control"
-                                    value="{{ $año }}" style="text-align: center">
+                                <div class="form-control bg-gray-100">{{ $año }}</div>
                             </fieldset>
                         </div>
                         {{-- <div class="form-group col-sm-6">
@@ -70,21 +67,15 @@
                         <div class="form-group col-sm-6">
                             <i class="fa-solid fa-file-circle-check iconos-crear"></i>
                             <label for="fecha_inicio">Día de inicio:</label>
-                            <input type="date" name="fecha_inicio" class="form-control"
-                                placeholder="Ingrese la fecha en que inician sus vacaciones..." id="fecha_inicio" readonly>
-                            @error('fecha_inicio')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                            <div class="form-control bg-gray-100">
+                                {{ \Carbon\Carbon::parse($vacacion->fecha_inicio)->format('d / m / Y') }}</div>
                         </div>
 
                         <div class="form-group col-sm-6">
                             <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>
                             <label for="fecha_fin">Día de fin:</label>
-                            <input type="date" name="fecha_fin" class="form-control"
-                                placeholder="Ingrese la fecha en que terminan sus vacaciones..." id="fecha_fin" readonly>
-                            @error('fecha_fin')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                            <div class="form-control bg-gray-100">
+                                {{ \Carbon\Carbon::parse($vacacion->fecha_fin)->format('d / m / Y') }}</div>
                         </div>
                     </div>
 
@@ -92,11 +83,7 @@
                         <div class="form-group col-sm-12">
                             <i class="fa-solid fa-calendar-day iconos-crear"></i>
                             <label for="dias_solicitados">Número de días solicitados:</label>
-                            <input type="number" name="dias_solicitados" class="form-control" placeholder="0" readonly
-                                id="dias_solicitados" style="text-align:center">
-                            @error('dias_solicitados')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                            <div class="form-control bg-gray-100">{{ $vacacion->dias_solicitados }}</div>
                         </div>
                     </div>
 
