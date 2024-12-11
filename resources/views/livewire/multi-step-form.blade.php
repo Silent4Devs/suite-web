@@ -533,8 +533,8 @@
                                                             {{-- Evaluación de Desempeño Jun-Dic 2021 --}}
                                                             {{-- Evaluación de desempeño realizada en el segundo periodo del año 2021 para los empleados de S4B sede Torre Murano. --}}
                                                             <input type="checkbox" type="checkbox"
-                                                                wire:model.blur="includeCompetencias"
-                                                                wire:change.prevent="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
+                                                                wire:model.lazy="includeCompetencias"
+                                                                wire:click="$set('showPesoGeneralCompetencias',{{ !$showPesoGeneralCompetencias }})">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
@@ -559,24 +559,29 @@
                                                                     ({{ $errors->first('includeObjetivos') }})
                                                                 </small>
                                                             @endif
-                                                            <input type="checkbox" wire:model.blur="includeObjetivos"
-                                                                class="form-check-input" type="checkbox"
-                                                                wire:change.prevent="$set('showPesoGeneralObjetivos',{{ !$showPesoGeneralObjetivos }})">
+                                                            <input type="checkbox"
+                                                                wire:model.lazy="includeObjetivos"
+                                                                class="form-check-input">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-3 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+
+                                                <!-- Aquí nos aseguramos de que los campos solo se muestren si `includeObjetivos` es verdadero -->
+                                                <div class="col-3 {{ $includeObjetivos ? '' : 'd-none' }}">
                                                     <input style="width: 120px;text-align: center;padding-right: 20px;"
-                                                        wire:model="pesoGeneralObjetivos" id="pesoGeneralOnjetivos"
-                                                        class="form-control" type="text" pattern="[0-9]*"
+                                                        wire:model.defer="pesoGeneralObjetivos"
+                                                        id="pesoGeneralOnjetivos" class="form-control" type="text"
+                                                        pattern="[0-9]*"
                                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                         min="0" max="100">
                                                     <span style="position: absolute;top: 8px;left: 80px;">%</span>
                                                 </div>
-                                                <div class="col-4 {{ $showPesoGeneralObjetivos ? '' : 'd-none' }}">
+
+                                                <div class="col-4 {{ $includeObjetivos ? '' : 'd-none' }}">
+                                                    <br>
                                                     <select class="form-control" name="catalogoObjetivos"
-                                                        id="catalogoObjetivos" wire:model="catalogoObjetivos">
+                                                        id="catalogoObjetivos" wire:model.defer="catalogoObjetivos">
                                                         <option value="" selected>Seleccione el Catalogo
                                                             de
                                                             Parametros que utilizara la Evaluacion</option>
@@ -590,8 +595,11 @@
                                                             </small>
                                                         @endif
                                                     </select>
+                                                    &nbsp;<small style="color: red;">Importante: Seleccione Un Catalogo</small>
                                                 </div>
                                             </div>
+
+
                                         </div>
                                         @if ($errors->has('sumaTotalPesoGeneral'))
                                             <p style="font-size:12px;" class="m-0 text-center text-danger">
@@ -599,68 +607,6 @@
                                             </p>
                                         @endif
                                     </div>
-                                    {{-- @if ($showContentTable)
-                                        <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-                                            <label for="descripcion">
-                                                <i class="mr-2 fab fa-discourse iconos-evaluacion"></i>
-                                                Selecciona las competencias a evaluar
-                                            </label>
-                                            <div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-8">
-                                                        <input class="form-control" type="text" wire:model.live="search"
-                                                            placeholder="Buscar competencia...">
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <select wire:model.live="filter" class="form-control">
-                                                            @foreach ($tipos as $tipo)
-                                                                <option value="{{ $tipo->id }}">
-                                                                    {{ $tipo->nombre }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                @if ($competencias->isNotEmpty())
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>Competencia</th>
-                                                                <th>Tipo</th>
-                                                                <th>Descripción</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($competencias as $competencia)
-                                                                <tr>
-                                                                    <th scope="row"><input wire:model.live.prevent="selected"
-                                                                            value="{{ $competencia->id }}"
-                                                                            type="checkbox">
-                                                                    </th>
-                                                                    <td>{{ $competencia->nombre }}</td>
-                                                                    <td>{{ $competencia->tipo->nombre }}</td>
-                                                                    <td>{{ $competencia->descripcion }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                    @if ($errors->has('selected'))
-                                                        <small
-                                                            class="text-danger">{{ $errors->first('selected') }}</small>
-                                                    @endif
-                                                    {!! $competencias->links() !!}
-                                                @else
-                                                    <p class="text-center "><i
-                                                            class="mr-2 fas fa-exclamation-triangle"></i>Opps...
-                                                        No hemos
-                                                        encontrado ninguna
-                                                        competencia</p>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif --}}
-
                                 </div>
                             </div>
                         </div>
@@ -785,9 +731,7 @@
                                                             {{ $errors->first('by_manual') }}
                                                         </div>
                                                     @endif
-                                                    <small class="form-text text-muted">Importante: No se creará un
-                                                        nuevo grupo,esta opción es recomendada para selecciones de una
-                                                        sola vez</small>
+                                                    <small class="form-text text-muted">Importante: Para seleccionar más de un estudiante, debe mantener oprimido el botón Ctrl</small>
                                                 @endif
                                             </div>
                                             <div class="col-3" style="margin-top: 0;">
@@ -1365,7 +1309,7 @@
                                 class="mr-2 fas fa-arrow-circle-left"></i>Atrás</button>
                     @endif
                     @if ($currentStep == 1 || $currentStep == 2 || $currentStep == 3)
-                        <button type="button" class="btn btn-md btn-success" wire:click="increaseStep()"><i
+                        <button type="button" class="btn btn-md btn-success" wire:click.prevent="increaseStep()"><i
                                 class="mr-2 fas fa-arrow-circle-right"></i>Siguiente</button>
                     @endif
                     @if ($currentStep == 4)

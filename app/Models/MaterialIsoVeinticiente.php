@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class MaterialIsoVeinticiente extends Model implements Auditable, HasMedia
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     public static $searchable = [
         'objetivo',

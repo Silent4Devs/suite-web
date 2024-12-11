@@ -58,11 +58,11 @@ class MultiStepForm extends Component
 
     public $showPesoGeneralCompetencias = false;
 
-    public $pesoGeneralCompetencias = 50;
+    public $pesoGeneralCompetencias = 0;
 
     public $showPesoGeneralObjetivos = false;
 
-    public $pesoGeneralObjetivos = 50;
+    public $pesoGeneralObjetivos = 0;
 
     public $sumaTotalPesoGeneral;
 
@@ -224,88 +224,134 @@ class MultiStepForm extends Component
 
     public function increaseStep()
     {
-        $this->resetErrorBag();
-        $this->validateData();
-        $this->dispatch('increaseStep');
-        $this->currentStep++;
-        if ($this->currentStep == 3) {
-            $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
-            // dd($this->listaEvaluados[0]['evaluado']);
+
+           $this->dispatch('increaseStep');
+
+          // Verificar si el peso general por competencias es válido (≤ 100)
+          if ($this->pesoGeneralCompetencias > 100) {
+            $this->alert('error', 'Excede el peso general por competencias!');
+            return;
         }
-        if ($this->currentStep == 4) {
-            $this->listaEmpleadosSinCompetencias = collect();
-            $this->listaIDSinCompetencias = collect();
-            $this->listaEmpleadosSinObjetivos = collect();
-            $this->listaIDSinObjetivos = collect();
-            $this->listaEmpleadosObjetivosPendiente = collect();
-            $this->listaIDObjetivosPendiente = collect();
-            $this->totalEmpleadosSinCompetencias = 0;
-            $this->totalEmpleadosSinObjetivos = 0;
-            $this->totalEmpleadosObjetivosPendiente = 0;
-            $this->hayEmpleadosSinCompetencias = false;
-            $this->hayEmpleadosSinObjetivos = false;
-            $this->hayEmpleadosObjetivosPendiente = false;
-            foreach ($this->listaEvaluados as $evaluadoL) {
-                // dd($evaluadoL['evaluado']);
-                if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
-                    // dd($evaluadoL['evaluado']['id']);
-                    $this->hayEmpleadosSinCompetencias = true;
-                    $this->totalEmpleadosSinCompetencias++;
-                    $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
-                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['cuenta'] == 0) {
-                    $this->hayEmpleadosSinObjetivos = true;
-                    $this->totalEmpleadosSinObjetivos++;
-                    $this->listaEmpleadosSinObjetivos->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDSinObjetivos->push($evaluadoL['evaluado']['id']);
-                } elseif ($evaluadoL['evaluado']['objetivos_asignados']['pendientes'] == true) {
-                    $this->hayEmpleadosObjetivosPendiente = true;
-                    $this->totalEmpleadosObjetivosPendiente++;
-                    $this->listaEmpleadosObjetivosPendiente->push($evaluadoL['evaluado']['name']);
-                    $this->listaIDObjetivosPendiente->push($evaluadoL['evaluado']['id']);
+
+        // Verificar si el peso general por objetivos es válido (≤ 100)
+        if ($this->pesoGeneralObjetivos > 100) {
+            $this->alert('error', 'Excede el peso general por objetivos!');
+            return;
+        }
+
+        // Verificar si ambos pesos han sido completados y no son insuficientes
+        if ($this->pesoGeneralCompetencias < 100 && $this->pesoGeneralObjetivos === 0) {
+            $this->alert('error', 'Falta completar el peso general por objetivos!');
+            return;
+        }
+
+        if ($this->pesoGeneralObjetivos < 100 && $this->pesoGeneralCompetencias === 0) {
+            $this->alert('error', 'Falta completar el peso general por competencias!');
+            return;
+        }
+
+        // Calcular la suma total de los pesos generales
+        $this->sumaTotalPesoGeneral = intval(((float) $this->pesoGeneralCompetencias ?: 0) + ((float) $this->pesoGeneralObjetivos ?: 0));
+
+
+        // Verificar si la suma total es igual a 100
+        if ($this->sumaTotalPesoGeneral === 100) {
+
+
+            if ($this->catalogoObjetivos === '') {
+                $this->alert('error', 'Seleccione un catalogo!');
+                return;
+            }else{
+
+            $this->resetErrorBag();
+            $this->validateData();
+            $this->dispatch('increaseStep');
+            $this->currentStep++;
+            if ($this->currentStep == 3) {
+                $this->listaEvaluados = $this->obtenerEvaluadosConEvaluadores($this->evaluados_objetivo);
+                // dd($this->listaEvaluados[0]['evaluado']);
+            }
+            if ($this->currentStep == 4) {
+                $this->listaEmpleadosSinCompetencias = collect();
+                $this->listaIDSinCompetencias = collect();
+                $this->listaEmpleadosSinObjetivos = collect();
+                $this->listaIDSinObjetivos = collect();
+                $this->listaEmpleadosObjetivosPendiente = collect();
+                $this->listaIDObjetivosPendiente = collect();
+                $this->totalEmpleadosSinCompetencias = 0;
+                $this->totalEmpleadosSinObjetivos = 0;
+                $this->totalEmpleadosObjetivosPendiente = 0;
+                $this->hayEmpleadosSinCompetencias = false;
+                $this->hayEmpleadosSinObjetivos = false;
+                $this->hayEmpleadosObjetivosPendiente = false;
+                foreach ($this->listaEvaluados as $evaluadoL) {
+                    // dd($evaluadoL['evaluado']);
+                    if ($evaluadoL['evaluado']['competencias_asignadas'] == 0) {
+                        // dd($evaluadoL['evaluado']['id']);
+                        $this->hayEmpleadosSinCompetencias = true;
+                        $this->totalEmpleadosSinCompetencias++;
+                        $this->listaEmpleadosSinCompetencias->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDSinCompetencias->push($evaluadoL['evaluado']['id']);
+                    } elseif ($evaluadoL['evaluado']['objetivos_asignados']['cuenta'] == 0) {
+                        $this->hayEmpleadosSinObjetivos = true;
+                        $this->totalEmpleadosSinObjetivos++;
+                        $this->listaEmpleadosSinObjetivos->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDSinObjetivos->push($evaluadoL['evaluado']['id']);
+                    } elseif ($evaluadoL['evaluado']['objetivos_asignados']['pendientes'] == true) {
+                        $this->hayEmpleadosObjetivosPendiente = true;
+                        $this->totalEmpleadosObjetivosPendiente++;
+                        $this->listaEmpleadosObjetivosPendiente->push($evaluadoL['evaluado']['name']);
+                        $this->listaIDObjetivosPendiente->push($evaluadoL['evaluado']['id']);
+                    }
+                }
+
+                if ($this->totalEmpleadosSinCompetencias > 0) {
+                    $this->alert('warning', 'Sin Competencias', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } elseif ($this->totalEmpleadosSinObjetivos > 0) {
+                    $this->alert('warning', 'Sin Objetivos', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
+                    $this->alert('warning', 'Objetivos Pendientes', [
+                        'position' => 'center',
+                        'timer' => '600000',
+                        'toast' => false,
+                        'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
+                        'showConfirmButton' => true,
+                        'onConfirmed' => '',
+                        'confirmButtonText' => 'Confirmar',
+                        'timerProgressBar' => true,
+                    ]);
+                } else {
+                    $this->bloquear_evaluacion = false;
                 }
             }
 
-            if ($this->totalEmpleadosSinCompetencias > 0) {
-                $this->alert('warning', 'Sin Competencias', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores sin competencias asignadas, no podra crear la evaluación si los colaboradores no tienen competencias para evaluar',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } elseif ($this->totalEmpleadosSinObjetivos > 0) {
-                $this->alert('warning', 'Sin Objetivos', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores sin objetivos asignados, no podra crear la evaluación si los colaboradores no tienen objetivos para evaluar',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } elseif ($this->totalEmpleadosObjetivosPendiente > 0) {
-                $this->alert('warning', 'Objetivos Pendientes', [
-                    'position' => 'center',
-                    'timer' => '600000',
-                    'toast' => false,
-                    'text' => 'Existen colaboradores con objetivos asignados pendientes de revisar, no podra crear la evaluación si los colaboradores tienen objetivos con estatus pendientes.',
-                    'showConfirmButton' => true,
-                    'onConfirmed' => '',
-                    'confirmButtonText' => 'Confirmar',
-                    'timerProgressBar' => true,
-                ]);
-            } else {
-                $this->bloquear_evaluacion = false;
+            if ($this->currentStep > $this->totalSteps) {
+                $this->currentStep = $this->totalSteps;
             }
-        }
 
-        if ($this->currentStep > $this->totalSteps) {
-            $this->currentStep = $this->totalSteps;
+            }
+
+        } else {
+            $this->alert('error', 'La suma total no alcanza 100. Verifique que ambos valores sumen 100.!');
+            return;
         }
     }
 
@@ -739,10 +785,17 @@ class MultiStepForm extends Component
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
         //se modifico el codigo para no generar consultas de mas y hacer cargas batch
-        $empleado = Empleado::getaltaAllObjetivoSupervisorChildren()->find(intval($evaluado));
-        // dd($empleado);
+        $empleado = Empleado::select(
+            'id',
+            'name',
+            'area_id',
+            'supervisor_id',
+            'puesto_id',
+            'estatus',
+        )->with(['objetivos.objetivo', 'children', 'supervisor', 'area', 'puestoRelacionado'])->where('estatus', 'alta')->where('id',intval($evaluado))->first();
         $evaluadores_objetivos = collect();
         $evaluacion = Evaluacion::with('competencias')->find($evaluacion->id);
+
 
         if ($includeObjetivos) {
             // Add empleado and supervisor as evaluadores_objetivos
@@ -916,26 +969,43 @@ class MultiStepForm extends Component
             'name',
             'area_id',
             'supervisor_id',
-            'puesto_id',
-        )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->where('estatus', 'alta')->whereNull('deleted_at')->get();
+            'puesto_id'
+        )
+        ->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
+        ->where('estatus', 'alta')
+        ->whereNull('deleted_at')
+        ->get();
 
-        // $emps = Empleado::alta()->select(
-        //     'id',
-        //     'name',
-        //     'area_id',
-        //     'supervisor_id',
-        //     'puesto_id',
-        // )->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])->get();
-        // dd($emps);
-        // dd($evaluados);
+        $validIds = $emps->pluck('id')->toArray();
+
         foreach ($evaluados as $evaluado) {
-            // dd($emps[0], $evaluado);
-            $empleado = $emps->find($evaluado);
+            $empleado = $emps->firstWhere('id', intval($evaluado));
+
+            if (!$empleado) {
+                // Intenta buscar directamente en la base de datos
+                $empleado = Empleado::with([
+                    'objetivos', 'children:id,name', 'supervisor:id,name',
+                    'area:id,area', 'puestoRelacionado:id,puesto'
+                ])->where('estatus', 'alta')->find(intval($evaluado));
+
+                if (!$empleado) {
+                    // Si no se encuentra en la base de datos, maneja el caso
+                    dd("Empleado no encontrado para evaluado: {$evaluado}");
+                }
+
+                // Agrega el empleado encontrado a la colección para evitar búsquedas repetidas
+                $emps->push($empleado);
+            }
+
             $evaluadores = collect();
-            // dd($empleado);
+
             try {
-                //code...
-                $evaluadores->put('autoevaluacion', ['id' => intval($empleado->id), 'peso' => $this->pesoAutoevaluacion, 'tipo' => EvaluadoEvaluador::AUTOEVALUACION]);
+                $evaluadores->put('autoevaluacion', [
+                    'id' => intval($empleado->id),
+                    'peso' => $this->pesoAutoevaluacion,
+                    'tipo' => EvaluadoEvaluador::AUTOEVALUACION,
+                ]);
+
                 $evaluadores->put('jefe', [
                     'id' => $empleado->supervisor ? intval($empleado->supervisor->id) : Empleado::getAltaEmpleados()->unique()->random()->id,
                     'peso' => $this->pesoEvaluacionJefe,
@@ -943,16 +1013,29 @@ class MultiStepForm extends Component
                 ]);
 
                 $equipo = $empleado->children->isEmpty() ? [Empleado::getAltaEmpleados()->unique()->random()->id] : $this->obtenerEquipoACargo($empleado->children);
-                $evaluadores->put('subordinado', ['id' => $equipo[array_rand($equipo)], 'peso' => $this->pesoEvaluacionEquipo, 'tipo' => EvaluadoEvaluador::EQUIPO]);
+                $evaluadores->put('subordinado', [
+                    'id' => $equipo[array_rand($equipo)],
+                    'peso' => $this->pesoEvaluacionEquipo,
+                    'tipo' => EvaluadoEvaluador::EQUIPO,
+                ]);
 
-                $evaluadores->put('par', ['id' => Empleado::getAltaEmpleados()->unique()->random()->id, 'peso' => $this->pesoEvaluacionArea, 'tipo' => EvaluadoEvaluador::MISMA_AREA]);
+                $evaluadores->put('par', [
+                    'id' => Empleado::getAltaEmpleados()->unique()->random()->id,
+                    'peso' => $this->pesoEvaluacionArea,
+                    'tipo' => EvaluadoEvaluador::MISMA_AREA,
+                ]);
 
-                $evaluadosEvaluadores->push(['evaluado' => $empleado, 'evaluadores' => $evaluadores]);
+                $evaluadosEvaluadores->push([
+                    'evaluado' => $empleado,
+                    'evaluadores' => $evaluadores,
+                ]);
             } catch (\Throwable $th) {
-                //throw $th;
+                // Captura errores y muestra información relevante
                 dd($th, $empleado, $evaluado);
             }
         }
+
+
         $this->time_elapsed_secs
             =
             microtime(true) -
@@ -980,6 +1063,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinCompetencias = $this->listaEmpleadosSinCompetencias->filter(function ($item) use ($rev_emp_comp) {
                     return $item !== $rev_emp_comp->name;
                 });
+            }else{
+                $this->alert('error', 'Existen niveles de competencia no mayores a 0!');
             }
         }
 
@@ -1016,6 +1101,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->filter(function ($item) use ($rev_emp_obj) {
                     return $item !== $rev_emp_obj->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos de cuenta no mayores a 0!');
             }
         }
         $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
@@ -1052,6 +1139,8 @@ class MultiStepForm extends Component
                 $this->listaEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->filter(function ($item) use ($rev_emp_obj_pend) {
                     return $item !== $rev_emp_obj_pend->name;
                 });
+            }else{
+                $this->alert('error', 'Existen objetivos  pendientes no mayores a 0!');
             }
         }
         $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();
