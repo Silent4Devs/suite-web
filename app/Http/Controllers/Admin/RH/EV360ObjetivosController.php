@@ -252,7 +252,7 @@ class EV360ObjetivosController extends Controller
 
         $objetivo = Objetivo::create($request->all());
         if ($objetivo) {
-            return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
+            return redirect()->route('admin.ev360-objetivos.index');
         } else {
             return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
         }

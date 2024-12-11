@@ -34,27 +34,33 @@
             </div>
         </div>
     </div>
-    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-principal">
-        <canvas id="graf-proyectos-area"></canvas>
+    <div class="card card-body" style="height: 800px; width:1600px;">
+        <div style="height:750px; width:1400px;" id="contenedor-principal">
+            <canvas id="graf-proyectos-area" width="1400" height="750"></canvas>
+        </div>
     </div>
     <div class="row">
         <div class=" col-lg-6">
-            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;"
-                id="contenedor-areas">
+            <div class="card card-body" style="height:600px;">
                 <h3>Horas Invertidas en el Proyecto por Área</h3>
-                <canvas id="graf-participacion-areas" width="600" height="600"></canvas>
+                <div style="height:550px; width:550px;" id="contenedor-areas">
+                    <canvas id="graf-participacion-areas" width="550" height="550"></canvas>
+                </div>
             </div>
         </div>
         <div class=" col-lg-6">
-            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;"
-                id="contenedor-tareas">
+            <div class="card card-body" style="height:600px;">
                 <h3>Tareas en el Proyecto por Área</h3>
-                <canvas id="graf-participacion-tareas" width="600" height="600"></canvas>
+                <div style="height:550px; width:550px;" id="contenedor-tareas">
+                    <canvas id="graf-participacion-tareas" width="550" height="550"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-empleados">
-        <canvas id="graf-proyectos-empleado"></canvas>
+    <div class="card card-body" style="height:800px; width:1600px;" >
+        <div id="contenedor-empleados" style="height:750px; width:1400px;" >
+            <canvas id="graf-proyectos-empleado" width="1400" height="750"></canvas>
+        </div>
     </div>
 </div>
 
@@ -69,9 +75,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        Livewire.on('renderAreas', (datos_areas, datos_empleados) => {
-            // console.log(datos_areas);
-            // console.log(datos_empleados);
+        Livewire.on('renderAreas', (data) => {
+
+            let datos_areas = data[0]['datos_areas'];
+            let datos_empleados = data[0]['datos_empleados'];
 
             document.getElementById('graf-proyectos-area').remove();
 
