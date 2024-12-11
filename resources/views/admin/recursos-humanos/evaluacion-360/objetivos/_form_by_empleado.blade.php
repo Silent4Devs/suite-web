@@ -218,7 +218,8 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
-                                    @if (Auth::id() == $empleado->supervisor->id || $permiso === true)
+                                    {{-- @if (Auth::id() === $empleado->supervisor->id || $permiso === true) --}}
+                                    @if (true)
                                         <div class="col-12">
                                             <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);" class="btn btn-small text-success">
                                                 <i class="fa-solid fa-thumbs-up"></i>
@@ -227,7 +228,8 @@
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>
                                         </div>
-                                     @endif
+                                    @endif
+                                     {{-- @endif --}}
                                 </div>
                             </td>
                         </tr>
