@@ -143,7 +143,7 @@
     <div class="row">
         <div class="col-12">
             <button id="BtnAgregarObjetivo" class="btn" style="float: right" title="Agregar objetivo">
-                Agregar objetivo a la tabla<i class="material-symbols-outlined">south</i>
+                Agregar objetivo a la tabla <i class="material-symbols-outlined">south</i>
             </button>
         </div>
     </div>
@@ -189,8 +189,8 @@
                     @foreach ($objetivos as $objetivo)
                         <tr>
                             <td>{{ $objetivo->objetivo->tipo->nombre ?? '' }}</td>
-                            <td>{{ $objetivo->objetivo->nombre }}</td>
-                            <td>{{ $objetivo->objetivo->KPI }}</td>
+                            <td>{{ $objetivo->objetivo->nombre ?? ''   }}</td>
+                            <td>{{ $objetivo->objetivo->KPI ?? ''  }}</td>
                             <td>
                                 @if ($objetivo->objetivo->esta_aprobado == 1)
                                     <span class="badge badge-success">Aprobado</span>
@@ -218,7 +218,8 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
-                                    @if (Auth::id() == $empleado->supervisor->id || $permiso === true)
+                                    {{-- @if (Auth::id() === $empleado->supervisor->id || $permiso === true) --}}
+                                    @if (true)
                                         <div class="col-12">
                                             <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);" class="btn btn-small text-success">
                                                 <i class="fa-solid fa-thumbs-up"></i>
@@ -227,7 +228,8 @@
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>
                                         </div>
-                                     @endif
+                                    @endif
+                                     {{-- @endif --}}
                                 </div>
                             </td>
                         </tr>
@@ -268,14 +270,11 @@
 <script>
 
     document.getElementById('BtnAgregarObjetivo').addEventListener('click', function (event) {
-        Swal.fire({
-            title: 'Registro exitoso',
-            text: "El objetivo ha sido registrado correctamente",
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-        });
-    });
+    setTimeout(function () {
+        event.preventDefault();
+        location.reload();
+    }, 3000); //
+});
 
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
