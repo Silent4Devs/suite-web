@@ -1146,7 +1146,7 @@ class RequisicionesController extends Controller
 
     public function cambiarResponsable(Request $request)
     {
-        dd($request->all());
+        return response()->json($request->all());
         try {
             $idEmpleadoActual = User::getCurrentUser()->empleado->id;
 
