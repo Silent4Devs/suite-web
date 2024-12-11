@@ -210,7 +210,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-sm btn-editar" title="Editar"
-                                            onclick="Editar('/admin/recursos-humanos/evaluacion-360/{{ $objetivo->empleado_id }}/objetivos/{{ $objetivo->objetivo_id }}/editByEmpleado', '/admin/recursos-humanos/evaluacion-360/objetivos/{{ $objetivo->objetivo_id }}/empleado')">
+                                            onclick="event.preventDefault();Editar('/admin/recursos-humanos/evaluacion-360/{{ $objetivo->empleado_id }}/objetivos/{{ $objetivo->objetivo->id }}/editByEmpleado', '/admin/recursos-humanos/evaluacion-360/objetivos/{{ $objetivo->objetivo->id }}/empleado')">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar"
@@ -221,10 +221,10 @@
                                     {{-- @if (Auth::id() === $empleado->supervisor->id || $permiso === true) --}}
                                     @if (true)
                                         <div class="col-12">
-                                            <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);" class="btn btn-small text-success">
+                                            <button onclick="event.preventDefault();aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);" class="btn btn-small text-success">
                                                 <i class="fa-solid fa-thumbs-up"></i>
                                             </button>
-                                            <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, false);" class="btn btn-small text-danger">
+                                            <button onclick="event.preventDefault();aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, false);" class="btn btn-small text-danger">
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>
                                         </div>
