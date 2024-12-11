@@ -421,6 +421,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             ])->except(['show', 'destroy']);
         });
 
+        Route::post('solicitudAprobacionDayOff/updateAprobacion/{id}', 'SolicitudDayOffController@updateAprobacion')->name('solicitud-DayOff.updateAprobacion');
+
         // Rutas para Solicitud de Permiso Goce Sueldo
         Route::prefix('solicitud-permiso-goce-sueldo')->controller(SolicitudPermisoGoceSueldoController::class)->group(function () {
             Route::get('{id}/showArchivo', 'showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
