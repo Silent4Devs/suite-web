@@ -183,28 +183,13 @@ class CoursesLesson extends Component
                 try {
                     $this->validateOnly('name');
                     $this->validateOnly('platform_id');
-                    $this->validateOnly('url');
-                    //code...
-                    if ($this->formatType == 'Vimeo') {
-                        $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
-                    }
-
-                    // $this->validate($rules);
 
                     $resource = Lesson::create([
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
-                        'url' => $this->url.'?rel=0',
                         'section_id' => $this->section->id,
-                        'description' => $this->description,
+                        'text_content_lesson' => $this->description,
                     ]);
-
-                    if ($this->file) {
-                        $urlresorce = $this->file->store('cursos');
-                        $resource->resource()->create([
-                            'url' => $urlresorce,
-                        ]);
-                    }
 
                     $this->reset('name', 'platform_id', 'url', 'description', 'file');
 
@@ -213,7 +198,7 @@ class CoursesLesson extends Component
                     // dd($resource, $this->section->course_id);
                     $this->render_alerta('success', 'Registro añadido exitosamente');
                 } catch (\Throwable $th) {
-                    // dd('error');
+
                     $this->render_alerta('error', 'Completa los campos obligatorios');
                     //throw $th;
                 }
@@ -223,36 +208,30 @@ class CoursesLesson extends Component
                 # code...
 
                 try {
-                    $this->validateOnly('name');
-                    $this->validateOnly('platform_id');
-                    $this->validateOnly('url');
-                    //code...
-                    if ($this->formatType == 'Vimeo') {
-                        $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
-                    }
-
-                    // $this->validate($rules);
-
-                    $resource = Lesson::create([
-                        'name' => $this->name,
-                        'platform_id' => $this->platform_id,
-                        'url' => $this->url.'?rel=0',
-                        'section_id' => $this->section->id,
-                        'description' => $this->description,
-                    ]);
-
                     if ($this->file) {
-                        $urlresorce = $this->file->store('cursos');
+                        $this->validateOnly('name');
+                        $this->validateOnly('platform_id');
+
+                        $resource = Lesson::create([
+                            'name' => $this->name,
+                            'platform_id' => $this->platform_id,
+                            'section_id' => $this->section->id,
+                        ]);
+
+                        $urlresorce = $this->file->store('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id);
+
                         $resource->resource()->create([
                             'url' => $urlresorce,
                         ]);
+
+                        $this->reset('name', 'platform_id', 'url', 'description', 'file');
+
+                        $this->section = Section::find($this->section->id);
+
+                        $this->render_alerta('success', 'Registro añadido exitosamente');
+                    }else{
+                        $this->render_alerta('error', 'Completa los campos obligatorios');
                     }
-
-                    $this->reset('name', 'platform_id', 'url', 'description', 'file');
-
-                    $this->section = Section::find($this->section->id);
-
-                    $this->render_alerta('success', 'Registro añadido exitosamente');
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
@@ -274,7 +253,7 @@ class CoursesLesson extends Component
         // dd($lesson->name);
         $this->formName = $lesson->name;
         $this->formPlatformId = $lesson->platform_id;
-        $this->formUrl = $lesson->url;
+        $this->formUrl = $lesson->url ?? null;
 
     }
 
@@ -317,6 +296,130 @@ class CoursesLesson extends Component
             //throw $th;
             $this->render_alerta('error', 'Completa los campos obligatorios');
 
+        }
+
+        switch ($this->formatType) {
+            case 'Youtube':
+                # code...
+
+                try {
+
+                    $this->validateOnly('formName');
+                    $this->validateOnly('formPlatformId');
+                    $this->validateOnly('formUrl');
+
+                    $this->lesson->name = $this->formName;
+                    $this->lesson->platform_id = $this->formPlatformId;
+                    $this->lesson->url = $this->formUrl;
+
+                    $this->lesson->save();
+                    if ($this->file) {
+                        $urlresorce = $this->file->store('cursos');
+                        $this->lesson->resource()->create([
+                            'url' => $urlresorce.'?rel=0',
+                        ]);
+                    }
+                    // $this->lesson = new Lesson();
+
+                    $this->section = Section::find($this->section->id);
+                    $this->render_alerta('success', 'Registro actualizado exitosamente');
+                } catch (\Throwable $th) {
+                    // dd('error');
+                    $this->render_alerta('error', 'Completa los campos obligatorios');
+                    //throw $th;
+                }
+                break;
+
+            case 'Vimeo':
+                # code...
+                try {
+
+                    $this->validateOnly('formName');
+                    $this->validateOnly('formPlatformId');
+                    $this->validateOnly('formUrl');
+
+                    if ($this->formatType == 'Vimeo') {
+                        $this->rules['lesson.url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
+                    }
+
+                    $this->lesson->name = $this->formName;
+                    $this->lesson->platform_id = $this->formPlatformId;
+                    $this->lesson->url = $this->formUrl;
+
+                    $this->lesson->save();
+                    if ($this->file) {
+                        $urlresorce = $this->file->store('cursos');
+                        $this->lesson->resource()->create([
+                            'url' => $urlresorce.'?rel=0',
+                        ]);
+                    }
+                    // $this->lesson = new Lesson();
+
+                    $this->section = Section::find($this->section->id);
+                    $this->render_alerta('success', 'Registro actualizado exitosamente');
+
+                } catch (\Throwable $th) {
+                    // dd('error');
+                    $this->render_alerta('error', 'Completa los campos obligatorios');
+                    //throw $th;
+                }
+
+                break;
+
+            case 'Texto':
+                # code...
+
+                try {
+                    $this->validateOnly('formName');
+                    $this->validateOnly('formPlatformId');
+
+                    $this->lesson->name = $this->formName;
+                    $this->lesson->platform_id = $this->formPlatformId;
+
+                    $this->lesson->save();
+
+                    $this->section = Section::find($this->section->id);
+                    $this->render_alerta('success', 'Registro actualizado exitosamente');
+                } catch (\Throwable $th) {
+                    // dd('error');
+                    $this->render_alerta('error', 'Completa los campos obligatorios');
+                    //throw $th;
+                }
+                break;
+
+            case 'Documento':
+                # code...
+
+                try {
+                    $this->validateOnly('formName');
+                    $this->validateOnly('formPlatformId');
+                    $this->validateOnly('formUrl');
+
+                    $this->lesson->name = $this->formName;
+                    $this->lesson->platform_id = $this->formPlatformId;
+                    $this->lesson->url = $this->formUrl;
+
+                    $this->lesson->save();
+                    if ($this->file) {
+                        $urlresorce = $this->file->store('cursos');
+                        $this->lesson->resource()->create([
+                            'url' => $urlresorce.'?rel=0',
+                        ]);
+                    }
+                    // $this->lesson = new Lesson();
+
+                    $this->section = Section::find($this->section->id);
+                    $this->render_alerta('success', 'Registro actualizado exitosamente');
+                } catch (\Throwable $th) {
+
+                    $this->render_alerta('error', 'Completa los campos obligatorios');
+                    //throw $th;
+                }
+                break;
+
+            default:
+                # code...
+                break;
         }
     }
 
