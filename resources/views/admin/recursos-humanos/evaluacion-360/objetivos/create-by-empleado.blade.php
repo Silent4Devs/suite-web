@@ -413,7 +413,8 @@
                             },
                             success: function(response) {
                                 toastr.success('Objetivo eliminado');
-                                tblObjetivos.ajax.reload();
+                                e.preventDefault();
+                                location.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(
