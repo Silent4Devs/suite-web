@@ -159,8 +159,7 @@
                                 </a>
                             </td>
                             <td class="alineacion">
-                                <button wire:click="destroy({{ $em->entregable_id }})"
-                                    class="btn red">
+                                <button wire:click="destroy({{ $em->entregable_id }})" class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>
@@ -196,7 +195,7 @@
     @endif
 
     <div class="col-12 d-flex justify-content-end">
-        {{ $entregamensuales->links('livewire::simple-tailwind') }}
+        {{ $entregamensuales->links('pagination::TbPagination') }}
     </div>
 
 </div>

@@ -72,42 +72,97 @@
                                 @endswitch
 
                             </td>
-                            @php
-                                $user = Illuminate\Support\Facades\DB::table('users')
-                                    ->select('id', 'name')
-                                    ->where('id', $requisicion->id_user)
-                                    ->first();
-                            @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
+                                        <p>Solicitante: {{ $requisicion->userSolicitante->name ?? '' }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
-                                            $employee = App\Models\User::find($requisicion->id_user)->empleado;
-
-                                            if ($employee !== null && $employee->supervisor !== null) {
+                                            $employee = $requisicion->userSolicitante->empleado;
+                                            if ($requisicion->registroFirmas) {
+                                                $supervisorName =
+                                                    $requisicion->obtener_responsable_lider->name ?? false;
+                                            } elseif ($employee !== null && $employee->supervisor !== null) {
                                                 $supervisorName = $employee->supervisor->name;
                                             } else {
-                                                $supervisorName = 'N/A'; // Or any default value you prefer
+                                                $supervisorName = 'N/A';
                                             }
                                         @endphp
+
+                                        @if ($supervisorName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'Líder no identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
                                         <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
-                                        <p>Finanzas</p>
+                                        @php
+                                            if ($requisicion->registroFirmas) {
+                                                $finanzasName =
+                                                    $requisicion->obtener_responsable_finanzas->name ?? false;
+                                            } else {
+                                                $finanzasName = 'Sin identificar';
+                                            }
+                                        @endphp
+
+                                        @if ($finanzasName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El responsable de finanzas no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
                                         @php
-                                            $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                ->where('id', $requisicion->comprador_id)
-                                                ->first();
+                                            if ($requisicion->registroFirmas) {
+                                                $compradorName =
+                                                    $requisicion->obtener_responsable_comprador->name ?? false;
+                                            } else {
+                                                $compradorName = $requisicion->comprador->user->name;
+                                            }
                                         @endphp
-                                        <p>Comprador: {{ $comprador->name }}</p>
+
+                                        @if ($compradorName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El comprador no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
                                     @default

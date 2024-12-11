@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
 @endsection
 @section('content')
-@section('titulo', 'Ver Requisición')
+{{-- @section('titulo', 'Ver Requisición') --}}
 
 @include('layouts.datatables_css')
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">

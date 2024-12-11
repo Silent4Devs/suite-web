@@ -50,8 +50,8 @@ services:
 
   php:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: dockerfile
     container_name: php-tabantaj
     depends_on:
       - postgres-tabantaj
@@ -59,7 +59,6 @@ services:
     tty: true
     volumes:
       - .:/var/www/html
-    command: php artisan octane:start --server=frankenphp --host=192.168.9.78 --port=9000
     ports:
       - 9000:80
     networks:
@@ -67,8 +66,8 @@ services:
 
   queue-worker:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
     command: php artisan queue:work --tries=6
@@ -85,8 +84,8 @@ services:
 
   schedule-worker:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
@@ -145,7 +144,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3302:3302"
+      - "3000:3000"
     volumes:
       - goservices_data:/goservices
     networks:

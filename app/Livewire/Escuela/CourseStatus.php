@@ -67,12 +67,14 @@ class CourseStatus extends Component
         // dd($this->course);
         // dd($this->course->lessons->where('completed', true)->count());
         // dd($this->current);
-        // $fechaYHora = $this->fecha.' '.$this->hora;
-        // $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
-        //     ->where('user_id', $this->usuario->id)->first();
+
+        // lastReview
+        $fechaYHora = $this->fecha.' '.$this->hora;
+        $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
+            ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
 
-        // $this->updateLastReview($fechaYHora, $cursoLastReview);
+        $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
         $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
@@ -216,18 +218,13 @@ class CourseStatus extends Component
                 $i++;
             }
         }
-        $evaluations_count = 0;
-        if (isset($this->evaluacionesGenerales)) {
-            $ids = $this->evaluacionesGenerales->pluck('id');
-            $evaluations_count = $this->evaluacionesGenerales->count();
-        } else {
-            $ids = [];
-        }
-        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+
+        $ids = $this->evaluacionesGenerales->pluck('id');
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
         //calcular el porcentaje del curso
-        $advance = ($i * 100) / ($this->lecciones_orden->count() + $evaluations_count);
+        $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());
 
         return round($advance, 2);
     }

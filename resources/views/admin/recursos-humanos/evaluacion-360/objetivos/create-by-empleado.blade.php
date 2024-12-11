@@ -163,136 +163,7 @@
 
 @section('scripts')
     <script type="text/javascript">
-        $(function() {
-            $('#foto').on('change', function(e) {
-                let inputFile = e.currentTarget;
-                console.log('si')
-                $("#texto-imagen").text(inputFile.files[0].name);
-                // Imagen previa
-                var reader = new FileReader();
-                reader.readAsDataURL(inputFile.files[0]);
-                reader.onload = function(e) {
-                    document.getElementById('uploadPreview').src = e.target.result;
-                };
-            });
-            // $('#fotoEdit').on('change', function(e) {
-            //     let inputFile = e.currentTarget;
-            //     console.log('No')
-            //     $("#texto-imagenEdit").text(inputFile.files[0].name);
-            //     // Imagen previa
-            //     var reader = new FileReader();
-            //     reader.readAsDataURL(inputFile.files[0]);
-            //     reader.onload = function(e) {
-            //         document.querySelector('#uploadPreviewEdit').src = e.target.result;
-            //     };
-            // });
-            $('#fotoPerspectiva').on('change', function(e) {
-                let inputFile = e.currentTarget;
-                console.log('No')
-                $("#texto-imagen-perspectiva").text(inputFile.files[0].name);
-                // Imagen previa
-                var reader = new FileReader();
-                reader.readAsDataURL(inputFile.files[0]);
-                reader.onload = function(e) {
-                    document.querySelector('#uploadPreviewPerspectiva').src = e.target.result;
-                };
-            });
-
-
-            let dtButtons = [];
-            let empleado = @json($empleado);
-            let auth = @json(Auth::user()->empleado);
-            let permiso = @json($permiso);
-            let supervisor = @json($empleado->supervisor);
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
-                columns: [{
-                        data: 'objetivo.tipo.nombre',
-                    }, {
-                        data: 'objetivo.nombre'
-                    },
-                    // {
-                    //     data: 'id',
-                    //     render: function(data, type, row, meta) {
-                    //         return row.evaluacion_id;
-                    //     }
-                    // },
-                    {
-                        data: 'objetivo.KPI',
-                    }, {
-                        data: 'objetivo',
-                        render: function(data, type, row, meta) {
-                            return data.meta + ' ' + row.objetivo?.metrica?.definicion;
-                        }
-                    }, {
-                        data: 'objetivo.esta_aprobado',
-                        render: function(data, type, row, meta) {
-                            if (data == 1) {
-                                return '<span class="badge badge-success">Aprobado</span>';
-                            } else if (data == 2) {
-                                let html = `
-                            <span class="badge badge-danger">No Aprobado
-                                <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
-                            </span>`;
-                                return html;
-                            } else {
-                                return '<span class="badge badge-warning">Pendiente</span>';
-                            }
-                        }
-                    }, {
-                        data: 'objetivo.descripcion_meta',
-                    }, {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-
-                            let urlBtnEditar =
-                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
-                            let urlBtnActualizar =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
-                            let urlBtnEliminar =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
-                            let urlShow =
-                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
-                            let botones = `
-                            <div class="row">
-                                <div class="col-12">
-                                    <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                                `;
-                            if (row.objetivo.esta_aprobado == 0) {
-                                if (auth.id == supervisor.id || permiso == true) {
-                                    botones +=
-                                        `<div class="col-12">
-                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>
-                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);" class="btn btn-small text-danger"><i class="fa-solid fa-thumbs-down"></i></button>
-                                        </div>
-                                    </div>
-                                    `;
-                                }
-                            } else {
-                                botones += `</div>`;
-                            }
-
-                            return botones;
-                        }
-                    }
-                ],
-                order: [
-                    [1, 'asc']
-                ],
-                pageLength: 10,
-                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-            };
-            window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
-
-            window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+        window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
                 console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
                 let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
@@ -363,8 +234,7 @@
                     }
                 })
 
-            }
-        });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
                 headers: {
@@ -383,12 +253,12 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        toastr.info('Asignando el objetivo');
+                        Registro actualizado
                     },
                     success: function(response) {
                         if (response.success) {
                             tblObjetivos.ajax.reload();
-                            toastr.success('Objetivo asignado');
+                            // toastr.success('Objetivo asignado');
                             document.getElementById('formObjetivoCreate').reset();
                             $("#tipo_id").val('').trigger('change');
                             $("#metrica_id").val('').trigger('change');
@@ -415,8 +285,20 @@
                     type: "GET",
                     url: urlEditar,
                     beforeSend: function() {
-                        toastr.info(
-                            'Recuperando información de la conducta, espere unos instantes...');
+                        Swal.fire({
+                            title: 'Recuperando información',
+                            text: "Espere unos instantes...",
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 10000, // Tiempo en milisegundos (5 segundos)
+                            didOpen: () => {
+                                Swal.showLoading(); // Muestra un indicador de carga
+                            },
+                            willClose: () => {
+                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                            }
+                        });
                     },
                     success: function(response) {
                         console.log(response);
@@ -486,14 +368,33 @@
                     contentType: false,
                     dataType: "JSON",
                     beforeSend: function() {
-                        toastr.info(
-                            'Actualizando, espere unos instantes...');
+                        Swal.fire({
+                            title: 'Actualizando información',
+                            text: "espere unos instantes...",
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 10000, // Tiempo en milisegundos (5 segundos)
+                            didOpen: () => {
+                                Swal.showLoading(); // Muestra un indicador de carga
+                            },
+                            willClose: () => {
+                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                            }
+                        });
                     },
                     success: function(response) {
                         ocultarValidando();
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
-                        toastr.success('Registro actualizado');
+                        Swal.fire({
+                            title: 'Registro actualizado',
+                            text: "Ha sido registrado correctamente",
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Aceptar'
+                        });
+
                         tblObjetivos.ajax.reload();
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
@@ -538,11 +439,28 @@
                             type: "POST",
                             url: urlEliminar,
                             beforeSend: function() {
-                                toastr.info(
-                                    'Eliminando el objetivo, espere unos instantes...');
+                            Swal.fire({
+                            title: 'Eliminando información',
+                            text: "espere unos instantes...",
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 1000, // Tiempo en milisegundos (5 segundos)
+                            didOpen: () => {
+                                Swal.showLoading(); // Muestra un indicador de carga
                             },
+                            willClose: () => {
+                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                            }
+                        });
                             success: function(response) {
-                                toastr.success('Objetivo eliminado');
+                                Swal.fire({
+                                    title: 'Objetivo eliminado',
+                                    text: "Ha sido registrado correctamente",
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Aceptar'
+                                });
                                 tblObjetivos.ajax.reload();
                             },
                             error: function(request, status, error) {
@@ -616,11 +534,30 @@
                         },
                         dataType: "JSON",
                         beforeSend: function() {
-                            toastr.info('Copiando objetivos');
+                            Swal.fire({
+                            title: 'Copiando objetivos',
+                            text: "espere unos instantes...",
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 1000, // Tiempo en milisegundos (5 segundos)
+                            didOpen: () => {
+                                Swal.showLoading(); // Muestra un indicador de carga
+                            },
+                            willClose: () => {
+                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                            }
                         },
                         success: function(response) {
                             if (response.success) {
-                                toastr.success('Objetivos copiados correctamente');
+
+                                Swal.fire({
+                                    title: 'Objetivos copiados correctamente',
+                                    text: "Ha sido copiado correctamente",
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Aceptar'
+                                });
                                 tblObjetivos.ajax.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
@@ -653,12 +590,24 @@
         Livewire.on('tipoObjetivoStore', () => {
             $('#tipoObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Tipo de objetivo creado con éxito');
+            Swal.fire({
+            title: 'Tipo de objetivo',
+            text: "Ha sido registrado correctamente",
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
         });
         Livewire.on('metricaObjetivoStore', () => {
             $('#metricaObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Métrica del objetivo creada con éxito');
+            Swal.fire({
+                title: 'Métrica del objetivo',
+                text: "Ha sido creada con éxito",
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar'
+            });
         });
         window.initSelect2 = () => {
             $('.select2').select2({

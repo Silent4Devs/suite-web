@@ -123,11 +123,18 @@ class Entregablecomponent extends Component
 
     public function store()
     {
+        $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
+
+        // $formatoFecha = new FormatearFecha;
+        $fecha_inicial_formateada = $this->plazo_entrega_inicio ?: null;
+        $fecha_final_formateada = $this->plazo_entrega_termina ?: null;
+        $fecha_real_formateada = $this->entrega_real ?: null;
+
         $this->validate([
             'nombre_entregable' => 'required|max:255',
             'descripcion' => 'required',
-            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
-            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
+            'plazo_entrega_inicio' => 'required|before_or_equal:fecha_final_formateada',
+            'plazo_entrega_termina' => 'required|after_or_equal:fecha_inicial_formateada',
             'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
             'observaciones' => 'required',
             'entrega_real' => 'required',
@@ -135,15 +142,12 @@ class Entregablecomponent extends Component
             'aplica_deductiva' => 'required',
             // 'deductiva_penalizacion' => 'numeric|max:100000000000',
             // 'nota_credito' => 'max:255',
+        ], [
+            'plazo_entrega_inicio.after_or_equal' => 'La fecha de recepción no puede ser antes de la fecha inicio del contrato',
+            'plazo_entrega_termina.before_or_equal' => 'La fecha de recepción no puede ser despues de la fecha fin del contrato',
+            // 'monto_factura.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
         ]);
 
-        $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
-
-        // $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = $this->plazo_entrega_inicio ?: null;
-        $fecha_final_formateada = $this->plazo_entrega_termina ?: null;
-        $fecha_real_formateada = $this->entrega_real ?: null;
-        //  dd(EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count());
         $ultimo_numero_entregable = EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count() > 0 ? EntregaMensual::select('no')->where('contrato_id', $this->contrato_id)->orderBy('id', 'desc')->first()->no : 0;
         $numero_entregable = ! is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;
 

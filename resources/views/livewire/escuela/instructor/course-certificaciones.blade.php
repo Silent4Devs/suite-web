@@ -1,7 +1,7 @@
 <div>
     <style>
         .cert-null {
-            opacity: 0.5;
+            opacity: 0.2;
         }
     </style>
     @if ($course->certificado)
@@ -57,16 +57,15 @@
                     <h5 class="color-tbj">Certificaciones</h5>
                     <hr>
                     <div>
-                        <input type="checkbox" name="habilitar_certificado" id="habilitar_certificado"
-                            wire:model.live="habilitar_certificado" style="display: none;">
-                        <label for="habilitar_certificado">
-                            <div class="btn btn-outline-primary">
-                                Emitir certificado del curso
-                            </div>
-                        </label>
+                        <div class="form-check form-switch" style="cursor: pointer;">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                                {{ $course->certificado != 0 ? 'checked' : '' }} wire:change="habilitarCertificado()">
+                            <label class="form-check-label ms-4" for="flexSwitchCheckChecked">Emitir certificado del
+                                curso</label>
+                        </div>
                     </div>
 
-                    <div class="{{ $course->certificado ? '' : 'cert-null' }}">
+                    <div class="mt-4 {{ $course->certificado ? '' : 'cert-null' }}">
                         <p class="text-center">
                             <strong>Certificado asignado</strong>
                         </p>
@@ -79,18 +78,25 @@
             <div class="col-md-6 d-flex">
                 <div class="card card-body">
                     <div class="{{ $course->certificado ? '' : 'cert-null' }}">
-                        <h5 class="color-tbj">Firma</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="color-tbj">Firma</h5>
+                            @if ($course->certificado != 0)
+                                <div class="btn btn-outline-secondary" wire:click="habilitarFirma()">
+                                    {{ $course->firma_habilitar ? 'Ocultar' : 'Habilitar' }} firma
+                                </div>
+                            @endif
+                        </div>
                         <hr>
                         <p class="text-center">
                             <strong>Firma del evaluador</strong>
                         </p>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center {{ $course->firma_habilitar ? '' : 'cert-null' }}">
                             @if ($course->firma_instructor)
                                 <img src="{{ $course->firma_instructor }}" alt="" style="width: 100%;">
                             @endif
                         </div>
                         <div class="text-center mt-3">
-                            @if ($course->certificado)
+                            @if ($course->certificado && $course->firma_habilitar)
                                 <div class="btn btn-secondary" disabled data-bs-toggle="modal"
                                     data-bs-target="#modal-firma">
                                     {{ $course->firma_instructor ? 'EDITAR' : 'AGREGAR' }} FIRMA

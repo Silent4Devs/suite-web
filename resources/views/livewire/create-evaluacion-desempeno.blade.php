@@ -23,7 +23,7 @@
     </div>
 
     @switch($paso)
-        @case('1')
+        @case(1)
             <div class="tab-content" id="nav-create-1" role="tabpanel" aria-labelledby="nav-create-1">
                 <div>
                     <div class="card card-body">
@@ -90,21 +90,21 @@
 
                     <div class="row">
                         <div class="col-6 text-left my-4">
-                            <a wire:click.prevent="guardarBorrador" class="btn btn-primary" style="width: 170px;">Guardar
+                            <a wire:click.prevent="guardarBorrador" type="button" class="btn btn-primary" style="width: 170px;">Guardar
                                 Borrador</a>
                         </div>
 
                         <div class=" col-6 text-right my-4">
                             <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-general') }}"
                                 class="btn btn-outline-primary" style="width: 170px;">Cancelar</a>
-                            <a wire:click.prevent="primerPaso" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
+                            <a wire:click.prevent="primerPaso" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
                         </div>
                     </div>
                 </div>
             </div>
         @break
 
-        @case('2')
+        @case(2)
             <div class="tab-content" id="nav-create-2" role="tabpanel" aria-labelledby="nav-create-2">
                 {{-- <form wire:submit="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
                 <div class="card card-body">
@@ -117,42 +117,18 @@
                         Selecciona la periodicidad
                     </div>
                     <div class="d-flex mt-3" style="gap: 20px;">
-                        <div class="form-group">
-                            <input type="checkbox" name="mensual" id="mensual"
-                                wire:change="seleccionPeriodo('mensual', $event.target.checked)"
-                                @if ($mensual) checked @endif>
-                            <label class="mb-0" for="">Mensual</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="bimestral" id="bimestral"
-                                wire:change="seleccionPeriodo('bimestral', $event.target.checked)"
-                                @if ($bimestral) checked @endif>
-                            <label class="mb-0" for="">Bimestral</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="trimestral" id="trimestral"
-                                wire:change="seleccionPeriodo('trimestral', $event.target.checked)"
-                                @if ($trimestral) checked @endif>
-                            <label class="mb-0" for="">Trimestral</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="semestral" id="semestral"
-                                wire:change="seleccionPeriodo('semestral', $event.target.checked)"
-                                @if ($semestral) checked @endif>
-                            <label class="mb-0" for="">Semestral</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="anualmente" id="anualmente"
-                                wire:change="seleccionPeriodo('anualmente', $event.target.checked)"
-                                @if ($anualmente) checked @endif>
-                            <label class="mb-0" for="">Anual</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="abierta" id="abierta"
-                                wire:change="seleccionPeriodo('abierta', $event.target.checked)"
-                                @if ($abierta) checked @endif>
-                            <label class="mb-0" for="">Abierta</label>
-                        </div>
+                        @foreach (['mensual', 'bimestral', 'trimestral', 'semestral', 'anualmente', 'abierta'] as $periodo)
+                            <div class="form-group">
+                                <input
+                                    type="radio"
+                                    name="periodo"
+                                    id="{{ $periodo }}"
+                                    value="{{ $periodo }}"
+                                    wire:change="seleccionPeriodo('{{ $periodo }}')"
+                                    @if ($periodo_evaluacion === $periodo) checked @endif>
+                                <label class="mb-0" for="{{ $periodo }}">{{ ucfirst($periodo) }}</label>
+                            </div>
+                        @endforeach
                     </div>
 
                     <hr>
@@ -210,9 +186,13 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="form-group">
-                                                <input type="checkbox" class="form-control"
-                                                    wire:model.live="arreglo_periodos.{{ $index }}.habilitar"@if ($index == 0) disabled @endif>
+                                            <div class="form-check d-flex justify-content-center align-items-center" style="height: 100%;">
+                                                <input
+                                                    type="checkbox"
+                                                    class="form-check-input checkbox-large"
+                                                    id="checkbox-{{ $index }}"
+                                                    wire:model.live="arreglo_periodos.{{ $index }}.habilitar"
+                                                    @if ($index == 0) disabled @endif>
                                             </div>
                                         </td>
                                         @if ($abierta)
@@ -244,20 +224,20 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a wire:click.prevent="guardarBorrador" class="btn btn-primary" style="width: 170px;">Guardar
+                        <a wire:click.prevent="guardarBorrador" type="button" class="btn btn-primary" style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
-                        <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <a wire:click.prevent="segundoPaso" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
+                        <a wire:click.prevent="retroceder" type="button" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                        <a wire:click.prevent="segundoPaso" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
                     </div>
                 </div>
                 {{-- </form> --}}
             </div>
         @break
 
-        @case('3')
+        @case(3)
             <div class="tab-content" id="nav-create-3" role="tabpanel" aria-labelledby="nav-create-3">
                 <div class="card card-body">
                     <div class="info-first-config">
@@ -348,12 +328,58 @@
                             @break
 
                             @case('manualmente')
-                                <select class="form-control select2" name="evaluados_manual" id="evaluados_manual"
-                                    wire:model.live="evaluados_manual" multiple wire:ignore>
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="w-100">
+                                    <!-- Dropdown -->
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <select class="form-control"
+                                                    wire:change="asignacionEmpleados($event.target.value, $event.target.options[$event.target.selectedIndex].text)">
+                                                <option value="" disabled selected>Seleccione un empleado</option>
+                                                @foreach ($empleados as $empleado)
+                                                    <option value="{{ $empleado['id'] }}">{{ $empleado['name'] }}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Tabla -->
+                                    <div class="row mt-3">
+                                        <div class="col-12">
+                                            <table id="tabla_time_poyect_empleados" class="table w-100 tabla-animada">
+                                                <thead class="w-100">
+                                                    <tr>
+                                                        <th>Nombre </th>
+                                                        <th style="max-width:150px !important; width:150px ;">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="position:relative;">
+                                                    @forelse ($empleados_seleccionados as $keySelect => $empleado)
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{{ asset('storage/empleados/imagenes/' . ($empleado['foto'] ?? 'usuario_no_cargado.png')) }}"
+                                                                     alt="{{ $empleado['name'] }}"
+                                                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                                                                {{ $empleado['name'] }}
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-primary" type="button" wire:click.prevent="desasignarColaborador({{ $keySelect }})">
+                                                                    Desasignar
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2" class="text-center">
+                                                                <h4>Sin colaboradores seleccionados</h4>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             @break
 
                             @case('grupo')
@@ -373,20 +399,20 @@
 
                 <div class="row">
                     <div class="col-6 text-left my-4">
-                        <a id="btn-borrador-paso3" wire:click.prevent="guardarBorrador" class="btn btn-primary"
+                        <a wire:click.prevent="guardarBorrador" type="button" class="btn btn-primary"
                             style="width: 170px;">Guardar
                             Borrador</a>
                     </div>
 
                     <div class="col-6 text-right my-4">
-                        <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
-                        <button id="btn-paso3" class="btn btn-primary" style="width: 170px;">SIGUIENTE</button>
+                        <a wire:click.prevent="retroceder" type="button" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
+                        <button wire:click.prevent="tercerPaso" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</button>
                     </div>
                 </div>
             </div>
         @break
 
-        @case('4')
+        @case(4)
             <div class="tab-content" id="nav-create-4" role="tabpanel" aria-labelledby="nav-create-4">
                 <div class="card card-body">
                     <div class="info-first-config">
@@ -718,19 +744,19 @@
                     dataEmpleados = data;
                 });
 
-                document.addEventListener('click', (e) => {
-                    if (e.target && e.target.id == 'btn-paso3') {
-                        e.preventDefault();
-                        console.log(dataEmpleados);
-                        @this.set('empleados_seleccionados', dataEmpleados);
-                    }
+                // document.addEventListener('click', (e) => {
+                //     if (e.target && e.target.id == 'btn-paso3') {
+                //         e.preventDefault();
+                //         console.log(dataEmpleados);
+                //         @this.set('empleados_seleccionados', dataEmpleados);
+                //     }
 
-                    if (e.target && e.target.id == 'btn-borrador-paso3') {
-                        e.preventDefault();
-                        console.log(dataEmpleados);
-                        @this.set('empleados_seleccionados', dataEmpleados);
-                    }
-                });
+                //     if (e.target && e.target.id == 'btn-borrador-paso3') {
+                //         e.preventDefault();
+                //         console.log(dataEmpleados);
+                //         @this.set('empleados_seleccionados', dataEmpleados);
+                //     }
+                // });
             });
         </script>
 

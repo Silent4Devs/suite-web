@@ -9,6 +9,7 @@
         margin-top: 10px !important;
     }
 </style>
+
 <div class="card card-body">
 
     <div class="row">
@@ -142,44 +143,11 @@
     <div class="row">
         <div class="col-12">
             <button id="BtnAgregarObjetivo" class="btn" style="float: right" title="Agregar objetivo">
-                Agregar objetivo a la tabla <i class="material-symbols-outlined">south</i>
+                Agregar objetivo a la tabla<i class="material-symbols-outlined">south</i>
             </button>
         </div>
     </div>
 </div>
-
-
-{{-- <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-    <div class="input-group is-invalid">
-        <div class="form-group" style="width: 100%;border: solid 1px #cecece;">
-            <div class="row align-items-center" style="padding: 20px 0;">
-                <div class="col-md-6 col-sm-6 col-12 d-flex justify-content-center">
-                    <label style="cursor: pointer" for="foto{{ $editar ? 'Edit' : '' }}">
-                        <div class="d-flex align-items-center">
-                            <h5>
-                                <i class="fas fa-image iconos-crear"
-                                    style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                <span id="texto-imagen{{ $editar ? 'Edit' : '' }}" class="pl-2">
-                                    Subir imágen
-                                    <small class="text-danger" style="font-size: 10px">
-                                        (Opcional)</small>
-                                </span>
-                            </h5>
-                        </div>
-                    </label>
-                </div>
-                <div class="text-center col-6">
-                    <img id="uploadPreview{{ $editar ? 'Edit' : '' }}" class="imagen-preview"
-                        src="{{ asset('img/not-available.png') }}" width="150" height="150"
-                        accept="image/png, image/gif, image/jpeg" style="clip-path: circle(60px at 50% 50%);
-                        height: 120px;" />
-                </div>
-            </div>
-            <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
-                id="foto{{ $editar ? 'Edit' : '' }}" hidden="">
-        </div>
-    </div>
-</div> --}}
 
 <div class="card card-body">
     @if (!$editar)
@@ -202,14 +170,8 @@
                         <th style="vertical-align: top">
                             Objetivos Estratégicos
                         </th>
-                        {{-- <th style="vertical-align: top">
-                            Evaluación Asignada
-                        </th> --}}
                         <th style="vertical-align: top">
                             KPI
-                        </th>
-                        <th style="vertical-align: top">
-                            Meta
                         </th>
                         <th style="vertical-align: top">
                             Estatus
@@ -222,7 +184,57 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+
+                    @foreach ($objetivos as $objetivo)
+                        <tr>
+                            <td>{{ $objetivo->objetivo->tipo->nombre ?? '' }}</td>
+                            <td>{{ $objetivo->objetivo->nombre }}</td>
+                            <td>{{ $objetivo->objetivo->KPI }}</td>
+                            <td>
+                                @if ($objetivo->objetivo->esta_aprobado == 1)
+                                    <span class="badge badge-success">Aprobado</span>
+                                @elseif ($objetivo->objetivo->esta_aprobado  == 2)
+                                    <span class="badge badge-danger">
+                                        No Aprobado
+                                        @if ($objetivo->objetivo->comentarios_aprobacion)
+                                            <i class="fas fa-comment ml-1" title="{{ $objetivo->objetivo->comentarios_aprobacion }}"></i>
+                                        @endif
+                                    </span>
+                                @else
+                                    <span class="badge badge-warning">Pendiente</span>
+                                @endif
+                            </td>
+                            <td>{{ $objetivo->objetivo->descripcion_meta }}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button class="btn btn-sm btn-editar" title="Editar"
+                                            onclick="Editar('/admin/recursos-humanos/evaluacion-360/{{ $objetivo->empleado_id }}/objetivos/{{ $objetivo->objetivo_id }}/editByEmpleado', '/admin/recursos-humanos/evaluacion-360/objetivos/{{ $objetivo->objetivo_id }}/empleado')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar"
+                                                onclick="Eliminar('{{ route('admin.ev360-objetivos-empleado.destroyByEmpleado', ['objetivo' => $objetivo->objetivo->id]) }}')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                    @if (Auth::id() == $empleado->supervisor->id || $permiso === true)
+                                        <div class="col-12">
+                                            <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);" class="btn btn-small text-success">
+                                                <i class="fa-solid fa-thumbs-up"></i>
+                                            </button>
+                                            <button onclick="aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, false);" class="btn btn-small text-danger">
+                                                <i class="fa-solid fa-thumbs-down"></i>
+                                            </button>
+                                        </div>
+                                     @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
+
             <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false"
                 tabindex="-1" aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -251,7 +263,20 @@
     @endif
 </div>
 
+
+
 <script>
+
+    document.getElementById('BtnAgregarObjetivo').addEventListener('click', function (event) {
+        Swal.fire({
+            title: 'Registro exitoso',
+            text: "El objetivo ha sido registrado correctamente",
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
             e.preventDefault();

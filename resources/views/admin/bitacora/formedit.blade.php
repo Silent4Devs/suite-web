@@ -174,11 +174,10 @@
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             @if ($convenios->count() > 0)
-                <div class="col s12 right-align">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#convenios_modificados">Visualizar
-                        Convenios
-                        Modificados</a>
-                </div>
+            <div class="col s12 right-align">
+                <!-- Botón para abrir el modal -->
+                <a id="openModal" class="waves-effect waves-light btn">Visualizar Convenios Modificados</a>
+            </div>
             @endif
         </div>
 
@@ -468,6 +467,32 @@
 
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="distancia form-group col-md-4">
+                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
+                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
+                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
+                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('vigencia_contrato'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('vigencia_contrato') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
+                <input type="number" name="no_pagos" id="no_pagos"
+                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
+                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('no_pagos'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_pagos') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">Fecha
                     de
                     inicio<font class="asterisco">*</font></label>
@@ -524,31 +549,6 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
-                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
-                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
-                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
-                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('vigencia_contrato'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('vigencia_contrato') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
-                <input type="number" name="no_pagos" id="no_pagos"
-                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
-                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('no_pagos'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_pagos') }}
-                    </div>
-                @endif
-            </div>
-        </div>
 
         @livewire('moneda-ext-contratos-edit', ['id_contrato' => $contrato->id])
 
@@ -575,7 +575,7 @@
                             <div class="inline input-field linea">
                                 <div class="switch" style="margin-top: -5px; margin-left: 8px;">
                                     @if (isset($contratos))
-                                        @if ($contrato->documento)
+                                        @if (isset($contrato->documento) || isset($contratos->folio))
                                             <div class="custom-control custom-switch form">
                                                 <input type="checkbox" class="custom-control-input" id="check_fianza"
                                                     name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}
@@ -629,13 +629,11 @@
                             <div class="ml-4 display-flex">
                                 <label class="red-text">{{ $errors->first('Type') }}</label>
                             </div>
+                        </td>
+                    </tbody>
+                </table>
             </div>
-            </td>
-
-            </tbody>
-            </table>
         </div>
-    </div>
 
     <div class="row">
         <br>
@@ -715,32 +713,6 @@
                 </div>
             @endif
         </div>
-        {{-- <div class="row"></div>
-    <div class="row">
-        <br>
-        <label class="txt-tamaño" for="firma">
-            Firma:</label>
-        <br/>
-        <br>
-        @if ($contratos->firma1 != null)
-            <p>Ya existe una firma registrada para este contrato</p>
-            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                firme el espacio.</p><br>
-            <label class="txt-tamaño">Actualizar firma </label>
-            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-            onclick="var input = document.getElementById('signature64');
-            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-        @endif
-    </div>
-    <div class="col s12 m3 distancia"></div>
-    <div class="distancia form-group col-md-4">
-        <div id="signaturePad" >
-            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-        </div>
-        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
-        <br/>
-    </div> --}}
-
     </div>
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 right-align btn-grd distancia">
@@ -759,18 +731,22 @@
 {{-- nuevo diseño --}}
 
 <!-- Modal Structure -->
-<div id="convenios_modificados" class="modal">
-    <div class="modal-content">
-        <strong class=" txt-frm">Convenios Modificados</strong>
+<div id="convenios_modificados" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
+    <strong class="txt-frm">Convenios Modificados</strong>
+    <ul>
         @foreach ($convenios as $convenio)
             <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
-                {{ $convenio->no_convenio }}</label>
+                {{ $convenio->no_convenio }}
+            </li>
         @endforeach
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </ul>
+    <div class="modal-footer" style="text-align: right; margin-top: 10px;">
+        <button id="closeModal" class="modal-close waves-effect waves-green btn-flat">Cerrar</button>
     </div>
 </div>
+
+
+<div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
 
 @if ($aprobacionFirmaContrato->count())
     <div class="col-12">
@@ -862,6 +838,35 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener los elementos del modal y botones
+        const openModalButton = document.getElementById('openModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modal = document.getElementById('convenios_modificados');
+        const overlay = document.getElementById('modalOverlay');
+
+        // Abrir el modal
+        openModalButton.addEventListener('click', function () {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Cerrar el modal
+        closeModalButton.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Cerrar el modal al hacer clic en el overlay
+        overlay.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let no_contrato = document.getElementById('no_contrato');
@@ -1015,19 +1020,26 @@
 
 <script>
     $(document).ready(function() {
+        // Verifica si los campos vienen del backend
+        let checkFianzaInicial = {{ $contratos->folio ? 'true' : 'false' }};
 
-        if ($('#check_fianza').checked) {
-            $(".td_fianza").fadeOut(0);
-        } else {
+        // Al cargar la página, ajusta la visibilidad según el valor inicial
+        if (checkFianzaInicial) {
             $(".td_fianza").fadeIn(0);
-        }
-    });
-    $(document).on('change', '#check_fianza', function(e) {
-        if (this.checked) {
-            $(".td_fianza").fadeIn(0);
+            $('#check_fianza').prop('checked', true);
         } else {
             $(".td_fianza").fadeOut(0);
+            $('#check_fianza').prop('checked', false);
         }
+
+        // Al cambiar el checkbox, ajusta la visibilidad
+        $(document).on('change', '#check_fianza', function(e) {
+            if (this.checked) {
+                $(".td_fianza").fadeIn(0);
+            } else {
+                $(".td_fianza").fadeOut(0);
+            }
+        });
     });
 </script>
 
@@ -1181,9 +1193,9 @@
     });
 </script>
 
-<script>
+{{-- <script>
     $("#dolares_filtro").select2('destroy');
-</script>
+</script> --}}
 
 {{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {

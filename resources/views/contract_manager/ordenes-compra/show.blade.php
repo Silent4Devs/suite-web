@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-@section('titulo', 'Ver Orden de Compra')
+{{-- @section('titulo', 'Ver Orden de Compra') --}}
 
 @include('layouts.datatables_css')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/global/tbButtons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}{{ config('app.cssVersion') }}">
 <style>
     .col {
@@ -230,9 +231,9 @@
                     <div class="row gy-4">
                         <div class="col-sm-12 col-lg-4">
                             <strong> Proveedor: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->razon_social }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->razon_social }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Nombre Comercial: </strong> <br>
@@ -242,39 +243,39 @@
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> RFC: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->rfc }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->rfc }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Nombre de Contacto: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->contacto }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->contacto }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Dirección: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->direccion }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->direccion }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Envio a: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->envio }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->envio }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Facturación: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->facturacion }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->facturacion }}
+                            @endisset
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <strong> Crédito Disponible: </strong> <br>
-                                @isset($proveedores)
-                                    {{ $proveedores->credito }}
-                                @endisset
+                            @isset($proveedores)
+                                {{ $proveedores->credito }}
+                            @endisset
                         </div>
                     </div>
                     {{-- <table class="table-proveedor">
@@ -390,7 +391,8 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_finanzas_orden)
                                 <img src="{{ $requisicion->firma_finanzas_orden }}" class="img-firma">
-                                <p> {{ $firma_siguiente->responsableFinanzas->name ?? $firma_finanzas_name ?? '' }} </p>
+                                <p> {{ $firma_siguiente->responsableFinanzas->name ?? ($firma_finanzas_name ?? '') }}
+                                </p>
                                 <p>{{ $requisicion->fecha_firma_finanzas_orden }}</p>
                             @else
                                 <div style="height: 137px;"></div>
@@ -416,13 +418,17 @@
                     </div>
                 </div>
 
-                <div class="row print-none">
-                    <div class="col-12">
-                        <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
-                                bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info" style="position: relative;   left:40%;"><a
-                                href="{{ route('contract_manager.orden-compra') }}"
-                                style="color: #EEEEEE">Regresar</a></button>
+                <div class="print-none" style="margin-left: 30px; margin-bottom:30px;">
+                    <div class="row">
+                        <div class="col-6 d-flex align-items-center pl-0">
+                            <small><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto
+                                    bueno de Gestión de talento.</i></small>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end pr-0 ">
+                            <button class="btn tb-btn-secondary" style="margin-right: 30px;"><a
+                                    href="{{ route('contract_manager.orden-compra') }}"
+                                    style="color: #EEEEEE">Regresar</a></button>
+                        </div>
                     </div>
                 </div>
             </div>

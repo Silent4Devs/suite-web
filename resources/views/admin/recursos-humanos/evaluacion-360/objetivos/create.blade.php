@@ -22,12 +22,24 @@
         Livewire.on('tipoObjetivoStore', () => {
             $('#tipoObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Tipo de objetivo creado con éxito');
+            Swal.fire({
+            title: 'Tipo de objetivo',
+            text: "Ha sido registrado correctamente",
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
         });
         Livewire.on('metricaObjetivoStore', () => {
             $('#metricaObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            toastr.success('Métrica del objetivo creada con éxito');
+            Swal.fire({
+            title: 'Métrica del objetivo',
+            text: "Ha sido registrado correctamente",
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
         });
         window.initSelect2 = () => {
             $('.select2').select2({

@@ -88,7 +88,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
-    mem_limit: 2g
+    mem_limit: 3g
 
   schedule-worker:
     build:
@@ -106,7 +106,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
-    mem_limit: 2g
+    mem_limit: 3g
 
   redis-tabantaj:
     image: redis:alpine
@@ -134,6 +134,7 @@ services:
       - tabantajnetwork
     # networks:
     #   - tabantajnetwork
+    mem_limit: 1g
 
   rabbitmq-tabantaj:
     image: rabbitmq:3-management-alpine

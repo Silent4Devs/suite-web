@@ -526,7 +526,7 @@
                                                 <div class="col s12 l12 anima-focus">
                                                     <input type="file" required
                                                         class="modal-cotizacion form-control-file"
-                                                        wire:model='array_proveedores.{{ $keyP }}.archivo'
+                                                        wire:model.lazy='array_proveedores.{{ $keyP }}.archivo'
                                                         id="cotizacion_{{ $keyP }}"
                                                         name="cotizacion_{{ $keyP }}"
                                                         accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
@@ -545,21 +545,23 @@
                                             </button>
                                             <br>
                                             @if ($bandera)
-                                            <div>
-                                                <label for="question">Pregunta:</label>
-                                                <input type="text" id="question" wire:model.debounce="question">
-                                                <button type="submit" wire:click.prevent="askQuestion">Enviar Pregunta</button>
-                                                <span wire:loading wire:target="askQuestion">
-                                                    <i class="fas fa-spinner fa-spin"></i> Cargando...
-                                                </span>
-                                            </div>
-                                            <br>
-                                            @if ($respuesta = $this->respuesta['response'] ?? null)
-                                                <div class="response">
-                                                    <h3>Respuesta:</h3>
-                                                    <p>{{ $respuesta }}</p>
+                                                <div>
+                                                    <label for="question">Pregunta:</label>
+                                                    <input type="text" id="question"
+                                                        wire:model.debounce="question">
+                                                    <button type="submit" wire:click.prevent="askQuestion">Enviar
+                                                        Pregunta</button>
+                                                    <span wire:loading wire:target="askQuestion">
+                                                        <i class="fas fa-spinner fa-spin"></i> Cargando...
+                                                    </span>
                                                 </div>
-                                            @endif
+                                                <br>
+                                                @if ($respuesta = $this->respuesta['response'] ?? null)
+                                                    <div class="response">
+                                                        <h3>Respuesta:</h3>
+                                                        <p>{{ $respuesta }}</p>
+                                                    </div>
+                                                @endif
                                             @endif
                                         @endif
                                     @endif
@@ -606,12 +608,11 @@
                         <div class="card card-item doc-requisicion">
                             <div class="flex header-doc">
                                 <div class="flex-item item-doc-img">
-                                    @if ($requisicion->sucursal->mylogo)
-                                        <td><img src="{{ url('razon_social/' . $requisicion->sucursal->mylogo) }}"
-                                                style="width:100%; max-width:150px;" alt=""></td>
+                                    @if ($organizacion->logo)
+                                        <img src="{{ asset($organizacion->logo) }}"
+                                            style="width:100%; max-width:150px;">
                                     @else
-                                        <td><img src="{{ asset('sinLogo.png') }}"
-                                                style="width:100%; max-width:150px;" alt=""></td>
+                                        <img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px;">
                                     @endif
                                 </div>
                                 <div class="flex-item info-med-doc-header">
@@ -699,49 +700,45 @@
                                                 procedera </small>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col s12 l4">
+                                    <div class="row gy-4">
+                                        <div class="col-sm-12 col-lg-12">
                                             <strong>Proveedor:</strong><br><br>
                                             {{ $proveedor->proveedor }}
                                         </div>
-                                        <div class="col s12  l4">
+                                        <div class="col-sm-12 col-lg-6">
+                                            <strong>Nombre del contacto:</strong><br><br>
+                                            {{ $proveedor->contacto }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-4">
+                                            <strong>Correo Electrónico:</strong><br><br>
+                                            {{ $proveedor->contacto_correo }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-2">
+                                            <strong>Teléfono:</strong><br><br>
+                                            {{ $proveedor->cel }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-6">
+                                            <strong>URL:</strong><br><br>
+                                            {{ $proveedor->url }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-4">
+                                            <strong>Fecha Inicio:</strong><br><br>
+                                            {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-2">
+                                            <strong>Fecha Fin:</strong><br><br>
+                                            {{ date('d-m-Y', strtotime($proveedor->fecha_fin)) }}
+                                        </div>
+                                        <div class="col-sm-12 col-lg-6">
                                             <strong>Detalle del producto:</strong><br><br>
                                             {{ $proveedor->detalles }}
                                         </div>
-                                        <div class="col s12 l4">
+                                        <div class="col-sm-12 col-lg-6">
                                             <strong>Comentarios:</strong><br><br>
                                             {{ $proveedor->comentarios }}
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col s12 l4">
-                                            <strong>Nombre del contacto:</strong><br><br>
-                                            {{ $proveedor->contacto }}
-                                        </div>
-                                        <div class="col s12 l4">
-                                            <strong>Fecha Inicio:</strong><br><br>
-                                            {{ date('d-m-Y', strtotime($proveedor->fecha_inicio)) }}
-                                        </div>
-                                        <div class="col s12 l4">
-                                            <strong>Teléfono:</strong><br><br>
-                                            {{ $proveedor->cel }}
-                                        </div>
-                                        <div class="col s12 l4">
-                                            <br><br>
-                                            <strong>Correo Electrónico:</strong><br><br>
-                                            {{ $proveedor->contacto_correo }}
-                                        </div>
-                                        <div class="col s12 l4">
-                                            <br><br>
-                                            <strong>Fecha Fin:</strong><br><br>
-                                            {{ date('d-m-Y', strtotime($proveedor->fecha_fin)) }}
-                                        </div>
-                                        <div class="col s12 l4">
-                                            <br><br>
-                                            <strong>URL:</strong><br><br>
-                                            {{ $proveedor->url }}
-                                        </div>
-                                    </div>
+
                                 </div>
                             @endforeach
 

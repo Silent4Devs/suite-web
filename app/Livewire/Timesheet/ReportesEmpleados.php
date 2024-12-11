@@ -9,6 +9,7 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -442,5 +443,34 @@ class ReportesEmpleados extends Component
 
         $this->alert('success', 'Correos Enviados!');
         $this->empleado = null;
+    }
+
+    public function timeDuplicado()
+    {
+        // Paso 1: Identificar los duplicados y conservar el menor id
+        $duplicadosDelete = Timesheet::select('fecha_dia', 'empleado_id', DB::raw('MIN(id) as id_minimo'))
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->pluck('id_minimo');
+
+        // Paso 2: Eliminar los registros duplicados, excepto los identificados en el paso 1
+        Timesheet::whereNotIn('id', $duplicadosDelete)->delete();
+
+        // Paso 1: Identificar combinaciones duplicadas
+        $duplicados = Timesheet::select('fecha_dia', 'empleado_id')
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
+
+        // Paso 2: Obtener registros completos
+        $resultados = Timesheet::where(function ($query) use ($duplicados) {
+            foreach ($duplicados as $duplicado) {
+                $query->orWhere(function ($q) use ($duplicado) {
+                    $q->where('fecha_dia', $duplicado->fecha_dia)
+                        ->where('empleado_id', $duplicado->empleado_id);
+                });
+            }
+        })->get();
+
     }
 }

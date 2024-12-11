@@ -22,17 +22,16 @@ $(document).ajaxSuccess(function (event, request, settings) {
         let c_entregables = document.querySelector("#resultado_entregables");
         c_entregables.style.display = "grid";
         //c_entregables.style.padding = "15px 5px 0 5px";
-        c_entregables.classList.add("card");
+        // c_entregables.classList.add("card");
         let html = `
-            <div style="width: 100%; padding: 15px 15px 0 15px"">
+            <div class="card" style="width: 100%; padding: 15px 15px 15px 0px; border:none !important;">
             <div style="padding:10px 15px">
             <h4 class="card-title graficas_titulos graficas_titulo1"
                 style="display: flex; align-items: center; justify-content: center;">
                Entregables
             </h4>
             </div>
-            </div>
-            <div class="table-responsive">
+            <div class="table-responsive" style="padding-left: 15px;">
             <table class="table datatable" id="table-entregables">
                 <thead>
                     <tr>
@@ -103,6 +102,7 @@ $(document).ajaxSuccess(function (event, request, settings) {
         html += `
                     </tbody>
                 </tableid=>
+            </div>
             </div>`;
 
         c_entregables.innerHTML = html;
@@ -117,12 +117,12 @@ $(document).ajaxSuccess(function (event, request, settings) {
             "#c_grafica_facturacion"
         );
         c_grafica_facturacion.style.display = "grid";
-        c_grafica_facturacion.classList.add("card");
+        // c_grafica_facturacion.classList.add("card");
         let titulo_grafica_facturacion = document.querySelector(
             "#titulo_grafica_facturacion"
         );
         titulo_grafica_facturacion.innerHTML = `
-        <div style="padding:10px 15px">
+        <div style="padding: 15px 15px 15px 0px;">
             <h4 class="card-title graficas_titulos graficas_titulo2"
                 style="display: flex; align-items: center; justify-content: center;">
                 Facturas
@@ -131,7 +131,7 @@ $(document).ajaxSuccess(function (event, request, settings) {
         `;
         let tabla = document.querySelector("#tbl_facturas");
         let html = `
-        <div class="table-responsive">
+        <div class="table-responsive" style="padding-left: 15px;">
             <table class="table datatable" id="dtbl_facturas">
                 <thead>
                     <tr>
@@ -253,7 +253,7 @@ $(document).ajaxSuccess(function (event, request, settings) {
         // Renderizamos tabla
         let titulo_cierre = document.querySelector("#titulo_cierre");
         titulo_cierre.innerHTML = `
-            <div style="padding:10px 15px">
+            <div style="padding-top:26px;">
                 <h4 class="card-title graficas_titulos graficas_titulo3"
                     style="display: flex; align-items: center; justify-content: center;">
                     Cierre del proyecto
@@ -266,7 +266,7 @@ $(document).ajaxSuccess(function (event, request, settings) {
         let tabla = document.querySelector("#tabla_cierre");
         let html = `
         <div class="table-responsive">
-            <table class="table datatable" id="d_tbl_cierre">
+            <table class="table datatable" id="d_tbl_cierre" style="padding-bottom:15px;">
                 <thead>
                     <tr>
                         <th>Aspectos para la validación de cierre</th>
@@ -374,9 +374,9 @@ $(document).ajaxSuccess(function (event, request, settings) {
 
         let c_niveles_servicio = document.querySelector("#niveles_servicio");
         //c_niveles_servicio.classList.add("card");
-        c_niveles_servicio.style.padding = "15px 10px";
+        // c_niveles_servicio.style.padding = "15px 10px";
         let html = `
-            <div style="padding:10px 15px">
+            <div style="padding:26px 0px 0px 15px;">
                 <h4 class="card-title graficas_titulos graficas_titulo4"
                     style="display: flex; align-items: center; justify-content: center;">
                     Niveles de Servicio

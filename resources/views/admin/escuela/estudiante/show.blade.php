@@ -243,7 +243,7 @@
                                                 @else
                                                 x-data="{open:false}" @endif>
                                     <!--Alphine: El valor de open va ser lo contrario del valor de open a traves del ! es decir si es false
-                                                                                                    se cambia a true y viceversa -->
+                                                                                                                    se cambia a true y viceversa -->
                                     <div class=" px-4" x-on:click="open=!open"
                                         style="display: inline-block; vertical-align: middle;">
                                         <p><span class="material-symbols-outlined" style="vertical-align: middle;">
@@ -263,6 +263,13 @@
                                 </div>
                             @endforeach
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div>
+                        @livewire('escuela.courses-review', ['course' => $course])
                     </div>
                 </div>
             </div>
@@ -333,7 +340,4 @@
 
         </div>
     </div>
-
-    @livewire('escuela.courses-review', ['course' => $course])
-
 @endsection

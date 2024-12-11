@@ -86,10 +86,10 @@
 
     @if ($isPersonal)
         <div class="d-flex justify-content-end">
-            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-primary btn-md"><i
+            {{-- <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-primary btn-md"><i
                     class="fas fa-plus mr-1"></i>Certificación</button>
             <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
-                class="btn btn-primary btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
+                class="btn btn-primary btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button> --}}
             <a class="btn btn-primary btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
         </div>
     @endif
@@ -410,7 +410,35 @@
                                                             Certificaciones</span>
                                                     </div>
                                                     <ul>
-                                                        @forelse ($documents as $document)
+                                                        @forelse ($documents['certificates'] as $document)
+                                                            <li>
+                                                                <div class="d-flex">
+                                                                    <h6> <strong>{{ $document->category->name }}</strong>
+                                                                        con
+                                                                        nombre
+                                                                        <strong>{{ $document->getName->name }}</strong>
+                                                                        de la empresa
+                                                                        <strong>{{ $document->getName->issuing_company }}</strong>
+                                                                    </h6>
+
+                                                                </div>
+                                                            </li>
+                                                        @empty
+                                                            <p><i class="fas fa-info-circle text-primary mr-2"></i>No
+                                                                hay
+                                                                información
+                                                                registrada
+                                                            </p>
+                                                        @endforelse
+                                                    </ul>
+
+                                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
+                                                        <span style="font-size: 17px; font-weight: bold;">
+                                                            Capacitaciones</span>
+                                                    </div>
+                                                    <ul>
+                                                        @forelse ($documents['capacitations'] as $document)
                                                             <li>
                                                                 <div class="d-flex">
                                                                     <h6> <strong>{{ $document->category->name }}</strong>
@@ -554,7 +582,44 @@
                                                         </div>
                                                     </div>
                                                     <div x-show="open">
-                                                        @foreach ($documents as $document)
+                                                        @foreach ($documents['certificates'] as $document)
+                                                            @if (!is_null($document->evidence_id))
+                                                                <div class="d-flex align-items-center">
+                                                                    <h6 class="p-0 m-0">
+                                                                        {{ $document->category->name }} con nombre
+                                                                        {{ $document->getName->name }} </h6>
+                                                                    <i class="material-symbols-outlined ml-3"
+                                                                        wire:click='downloadEvidencie({{ $document->evidence_id }})'>
+                                                                        download
+                                                                    </i>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-sm-6 pt-3 pl-0" x-data="{ open: false }">
+                                            <div class="row justify-content-center">
+                                                <div class="col-11 shadow-sm rounded border p-4">
+                                                    <div class="mb-3 w-100 "
+                                                        style="border-bottom: solid 2px var(--color-tbj)">
+                                                        <div class="row align-items-center justify-content-center">
+                                                            <div class="col-10" style="white-space: nowrap;">
+                                                                <span style="font-size: 17px; font-weight: bold;"><i
+                                                                        class="fas iconos-crear"
+                                                                        x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Capacitaciones
+                                                                </span>
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <i class="fas text-muted"
+                                                                    x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                                    x-on:click="open = ! open"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div x-show="open">
+                                                        @foreach ($documents['capacitations'] as $document)
                                                             @if (!is_null($document->evidence_id))
                                                                 <div class="d-flex align-items-center">
                                                                     <h6 class="p-0 m-0">
@@ -677,7 +742,7 @@
                                                         Certificaciones</span>
                                                 </div>
                                                 <ul>
-                                                    @forelse ($documents as $document)
+                                                    @forelse ($documents['certificates'] as $document)
                                                         <li>
                                                             <div class="d-flex">
                                                                 <h6> <strong>{{ $document->category->name }}</strong>
@@ -697,6 +762,32 @@
                                                         </p>
                                                     @endforelse
                                                 </ul>
+                                                <div class="mt-4 mb-3 w-100 dato_mairg "
+                                                style="border-bottom: solid 2px var(--color-tbj)">
+                                                <span style="font-size: 17px; font-weight: bold;">
+                                                    Capacitaciones</span>
+                                            </div>
+                                            <ul>
+                                                @forelse ($documents['capacitations'] as $document)
+                                                    <li>
+                                                        <div class="d-flex">
+                                                            <h6> <strong>{{ $document->category->name }}</strong>
+                                                                con
+                                                                nombre
+                                                                <strong>{{ $document->getName->name }}</strong>
+                                                                de la empresa
+                                                                <strong>{{ $document->getName->issuing_company }}</strong>
+                                                            </h6>
+
+                                                        </div>
+                                                    </li>
+                                                @empty
+                                                    <p><i class="fas fa-info-circle text-primary mr-2"></i>No hay
+                                                        información
+                                                        registrada
+                                                    </p>
+                                                @endforelse
+                                            </ul>
 
                                                 <div class="mt-4 mb-3 w-100 dato_mairg "
                                                     style="border-bottom: solid 2px var(--color-tbj)">
@@ -818,13 +909,50 @@
                                                     </div>
                                                 </div>
                                                 <div x-show="open">
-                                                    @foreach ($documents as $document)
+                                                    @foreach ($documents['certificates'] as $document)
                                                         @if (!is_null($document->evidence_id))
                                                             <div class="d-flex align-items-center">
                                                                 <h6 class="p-0 m-0">{{ $document->category->name }}
                                                                     con nombre
                                                                     {{ $document->getName->name }} </h6>
                                                                 <i class="material-symbols-outlined ml-3"
+                                                                    wire:click='downloadEvidencie({{ $document->evidence_id }})'>
+                                                                    download
+                                                                </i>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-sm-6 pt-3 pl-0" x-data="{ open: false }">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11 shadow-sm rounded border p-4">
+                                                <div class="mb-3 w-100 "
+                                                    style="border-bottom: solid 2px var(--color-tbj)">
+                                                    <div class="row align-items-center justify-content-center">
+                                                        <div class="col-10" style="white-space: nowrap;">
+                                                            <span style="font-size: 17px; font-weight: bold;"><i
+                                                                    class="fas iconos-crear"
+                                                                    x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Capacitaciones
+                                                            </span>
+                                                        </div>
+                                                        <div class="col text-center">
+                                                            <i class="fas text-muted"
+                                                                x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                                x-on:click="open = ! open"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div x-show="open">
+                                                    @foreach ($documents['capacitations'] as $document)
+                                                        @if (!is_null($document->evidence_id))
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="p-0 m-0">{{ $document->category->name }}
+                                                                    con nombre
+                                                                    {{ $document->getName->name }} </h6>
+                                                                <i class="material-symbols-outlined ml-3" style="cursor: pointer;"
                                                                     wire:click='downloadEvidencie({{ $document->evidence_id }})'>
                                                                     download
                                                                 </i>

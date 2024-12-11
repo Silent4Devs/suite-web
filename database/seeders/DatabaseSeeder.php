@@ -153,6 +153,8 @@ class DatabaseSeeder extends Seeder
                 ListaDistribucionCompradoresSeeder::class,
 
                 SentimentSeeder::class,
+
+                UpdateDiasSolicitadosSeeder::class,
             ]
         );
     }

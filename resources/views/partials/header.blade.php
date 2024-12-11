@@ -131,12 +131,12 @@
                     @else
                         <div class="mt-3 text-center dropdown-menu dropdown-menu-right hide py-0"
                             style="width:300px; box-shadow: 0px 3px 6px 1px #00000029; border-radius: 4px; border:none;">
-                            <div class="d-flex align-items-center justify-content-center gap-2 py-3"
+                            <div class="d-flex align-items-center justify-content-center gap-2 py-3 px-4"
                                 style=" background-color: #cfdbe4;">
                                 <div class="img-person">
                                     <img src="{{ $empleado->avatar_ruta }}" alt="{{ $empleado->name }}">
                                 </div>
-                                <span style="font-size:18px;" class="color-tbj">
+                                <span style="font-size:18px; text-wrap: balance;" class="color-tbj">
                                     <strong>{{ $empleado->name }}</strong>
                                 </span>
                             </div>
@@ -323,14 +323,6 @@
                             <span>Gestión Contractual</span>
                         </a>
                     @endif
-                    @can('planes_de_accion_acceder')
-                        <a href="{{ asset('admin/planes-de-accion') }}">
-                            <div class="caja-icon-mod-header" style="background: #B1C6FF;">
-                                <i class="material-symbols-outlined">shield_person</i>
-                            </div>
-                            <span>Planes de Trabajo</span>
-                        </a>
-                    @endcan
                     @can('control_documentar_acceder')
                         <a href="{{ asset('admin/documentos') }}">
                             <div class="caja-icon-mod-header" style="background: #FFFDC4;">
@@ -446,7 +438,10 @@
                 $usuario->can('configurar_soporte_acceder'))
             <div class="item-content-menu-header line-left caja-menu-admin-header overflow-hidden"
                 style="background-color: #fff; min-width: 280px;">
-                <span class="title-item-menu-header">ADMINISTRACIÓN</span>
+                <div class="caja-logo-ltr-light">
+                    <img src="{{ asset($logotipo) }}" style="object-position: left center;">
+                </div>
+                <span class="title-item-menu-header mt-4">ADMINISTRACIÓN</span>
                 <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
                     <ul class="menu-list-admin-header ">
                         @if ($usuario->can('clausulas_auditorias_acceder') || $usuario->can('clasificaciones_auditorias_acceder'))

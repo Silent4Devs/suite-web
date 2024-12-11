@@ -1043,7 +1043,7 @@ class EmpleadoController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion', 'id'));
     }
 
     public function getListaDocumentos($id_empleado)
@@ -1495,7 +1495,8 @@ class EmpleadoController extends Controller
                 'foto' => $new_name_image,
             ]);
 
-            return response()->json(['success' => 'Imágen actualizada']);
+            // return response()->json(['success' => 'Imágen actualizada']);
+            return redirect()->back()->with(['success' => 'Foto actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
 
