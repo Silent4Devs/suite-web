@@ -254,7 +254,8 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="anima-focus">
-                                                                    <select name="sustituto_id" id="sustituto_id">
+                                                                    <select class="form-control" name="nuevo_responsable"
+                                                                    id="nuevo_responsable-{{ $requisicion->id }}">
                                                                         @forelse ($requisicion->lista_sustitutos ?? [] as $sustituto)
                                                                             <option value="{{ $sustituto->id }}">
                                                                                 {{ $sustituto->name }}</option>
