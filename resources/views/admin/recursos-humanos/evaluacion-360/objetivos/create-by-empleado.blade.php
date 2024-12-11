@@ -253,12 +253,12 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        toastr.info('Asignando el objetivo');
+                        toastr.success('Asignando el objetivo.');
                     },
                     success: function(response) {
                         if (response.success) {
                             tblObjetivos.ajax.reload();
-                            toastr.success('Objetivo asignado');
+                            toastr.success('El objetivo ha sido asignado correctamente.', 'Éxito');
                             document.getElementById('formObjetivoCreate').reset();
                             $("#tipo_id").val('').trigger('change');
                             $("#metrica_id").val('').trigger('change');

@@ -860,7 +860,7 @@ class EditEvaluacionDesempeno extends Component
 
             for ($i = 1; $i <= $cantidad_periodos; $i++) {
                 $this->arreglo_periodos[] = [
-                    'nombre_evaluacion' => 'T' . $i,
+                    'nombre_evaluacion' => 'T'.$i,
                     'fecha_inicio' => null,
                     'fecha_fin' => null,
                     'habilitar' => ($i === 1), // Solo el primer periodo habilitado

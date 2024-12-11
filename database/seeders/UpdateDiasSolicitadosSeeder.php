@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\SolicitudVacaciones;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class UpdateDiasSolicitadosSeeder extends Seeder
 {

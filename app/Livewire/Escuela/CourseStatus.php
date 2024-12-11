@@ -113,6 +113,7 @@ class CourseStatus extends Component
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
+        // dd($this->current);
         return view('livewire.escuela.course-status');
 
     }
@@ -124,16 +125,19 @@ class CourseStatus extends Component
         // Verificar si el usuario está yendo a una lección anterior o desea regresar
         if ($atras == 'previous') {
             $this->current = $lesson;
+            $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render'); // Renderizar la vista correctamente
 
             return;
         }
 
         // Permitir acceder a la lección seleccionada si está completada
-        if ($lesson->completed) {
+        if ($lesson->completed || $this->current->completed) {
             $this->current = $lesson;
+            $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render');
 
+            // dd('aqui');
             return;
         }
 
@@ -142,6 +146,7 @@ class CourseStatus extends Component
             $this->alertaEmergente('Es necesario terminar esta lección antes de avanzar.');
             $this->dispatch('render'); // Asegurarse de renderizar la lección actual
 
+            // dd('aqui2');
             return;
         }
 
@@ -192,6 +197,7 @@ class CourseStatus extends Component
     //calculamos la propiedad previous
     public function getPreviousProperty()
     {
+
         if ($this->index == 0) {
             return null;
         } else {
@@ -205,6 +211,7 @@ class CourseStatus extends Component
         if ($this->index == $this->lecciones_orden->count() - 1) {
             return null;
         } else {
+            // dump($this->current->name);
             return $this->lecciones_orden[$this->index + 1];
         }
     }

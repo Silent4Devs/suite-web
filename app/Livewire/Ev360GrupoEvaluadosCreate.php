@@ -5,14 +5,17 @@ namespace App\Livewire;
 use App\Models\Empleado;
 use App\Models\RH\GruposEvaluado;
 use Carbon\Carbon;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class Ev360GrupoEvaluadosCreate extends Component
 {
     use LivewireAlert;
+
     public $open = false;
+
     public $empleados = [];
+
     public $nombreGrupo;
 
     protected $rules = [
@@ -56,6 +59,7 @@ class Ev360GrupoEvaluadosCreate extends Component
     public function render()
     {
         $lista_empleados = Empleado::getaltaAll();
+
         return view('livewire.ev360-grupo-evaluados-create', ['lista_empleados' => $lista_empleados]);
     }
 

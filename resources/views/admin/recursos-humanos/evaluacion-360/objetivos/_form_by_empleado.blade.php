@@ -189,8 +189,8 @@
                     @foreach ($objetivos as $objetivo)
                         <tr>
                             <td>{{ $objetivo->objetivo->tipo->nombre ?? '' }}</td>
-                            <td>{{ $objetivo->objetivo->nombre }}</td>
-                            <td>{{ $objetivo->objetivo->KPI }}</td>
+                            <td>{{ $objetivo->objetivo->nombre ?? ''   }}</td>
+                            <td>{{ $objetivo->objetivo->KPI ?? ''  }}</td>
                             <td>
                                 @if ($objetivo->objetivo->esta_aprobado == 1)
                                     <span class="badge badge-success">Aprobado</span>
@@ -271,8 +271,8 @@
     setTimeout(function () {
         event.preventDefault();
         location.reload();
-    }, 3000); // 
-    });
+    }, 3000); //
+});
 
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {

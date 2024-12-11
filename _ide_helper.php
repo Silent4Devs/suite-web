@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.34.2.
+ * Generated for Laravel 11.35.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10319,6 +10319,16 @@ namespace Illuminate\Support\Facades {
                         return $instance->method();
         }
                     /**
+         * Get a URI instance for the request.
+         *
+         * @return \Illuminate\Support\Uri 
+         * @static 
+         */        public static function uri()
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->uri();
+        }
+                    /**
          * Get the root URL for the application.
          *
          * @return string 
@@ -12269,6 +12279,36 @@ namespace Illuminate\Support\Facades {
                         return $instance->except($keys);
         }
                     /**
+         * Apply the callback if the given "value" is (or resolves to) truthy.
+         *
+         * @template TWhenParameter
+         * @template TWhenReturnType
+         * @param (\Closure($this): TWhenParameter)|\Illuminate\Http\TWhenParameter|null $value
+         * @param (callable($this, TWhenParameter): TWhenReturnType)|null $callback
+         * @param (callable($this, TWhenParameter): TWhenReturnType)|null $default
+         * @return $this|\Illuminate\Http\TWhenReturnType 
+         * @static 
+         */        public static function when($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->when($value, $callback, $default);
+        }
+                    /**
+         * Apply the callback if the given "value" is (or resolves to) falsy.
+         *
+         * @template TUnlessParameter
+         * @template TUnlessReturnType
+         * @param (\Closure($this): TUnlessParameter)|\Illuminate\Http\TUnlessParameter|null $value
+         * @param (callable($this, TUnlessParameter): TUnlessReturnType)|null $callback
+         * @param (callable($this, TUnlessParameter): TUnlessReturnType)|null $default
+         * @return $this|\Illuminate\Http\TUnlessReturnType 
+         * @static 
+         */        public static function unless($value = null, $callback = null, $default = null)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->unless($value, $callback, $default);
+        }
+                    /**
          * Register a custom macro.
          *
          * @param string $name
@@ -13712,6 +13752,16 @@ namespace Illuminate\Support\Facades {
         {
                         /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
                         return $instance->getForeignKeys($table);
+        }
+                    /**
+         * Get the schemas for the connection.
+         *
+         * @return array 
+         * @static 
+         */        public static function getSchemas()
+        {
+                        /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+                        return $instance->getSchemas();
         }
                     /**
          * Parse the database object reference and extract the schema and table.

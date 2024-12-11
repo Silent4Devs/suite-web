@@ -124,7 +124,7 @@
 
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
-                                             $employee = $requisicion->userSolicitante?->empleado ?? null;
+                                            $employee = $requisicion->userSolicitante?->empleado ?? null;
                                             if ($requisicion->registroFirmas) {
                                                 $supervisorName =
                                                     $requisicion->obtener_responsable_lider->name ?? false;
@@ -255,11 +255,14 @@
                                                             <div class="col-12">
                                                                 <div class="anima-focus">
                                                                     <select class="form-control" name="nuevo_responsable"
-                                                                        id="nuevo_responsable-{{ $requisicion->id }}">
-                                                                        @foreach ($requisicion->lista_sustitutos as $key => $sustituto)
+                                                                    id="nuevo_responsable-{{ $requisicion->id }}">
+                                                                        @forelse ($requisicion->lista_sustitutos ?? [] as $sustituto)
                                                                             <option value="{{ $sustituto->id }}">
                                                                                 {{ $sustituto->name }}</option>
-                                                                        @endforeach
+                                                                        @empty
+                                                                            <option value="">Sin Sustitutos
+                                                                                disponibles</option>
+                                                                        @endforelse
                                                                     </select>
                                                                     <label
                                                                         for="nuevo_responsable-{{ $requisicion->id }}">Responsable</label>

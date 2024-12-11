@@ -1147,6 +1147,7 @@ class RequisicionesController extends Controller
     public function cambiarResponsable(Request $request)
     {
         try {
+
             $idEmpleadoActual = User::getCurrentUser()->empleado->id;
 
             $request->validate([
@@ -1155,7 +1156,11 @@ class RequisicionesController extends Controller
             ]);
 
             $requisicion = KatbolRequsicion::find($request->requisicion_id);
+
             $firmasRequisicion = $requisicion->registroFirmas;
+
+            $posicion = null;
+            $posicion_firma = null;
 
             if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
                 $posicion = 'delegado_jefe_id';
@@ -1173,6 +1178,7 @@ class RequisicionesController extends Controller
             }
 
             $nuevoResponsableId = $request->nuevo_responsable;
+
             $emailNuevoResponsable = Empleado::find($nuevoResponsableId);
 
             $firmasRequisicion->update([
@@ -1181,11 +1187,20 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
-            Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(new RequisicionesEmail($requisicion, $organizacion, $posicion_firma));
+            try {
+                //code...
+                Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(
+                    new RequisicionesEmail($requisicion, $organizacion, $posicion_firma)
+                );
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             toast('Error al modificar al colaborador responsable.', 'error');
+
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
     }
 

@@ -17,10 +17,10 @@ use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Artisan;
 
 class EV360ObjetivosController extends Controller
 {
@@ -88,17 +88,16 @@ class EV360ObjetivosController extends Controller
                     $objetivo = new Objetivo;
 
                     $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
-                    ->with([
-                        'objetivos' => function ($query) {
-                            $query->with([
-                                'objetivo' => function ($nestedQuery) {
-                                    $nestedQuery->with(['tipo', 'metrica']);
-                                }
-                            ]);
-                        }
-                    ])->where('estatus', 'alta')
-                    ->find(intval($empleado));
-
+                        ->with([
+                            'objetivos' => function ($query) {
+                                $query->with([
+                                    'objetivo' => function ($nestedQuery) {
+                                        $nestedQuery->with(['tipo', 'metrica']);
+                                    },
+                                ]);
+                            },
+                        ])->where('estatus', 'alta')
+                        ->find(intval($empleado));
 
                     $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
@@ -109,22 +108,22 @@ class EV360ObjetivosController extends Controller
 
                     $permiso = $user->can('aprobacion_objetivos_estrategicos');
 
-                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo','objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
                 } else {
                     abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
                     $objetivo = new Objetivo;
 
                     $empleado = Empleado::select('id', 'name', 'foto', 'area_id', 'puesto_id', 'supervisor_id')
-                    ->with([
-                        'objetivos' => function ($query) {
-                            $query->with([
-                                'objetivo' => function ($nestedQuery) {
-                                    $nestedQuery->with(['tipo', 'metrica']);
-                                }
-                            ]);
-                        }
-                    ])->where('estatus', 'alta')
-                    ->find(intval($empleado));
+                        ->with([
+                            'objetivos' => function ($query) {
+                                $query->with([
+                                    'objetivo' => function ($nestedQuery) {
+                                        $nestedQuery->with(['tipo', 'metrica']);
+                                    },
+                                ]);
+                            },
+                        ])->where('estatus', 'alta')
+                        ->find(intval($empleado));
 
                     $objetivos = $empleado->objetivos ? $empleado->objetivos : collect();
 
@@ -135,10 +134,10 @@ class EV360ObjetivosController extends Controller
                     $permiso = $user->can('aprobacion_objetivos_estrategicos');
 
                     // dd($permiso);
-                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo' ,'objetivos','tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
                 }
             } catch (\Throwable $th) {
-                dd( $th);
+                dd($th);
             }
         } else {
             // El valor no es válido, maneja el error
@@ -252,7 +251,7 @@ class EV360ObjetivosController extends Controller
 
         $objetivo = Objetivo::create($request->all());
         if ($objetivo) {
-            return redirect()->route('admin.ev360-objetivos.index')->with('success', 'Objetivo creado con éxito');
+            return redirect()->route('admin.ev360-objetivos.index');
         } else {
             return redirect()->route('admin.ev360-objetivos.index')->with('error', 'Ocurrió un error al crear el objetivo, intente de nuevo...');
         }
@@ -314,11 +313,10 @@ class EV360ObjetivosController extends Controller
         return $objetivo;
     }
 
-
     public function destroyByEmpleado($id)
     {
         $objetivo = Objetivo::findOrFail($id); // Buscar el objetivo por ID
-        $objetivo_empleado = ObjetivoEmpleado::where('objetivo_id',$id)->first();
+        $objetivo_empleado = ObjetivoEmpleado::where('objetivo_id', $id)->first();
 
         $ev = $this->evaluacionActiva();
 
@@ -334,7 +332,6 @@ class EV360ObjetivosController extends Controller
 
         return response()->json(['success' => '¡Eliminado con éxito!']);
     }
-
 
     public function evaluacionActiva()
     {
