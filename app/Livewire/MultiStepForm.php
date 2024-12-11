@@ -1066,7 +1066,7 @@ class MultiStepForm extends Component
                     return $item !== $rev_emp_comp->name;
                 });
             } else {
-                $this->alert('error', 'Existen niveles de competencia no mayores a 0!');
+                $this->alert('error', 'Algunos empleados no tienen niveles de competencia asignados. Por favor, asigne los niveles correspondientes.');
             }
         }
 
@@ -1104,7 +1104,7 @@ class MultiStepForm extends Component
                     return $item !== $rev_emp_obj->name;
                 });
             } else {
-                $this->alert('error', 'Existen objetivos de cuenta no mayores a 0!');
+                $this->alert('error', 'Algunos empleados no tienen objetivos asignados. Por favor, asigne los correspondientes.');
             }
         }
         $this->totalEmpleadosSinObjetivos = $this->listaEmpleadosSinObjetivos->count();
@@ -1142,7 +1142,8 @@ class MultiStepForm extends Component
                     return $item !== $rev_emp_obj_pend->name;
                 });
             } else {
-                $this->alert('error', 'Existen objetivos  pendientes no mayores a 0!');
+
+                $this->alert('error', 'Algunos empleados no tienen objetivos asignados. Por favor, asigne los correspondientes.');
             }
         }
         $this->totalEmpleadosObjetivosPendiente = $this->listaEmpleadosObjetivosPendiente->count();
