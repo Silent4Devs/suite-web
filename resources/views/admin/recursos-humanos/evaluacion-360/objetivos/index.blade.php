@@ -172,59 +172,8 @@
 @endsection
 @section('scripts')
     @parent
-
     <script>
         $(function() {
-            // document.getElementById('btnNuevosObjetivos').addEventListener('click', () => {
-            //     Swal.fire({
-            //         title: '¿Quieres registrar nuevos objetivos?',
-            //         text: "Registrar nuevos objetivos te permitirá evaluarlos en una nueva evaluación, los objetivos anteriores no se eliminaran pero no serán visibles para nuevas evaluaciones",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: 'Aceptar',
-            //         cancelButtonText: 'Cancelar',
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-            //             $.ajax({
-            //                 type: "POST",
-            //                 headers: {
-            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                 },
-            //                 url: "{{ route('admin.ev360-objetivos-empleado.definir-nuevos') }}",
-            //                 beforeSend: function() {
-            //                     Swal.fire(
-            //                         'En proceso',
-            //                         'Estamos preparando todo para que puedas definir nuevos objetivos',
-            //                         'info'
-            //                     );
-            //                 },
-            //                 success: function(response) {
-            //                     if (response.estatus == 200) {
-            //                         Swal.fire(
-            //                             'Bien Hecho',
-            //                             'Ahora puedes definir nuevos objetivos para los colaboradores',
-            //                             'success'
-            //                         );
-            //                         setTimeout(() => {
-            //                             window.location.reload();
-            //                         }, 1000);
-            //                     }
-            //                 },
-            //                 error: function(request, status, error) {
-            //                     Swal.fire(
-            //                         'Error',
-            //                         error,
-            //                         'error'
-            //                     )
-            //                 }
-            //             });
-            //         }
-            //     })
-
-            // })
-
             let dtButtons = [{
                     extend: 'csvHtml5',
                     title: `Objetivos ${new Date().toLocaleDateString().trim()}`,
@@ -293,97 +242,6 @@
 
             ];
 
-            // let dtOverrideGlobals = {
-            //     buttons: dtButtons,
-            //     processing: true,
-            //     serverSide: true,
-            //     retrieve: true,
-            //     aaSorting: [],
-            //     // ajax: "{{ route('admin.ev360-objetivos.index') }}",
-            //     // columns: [{
-            //     //         data: 'n_empleado'
-            //     //     }, {
-            //     //         data: 'name',
-            //     //         width: '25%',
-            //     //         render: function(data, type, row, meta) {
-            //     //             let html = `<img src="{{ asset('storage/empleados/imagenes') }}/${row.avatar}" style="clip-path:circle(20px at 50% 50%);height:40px;">
-        // //             <span>${data}</span>`;
-            //     //             return html;
-            //     //         }
-            //     //     }, {
-            //     //         data: 'puesto',
-            //     //         width: '18%'
-            //     //     }, {
-            //     //         data: 'area.area',
-            //     //     }, {
-            //     //         data: 'perfil.nombre',
-            //     //         render: function(data, type, row, meta) {
-            //     //             if (data) {
-            //     //                 return data;
-            //     //             }
-            //     //             return "Sin perfil vinculado";
-            //     //         },
-            //     //         width: '10%'
-            //     //     },
-            //     //     {
-            //     //         data: 'objetivos',
-            //     //         render: function(data, type, row, meta) {
-            //     //             if (data) {
-            //     //                 if (data.length == 1) {
-            //     //                     return `<span class="badge badge-success">${data.length} objetivo asignado</span>`;
-            //     //                 } else {
-            //     //                     return `<span class="badge badge-success">${data.length} objetivos asignados</span>`;
-            //     //                 }
-            //     //             } else {
-            //     //                 return `<span class="badge badge-dark">Sin asignar objetivos</span>`;
-            //     //             }
-            //     //         },
-            //     //         width: '10%'
-            //     //     },
-            //     //     {
-            //     //         data: 'id',
-            //     //         render: function(data, type, row, meta) {
-            //     //             let urlAsignar =
-            //     //                 `/admin/recursos-humanos/evaluacion-360/${data}/objetivos`;
-            //     //             let urlShow =
-            //     //                 `/admin/recursos-humanos/evaluacion-360/${data}/objetivos/lista`;
-            //     //             let urlCopiarObjetivos =
-            //     //                 `/admin/recursos-humanos/evaluacion-360/objetivos/copiar`;
-            //     //             let urlVistaCopiarObjetivos =
-            //     //                 `/admin/recursos-humanos/evaluacion-360/objetivos/${data}/copiar`;
-            //     //             let html = `
-        // //             <div class="d-flex">
-        // //             @can('objetivos_estrategicos_agregar')
-        // //                 <a href="${urlAsignar}" title="Editar" class="btn btn-sm tb-btn-primary">
-        // //                     <i class="fas fa-user-tag"></i> Agregar
-        // //                 </a>
-        // //             @endcan
-        // //             @can('objetivos_estrategicos_copiar')
-        // //                 <button onclick="CopiarObjetivos('${urlVistaCopiarObjetivos}','${row.name}','${data}')" title="Copiar Objetivos"
-        // //                     class="ml-2 text-white btn btn-sm" style="background:#11bb55">
-        // //                     <i class="fas fa-copy"></i>Copiar</button>
-        // //             @endcan
-        // //             @can('objetivos_estrategicos_ver')
-        // //                 <a href="${urlShow}" title="Visualizar" class="ml-2 text-white btn btn-sm" style="background:#1da79f">
-        // //                     <i class="fas fa-eye"></i> Ver
-        // //                 </a>
-        // //             @endcan
-        // //             </div>
-        // //             `;
-            //     //             return html;
-            //     //         },
-            //     //         width: '12%'
-            //     //     }
-            //     // ],
-            //     orderCellsTop: true,
-            //     order: [
-            //         [1, 'desc']
-            //     ],
-            //     dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
-            //         "<'row'<'col-sm-12'tr>>" +
-            //         "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-            // };
-            // let table = $('.tblObjetivos').DataTable(dtOverrideGlobals);
             let dtOverrideGlobals = {
                 pageLength: 5,
                 buttons: dtButtons,

@@ -853,59 +853,6 @@
                 });
             }
 
-            // window.saveMetaAlcanzada = function(input, objetivo, evaluado, evaluador, evaluacion, url,
-            //     iconoObjetivoId) {
-            //     let data = {
-            //         calificacion: input.value,
-            //         objetivo,
-            //         evaluado,
-            //         evaluador,
-            //         evaluacion,
-            //     }
-            //     $.ajax({
-            //         headers: {
-            //             "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-            //         },
-            //         type: "POST",
-            //         url: url,
-            //         data: data,
-            //         dataType: "JSON",
-            //         beforeSend: function() {
-            //             toastr.info('Guardando información, espere un momento...');
-            //         },
-            //         success: function(response) {
-            //             if (response.success) {
-            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-            //                     .remove(
-            //                         'fa-times-circle');
-            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-            //                     .remove(
-            //                         'text-danger');
-            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList.add(
-            //                     'fa-check-circle');
-            //                 document.getElementById(`iconObjetivo${iconoObjetivoId}`).classList
-            //                     .add(
-            //                         'text-success');
-            //                 let barra = document.getElementById('progresoEvaluacionObjetivos');
-            //                 barra.style.width = `${response.progreso}%`;
-            //                 barra.innerHTML = `${response.progreso}%`;
-            //                 let contestadas = document.getElementById('objetivosEvaluados');
-            //                 let no_contestadas = document.getElementById('objetivosNoEvaluados');
-            //                 contestadas.innerHTML = `${response.contestadas}`;
-            //                 no_contestadas.innerHTML = `${response.sin_contestar}`;
-            //                 toastr.success('Guardado con éxito');
-            //             }
-            //             if (response.error) {
-            //                 toastr.error('Algo salió mal, intente de nuevo...');
-            //             }
-            //         },
-            //         error: function(request, status, error) {
-            //             toastr.error(
-            //                 'Ocurrió un error: ' + error);
-            //         }
-            //     });
-            // }
-
             window.FinalizarEvaluacion = function(url) {
                 Swal.fire({
                     title: '¿Estás seguro de finalizar la evaluación?',
@@ -1231,30 +1178,11 @@
                 return !pixelBuffer.some(color => color !== 0);
             }
 
-            // Set up the UI
-            // var sigText = document.getElementById(dataBaseCanvas);
-            // var sigImage = document.getElementById(imageCanvas);
+
             var clearBtn = document.getElementById(clearBtnCanvas);
-            // var submitBtn = document.getElementById(submitBtnCanvas);
             clearBtn.addEventListener("click", function(e) {
                 clearCanvas();
-                // sigText.innerHTML = "Data URL for your signature will go here!";
-                // sigImage.setAttribute("src", "");
             }, false);
-            // submitBtn.addEventListener("click", function(e) {
-            //     const blank = isCanvasBlank();
-            //     if (!blank) {
-            //         // var dataUrl = canvas.toDataURL();
-            //         // sigText.innerHTML = dataUrl;
-            //         // sigImage.setAttribute("src", dataUrl);
-            //     } else {
-            //         if (toastr) {
-            //             toastr.info('No has firmado en el canvas');
-            //         } else {
-            //             alert('No has firmado en el canvas');
-            //         }
-            //     }
-            // }, false);
 
         }
 
