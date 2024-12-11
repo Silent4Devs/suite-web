@@ -229,7 +229,7 @@
                     if (result.isConfirmed) {
                         Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
                             () => {
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             });
                     }
                 })
