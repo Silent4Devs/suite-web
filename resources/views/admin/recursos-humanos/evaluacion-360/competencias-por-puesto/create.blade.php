@@ -164,20 +164,7 @@
                     },
                     dataType: "JSON",
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Recuperando información',
-                            text: "Espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
+                        toastr.info('Recuperando información, espere un momento...');
                     },
                     success: function(response) {
                         console.log(response);
@@ -213,30 +200,15 @@
                                     data: data,
                                     dataType: "JSON",
                                     beforeSend: function() {
-                                        Swal.fire({
-                                            title: 'Cambiando el nivel esperado',
-                                            text: "espere unos instantes...",
-                                            icon: 'info',
-                                            allowOutsideClick: false,
-                                            showConfirmButton: false,
-                                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                            didOpen: () => {
-                                                Swal.showLoading(); // Muestra un indicador de carga
-                                            },
-                                            willClose: () => {
-                                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                            }
-                                        });
+                                        toastr.info(
+                                            'Cambiando el nivel esperado, espere un momento...'
+                                        )
                                     },
                                     success: function(response) {
                                         if (response.success) {
-                                            Swal.fire({
-                                                title: 'Nivel esperado',
-                                                text: "Cambiado con éxito",
-                                                icon: 'success',
-                                                confirmButtonColor: '#3085d6',
-                                                confirmButtonText: 'Aceptar'
-                                            });
+                                            toastr.success(
+                                                'Nivel esperado cambiado con éxito'
+                                            );
                                             tblCompetenciasPorPuesto.ajax.reload();
                                             $('#modalEditarCompetencia').modal(
                                                 'hide');
@@ -283,29 +255,12 @@
                             type: "DELETE",
                             url: urlEliminar,
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Quitando competencia',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info(
+                                    'Quitando competencia, espere unos instantes...'
+                                );
                             },
                             success: function(response) {
-                                Swal.fire({
-                                    title: 'Competencia removida',
-                                    text: "Ha sido removida correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success('Competencia removida');
                                 tblCompetenciasPorPuesto.ajax.reload();
                             },
                             error: function(request, status, error) {
