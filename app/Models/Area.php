@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use EloquentFilter\Filterable;
@@ -39,7 +38,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Area extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use Filterable, HasFactory, MultiTenantModelTrait, SoftDeletes;
+    use Filterable, HasFactory, SoftDeletes;
 
     protected $table = 'areas';
 
