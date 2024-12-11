@@ -143,7 +143,7 @@
     <div class="row">
         <div class="col-12">
             <button id="BtnAgregarObjetivo" class="btn" style="float: right" title="Agregar objetivo">
-                Agregar objetivo a la tabla<i class="material-symbols-outlined">south</i>
+                Agregar objetivo a la tabla <i class="material-symbols-outlined">south</i>
             </button>
         </div>
     </div>
@@ -268,14 +268,11 @@
 <script>
 
     document.getElementById('BtnAgregarObjetivo').addEventListener('click', function (event) {
-        Swal.fire({
-            title: 'Registro exitoso',
-            text: "El objetivo ha sido registrado correctamente",
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-        });
-    });
+    setTimeout(function () {
+        event.preventDefault();
+        location.reload();
+    }, 3000); //
+});
 
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
