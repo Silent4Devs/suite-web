@@ -38,5 +38,4 @@ return new class extends Migration
             $table->dropColumn(['delegado_jefe_id', 'delegado_finanzas_id', 'delegado_comprador_id']);
         });
     }
-
 };

@@ -1198,7 +1198,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }
@@ -1238,7 +1238,7 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoJefe;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
             $user = User::where('id', $requisicion->id_user)->first();
 
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
@@ -1280,7 +1280,7 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoResponsableFinanzas;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
             $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
             $listaPart = $listaReq->participantes;
 
@@ -1308,7 +1308,7 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoComprador;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
 
             $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 
@@ -1336,7 +1336,8 @@ class Requsicion extends Model implements Auditable
         }
     }
 
-    public function getListaSustitutosAttribute(){
+    public function getListaSustitutosAttribute()
+    {
 
         $requisicion = self::where('id', $this->id)->first();
 
@@ -1364,7 +1365,7 @@ class Requsicion extends Model implements Auditable
             }
 
             return $sustitutosLD;
-       } elseif ($requisicion->firma_finanzas === null) {
+        } elseif ($requisicion->firma_finanzas === null) {
 
             $LD = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
             $participantes = $LD->participantes;
