@@ -214,7 +214,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar"
-                                                onclick="Eliminar('{{ route('admin.ev360-objetivos-empleado.destroyByEmpleado', ['objetivo' => $objetivo->objetivo->id]) }}')">
+                                                onclick="event.preventDefault();Eliminar('{{ route('admin.ev360-objetivos-empleado.destroyByEmpleado', ['objetivo' => $objetivo->objetivo->id]) }}')">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
