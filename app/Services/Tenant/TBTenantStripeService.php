@@ -149,4 +149,137 @@ class TBTenantStripeService
             abort(403);
         }
     }
+
+    /**
+     * Obtiene el historial de compras de un cliente.
+     *
+     * @param string $tbCustomerId
+     * @return \Stripe\Collection
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetPurchaseHistory(string $tbCustomerId)
+    {
+        try {
+            return $this->tbStripeClient->paymentIntents->all(['customer' => $tbCustomerId]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener el historial de compras: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Obtiene las tarjetas guardadas de un cliente.
+     *
+     * @param string $tbCustomerId
+     * @return \Stripe\Collection
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetSavedCards(string $tbCustomerId)
+    {
+        try {
+            return $this->tbStripeClient->paymentMethods->all([
+                'customer' => $tbCustomerId,
+                'type' => 'card',
+            ]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener las tarjetas guardadas: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Agrega un nuevo método de pago para un cliente.
+     *
+     * @param string $tbCustomerId
+     * @param string $tbPaymentMethodId
+     * @return \Stripe\PaymentMethod
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbAddPaymentMethod(string $tbCustomerId, string $tbPaymentMethodId)
+    {
+        try {
+            $this->tbStripeClient->paymentMethods->attach($tbPaymentMethodId, [
+                'customer' => $tbCustomerId,
+            ]);
+            return $this->tbStripeClient->paymentMethods->retrieve($tbPaymentMethodId);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al agregar el método de pago: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Elimina un método de pago de un cliente.
+     *
+     * @param string $tbPaymentMethodId
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbRemovePaymentMethod(string $tbPaymentMethodId)
+    {
+        try {
+            $this->tbStripeClient->paymentMethods->detach($tbPaymentMethodId);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al eliminar el método de pago: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Obtiene la dirección de facturación de un cliente.
+     *
+     * @param string $tbCustomerId
+     * @return array
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetBillingAddress(string $tbCustomerId): array
+    {
+        try {
+            $tbCustomer = $this->tbGetCustomerById($tbCustomerId);
+            return $tbCustomer->address ?: [];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener la dirección de facturación: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Agrega una nueva dirección de facturación para un cliente.
+     *
+     * @param string $tbCustomerId
+     * @param array $tbBillingAddress
+     * @return \Stripe\Customer
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbAddBillingAddress(string $tbCustomerId, array $tbBillingAddress): Customer
+    {
+        return $this->tbUpdateBillingAddress($tbCustomerId, $tbBillingAddress);
+    }
+
+    /**
+     * Elimina la dirección de facturación de un cliente.
+     *
+     * @param string $tbCustomerId
+     * @return \Stripe\Customer
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbRemoveBillingAddress(string $tbCustomerId): Customer
+    {
+        try {
+            return $this->tbStripeClient->customers->update($tbCustomerId, ['address' => null]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al eliminar la dirección de facturación: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Actualiza la dirección de facturación de un cliente.
+     *
+     * @param string $tbCustomerId
+     * @param array $tbBillingAddress
+     * @return \Stripe\Customer
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbUpdateBillingAddress(string $tbCustomerId, array $tbBillingAddress): Customer
+    {
+        try {
+            return $this->tbStripeClient->customers->update($tbCustomerId, ['address' => $tbBillingAddress]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al actualizar la dirección de facturación: " . $e->getMessage());
+        }
+    }
 }

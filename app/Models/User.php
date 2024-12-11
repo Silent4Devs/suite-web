@@ -117,7 +117,7 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
-
+        //dd(User::on('tenant')->find(Auth::id()));
         if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }

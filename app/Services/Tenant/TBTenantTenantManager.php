@@ -12,8 +12,19 @@ use Illuminate\Support\Facades\Auth;
 
 class TBTenantTenantManager
 {
+    /**
+     * @var mixed $tbTenant Instancia del tenant actual.
+     */
     protected $tbTenant;
 
+    /**
+     * tbSetTenant
+     *
+     * Establece el tenant actual y configura la conexión y autenticación para este.
+     *
+     * @param mixed $tbTenant Instancia del tenant.
+     * @return void
+     */
     public function tbSetTenant($tbTenant)
     {
         $this->tbTenant = $tbTenant;
@@ -21,11 +32,26 @@ class TBTenantTenantManager
         $this->tbConfigureAuthTenant($tbTenant);
     }
 
+    /**
+     * tbGetTenant
+     *
+     * Obtiene la instancia del tenant actual.
+     *
+     * @return mixed Instancia del tenant.
+     */
     public function tbGetTenant()
     {
         return $this->tbTenant;
     }
 
+    /**
+     * tbConfigureTenantConnection
+     *
+     * Configura la conexión de base de datos para el tenant actual.
+     *
+     * @param mixed $tbTenant Instancia del tenant.
+     * @return void
+     */
     protected function tbConfigureTenantConnection($tbTenant)
     {
         config([
@@ -49,11 +75,27 @@ class TBTenantTenantManager
         app()->instance('tbTenant', $tbTenant);
     }
 
+    /**
+     * tbConfigureAuthTenant
+     *
+     * Configura la autenticación para el tenant actual.
+     *
+     * @param mixed $tbTenant Instancia del tenant.
+     * @return void
+     */
     protected function tbConfigureAuthTenant($tbTenant)
     {
         Config::set('auth.providers.tb_tenant_users.connection', 'tenant');
     }
 
+    /**
+     * tbGetTenantFromRequest
+     *
+     * Obtiene el tenant a partir de un subdominio en la solicitud HTTP.
+     *
+     * @param \Illuminate\Http\Request $tbRequest Solicitud HTTP entrante.
+     * @return string ID de Stripe del tenant encontrado.
+     */
     public function tbGetTenantFromRequest($tbRequest)
     {
         $tbSubdomain = explode('.', $tbRequest->getHost(), 2)[0];
