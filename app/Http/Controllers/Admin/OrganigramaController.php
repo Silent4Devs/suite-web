@@ -41,7 +41,7 @@ class OrganigramaController extends Controller
                         )->with('children');
                     }])->find($request->area_id);
 
-                    if (!$area) {
+                    if (! $area) {
                         return response()->json(['error' => 'Área no encontrada'], 404);
                     }
 
@@ -49,11 +49,12 @@ class OrganigramaController extends Controller
                 } else {
                     if ($request->id === null) {
                         $organizacionTree = Empleado::getAllOrganigramaTree();
-                        if (!$organizacionTree) {
+                        if (! $organizacionTree) {
                             return response()->json(['error' => 'No se encontró la organización'], 404);
                         }
 
                         $organizacionArray = $this->cleanOrganizacionArray($organizacionTree->toArray());
+
                         return response()->json($organizacionArray);
                     } else {
                         $organizacionTree = Empleado::getAllOrganigramaTreeElse($request->id);
@@ -65,17 +66,18 @@ class OrganigramaController extends Controller
                 }
             }
 
-            $rutaImagenes = Async::run(fn() => asset('storage/empleados/imagenes/'));
-            $organizacionDB = Async::run(fn() => Organizacion::first());
-            $areas = Async::run(fn() => Area::all());
+            $rutaImagenes = Async::run(fn () => asset('storage/empleados/imagenes/'));
+            $organizacionDB = Async::run(fn () => Organizacion::first());
+            $areas = Async::run(fn () => Area::all());
 
             if ($organizacionDB && property_exists($organizacionDB, 'empresa')) {
                 $organizacion = $organizacionDB->empresa;
-                $org_foto = url('images/' . $organizacionDB->logotipo);
+                $org_foto = url('images/'.$organizacionDB->logotipo);
             } else {
                 $organizacion = 'la organización';
                 $org_foto = url('img/Silent4Business-Logo-Color.png');
             }
+
             return view('admin.organigrama.index', compact(
                 'organizacionTree',
                 'rutaImagenes',

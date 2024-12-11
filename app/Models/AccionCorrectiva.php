@@ -188,8 +188,8 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->select('id','name','foto')
-        ->alta();
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->select('id', 'name', 'foto')
+            ->alta();
     }
 
     public function area()
