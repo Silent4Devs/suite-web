@@ -1146,48 +1146,47 @@ class RequisicionesController extends Controller
 
     public function cambiarResponsable(Request $request)
     {
-        return response()->json($request->all());
-        // try {
-        //     $idEmpleadoActual = User::getCurrentUser()->empleado->id;
+        try {
+            $idEmpleadoActual = User::getCurrentUser()->empleado->id;
 
-        //     $request->validate([
-        //         'requisicion_id' => 'required',
-        //         'nuevo_responsable' => 'required',
-        //     ]);
+            $request->validate([
+                'requisicion_id' => 'required',
+                'nuevo_responsable' => 'required',
+            ]);
 
-        //     $requisicion = KatbolRequsicion::find($request->requisicion_id);
-        //     $firmasRequisicion = $requisicion->registroFirmas;
+            $requisicion = KatbolRequsicion::find($request->requisicion_id);
+            $firmasRequisicion = $requisicion->registroFirmas;
 
-        //     if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
-        //         $posicion = 'delegado_jefe_id';
-        //         $posicion_firma = 'firma_solicitante';
-        //     }
+            if ($firmasRequisicion->jefe_id == $idEmpleadoActual) {
+                $posicion = 'delegado_jefe_id';
+                $posicion_firma = 'firma_solicitante';
+            }
 
-        //     if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
-        //         $posicion = 'delegado_finanzas_id';
-        //         $posicion_firma = 'firma_jefe';
-        //     }
+            if ($firmasRequisicion->responsable_finanzas_id == $idEmpleadoActual) {
+                $posicion = 'delegado_finanzas_id';
+                $posicion_firma = 'firma_jefe';
+            }
 
-        //     if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
-        //         $posicion = 'delegado_comprador_id';
-        //         $posicion_firma = 'firma_finanzas';
-        //     }
+            if ($firmasRequisicion->comprador_id == $idEmpleadoActual) {
+                $posicion = 'delegado_comprador_id';
+                $posicion_firma = 'firma_finanzas';
+            }
 
-        //     $nuevoResponsableId = $request->nuevo_responsable;
-        //     $emailNuevoResponsable = Empleado::find($nuevoResponsableId);
+            $nuevoResponsableId = $request->nuevo_responsable;
+            $emailNuevoResponsable = Empleado::find($nuevoResponsableId);
 
-        //     $firmasRequisicion->update([
-        //         $posicion => $nuevoResponsableId,
-        //     ]);
+            $firmasRequisicion->update([
+                $posicion => $nuevoResponsableId,
+            ]);
 
-        //     $organizacion = Organizacion::getFirst();
+            $organizacion = Organizacion::getFirst();
 
-        //     Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(new RequisicionesEmail($requisicion, $organizacion, $posicion_firma));
+            Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(new RequisicionesEmail($requisicion, $organizacion, $posicion_firma));
 
-        //     return response()->json(['success' => true]);
-        // } catch (\Throwable $th) {
-        //     toast('Error al modificar al colaborador responsable.', 'error');
-        // }
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            toast('Error al modificar al colaborador responsable.', 'error');
+        }
     }
 
     public function cancelarRequisicion(Request $request)
