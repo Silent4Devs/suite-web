@@ -189,8 +189,8 @@
                     @foreach ($objetivos as $objetivo)
                         <tr>
                             <td>{{ $objetivo->objetivo->tipo->nombre ?? '' }}</td>
-                            <td>{{ $objetivo->objetivo->nombre }}</td>
-                            <td>{{ $objetivo->objetivo->KPI }}</td>
+                            <td>{{ $objetivo->objetivo->nombre ?? ''   }}</td>
+                            <td>{{ $objetivo->objetivo->KPI ?? ''  }}</td>
                             <td>
                                 @if ($objetivo->objetivo->esta_aprobado == 1)
                                     <span class="badge badge-success">Aprobado</span>
