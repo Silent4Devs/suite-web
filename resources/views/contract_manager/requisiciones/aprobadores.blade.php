@@ -301,48 +301,45 @@
     <script>
         $(document).ready(function() {
             $('.cambiarResponsableButton').click(function() {
-                let button = $(this);
-                let requisicionId = button.data('requisicion-id');
-                let nuevoResponsableId = $('#nuevo_responsable-' + requisicionId).val();
+                    let button = $(this);
+                    let requisicionId = button.data('requisicion-id');
+                    let nuevoResponsableId = $('#nuevo_responsable-' + requisicionId).val();
 
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, cambiar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '{{ route('contract_manager.requisiciones.cambiarResponsable') }}', // Replace with your route
-                            type: 'POST',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                requisicion_id: requisicionId,
-                                nuevo_responsable: nuevoResponsableId
-                            },
-                            success: function(response) {
-                                Swal.fire(
-                                    'Cambiado!',
-                                    'El responsable ha sido cambiado.',
-                                    'success'
-                                ).then(() => {
-                                    location
-                                        .reload(); // Reload the page or do whatever you want after success
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, cambiar'
+                    }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                        url: '{{ route('contract_manager.requisiciones.cambiarResponsable') }}', // Replace with your route
+                                        type: 'POST',
+                                        data: {
+                                            _token: '{{ csrf_token() }}',
+                                            requisicion_id: requisicionId,
+                                            nuevo_responsable: nuevoResponsableId
+                                        },
+                                        success: function(response) {
+                                            Swal.fire(
+                                                'Cambiado!',
+                                                'El responsable ha sido cambiado.',
+                                                'success'
+                                            ));
+                                    },
+                                    error: function(xhr) {
+                                        Swal.fire(
+                                            'Error!',
+                                            'Hubo un problema al cambiar el responsable.',
+                                            'error'
+                                        );
+                                    }
                                 });
-                            },
-                            error: function(xhr) {
-                                Swal.fire(
-                                    'Error!',
-                                    'Hubo un problema al cambiar el responsable.',
-                                    'error'
-                                );
-                            }
-                        });
-                    }
-                });
+                        }
+                    });
             });
         });
     </script>
