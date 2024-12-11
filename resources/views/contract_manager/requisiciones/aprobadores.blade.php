@@ -124,7 +124,7 @@
 
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
-                                             $employee = $requisicion->userSolicitante?->empleado ?? null;
+                                            $employee = $requisicion->userSolicitante?->empleado ?? null;
                                             if ($requisicion->registroFirmas) {
                                                 $supervisorName =
                                                     $requisicion->obtener_responsable_lider->name ?? false;
@@ -256,9 +256,11 @@
                                                                 <div class="anima-focus">
                                                                     <select name="sustituto_id" id="sustituto_id">
                                                                         @forelse ($requisicion->lista_sustitutos ?? [] as $sustituto)
-                                                                            <option value="{{ $sustituto->id }}">{{ $sustituto->name }}</option>
+                                                                            <option value="{{ $sustituto->id }}">
+                                                                                {{ $sustituto->name }}</option>
                                                                         @empty
-                                                                            <option value="">Sin Sustitutos disponibles</option>
+                                                                            <option value="">Sin Sustitutos
+                                                                                disponibles</option>
                                                                         @endforelse
                                                                     </select>
                                                                     <label
