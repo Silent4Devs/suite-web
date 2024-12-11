@@ -253,12 +253,12 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        Registro actualizado
+                        toastr.success('Asignando el objetivo.');
                     },
                     success: function(response) {
                         if (response.success) {
                             tblObjetivos.ajax.reload();
-                            // toastr.success('Objetivo asignado');
+                            toastr.success('El objetivo ha sido asignado correctamente.', 'Éxito');
                             document.getElementById('formObjetivoCreate').reset();
                             $("#tipo_id").val('').trigger('change');
                             $("#metrica_id").val('').trigger('change');
@@ -285,20 +285,8 @@
                     type: "GET",
                     url: urlEditar,
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Recuperando información',
-                            text: "Espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
+                        toastr.info(
+                            'Recuperando información de la conducta, espere unos instantes...');
                     },
                     success: function(response) {
                         console.log(response);
@@ -368,33 +356,14 @@
                     contentType: false,
                     dataType: "JSON",
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Actualizando información',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
+                        toastr.info(
+                            'Actualizando, espere unos instantes...');
                     },
                     success: function(response) {
                         ocultarValidando();
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
-                        Swal.fire({
-                            title: 'Registro actualizado',
-                            text: "Ha sido registrado correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                        });
-
+                        toastr.success('Registro actualizado');
                         tblObjetivos.ajax.reload();
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
@@ -439,28 +408,11 @@
                             type: "POST",
                             url: urlEliminar,
                             beforeSend: function() {
-                            Swal.fire({
-                            title: 'Eliminando información',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 1000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
+                                toastr.info(
+                                    'Eliminando el objetivo, espere unos instantes...');
                             },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
                             success: function(response) {
-                                Swal.fire({
-                                    title: 'Objetivo eliminado',
-                                    text: "Ha sido registrado correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success('Objetivo eliminado');
                                 tblObjetivos.ajax.reload();
                             },
                             error: function(request, status, error) {
@@ -534,30 +486,11 @@
                         },
                         dataType: "JSON",
                         beforeSend: function() {
-                            Swal.fire({
-                            title: 'Copiando objetivos',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 1000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
+                            toastr.info('Copiando objetivos');
                         },
                         success: function(response) {
                             if (response.success) {
-
-                                Swal.fire({
-                                    title: 'Objetivos copiados correctamente',
-                                    text: "Ha sido copiado correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success('Objetivos copiados correctamente');
                                 tblObjetivos.ajax.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
@@ -590,24 +523,12 @@
         Livewire.on('tipoObjetivoStore', () => {
             $('#tipoObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            Swal.fire({
-            title: 'Tipo de objetivo',
-            text: "Ha sido registrado correctamente",
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-            });
+            toastr.success('Tipo de objetivo creado con éxito');
         });
         Livewire.on('metricaObjetivoStore', () => {
             $('#metricaObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            Swal.fire({
-                title: 'Métrica del objetivo',
-                text: "Ha sido creada con éxito",
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Aceptar'
-            });
+            toastr.success('Métrica del objetivo creada con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({
