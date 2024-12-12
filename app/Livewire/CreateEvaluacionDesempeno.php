@@ -1184,35 +1184,35 @@ class CreateEvaluacionDesempeno extends Component
                 break;
 
             case 3:
-                    $this->segundoPaso();
-                    $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
-                    $this->tercerPaso();
-                    $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
-                    if(empty($this->array_evaluados)){
-                            $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
-                                'position' => 'center',
-                                'timer' => 6000,
-                                'toast' => false,
-                                'text' => 'Se deberan seleccionar los colaboradores que seran evaluados con esta evaluación.',
-                                'showConfirmButton' => true,
-                                'confirmButtonText' => 'Entendido',
-                                'timerProgressBar' => true,
-                            ]);
+                $this->segundoPaso();
+                $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
+                $this->tercerPaso();
+                $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
+                if (empty($this->array_evaluados)) {
+                    $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Se deberan seleccionar los colaboradores que seran evaluados con esta evaluación.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
 
-                            return false;
-                    } else {
-                        $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'Se debe seleccionar el publico que realizara la evaluación.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
+                    return false;
+                } else {
+                    $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Se debe seleccionar el publico que realizara la evaluación.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
 
-                        return false;
-                    }
+                    return false;
+                }
                 break;
 
             case 4:
@@ -1260,7 +1260,7 @@ class CreateEvaluacionDesempeno extends Component
             $new_evaluado = EvaluadosEvaluacionDesempeno::create(
                 [
                     'evaluacion_desempeno_id' => $evaluacion->id,
-                    'evaluado_desempeno_id' => $evaluado['id']
+                    'evaluado_desempeno_id' => $evaluado['id'],
                 ]
             );
 
@@ -1271,7 +1271,7 @@ class CreateEvaluacionDesempeno extends Component
                             'evaluado_desempeno_id' => $new_evaluado->id,
                             'evaluador_desempeno_id' => $evaluador,
                             'periodo_id' => $p->id,
-                            'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey]
+                            'porcentaje_objetivos' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_objetivos'][$subkey],
                         ]
                     );
                 }
@@ -1282,7 +1282,7 @@ class CreateEvaluacionDesempeno extends Component
                             'evaluado_desempeno_id' => $new_evaluado->id,
                             'evaluador_desempeno_id' => $evaluador,
                             'periodo_id' => $p['id'],
-                            'porcentaje_competencias' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey]
+                            'porcentaje_competencias' => $this->array_porcentaje_evaluadores[$key]['porcentaje_evaluador_competencias'][$subkey],
                         ]
                     );
                 }
