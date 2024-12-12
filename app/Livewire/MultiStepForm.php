@@ -260,7 +260,7 @@ class MultiStepForm extends Component
         // Verificar si la suma total es igual a 100
         if ($this->sumaTotalPesoGeneral === 100) {
 
-            if ($this->catalogoObjetivos === '' && $this->pesoGeneralObjetivos != 0 ) {
+            if ($this->catalogoObjetivos === '' && $this->pesoGeneralObjetivos != 0) {
                 $this->alert('error', 'Seleccione un catalogo!');
 
                 return;

@@ -127,7 +127,6 @@ class EditEvaluacionDesempeno extends Component
 
     public $empleados_grupo;
 
-
     public function hydrate()
     {
         $this->dispatch('select2');
@@ -299,7 +298,7 @@ class EditEvaluacionDesempeno extends Component
 
             if ($this->activar_objetivos == true && $this->activar_competencias == true) {
 
-                if($evaluado->evaluadoresObjetivos->isNotEmpty() && $evaluado->evaluadoresCompetencias->isNotEmpty()){
+                if ($evaluado->evaluadoresObjetivos->isNotEmpty() && $evaluado->evaluadoresCompetencias->isNotEmpty()) {
                     foreach ($evaluado->evaluadoresObjetivos as $key_evaluadorO => $evaluadorObjetivos) {
 
                         if ($evaluadoL['id'] != $evaluadorObjetivos->evaluador_desempeno_id) {
@@ -326,7 +325,7 @@ class EditEvaluacionDesempeno extends Component
                         }
                         // dump($evaluado->evaluado_evaluacion_id != $evaluadorCompetencias->evaluador_desempeno_id);
                     }
-                }else{
+                } else {
                     $this->array_evaluadores[$key] = [
                         'evaluador_objetivos' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                         'evaluador_competencias' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
@@ -340,7 +339,7 @@ class EditEvaluacionDesempeno extends Component
                 }
 
             } elseif ($this->activar_objetivos == true && $this->activar_competencias == false) {
-                if($evaluado->evaluadoresObjetivos->isNotEmpty()){
+                if ($evaluado->evaluadoresObjetivos->isNotEmpty()) {
                     foreach ($evaluado->evaluadoresObjetivos as $key_evaluadorO => $evaluadorObjetivos) {
                         if ($evaluado->evaluado_evaluacion_id != $evaluadorObjetivos->evaluador_desempeno_id) {
                             $this->array_evaluadores[$key]['evaluador_objetivos'][] = [
@@ -351,7 +350,7 @@ class EditEvaluacionDesempeno extends Component
                                 $evaluadorObjetivos->porcentaje_objetivos;
                         }
                     }
-                }else{
+                } else {
                     $this->array_evaluadores[$key] = [
                         'evaluador_objetivos' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
@@ -375,7 +374,7 @@ class EditEvaluacionDesempeno extends Component
                                 ];
                         }
                     }
-                }else{
+                } else {
                     $this->array_evaluadores[$key] = [
                         'evaluador_competencias' => [isset($eva->supervisor->id) ? $eva->supervisor->id : ''],
                     ];
@@ -1389,20 +1388,20 @@ class EditEvaluacionDesempeno extends Component
                 $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
                 $this->tercerPaso();
                 $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
-                if(empty($this->array_evaluados)){
-                        $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
-                            'position' => 'center',
-                            'timer' => 6000,
-                            'toast' => false,
-                            'text' => 'Se deberan seleccionar los colaboradores que seran evaluados con esta evaluación.',
-                            'showConfirmButton' => true,
-                            'confirmButtonText' => 'Entendido',
-                            'timerProgressBar' => true,
-                        ]);
+                if (empty($this->array_evaluados)) {
+                    $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
+                        'position' => 'center',
+                        'timer' => 6000,
+                        'toast' => false,
+                        'text' => 'Se deberan seleccionar los colaboradores que seran evaluados con esta evaluación.',
+                        'showConfirmButton' => true,
+                        'confirmButtonText' => 'Entendido',
+                        'timerProgressBar' => true,
+                    ]);
 
-                        return false;
+                    return false;
                 }
-            break;
+                break;
 
             case 4:
                 // Agrega las validaciones del cuarto paso aquí
@@ -1414,7 +1413,7 @@ class EditEvaluacionDesempeno extends Component
 
     private function guardarPaso2()
     {
-        if(($this->evaluacion->tipo_periodo == $this->periodo_evaluacion) && !empty($this->periodo_evaluacion)){
+        if (($this->evaluacion->tipo_periodo == $this->periodo_evaluacion) && ! empty($this->periodo_evaluacion)) {
 
             foreach ($this->datosPaso2 as $p) {
 
@@ -1435,27 +1434,26 @@ class EditEvaluacionDesempeno extends Component
 
             }
 
-        }elseif (! empty($this->periodo_evaluacion)){
+        } elseif (! empty($this->periodo_evaluacion)) {
 
             $this->evaluacion->periodos()->delete();
 
             $this->evaluacion->update(['tipo_periodo' => $this->periodo_evaluacion]);
 
-                foreach ($this->datosPaso2 as $p) {
-                    if (! empty($p['nombre_evaluacion'])) {
-                        PeriodosEvaluacionDesempeno::create(
-                            [
-                                'evaluacion_desempeno_id' => $this->evaluacion->id,
-                                'nombre_evaluacion' => $p['nombre_evaluacion'],
-                                'fecha_inicio' => $p['fecha_inicio'],
-                                'fecha_fin' => $p['fecha_fin'],
-                                'habilitado' => $p['habilitar'],
-                            ]
-                        );
-                    }
+            foreach ($this->datosPaso2 as $p) {
+                if (! empty($p['nombre_evaluacion'])) {
+                    PeriodosEvaluacionDesempeno::create(
+                        [
+                            'evaluacion_desempeno_id' => $this->evaluacion->id,
+                            'nombre_evaluacion' => $p['nombre_evaluacion'],
+                            'fecha_inicio' => $p['fecha_inicio'],
+                            'fecha_fin' => $p['fecha_fin'],
+                            'habilitado' => $p['habilitar'],
+                        ]
+                    );
                 }
+            }
         }
-
 
     }
 
