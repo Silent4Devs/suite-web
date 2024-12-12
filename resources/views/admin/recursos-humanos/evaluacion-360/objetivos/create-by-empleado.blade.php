@@ -491,7 +491,7 @@
                         success: function(response) {
                             if (response.success) {
                                 toastr.success('Objetivos copiados correctamente');
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
                         },
