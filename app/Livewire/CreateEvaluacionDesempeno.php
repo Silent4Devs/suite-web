@@ -1184,11 +1184,11 @@ class CreateEvaluacionDesempeno extends Component
                 break;
 
             case 3:
-                // dd($this->select_evaluados);
-                if ($this->select_evaluados != null) {
-                    // Agrega las validaciones del tercer paso aquí
-                    if ($this->select_evaluados == 'manualmente') {
-                        if (empty($this->array_evaluados)) {
+                    $this->segundoPaso();
+                    $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
+                    $this->tercerPaso();
+                    $this->paso--; // Se reduce porque permanece en el mismo paso y segundoPaso() lo aumenta en 1
+                    if(empty($this->array_evaluados)){
                             $this->alert('warning', 'Debe seleccionar a los colaboradres que seran evaluados.', [
                                 'position' => 'center',
                                 'timer' => 6000,
@@ -1200,21 +1200,19 @@ class CreateEvaluacionDesempeno extends Component
                             ]);
 
                             return false;
-                        }
-                    }
-                } else {
-                    $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
-                        'position' => 'center',
-                        'timer' => 6000,
-                        'toast' => false,
-                        'text' => 'Se debe seleccionar el publico que realizara la evaluación.',
-                        'showConfirmButton' => true,
-                        'confirmButtonText' => 'Entendido',
-                        'timerProgressBar' => true,
-                    ]);
+                    } else {
+                        $this->alert('warning', 'Debe seleccionar un publico objetivo para la evaluación.', [
+                            'position' => 'center',
+                            'timer' => 6000,
+                            'toast' => false,
+                            'text' => 'Se debe seleccionar el publico que realizara la evaluación.',
+                            'showConfirmButton' => true,
+                            'confirmButtonText' => 'Entendido',
+                            'timerProgressBar' => true,
+                        ]);
 
-                    return false;
-                }
+                        return false;
+                    }
                 break;
 
             case 4:

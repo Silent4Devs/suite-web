@@ -26,7 +26,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus');
+        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus', 'supervisor_id');
     }
 
     public function evaluadoresObjetivos($id_periodo = null)
