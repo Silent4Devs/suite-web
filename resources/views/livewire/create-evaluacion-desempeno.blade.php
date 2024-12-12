@@ -211,7 +211,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @if ($abierta)
+                        @if ($periodo_evaluacion == 'abierta')
                             <div class="col-3" style="justify-content: left;">
                                 <button class="btn btn-link" wire:click.prevent="agregarPeriodo">
                                     Añadir Periodo
