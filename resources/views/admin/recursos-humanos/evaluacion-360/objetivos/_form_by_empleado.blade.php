@@ -245,16 +245,15 @@
                             <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i
                                     class="mr-2 fas fa-copy"></i>Copiar
                                 Objetivos</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                <button type="button" class="close" id="closeModalBtn">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                         </div>
                         <div class="modal-body">
                             <div id="contenidoModal"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary"
-                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-outline-primary" id="btnCerrarModal">Cerrar</button>
                             <button type="button" id="btnGuardarCopiaObjs" class="btn btn-primary">Guardar</button>
                         </div>
                         @include('layouts.loader')
@@ -274,7 +273,20 @@
         event.preventDefault();
         location.reload();
     }, 3000); //
-});
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Botón "Cerrar" en el footer
+    document.getElementById('btnCerrarModal').addEventListener('click', function () {
+        $('#modalCopiarObjetivos').modal('hide');
+    });
+
+    // Ícono de cierre (tache)
+    document.getElementById('closeModalBtn').addEventListener('click', function () {
+        $('#modalCopiarObjetivos').modal('hide');
+    });
+    });
+
 
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
