@@ -64,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditarCompetenciaLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="closeModalBtn">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -72,7 +72,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCerrarModal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
@@ -82,6 +82,19 @@
 
 @section('scripts')
     <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Botón "Cerrar" en el footer
+            document.getElementById('btnCerrarModal').addEventListener('click', function () {
+                $('#modalEditarCompetencia').modal('hide');
+            });
+
+            // Ícono de cierre (tache)
+            document.getElementById('closeModalBtn').addEventListener('click', function () {
+                $('#modalEditarCompetencia').modal('hide');
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
                 headers: {
