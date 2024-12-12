@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('tenant', 'central.landing')->name('central.landing');
 
+Route::view('tenant', 'central.landing')->name('central.landing');
+
 Route::group(['middleware' => ['tenant']], function () {
 
     Route::get('correotestqueue', [QueueCorreo::class, 'index']);
@@ -331,9 +333,6 @@ Route::group(['middleware' => ['tenant']], function () {
                 Route::get('timesheet/dashboard', 'TimesheetController@dashboard')->name('timesheet-dashboard');
 
                 Route::post('timesheet/create/obtenerTareas', 'TimesheetController@obtenerTareas')->name('timesheet-obtener-tareas');
-        //Modulo Capital Humano
-        // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
                 Route::post('timesheet/creacionContratoProyecto', 'TimesheetController@creacionContratoProyecto')->name('timesheet.creacionContratoProyecto');
 
@@ -358,18 +357,6 @@ Route::group(['middleware' => ['tenant']], function () {
 
                 Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
                 Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-        Route::post('solicitudAprobacionVacacion/updateAprobacion/{id}', 'SolicitudVacacionesController@updateAprobacion')->name('solicitud-vacaciones.updateAprobacion');
-
-        Route::prefix('solicitud-dayoff')->group(function () {
-            Route::controller(SolicitudDayOffController::class)->group(function () {
-                Route::get('{id}/showArchivo', 'showArchivo')->name('solicitud-dayoff.showArchivo');
-                Route::get('{id}/vistaGlobal', 'showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
-                Route::get('menu', 'aprobacionMenu')->name('solicitud-dayoff.menu');
-                Route::get('archivo', 'archivo')->name('solicitud-dayoff.archivo');
-                Route::get('aprobacion', 'aprobacion')->name('solicitud-dayoff.aprobacion');
-                Route::get('{id}/respuesta', 'respuesta')->name('solicitud-dayoff.respuesta');
-                Route::get('{id}/show', 'show')->name('solicitud-dayoff.show');
-                Route::post('destroy', 'destroy')->name('solicitud-dayoff.destroy');
             });
 
             // Comunicacion Sgis
@@ -646,10 +633,6 @@ Route::group(['middleware' => ['tenant']], function () {
                     Route::post('process-csv-import', 'PerfilController@processCsvImport')->name('processCsvImport');
                     Route::resource('/', 'PerfilController');
                 });
-        // evaluaciones desempeno
-        Route::get('recursos-humanos/evaluacion-desempeno/configuracion', 'RH\ObjetivosPeriodoController@config')->name('ev360-objetivos-periodo.config');
-        Route::get('recursos-humanos/evaluacion-desempeno/index', 'RH\EvaluacionesDesempenoController@index')->name('rh.evaluaciones-desempeno.index');
-        Route::delete('recursos-humanos/evaluacion-desempeno/{evaluacion}/destroy', 'RH\EvaluacionesDesempenoController@destroy')->name('rh.evaluaciones-desempeno.borrar');
 
                 Route::get(
                     'recursos-humanos/evaluacion-360/competencias-por-puesto/{puesto}/create',
@@ -1782,14 +1765,6 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::get('ExportCategoriaCapacitacion', 'ExportExcelReport@CategoriaCapacitacion')->name('descarga-categoriacapacitacion');
         Route::get('ExportRevisionDireccion', 'ExportExcelReport@RevisionDireccion')->name('descarga-revisiondireccion');
         // Route::get('ExportCategoria', 'ExportExcelReport@CategoriaActivo')->name('descarga-categoria');
-    Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante')->middleware('course');
-    Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
-    Route::get('reload-porcentage-courses', 'CursoEstudiante@porcentageCourses');
-    Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
-    Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
-    Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
-    Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
-    Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
 
         // Route::get('ExportEstadoIncidente', 'ExportExcelReport@EstadoIncidente')->name('descarga-estadoincidente');
         Route::get('ExportPoliticaSgsi', 'ExportExcelReport@PoliticaSgsi')->name('descarga-politica_sgi');

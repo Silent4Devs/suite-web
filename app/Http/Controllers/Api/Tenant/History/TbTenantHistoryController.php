@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Tenant\Profile;
+namespace App\Http\Controllers\Api\Tenant\History;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Services\Tenant\TBTenantStripeService;
@@ -8,8 +8,9 @@ use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TbTenantProfileController extends TbTenantBaseController
+class TbTenantHistoryController extends TbTenantBaseController
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;
@@ -20,13 +21,13 @@ class TbTenantProfileController extends TbTenantBaseController
         $this->tbStripeService = $tbStripeService;
     }
 
-    public function tbGetCostumerInfo(Request $request)
+    public function tbGetHistory(Request $request)
     {
         try {
-            $tbStripeId = 'cus_RB6jvmea5u8gkC';
-            $tbProfile = $this->tbStripeService->tbGetCustomerById($tbStripeId);
+            $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costomerId
+            $tbHistory = $this->tbStripeService->tbGetPurchaseHistory($tbStripeId);
 
-            return $this->tbSendResponse($tbProfile, 'Perfil correcto');
+            return $this->tbSendResponse($tbHistory, 'Historial correcto');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
         }
