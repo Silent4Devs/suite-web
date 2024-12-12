@@ -364,7 +364,7 @@
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
                         toastr.success('Registro actualizado');
-                        tblObjetivos.ajax.reload();
+                        location.reload();
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
                             'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
