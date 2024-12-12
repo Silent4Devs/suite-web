@@ -229,7 +229,7 @@
                     if (result.isConfirmed) {
                         Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
                             () => {
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             });
                     }
                 })
@@ -253,12 +253,12 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        toastr.success('Asignando el objetivo.');
+                        toastr.info('Asignando el objetivo');
                     },
                     success: function(response) {
                         if (response.success) {
                             tblObjetivos.ajax.reload();
-                            toastr.success('El objetivo ha sido asignado correctamente.', 'Éxito');
+                            toastr.success('Objetivo asignado');
                             document.getElementById('formObjetivoCreate').reset();
                             $("#tipo_id").val('').trigger('change');
                             $("#metrica_id").val('').trigger('change');
@@ -413,7 +413,7 @@
                             },
                             success: function(response) {
                                 toastr.success('Objetivo eliminado');
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(
@@ -491,7 +491,7 @@
                         success: function(response) {
                             if (response.success) {
                                 toastr.success('Objetivos copiados correctamente');
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
                         },

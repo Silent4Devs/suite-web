@@ -260,7 +260,7 @@ class MultiStepForm extends Component
         // Verificar si la suma total es igual a 100
         if ($this->sumaTotalPesoGeneral === 100) {
 
-            if ($this->catalogoObjetivos === '') {
+            if ($this->catalogoObjetivos === '' && $this->pesoGeneralObjetivos != 0 ) {
                 $this->alert('error', 'Seleccione un catalogo!');
 
                 return;
@@ -407,7 +407,7 @@ class MultiStepForm extends Component
 
         if ($this->includeCompetencias && $this->includeObjetivos) {
             // If both competencias and objetivos are included
-            $this->sumaTotalPesoGeneral = $this->pesoGeneralCompetencias + $this->pesoGeneralObjetivos;
+            $this->sumaTotalPesoGeneral = intval(((float) $this->pesoGeneralCompetencias ?: 0) + ((float) $this->pesoGeneralObjetivos ?: 0));
             $this->validate(array_merge($commonRules, [
                 //'pesoGeneralCompetencias' => 'required|numeric|min:100|max:100',
                 'pesoGeneralObjetivos' => 'required|numeric',

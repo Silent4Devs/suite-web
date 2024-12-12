@@ -315,13 +315,13 @@ class EV360ObjetivosController extends Controller
 
     public function destroyByEmpleado($id)
     {
-        $objetivo = Objetivo::findOrFail($id); // Buscar el objetivo por ID
+        $objetivo = Objetivo::where('id',$id)->first(); // Buscar el objetivo por ID
         $objetivo_empleado = ObjetivoEmpleado::where('objetivo_id', $id)->first();
 
         $ev = $this->evaluacionActiva();
 
         if (isset($ev->id)) {
-            ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
+            ObjetivoRespuesta::where('objetivo_id', $id)
                 ->where('evaluado_id', $objetivo_empleado->empleado_id)
                 ->where('evaluacion_id', '=', $ev->id)
                 ->delete();
