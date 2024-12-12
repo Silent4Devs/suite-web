@@ -211,7 +211,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @if ($abierta)
+                        @if ($periodo_evaluacion == 'abierta')
                             <div class="col-3" style="justify-content: left;">
                                 <button class="btn btn-link" wire:click.prevent="agregarPeriodo">
                                     Añadir Periodo
@@ -706,11 +706,12 @@
                         <a wire:click.prevent="retroceder" class="btn btn-outline-primary" style="width: 170px;">ATRÁS</a>
                         <a
                             @if ($bloquear_evaluacion) class="btn btn-primary disabled"
-        style="width: 170px; pointer-events: none; opacity: 0.5;"
-    @else
-        wire:click.prevent="cuartoPaso"
-        class="btn btn-primary"
-        style="width: 170px;" @endif>
+                                style="width: 170px; pointer-events: none; opacity: 0.5;"
+                            @else
+                                wire:click.prevent="cuartoPaso"
+                                class="btn btn-primary"
+                                style="width: 170px;">
+                            @endif
                             FINALIZAR
                         </a>
 

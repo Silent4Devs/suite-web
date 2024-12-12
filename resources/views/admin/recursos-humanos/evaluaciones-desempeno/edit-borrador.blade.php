@@ -3,6 +3,40 @@
     <link rel="stylesheet" href="{{ asset('css/evaluaciones.css') }}{{ config('app.cssVersion') }}">
 
     <style>
+        .checkbox-large {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .form-check {
+            justify-content: center; /* Centra el contenido horizontalmente */
+            align-items: center;    /* Centra el contenido verticalmente */
+            height: 100%;           /* Asegura que ocupe toda la altura de la fila */
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            margin-right: 5px;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #007bff;
+            border-color: #007bff;
+            box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+        }
+
+        label {
+            cursor: pointer;
+        }
+
         .alert-danger {
             background: #FFFDE3 0% 0% no-repeat padding-box !important;
             box-shadow: 0px 2px 3px #00000024 !important;
