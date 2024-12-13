@@ -395,7 +395,7 @@ class EV360ObjetivosController extends Controller
             ]);
         }
         if ($u_objetivo) {
-            return ['success', 'Objetivo editado con éxito'];
+            return redirect()->route('admin.ev360-objetivos-empleado.updateByEmpleado', ['objetivo' => $objetivo->id]);
         } else {
             return ['error', 'Ocurrió un error al editar el objetivo, intente de nuevo...'];
         }
