@@ -133,7 +133,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
+                    <form id="formObjetivoEdit" method="POST" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
                         @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
                             'editar' => true,
@@ -163,6 +163,11 @@
 
 @section('scripts')
     <script type="text/javascript">
+
+        $('#btnCancelarEditObjetivo').click(function() {
+            $('#objetivoModal').modal('hide');
+        });
+
         window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
                 console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
@@ -285,6 +290,25 @@
                     type: "GET",
                     url: urlEditar,
                     beforeSend: function() {
+                        $('#objetivoModal').on('show.bs.modal', function (e) {
+                            const form = document.getElementById('formObjetivoEdit');
+                            // Verificamos si el formulario existe en el DOM
+                            if (form) {
+                                // Buscamos el botón dentro del formulario usando el id 'BtnAgregarObjetivo'
+                                const btnAgregarObjetivo = form.querySelector('#BtnAgregarObjetivo');
+
+                                // Verificamos si el botón existe dentro del formulario
+                                if (btnAgregarObjetivo) {
+                                    // Ocultamos el botón
+                                    btnAgregarObjetivo.style.display = 'none';
+                                    console.log('Botón ocultado');
+                                } else {
+                                    console.log('Botón no encontrado');
+                                }
+                            }
+
+                        });
+
                         toastr.info(
                             'Recuperando información de la conducta, espere unos instantes...');
                     },
@@ -306,11 +330,17 @@
                         $('#formObjetivoEdit #metrica_id').val(response.metrica_id).trigger(
                             'change');
 
+
                         $('#objetivoModal').modal('show');
+
                         $('#formObjetivoEdit').removeAttr('action');
                         $('#formObjetivoEdit').removeAttr('method');
                         $('#formObjetivoEdit').attr('action', urlActualizar);
                         $('#formObjetivoEdit').attr('method', 'PATCH');
+
+                        $('#objetivoModal').on('hidden.bs.modal', function() {
+                            document.getElementById('BtnAgregarObjetivo').style.display = 'inline-block';
+                        });
                     },
                     error: function(request, status, error) {
                         if (error != 'Unprocessable Entity') {
@@ -343,7 +373,7 @@
                 formDataEdit.append('nombre', nombre);
                 formDataEdit.append('KPI', kpi);
                 formDataEdit.append('meta', meta);
-                formDataEdit.append('descripcion', descripcion);
+                formDataEdit.append('descripcion_meta', descripcion);
                 formDataEdit.append('tipo_id', tipo_id);
                 formDataEdit.append('metrica_id', metrica_id);
                 // formDataEdit.append('foto', document.querySelector('#formObjetivoEdit #fotoEdit').files[0]);
@@ -364,18 +394,17 @@
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
                         toastr.success('Registro actualizado');
-                        location.reload();
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
                             'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
                         document.getElementById('uploadPreviewEdit').src =
-                            @json(asset('img/not-available.png'))
+                            @json(asset('img/not-available.png'));
+                        location.reload();
                     },
                     error: function(request, status, error) {
                         ocultarValidando();
                         if (error != 'Unprocessable Entity') {
-                            toastr.error(
-                                'Ocurrió un error: ' + error);
+                            location.reload();
                         } else {
                             $.each(request.responseJSON.errors, function(indexInArray,
                                 valueOfElement) {

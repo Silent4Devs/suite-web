@@ -355,16 +355,14 @@ class EV360ObjetivosController extends Controller
     public function updateByEmpleado(Request $request, $objetivo)
     {
         abort_if(Gate::denies('objetivos_estrategicos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $request->validate([
-        //     'nombre' => 'required|string|max:255',
-        //     'KPI' => 'required|string|max:1500',
-        //     'meta' => 'required|integer|min:0',
-        //     'descripcion_meta' => 'nullable|string|max:1500',
-        //     'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
-        //     'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
-        // ]);
-
-        // dd($request->all());
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'KPI' => 'required|string|max:1500',
+            'meta' => 'required|integer|min:0',
+            'descripcion_meta' => 'nullable|string|max:1500',
+            'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
+            'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
+        ]);
 
         $objetivo = Objetivo::find($objetivo);
         $u_objetivo = $objetivo->update([

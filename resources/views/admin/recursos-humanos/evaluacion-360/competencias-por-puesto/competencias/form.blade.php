@@ -51,7 +51,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="titulo_competencia"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="btnCerrarModal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -76,3 +76,12 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Botón "Cerrar" en el footer
+    document.getElementById('btnCerrarModal').addEventListener('click', function () {
+        $('#competenciaModal').modal('hide');
+    });
+
+    });
+</script>
