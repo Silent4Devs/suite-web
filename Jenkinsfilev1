@@ -17,7 +17,7 @@ pipeline {
                             echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
 
                             # Realiza la conexión SSH y ejecuta el comando de git pull
-                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
+                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedores/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
 
                             # Elimina el archivo de configuración SSH temporal
                             rm /tmp/ssh_config
