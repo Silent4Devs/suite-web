@@ -137,16 +137,16 @@ class Area extends Model implements Auditable
         return $this->hasMany(self::class, 'id_reporta');
     }
 
-    public function children()
-    {
-        return $this->hasMany(self::class, 'id_reporta', 'id')
-            ->with([
-                'children:id,name,foto,puesto_id,genero',
-                'supervisor:id,name,foto,puesto_id,genero',
-                'lider:id,name,foto,puesto_id,genero',
-                'grupo',
-            ]);
-    }
+//     public function children()
+//     {
+//         return $this->hasMany(self::class, 'id_reporta', 'id')
+//             ->with([
+//                 'children:id,name,foto,puesto_id,genero',
+//                 'supervisor:id,name,foto,puesto_id,genero',
+//                 'lider:id,name,foto,puesto_id,genero',
+//                 'grupo',
+//             ]);
+//     }
 
     public function concientizacion_sgis()
     {
@@ -210,7 +210,9 @@ class Area extends Model implements Auditable
 
     public function getUtilizadaAttribute()
     {
-        return $this->empleados->count() > 0;
+        if(!is_null($this->empleados)){
+            return $this->empleados->count() > 0;
+        }
     }
 
     public function lider()
