@@ -1165,7 +1165,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
 
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
-        Route::middleware('cacheResponse')->get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+        Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
         //Directorio
 
