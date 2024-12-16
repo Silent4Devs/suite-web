@@ -90,7 +90,8 @@
         <div class="d-flex align-items-center" style="gap: 50px;">
             <div class="d-flex align-items-center" style="gap: 15px;">
                 <div class="img-person" style="width: 100px; height: 100px;">
-                    <img src="{{ $empleado->ruta_avatar }}" alt="">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
+                    alt="{{ $empleado->name }}">
                 </div>
                 <span style="font-size: 16px;">{{ $empleado->name }}</span>
             </div>
