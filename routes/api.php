@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Mobile\SolicitudPermisoGoceSueldo\tbApiMobileContro
 use App\Http\Controllers\Api\Mobile\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\Mobile\Timesheet\TbTimesheetApiMobileController;
 use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
+use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
 use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::post('/rtenant', [TBTenantRegisterController::class, 'submit']);
 
 Route::get('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);
 Route::get('/stripe/profile', [TbTenantProfileController::class, 'tbGetCostumerInfo']);
+Route::get('/stripe/paymentMetod', [TbTenantPaymentMetodController::class, 'tbGetPaymentMetod']);
 
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
