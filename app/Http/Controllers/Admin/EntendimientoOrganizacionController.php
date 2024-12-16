@@ -563,7 +563,7 @@ class EntendimientoOrganizacionController extends Controller
         // dd($procesoAprobado);
         foreach ($procesoAprobado->participantes as $part) {
             $emailAprobado = $part->participante->empleado->email;
-            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->analisis));
+            Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new NotificacionSolicitudAprobacionAnalisisFODA($foda->id, $foda->analisis));
             // dd('primer usuario', $part->participante);
         }
     }
