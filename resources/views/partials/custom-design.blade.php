@@ -76,11 +76,11 @@
 
     <div class="d-flex gap-4">
         <img src="{{ asset('img/custom/menu-1.png') }}" alt="Menu ejemplo" class="example-menu-position"
-            style="width: 50px; ">
+            style="width: 50px; " data-item="1" onclick="menuItem(1);">
         <img src="{{ asset('img/custom/menu-2.png') }}" alt="Menu ejemplo" class="example-menu-position"
-            style="width: 50px; ">
+            style="width: 50px; " data-item="2" onclick="menuItem(2);">
         <img src="{{ asset('img/custom/menu-3.png') }}" alt="Menu ejemplo" class="example-menu-position"
-            style="width: 50px; ">
+            style="width: 50px; " data-item="3" onclick="menuItem(3);">
     </div>
 
 </div>
@@ -133,11 +133,27 @@
         }
         document.querySelector('.btn-theme-estilo[data-estilo="' + contrast + '"]').classList.add('active');
     }
+
+    function menuItem(item = 1) {
+        localStorage.setItem('menuItem', item);
+        let items = [1, 2, 3];
+        items.forEach(itm => {
+            bodyElement.classList.remove('menu-global-item-' + itm);
+        });
+        bodyElement.classList.add('menu-global-item-' + item);
+        if (document.querySelector('.btn-menu-item.active')) {
+            document.querySelector('.btn-menu-item.active').classList.remove('active');
+        }
+        document.querySelector('.btn-menu-item[data-item="' + item + '"]').classList.add('active');
+
+        console.log(localStorage.getItem('menuItem'));
+    }
 </script>
 <script>
     addEventListener("DOMContentLoaded", () => {
         themeContrast(JSON.parse(localStorage.getItem('themeContrast')) || false);
         menuPosition(localStorage.getItem('menuPosition') || 'top');
+        menuItem(localStorage.getItem('menuItem') || 1);
         themeColor(localStorage.getItem('themeColor') || '#4870b2');
         darkMode(localStorage.getItem('theme') || 'light');
     });

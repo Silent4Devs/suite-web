@@ -1036,6 +1036,10 @@ header.mostrar-menu {
     border-color: var(--color-tbj) !important;
 }
 
+.btn-menu-item.active{
+    border-color: var(--color-tbj) !important;
+}
+
 .box-acces-custom-items {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -1094,4 +1098,64 @@ header.mostrar-menu {
 
 .caja-items-menu-slider > div.group-menu-centro-atencion{
     display: none;
+}
+
+/* menus modulos  ----------- */
+ul.menu-modulos{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+}
+ul.menu-modulos li a{
+    background-color: #fff;
+    display: block;
+    padding: 20px;
+    border-radius: 28px;
+    box-shadow: 0px 1px 4px #00000024;
+    background-position: 100% 100%;
+    background-size: 25%;
+    background-repeat: no-repeat;
+    transition: 0.1s;
+}
+ul.menu-modulos li a:hover{
+    background-size: 26%;
+
+}
+ul.menu-modulos li a i{
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+    display: grid;
+    place-items: center;
+    color: #3f3f3f;
+}
+ul.menu-modulos li a span{
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 30px 0px;
+    width: 50%;
+}
+ul.menu-modulos li a::after{
+    content: "❯";
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    display: block;
+    text-align: center;
+
+    background-color: #78BB50;
+    color: #fff;
+}
+
+/* menu modulo 1 --------------- */
+body.menu-modulo-1 ul.menu-modulos li a{
+    background-image: url('../img/menu-grafis-2.png');
+}
+body.menu-modulo-1 ul.menu-modulos li a i{
+    background-color: #93e2ff;
 }

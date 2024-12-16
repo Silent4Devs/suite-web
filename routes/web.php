@@ -285,8 +285,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         });
 
         //Modulo Capital Humano
+        Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
         // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
-        Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
         // Rutas de AusenciasController
         Route::controller(AusenciasController::class)->group(function () {

@@ -1,83 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    {{-- menus horizontales --}}
-    <style type="text/css">
-        div.nav .nav-link {
-            color: var(--color-tbj);
-        }
-
-        div.tab-pane ul {
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        div.tab-pane li {
-            list-style: none;
-            width: 150px;
-            height: 150px;
-            box-sizing: border-box;
-            position: relative;
-            margin: 10px;
-            display: inline-block;
-        }
-
-        div.tab-pane li i {
-            font-size: 30pt;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        div.tab-pane a {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8fcff;
-            color: var(--color-tbj);
-            border-radius: 6px;
-            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
-            transition: 0.1s;
-            padding: 7px;
-        }
-
-        div.tab-pane a:hover {
-            text-decoration: none !important;
-            outline: 1px solid var(--color-tbj);
-            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
-            background-color: #fff;
-        }
-
-        a:hover {
-            text-decoration: none !important;
-        }
-    </style>
-    <style>
-        .ventana_menu {
-            width: calc(100% - 40px);
-            background-color: #fff;
-            position: absolute;
-            margin: auto;
-            display: none;
-            top: 35px;
-            z-index: 3;
-            height: calc(100% - 40px);
-
-        }
-
-        .ventana_menu ul {
-            margin-top: 0px !important;
-        }
-    </style>
-
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
-    <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Evaluaciones </h5>
-    </div>
+    <h5 class="titulo_general_funcion">Evaluaciones </h5>
     <nav>
         <div class="nav nav-tabs" id="tabsCapitalHumano" role="tablist" style="margin-bottom: 0px !important;">
             <a class="nav-link active" id="nav-empleados-tab" data-type="empleados" data-toggle="tab" href="#nav-empleados"
@@ -98,23 +22,19 @@
             </a>
         </div>
     </nav>
-    <div class="card">
-        <div class="card-body">
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
-                    aria-labelledby="nav-empleados-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.empleados')
-                </div>
-                <div class="tab-pane mb-4 fade" id="nav-calendario-comunicacion" role="tabpanel"
-                    aria-labelledby="nav-calendario-comunicacion-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
-                </div>
-                <div class="tab-pane mb-4 fade" id="nav-ev360" role="tabpanel" aria-labelledby="nav-ev360-tab">
-                    @include('admin.recursos-humanos.capital-humano.components.ev360')
-                </div>
-
-            </div>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
+            @include('admin.recursos-humanos.capital-humano.components.empleados')
+            
         </div>
+        <div class="tab-pane mb-4 fade" id="nav-calendario-comunicacion" role="tabpanel"
+            aria-labelledby="nav-calendario-comunicacion-tab">
+            @include('admin.recursos-humanos.capital-humano.components.calendario-comunicacion')
+        </div>
+        <div class="tab-pane mb-4 fade" id="nav-ev360" role="tabpanel" aria-labelledby="nav-ev360-tab">
+            @include('admin.recursos-humanos.capital-humano.components.ev360')
+        </div>
+
     </div>
 @endsection
 
