@@ -72,7 +72,6 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" id="btnCerrarModal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
@@ -81,14 +80,10 @@
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Botón "Cerrar" en el footer
-            document.getElementById('btnCerrarModal').addEventListener('click', function () {
-                $('#modalEditarCompetencia').modal('hide');
-            });
-
             // Ícono de cierre (tache)
             document.getElementById('closeModalBtn').addEventListener('click', function () {
                 $('#modalEditarCompetencia').modal('hide');
