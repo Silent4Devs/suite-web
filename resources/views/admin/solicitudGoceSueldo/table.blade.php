@@ -95,14 +95,7 @@
                                 onclick="eliminar('{{ route('admin.solicitud-permiso-goce-sueldo.destroy') }}', {{ $sol->id }})"
                                 title="Cancelar solicitud" class="btn btn-sm text-danger"
                                 style="display:inline-block"><i
-                                    class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
-                                    <button
-                                        onclick="window.location.href='{{ route('admin.solicitud-permiso-goce-sueldo.respuesta', ['id' => $sol->id]) }}'"
-                                        title="Aprobar solicitud" class="btn btn-sm text-success"
-                                        style="display:inline-block">
-                                        <i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i>
-                                    </button>
-                                </button>
+                                class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
                         </div>
                     @endif
 
