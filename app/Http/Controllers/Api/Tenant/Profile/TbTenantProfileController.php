@@ -31,4 +31,29 @@ class TbTenantProfileController extends TbTenantBaseController
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
+
+    public function tbGetCostumerSubscriptions(Request $request)
+    {
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC';
+            $tbSuscriptions = $this->tbStripeService->tbGetCustomerSubscriptions($tbStripeId);
+
+            return $this->tbSendResponse($tbSuscriptions, 'Suscripciones encontradas');
+        } catch (\Exception $e) {
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
+
+    // public function tbGetSubscriptionStatus(Request $request)
+    // {
+    //     try {
+    //         $tbIdSubscription = "sub_1QQa2ILyj74BldhkQ5BUSoav";
+    //         $tbStatus = $this->tbStripeService->tbGetCustomerSubscriptions($tbIdSubscription);
+
+    //         return $this->tbSendResponse($tbStatus, 'Status obtenido.');
+    //     } catch (\Exception $e) {
+    //         dd($e);
+    //         return $this->tbSendError($e, ['error' => $e]);
+    //     }
+    // }
 }
