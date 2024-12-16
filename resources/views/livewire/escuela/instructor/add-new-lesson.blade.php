@@ -100,9 +100,7 @@
 
                                 <div class="form-group col-12 anima-focus">
                                     <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
-                                        class=" w-full form-control @if ($errors->has('description')) invalid @endif"></textarea>
-                                    <label for="url-{{ $section->id }}">Texto</label>
-
+                                        class=" w-full form-control @if ($errors->has('description')) invalid @endif" required></textarea>
                                 </div>
 
                             @break

@@ -41,6 +41,8 @@ class CourseStatus extends Component
 
     public $cursoCompletado;
 
+    public $urlResource = null;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
     {
@@ -109,6 +111,16 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+        if($this->current->resource !== null){
+            // $this->urlResource = "C:\laragon\www\suite-web\storage\app\cursos#9a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
+            $this->urlResource = asset("storage\app\cursos\439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf");
+            // dd($this->urlResource);
+            // $this->urlResource = "C:\laragon\www\suite-web\storage\app\cursos\439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
+            // $this->urlResource = storage_path('app/'.$this->current->resource->url);
+            // $this->urlResource = "storage/app/cursos/439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
+        }
+
+
         $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();

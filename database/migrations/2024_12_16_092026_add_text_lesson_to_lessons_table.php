@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             //
-            $table->string('url')->nullable()->change();
-            $table->string('iframe')->nullable()->change();
-            $table->longText('text_content_lesson')->nullable()->default('text');
+            $table->longText('text_lesson')->nullable()->default('text');
         });
     }
 
@@ -26,9 +24,7 @@ return new class extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             //
-            $table->string('url')->nullable(false)->change();
-            $table->string('iframe')->nullable(false)->change();
-            $table->dropColumn('text_content_lesson');
+            $table->dropColumn('text_lesson');
         });
     }
 };

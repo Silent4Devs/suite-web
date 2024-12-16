@@ -51,17 +51,62 @@
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            <div class="video-curso-box">
-                @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
-                        {!! $current->iframe !!}
+            @if ($current)
+                @if ($current->iframe)
+                    <div class="video-curso-box">
+                        <div class="box-iframe-video-courses d-none">
+                            {!! $current->iframe !!}
+                        </div>
+                        <div id="player3" class="w-100"></div>
                     </div>
-                    <div id="player3" class="w-100"></div>
+                    @else
+                    <div class="card card-body">
+                        {{-- {{ $current->resource->url }}
+                            {{ $urlResource }} --}}
+                            {{-- <iframe src="https://docs.google.com/gview?url={{ $urlResource }}&embedded=true" width="100%" height="600px"></iframe> --}}
+                            {{-- <iframe src="{{ $urlResource }}" width="100%"
+                            height="600px"></iframe> --}}
+                                <embed src="{{ $urlResource }}" type="application/pdf" width="100%"
+                                height="600px" />
+                    </div>
+
+                        {{-- @switch ($extension_arch)
+                            @case ('pdf')
+                                <embed src="{{ asset($archivo_mostrado) }}" type="application/pdf" width="100%"
+                                    height="600px" />
+                            @break;
+                            @case ('jpg')
+                                <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
+                            @break;
+                            @case ('jpeg')
+                                <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
+                            @break;
+                            @case ('png')
+                                <img src="{{ asset($archivo_mostrado) }}" type="image/png" width="100%" height="600px" />
+                            @break;
+                            @case ('xls')
+                                <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
+                                    height="600px" />
+                            @break;
+                            @case ('xlsx')
+                                <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
+                                    height="600px" />
+                            @break;
+                            @case ('docx')
+                                <embed src="{{ asset($archivo_mostrado) }}" type="application/msword" width="100%"
+                                    height="600px" />
+                            @break;
+
+                            @default
+                                <h1>Error al cargar archivo</h1>
+                            @break;
+                        @endswitch --}}
+                    @endif
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
                 @else
                     <p>Sin registro</p>
                 @endif
-            </div>
+
 
             <div class="row" style="margin-top: 36px;">
                 <div class="col-12">
