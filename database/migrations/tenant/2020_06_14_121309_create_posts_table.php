@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('body');
 
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users_tenant')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

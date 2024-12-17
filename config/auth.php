@@ -42,7 +42,7 @@ return [
         ],
         'api' => [
             'driver' => 'passport',
-            'provider' => 'tenant_users',
+            'provider' => 'users',
             'hash' => false,
         ],
         'tenants' => [
@@ -71,7 +71,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Tenant\TbTenantUserModel::class,
             'connection' => 'tenant',
         ],
         'tenant_users' => [

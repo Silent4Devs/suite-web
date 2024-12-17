@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\Tenant\Auth;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-
+use App\Models\Tenant\TbTenantUserModel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Sanctum\Sanctum;
 
 class TbTenantAuthController extends TbTenantBaseController
 {
@@ -17,20 +20,36 @@ class TbTenantAuthController extends TbTenantBaseController
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
-            $token = $user->createToken('API Token')->plainTextToken;
-
-            return $this->tbSendResponse(['token' => $token], 'Login successful.');
+        if (! Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Invalid access credentials',
+            ], 401);
         }
 
-        return $this->tbSendError('Unauthorized.', ['error' => 'Invalid credentials']);
+        $user = TbTenantUserModel::select(['id', 'name', 'password', 'email'])
+            ->where('email', request('email'))
+            ->firstOrFail()
+            ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
+
+        Cache::put($this->tokenCachePrefix . $token, [
+            'user_id' => $user->id,
+            'expiration' => $expiration,
+        ], config('sanctum.expiration') * 60);
+
+        return response()->json([
+            'access_token' => $token,
+            'user' => $user->toArray(),
+            'expiration' => $expiration,
+        ]);
     }
 
     public function tbLogout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-
         return $this->tbSendResponse([], 'Logged out successfully.');
     }
 }

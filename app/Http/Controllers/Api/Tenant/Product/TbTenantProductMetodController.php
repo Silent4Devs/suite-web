@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TbTenantProductMetodController extends TbTenantBaseController
 {
-
     protected $tbTenantManager;
 
     protected $tbStripeService;
@@ -35,5 +34,4 @@ class TbTenantProductMetodController extends TbTenantBaseController
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
-
 }

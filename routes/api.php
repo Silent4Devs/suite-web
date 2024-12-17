@@ -16,14 +16,18 @@ use App\Http\Controllers\Api\Mobile\SolicitudDayOff\tbApiMobileControllerSolicit
 use App\Http\Controllers\Api\Mobile\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
 use App\Http\Controllers\Api\Mobile\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
 use App\Http\Controllers\Api\Mobile\Timesheet\TbTimesheetApiMobileController;
+use App\Http\Controllers\Api\Tenant\Auth\TbTenantAuthController;
 use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
 use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
 use App\Http\Controllers\Api\Tenant\Product\TbTenantProductMetodController;
 use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
+use App\Http\Controllers\Api\Tenant\User\TbTenantUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/rtenant', [TBTenantRegisterController::class, 'submit']);
 
+Route::post('/user/login', [TbTenantAuthController::class, 'tbLogin']);
+Route::post('/user/register', [TbTenantUserController::class, 'tbRegister']);
 Route::get('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);
 Route::get('/stripe/profile', [TbTenantProfileController::class, 'tbGetCostumerInfo']);
 Route::get('/stripe/suscriptions', [TbTenantProfileController::class, 'tbGetCostumerSubscriptions']);
