@@ -112,7 +112,7 @@ class TBTenantCreateTenantAction
         if (DB::connection('tenant')->getPdo()) {
             Artisan::call('migrate', [
                 '--database' => 'tenant',
-                '--path' => 'database/migrations/tabantaj2',
+                '--path' => 'database/migrations/tabantaj',
                 '--force' => true,
             ]);
         } else {
