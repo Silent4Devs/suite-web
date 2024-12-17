@@ -24,8 +24,7 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" onclick="confirmarRestauracion({{ $obj->id }})">
                                         <i class="fa-solid fa-pencil"></i>&nbsp;Restaurar</a>
-                                    <a class="dropdown-item delete-item"
-                                        wire:click.prevent="eliminarObjetivo({{ $obj->id }})">
+                                    <a class="dropdown-item delete-item" onclick="confirmarEliminacion({{ $obj->id }})">
                                         <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                                 </div>
                             </div>
