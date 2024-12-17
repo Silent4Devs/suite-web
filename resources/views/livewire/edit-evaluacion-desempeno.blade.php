@@ -591,7 +591,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <label
-                                                                    for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador</label>
+                                                                    for="evaluador_objetivo_{{ $key }}.evaluador_objetivos.{{ $index_obj }}">Evaluador Objetivos</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-2">
@@ -609,7 +609,7 @@
                                                         </div>
                                                         @if ($index_obj > 0)
                                                             <div class="col-1">
-                                                                <button class="btn trash-button"
+                                                                <button wire:loading.remove class="btn trash-button"
                                                                     wire:click="removerEvaluadorObjetivos({{ $key }}, {{ $index_obj }})"
                                                                     class="btn btn-cancel"><i class="fa-regular fa-trash-can"
                                                                         style="color: rgb(0, 0, 0); font-size: 15pt;"
@@ -617,10 +617,25 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-2">
+                                                    <div class="mb-3" wire:loading.remove>
+                                                        <div class="col-3">
+                                                            <a class="btn btn-link" style="color: #3490dc;"
+                                                                wire:click.prevent="agregarEvaluadorObjetivos({{ $key }})">+Agregar Evaluador Objetivos</a>
+                                                        </div>
+                                                        </div>
+
+                                                        <!-- Overlay mientras carga -->
+                                                        <div wire:loading class="overlay">
+                                                        <div class="spinner-container">
+                                                        <div class="spinner-border text-primary" role="status"></div>
+                                                        <p class="mt-2">Agregando espacio de Evaluador...</p>
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- <div class="col-2">
                                                         <a class="btn btn-link" style="color: #3490dc;"
                                                             wire:click.prevent="agregarEvaluadorObjetivos({{ $key }} )">+Agregar</a>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -648,7 +663,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <label
-                                                                    for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador</label>
+                                                                    for="evaluador_competencia_{{ $key }}.evaluador_competencias.{{ $index_comp }}">Evaluador Competencias</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-2">
@@ -666,7 +681,7 @@
                                                         </div>
                                                         @if ($index_comp > 0)
                                                             <div class="col-1">
-                                                                <button class="btn trash-button"
+                                                                <button wire:loading.remove class="btn trash-button"
                                                                     wire:click="removerEvaluadorCompetencias({{ $key }}, {{ $index_comp }})"
                                                                     class="btn btn-cancel"> <i class="fa-regular fa-trash-can"
                                                                         style="color: rgb(0, 0, 0); font-size: 15pt;"
@@ -674,11 +689,25 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="col-4">
+                                                    <div class="mb-3" wire:loading.remove>
+                                                        <div class="col-3">
+                                                        <a class="btn btn-link" style="color: #3490dc;"
+                                                                    wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar Evaluador Competencias</a>
+                                                        </div>
+                                                        </div>
+
+                                                        <!-- Overlay mientras carga -->
+                                                        <div wire:loading class="overlay">
+                                                        <div class="spinner-container">
+                                                        <div class="spinner-border text-primary" role="status"></div>
+                                                        <p class="mt-2">Agregando espacio de Evaluador...</p>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="col-4">
                                                         <a class="btn-link" style="color: #3490dc;"
                                                             wire:click.prevent="agregarEvaluadorCompetencias({{ $key }})">+Agregar
                                                         </a>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
