@@ -159,7 +159,7 @@ class ProbabilidadImpacto extends Component
             }
         }
 
-        $this->dispatch('validateProb_Imp', $this->send);
+        $this->dispatch('validateProb_Imp', send: $this->send);
     }
 
     public function removeInput($key)

@@ -118,7 +118,7 @@ export const TableSettigs = ({data}) => {
                                         width: "24px",
                                         height: "24px",
                                     }}
-                                    className="form-control "
+                                    className="form-check-input"
                                     type="checkbox"
                                     value=""
                                     id={`checkoutSettigns-q-${item.question_id}`}
@@ -143,7 +143,7 @@ export const TableSettigs = ({data}) => {
                                         width: "24px",
                                         height: "24px",
                                     }}
-                                    className="form-control"
+                                    className="form-check-input"
                                     type="checkbox"
                                     value=""
                                     id={`checkoutSettigns-f-${item.formula_id}`}
