@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\User;
+namespace App\Http\Middleware\Tabantaj\User;
 
 use App\Models\User;
 use Closure;

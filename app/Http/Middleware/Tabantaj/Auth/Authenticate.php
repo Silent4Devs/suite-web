@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Auth;
+namespace App\Http\Middleware\Tabantaj\Auth;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Auth;

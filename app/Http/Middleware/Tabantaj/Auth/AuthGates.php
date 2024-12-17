@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Auth;
+namespace App\Http\Middleware\Tabantaj\Auth;
 
 use App\Models\Role;
 use App\Models\User;

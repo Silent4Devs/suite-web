@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tabantaj;
 
 use App\Models\Escuela\CourseUser;
 use App\Models\User;
@@ -26,6 +26,5 @@ class CourseMiddleware
         }
 
         return redirect()->route('admin.mis-cursos');
-
     }
 }

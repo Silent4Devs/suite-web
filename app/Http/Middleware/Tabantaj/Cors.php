@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tabantaj;
 
 use App\Models\User;
 use Closure;
@@ -35,7 +35,7 @@ class Cors
         if ($request->getMethod() == 'OPTIONS') {
             return response()->json('ok', 200, $headers);
         }
-        
+
         $response = $next($request);
         if ($response instanceof $IlluminateResponse) {
             foreach ($headers as $key => $value) {
