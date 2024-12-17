@@ -50,7 +50,7 @@ class OrganigramaController extends Controller
                 }
             }
 
-            $rutaImagenes = Async::run(fn() => asset('storage/empleados/imagenes/'));
+            $rutaImagenes = asset('storage/empleados/imagenes/');
             $organizacionDB = Async::run(fn() => Organizacion::first());
             $areas = Area::all();
 
