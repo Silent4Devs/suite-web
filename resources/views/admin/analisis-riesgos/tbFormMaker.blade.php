@@ -2,6 +2,7 @@
 @switch($question->type)
     @case('1')
         <div>
+            {{-- @dump($answersForm ? $answersForm[$question->id] : '') --}}
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input class="form-control" placeholder="" name="qs-{{ $question->id }}" maxlength="255"
                     required="{{ $question->obligatory }}" wire:model.defer="answersForm.{{$question->id}}.value">
@@ -90,15 +91,12 @@
 
     @case('11')
         <div class="d-flex justify-content-center align-items-center gap-1">
-            {{-- {{ $question->getFormula->formula }} --}}
-            {{-- {{$question->id}} --}}
             <div id="scaleIndicator-{{$question->id}}" style="min-width: 68px; padding: 5px 5px; border-radius:11px; text-align:center;"></div>
             <input class="form-control" placeholder="" id="qs-{{ $question->id }}" name="qs-{{ $question->id }}"
                 maxlength="255" required="{{ $question->obligatory }}" readonly wire:model.defer="answersForm.{{$question->id}}.value"
                 value="{{ old('answersForm.'.$question->id.'.value') ?? ($answersForm[$question->id]['value'] ?? '') }}">
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // console.log("object formula")
                     const inputId = @json($question->id);
                     const sections = @json($sections);
                     const ids = @json($questionsFormulas);
@@ -106,29 +104,34 @@
                     const inputFormula = document.getElementById(`qs-${inputId}`);
                     const inputScale = document.getElementById(`scaleIndicator-${inputId}`);
                     let resultFormula;
-                    // console.log(resultFormula)
                     let scaleIndicator={};
                     const formula = @json($question->getFormula->formula);
-                    // updateStatus();
-
-                    // const numbers = formula.match(/\$fv(\d+)/g).map(num => num.replace('$fv', ''));
+                    updateStatus();
 
                     const numbers = formula.match(/\$fv([^+\-*\/]+)/g).map(num => num.replace('$fv', ''));
+                    // console.log(numbers)
                     numbers.map((number) => {
                         const uuidFormula = number;
 
                         ids.map((itm)=>{
                             if(uuidFormula === itm.uuid_formula){
-                                console.log(itm.id)
+                                // console.log(itm.id)
                                 const inputId = `qs-${itm.id}`;
                                 const inputElement = document.getElementById(inputId);
                                 if (inputElement) {
-                                    inputElement.addEventListener('input', actualizarFormula);
-                                    inputElement.addEventListener('input', updateStatus);
+                                    // inputElement.addEventListener('input', actualizarFormula);
+                                    // inputElement.addEventListener('input', updateStatus);
+                                    inputElement.addEventListener('input', function () {
+                                        actualizarFormula();
+                                        updateStatus();
+                                        // console.log("item")
+                                    });
+                                    setTimeout(() => {
+                                        console.log(itm.id)
+                                        Livewire.dispatch('saveCoordinates', { id: itm.id }); // Despachar evento de Livewire
+                                    }, 500);
+
                                 }
-
-                                Livewire.emit('saveCoordinates', itm.id);
-
                             }
                         })
                     });
@@ -174,8 +177,11 @@
                     }
 
                     function updateStatus(){
+                        // console.log(resultFormula)
+                        if(resultFormula === undefined){
+                            resultFormula = 0;
+                        }
                        const newScales = scales.find((item)=> parseInt(item.valor) >= parseInt(resultFormula));
-                    //    console.log(newScales);
                        scaleIndicator.name = newScales.nombre;
                        scaleIndicator.color = newScales.color;
                        inputScale.style.background = scaleIndicator.color;
@@ -185,34 +191,39 @@
                     }
 
                     function getStatus(){
-                        // console.log(scales,resultFormula)
+                        if(resultFormula === undefined || resultFormula === ''){
+                            resultFormula = 0;
+                        }
+                        // console.log(resultFormula);
                         const newScales = scales.find((item)=> parseInt(resultFormula) <= parseInt(item.valor));
-                    //    console.log(newScales);
-                       scaleIndicator.name = newScales.nombre;
-                    //    console.log(scaleIndicator)
-                       scaleIndicator.color = newScales.color;
-                       inputScale.style.background = scaleIndicator.color;
-                       inputScale.style.color = '#FFFFFF'
-                       inputScale.innerHTML = scaleIndicator.name;
+                        scaleIndicator.name = newScales.nombre;
+                        scaleIndicator.color = newScales.color;
+                        inputScale.style.background = scaleIndicator.color;
+                        inputScale.style.color = '#FFFFFF'
+                        inputScale.innerHTML = scaleIndicator.name;
                     }
 
                     Livewire.on("calculateScale", () => {
-                        resultFormula = inputFormula.value
-                        // console.log(resultFormula);
-                        getStatus();
-                    });
+                        setTimeout(() => {
+                            if(inputFormula.value !== undefined){
+                                resultFormula = inputFormula.value
+                                getStatus();
+                            }
+                        }, 500);
+                        });
                 });
+
             </script>
         </div>
     @break
 
     @case('12')
         <div>
-            {{-- {{$question->id}} --}}
+            {{$question->id}}
             {{-- {{isset($answersForm[$question->id]) && isset($answersForm[$question->id]->value) ? $answersForm[$question->id]->value : '' }} --}}
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input class="form-control" placeholder="" name="qs-{{ $question->id }}"
-                    required="{{ $question->obligatory }}"  wire:model.defer="answersForm.{{$question->id}}.value" >
+                    required="{{ $question->obligatory }}"  wire:model="answersForm.{{$question->id}}.value" >
                     {{-- value="{{isset($answersForm[$question->id]->value) ? $answersForm[$question->id]->value : '' }}" --}}
             </div>
         </div>
@@ -230,6 +241,7 @@
     @case('14')
         <div>
             <div class="form-group pl-0 mb-0 anima-focus">
+
                 {{-- {{$question->id}} --}}
                 <input type="number" step="1" class="form-control" placeholder="" name="qs-{{ $question->id }}"
                     id="qs-{{ $question->id }}" required="{{ $question->obligatory }}" wire:model.defer="answersForm.{{$question->id}}.value"

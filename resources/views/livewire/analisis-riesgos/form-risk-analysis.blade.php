@@ -262,7 +262,6 @@
                         @endif
                     </div>
                     {{-- controls --}}
-                    {{-- @dump($sheetId) --}}
                     @if ($sheetId)
                         @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
                     @endif
@@ -333,7 +332,7 @@
             });
 
             if (form.checkValidity()) {
-                Livewire.emit('formData', data);
+                Livewire.dispatch('formData', {data});
             }
         });
     </script>
@@ -353,7 +352,7 @@
     </script>
 
     {{-- table sheets --}}
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {
                 setTimeout(() => {
@@ -368,7 +367,7 @@
             //     }, 200);
             // });
         });
-    </script>
+    </script> --}}
 
     {{-- alerts --}}
     @yield('js')

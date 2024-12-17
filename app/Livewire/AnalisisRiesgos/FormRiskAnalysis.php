@@ -16,6 +16,7 @@ use App\Models\TBSettingsAr_QuestionsArModel;
 use App\Models\TBSheetRiskAnalysisModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -86,12 +87,12 @@ class FormRiskAnalysis extends Component
         'bg' => '#FFFFD8',
         'initial_risk_confirm' => false,
         'residual_risk_confirm' => false,
-        // 'edit' => false,
+        'edit' => false,
     ];
 
-    public $answersForm;
+    public $answersForm =[] ;
 
-    protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
+    // protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
 
     public function riskConfirm()
     {
@@ -115,6 +116,7 @@ class FormRiskAnalysis extends Component
         $this->dispatch('riskConfirmMessage');
     }
 
+    #[On('saveCoordinates')]
     public function saveCoordinates($id)
     {
         if (! in_array($id, $this->scalesCoordinates)) {
@@ -131,6 +133,7 @@ class FormRiskAnalysis extends Component
         $ids = $this->getAnswerWithoutPrefix();
         $commonKeys = array_intersect_key($ids, array_flip($this->scalesCoordinates));
         $commonKeys = array_values($commonKeys);
+
 
         switch (! is_null($questionFormula)) {
             case intval($questionId) === $questionFormula->question_id && $this->sheetForm['status'] === 1:
@@ -197,7 +200,7 @@ class FormRiskAnalysis extends Component
 
         $max = $this->probImpa->valor_max * $this->probImpa->valor_max;
 
-        $formulaRI = ($pivot->initial_risk / $max) * 100;
+        $formulaRI = round(($pivot->initial_risk / $max) * 100,2);
         $formulaRR = ($pivot->residual_risk / $max) * 100;
         $this->risks['id'] = $pivot->id;
         $this->risks['initial'] = $formulaRI;
@@ -226,8 +229,13 @@ class FormRiskAnalysis extends Component
         if ($answersFormRegister->isNotEmpty()) {
             $this->sheetForm['edit'] = true;
             foreach ($answersFormRegister as $answerRegister) {
-                $this->answersForm[$answerRegister->answer->question_id] = $answerRegister->answer;
+                $this->answersForm[$answerRegister->answer->question_id] = [
+                    'id' => $answerRegister->answer->id,
+                    'question_id' => $answerRegister->answer->question_id,
+                    'value' => $answerRegister->answer->value,
+                ];
             }
+            // dd($this->answersForm);
         } else {
             $this->answersForm = [];
             $this->sheetForm['edit'] = false;
@@ -247,11 +255,10 @@ class FormRiskAnalysis extends Component
         };
 
         $this->getQuestionsAnswer();
-        // $this->getInitialResidualRisk();
+        $this->getInitialResidualRisk();
         // $this->dispatch('analisis-riesgos.controls-risk-analysis', 'reload', $this->sheetId);
-        $this->dispatch('test', $id);
-        // dd("a");
-        // $this->dispatch('calculateScale');
+        // $this->dispatch('test', $id);
+        $this->dispatch('calculateScale');
 
     }
 
@@ -336,7 +343,6 @@ class FormRiskAnalysis extends Component
     {
         $questionsAnswer = $this->getAnswerWithoutPrefix();
         foreach ($questionsAnswer as $index => $questionAnswer) {
-
             $answerRegisterId = $this->answersForm[$index]['id'];
             $answerRegister = TBAnswerSheetRiskAnalysisModel::find($answerRegisterId);
             $answerRegister->value = $questionAnswer;
@@ -394,6 +400,7 @@ class FormRiskAnalysis extends Component
         return $newAswers;
     }
 
+    #[On('formData')]
     public function formData($data)
     {
         $this->questionsAnswer = $data;
@@ -496,9 +503,9 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
-        $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
+        // $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 
-        $this->dispatch('scriptTabla');
+        // $this->dispatch('scriptTabla');
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }
