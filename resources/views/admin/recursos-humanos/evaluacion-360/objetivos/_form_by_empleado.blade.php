@@ -107,7 +107,7 @@
                 Meta a alcanzar
             </label>
             <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
-                aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
+                aria-describedby="metaHelp" required name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
             <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
             @if ($errors->has('meta'))
                 <div class="invalid-feedback">
