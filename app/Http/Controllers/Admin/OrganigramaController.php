@@ -9,6 +9,7 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use VXM\Async\AsyncFacade as Async;
@@ -23,29 +24,10 @@ class OrganigramaController extends Controller
             $organizacionArray = [];
             if ($request->ajax()) {
                 if ($request->area_filter === 'true') {
-                    $area = Area::with(['lider' => function ($query) {
-                        $query->select(
-                            'id',
-                            'name',
-                            'area_id',
-                            'foto',
-                            'puesto_id',
-                            'antiguedad',
-                            'email',
-                            'telefono',
-                            'estatus',
-                            'n_registro',
-                            'n_empleado',
-                            'genero',
-                            'telefono_movil'
-                        )->with('children');
-                    }])->find($request->area_id);
 
-                    if (! $area) {
-                        return response()->json(['error' => 'Área no encontrada'], 404);
-                    }
-
-                    return response()->json($area->lider);
+                    $area = $this->getAreaWithLiderAndChildren($request->area_id);
+                    $childrenArea = $area->lider;
+                    return response()->json($childrenArea);
                 } else {
                     if ($request->id === null) {
                         $organizacionTree = Empleado::getAllOrganigramaTree();
@@ -53,22 +35,24 @@ class OrganigramaController extends Controller
                             return response()->json(['error' => 'No se encontró la organización'], 404);
                         }
 
-                        $organizacionArray = $this->cleanOrganizacionArray($organizacionTree->toArray());
-
-                        return response()->json($organizacionArray);
+                        $organizacionArray = $organizacionTree;
+                        $this->traverseAllOrganigrama($organizacionArray->children_organigrama, $organizacionArray->area_id);
+                        return response()->json($organizacionTree);
                     } else {
-                        $organizacionTree = Empleado::getAllOrganigramaTreeElse($request->id);
+                        $organizacionTree = $this->getSearchEmployOrganizationChart($request->id);
+                        $organizacionTree->children = $this->transverseChildrens($organizacionTree->id);
+                        return response()->json($organizacionTree);
 
-                        return $organizacionTree
-                            ? response()->json($organizacionTree)
-                            : response()->json(['error' => 'No encontrado'], 404);
+                        // return $organizacionTree
+                        //     ? response()->json($organizacionTree)
+                        //     : response()->json(['error' => 'No encontrado'], 404);
                     }
                 }
             }
 
-            $rutaImagenes = Async::run(fn () => asset('storage/empleados/imagenes/'));
-            $organizacionDB = Async::run(fn () => Organizacion::first());
-            $areas = Async::run(fn () => Area::all());
+            $rutaImagenes = Async::run(fn() => asset('storage/empleados/imagenes/'));
+            $organizacionDB = Async::run(fn() => Organizacion::first());
+            $areas = Area::all();
 
             if ($organizacionDB && property_exists($organizacionDB, 'empresa')) {
                 $organizacion = $organizacionDB->empresa;
@@ -87,6 +71,32 @@ class OrganigramaController extends Controller
             ));
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    function traverseArea(&$areasChildren)
+    {
+        foreach ($areasChildren as $areaChildren) {
+            $puesto =  $areaChildren->puesto;
+            $areaChildren->setAppends([]);
+            $areaChildren->area->setAppends([]);
+            $areaChildren->supervisor->setAppends([]);
+            $areaChildren->puesto = $puesto;
+            if ($areaChildren->children->isNotEmpty()) {
+                $this->traverseArea($areaChildren->children);
+            }
+        }
+    }
+
+    function traverseAllOrganigrama(&$allsChildren, $liderAreaId)
+    {
+        foreach ($allsChildren as $allChildren) {
+
+            if ($allChildren->area_id !== $liderAreaId) {
+                $area = $this->getAreaWithLiderAndChildren($allChildren->area_id);
+                $childrenAll = $area->lider;
+                $allChildren->childrenOrganigrama = $childrenAll->children;
+            }
         }
     }
 
@@ -136,5 +146,111 @@ class OrganigramaController extends Controller
             // Reindex after removing 'baja' items
             $array['children_organigrama'] = array_values($array['children_organigrama']);
         }
+    }
+
+
+    public function getAreaWithLiderAndChildren($areaId)
+    {
+        // Obtener el área con el líder y sus hijos
+        $area = DB::table('areas')
+            ->select('id', 'area', 'empleados_id') // Selecciona los campos necesarios de la tabla 'areas'
+            ->where('areas.id', $areaId)
+            ->first();
+
+        if ($area) {
+            $lider = $this->getSearchEmployOrganizationChart($area->empleados_id);
+            $childrens = $this->transverseChildrens($lider->id);
+        }
+
+        $lider->children = $childrens;
+        $area->lider = $lider;
+
+        // Comprobar si el área no fue encontrada
+        if (!$area) {
+            return response()->json(['error' => 'Área no encontrada'], 404);
+        }
+
+        // Devolver la información del área con su líder y los hijos
+        return $area;
+    }
+
+    //obtener los childres de un lider, mediante su id
+    public function transverseChildrens($liderId)
+    {
+
+        $childrens = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'area_id',
+                'foto',
+                'puesto_id',
+                'antiguedad',
+                'email',
+                'telefono',
+                'estatus',
+                'n_registro',
+                'n_empleado',
+                'genero',
+                'telefono_movil',
+                'supervisor_id'
+            )
+            ->where('supervisor_id', $liderId)
+            ->where('estatus', 'alta')
+            ->whereNull('deleted_at')
+            ->get();
+
+        foreach ($childrens as $children) {
+            $puesto = DB::table('puestos')
+                ->select('puesto')
+                ->where('id', '=', $children->puesto_id)
+                ->first();
+            $children->puesto = $puesto->puesto;
+            $area = DB::table('areas')
+                ->select('area')
+                ->where('id', '=', $children->area_id)
+                ->first();
+            $children->area = $area;
+            $grandChildren = $this->transverseChildrens($children->id);
+            $children->children = $grandChildren;
+        }
+
+        return $childrens;
+    }
+
+    public function getSearchEmployOrganizationChart($employId)
+    {
+        $employ = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'area_id',
+                'foto',
+                'puesto_id',
+                'antiguedad',
+                'email',
+                'telefono',
+                'estatus',
+                'n_registro',
+                'n_empleado',
+                'genero',
+                'telefono_movil'
+            )
+            ->where('id', $employId)
+            ->first();
+
+        $puesto = DB::table('puestos')
+            ->select('puesto')
+            ->where('id', '=', $employ->puesto_id)
+            ->first();
+        $employ->puesto = $puesto->puesto;
+
+        $area = DB::table('areas')
+            ->select('area')
+            ->where('id', '=', $employ->area_id)
+            ->first();
+        $employ->area = $area;
+
+        return $employ;
     }
 }
