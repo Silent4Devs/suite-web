@@ -186,9 +186,11 @@
                             <small class="errores error_nivel_esperado"></small>
                             `
                         response.forEach(nivel => {
-                            formHTML += `
-                                <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
-                                `;
+                            if (nivel.ponderacion > 0) {
+                                formHTML += `
+                                    <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         formHTML += `</select></form>`;
                         modalBody.innerHTML = formHTML;
@@ -305,9 +307,11 @@
                         let selectNiveles = document.querySelector('#nivel_esperado');
                         let opciones = '';
                         response.forEach(nivel => {
-                            opciones += `
-                            <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
-                            `;
+                            if (nivel.ponderacion > 0) {
+                                opciones += `
+                                    <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         selectNiveles.innerHTML = opciones;
 
