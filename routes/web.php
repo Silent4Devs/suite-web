@@ -421,6 +421,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             ])->except(['show', 'destroy']);
         });
 
+        Route::post('solicitudAprobacionDayOff/updateAprobacion/{id}', 'SolicitudDayOffController@updateAprobacion')->name('solicitud-DayOff.updateAprobacion');
+
         // Rutas para Solicitud de Permiso Goce Sueldo
         Route::prefix('solicitud-permiso-goce-sueldo')->controller(SolicitudPermisoGoceSueldoController::class)->group(function () {
             Route::get('{id}/showArchivo', 'showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
@@ -1163,7 +1165,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
 
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
-        Route::middleware('cacheResponse')->get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
+        Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
         //Directorio
 

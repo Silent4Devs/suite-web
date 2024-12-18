@@ -132,7 +132,7 @@ class AccionCorrectivaController extends Controller
                 $query->rp_name = $query->reporto->name;
                 $query->rp_foto = $query->reporto->foto;
             }
-            if(isset($query->empleados)){
+            if (isset($query->empleados)) {
                 $query->registro = $query->empleados->name;
             }
             // dd($query_ac[0]->reporto);
@@ -154,7 +154,7 @@ class AccionCorrectivaController extends Controller
         $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
         $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
-        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'teams', 'query_ac','accionesCorrectivas'));
+        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'teams', 'query_ac', 'accionesCorrectivas'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()
@@ -171,7 +171,7 @@ class AccionCorrectivaController extends Controller
 
     public function aprobaroRechazarAc(Request $request)
     {
-        $accionCorrectiva = AccionCorrectiva::with('quejascliente','nombrereporta')->find($request->id);
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente', 'nombrereporta')->find($request->id);
         $esAprobada = $request->aprobada == 'true' ? true : false;
         // dd($esAprobada);
         $accionCorrectiva->update([
@@ -186,11 +186,13 @@ class AccionCorrectivaController extends Controller
 
         if ($esAprobada) {
             Alert::success('éxito', 'Registro aprobado con éxito');
+
             return redirect(route('admin.accion-correctivas.index'));
             // return view('admin.actionsCorrective.index');
             // return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
         } else {
             Alert::success('éxito', 'Registro rechazado con éxito');
+
             return redirect(route('admin.accion-correctivas.index'));
             // return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
         }
@@ -343,7 +345,7 @@ class AccionCorrectivaController extends Controller
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();

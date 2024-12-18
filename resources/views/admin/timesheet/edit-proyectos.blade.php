@@ -47,41 +47,45 @@
                         @livewire('edit-identificador-proyectos-int-ext', ['id_proyecto' => $proyecto->id])
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="name_proyect" class="asterisco">Nombre del proyecto*</label>
                         <input id="name_proyect" name="proyecto_name" class="form-control" required
                             value="{{ old('proyecto_name', $proyecto->proyecto, '') }}">
+                        <label for="name_proyect" class="asterisco">Nombre del proyecto*</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="cliente_id" class="asterisco">Cliente*</label>
                         <select name="cliente_id" id="cliente_id" class="form-control" required>
                             <option selected value="{{ old('cliente_id', $proyecto->cliente_id, '') }}">
-                                {{ $proyecto->cliente_id ?? '' }} - {{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }}
+                                {{ $proyecto->cliente_id ?? '' }} -
+                                {{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }}
                             </option>
                             @foreach ($clientes as $cliente)
-                                <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}</option>
+                                <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
+                                </option>
                             @endforeach
                         </select>
+                        <label for="cliente_id" class="asterisco">Cliente*</label>
                     </div>
-                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;" id="caja_areas_seleccionadas_create">
-                        <label for="areas_seleccionadas" class="asterisco">Área(s) participante(s)*</label>
-                        <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas" name="areas_seleccionadas[]" required>
+                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
+                        id="caja_areas_seleccionadas_create">
+                        <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
+                            name="areas_seleccionadas[]" required>
                             @php
                                 $areasSeleccionadas = $proyecto->areas->pluck('id')->toArray();
                             @endphp
                             @foreach ($areas as $area)
-                                <option value="{{ $area->id }}" {{ in_array($area->id, $areasSeleccionadas) ? 'selected' : '' }}>
+                                <option value="{{ $area->id }}"
+                                    {{ in_array($area->id, $areasSeleccionadas) ? 'selected' : '' }}>
                                     {{ $area->area }}
                                 </option>
                             @endforeach
                         </select>
+                        <label for="areas_seleccionadas" class="asterisco">Área(s) participante(s)*</label>
                         <div class="mt-1">
                             <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                         </div>
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="sede_id" class="asterisco">Sede</label>
                         <select class="form-control" name="sede_id" id="sede_id">
                             <option selected value="{{ old('sede_id', $proyecto->sede_id, null) }}">
                                 {{ $proyecto->sede->sede ?? '' }}
@@ -90,13 +94,14 @@
                                 <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
                             @endforeach
                         </select>
+                        <label for="sede_id" class="asterisco">Sede</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="fecha_inicio" class="asterisco">Fecha de inicio</label>
                         <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"
                             value="{{ old('fecha_inicio', $proyecto->fecha_inicio, '') }}">
+                        <label for="fecha_inicio" class="asterisco">Fecha de inicio</label>
                         @if ($errors->has('fecha_inicio'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_inicio') }}
@@ -107,9 +112,9 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="fecha_fin" class="asterisco">Fecha de fin</label>
                         <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"
                             value="{{ old('fecha_fin', $proyecto->fecha_fin, '') }}">
+                        <label for="fecha_fin" class="asterisco">Fecha de fin</label>
                         @if ($errors->has('fecha_fin'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_fin') }}
@@ -120,10 +125,10 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-4 anima-focus">
-                        <label for="horas_proyecto" class="asterisco">Horas Asignadas al proyecto</label>
                         <input type="text" pattern="[0-9]+" title="Por favor, ingrese solo números enteros."
                             name="horas_proyecto" id="horas_asignadas" class="form-control"
                             value="{{ old('horas_proyecto', $proyecto->horas_proyecto, '') }}">
+                        <label for="horas_proyecto" class="asterisco">Horas Asignadas al proyecto</label>
                     </div>
                 </div>
 

@@ -64,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditarCompetenciaLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="closeModalBtn">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -72,7 +72,6 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
@@ -81,7 +80,16 @@
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ícono de cierre (tache)
+            document.getElementById('closeModalBtn').addEventListener('click', function () {
+                $('#modalEditarCompetencia').modal('hide');
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
                 headers: {
@@ -164,20 +172,7 @@
                     },
                     dataType: "JSON",
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Recuperando información',
-                            text: "Espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
+                        toastr.info('Recuperando información, espere un momento...');
                     },
                     success: function(response) {
                         console.log(response);
@@ -191,9 +186,11 @@
                             <small class="errores error_nivel_esperado"></small>
                             `
                         response.forEach(nivel => {
-                            formHTML += `
-                                <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
-                                `;
+                            if (nivel.ponderacion > 0) {
+                                formHTML += `
+                                    <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         formHTML += `</select></form>`;
                         modalBody.innerHTML = formHTML;
@@ -213,30 +210,15 @@
                                     data: data,
                                     dataType: "JSON",
                                     beforeSend: function() {
-                                        Swal.fire({
-                                            title: 'Cambiando el nivel esperado',
-                                            text: "espere unos instantes...",
-                                            icon: 'info',
-                                            allowOutsideClick: false,
-                                            showConfirmButton: false,
-                                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                            didOpen: () => {
-                                                Swal.showLoading(); // Muestra un indicador de carga
-                                            },
-                                            willClose: () => {
-                                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                            }
-                                        });
+                                        toastr.info(
+                                            'Cambiando el nivel esperado, espere un momento...'
+                                        )
                                     },
                                     success: function(response) {
                                         if (response.success) {
-                                            Swal.fire({
-                                                title: 'Nivel esperado',
-                                                text: "Cambiado con éxito",
-                                                icon: 'success',
-                                                confirmButtonColor: '#3085d6',
-                                                confirmButtonText: 'Aceptar'
-                                            });
+                                            toastr.success(
+                                                'Nivel esperado cambiado con éxito'
+                                            );
                                             tblCompetenciasPorPuesto.ajax.reload();
                                             $('#modalEditarCompetencia').modal(
                                                 'hide');
@@ -283,29 +265,12 @@
                             type: "DELETE",
                             url: urlEliminar,
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Quitando competencia',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info(
+                                    'Quitando competencia, espere unos instantes...'
+                                );
                             },
                             success: function(response) {
-                                Swal.fire({
-                                    title: 'Competencia removida',
-                                    text: "Ha sido removida correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success('Competencia removida');
                                 tblCompetenciasPorPuesto.ajax.reload();
                             },
                             error: function(request, status, error) {
@@ -342,9 +307,11 @@
                         let selectNiveles = document.querySelector('#nivel_esperado');
                         let opciones = '';
                         response.forEach(nivel => {
-                            opciones += `
-                            <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
-                            `;
+                            if (nivel.ponderacion > 0) {
+                                opciones += `
+                                    <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         selectNiveles.innerHTML = opciones;
 

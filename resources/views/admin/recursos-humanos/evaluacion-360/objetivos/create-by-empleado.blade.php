@@ -90,7 +90,8 @@
         <div class="d-flex align-items-center" style="gap: 50px;">
             <div class="d-flex align-items-center" style="gap: 15px;">
                 <div class="img-person" style="width: 100px; height: 100px;">
-                    <img src="{{ $empleado->ruta_avatar }}" alt="">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
+                    alt="{{ $empleado->name }}">
                 </div>
                 <span style="font-size: 16px;">{{ $empleado->name }}</span>
             </div>
@@ -133,7 +134,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
+                    <form id="formObjetivoEdit" method="POST" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
                         @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
                             'editar' => true,
@@ -163,6 +164,11 @@
 
 @section('scripts')
     <script type="text/javascript">
+
+        $('#btnCancelarEditObjetivo').click(function() {
+            $('#objetivoModal').modal('hide');
+        });
+
         window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
                 console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
@@ -229,7 +235,7 @@
                     if (result.isConfirmed) {
                         Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
                             () => {
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             });
                     }
                 })
@@ -253,12 +259,12 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        Registro actualizado
+                        toastr.info('Asignando el objetivo');
                     },
                     success: function(response) {
                         if (response.success) {
                             tblObjetivos.ajax.reload();
-                            // toastr.success('Objetivo asignado');
+                            toastr.success('Objetivo asignado');
                             document.getElementById('formObjetivoCreate').reset();
                             $("#tipo_id").val('').trigger('change');
                             $("#metrica_id").val('').trigger('change');
@@ -285,20 +291,27 @@
                     type: "GET",
                     url: urlEditar,
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Recuperando información',
-                            text: "Espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
+                        $('#objetivoModal').on('show.bs.modal', function (e) {
+                            const form = document.getElementById('formObjetivoEdit');
+                            // Verificamos si el formulario existe en el DOM
+                            if (form) {
+                                // Buscamos el botón dentro del formulario usando el id 'BtnAgregarObjetivo'
+                                const btnAgregarObjetivo = form.querySelector('#BtnAgregarObjetivo');
+
+                                // Verificamos si el botón existe dentro del formulario
+                                if (btnAgregarObjetivo) {
+                                    // Ocultamos el botón
+                                    btnAgregarObjetivo.style.display = 'none';
+                                    console.log('Botón ocultado');
+                                } else {
+                                    console.log('Botón no encontrado');
+                                }
                             }
+
                         });
+
+                        toastr.info(
+                            'Recuperando información de la conducta, espere unos instantes...');
                     },
                     success: function(response) {
                         console.log(response);
@@ -318,11 +331,17 @@
                         $('#formObjetivoEdit #metrica_id').val(response.metrica_id).trigger(
                             'change');
 
+
                         $('#objetivoModal').modal('show');
+
                         $('#formObjetivoEdit').removeAttr('action');
                         $('#formObjetivoEdit').removeAttr('method');
                         $('#formObjetivoEdit').attr('action', urlActualizar);
                         $('#formObjetivoEdit').attr('method', 'PATCH');
+
+                        $('#objetivoModal').on('hidden.bs.modal', function() {
+                            document.getElementById('BtnAgregarObjetivo').style.display = 'inline-block';
+                        });
                     },
                     error: function(request, status, error) {
                         if (error != 'Unprocessable Entity') {
@@ -355,7 +374,7 @@
                 formDataEdit.append('nombre', nombre);
                 formDataEdit.append('KPI', kpi);
                 formDataEdit.append('meta', meta);
-                formDataEdit.append('descripcion', descripcion);
+                formDataEdit.append('descripcion_meta', descripcion);
                 formDataEdit.append('tipo_id', tipo_id);
                 formDataEdit.append('metrica_id', metrica_id);
                 // formDataEdit.append('foto', document.querySelector('#formObjetivoEdit #fotoEdit').files[0]);
@@ -368,45 +387,25 @@
                     contentType: false,
                     dataType: "JSON",
                     beforeSend: function() {
-                        Swal.fire({
-                            title: 'Actualizando información',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 10000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
+                        toastr.info(
+                            'Actualizando, espere unos instantes...');
                     },
                     success: function(response) {
                         ocultarValidando();
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
-                        Swal.fire({
-                            title: 'Registro actualizado',
-                            text: "Ha sido registrado correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                        });
-
-                        tblObjetivos.ajax.reload();
+                        toastr.success('Registro actualizado');
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
                             'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
                         document.getElementById('uploadPreviewEdit').src =
-                            @json(asset('img/not-available.png'))
+                            @json(asset('img/not-available.png'));
+                        location.reload();
                     },
                     error: function(request, status, error) {
                         ocultarValidando();
                         if (error != 'Unprocessable Entity') {
-                            toastr.error(
-                                'Ocurrió un error: ' + error);
+                            location.reload();
                         } else {
                             $.each(request.responseJSON.errors, function(indexInArray,
                                 valueOfElement) {
@@ -439,29 +438,12 @@
                             type: "POST",
                             url: urlEliminar,
                             beforeSend: function() {
-                            Swal.fire({
-                            title: 'Eliminando información',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 1000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
+                                toastr.info(
+                                    'Eliminando el objetivo, espere unos instantes...');
                             },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
-                        });
                             success: function(response) {
-                                Swal.fire({
-                                    title: 'Objetivo eliminado',
-                                    text: "Ha sido registrado correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
-                                tblObjetivos.ajax.reload();
+                                toastr.success('Objetivo eliminado');
+                                location.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(
@@ -534,31 +516,12 @@
                         },
                         dataType: "JSON",
                         beforeSend: function() {
-                            Swal.fire({
-                            title: 'Copiando objetivos',
-                            text: "espere unos instantes...",
-                            icon: 'info',
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            timer: 1000, // Tiempo en milisegundos (5 segundos)
-                            didOpen: () => {
-                                Swal.showLoading(); // Muestra un indicador de carga
-                            },
-                            willClose: () => {
-                                console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                            }
+                            toastr.info('Copiando objetivos');
                         },
                         success: function(response) {
                             if (response.success) {
-
-                                Swal.fire({
-                                    title: 'Objetivos copiados correctamente',
-                                    text: "Ha sido copiado correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
-                                tblObjetivos.ajax.reload();
+                                toastr.success('Objetivos copiados correctamente');
+                                location.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
                         },
@@ -590,24 +553,12 @@
         Livewire.on('tipoObjetivoStore', () => {
             $('#tipoObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            Swal.fire({
-            title: 'Tipo de objetivo',
-            text: "Ha sido registrado correctamente",
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-            });
+            toastr.success('Tipo de objetivo creado con éxito');
         });
         Livewire.on('metricaObjetivoStore', () => {
             $('#metricaObjetivoModal').modal('hide');
             $('.modal-backdrop').hide();
-            Swal.fire({
-                title: 'Métrica del objetivo',
-                text: "Ha sido creada con éxito",
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Aceptar'
-            });
+            toastr.success('Métrica del objetivo creada con éxito');
         });
         window.initSelect2 = () => {
             $('.select2').select2({

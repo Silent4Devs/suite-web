@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="esp">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -81,7 +80,16 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 </head>
+<style>
+    .toast {
+        background-color: #28a745 !important; /* Verde bootstrap */ /* Azul */
+        color: #ffffff !important;           /* Texto blanco */
+    }
 
+    .toast .toast-close-button {
+        color: #ffffff !important;
+    }
+ </style>
 <body class="menu-global-position-bottom">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
