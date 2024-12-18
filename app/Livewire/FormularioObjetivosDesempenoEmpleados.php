@@ -297,7 +297,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         $empleado = Empleado::where('id', $this->id_emp)->first();
         $usuario = User::getCurrentUser();
         // $usuario->can('objetivos_estrategicos_agregar')
-        if ($user->roles->contains('title', 'Admin') || $usuario->empleado->id == $empleado->supervisor->id) {
+        if ($usuario->roles->contains('title', 'Admin') || $usuario->empleado->id == $empleado->supervisor->id) {
             $estatus = 1;
         } else {
             $estatus = 0;

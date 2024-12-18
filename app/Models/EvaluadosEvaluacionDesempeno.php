@@ -199,18 +199,23 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         foreach ($evaluadores as $evlrs) {
             foreach ($evlrs->preguntasCuestionario as $pregunta) {
-                $calificacion = [
-                    'competencia_id' => $pregunta->competencia_id,
-                    'competencia' => $pregunta->infoCompetencia->competencia,
-                    'calificacion_competencia' => $pregunta->calificacion_competencia,
-                    'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
-                ];
+                try {
+                    $calificacion = [
+                        'competencia_id' => $pregunta->competencia_id,
+                        'competencia' => $pregunta->infoCompetencia->competencia,
+                        'calificacion_competencia' => $pregunta->calificacion_competencia,
+                        'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
+                    ];
 
-                if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
-                    $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                        $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    }
+
+                    $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    dd($pregunta, $pregunta->calificacion_competencia, $pregunta->infoCompetencia->nivel_esperado, $evlrs->porcentaje_competencias);
                 }
-
-                $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
             }
         }
 
