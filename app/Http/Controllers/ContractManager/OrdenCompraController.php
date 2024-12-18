@@ -1018,7 +1018,7 @@ class OrdenCompraController extends Controller
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $responsable->name . '</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
