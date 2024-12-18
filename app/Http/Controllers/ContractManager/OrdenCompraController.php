@@ -1008,7 +1008,7 @@ class OrdenCompraController extends Controller
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
-                    dd($firma_siguiente, $user, 1);
+
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             } else {
@@ -1019,7 +1019,7 @@ class OrdenCompraController extends Controller
                     $tipo_firma = 'firma_solicitante_orden';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo';
-                    dd($responsable, $firma_siguiente, $user, 2);
+
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             }
