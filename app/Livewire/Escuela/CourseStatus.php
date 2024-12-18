@@ -71,7 +71,7 @@ class CourseStatus extends Component
         // dd($this->current);
 
         // lastReview
-        $fechaYHora = $this->fecha.' '.$this->hora;
+        $fechaYHora = $this->fecha . ' ' . $this->hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
             ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
@@ -111,14 +111,6 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
-        if($this->current->resource !== null){
-            // $this->urlResource = "C:\laragon\www\suite-web\storage\app\cursos#9a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
-            $this->urlResource = asset("storage\app\cursos\439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf");
-            // dd($this->urlResource);
-            // $this->urlResource = "C:\laragon\www\suite-web\storage\app\cursos\439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
-            // $this->urlResource = storage_path('app/'.$this->current->resource->url);
-            // $this->urlResource = "storage/app/cursos/439a6511-357c-439d-891f-c28209b76e81_Curriculum Vitae Rodríguez Albarrán Víctor Hugo (1).pdf";
-        }
 
 
         $this->dispatch('render');
@@ -127,7 +119,13 @@ class CourseStatus extends Component
 
         // dd($this->current);
         return view('livewire.escuela.course-status');
+    }
 
+    public function completedLesson()
+    {
+        $usuario = User::getCurrentUser();
+        $this->current->users()->attach($usuario->id);
+        return redirect(route('admin.curso-estudiante', $this->course->id));
     }
 
     //METODOS
@@ -268,7 +266,7 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(storage_path('app/'.$this->current->resource->url));
+        return response()->download(public_path('app/' . $this->current->resource->url));
     }
 
     public function alertSection()

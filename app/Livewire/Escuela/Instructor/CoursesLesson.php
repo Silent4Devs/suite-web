@@ -77,13 +77,15 @@ class CoursesLesson extends Component
         return view('livewire.escuela.instructor.courses-lesson');
     }
 
-    public function platformFormat(){
-         $platf = Platform::where('id', $this->platform_id)->first();
-         return $platf->name;
+    public function platformFormat()
+    {
+        $platf = Platform::where('id', $this->platform_id)->first();
+        return $platf->name;
         //  dd($this->formatType);
     }
 
-    public function updateTypeFormat(){
+    public function updateTypeFormat()
+    {
         $this->formatType = $this->platformFormat();
     }
 
@@ -110,7 +112,7 @@ class CoursesLesson extends Component
                     $resource = Lesson::create([
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
-                        'url' => $this->url.'?rel=0',
+                        'url' => $this->url . '?rel=0',
                         'section_id' => $this->section->id,
                         'description' => $this->description,
                     ]);
@@ -151,7 +153,7 @@ class CoursesLesson extends Component
                     $resource = Lesson::create([
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
-                        'url' => $this->url.'?rel=0',
+                        'url' => $this->url . '?rel=0',
                         'section_id' => $this->section->id,
                         'description' => $this->description,
                     ]);
@@ -188,7 +190,7 @@ class CoursesLesson extends Component
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
                         'section_id' => $this->section->id,
-                        'text_content_lesson' => $this->description,
+                        'text_lesson' => $this->description,
                     ]);
 
                     $this->reset('name', 'platform_id', 'url', 'description', 'file');
@@ -229,7 +231,7 @@ class CoursesLesson extends Component
                         $this->section = Section::find($this->section->id);
 
                         $this->render_alerta('success', 'Registro añadido exitosamente');
-                    }else{
+                    } else {
                         $this->render_alerta('error', 'Completa los campos obligatorios');
                     }
                 } catch (\Throwable $th) {
@@ -254,7 +256,6 @@ class CoursesLesson extends Component
         $this->formName = $lesson->name;
         $this->formPlatformId = $lesson->platform_id;
         $this->formUrl = $lesson->url ?? null;
-
     }
 
     public function update()
@@ -284,7 +285,7 @@ class CoursesLesson extends Component
             if ($this->file) {
                 $urlresorce = $this->file->store('cursos');
                 $this->lesson->resource()->create([
-                    'url' => $urlresorce.'?rel=0',
+                    'url' => $urlresorce . '?rel=0',
                 ]);
             }
             // $this->lesson = new Lesson();
@@ -295,7 +296,6 @@ class CoursesLesson extends Component
         } catch (\Throwable $th) {
             //throw $th;
             $this->render_alerta('error', 'Completa los campos obligatorios');
-
         }
 
         switch ($this->formatType) {
@@ -316,7 +316,7 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce.'?rel=0',
+                            'url' => $urlresorce . '?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();
@@ -350,14 +350,13 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce.'?rel=0',
+                            'url' => $urlresorce . '?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();
 
                     $this->section = Section::find($this->section->id);
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
-
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
@@ -403,7 +402,7 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce.'?rel=0',
+                            'url' => $urlresorce . '?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();

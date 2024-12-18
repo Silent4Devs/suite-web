@@ -69,53 +69,33 @@
                         </div>
                         <div id="player3" class="w-100"></div>
                     </div>
-                    @else
-                    <div class="card card-body">
-                        {{-- {{ $current->resource->url }}
-                            {{ $urlResource }} --}}
-                            {{-- <iframe src="https://docs.google.com/gview?url={{ $urlResource }}&embedded=true" width="100%" height="600px"></iframe> --}}
-                            {{-- <iframe src="{{ $urlResource }}" width="100%"
-                            height="600px"></iframe> --}}
-                                <embed src="{{ $urlResource }}" type="application/pdf" width="100%"
-                                height="600px" />
-                    </div>
-
-                        {{-- @switch ($extension_arch)
-                            @case ('pdf')
-                                <embed src="{{ asset($archivo_mostrado) }}" type="application/pdf" width="100%"
-                                    height="600px" />
-                            @break;
-                            @case ('jpg')
-                                <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
-                            @break;
-                            @case ('jpeg')
-                                <img src="{{ asset($archivo_mostrado) }}" type="image/jpeg" width="100%" height="600px" />
-                            @break;
-                            @case ('png')
-                                <img src="{{ asset($archivo_mostrado) }}" type="image/png" width="100%" height="600px" />
-                            @break;
-                            @case ('xls')
-                                <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
-                                    height="600px" />
-                            @break;
-                            @case ('xlsx')
-                                <embed src="{{ asset($archivo_mostrado) }}" type="application/vnd.ms-excel" width="100%"
-                                    height="600px" />
-                            @break;
-                            @case ('docx')
-                                <embed src="{{ asset($archivo_mostrado) }}" type="application/msword" width="100%"
-                                    height="600px" />
-                            @break;
-
-                            @default
-                                <h1>Error al cargar archivo</h1>
-                            @break;
-                        @endswitch --}}
-                    @endif
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
+                @elseif (isset($current->resource))
+                    <div class="card card-body">
+                        <div>
+                            <embed src="{{ asset('storage/app/' . $current->resource->url) }}" type="application/pdf"
+                                width="100%" height="600px" />
+                        </div>
+                        <div>
+                            <button class="btn-outline-primary" type="button" wire:click="completedLesson">Completar
+                                Lección</button>
+                        </div>
+                    </div>
                 @else
-                    <p>Sin registro</p>
+                    <div class="card card-body">
+                        <div>
+                            <p>{{ $current->text_lesson }}</p>
+                        </div>
+
+                        <div>
+                            <button class="btn-outline-primary" type="button" wire:click="completedLesson">Completar
+                                Lección</button>
+                        </div>
+                    </div>
                 @endif
+            @else
+                <p>Sin registro</p>
+            @endif
 
 
             <div class="row" style="margin-top: 36px;">
