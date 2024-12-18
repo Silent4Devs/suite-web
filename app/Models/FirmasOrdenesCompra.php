@@ -10,7 +10,7 @@ class FirmasOrdenesCompra extends Model
 {
     use HasFactory;
 
-    protected $table = 'firmas_requisiciones';
+    protected $table = 'firmas_ordenes_compras';
 
     protected $fillable = [
         'requisicion_id',

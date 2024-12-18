@@ -309,7 +309,7 @@
                                                         <span>Documentos</span>
                                                     </div>
                                                 </a>
-                                            @endcan
+                                            @endcan --}}
                                             @can('portal_comunicacion_mostrar_reportar')
                                                 <a href="{{ asset('admin/portal-comunicacion/reportes') }}">
                                                     <div class="item-menu-portal">
@@ -317,7 +317,7 @@
                                                         <span>Reportar</span>
                                                     </div>
                                                 </a>
-                                            @endcan --}}
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>
