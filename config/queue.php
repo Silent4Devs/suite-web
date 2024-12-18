@@ -80,8 +80,7 @@ return [
                 ],
                 // ...
             ],
-
-            // ...
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
         ],
 
     ],
