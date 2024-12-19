@@ -1,341 +1,349 @@
-<ul class="mt-4">
-    {{-- <li><a href="{{ route('admin.puestos.index') }}"> --}}
+<ul class="menu-modulos">
     @can('competencias_acceder')
         <li>
             <a href="{{ route('admin.ev360-competencias.index') }}">
-                <div style="text-transform: capitalize">
-                    <i class="bi bi-star-half"></i><br>
-                    <p class="m-0 mt-2">
-                        Competencias
-                    </p>
-                </div>
+                <i class="bi bi-star-half"></i>
+                <span>
+                    Competencias
+                </span>
             </a>
         </li>
     @endcan
     @can('perfiles_de_puesto_acceder')
-        <li><a href="#" data-ventana="puestos" data-ruta="Capacitaciones" class="btn_ventana_menu">
-                <div>
-                    <i class="bi bi-briefcase"></i>
-                    <br>
+        <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#puestos-modal">
+                <i class="bi bi-briefcase"></i>
+                <span>
                     Perfiles de Puestos
-                </div>
-            </a></li>
-        <div class="ventana_menu" id="puestos" style="color:#008186 !important">
-            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
-                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-            <h3 class="text-center"><strong>Perfil de Puesto</strong></h3>
-            <ul>
-                @can('lista_de_perfiles_de_puesto_acceder')
-                    <li><a href="{{ route('admin.puestos.index') }}">
-                            <div>
-                                <i class="bi bi-briefcase"></i>
-                                <br>
-                                Lista de Perfiles de Puesto
-                            </div>
-                        </a></li>
-                @endcan
-                @can('competencias_por_puesto_acceder')
-                    <li>
-                        <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
-                            <div>
-                                <i class="bi bi-bookmark-star"></i><br>
-                                Competencias por Puesto
-                            </div>
-                        </a>
-                    </li>
-                @endcan
-                @can('consulta_perfiles_de_puesto_acceder')
-                    <li><a href="{{ route('admin.consulta-puestos') }}">
-                            <div>
-                                <i class="bi bi-person-video2"></i>
-                                <br>
-                                Consulta de Perfiles de Puesto
-                            </div>
-                        </a></li>
-                @endcan
-            </ul>
-        </div>
+                </span>
+            </a>
+        </li>
     @endcan
-    <li><a href="#" data-ventana="empleados_bd" data-ruta="Capacitaciones" class="btn_ventana_menu">
-            <div>
-                <i class="bi bi-people"></i>
-                <br>
+    <li>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#empleados_bd">
+            <i class="bi bi-people"></i>
+            <span>
                 Empleados
-            </div>
-        </a></li>
-
-    <div class="ventana_menu" id="empleados_bd" style="color:#008186 !important">
-        <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
-            style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-        <h3 class="text-center"><strong>Empleados</strong></h3>
-        <ul>
-            @can('bd_empleados_acceder')
-                <li><a href="{{ route('admin.empleados.index') }}">
-                        <div>
-                            <i class="bi bi-people"></i>
-                            <br>
-                            BD Empleados
-                        </div>
-                    </a></li>
-            @endcan
-            @can('lista_de_documentos_empleados_acceder')
-                <li>
-                    <a href="{{ route('admin.lista-documentos-empleados') }}">
-                        <div>
-                            <i class="far fa-address-book"></i>
-                            <br>
-                            Lista de Documentos de Empleados
-                        </div>
-                    </a>
-                </li>
-            @endcan
-            @can('niveles_jerarquicos_acceder')
-                <li><a href="{{ route('admin.perfiles.index') }}">
-                        <div>
-                            <i class="bi bi-triangle"></i>
-                            <br>
-                            Niveles Jerárquicos
-                        </div>
-                    </a></li>
-            @endcan
-            @can('tipos_de_contrato_para_empleados_acceder')
-                <li><a href="{{ route('admin.tipos-contratos-empleados.index') }}">
-                        <div>
-                            <i class="bi bi-bank"></i>
-                            <br>
-                            Tipos de contratos
-                        </div>
-                    </a></li>
-            @endcan
-            @can('entidades_crediticeas_acceder')
-                <li><a href="{{ route('admin.entidades-crediticias.index') }}">
-                        <div>
-                            <i class="bi bi-bank"></i>
-                            <br>
-                            Entidades Crediticias
-                        </div>
-                    </a>
-                </li>
-            @endcan
-            <li><a href="{{ route('admin.empleados.baja') }}">
-                    <div>
-                        <i class="bi bi-arrow-down"></i>
-                        <br>
-                        Baja Empleados
-                    </div>
-                </a>
-            </li>
-
-            <li><a href="{{ route('admin.empleados.historial') }}">
-                    <div>
-                        <i class="bi bi-clock-history"></i>
-                        <br>
-                        Historial Empleados
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
+            </span>
+        </a>
+    </li>
 
     @can('objetivos_estrategicos_acceder')
         <li>
             <a href="{{ route('admin.ev360-objetivos.index') }}">
-                <div>
-                    <i class="bi bi-bullseye"></i><br>
-                    Objetivos&nbsp;Estratégicos
-                </div>
+                <i class="bi bi-bullseye"></i>
+                <span>
+                    Objetivos Estratégicos
+                </span>
             </a>
         </li>
     @endcan
     @can('perfiles_profesionales_acceder')
-        {{-- <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
-                <div>
-                    <i class="bi bi-person-rolodex"></i>
-                    <br>
+        <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#profesional">
+                <i class="bi bi-person-rolodex"></i>
+                <span>
                     Perfiles Profesionales
-                </div>
-            </a></li> --}}
-        <li><a href="#" data-ventana="profesional" data-ruta="Capacitaciones" class="btn_ventana_menu">
-                <div>
-                    <i class="bi bi-person-rolodex"></i>
-                    <br>
-                    Perfiles Profesionales
-                </div>
-            </a></li>
-        <div class="ventana_menu" id="profesional" style="color:#008186 !important">
-            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="puestos"
-                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-            <h3 class="text-center"><strong>Perfil Profesional</strong></h3>
-            <ul>
-                @can('admin_type_catalogue_training')
-                    <li><a href="{{ route('type-catalogue-training.index') }}">
-                            <div>
-                                <i class="bi bi-briefcase"></i>
-                                <br>
-                                Catálogo Tipo de Capacitaciones
-                            </div>
-                        </a></li>
-                @endcan
-                @can('admin_catalogue_training')
-                    <li><a href="{{ route('catalogue-training.index') }}">
-                            <div>
-                                <i class="bi bi-briefcase"></i>
-                                <br>
-                                Catálogo de Capacitaciones
-                            </div>
-                        </a></li>
-                @endcan
-                <li><a href="{{ route('admin.capital.expedientes-profesionales') }}">
-                        <div>
-                            <i class="bi bi-person-rolodex"></i>
-                            <br>
-                            Perfiles Profesionales
-                        </div>
-                    </a></li>
-                {{-- @can('competencias_por_puesto_acceder') --}}
-                {{-- <li>
-                            <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
-                                <div>
-                                    <i class="bi bi-bookmark-star"></i><br>
-                                    Perfil Profesional
-                                </div>
-                            </a>
-                        </li> --}}
-                {{-- @endcan --}}
-                {{-- @can('consulta_perfiles_de_puesto_acceder')
-                        <li><a href="{{ route('admin.consulta-puestos') }}">
-                                <div>
-                                    <i class="bi bi-person-video2"></i>
-                                    <br>
-                                    Consulta de Perfiles de Puesto
-                                </div>
-                            </a></li>
-                    @endcan --}}
-            </ul>
-        </div>
+                </span>
+            </a>
+        </li>
     @endcan
     @can('organigrama_acceder')
-        <li><a href="{{ route('admin.organigrama.index') }}">
-                <div>
-                    <i class="bi bi-diagram-3"></i>
-                    <br>
+        <li>
+            <a href="{{ route('admin.organigrama.index') }}">
+                <i class="bi bi-diagram-3"></i>
+                <span>
                     Organigrama
-                </div>
-            </a></li>
+                </span>
+            </a>
+        </li>
     @endcan
     @can('capacitaciones_categorias_acceder')
         <li>
-            <a href="#" data-ventana="capacitaciones" data-ruta="Capacitaciones" class="btn_ventana_menu">
-                <div>
-                    <i class="bi bi-person-video3"></i>
-                    <br>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#capacitaciones">
+                <i class="bi bi-person-video3"></i>
+                <span>
                     Capacitaciones
-                </div>
+                </span>
             </a>
         </li>
-
-        <div class="ventana_menu" id="capacitaciones" style="color:#345183 !important">
-            <i class="fas fa-arrow-circle-left iconos_menu text-align:left btn_cerrar_ventana" data-ventana="capacitaciones"
-                style="font-size:20pt; position: absolute; left:60px; cursor:pointer"></i>
-            <h3 class="text-center"><strong>Capacitaciones</strong></h3>
-            <ul>
-                @can('capacitaciones_categorias_acceder')
-                    <li><a href="{{ route('admin.categoria-capacitacion.index') }}">
-                            <div>
-                                <i class="fas fa-layer-group"></i>
-                                <br>
-                                Categorías
-                            </div>
-                        </a></li>
-                @endcan
-
-                <li><a href="{{ route('admin.recursos.index') }}">
-                        <div>
-                            <i class="fas fa-graduation-cap"></i>
-                            <br>
-                            Capacitaciones
-                        </div>
-                    </a>
-                </li>
-
-                <li><a href="{{ route('admin.categories.index') }}">
-                        <div>
-                            <i class="fas fa-layer-group"></i>
-                            <br>
-                            Categorias Escuela
-                        </div>
-                    </a>
-                </li>
-
-                <li><a href="{{ route('admin.levels.index') }}">
-                        <div>
-                            <img src="{{ asset('assets/levels.svg') }}" width="60" height="70"
-                                style="margin-top: -10px;">
-                            <br>
-                            Niveles Escuela
-                        </div>
-                    </a>
-                </li>
-
-                <li><a href="{{ route('admin.dashboardescuela.index') }}">
-                        <div>
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <br>
-                            Dashboard
-                        </div>
-                    </a>
-                </li>
-
-                <li><a href="{{ route('admin.panel-cursos') }}">
-                        <div>
-                            <i class="fa-solid fa-sliders"></i>
-                            <br>
-                            Panel de Control
-                        </div>
-                    </a>
-                </li>
-
-                <li><a href="{{ asset('admin/certificado-course') }}">
-                        <div>
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <br>
-                            Certificaciones
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
     @endcan
 
     <li>
         <a href="ausencias">
-            <div>
-                <i class="bi bi-chat-square-dots"></i>
-                <br>
+            <i class="bi bi-chat-square-dots"></i>
+            <span>
                 Solicitudes e Incidencias
-            </div>
+            </span>
         </a>
     </li>
 
     @can('beneficios_acceder')
         <li>
             <a href="#">
-                <div>
-                    <i class="bi bi-tag"></i>
-                    <br>
+                <i class="bi bi-tag"></i>
+                <span>
                     Beneficios
-                </div>
+                </span>
             </a>
         </li>
     @endcan
     @can('timesheet_acceder')
         <li>
             <a href="{{ route('admin.timesheet-inicio') }}">
-                <div>
-                    <i class="bi bi-file-spreadsheet"></i><br>
+                <i class="bi bi-file-spreadsheet"></i>
+                <span>
                     TimeSheet
-                </div>
+                </span>
             </a>
         </li>
     @endcan
 </ul>
+
+
+<!-- Modal -->
+<div class="modal fade modal-menu-modulo" id="puestos-modal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h4 class="text-center"><strong>Perfil de Puesto</strong></h4>
+                    <ul class="menu-modulos mt-4">
+                        @can('lista_de_perfiles_de_puesto_acceder')
+                            <li>
+                                <a href="{{ route('admin.puestos.index') }}">
+                                    <i class="bi bi-briefcase"></i>
+                                    <span>
+                                        Lista de Perfiles de Puesto
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('competencias_por_puesto_acceder')
+                            <li>
+                                <a href="{{ route('admin.ev360-competencias-por-puesto.index') }}">
+                                    <i class="bi bi-bookmark-star"></i>
+                                    <span>
+                                        Competencias por Puesto
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('consulta_perfiles_de_puesto_acceder')
+                            <li>
+                                <a href="{{ route('admin.consulta-puestos') }}">
+                                    <i class="bi bi-person-video2"></i>
+                                    <span>
+                                        Consulta de Perfiles de Puesto
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-menu-modulo" id="capacitaciones" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h4 class="text-center"><strong>Capacitaciones</strong></h4>
+                    <ul class="menu-modulos">
+                        @can('capacitaciones_categorias_acceder')
+                            <li>
+                                <a href="{{ route('admin.categoria-capacitacion.index') }}">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>
+                                        Categorías
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        <li>
+                            <a href="{{ route('admin.recursos.index') }}">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>
+                                    Capacitaciones
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.categories.index') }}">
+                                <i class="fas fa-layer-group"></i>
+                                <span>
+                                    Categorias Escuela
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.levels.index') }}">
+                                <img src="{{ asset('assets/levels.svg') }}" width="60" height="70"
+                                    style="margin-top: -10px;">
+                                <span>
+                                    Niveles Escuela
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.dashboardescuela.index') }}">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <span>
+                                    Dashboard
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.panel-cursos') }}">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>
+                                    Panel de Control
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ asset('admin/certificado-course') }}">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>
+                                    Certificaciones
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-menu-modulo" id="profesional" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h4 class="text-center"><strong>Perfil Profesional</strong></h4>
+                    <ul class="menu-modulos">
+                        @can('admin_type_catalogue_training')
+                            <li>
+                                <a href="{{ route('type-catalogue-training.index') }}">
+                                    <i class="bi bi-briefcase"></i>
+                                    <span>
+                                        Catálogo Tipo de Capacitaciones
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('admin_catalogue_training')
+                            <li>
+                                <a href="{{ route('catalogue-training.index') }}">
+                                    <i class="bi bi-briefcase"></i>
+                                    <span>
+                                        Catálogo de Capacitaciones
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        <li>
+                            <a href="{{ route('admin.capital.expedientes-profesionales') }}">
+                                <i class="bi bi-person-rolodex"></i>
+                                <span>
+                                    Perfiles Profesionales
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-menu-modulo" id="empleados_bd" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h4 class="text-center"><strong>Empleados</strong></h4>
+                    <ul class="menu-modulos">
+                        @can('bd_empleados_acceder')
+                            <li>
+                                <a href="{{ route('admin.empleados.index') }}">
+                                    <i class="bi bi-people"></i>
+                                    <span>
+                                        BD Empleados
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('lista_de_documentos_empleados_acceder')
+                            <li>
+                                <a href="{{ route('admin.lista-documentos-empleados') }}">
+                                    <i class="far fa-address-book"></i>
+                                    <span>
+                                        Lista de Documentos de Empleados
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('niveles_jerarquicos_acceder')
+                            <li>
+                                <a href="{{ route('admin.perfiles.index') }}">
+                                    <i class="bi bi-triangle"></i>
+                                    <span>
+                                        Niveles Jerárquicos
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('tipos_de_contrato_para_empleados_acceder')
+                            <li>
+                                <a href="{{ route('admin.tipos-contratos-empleados.index') }}">
+                                    <i class="bi bi-bank"></i>
+                                    <span>
+                                        Tipos de contratos
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('entidades_crediticeas_acceder')
+                            <li>
+                                <a href="{{ route('admin.entidades-crediticias.index') }}">
+                                    <i class="bi bi-bank"></i>
+                                    <span>
+                                        Entidades Crediticias
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
+                        <li>
+                            <a href="{{ route('admin.empleados.baja') }}">
+                                <i class="bi bi-arrow-down"></i>
+                                <span>
+                                    Baja Empleados
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.empleados.historial') }}">
+                                <i class="bi bi-clock-history"></i>
+                                <span>
+                                    Historial Empleados
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
