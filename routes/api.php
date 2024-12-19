@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/rtenant', [TBTenantRegisterController::class, 'submit']);
 
+Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function () {});
+
 Route::post('/user/login', [TbTenantAuthController::class, 'tbLogin']);
 Route::post('/user/register', [TbTenantUserController::class, 'tbRegister']);
 Route::get('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\TbTenantUserModel;
+use Illuminate\Support\Facades\DB;
 
 class TbTenantUserController extends TbTenantBaseController
 {

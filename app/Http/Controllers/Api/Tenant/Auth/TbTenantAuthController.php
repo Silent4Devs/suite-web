@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\TbTenantUserModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
@@ -20,31 +22,23 @@ class TbTenantAuthController extends TbTenantBaseController
             'password' => 'required',
         ]);
 
-        if (! Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'Invalid access credentials',
-            ], 401);
+        $tbCredentials = $request->only('email', 'password');
+
+        $tbUser = TbTenantUserModel::where('email', $tbCredentials['email'])->first();
+
+        if ($tbUser && Hash::check($tbCredentials['password'], $tbUser->password)) {
+
+            $tbToken = $tbUser->createToken('auth_token', ['*'], now()->addHour())->plainTextToken;
+            $tbData = [
+                'user' => $tbUser,
+                'token' => $tbToken,
+                'expires_at' => now()->addHour(),
+            ];
+
+            return $this->tbSendResponse($tbData, 'Login correcto');
         }
 
-        $user = TbTenantUserModel::select(['id', 'name', 'password', 'email'])
-            ->where('email', request('email'))
-            ->firstOrFail()
-            ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
-
-        Cache::put($this->tokenCachePrefix . $token, [
-            'user_id' => $user->id,
-            'expiration' => $expiration,
-        ], config('sanctum.expiration') * 60);
-
-        return response()->json([
-            'access_token' => $token,
-            'user' => $user->toArray(),
-            'expiration' => $expiration,
-        ]);
+        return $this->tbSendError('Credenciales inválidas', ['error' => 'Credenciales inválidas']);
     }
 
     public function tbLogout(Request $request)

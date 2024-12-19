@@ -186,7 +186,7 @@ class TBTenantStripeService
     }
 
     /**
-     * Agrega un nuevo método de pago para un cliente.
+     * Agrega un nuevo método de pago para un cliente. se necesita agregar primero una tarjeta para asiciarlo 
      *
      * @param string $tbCustomerId
      * @param string $tbPaymentMethodId
@@ -204,6 +204,43 @@ class TBTenantStripeService
             throw new Exception("Error al agregar el método de pago: " . $e->getMessage());
         }
     }
+
+    /**
+     * Agrega una tarjeta como método de pago para un cliente. agrega y aoscia metodo de pago 
+     *
+     * @param string $tbCustomerId El ID del cliente en Stripe.
+     * @param string $cardNumber El número de la tarjeta de crédito.
+     * @param int $expMonth El mes de expiración de la tarjeta (1-12).
+     * @param int $expYear El año de expiración de la tarjeta (4 dígitos).
+     * @param string $cvc El código de seguridad de la tarjeta.
+     * @return \Stripe\PaymentMethod
+     * @throws Exception Si ocurre un error al agregar la tarjeta.
+     */
+    public function tbAddCard(string $tbCustomerId, string $cardNumber, int $expMonth, int $expYear, string $cvc)
+    {
+        try {
+            // Crear el PaymentMethod para la tarjeta
+            $paymentMethod = $this->tbStripeClient->paymentMethods->create([
+                'type' => 'card',
+                'card' => [
+                    'number' => $cardNumber,
+                    'exp_month' => $expMonth,
+                    'exp_year' => $expYear,
+                    'cvc' => $cvc,
+                ],
+            ]);
+
+            // Asociar el PaymentMethod al cliente
+            $this->tbStripeClient->paymentMethods->attach($paymentMethod->id, [
+                'customer' => $tbCustomerId,
+            ]);
+
+            return $this->tbStripeClient->paymentMethods->retrieve($paymentMethod->id);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al agregar la tarjeta: " . $e->getMessage());
+        }
+    }
+
 
     /**
      * Elimina un método de pago de un cliente.
