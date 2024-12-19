@@ -700,7 +700,7 @@ class EditEvaluacionDesempeno extends Component
                 ]);
 
                 foreach ($periodos_creados as $periodo) {
-                    if ($evaluacion->activar_objetivos) {
+                    if ($this->evaluacion->activar_objetivos) {
                         // Autoevaluacion
                         EvaluadoresEvaluacionObjetivosDesempeno::create([
                             'evaluado_desempeno_id' => $new_evaluado->id,
@@ -719,7 +719,7 @@ class EditEvaluacionDesempeno extends Component
                         }
                     }
 
-                    if ($evaluacion->activar_competencias) {
+                    if ($this->evaluacion->activar_competencias) {
                         // Autoevaluacion
                         EvaluadoresEvaluacionCompetenciasDesempeno::create([
                             'evaluado_desempeno_id' => $new_evaluado->id,
@@ -772,7 +772,7 @@ class EditEvaluacionDesempeno extends Component
                         }
                     }
 
-                    Mail::to($correos)->queue(new CreacionEvaluacionDesempenoMailable($evaluacion->nombre, $evaluacion->autor->name));
+                    Mail::to($correos)->queue(new CreacionEvaluacionDesempenoMailable($this->evaluacion->nombre, $this->evaluacion->autor->name));
                 }
             }
 
@@ -795,10 +795,10 @@ class EditEvaluacionDesempeno extends Component
     {
         $empleados = Empleado::getIDaltaAll();
 
-        $periodo = $evaluacion->periodos->first();
+        $periodo = $this->evaluacion->periodos->first();
         // foreach ($evaluacion->periodos as $periodo) {
-        foreach ($evaluacion->evaluados as $evaluado) {
-            if ($evaluacion->activar_objetivos) {
+        foreach ($this->evaluacion->evaluados as $evaluado) {
+            if ($this->evaluacion->activar_objetivos) {
                 $obj_per = $empleados->find($evaluado->evaluado_desempeno_id)->objetivosPeriodo($this->periodo_evaluacion);
 
                 foreach ($obj_per as $obj) {
@@ -843,7 +843,7 @@ class EditEvaluacionDesempeno extends Component
                 }
             }
 
-            if ($evaluacion->activar_competencias) {
+            if ($this->evaluacion->activar_competencias) {
                 $comp_per = $empleados->find($evaluado->evaluado_desempeno_id)->puestoRelacionado->competencias;
 
                 foreach ($comp_per as $comp) {
