@@ -1,52 +1,64 @@
 @can('sistema_gestion_contratos_acceder')
-    <ul class="mt-4">
+    <ul class="menu-modulos">
         @can('katbol_contratos_acceso')
-            <li><a href="{{ route('contract_manager.contratos-katbol.index') }}">
-                    <div>
-                        <i class="fa-regular fa-file-lines"></i><br>
+            <li>
+                <a href="{{ route('contract_manager.contratos-katbol.index') }}">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <span>
                         Contratos
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_requisiciones_acceso')
-            <li><a href="{{ route('contract_manager.requisiciones') }}">
-                    <div>
-                        <i class="fa-regular fa-folder-open"></i><br>
+            <li>
+                <a href="{{ route('contract_manager.requisiciones') }}">
+                    <i class="fa-regular fa-folder-open"></i>
+                    <span>
                         Requisiciones
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('dashboard_gestion_contratos_acceder')
-        <li><a href="{{ route('contract_manager.dashboard.katbol') }}">
-                    <div>
-                        <i class="fa-solid fa-chart-column "></i><br>
+            <li>
+                <a href="{{ route('contract_manager.dashboard.katbol') }}">
+                    <i class="fa-solid fa-chart-column "></i>
+                    <span>
                         Dashboard
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('calendario_corporativo_acceder')
-            <li><a href="{{ route('admin.systemCalendar') }}">
-                    <div>
-                        <i class="fa-solid fa-calendar-day"></i><br>
+            <li>
+                <a href="{{ route('admin.systemCalendar') }}">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span>
                         Calendario
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('timesheet_administrador_clientes_access')
-            <li><a href="{{ route('admin.timesheet-clientes') }}">
-                    <div>
-                        <i class="bi bi-bag"></i><br>
+            <li>
+                <a href="{{ route('admin.timesheet-clientes') }}">
+                    <i class="bi bi-bag"></i>
+                    <span>
                         Clientes
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_reportes_requisicion_acceso')
-            <li><a href="{{ route('contract_manager.reportes.index') }}">
-                    <div>
-                        <i class="fa-solid fa-file-circle-exclamation"></i>
+            <li>
+                <a href="{{ route('contract_manager.reportes.index') }}">
+                    <i class="fa-solid fa-file-circle-exclamation"></i>
+                    <span>
                         Reportes
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
     </ul>
 @else
