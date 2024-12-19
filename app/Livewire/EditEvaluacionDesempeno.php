@@ -673,7 +673,7 @@ class EditEvaluacionDesempeno extends Component
 
             foreach ($escalas as $escala) {
                 EscalasEvaluacionDesempeno::create([
-                    'evaluacion_desempeno_id' => $evaluacion->id,
+                    'evaluacion_desempeno_id' => $this->evaluacion->id,
                     'parametro' => $escala->parametro,
                     'valor' => $escala->valor,
                     'color' => $escala->color,
@@ -684,7 +684,7 @@ class EditEvaluacionDesempeno extends Component
             foreach ($this->datosPaso2 as $p) {
                 if (! empty($p['nombre_evaluacion'])) {
                     $periodos_creados[] = PeriodosEvaluacionDesempeno::create([
-                        'evaluacion_desempeno_id' => $evaluacion->id,
+                        'evaluacion_desempeno_id' => $this->evaluacion->id,
                         'nombre_evaluacion' => $p['nombre_evaluacion'],
                         'fecha_inicio' => $p['fecha_inicio'],
                         'fecha_fin' => $p['fecha_fin'],
@@ -695,7 +695,7 @@ class EditEvaluacionDesempeno extends Component
 
             foreach ($this->array_evaluados as $key => $evaluado) {
                 $new_evaluado = EvaluadosEvaluacionDesempeno::create([
-                    'evaluacion_desempeno_id' => $evaluacion->id,
+                    'evaluacion_desempeno_id' => $this->evaluacion->id,
                     'evaluado_desempeno_id' => $evaluado['id'],
                 ]);
 
@@ -740,7 +740,7 @@ class EditEvaluacionDesempeno extends Component
                 }
             }
 
-            $evaluaciones_actuales = EvaluacionDesempeno::where('id', '!=', $evaluacion->id)
+            $evaluaciones_actuales = EvaluacionDesempeno::where('id', '!=', $this->evaluacion->id)
                 ->where(function ($query) {
                     $query->where('estatus', 1)
                         ->orWhere('estatus', 3);
@@ -750,7 +750,7 @@ class EditEvaluacionDesempeno extends Component
             $evaluacion_activa = ! $evaluaciones_actuales->isEmpty();
 
             if ($evaluacion_activa) {
-                $borrador_evaluacion = EvaluacionDesempeno::where('id', $evaluacion->id)->first();
+                $borrador_evaluacion = EvaluacionDesempeno::where('id', $this->evaluacion->id)->first();
                 $borrador_evaluacion->update(['estatus' => 0]);
             } else {
                 $this->crearCuestionario($evaluacion);
@@ -1471,7 +1471,7 @@ class EditEvaluacionDesempeno extends Component
     {
         foreach ($this->array_evaluados as $key => $evaluado) {
             $new_evaluado = EvaluadosEvaluacionDesempeno::updateOrCreate(
-                ['evaluacion_desempeno_id' => $evaluacion->id, 'evaluado_desempeno_id' => $evaluado['id']],
+                ['evaluacion_desempeno_id' => $this->evaluacion->id, 'evaluado_desempeno_id' => $evaluado['id']],
                 []
             );
 
