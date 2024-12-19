@@ -95,7 +95,7 @@
     }
 </style>
 
-<body class="menu-global-position-bottom menu-modulo-1">
+<body class="menu-global-position-bottom">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
             alt="Loading...">

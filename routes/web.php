@@ -250,7 +250,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('autorizar', 'autorizar')->name('visitantes.autorizar'); // Autorizar visitantes
             Route::get('configuracion', 'configuracion')->name('visitantes.configuracion'); // Configuración
             Route::get('dashboard', 'dashboard')->name('visitantes.dashboard'); // Dashboard
-            Route::middleware('cacheResponse')->get('menu', 'menu')->name('visitantes.menu'); // Menú con cache
+            // Route::middleware('cacheResponse')->get('menu', 'menu')->name('visitantes.menu'); // Menú con cache
+            Route::get('menu', 'menu')->name('visitantes.menu');
         });
 
         // Rutas para recursos anidados
@@ -1647,7 +1648,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         // analisis Riesgos
         Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
-        Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
+        // Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
+        Route::get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
         Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
         Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
@@ -2010,7 +2012,8 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 //KATBOL
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
-    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+    // Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
+    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
     //Proveedores
     Route::resource('proveedor', 'ProveedoresController');

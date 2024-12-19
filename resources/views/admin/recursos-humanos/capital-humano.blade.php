@@ -1,5 +1,16 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        :root {
+            --color-menu-modulo: #ffd3bf;
+        }
+
+        ul.menu-modulos li a,
+        ul.menu-modulos li a::before {
+            background-image: url("{{ asset('img/menu-modulos/menu-grafis-2.png') }}");
+        }
+    </style>
+
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <h5 class="titulo_general_funcion">Evaluaciones </h5>
     <nav>
@@ -22,10 +33,10 @@
             </a>
         </div>
     </nav>
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-content mt-4" id="nav-tabContent">
         <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
             @include('admin.recursos-humanos.capital-humano.components.empleados')
-            
+
         </div>
         <div class="tab-pane mb-4 fade" id="nav-calendario-comunicacion" role="tabpanel"
             aria-labelledby="nav-calendario-comunicacion-tab">

@@ -138,23 +138,21 @@
         localStorage.setItem('menuItem', item);
         let items = [1, 2, 3];
         items.forEach(itm => {
-            bodyElement.classList.remove('menu-global-item-' + itm);
+            bodyElement.classList.remove('menu-modulo-' + itm);
         });
-        bodyElement.classList.add('menu-global-item-' + item);
+        bodyElement.classList.add('menu-modulo-' + item);
         if (document.querySelector('.btn-menu-item.active')) {
             document.querySelector('.btn-menu-item.active').classList.remove('active');
         }
         document.querySelector('.btn-menu-item[data-item="' + item + '"]').classList.add('active');
-
-        console.log(localStorage.getItem('menuItem'));
     }
 </script>
 <script>
     addEventListener("DOMContentLoaded", () => {
         themeContrast(JSON.parse(localStorage.getItem('themeContrast')) || false);
         menuPosition(localStorage.getItem('menuPosition') || 'top');
-        menuItem(localStorage.getItem('menuItem') || 1);
         themeColor(localStorage.getItem('themeColor') || '#4870b2');
-        darkMode(localStorage.getItem('theme') || 'light');
+        menuItem(localStorage.getItem('menuItem') || 1);
+        // darkMode(localStorage.getItem('theme') || 'light');
     });
 </script>
