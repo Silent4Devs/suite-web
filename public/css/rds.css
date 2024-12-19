@@ -1036,6 +1036,10 @@ header.mostrar-menu {
     border-color: var(--color-tbj) !important;
 }
 
+.btn-menu-item.active{
+    border-color: var(--color-tbj) !important;
+}
+
 .box-acces-custom-items {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -1094,4 +1098,121 @@ header.mostrar-menu {
 
 .caja-items-menu-slider > div.group-menu-centro-atencion{
     display: none;
+}
+
+/* menus modulos  ----------- */
+ul.menu-modulos{
+    width: 90%;
+    max-width: 1100px;
+    padding: 0;
+    margin: 0;
+    margin: auto;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    align-items: stretch;
+}
+ul.menu-modulos li{
+
+}
+ul.menu-modulos li a{
+    background-color: #fff;
+    display: block;
+    padding: 20px;
+    border-radius: 28px;
+    box-shadow: 0px 1px 4px #00000024;
+    background-position: 100% 100%;
+    background-size: auto 25%;
+    background-repeat: no-repeat;
+    transition: 0.1s;
+    color: #3f3f3f !important;
+    object-fit: contain;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+ul.menu-modulos li a::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-position: 100% 100%;
+    background-size: auto 15%;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    transform: rotateX(180deg);
+}
+ul.menu-modulos li a:hover{
+    background-size: auto 28%;
+
+}
+ul.menu-modulos li a i{
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+    display: grid;
+    place-items: center;
+    color: #3f3f3f;
+    background-color: var(--color-menu-modulo) !important;
+}
+ul.menu-modulos li a span{
+    display: block;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: left;
+    margin: 30px 0px;
+    margin-bottom: 60px;
+    width: 70%;
+    color: var(--color-menu-modulo);
+    filter: brightness(0.6);
+}
+ul.menu-modulos li a::after{
+    content: "❯";
+    position: absolute;
+    bottom: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 100px;
+    display: block;
+    text-align: center;
+
+    background-color: var(--color-menu-modulo);
+    filter: brightness(0.9);
+    color: #fff;
+}
+.modal-menu-modulo .modal-dialog{
+    max-width: 80%;
+}
+
+.modal-menu-modulo .modal-content{
+    background-color: #00000000;
+    color: #fff;
+}
+.modal .menu-modulos{
+    margin-top: 50px;
+}
+
+/* menu modulo 1 --------------- */
+body.menu-modulo-1 ul.menu-modulos li a{
+    background-image: url('../img/menu-modulos/menu-grafis-1.png') !important;
+}
+body.menu-modulo-1 ul.menu-modulos li a i{
+    background-color: #93e2ff;
+}
+/* menu modulo 2 --------------- */
+body.menu-modulo-2 ul.menu-modulos li a{
+    background-image: url('../img/menu-modulos/menu-grafis-2.png') !important;
+}
+body.menu-modulo-2 ul.menu-modulos li a i{
+    background-color: #ffdfa7;
+}
+/* menu modulo 3 --------------- */
+body.menu-modulo-3 ul.menu-modulos li a{
+    background-image: url('../img/menu-modulos/menu-grafis-3.png') !important;
+}
+body.menu-modulo-3 ul.menu-modulos li a i{
+    background-color: #c9e0ff;
 }
