@@ -85,7 +85,7 @@
 
     @livewire('analisis-riesgos.form-risk-analysis', ['RiskAnalysisId' => $riskAnalysisId])
 
-    {{-- @livewire('analisis-riesgos.treatment-plan') --}}
+    @livewire('analisis-riesgos.treatment-plan')
 @endsection
 
 @section('scripts')

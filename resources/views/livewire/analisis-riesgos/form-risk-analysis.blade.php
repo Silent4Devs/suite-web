@@ -262,9 +262,9 @@
                         @endif
                     </div>
                     {{-- controls --}}
-                    @if ($sheetId)
+                    {{-- @if ($sheetId) --}}
                         @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
-                    @endif
+                    {{-- @endif --}}
 
                     <div class="d-flex justify-content-end gap-3">
                         <button type="button" class="btn tb-btn-secondary" data-bs-dismiss="modal"
@@ -460,7 +460,7 @@
                     cancelButtonText: "Regresar",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emit('riskConfirm');
+                        Livewire.dispatch('riskConfirm');
                         Swal.fire({
                             title: "Confirmado",
                             text: "El riesgo se confirmo con éxito",

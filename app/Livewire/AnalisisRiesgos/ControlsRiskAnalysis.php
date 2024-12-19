@@ -7,6 +7,7 @@ use App\Models\TBControlRiskAnalysisModel;
 use App\Models\TBSheetRA_ControlRAModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Str;
@@ -25,11 +26,12 @@ class ControlsRiskAnalysis extends Component
 
     public $folder;
 
-    protected $listeners = ['test' => 'test'];
+    protected $listeners = ['reload' => 'reload'];
 
-    public function test($sheetId)
+    // #[On('updateData')]
+    public function reload($sheetId)
     {
-        dd("aaa");
+        // dd("aaa");
         $this->sheetId = $sheetId;
         $this->getControlsSheet();
     }

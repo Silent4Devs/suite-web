@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\Backup\Tasks\Cleanup\Period;
 
 class FormRiskAnalysis extends Component
 {
@@ -94,6 +95,7 @@ class FormRiskAnalysis extends Component
 
     // protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
 
+    #[On('riskConfirm')]
     public function riskConfirm()
     {
         $sheet = TBSheetRiskAnalysisModel::find($this->sheetId);
@@ -101,9 +103,9 @@ class FormRiskAnalysis extends Component
             $sheet->update([
                 'initial_risk_confirm' => true,
             ]);
-            $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
-            $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
+        $this->dispatch('reload',sheetId:$this->sheetId)->to(ControlsRiskAnalysis::class);
 
+            $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
         } else {
             $sheet->update([
                 'residual_risk_confirm' => true,
@@ -256,8 +258,7 @@ class FormRiskAnalysis extends Component
 
         $this->getQuestionsAnswer();
         $this->getInitialResidualRisk();
-        // $this->dispatch('analisis-riesgos.controls-risk-analysis', 'reload', $this->sheetId);
-        // $this->dispatch('test', $id);
+        $this->dispatch('reload',sheetId:$this->sheetId)->to(ControlsRiskAnalysis::class);
         $this->dispatch('calculateScale');
 
     }
@@ -503,6 +504,8 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
+        $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
+
         // $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 
         // $this->dispatch('scriptTabla');

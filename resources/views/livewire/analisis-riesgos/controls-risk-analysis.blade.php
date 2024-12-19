@@ -96,3 +96,11 @@
             CONTROLES</button>
     </div>
 </div>
+<script>
+    document.addEventListener('livewire:load', function () {
+    console.log("component load")
+        // Livewire.hook('message.processed', (component) => {
+    //     console.log(`Componente ${component.fingerprint.name} listo para escuchar eventos.`);
+    // });
+});
+</script>
