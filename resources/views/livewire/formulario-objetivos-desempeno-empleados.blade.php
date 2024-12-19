@@ -375,8 +375,18 @@
                             @if ($permisoAprobacion)
                                 <td>
                                     @if ($obj->objetivo->esta_aprobado == 0)
-                                        <a onclick="confirmarAprobacionObjetivo({{ $obj->objetivo->id }})">Aprobar</a>
-                                        <a onclick="confirmarRechazoObjetivo({{ $obj->objetivo->id }})">Rechazar</a>
+                                    <a onclick="confirmarAprobacionObjetivo({{ $obj->objetivo->id }})"
+                                    title="Aprobar">
+                                    <span class="material-symbols-outlined icono-aprobar">
+                                        thumb_up
+                                    </span>
+                                </a>
+                                <a onclick="confirmarRechazoObjetivo({{ $obj->objetivo->id }})"
+                                    title="Rechazar" >
+                                    <span class="material-symbols-outlined icono-rechazar">
+                                        thumb_down
+                                    </span>
+                                </a>
                                     @endif
                                 </td>
                             @endif
