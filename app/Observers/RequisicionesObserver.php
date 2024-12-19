@@ -11,11 +11,11 @@ class RequisicionesObserver
     /**
      * Handle the Requsicion "created" event.
      */
-    // public function created(Requsicion $requsicion): void
-    // {
-    //     event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
-    //     $this->forgetCache();
-    // }
+    public function created(Requsicion $requsicion): void
+    {
+        event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
+        $this->forgetCache();
+    }
 
     /**
      * Handle the Requsicion "updated" event.
