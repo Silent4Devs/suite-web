@@ -77,8 +77,13 @@
                                 width="100%" height="600px" />
                         </div>
                         <div>
-                            <button class="btn-outline-primary" type="button" wire:click="completedLesson">Completar
-                                Lección</button>
+                            @if ($current->completed)
+                                <button class="btn-outline-primary" type="button"
+                                    wire:click="completedLesson">Completar
+                                    Lección</button>
+                            @else
+                                Leccion Completada
+                            @endif
                         </div>
                     </div>
                 @else
@@ -88,8 +93,13 @@
                         </div>
 
                         <div>
-                            <button class="btn-outline-primary" type="button" wire:click="completedLesson">Completar
-                                Lección</button>
+                            @if ($current->completed)
+                                <button class="btn-outline-primary" type="button"
+                                    wire:click="completedLesson">Completar
+                                    Lección</button>
+                            @else
+                                Leccion Completada
+                            @endif
                         </div>
                     </div>
                 @endif
