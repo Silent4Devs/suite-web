@@ -657,7 +657,7 @@ class EditEvaluacionDesempeno extends Component
             }
 
             // Crear la evaluación de desempeño
-            $evaluacion = EvaluacionDesempeno::create([
+            $this->evaluacion->update([
                 'nombre' => $this->datosPaso1['nombre'],
                 'descripcion' => $this->datosPaso1['descripcion'],
                 'activar_objetivos' => $this->datosPaso1['activar_objetivos'],
