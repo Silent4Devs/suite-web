@@ -208,7 +208,8 @@
                                         <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
 
                                     </div>
-                                    <div class="form-group col-12 anima-focus">
+                                    <div class="form-group col-12 anima-focus" id="description2">
+                                        {{-- id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" --}}
                                         <textarea wire:model="formText" id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" placeholder=""
                                             class="form-control w-full"></textarea>
                                         @error('formText')
@@ -240,26 +241,42 @@
 
 
         @include('livewire.escuela.instructor.add-new-lesson')
-        {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const bladeElements = document.querySelectorAll('.test');
-            console.log(bladeElements);
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('openCollapse')) {
-                    let targetId = event.target.getAttribute('data-id');
-                    let collapse = document.querySelector(targetId);
-                    console.log("collapse", targetId);
-                    collapse.classList.toggle('collapse');
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Livewire.on('reinitializeCkeditor', () => {
+                    setTimeout(() => {
+                        // const editorElement = document.querySelector('#description1');
+                        // console.log(editorElement);
+                        ClassicEditor.create(document.querySelector('#description2 textarea'), {
+                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'blockQuote'],
+                        heading: {
+                            options: [{
+                                    model: 'paragraph',
+                                    title: 'Paragraph',
+                                    class: 'ck-heading_paragraph'
+                                },
+                                {
+                                    model: 'heading1',
+                                    view: 'h1',
+                                    title: 'Heading 1',
+                                    class: 'ck-heading_heading1'
+                                },
+                                {
+                                    model: 'heading2',
+                                    view: 'h2',
+                                    title: 'Heading 2',
+                                    class: 'ck-heading_heading2'
+                                }
+                            ]
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
-                }
+                    }, 500);
+                });
             });
-        });
-    </script>
-    <script>
-        document.addEventListener('livewire:init', function () {
-            Livewire.on('closeCollapse', function () {
-                window.dispatchEvent(new Event('close-collapse'));
-            });
-        });
-    </script> --}}
+        </script>
+
     </div>

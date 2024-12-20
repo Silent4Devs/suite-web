@@ -73,16 +73,17 @@
                 @elseif (isset($current->resource))
                     <div class="card card-body">
                         <div>
+                            @dump($current->resource->url)
                             <embed src="{{ asset('storage/app/' . $current->resource->url) }}" type="application/pdf"
                                 width="100%" height="600px" />
                         </div>
                         <div>
                             @if ($current->completed)
-                                <button class="btn-outline-primary" type="button"
-                                    wire:click="completedLesson">Completar
-                                    Lección</button>
+                            Leccion Completada
                             @else
-                                Leccion Completada
+                                <button class="btn-outline-primary" type="button"
+                                wire:click="completedLesson">Completar
+                                Lección</button>
                             @endif
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                         </div>
 
                         <div>
-                            @if ($current->completed)
+                            @if (!$current->completed)
                                 <button class="btn-outline-primary" type="button"
                                     wire:click="completedLesson">Completar
                                     Lección</button>

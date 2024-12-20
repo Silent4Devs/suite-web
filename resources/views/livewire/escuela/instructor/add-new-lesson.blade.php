@@ -98,11 +98,10 @@
 
                             @case('Texto')
 
-                                <div class="form-group col-12 anima-focus">
+                                <div class="form-group col-12 anima-focus" id="description1">
                                     <textarea wire:model="description" id="description-{{ $section->id }}" type="text" placeholder=""
                                         class=" w-full form-control @if ($errors->has('description')) invalid @endif" required></textarea>
                                 </div>
-
                             @break
 
 
@@ -135,3 +134,41 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.on('reinitializeCkeditor', () => {
+            setTimeout(() => {
+                // const editorElement = document.querySelector('#description1');
+                // console.log(editorElement);
+                ClassicEditor.create(document.querySelector('#description1 textarea'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'blockQuote'],
+                heading: {
+                    options: [{
+                            model: 'paragraph',
+                            title: 'Paragraph',
+                            class: 'ck-heading_paragraph'
+                        },
+                        {
+                            model: 'heading1',
+                            view: 'h1',
+                            title: 'Heading 1',
+                            class: 'ck-heading_heading1'
+                        },
+                        {
+                            model: 'heading2',
+                            view: 'h2',
+                            title: 'Heading 2',
+                            class: 'ck-heading_heading2'
+                        }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+            }, 500);
+        });
+    });
+</script>

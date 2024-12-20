@@ -89,6 +89,7 @@ class CoursesLesson extends Component
     public function updateTypeFormat()
     {
         $this->formatType = $this->platformFormat();
+        $this->dispatch('reinitializeCkeditor');
     }
 
     public function store()
@@ -259,6 +260,9 @@ class CoursesLesson extends Component
         $this->formPlatformId = $lesson->platform_id;
         $this->formText = $lesson->text_lesson ?? null;
         $this->formUrl = $lesson->url ?? null;
+        // dd($this->formText);
+        $this->dispatch('reinitializeCkeditor');
+
     }
 
     public function update()
