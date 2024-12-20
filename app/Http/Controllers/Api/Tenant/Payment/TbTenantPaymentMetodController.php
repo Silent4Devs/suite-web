@@ -33,30 +33,45 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
         }
     }
 
-    // public function tbAddPaymentMethod(Request $request)
-    // {
-    //     try {
-    //         $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costomerId
-    //         $tbPayment = $this->tbStripeService->tbAddPaymentMethod($tbStripeId, 'card');
+    public function tbAddPaymentMethod(Request $request)
+    {
+        try {
+            //$tbStripeId = 'cus_RB6jvmea5u8gkC';
+            $tbStripeId = 'cus_RABmnSCQX7qE8h'; //costumerId $tbStripeId
+            $tbPaymentId =  'card_1QQa2ELyj74Bldhk1lqfe0JN';
+            // $tbPaymentId = 'pm_1PZ8wJLyj74BldhkpOzeyWPs';
 
-    //         return $this->tbSendResponse($tbPayment, 'Metodo de pago removido correctamente.');
-    //     } catch (\Exception $e) {
-    //         return $this->tbSendError($e, ['error' => $e]);
-    //     }
-    // }
+            $tbPayment = $this->tbStripeService->tbAddPaymentMethod($tbStripeId, $tbPaymentId);
+            return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
+        } catch (\Exception $e) {
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
 
-    // public function tbRemovePaymentMethod(Request $request)
-    // {
-    //     try {
-    //         $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costomerId
-    //         $tbPayment = $this->tbStripeService->tbRemovePaymentMethod($tbStripeId);
+    public function tbAddCardPaymentMethod(Request $request)
+    {
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costumerId $tbStripeId
+            $tbPayment = $this->tbStripeService->tbAddCard($tbStripeId, $request['card_number'], $request['expiration_month'], $request['expiration_year'], $request['cvc']);
 
-    //         return $this->tbSendResponse($tbPayment, 'Metodo de pago removido correctamente.');
-    //     } catch (\Exception $e) {
-    //         dd($e);
-    //         return $this->tbSendError($e, ['error' => $e]);
-    //     }
-    // }
+            return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
+        } catch (\Exception $e) {
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
+
+    public function tbRemovePaymentMethod(Request $request)
+    {
+        try {
+            $tbPaymentId = 'pm_1PZ98cLyj74BldhkuDritGlQ';
+            // $tbPaymentId = 'card_1QQa6eLyj74BldhkqErgGNFG'; //paymentId
+            $tbPayment = $this->tbStripeService->tbRemovePaymentMethod($tbPaymentId);
+
+            return $this->tbSendResponse($tbPayment, 'Metodo de pago removido correctamente.');
+        } catch (\Exception $e) {
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
 
     public function tbGetBillingAddressMethod(Request $request)
     {

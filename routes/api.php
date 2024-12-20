@@ -36,6 +36,7 @@ Route::get('/stripe/suscriptions', [TbTenantProfileController::class, 'tbGetCost
 Route::get('/stripe/statusSuscription', [TbTenantProfileController::class, 'tbGetSubscriptionStatus']);
 Route::get('/stripe/paymentMethod', [TbTenantPaymentMetodController::class, 'tbGetPaymentMethod']);
 Route::get('/stripe/addPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddPaymentMethod']);
+Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddCardPaymentMethod']);
 Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
 Route::get('/stripe/billingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
 Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
