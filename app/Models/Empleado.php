@@ -507,7 +507,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaDataColumns()
     {
         return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
-            return self::alta()->select('id', 'name', 'email', 'foto')->get();
+            return self::alta()->select('id', 'name', 'email', 'foto')->orderBy('name', 'asc')->get();
         });
     }
 

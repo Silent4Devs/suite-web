@@ -32,6 +32,15 @@
             transform: translateX(5.25rem);
             /* Triple the original translateX */
         }
+        .icono-aprobar {
+            color: green;
+            cursor: pointer;
+        }
+
+        .icono-rechazar {
+            color: red;
+            cursor: pointer;
+        }
     </style>
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 

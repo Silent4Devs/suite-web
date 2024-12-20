@@ -315,13 +315,13 @@ class EV360ObjetivosController extends Controller
 
     public function destroyByEmpleado($id)
     {
-        $objetivo = Objetivo::findOrFail($id); // Buscar el objetivo por ID
+        $objetivo = Objetivo::where('id', $id)->first(); // Buscar el objetivo por ID
         $objetivo_empleado = ObjetivoEmpleado::where('objetivo_id', $id)->first();
 
         $ev = $this->evaluacionActiva();
 
         if (isset($ev->id)) {
-            ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
+            ObjetivoRespuesta::where('objetivo_id', $id)
                 ->where('evaluado_id', $objetivo_empleado->empleado_id)
                 ->where('evaluacion_id', '=', $ev->id)
                 ->delete();
@@ -358,13 +358,11 @@ class EV360ObjetivosController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'KPI' => 'required|string|max:1500',
-            'meta' => 'required|integer|min:0',
+            // 'meta' => 'required|integer|min:0',
             'descripcion_meta' => 'nullable|string|max:1500',
             'tipo_id' => 'required|exists:ev360_tipo_objetivos,id',
             'metrica_id' => 'required|exists:ev360_metricas_objetivos,id',
         ]);
-
-        // dd($request->all());
 
         $objetivo = Objetivo::find($objetivo);
         $u_objetivo = $objetivo->update([
@@ -395,7 +393,7 @@ class EV360ObjetivosController extends Controller
             ]);
         }
         if ($u_objetivo) {
-            return ['success', 'Objetivo editado con éxito'];
+            return redirect()->route('admin.ev360-objetivos-empleado.updateByEmpleado', ['objetivo' => $objetivo->id]);
         } else {
             return ['error', 'Ocurrió un error al editar el objetivo, intente de nuevo...'];
         }
