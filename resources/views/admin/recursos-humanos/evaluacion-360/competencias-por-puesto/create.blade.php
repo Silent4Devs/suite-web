@@ -140,7 +140,8 @@
                         return botones;
                     },
                     width: '15%'
-                }],
+                }
+            ],
                 language: {
                     decimal: "",
                     emptyTable: "No hay registros",
