@@ -301,7 +301,7 @@
                 </a>
             @endif
 
-            @if (isset($mis_evaluaciones->evaluacion) && $mis_evaluaciones->evaluacion->estatus === "2")
+            @if (isset($mis_evaluaciones->evaluacion) && intval($mis_evaluaciones->evaluacion->estatus) === 2)
                 <a
                     href="{{ url('admin/recursos-humanos/evaluacion-360/evaluaciones/' . $mis_evaluaciones->evaluacion->id . '/evaluacion/' . $usuario->empleado->id . '/' . $usuario->empleado->id) }}">
 
@@ -315,7 +315,7 @@
                         </div>
                     </div>
                 </a>
-            @elseif (isset($como_evaluador->evaluacion) && $como_evaluador->evaluacion->estatus === "2")
+            @elseif (isset($como_evaluador->evaluacion) && intval($como_evaluador->evaluacion->estatus) === 2)
                 <a
                     href="{{ url('admin/recursos-humanos/evaluacion-360/vista-evaluador/' . $como_evaluador->evaluacion->id . '/evaluacion/' . $usuario->empleado->id . '/evaluador') }}">
 
@@ -333,7 +333,7 @@
 
             {{-- Inhabilitado temporalmente --}}
             @if (isset($mis_evaluaciones->evaluacion))
-                @if ($mis_evaluaciones->evaluacion->estatus == 2 || $mis_evaluaciones->evaluacion->estatus == 3)
+                @if (intval($mis_evaluaciones->evaluacion->estatus) === 2 || intval($mis_evaluaciones->evaluacion->estatus) === 3)
                     <a
                         href="{{ route('admin.ev360-evaluaciones.autoevaluacion.consulta.evaluado', [$mis_evaluaciones->evaluacion->id, auth()->user()->empleado->id]) }}">
 
