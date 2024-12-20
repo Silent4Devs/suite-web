@@ -1137,7 +1137,8 @@ ul.menu-modulos li a::before{
     content: "Entrar";
     position: absolute;
     right: 20px;
-    background-color: var(--color-menu-modulo);
+    background-image: none !important;
+    background-color: var(--color-menu-modulo) !important;
     padding: 2px 6px;
     border-radius: 100px;
     color: #fff;
