@@ -975,7 +975,6 @@ class MultiStepForm extends Component
             'puesto_id'
         )
             ->with(['objetivos', 'children:id,name', 'supervisor:id,name', 'area:id,area', 'puestoRelacionado:id,puesto'])
-            ->where('estatus', 'alta')
             ->whereNull('deleted_at')
             ->get();
 
