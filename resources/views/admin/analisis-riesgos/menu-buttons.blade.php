@@ -9,7 +9,7 @@
 
         ul.menu-modulos li a,
         ul.menu-modulos li a::before {
-            background-image: url("{{ asset('img/menu-modulos/menu-grafis-4.png') }}") !important;
+            background-image: url("{{ asset('img/menu-modulos/menu-grafis-4.png') }}");
         }
     </style>
 
