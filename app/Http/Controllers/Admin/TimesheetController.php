@@ -1097,7 +1097,7 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
+        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
 
         $solicitante = Empleado::getDataColumns()->where('id', $aprobar->empleado_id)->first();
 
