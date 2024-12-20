@@ -148,7 +148,8 @@ class OrdenCompraController extends Controller
             $requisicion = KatbolRequsicion::where('id', $id)->first();
             $user = User::find($requisicion->id_finanzas_oc);
             // $proveedores = KatbolProveedorOC::getAll()->where('id', $requisicion->proveedor_id)->first();
-            $proveedores = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();
+            $proveedorId = $requisicion->proveedor_id ?? $requisicion->proveedoroc_id;
+            $proveedores = KatbolProveedorOC::where('id', $proveedorId)->first();
 
             $firma_siguiente = FirmasOrdenesCompra::where('requisicion_id', $requisicion->id)->first();
 
