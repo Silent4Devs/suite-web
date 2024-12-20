@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ContractManager;
 
 use App\Events\RequisicionesEvent;
+use App\Exports\RequsicionExport;
 use App\Http\Controllers\Controller;
 use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Mail;
 use NumberFormatter;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrdenCompraController extends Controller
 {
@@ -1189,5 +1191,12 @@ class OrdenCompraController extends Controller
         }
 
         return $alerta;
+    }
+
+    public function excel(Request $request)
+    {
+        $export = new RequsicionExport();
+
+        return Excel::download($export, 'oc.xlsx');
     }
 }
