@@ -6,6 +6,7 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Platform;
 use App\Models\Escuela\Section;
+use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -223,11 +224,19 @@ class CoursesLesson extends Component
                             'section_id' => $this->section->id,
                         ]);
 
-                        $urlresorce = $this->file->store('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id);
+                        // $urlresorce = $this->file->store('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id);
+
+                        $uuid = Str::uuid(); // Generar un UUID único
+                        $originalName = $this->file->getClientOriginalName(); // Obtener el nombre original del archivo
+                        $newFileName = $uuid . '_' . $originalName; // Concatenar UUID y nombre original
+
+                        $urlresorce = $this->file->storeAs('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
                         $resource->resource()->create([
                             'url' => $urlresorce,
                         ]);
+
+                        $this->file->storeAs('public/cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
                         $this->reset('name', 'platform_id', 'url', 'description', 'file');
 
@@ -262,7 +271,6 @@ class CoursesLesson extends Component
         $this->formUrl = $lesson->url ?? null;
         // dd($this->formText);
         $this->dispatch('reinitializeCkeditor');
-
     }
 
     public function update()

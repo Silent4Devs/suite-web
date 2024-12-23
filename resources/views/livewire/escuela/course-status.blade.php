@@ -70,39 +70,46 @@
                         <div id="player3" class="w-100"></div>
                     </div>
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
-                @elseif (isset($current->resource))
-                    <div class="card card-body">
-                        <div>
-                            @dump($current->resource->url)
-                            <embed src="{{ asset('storage/app/' . $current->resource->url) }}" type="application/pdf"
-                                width="100%" height="600px" />
-                        </div>
-                        <div>
-                            @if ($current->completed)
-                            Leccion Completada
-                            @else
-                                <button class="btn-outline-primary" type="button"
-                                wire:click="completedLesson">Completar
-                                Lección</button>
-                            @endif
-                        </div>
-                    </div>
                 @else
-                    <div class="card card-body">
-                        <div>
-                            <p>{{ $current->text_lesson }}</p>
-                        </div>
+                    @switch($current->platform_format)
+                        @case('Documento')
+                            <div class="card card-body">
+                                <div>
+                                    <embed src="{{ asset('storage/' . $this->current->resource->url) }}" type="application/pdf"
+                                        width="100%" height="600px">
+                                    </embed>
+                                </div>
+                                <div>
+                                    @if ($current->completed)
+                                        Leccion Completada
+                                    @else
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @endif
+                                </div>
+                            </div>
+                        @break
 
-                        <div>
-                            @if (!$current->completed)
-                                <button class="btn-outline-primary" type="button"
-                                    wire:click="completedLesson">Completar
-                                    Lección</button>
-                            @else
-                                Leccion Completada
-                            @endif
-                        </div>
-                    </div>
+                        @case('Texto')
+                            <div class="card card-body">
+                                <div>
+                                    <p>{{ $current->text_lesson }}</p>
+                                </div>
+
+                                <div>
+                                    @if (!$current->completed)
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @else
+                                        Leccion Completada
+                                    @endif
+                                </div>
+                            </div>
+                        @break
+
+                        @default
+                            <h1>Default</h1>
+                    @endswitch
                 @endif
             @else
                 <p>Sin registro</p>

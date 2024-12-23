@@ -208,7 +208,7 @@
                                         <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
 
                                     </div>
-                                    <div class="form-group col-12 anima-focus" id="description2">
+                                    <div class="form-group col-12 anima-focus" {{-- id="description2" --}}>
                                         {{-- id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" --}}
                                         <textarea wire:model="formText" id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" placeholder=""
                                             class="form-control w-full"></textarea>
@@ -248,31 +248,42 @@
                         // const editorElement = document.querySelector('#description1');
                         // console.log(editorElement);
                         ClassicEditor.create(document.querySelector('#description2 textarea'), {
-                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'blockQuote'],
-                        heading: {
-                            options: [{
-                                    model: 'paragraph',
-                                    title: 'Paragraph',
-                                    class: 'ck-heading_paragraph'
-                                },
-                                {
-                                    model: 'heading1',
-                                    view: 'h1',
-                                    title: 'Heading 1',
-                                    class: 'ck-heading_heading1'
-                                },
-                                {
-                                    model: 'heading2',
-                                    view: 'h2',
-                                    title: 'Heading 2',
-                                    class: 'ck-heading_heading2'
+                                toolbar: [
+                                    'heading', 'bold', 'italic', 'strikethrough', 'underline',
+                                    'code',
+                                    'subscript', 'superscript', 'link', 'bulletedList',
+                                    'numberedList',
+                                    'indent', 'outdent', 'blockQuote', 'insertTable',
+                                    'mediaEmbed',
+                                    'undo', 'redo', 'alignment', 'fontSize', 'fontColor',
+                                    'fontBackgroundColor',
+                                    'highlight', 'horizontalLine', 'pageBreak',
+                                    'specialCharacters'
+                                ],
+                                heading: {
+                                    options: [{
+                                            model: 'paragraph',
+                                            title: 'Paragraph',
+                                            class: 'ck-heading_paragraph'
+                                        },
+                                        {
+                                            model: 'heading1',
+                                            view: 'h1',
+                                            title: 'Heading 1',
+                                            class: 'ck-heading_heading1'
+                                        },
+                                        {
+                                            model: 'heading2',
+                                            view: 'h2',
+                                            title: 'Heading 2',
+                                            class: 'ck-heading_heading2'
+                                        }
+                                    ]
                                 }
-                            ]
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
 
                     }, 500);
                 });

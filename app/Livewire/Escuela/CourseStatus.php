@@ -266,7 +266,7 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(public_path('app/' . $this->current->resource->url));
+        return response()->download(storage_path('app/' . $this->current->resource->url));
     }
 
     public function alertSection()
