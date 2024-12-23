@@ -10,7 +10,8 @@
     </button>
 </div>
 <div class="seleccionar">
-    <select class="form-control" searchable="Buscar..." name="contrato" id="contrato" class="">
+    <select class="form-control" searchable="Buscar..." name="contrato" id="contrato" class=""
+        wire:model.live="contrato_id" wire:change="getContratoID">
         <option value="" selected disabled>Seleccione un contrato</option>
         @forelse($contratos as $item_contrato)
             <option value="{{ $item_contrato->id }}">{{ $item_contrato->no_contrato }}</option>
@@ -18,10 +19,32 @@
             <option value="">No hay contratos registrados</option>
         @endforelse
     </select>
-    <button type="submit" class="btn tb-btn-primary" id="buscar_contrato"
-        onclick="buscarcontrato($('#contrato').val()); return false;">
-        Generar reporte
-    </button>
+    <div wire:loading>
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-success" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-info" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-light" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
 </div>
 <div class="card">
     <div id="contrato_reporte" class="card-content">
@@ -41,6 +64,10 @@
                 background-position: center;
             }
         </style>
-        <div id="caja_reporte_contrato_ajax"></div>
+        <div wire:loading.remove>
+            @if ($reporte_contrato_generado)
+                {!! $reporte_contrato_generado !!}
+            @endif
+        </div>
     </div>
 </div>

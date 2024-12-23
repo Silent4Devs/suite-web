@@ -54,8 +54,6 @@ use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('orden-compra/excel', [OrdenCompraController::class, 'excel'])->name('orden-compra.excel');
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
