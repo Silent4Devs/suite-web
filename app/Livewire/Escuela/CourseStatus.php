@@ -41,7 +41,7 @@ class CourseStatus extends Component
 
     public $cursoCompletado;
 
-    public $urlResource = null;
+    public $archivoUrl = null;
 
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
@@ -62,6 +62,9 @@ class CourseStatus extends Component
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
+        if($this->current->resource){
+            $this->archivoUrl = asset('storage/' . $this->current->resource->url);  // Asegúrate de que el archivo sea accesible
+        }
     }
 
     public function render()

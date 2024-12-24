@@ -17,7 +17,7 @@ class Lesson extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    protected $appends = ['completed', 'completed_user', 'platform_format'];
+    protected $appends = ['completed', 'completed_user', 'platform_format', 'file_format'];
 
     // Funcion para indicar a que usuario permanece el avance del curso
     public function getCompletedAttribute()
@@ -35,6 +35,20 @@ class Lesson extends Model implements Auditable
         $platf = Platform::where('id', $this->platform_id)->first();
         return $platf->name;
         //  dd($this->formatType);
+    }
+
+    public function getFileFormatAttribute()
+    {
+
+        if($this->resource){
+            $ruta = storage_path('app/' . $this->resource->url);
+
+            // Obtener la extensión del archivo
+            $informacionArchivo = pathinfo($ruta);
+            $extension = $informacionArchivo['extension'];
+
+            return $extension;
+        }
     }
 
     //Relacion uno a uno
