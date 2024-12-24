@@ -294,7 +294,7 @@
                                 {{-- <div class="flex items-center">
                                         <img class="object-cover w-8 h-8 rounded-full shadow-lg"
                                             src="{{ $similar->teacher->profile_photo_url }}" alt=""> --}}
-                                <p class="ml-2 text-sm text-gray-700">{{ $similar->teacher->name }}</p>
+                                <p class="ml-2 text-sm text-gray-700">{{ $similar->instructor->name }}</p>
                                 {{-- </div> --}}
                                 <div class="mt-3 d-flex justify-content-between">
                                     <div style="color: #FFC400; font-size: 15px;">
