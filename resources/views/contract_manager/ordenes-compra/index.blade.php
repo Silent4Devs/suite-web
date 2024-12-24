@@ -8,6 +8,10 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
+
+        #form_id {
+            display: none;
+        }
     </style>
 
     @include('partials.flashMessages')
@@ -173,6 +177,12 @@
             </div>
         </div>
     </div>
+    <form method="GET" id="form_id" style="position: relative; left: 10rem; " action="{{ route('orden-compra.excel') }}">
+        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+    </form>
+
 @endsection
 @section('scripts')
     @parent
@@ -247,8 +257,12 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    action: function(e, dt, button, config) {
+                        document.getElementById('form_id').submit();
                     }
+
                 },
                 // {
                 //     extend: 'pdfHtml5',

@@ -336,7 +336,9 @@
                         <th>Estatus</th>
                         <th>Meta</th>
                         <th>Periodo</th>
-                        <th>Revisión</th>
+                        @if ($permisoAprobacion)
+                            <th>Revisión</th>
+                        @endif
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -349,15 +351,15 @@
                             <td>{{ $obj->objetivo->descripcion_meta }}</td>
                             <td>
                                 @switch($obj->objetivo->esta_aprobado)
-                                    @case(0)
+                                    @case("0")
                                         <span class="badge badge-warning">Pendiente</span>
                                     @break
 
-                                    @case(1)
+                                    @case("1")
                                         <span class="badge badge-success">Aprobado</span>
                                     @break
 
-                                    @case(2)
+                                    @case("2")
                                         <span class="badge badge-danger">Rechazado
                                             <i class="fas fa-comment ml-1"
                                                 title="{{ $obj->objetivo->comentarios_aprobacion }}"></i>
@@ -370,13 +372,24 @@
                             </td>
                             <td>{{ $obj->objetivo->meta }}</td>
                             <td>Periodo</td>
-                            <td>
-                                @if ($obj->objetivo->esta_aprobado == 0)
-                                    <a wire:click.prevent="revision({{ $obj->objetivo->id }}, 'aprobar')">Aprobar</a>
-                                    <a
-                                        wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
-                                @endif
-                            </td>
+                            @if ($permisoAprobacion)
+                                <td>
+                                    @if ($obj->objetivo->esta_aprobado == 0)
+                                    <a onclick="confirmarAprobacionObjetivo({{ $obj->objetivo->id }})"
+                                    title="Aprobar">
+                                    <span class="material-symbols-outlined icono-aprobar">
+                                        thumb_up
+                                    </span>
+                                </a>
+                                <a onclick="confirmarRechazoObjetivo({{ $obj->objetivo->id }})"
+                                    title="Rechazar" >
+                                    <span class="material-symbols-outlined icono-rechazar">
+                                        thumb_down
+                                    </span>
+                                </a>
+                                    @endif
+                                </td>
+                            @endif
                             <td>
                                 <div class="dropdown btn-options-foda-card">
                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
@@ -427,4 +440,42 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.confirmarAprobacionObjetivo = function (objetivoId) {
+                Swal.fire({
+                    title: 'Aprobar Objetivo',
+                    text: "¿Está seguro que desea aprobar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, aprobar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('aprobarObjetivo', { objetivoId });
+                    }
+                });
+            };
+
+            window.confirmarRechazoObjetivo = function (objetivoId) {
+                Swal.fire({
+                    title: 'Rechazar Objetivo',
+                    text: "¿Está seguro que desea rechazar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, rechazar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('rechazarObjetivo', { objetivoId });
+                    }
+                });
+            };
+        });
+    </script>
+
+
 </div>

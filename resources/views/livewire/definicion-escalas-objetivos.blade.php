@@ -20,7 +20,7 @@
                     <div class="col-4">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_1" name="estatus_1" wire:model="estatus_1"
-                                class="form-control" placeholder="" maxlength="120" required>
+                                class="form-control" placeholder="" maxlength="225" required>
                             <label for="estatus_1">Nombre de la escala*<sup>*</sup></label>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                     <div class="col-4">
                         <div class="anima-focus mb-3 ">
                             <input type="text" id="estatus_2" name="estatus_2" wire:model="estatus_2"
-                                class="form-control" placeholder="" maxlength="120" required>
+                                class="form-control" placeholder="" maxlength="225" required>
                             <label for="estatus_2">Nombre de la escala* <sup>*</sup></label>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                             <div class="anima-focus mb-3 ">
                                 <input type="text" id="estatus_arreglo_{{ $key }}"
                                     name="estatus_arreglo_{{ $key }}" class="form-control" placeholder=""
-                                    maxlength="120" wire:model.live="parametros.{{ $key }}.parametro">
+                                    maxlength="225" wire:model.live="parametros.{{ $key }}.parametro">
                                 <label for="estatus_arreglo_{{ $key }}">Nombre de la escala*</label>
                             </div>
                         </div>
