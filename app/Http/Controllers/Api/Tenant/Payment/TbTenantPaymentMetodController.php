@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tenant\Payment;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
+use App\Http\Controllers\Api\Tenant\Utilities\TbTenantUtilities;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
@@ -15,10 +16,13 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
 
     protected $tbStripeService;
 
-    public function __construct(TBTenantTenantManager $tbTenantManager, TBTenantStripeService $tbStripeService)
+    protected $tbTenantUtilities;
+
+    public function __construct(TBTenantTenantManager $tbTenantManager, TBTenantStripeService $tbStripeService, TbTenantUtilities $tbTenantUtilities)
     {
         $this->tbTenantManager = $tbTenantManager;
         $this->tbStripeService = $tbStripeService;
+        $this->tbTenantUtilities = $tbTenantUtilities;
     }
 
     public function tbGetPaymentMethod(Request $request)
@@ -52,6 +56,17 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
     {
         try {
             $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costumerId $tbStripeId
+
+            $validationCardNumber = $this->tbTenantUtilities->tbValidateCardNumber("424242424242");
+            // return $this->tbSendError($validationCardNumber, ['error' => $validationCardNumber]);
+            $validationExpirationMonth = $this->tbTenantUtilities->tbValidateExpirationMonth(12);
+            // return $this->tbSendError($validationExpirationMonth, ['error' => $validationExpirationMonth]);
+            $validationExpirationYear = $this->tbTenantUtilities->tbValidateExpirationYear(2024);
+            // return $this->tbSendError($validationExpirationYear, ['error' => $validationExpirationYear]);
+            $validationCVC = $this->tbTenantUtilities->tbValidateCVC("424242424242");
+            return $this->tbSendError($validationCVC, ['error' => $validationCVC]);
+
+
             $tbPayment = $this->tbStripeService->tbAddCard($tbStripeId, $request['card_number'], $request['expiration_month'], $request['expiration_year'], $request['cvc']);
 
             return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
