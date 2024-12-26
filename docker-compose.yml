@@ -119,7 +119,7 @@ services:
       - tabantajnetwork
     # networks:
     #   - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 4g
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
