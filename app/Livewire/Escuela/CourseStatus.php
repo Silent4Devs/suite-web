@@ -41,6 +41,8 @@ class CourseStatus extends Component
 
     public $cursoCompletado;
 
+    public $archivoUrl = null;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
     {
@@ -60,6 +62,9 @@ class CourseStatus extends Component
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
+        if($this->current->resource){
+            $this->archivoUrl = asset('storage/' . $this->current->resource->url);  // Asegúrate de que el archivo sea accesible
+        }
     }
 
     public function render()
@@ -69,7 +74,7 @@ class CourseStatus extends Component
         // dd($this->current);
 
         // lastReview
-        $fechaYHora = $this->fecha.' '.$this->hora;
+        $fechaYHora = $this->fecha . ' ' . $this->hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
             ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
@@ -109,13 +114,21 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+
+
         $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
         // dd($this->current);
         return view('livewire.escuela.course-status');
+    }
 
+    public function completedLesson()
+    {
+        $usuario = User::getCurrentUser();
+        $this->current->users()->attach($usuario->id);
+        return redirect(route('admin.curso-estudiante', $this->course->id));
     }
 
     //METODOS
@@ -256,7 +269,7 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(storage_path('app/'.$this->current->resource->url));
+        return response()->download(storage_path('app/' . $this->current->resource->url));
     }
 
     public function alertSection()
