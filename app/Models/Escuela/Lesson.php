@@ -2,7 +2,7 @@
 
 namespace App\Models\Escuela;
 
-use App\Models\escuela\Platform;
+use App\Models\Escuela\Platform;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
