@@ -62,7 +62,7 @@ class CourseStatus extends Component
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
-        if($this->current->resource){
+        if(isset($this->current->resource)){
             $this->archivoUrl = asset('storage/' . $this->current->resource->url);  // Asegúrate de que el archivo sea accesible
         }
     }
