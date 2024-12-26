@@ -160,7 +160,27 @@ class TBTenantStripeService
     public function tbGetPurchaseHistory(string $tbCustomerId)
     {
         try {
-            return $this->tbStripeClient->paymentIntents->all(['customer' => $tbCustomerId]);
+            $paymentIntents = $this->tbStripeClient->paymentIntents->all(['customer' => $tbCustomerId]);
+
+            $purchaseHistory = [];
+            foreach ($paymentIntents->data as $paymentIntent) {
+                $charge = $paymentIntent->charges->data[0] ?? null;
+
+                $paymentDetails = $charge->payment_method_details ?? null;
+                $last4 = $paymentDetails->card->last4 ?? 'N/A';
+                $productName = $paymentIntent->metadata['product_name'] ?? 'Producto desconocido';
+
+
+                $purchaseHistory[] = [
+                    'amount' => $paymentIntent->amount / 100,
+                    'currency' => strtoupper($paymentIntent->currency),
+                    'date' => date('Y-m-d H:i:s', $paymentIntent->created),
+                    'product_name' => $productName,
+                    'payment_method' => '**** **** **** ' . $last4,
+                ];
+            }
+
+            return $purchaseHistory;
         } catch (\Stripe\Exception\ApiErrorException $e) {
             throw new Exception("Error al obtener el historial de compras: " . $e->getMessage());
         }
@@ -176,10 +196,22 @@ class TBTenantStripeService
     public function tbGetSavedCards(string $tbCustomerId)
     {
         try {
-            return $this->tbStripeClient->paymentMethods->all([
+            $cards = $this->tbStripeClient->paymentMethods->all([
                 'customer' => $tbCustomerId,
                 'type' => 'card',
             ]);
+
+            $savedCards = [];
+            foreach ($cards->data as $card) {
+                $savedCards[] = [
+                    'type' => ucfirst($card->card->brand),
+                    'last4' => $card->card->last4,
+                    'added_date' => date('Y-m-d H:i:s', $card->created),
+                    'is_active' => $card->card->checks->cvc_check === 'pass',
+                ];
+            }
+
+            return $savedCards;
         } catch (\Stripe\Exception\ApiErrorException $e) {
             throw new Exception("Error al obtener las tarjetas guardadas: " . $e->getMessage());
         }
