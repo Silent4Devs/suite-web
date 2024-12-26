@@ -916,7 +916,8 @@ class RequisicionesController extends Controller
      */
     public function pdf($id)
     {
-        $requisiciones = KatbolRequsicion::getArchivoFalseAll()->find($id);
+        // $requisiciones = KatbolRequsicion::getArchivoFalseAll()->find($id);
+        $requisiciones = KatbolRequsicion::where('id', $id)->first();
         $user = User::find($requisiciones->id_finanzas);
 
         if ($user) {
