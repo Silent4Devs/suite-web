@@ -57,19 +57,46 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
         try {
             $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costumerId $tbStripeId
 
-            $validationCardNumber = $this->tbTenantUtilities->tbValidateCardNumber("424242424242");
-            // return $this->tbSendError($validationCardNumber, ['error' => $validationCardNumber]);
-            $validationExpirationMonth = $this->tbTenantUtilities->tbValidateExpirationMonth(12);
-            // return $this->tbSendError($validationExpirationMonth, ['error' => $validationExpirationMonth]);
-            $validationExpirationYear = $this->tbTenantUtilities->tbValidateExpirationYear(2024);
-            // return $this->tbSendError($validationExpirationYear, ['error' => $validationExpirationYear]);
-            $validationCVC = $this->tbTenantUtilities->tbValidateCVC("424242424242");
-            return $this->tbSendError($validationCVC, ['error' => $validationCVC]);
+            // Inicializar un arreglo para almacenar errores
+            $errors = [];
 
+            // Validar cada campo y almacenar el error si existe
+            $validationCardNumber = $this->tbTenantUtilities->tbValidateCardNumber($request['card_number']);
+            if ($validationCardNumber !== true) {
+                $errors['card_number'] = $validationCardNumber;
+            }
 
+            $validationExpirationMonth = $this->tbTenantUtilities->tbValidateExpirationMonth($request['expiration_month']);
+            if ($validationExpirationMonth !== true) {
+                $errors['expiration_month'] = $validationExpirationMonth;
+            }
+
+            $validationExpirationYear = $this->tbTenantUtilities->tbValidateExpirationYear($request['expiration_year']);
+            if ($validationExpirationYear !== true) {
+                $errors['expiration_year'] = $validationExpirationYear;
+            }
+
+            $validationDate = $this->tbTenantUtilities->tbValidateExpirationDate($request['expiration_month'], $request['expiration_year']);
+            if ($validationDate !== true) {
+                $errors['expiration_date'] = $validationDate;
+            }
+
+            $validationCVC = $this->tbTenantUtilities->tbValidateCVC($request['cvc']);
+            if ($validationCVC !== true) {
+                $errors['cvc'] = $validationCVC;
+            }
+
+            // Verificar si hay errores
+            if (!empty($errors)) {
+                // Retornar los errores
+                return $this->tbSendError('Validation failed', ['errors' => $errors]);
+            }
+
+            // Si no hay errores, proceder con la lógica adicional
             $tbPayment = $this->tbStripeService->tbAddCard($tbStripeId, $request['card_number'], $request['expiration_month'], $request['expiration_year'], $request['cvc']);
 
             return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
+
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
         }
@@ -98,5 +125,11 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
         }
+    }
+
+    public function tbAddBillingAddressMethod(Request $request)
+    {
+        $arrayTest = [];
+
     }
 }

@@ -60,9 +60,37 @@ class TbTenantUtilities extends TbTenantBaseController
         return true;
     }
 
+    public function tbValidateExpirationDate($tbExpirationMonth, $tbExpirationYear)
+    {
+
+        // Obtener el mes y año actual
+        $mesActual = (int)date('m');
+        $anoActual = (int)date('Y');
+
+        // Verificar si el dato es mayor o igual al año actual
+        if ($tbExpirationYear == $anoActual) {
+            if($tbExpirationMonth >= $mesActual)
+            return 'Fecha de expiración invalida. Por favor ingrese correctamente la fecha o una tarjeta valida.';
+        }
+
+        // Si pasa la validación
+        return true;
+    }
+
     public function tbValidateCVC($tbCardNumber)
     {
-        dd($tbCardNumber);
+        // Paso 1: Verificar si el string tiene exactamente 3 caracteres
+        if (strlen($tbCardNumber) !== 3) {
+            return 'El dato proporcionado debe contener solo 3 caracteres.';
+        }
+
+        // Paso 2: Verificar si el string contiene solo números
+        if (!preg_match('/^\d{3}$/', $tbCardNumber)) {
+            return 'Valor invalido. Ingrese nuevamente su CVC';
+        }
+
+        // Si pasa todas las validaciones
+        return true;
     }
     //esto es un cambio
 }

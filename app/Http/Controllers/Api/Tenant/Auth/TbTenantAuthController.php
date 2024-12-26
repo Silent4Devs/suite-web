@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\Tenant\Auth;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
+use App\Models\Tenant\TbTenantUserImpersonationTokensModel;
+use App\Models\Tenant\TbTenantUserModel;
+use App\Services\Tenant\TBTenantStripeService;
+use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Tenant\TbTenantUserModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +18,16 @@ use Laravel\Sanctum\Sanctum;
 
 class TbTenantAuthController extends TbTenantBaseController
 {
+    protected $tbTenantManager;
+
+    protected $tbStripeService;
+
+    public function __construct(TBTenantTenantManager $tbTenantManager, TBTenantStripeService $tbStripeService)
+    {
+        $this->tbTenantManager = $tbTenantManager;
+        $this->tbStripeService = $tbStripeService;
+    }
+
     public function tbLogin(Request $request)
     {
         $request->validate([
@@ -25,12 +38,28 @@ class TbTenantAuthController extends TbTenantBaseController
         $tbCredentials = $request->only('email', 'password');
 
         $tbUser = TbTenantUserModel::where('email', $tbCredentials['email'])->first();
-
+        return $tbUser;
         if ($tbUser && Hash::check($tbCredentials['password'], $tbUser->password)) {
 
             $tbToken = $tbUser->createToken('auth_token', ['*'], now()->addHour())->plainTextToken;
+
+            $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
+            [
+                'tenant_id' => "qqwe_1234567898765",
+                'user_id' => $tbUser->id,
+            ],
+            [
+                'token' => $tbToken,
+                'auth_guard' => "test_data",
+                'redirect_url' => 'www.suite-web.test',
+            ]);
+
+            $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbUserToken);
+
             $tbData = [
                 'user' => $tbUser,
+                'userToken' => $tbUserToken,
+                'userProfile' => $tbUserProfile,
                 'token' => $tbToken,
                 'expires_at' => now()->addHour(),
             ];

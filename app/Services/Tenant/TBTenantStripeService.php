@@ -123,7 +123,7 @@ class TBTenantStripeService
      * Verifica el estado de suscripciones de un cliente para determinar si tiene acceso a los módulos válidos.
      *
      * Este método revisa las suscripciones activas de un cliente y valida si alguna de ellas coincide con los módulos
-     * válidos proporcionados. Si una suscripción activa pertenece a un módulo válido, el método devuelve `true`, 
+     * válidos proporcionados. Si una suscripción activa pertenece a un módulo válido, el método devuelve `true`,
      * de lo contrario, devuelve `false`. Si no hay suscripciones o las suscripciones no son válidas, también se devuelve `false`.
      *
      * @param array $tbSuscripciones Listado de las suscripciones del cliente.
@@ -218,7 +218,7 @@ class TBTenantStripeService
     }
 
     /**
-     * Agrega un nuevo método de pago para un cliente. se necesita agregar primero una tarjeta para asiciarlo 
+     * Agrega un nuevo método de pago para un cliente. se necesita agregar primero una tarjeta para asiciarlo
      *
      * @param string $tbCustomerId
      * @param string $tbPaymentMethodId
@@ -238,7 +238,7 @@ class TBTenantStripeService
     }
 
     /**
-     * Agrega una tarjeta como método de pago para un cliente. agrega y aoscia metodo de pago 
+     * Agrega una tarjeta como método de pago para un cliente. agrega y aoscia metodo de pago
      *
      * @param string $tbCustomerId El ID del cliente en Stripe.
      * @param string $cardNumber El número de la tarjeta de crédito.
