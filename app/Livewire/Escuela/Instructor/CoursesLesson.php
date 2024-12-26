@@ -218,31 +218,36 @@ class CoursesLesson extends Component
                         $this->validateOnly('name');
                         $this->validateOnly('platform_id');
 
-                        $resource = Lesson::create([
-                            'name' => $this->name,
-                            'platform_id' => $this->platform_id,
-                            'section_id' => $this->section->id,
-                        ]);
+                        $formatoArchivo = $this->file->getClientOriginalExtension();
+                        if($formatoArchivo == 'pdf' || $formatoArchivo == 'doc' || $formatoArchivo == 'docx' || $formatoArchivo == 'ppt' || $formatoArchivo == 'pptx'){
+                            $resource = Lesson::create([
+                                'name' => $this->name,
+                                'platform_id' => $this->platform_id,
+                                'section_id' => $this->section->id,
+                            ]);
 
-                        // $urlresorce = $this->file->store('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id);
+                            // $urlresorce = $this->file->store('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id);
 
-                        $uuid = Str::uuid(); // Generar un UUID único
-                        $originalName = $this->file->getClientOriginalName(); // Obtener el nombre original del archivo
-                        $newFileName = $uuid . '_' . $originalName; // Concatenar UUID y nombre original
+                            $uuid = Str::uuid(); // Generar un UUID único
+                            $originalName = $this->file->getClientOriginalName(); // Obtener el nombre original del archivo
+                            $newFileName = $uuid . '_' . $originalName; // Concatenar UUID y nombre original
 
-                        $urlresorce = $this->file->storeAs('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
+                            $urlresorce = $this->file->storeAs('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
-                        $resource->resource()->create([
-                            'url' => $urlresorce,
-                        ]);
+                            $resource->resource()->create([
+                                'url' => $urlresorce,
+                            ]);
 
-                        $this->file->storeAs('public/cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
+                            $this->file->storeAs('public/cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
-                        $this->reset('name', 'platform_id', 'url', 'description', 'file');
+                            $this->reset('name', 'platform_id', 'url', 'description', 'file');
 
-                        $this->section = Section::find($this->section->id);
+                            $this->section = Section::find($this->section->id);
 
-                        $this->render_alerta('success', 'Registro añadido exitosamente');
+                            $this->render_alerta('success', 'Registro añadido exitosamente');
+                        }else{
+                            $this->render_alerta('error', 'Este formato de archivo no es valido.');
+                        }
                     } else {
                         $this->render_alerta('error', 'Completa los campos obligatorios');
                     }

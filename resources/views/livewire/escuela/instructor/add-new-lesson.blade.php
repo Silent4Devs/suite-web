@@ -112,7 +112,7 @@
                                     <p>Ingrese un documento con uno de los siguientes formatos: Power Point (.ppt, .pptx), PDF (.pdf), Word (.doc, .docx).</p>
                                     <div class="mt-4 pl-4 d-flex justify-content-start align-items-center"
                                         style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
-                                        <input wire:model.live="file" type="file" accept=".pdf, .docx, .pptx" class="flex-1 form-input">
+                                        <input wire:model.live="file" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx" class="flex-1 form-input">
                                     </div>
                                     <div class="mt-1 font-bold text-blue-500" wire:loading wire:target="file">
                                         Cargando ...
