@@ -47,83 +47,247 @@
                         </div>
                     </div>
                     <div wire:loading.remove wire:loading.remove.class="test">
-                        <div class="row">
-                            <div class="form-group col-8 anima-focus">
-                                <input wire:model="formName"
-                                    id="edit-lesson-name-{{ $section->id }}-{{ $item->id }}" type="text"
-                                    placeholder="" maxlength="250" class=" form-control">
-                                @error('formName')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                <label for="edit-lesson-name-{{ $section->id }}-{{ $item->id }}">Nombre*</label>
+                        @switch($item->platform_format)
+                            @case('Youtube')
+                                <div class="row">
+                                    <div class="form-group col-8 anima-focus">
+                                        <input wire:model="formName"
+                                            id="edit-lesson-name-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" maxlength="250" class=" form-control">
+                                        @error('formName')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="edit-lesson-name-{{ $section->id }}-{{ $item->id }}">Nombre*</label>
 
-                            </div>
-                            <div class="form-group col-4 anima-focus">
-                                <select wire:model="formPlatformId"
-                                    id="edit-lesson-platform-{{ $section->id }}-{{ $item->id }}" type="text"
-                                    class="w-full form-control ">
-                                    @foreach ($platforms as $platform)
-                                        <option value="{{ $platform->id }}">{{ $platform->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('formPlatformId')
-                                    <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
-                                @enderror
-                                <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
+                                    </div>
+                                    <div class="form-group col-4 anima-focus">
+                                        <select wire:model="formPlatformId"
+                                            id="edit-lesson-platform-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            class="w-full form-control ">
+                                            @foreach ($platforms as $platform)
+                                                <option value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('formPlatformId')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
 
-                            </div>
-                            <div class="form-group col-12 anima-focus">
-                                <input wire:model="formUrl"
-                                    id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" type="text"
-                                    placeholder="" class="form-control w-full">
-                                @error('formUrl')
-                                    <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
-                                @enderror
-                                <label for="edit-lesson-url-{{ $section->id }}">URL*</label>
+                                    </div>
+                                    <div class="form-group col-12 anima-focus">
+                                        <input wire:model="formUrl"
+                                            id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" class="form-control w-full">
+                                        @error('formUrl')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-url-{{ $section->id }}">URL*</label>
 
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="mt-3">
-                            @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
-                        </div>
+                                <div class="mt-3">
+                                    @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+                                </div>
 
-                        <div class="d-flex justify-content-end mt-4">
-                            <button wire:click="update" class="btn btn-outline-primary"
-                                style="min-width:140px;">Actualizar</button>
-                        </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button wire:click="update" class="btn btn-outline-primary"
+                                        style="min-width:140px;">Actualizar</button>
+                                </div>
+                            @break
+
+                            @case('Vimeo')
+                                <div class="row">
+                                    <div class="form-group col-8 anima-focus">
+                                        <input wire:model="formName"
+                                            id="edit-lesson-name-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" maxlength="250" class=" form-control">
+                                        @error('formName')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="edit-lesson-name-{{ $section->id }}-{{ $item->id }}">Nombre*</label>
+
+                                    </div>
+                                    <div class="form-group col-4 anima-focus">
+                                        <select wire:model="formPlatformId"
+                                            id="edit-lesson-platform-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            class="w-full form-control ">
+                                            @foreach ($platforms as $platform)
+                                                <option value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('formPlatformId')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
+
+                                    </div>
+                                    <div class="form-group col-12 anima-focus">
+                                        <input wire:model="formUrl"
+                                            id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" class="form-control w-full">
+                                        @error('formUrl')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-url-{{ $section->id }}">URL*</label>
+
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button wire:click="update" class="btn btn-outline-primary"
+                                        style="min-width:140px;">Actualizar</button>
+                                </div>
+                            @break
+
+                            @case('Documento')
+                                <div class="row">
+                                    <div class="form-group col-8 anima-focus">
+                                        <input wire:model="formName"
+                                            id="edit-lesson-name-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" maxlength="250" class=" form-control">
+                                        @error('formName')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="edit-lesson-name-{{ $section->id }}-{{ $item->id }}">Nombre*</label>
+
+                                    </div>
+                                    <div class="form-group col-4 anima-focus">
+                                        <select wire:model="formPlatformId"
+                                            id="edit-lesson-platform-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            class="w-full form-control ">
+                                            @foreach ($platforms as $platform)
+                                                <option value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('formPlatformId')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
+
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button wire:click="update" class="btn btn-outline-primary"
+                                        style="min-width:140px;">Actualizar</button>
+                                </div>
+                            @break
+
+                            @case('Texto')
+                                <div class="row">
+                                    <div class="form-group col-8 anima-focus">
+                                        <input wire:model="formName"
+                                            id="edit-lesson-name-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            placeholder="" maxlength="250" class=" form-control">
+                                        @error('formName')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="edit-lesson-name-{{ $section->id }}-{{ $item->id }}">Nombre*</label>
+
+                                    </div>
+                                    <div class="form-group col-4 anima-focus">
+                                        <select wire:model="formPlatformId"
+                                            id="edit-lesson-platform-{{ $section->id }}-{{ $item->id }}" type="text"
+                                            class="w-full form-control ">
+                                            @foreach ($platforms as $platform)
+                                                <option value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('formPlatformId')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-platform-{{ $section->id }}">Plataforma*</label>
+
+                                    </div>
+                                    <div class="form-group col-12 anima-focus" {{-- id="description2" --}}>
+                                        {{-- id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" --}}
+                                        <textarea wire:model="formText" id="edit-lesson-url-{{ $section->id }}-{{ $item->id }}" placeholder=""
+                                            class="form-control w-full"></textarea>
+                                        @error('formText')
+                                            <b class="block mt-1 text-xs text-red-500">{{ $message }}</b>
+                                        @enderror
+                                        <label for="edit-lesson-url-{{ $section->id }}">Texto*</label>
+
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button wire:click="update" class="btn btn-outline-primary"
+                                        style="min-width:140px;">Actualizar</button>
+                                </div>
+                            @break
+
+                            @default
+                                <h1>TST</h1>
+                        @endswitch
                     </div>
                 </div>
             </div>
-        @empty
-            <div class="text-center">
-                Aun no hay lecciones en esta sección
-            </div>
-        @endforelse
+            @empty
+                <div class="text-center">
+                    Aun no hay lecciones en esta sección
+                </div>
+            @endforelse
+        </div>
+
+
+        @include('livewire.escuela.instructor.add-new-lesson')
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Livewire.on('reinitializeCkeditor', () => {
+                    setTimeout(() => {
+                        // const editorElement = document.querySelector('#description1');
+                        // console.log(editorElement);
+                        ClassicEditor.create(document.querySelector('#description2 textarea'), {
+                                toolbar: [
+                                    'heading', 'bold', 'italic', 'strikethrough', 'underline',
+                                    'code',
+                                    'subscript', 'superscript', 'link', 'bulletedList',
+                                    'numberedList',
+                                    'indent', 'outdent', 'blockQuote', 'insertTable',
+                                    'mediaEmbed',
+                                    'undo', 'redo', 'alignment', 'fontSize', 'fontColor',
+                                    'fontBackgroundColor',
+                                    'highlight', 'horizontalLine', 'pageBreak',
+                                    'specialCharacters'
+                                ],
+                                heading: {
+                                    options: [{
+                                            model: 'paragraph',
+                                            title: 'Paragraph',
+                                            class: 'ck-heading_paragraph'
+                                        },
+                                        {
+                                            model: 'heading1',
+                                            view: 'h1',
+                                            title: 'Heading 1',
+                                            class: 'ck-heading_heading1'
+                                        },
+                                        {
+                                            model: 'heading2',
+                                            view: 'h2',
+                                            title: 'Heading 2',
+                                            class: 'ck-heading_heading2'
+                                        }
+                                    ]
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+
+                    }, 500);
+                });
+            });
+        </script>
+
     </div>
-
-
-    @include('livewire.escuela.instructor.add-new-lesson')
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const bladeElements = document.querySelectorAll('.test');
-            console.log(bladeElements);
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('openCollapse')) {
-                    let targetId = event.target.getAttribute('data-id');
-                    let collapse = document.querySelector(targetId);
-                    console.log("collapse", targetId);
-                    collapse.classList.toggle('collapse');
-
-                }
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('livewire:init', function () {
-            Livewire.on('closeCollapse', function () {
-                window.dispatchEvent(new Event('close-collapse'));
-            });
-        });
-    </script> --}}
-</div>

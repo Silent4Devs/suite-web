@@ -15,8 +15,9 @@
             </div>
         @else
             {{-- <form wire:submit="save"> --}}
+            <p>Ingrese un documento con uno de los siguientes formatos: Power Point (.ppt, .pptx), PDF (.pdf), Word (.doc, .docx).</p>
             <div class="flex items-center">
-                <input wire:model.live="file" type="file" class="flex-1 form-input">
+                <input wire:model.live="file" type="file" accept=".pdf, .docx, .pptx" class="flex-1 form-input">
                 <button type="button" wire:click="save" style="background-color:#333;"
                     class="inline-flex items-center px-4 py-2 mt-4 mb-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">Guardar</button>
             </div>
