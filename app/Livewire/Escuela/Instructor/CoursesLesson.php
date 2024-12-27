@@ -57,6 +57,8 @@ class CoursesLesson extends Component
 
     public $formText;
 
+    public $arrayTypeLesson;
+
     protected $listeners = ['closeCollapse'];
 
     // protected $rules = [
@@ -71,6 +73,7 @@ class CoursesLesson extends Component
         $this->platforms = Platform::get();
         // $this->lesson = new Lesson;
         $this->formatType = $this->platformFormat();
+        $this->sectionLessons();
     }
 
     public function render()
@@ -78,6 +81,27 @@ class CoursesLesson extends Component
         // dd($this->lesson);
 
         return view('livewire.escuela.instructor.courses-lesson');
+    }
+
+    public function sectionLessons()
+    {
+        $this->arrayTypeLesson = [];
+        foreach ($this->section->lessons as $key => $lesson) {
+            $this->arrayTypeLesson[$key] = $lesson->platform_format;
+        }
+    }
+
+    public function updateTypeArray($keyItem)
+    {
+        $this->arrayTypeLesson[$keyItem] = $this->platformFormatEdit();
+        $this->render();
+        // dd($this->arrayTypeLesson);
+    }
+
+    public function platformFormatEdit()
+    {
+        $platf = Platform::where('id', $this->formPlatformId)->first();
+        return $platf->name;
     }
 
     public function platformFormat()
@@ -219,7 +243,7 @@ class CoursesLesson extends Component
                         $this->validateOnly('platform_id');
 
                         $formatoArchivo = $this->file->getClientOriginalExtension();
-                        if($formatoArchivo == 'pdf' || $formatoArchivo == 'doc' || $formatoArchivo == 'docx' || $formatoArchivo == 'ppt' || $formatoArchivo == 'pptx'){
+                        if ($formatoArchivo == 'pdf' || $formatoArchivo == 'doc' || $formatoArchivo == 'docx' || $formatoArchivo == 'ppt' || $formatoArchivo == 'pptx') {
                             $resource = Lesson::create([
                                 'name' => $this->name,
                                 'platform_id' => $this->platform_id,
@@ -245,7 +269,7 @@ class CoursesLesson extends Component
                             $this->section = Section::find($this->section->id);
 
                             $this->render_alerta('success', 'Registro añadido exitosamente');
-                        }else{
+                        } else {
                             $this->render_alerta('error', 'Este formato de archivo no es valido.');
                         }
                     } else {
@@ -262,6 +286,7 @@ class CoursesLesson extends Component
                 # code...
                 break;
         }
+        $this->formatType = 'Youtube';
     }
 
     public function edit(Lesson $lesson)
@@ -292,6 +317,9 @@ class CoursesLesson extends Component
             case 'Youtube':
                 # code...
                 try {
+                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
+                        $this->lesson->resource->delete();
+                    }
                     //code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
@@ -327,6 +355,9 @@ class CoursesLesson extends Component
             case 'Vimeo':
                 # code...
                 try {
+                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
+                        $this->lesson->resource->delete();
+                    }
                     //code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
@@ -363,6 +394,11 @@ class CoursesLesson extends Component
                 # code...
 
                 try {
+
+                    if (isset($this->lesson->resource)) {
+                        $this->lesson->resource->delete();
+                    }
+
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
 
@@ -371,6 +407,10 @@ class CoursesLesson extends Component
                     $this->lesson->text_lesson = $this->formText;
 
                     $this->lesson->save();
+
+                    if ($this->lesson->resource) {
+                        $this->lesson->resource->delete();
+                    }
 
                     $this->section = Section::find($this->section->id);
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
@@ -385,6 +425,11 @@ class CoursesLesson extends Component
                 # code...
 
                 try {
+
+                    if ($this->lesson->resource) {
+                        $this->lesson->resource->delete();
+                    }
+
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
                     $this->validateOnly('formUrl');
