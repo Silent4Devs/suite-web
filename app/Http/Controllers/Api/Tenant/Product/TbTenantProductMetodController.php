@@ -34,4 +34,28 @@ class TbTenantProductMetodController extends TbTenantBaseController
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
+
+    public function tbGetAllActiveProducts(Request $request)
+    {
+        try {
+
+            $tbProduct = $this->tbStripeService->tbGetAllActiveProducts();
+            return $this->tbSendResponse($tbProduct, 'Todos los productos.');
+        } catch (\Exception $e) {
+            dd($e);
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
+
+    public function tbGetUnpurchasedProducts(Request $request)
+    {
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC';
+            $tbProduct = $this->tbStripeService->tbGetUnpurchasedProductsByCustomer($tbStripeId);
+            return $this->tbSendResponse($tbProduct, 'Todos los productos.');
+        } catch (\Exception $e) {
+            dd($e);
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
 }

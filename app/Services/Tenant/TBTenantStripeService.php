@@ -120,6 +120,103 @@ class TBTenantStripeService
     }
 
     /**
+     * Obtiene todos los productos activos de Stripe.
+     *
+     * @return array
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetAllActiveProducts(): array
+    {
+        try {
+            $allProducts = \Stripe\Product::all(['active' => true]);
+            $products = [];
+
+            foreach ($allProducts->data as $product) {
+                $products[] = [
+                    'active' => $product->active,
+                    'id' => $product->id,
+                    'images' => $product->images,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'img' => $product->metadata['img'] ?? null,
+                ];
+            }
+
+            return $products;
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener los productos activos: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Obtiene los productos no adquiridos por un cliente a través de sus suscripciones.
+     *
+     * @param string $tbCustomerId
+     * @return array
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetUnpurchasedProductsByCustomer(string $tbCustomerId): array
+    {
+        try {
+            $tbSubscriptions = $this->tbGetCustomerSubscriptions($tbCustomerId);
+            $purchasedProductIds = [];
+
+            foreach ($tbSubscriptions->data as $tbSubscription) {
+                foreach ($tbSubscription->items->data as $tbItem) {
+                    $purchasedProductIds[] = $tbItem->price->product;
+                }
+            }
+
+            $allProducts = \Stripe\Product::all(['active' => true]);
+            $unpurchasedProducts = [];
+            $totalMonthlyAmount = 0;
+            $totalYearlyAmount = 0;
+
+            foreach ($allProducts->data as $product) {
+                if (!in_array($product->id, $purchasedProductIds)) {
+
+                    $prices = \Stripe\Price::all(['product' => $product->id]);
+                    $formattedPrices = [];
+
+                    foreach ($prices->data as $price) {
+                        $formattedPrice = [
+                            'id' => $price->id,
+                            'amount' => $price->unit_amount / 100,
+                            'currency' => strtoupper($price->currency),
+                            'interval' => $price->recurring->interval ?? null,
+                        ];
+
+                        if ($price->recurring) {
+                            if ($price->recurring->interval === 'month') {
+                                $totalMonthlyAmount += $formattedPrice['amount'];
+                            } elseif ($price->recurring->interval === 'year') {
+                                $totalYearlyAmount += $formattedPrice['amount'];
+                            }
+                        }
+
+                        $formattedPrices[] = $formattedPrice;
+                    }
+
+                    $unpurchasedProducts[] = [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'prices' => $formattedPrices,
+                    ];
+                }
+            }
+
+            return [
+                'unpurchased_products' => $unpurchasedProducts,
+                'total_monthly_amount' => $totalMonthlyAmount,
+                'total_yearly_amount' => $totalYearlyAmount,
+            ];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener los productos no adquiridos por el cliente: " . $e->getMessage());
+        }
+    }
+
+
+    /**
      * Verifica el estado de suscripciones de un cliente para determinar si tiene acceso a los módulos válidos.
      *
      * Este método revisa las suscripciones activas de un cliente y valida si alguna de ellas coincide con los módulos

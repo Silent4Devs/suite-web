@@ -40,6 +40,8 @@ Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::clas
 Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
 Route::get('/stripe/billingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
 Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
+Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
+Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
