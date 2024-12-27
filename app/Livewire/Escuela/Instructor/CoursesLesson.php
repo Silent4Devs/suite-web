@@ -317,7 +317,7 @@ class CoursesLesson extends Component
             case 'Youtube':
                 # code...
                 try {
-                    if ($this->lesson->platform_format == 'Documento' && $this->lesson->resource) {
+                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
                     //code...
@@ -355,7 +355,7 @@ class CoursesLesson extends Component
             case 'Vimeo':
                 # code...
                 try {
-                    if ($this->lesson->platform_format == 'Documento' && $this->lesson->resource) {
+                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
                     //code...
@@ -395,7 +395,7 @@ class CoursesLesson extends Component
 
                 try {
 
-                    if ($this->lesson->resource) {
+                    if (isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
 
