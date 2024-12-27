@@ -27,7 +27,7 @@ class TbTenantUserController extends TbTenantBaseController
 
             return $this->tbSendResponse(['user' => $user], 'User correcto.');
         } catch (\Exception $e) {
-            return $this->tbSendError(__('es.Tenant.errors.generic_error'), ['error' => $e->getMessage()]);
+            return $this->tbSendError(__($e), ['error' => $e->getMessage()]);
         }
     }
 

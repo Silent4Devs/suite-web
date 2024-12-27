@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
+use App\Models\Tenant\TbTenantUserModel;
 use App\Services\Tenant\TBTenantTenantManager;
 use Carbon\Carbon;
 use Exception;
@@ -77,6 +78,20 @@ class TBTenantCreateTenantAction
         $tbTenant->createDomain(['domain' => $tbDomain])
             ->makePrimary()
             ->makeFallback();
+
+        $tbUserId = $tbData['userId'] ?? null;
+
+        if (!$tbUserId) {
+            throw new \InvalidArgumentException("El ID del usuario no esta definido en los datos proporcionados.{$tbUserId}");
+        }
+
+        try {
+            $tbTenantUser = TbTenantUserModel::findOrFail($tbUserId);
+            $tbTenantUser->tenant_Id = $tbTenant->id;
+            $tbTenantUser->save();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            throw new \Exception("No se encontró el usuario con ID: {$tbUserId}");
+        }
 
         return $tbTenant;
     }

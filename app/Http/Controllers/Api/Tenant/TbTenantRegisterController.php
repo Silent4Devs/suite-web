@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Tenant;
 
 use App\Actions\Tenant\TBTenantCreateTenantAction;
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\TbTenantUserModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,10 +27,9 @@ class TbTenantRegisterController extends Controller
             $tbDomain = $tbData['domain'];
             $tbData['password'] = Hash::make($tbData['password']);
             unset($tbData['domain']);
-
             // Crear el inquilino
             $tbTenant = (new TBTenantCreateTenantAction)($tbData, $tbDomain);
-
+            
             // Generar la URL completa del tenant
             $tbTenantUrl = $this->tbGenerateTenantUrl($tbDomain, 'users.login');
 
@@ -87,6 +87,7 @@ class TbTenantRegisterController extends Controller
             'sede' => 'required|string|max:150',
             'direccion' => 'required|string|max:255',
             'resumen' => 'required|string|min:10|max:500',
+            'userId' => 'required|integer',
         ]);
     }
 
