@@ -287,6 +287,7 @@ class CoursesLesson extends Component
                 break;
         }
         $this->formatType = 'Youtube';
+        $this->sectionLessons();
     }
 
     public function edit(Lesson $lesson)
