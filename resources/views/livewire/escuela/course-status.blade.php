@@ -73,36 +73,34 @@
                 @else
                     @switch($current->platform_format)
                         @case('Documento')
+                            <div class="card card-body">
+                                @switch($current->file_format)
+                                    @case('pdf')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                        </div>
+                                    @break
 
-                        <div class="card card-body">
-                            @switch($current->file_format)
-                                @case('pdf')
-                                    <div>
-                                        <embed src="{{ asset('storage/' . $this->current->resource->url) }}" type="application/pdf"
-                                            width="100%" height="600px">
-                                        </embed>
-                                    </div>
-                                @break
+                                    @case('docx')
+                                        <div>
+                                            <iframe src="https://docs.google.com/viewer?embedded=true&url={{ $archivoUrl }}"
+                                                width="100%" height="400"></iframe>
+                                        </div>
+                                    @break
 
-                                @case('docx')
-                                    <div>
-                                        <iframe src="https://docs.google.com/viewer?embedded=true&url={{ $archivoUrl }}" width="100%" height="400"></iframe>
-                                    </div>
+                                    @case('pptx')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                            {{-- <iframe src="https://docs.google.com/viewer?embedded=true&url={{ asset('storage/' . $this->current->resource->url) }}" width="600" height="400"></iframe> --}}
+                                        </div>
+                                    @break
 
-                                @break
-
-                                @case('pptx')
-                                    <div>
-                                        <embed src="{{ asset('storage/' . $this->current->resource->url) }}" type="application/pdf"
-                                            width="100%" height="600px">
-                                        </embed>
-                                        {{-- <iframe src="https://docs.google.com/viewer?embedded=true&url={{ asset('storage/' . $this->current->resource->url) }}" width="600" height="400"></iframe> --}}
-                                    </div>
-                                @break
-
-                                @default
-
-                            @endswitch
+                                    @default
+                                @endswitch
                                 <div>
                                     @if ($current->completed)
                                         Leccion Completada
