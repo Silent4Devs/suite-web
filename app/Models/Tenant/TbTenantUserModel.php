@@ -2,10 +2,10 @@
 
 namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
+use App\Models\Tenant\TbTenantsModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class TbTenantUserModel extends Authenticatable
 {
@@ -41,8 +41,13 @@ class TbTenantUserModel extends Authenticatable
 
     protected $keyType = 'int';
 
-    // Puedes ayudarme, estoy usando laravel 11 y necesito relacionar 2 tablas a traves de una tercera que puede servir como pivote, las 3 comparten un campo llamado tenant_id, la primera y la segunda deben relacionarse a traves del campo email, la primera y la tercera(pivote) se relacionan a traves del id (id en la primera, user_id en la tercera); y la segunda y la tercera(pivote) se relacionan a traves del id igualmente (id en la segunda, tenant_id en la tercera)
-    // public function tenantUser(){
-    //     return $this->hasOneThrough(TbTenantsModel::class, TbTenantUserImpersonationTokensModel::class, 'user_id', 'id', 'id', 'tenant_id');
-    // }
+    /**
+     * Método para obtener el tenant asociado mediante el email.
+     *
+     * @return TbTenantsModel|null
+     */
+    public function tenant()
+    {
+        return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id');
+    }
 }

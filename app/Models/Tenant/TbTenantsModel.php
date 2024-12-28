@@ -25,4 +25,8 @@ class TbTenantsModel extends Authenticatable
         'created_at',
     ];
 
+    public function users()
+    {
+        return $this->hasMany(TbTenantUserModel::class, 'tenant_Id', 'id');
+    }
 }

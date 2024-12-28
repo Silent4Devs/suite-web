@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tenant\Auth;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
+use App\Models\Tenant\TbTenantsModel;
 use App\Models\Tenant\TbTenantUserImpersonationTokensModel;
 use App\Models\Tenant\TbTenantUserModel;
 use App\Services\Tenant\TBTenantStripeService;
@@ -38,23 +39,26 @@ class TbTenantAuthController extends TbTenantBaseController
         $tbCredentials = $request->only('email', 'password');
 
         $tbUser = TbTenantUserModel::where('email', $tbCredentials['email'])->first();
-        return $tbUser;
+
         if ($tbUser && Hash::check($tbCredentials['password'], $tbUser->password)) {
 
             $tbToken = $tbUser->createToken('auth_token', ['*'], now()->addHour())->plainTextToken;
 
             $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
-            [
-                'tenant_id' => "qqwe_1234567898765",
-                'user_id' => $tbUser->id,
-            ],
-            [
-                'token' => $tbToken,
-                'auth_guard' => "test_data",
-                'redirect_url' => 'www.suite-web.test',
-            ]);
+                [
+                    'tenant_id' => "1",
+                    'user_id' => $tbUser->id,
+                ],
+                [
+                    'token' => $tbToken,
+                    'auth_guard' => "test_data",
+                    'redirect_url' => 'www.suite-web.test',
+                ]
+            );
 
-            $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbUserToken);
+            $tbTenant = $tbUser->tenant()->where('email', $tbUser->email)->first();
+
+            $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbTenant->stripe_id);
 
             $tbData = [
                 'user' => $tbUser,
