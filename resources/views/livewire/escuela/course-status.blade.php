@@ -61,24 +61,82 @@
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            <div class="video-curso-box" style="position: relative;">
-                <div id="end-screen"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,1); display: none; color: white; text-align: center; justify-content: center; align-items: center; flex-direction: column;">
-                    <h2 style="margin-bottom: 20px;">¡Pasando a la siguiente leccion!</h2>
-                    <div class="spinner"
-                        style="width: 40px; height: 40px; border: 4px solid rgba(255, 255, 255, 0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;">
+            @if ($current)
+                @if ($current->iframe)
+                    <div class="video-curso-box">
+                        <div class="box-iframe-video-courses d-none">
+                            {!! $current->iframe !!}
+                        </div>
+                        <div id="player3" class="w-100"></div>
                     </div>
-                </div>
-                @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
-                        {!! $current->iframe !!}
-                    </div>
-                    <div id="player3" class="w-100"></div>
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
                 @else
-                    <p>Sin registro</p>
+                    @switch($current->platform_format)
+                        @case('Documento')
+                            <div class="card card-body">
+                                @switch($current->file_format)
+                                    @case('pdf')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                        </div>
+                                    @break
+
+                                    @case('docx')
+                                        <div>
+                                            <iframe src="https://docs.google.com/viewer?embedded=true&url={{ $archivoUrl }}"
+                                                width="100%" height="400"></iframe>
+                                        </div>
+                                    @break
+
+                                    @case('pptx')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                            {{-- <iframe src="https://docs.google.com/viewer?embedded=true&url={{ asset('storage/' . $this->current->resource->url) }}" width="600" height="400"></iframe> --}}
+                                        </div>
+                                    @break
+
+                                    @default
+                                @endswitch
+                                <div>
+                                    @if ($current->completed)
+                                        Leccion Completada
+                                    @else
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @endif
+                                </div>
+                            </div>
+                        @break
+
+                        @case('Texto')
+                            <div class="card card-body">
+                                <div>
+                                    <p>{{ $current->text_lesson }}</p>
+                                </div>
+
+                                <div>
+                                    @if (!$current->completed)
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @else
+                                        Leccion Completada
+                                    @endif
+                                </div>
+                            </div>
+                        @break
+
+                        @default
+                            <h1>Default</h1>
+                    @endswitch
                 @endif
-            </div>
+            @else
+                <p>Sin registro</p>
+            @endif
+
 
             <div class="row" style="margin-top: 36px;">
                 <div class="col-12">
@@ -300,6 +358,7 @@
         </ul>
     </div>
     @section('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
             var player;
