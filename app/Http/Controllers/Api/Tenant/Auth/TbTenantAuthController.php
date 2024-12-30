@@ -44,22 +44,30 @@ class TbTenantAuthController extends TbTenantBaseController
 
             $tbToken = $tbUser->createToken('auth_token', ['*'], now()->addHour())->plainTextToken;
 
-            $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
-                [
-                    'tenant_id' => $tbUser->tenant_Id,
-                    'user_id' => $tbUser->id,
-                ],
-                [
-                    'token' => $tbToken,
-                    'auth_guard' => "test_data",
-                    'redirect_url' => 'www.suite-web.test',
-                ]
-            );
+            $tbUserToken = null;
+            $tbUserProfile = null;
 
-            $tbTenant = $tbUser->tenant;
+            if (isset($tbUser->tenant_Id)) {
+                # code...
+                $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
+                    [
+                        'tenant_id' => $tbUser->tenant_Id,
+                        'user_id' => $tbUser->id,
+                    ],
+                    [
+                        'token' => $tbToken,
+                        'auth_guard' => "test_data",
+                        'redirect_url' => 'www.suite-web.test',
+                    ]
+                );
+            }
 
-            $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbTenant->stripe_id);
+            if(isset($tbUser->tenant)){
+                $tbTenant = $tbUser->tenant;
 
+                $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbTenant->stripe_id);
+            }
+            //8a66496e-921e-460a-bad3-aa39762b0200
             $tbData = [
                 'user' => $tbUser,
                 'userToken' => $tbUserToken,

@@ -48,6 +48,9 @@ class TbTenantUserModel extends Authenticatable
      */
     public function tenant()
     {
-        return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id')->where('email', $this->email);
+        return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id')
+            ->when($this->email, function ($query, $email) {
+                $query->where('email', $email);
+        });
     }
 }
