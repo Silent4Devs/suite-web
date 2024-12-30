@@ -30,7 +30,6 @@ class TbTenantProductMetodController extends TbTenantBaseController
 
             return $this->tbSendResponse($tbProduct, 'Metodos de pagos correcto.');
         } catch (\Exception $e) {
-            dd($e);
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
@@ -42,7 +41,6 @@ class TbTenantProductMetodController extends TbTenantBaseController
             $tbProduct = $this->tbStripeService->tbGetAllActiveProducts();
             return $this->tbSendResponse($tbProduct, 'Todos los productos.');
         } catch (\Exception $e) {
-            dd($e);
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
@@ -54,7 +52,6 @@ class TbTenantProductMetodController extends TbTenantBaseController
             $tbProduct = $this->tbStripeService->tbGetUnpurchasedProductsByCustomer($tbStripeId);
             return $this->tbSendResponse($tbProduct, 'Todos los productos.');
         } catch (\Exception $e) {
-            dd($e);
             return $this->tbSendError($e, ['error' => $e]);
         }
     }

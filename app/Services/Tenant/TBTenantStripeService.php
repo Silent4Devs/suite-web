@@ -393,7 +393,8 @@ class TBTenantStripeService
      * @return array
      * @throws \Stripe\Exception\ApiErrorException
      */
-    public function tbGetBillingAddress(string $tbCustomerId): array
+    // : array Se comento ya que la Api retorna un objeto
+    public function tbGetBillingAddress(string $tbCustomerId)
     {
         try {
             $tbCustomer = $this->tbGetCustomerById($tbCustomerId);

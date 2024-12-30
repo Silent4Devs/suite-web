@@ -42,12 +42,12 @@ class TbTenantUserModel extends Authenticatable
     protected $keyType = 'int';
 
     /**
-     * Método para obtener el tenant asociado mediante el email.
+     * Método para obtener el tenant asociado mediante el id.
      *
      * @return TbTenantsModel|null
      */
     public function tenant()
     {
-        return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id');
+        return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id')->where('email', $this->email);
     }
 }

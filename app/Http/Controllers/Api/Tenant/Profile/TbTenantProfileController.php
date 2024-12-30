@@ -44,16 +44,4 @@ class TbTenantProfileController extends TbTenantBaseController
         }
     }
 
-    // public function tbGetSubscriptionStatus(Request $request)
-    // {
-    //     try {
-    //         $tbIdSubscription = "sub_1QQa2ILyj74BldhkQ5BUSoav";
-    //         $tbStatus = $this->tbStripeService->tbGetCustomerSubscriptions($tbIdSubscription);
-
-    //         return $this->tbSendResponse($tbStatus, 'Status obtenido.');
-    //     } catch (\Exception $e) {
-    //         dd($e);
-    //         return $this->tbSendError($e, ['error' => $e]);
-    //     }
-    // }
 }

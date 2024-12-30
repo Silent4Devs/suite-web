@@ -38,7 +38,10 @@ Route::get('/stripe/paymentMethod', [TbTenantPaymentMetodController::class, 'tbG
 Route::get('/stripe/addPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddPaymentMethod']);
 Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddCardPaymentMethod']);
 Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
-Route::get('/stripe/billingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
+Route::get('/stripe/getBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
+Route::post('/stripe/addBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbAddBillingAddressMethod']);
+Route::post('/stripe/updateBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbUpdateBillingAddressMethod']);
+Route::post('/stripe/removeBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbRemoveBillingAddressMethod']);
 Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
 Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
 Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);

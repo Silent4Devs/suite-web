@@ -46,7 +46,7 @@ class TbTenantAuthController extends TbTenantBaseController
 
             $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
                 [
-                    'tenant_id' => "1",
+                    'tenant_id' => $tbUser->tenant_Id,
                     'user_id' => $tbUser->id,
                 ],
                 [
@@ -56,7 +56,7 @@ class TbTenantAuthController extends TbTenantBaseController
                 ]
             );
 
-            $tbTenant = $tbUser->tenant()->where('email', $tbUser->email)->first();
+            $tbTenant = $tbUser->tenant;
 
             $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbTenant->stripe_id);
 

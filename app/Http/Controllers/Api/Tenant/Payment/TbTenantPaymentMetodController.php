@@ -129,7 +129,82 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
 
     public function tbAddBillingAddressMethod(Request $request)
     {
-        $arrayTest = [];
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC'; // Customer ID
 
+            // Obtenemos la dirección del request
+            $data = $request->input('address'); // Address contiene la información del formulario
+            $billingAddress = collect($data)->toArray();
+
+            // Validamos la dirección utilizando tbValidateAddress
+            $addressValidation = $this->tbTenantUtilities->tbValidateAddress($billingAddress);
+
+            if (!empty($addressValidation)) {
+                // Enviamos los errores si la validación falla
+                return $this->tbSendError(
+                    'Ha habido un error al validar la dirección de facturación',
+                    ['errors' => $addressValidation],
+                    422
+                );
+            }
+
+            // Si pasa la validación, llamamos al servicio para agregar la dirección
+            $tbAddBillingAddress = $this->tbStripeService->tbAddBillingAddress($tbStripeId, $billingAddress);
+
+            return $this->tbSendResponse($tbAddBillingAddress, 'Dirección de factura agregada exitosamente');
+
+        } catch (\Exception $e) {
+            // Manejo de excepciones
+            return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function tbUpdateBillingAddressMethod(Request $request)
+    {
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC'; // Customer ID
+
+            // Obtenemos la dirección del request
+            $data = $request->input('address'); // Address contiene la información del formulario
+            $billingAddress = collect($data)->toArray();
+
+            // Validamos la dirección utilizando tbValidateAddress
+            $addressValidation = $this->tbTenantUtilities->tbValidateAddress($billingAddress);
+
+            if (!empty($addressValidation)) {
+                // Enviamos los errores si la validación falla
+                return $this->tbSendError(
+                    'Ha habido un error al validar la dirección de facturación',
+                    ['errors' => $addressValidation],
+                    422
+                );
+            }
+
+            // Si pasa la validación, llamamos al servicio para agregar la dirección
+            $tbAddBillingAddress = $this->tbStripeService->tbAddBillingAddress($tbStripeId, $billingAddress);
+
+            return $this->tbSendResponse($tbAddBillingAddress, 'Dirección de factura modificada exitosamente');
+
+        } catch (\Exception $e) {
+            // Manejo de excepciones
+            return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function tbRemoveBillingAddressMethod(Request $request)
+    {
+        try {
+            $tbStripeId = 'cus_RB6jvmea5u8gkC'; // Customer ID
+
+            $tbRemoveBillingAddress = $this->tbStripeService->tbRemoveBillingAddress($tbStripeId);
+            // tbRemoveBillingAddress(string $tbCustomerId)
+
+            return $this->tbSendResponse($tbRemoveBillingAddress, 'Dirección de factura removida exitosamente');
+
+        } catch (\Exception $e) {
+            // Manejo de excepciones
+            return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
+        }
     }
 }
