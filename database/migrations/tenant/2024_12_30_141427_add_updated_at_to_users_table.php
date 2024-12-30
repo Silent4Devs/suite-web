@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('tenant_Id')->nullable();
+            $table->timestamp('updated_at')->nullable()->after('created_at');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tenant_Id');
+            $table->dropColumn('updated_at');
         });
     }
 };

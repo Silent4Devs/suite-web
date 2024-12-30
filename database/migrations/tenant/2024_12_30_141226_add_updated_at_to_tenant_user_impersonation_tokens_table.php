@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users_tenant', function (Blueprint $table) {
-            //
-            $table->timestamp('updated_at')->nullable();
+        Schema::table('tenant_user_impersonation_tokens', function (Blueprint $table) {
+            $table->timestamp('updated_at')->nullable()->after('created_at');
         });
     }
 
@@ -22,8 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users_tenant', function (Blueprint $table) {
-            //
+        Schema::table('tenant_user_impersonation_tokens', function (Blueprint $table) {
             $table->dropColumn('updated_at');
         });
     }

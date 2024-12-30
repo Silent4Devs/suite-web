@@ -13,7 +13,7 @@ class TbTenantUserModel extends Authenticatable
 
     protected $connection = 'pgsql';
 
-    protected $table = 'users_tenant';
+    protected $table = 'users';
 
     protected $primaryKey = 'id';
 
