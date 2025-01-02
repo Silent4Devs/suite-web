@@ -104,7 +104,7 @@ class EV360CompetenciasController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.competencias.edit', compact('competencia', 'tipo_seleccionado', 'editar_solo_conductas'));
     }
 
-    public function update(Request $request, $competencia)
+    public function update(Request $request, $id_competencia)
     {
         abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
@@ -112,7 +112,7 @@ class EV360CompetenciasController extends Controller
             'descripcion' => 'nullable|string',
             'tipo_id' => 'required|exists:ev360_tipo_competencias,id',
         ]);
-        $competencia = Competencia::find(intval($competencia));
+        $competencia = Competencia::find(intval($id_competencia));
         $competencia_u = $competencia->update($request->all());
 
         if ($request->hasFile('foto')) {
@@ -156,11 +156,11 @@ class EV360CompetenciasController extends Controller
         }
     }
 
-    public function conductas(Request $request, $competencia)
+    public function conductas(Request $request, $id_competencia)
     {
         if ($request->ajax()) {
             // $conductas = Conducta::where('competencia_id', intval($competencia))->get()->sortBy('ponderacion');
-            $conductas = Conducta::where('competencia_id', intval($competencia))->orderBy('ponderacion')->get();
+            $conductas = Conducta::where('competencia_id', intval($id_competencia))->orderBy('ponderacion')->get();
 
             return datatables()->of($conductas)->toJson();
         }
@@ -174,24 +174,24 @@ class EV360CompetenciasController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.competencias.show', compact('competencia'));
     }
 
-    public function informacionCompetencia(Request $request, $competencia)
+    public function informacionCompetencia(Request $request, $id_competencia)
     {
         if ($request->ajax()) {
             $competencia = Competencia::with(['opciones' => function ($q) {
                 $q->orderByDesc('ponderacion');
-            }])->find(intval($competencia));
+            }])->find(intval($id_competencia));
 
             return response()->json(['competencia' => $competencia]);
         }
     }
 
-    public function guardarRespuestaCompetencia(Request $request, $competencia)
+    public function guardarRespuestaCompetencia(Request $request, $id_competencia)
     {
         if ($request->ajax()) {
             $repuesta = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
                 ->where('evaluado_id', $request->evaluado_id)
                 ->where('evaluador_id', $request->evaluador_id)
-                ->where('competencia_id', intval($competencia))
+                ->where('competencia_id', intval($id_competencia))
                 ->first();
             $repuesta_u = $repuesta->update(['calificacion' => intval($request->calificacion)]);
             $total_preguntas = EvaluacionRepuesta::where('evaluacion_id', $request->evaluacion_id)
@@ -239,10 +239,10 @@ class EV360CompetenciasController extends Controller
         return $nivel;
     }
 
-    public function destroy(Competencia $competencia)
+    public function destroy($id_competencia)
     {
         abort_if(Gate::denies('competencias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $competencia = Competencia::find($competencia);
+        $competencia = Competencia::where()->find($id_competencia);
         $competencia->delete();
 
         return response()->json(['deleted' => true]);
