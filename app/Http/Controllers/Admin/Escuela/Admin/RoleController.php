@@ -71,8 +71,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id_role)
     {
+        $role = Role::where('id', $id_role)->first();
         return view('admin.roles.show', [
             'role' => $role,
         ]);
@@ -84,8 +85,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id_role)
     {
+        $role = Role::where('id', $id_role)->first();
         return view('admin.roles.edit', [
             'role' => $role,
             'permissions' => Permission::getAll(),
@@ -98,8 +100,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id_role)
     {
+        $role = Role::where('id', $id_role)->first();
         $request->validate([
             'name' => 'required',
             'permissions' => 'required',
@@ -122,8 +125,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id_role)
     {
+        $role = Role::where('id', $id_role)->first();
         $role->delete();
         Alert::toast('El rol fue eliminado exitosamente', 'success');
 

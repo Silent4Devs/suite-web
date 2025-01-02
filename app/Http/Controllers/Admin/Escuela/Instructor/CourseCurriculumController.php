@@ -12,8 +12,9 @@ class CourseCurriculumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         return view('admin.escuela.instructor.courses.curriculum', compact('course'));
     }
 }
