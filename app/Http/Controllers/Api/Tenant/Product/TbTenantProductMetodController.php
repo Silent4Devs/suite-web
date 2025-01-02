@@ -61,4 +61,15 @@ class TbTenantProductMetodController extends TbTenantBaseController
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
+
+    public function tbPostInactiveSubscriptionsByCustomer(Request $request)
+    {
+        try {
+            $tbCustomerId = $request->customerId;
+            $tbProduct = $this->tbStripeService->tbGetInactiveSubscriptionsByCustomer($tbCustomerId);
+            return $this->tbSendResponse($tbProduct, 'Todos los productos no contratados.');
+        } catch (\Exception $e) {
+            return $this->tbSendError($e, ['error' => $e]);
+        }
+    }
 }

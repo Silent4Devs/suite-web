@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function 
     Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
     Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);
     Route::post('/stripe/productSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostProductsByCustomer']);
+    Route::post('/stripe/productInactiveSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostInactiveSubscriptionsByCustomer']);
 });
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);

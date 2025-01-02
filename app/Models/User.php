@@ -27,7 +27,6 @@ class User extends Authenticatable implements Auditable
 
     protected $guard = 'tenants';
 
-
     protected $connection = 'tenant';
 
     public function __construct(array $attributes = [])

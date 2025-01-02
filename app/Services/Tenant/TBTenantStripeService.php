@@ -95,6 +95,51 @@ class TBTenantStripeService
     }
 
     /**
+     * Obtiene las suscripciones que no están activas para un cliente.
+     *
+     * @param string $tbCustomerId
+     * @return array
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function tbGetInactiveSubscriptionsByCustomer(string $tbCustomerId): array
+    {
+        try {
+            \Stripe\Customer::retrieve($tbCustomerId);
+
+            $tbSubscriptions = $this->tbGetCustomerSubscriptions($tbCustomerId);
+            $subscribedProductIds = [];
+
+            foreach ($tbSubscriptions->data as $tbSubscription) {
+                foreach ($tbSubscription->items->data as $tbItem) {
+                    $subscribedProductIds[] = $tbItem->price->product;
+                }
+            }
+
+            $tbProducts = \Stripe\Product::all(['active' => true]);
+
+            $unsubscribedProducts = [];
+
+            foreach ($tbProducts->data as $product) {
+                if (!in_array($product->id, $subscribedProductIds)) {
+                    $unsubscribedProducts[] = [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'description' => $product->description,
+                        'active' => $product->active,
+                        'images' => $product->images,
+                        'img' => $product->metadata['img'] ?? null,
+                    ];
+                }
+            }
+
+            return $unsubscribedProducts;
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("Error al obtener los productos no suscritos activos del cliente: " . $e->getMessage());
+        }
+    }
+
+
+    /**
      * Obtiene todos los productos de un cliente a través de sus suscripciones.
      *
      * @param string $tbCustomerId
@@ -249,8 +294,8 @@ class TBTenantStripeService
         try {
             if (!empty($tbSuscripciones) && is_array($tbSuscripciones)) {
                 foreach ($tbSuscripciones as $tbSuscripcion) {
-                    if (in_array($tbSuscripcion->tbName, $tbModulosValidos) && $tbSuscripcion->tbActive === true) {
-                        return $tbSuscripcion->tbActive ? true : false;
+                    if (in_array($tbSuscripcion["name"], $tbModulosValidos) && $tbSuscripcion["active"] === true) {
+                        return true;
                     } else {
                         return false;
                     }
