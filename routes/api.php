@@ -28,27 +28,27 @@ Route::post('/rtenant', [TBTenantRegisterController::class, 'submit']);
 Route::post('/user/login', [TbTenantAuthController::class, 'tbLogin']);
 Route::post('/user/register', [TbTenantUserController::class, 'tbRegister']);
 
-Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function () {});
-Route::post('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);
-Route::get('/stripe/profile', [TbTenantProfileController::class, 'tbGetCostumerInfo']);
-Route::get('/stripe/suscriptions', [TbTenantProfileController::class, 'tbGetCostumerSubscriptions']);
-Route::get('/stripe/statusSuscription', [TbTenantProfileController::class, 'tbGetSubscriptionStatus']);
-//pagos
-Route::post('/stripe/paymentMethod', [TbTenantPaymentMetodController::class, 'tbGetPaymentMethod']);
-Route::get('/stripe/addPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddPaymentMethod']);
-Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddCardPaymentMethod']);
-Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
-Route::get('/stripe/getBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
-Route::post('/stripe/addBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbAddBillingAddressMethod']);
-Route::post('/stripe/updateBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbUpdateBillingAddressMethod']);
-Route::post('/stripe/removeBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbRemoveBillingAddressMethod']);
-Route::post('/stripe/createSubcriptions', [TbTenantPaymentMetodController::class, 'createSubscriptionForMultipleProducts']);
-//products
-Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
-Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
-Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);
-Route::post('/stripe/productSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostProductsByCustomer']);
-
+Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function () {
+    Route::post('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);
+    Route::get('/stripe/profile', [TbTenantProfileController::class, 'tbGetCostumerInfo']);
+    Route::get('/stripe/suscriptions', [TbTenantProfileController::class, 'tbGetCostumerSubscriptions']);
+    Route::get('/stripe/statusSuscription', [TbTenantProfileController::class, 'tbGetSubscriptionStatus']);
+    //pagos
+    Route::post('/stripe/paymentMethod', [TbTenantPaymentMetodController::class, 'tbGetPaymentMethod']);
+    Route::get('/stripe/addPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddPaymentMethod']);
+    Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddCardPaymentMethod']);
+    Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
+    Route::get('/stripe/getBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
+    Route::post('/stripe/addBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbAddBillingAddressMethod']);
+    Route::post('/stripe/updateBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbUpdateBillingAddressMethod']);
+    Route::post('/stripe/removeBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbRemoveBillingAddressMethod']);
+    Route::post('/stripe/createSubcriptions', [TbTenantPaymentMetodController::class, 'createSubscriptionForMultipleProducts']);
+    //products
+    Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
+    Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
+    Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);
+    Route::post('/stripe/productSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostProductsByCustomer']);
+});
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
