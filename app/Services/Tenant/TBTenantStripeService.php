@@ -104,12 +104,42 @@ class TBTenantStripeService
     public function tbGetProductsByCustomer(string $tbCustomerId): array
     {
         try {
+            \Stripe\Customer::retrieve($tbCustomerId);
+
             $tbSubscriptions = $this->tbGetCustomerSubscriptions($tbCustomerId);
             $tbProducts = [];
 
             foreach ($tbSubscriptions->data as $tbSubscription) {
                 foreach ($tbSubscription->items->data as $tbItem) {
-                    $tbProducts[] = $this->tbGetProductDetailsById($tbItem->price->product);
+
+                    $product = \Stripe\Product::retrieve($tbItem->price->product);
+                    $price = $tbItem->price;
+
+                    $paymentMethod = null;
+                    $cardDetails = null;
+
+                    if ($tbSubscription->default_payment_method) {
+                        $paymentMethod = \Stripe\PaymentMethod::retrieve($tbSubscription->default_payment_method);
+                        $cardDetails = $paymentMethod->card ?? null;
+                    }
+
+                    $tbProducts[] = [
+                        'active' => $product->active,
+                        'id' => $product->id,
+                        'images' => $product->images,
+                        'name' => $product->name,
+                        'description' => $product->description,
+                        'img' => $product->metadata['img'] ?? null,
+                        'price' => [
+                            'amount' => $price->unit_amount / 100,
+                            'currency' => strtoupper($price->currency),
+                            'interval' => $price->recurring->interval ?? null,
+                        ],
+                        'payment_method' => $paymentMethod->type ?? 'unknown',
+                        'last4' => $cardDetails ? $cardDetails->last4 : null,
+                        'subscription_start' => $tbSubscription->start_date ? date('Y-m-d', $tbSubscription->start_date) : null,
+                        'subscription_end' => $tbSubscription->current_period_end ? date('Y-m-d', $tbSubscription->current_period_end) : null,
+                    ];
                 }
             }
 
@@ -155,54 +185,42 @@ class TBTenantStripeService
      * @return array
      * @throws \Stripe\Exception\ApiErrorException
      */
-    public function tbGetUnpurchasedProductsByCustomer(string $tbCustomerId): array
+    public function tbGetUnpurchasedProducts(): array
     {
         try {
-            $tbSubscriptions = $this->tbGetCustomerSubscriptions($tbCustomerId);
-            $purchasedProductIds = [];
-
-            foreach ($tbSubscriptions->data as $tbSubscription) {
-                foreach ($tbSubscription->items->data as $tbItem) {
-                    $purchasedProductIds[] = $tbItem->price->product;
-                }
-            }
-
             $allProducts = \Stripe\Product::all(['active' => true]);
             $unpurchasedProducts = [];
             $totalMonthlyAmount = 0;
             $totalYearlyAmount = 0;
 
             foreach ($allProducts->data as $product) {
-                if (!in_array($product->id, $purchasedProductIds)) {
+                $prices = \Stripe\Price::all(['product' => $product->id]);
+                $formattedPrices = [];
 
-                    $prices = \Stripe\Price::all(['product' => $product->id]);
-                    $formattedPrices = [];
+                foreach ($prices->data as $price) {
+                    $formattedPrice = [
+                        'id' => $price->id,
+                        'amount' => $price->unit_amount / 100,
+                        'currency' => strtoupper($price->currency),
+                        'interval' => $price->recurring->interval ?? null,
+                    ];
 
-                    foreach ($prices->data as $price) {
-                        $formattedPrice = [
-                            'id' => $price->id,
-                            'amount' => $price->unit_amount / 100,
-                            'currency' => strtoupper($price->currency),
-                            'interval' => $price->recurring->interval ?? null,
-                        ];
-
-                        if ($price->recurring) {
-                            if ($price->recurring->interval === 'month') {
-                                $totalMonthlyAmount += $formattedPrice['amount'];
-                            } elseif ($price->recurring->interval === 'year') {
-                                $totalYearlyAmount += $formattedPrice['amount'];
-                            }
+                    if ($price->recurring) {
+                        if ($price->recurring->interval === 'month') {
+                            $totalMonthlyAmount += $formattedPrice['amount'];
+                        } elseif ($price->recurring->interval === 'year') {
+                            $totalYearlyAmount += $formattedPrice['amount'];
                         }
-
-                        $formattedPrices[] = $formattedPrice;
                     }
 
-                    $unpurchasedProducts[] = [
-                        'id' => $product->id,
-                        'name' => $product->name,
-                        'prices' => $formattedPrices,
-                    ];
+                    $formattedPrices[] = $formattedPrice;
                 }
+
+                $unpurchasedProducts[] = [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'prices' => $formattedPrices,
+                ];
             }
 
             return [
@@ -211,11 +229,9 @@ class TBTenantStripeService
                 'total_yearly_amount' => $totalYearlyAmount,
             ];
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception("Error al obtener los productos no adquiridos por el cliente: " . $e->getMessage());
+            throw new Exception("Error al obtener los productos: " . $e->getMessage());
         }
     }
-
-
     /**
      * Verifica el estado de suscripciones de un cliente para determinar si tiene acceso a los módulos válidos.
      *

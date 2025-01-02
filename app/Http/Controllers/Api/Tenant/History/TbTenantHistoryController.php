@@ -24,8 +24,8 @@ class TbTenantHistoryController extends TbTenantBaseController
     public function tbGetHistory(Request $request)
     {
         try {
-            $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costomerId
-            $tbHistory = $this->tbStripeService->tbGetPurchaseHistory($tbStripeId);
+            $tbCustomerId = $request->customerId;
+            $tbHistory = $this->tbStripeService->tbGetPurchaseHistory($tbCustomerId);
 
             return $this->tbSendResponse($tbHistory, 'Historial correcto');
         } catch (\Exception $e) {

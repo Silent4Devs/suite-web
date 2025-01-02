@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tenant\Auth;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
+use App\Models\Tenant;
 use App\Models\Tenant\TbTenantsModel;
 use App\Models\Tenant\TbTenantUserImpersonationTokensModel;
 use App\Models\Tenant\TbTenantUserModel;
@@ -62,16 +63,22 @@ class TbTenantAuthController extends TbTenantBaseController
                 );
             }
 
-            if(isset($tbUser->tenant)){
-                $tbTenant = $tbUser->tenant;
-
-                $tbUserProfile = $this->tbStripeService->tbGetCustomerById($tbTenant->stripe_id);
+            if ($tbUser->tenant_Id !== null) {
+                $tenant = Tenant::where('id', $tbUser->tenant_Id)->first();
+                $tbUserProfile = [
+                    'id' => $tenant->id,
+                    'name' => $tenant->name,
+                    'email' => $tenant->email,
+                    'stripe_id' => $tenant->stripe_id,
+                    'created_at' => $tenant->created_at,
+                    'updated_at' => $tenant->updated_at,
+                ];
             }
             //8a66496e-921e-460a-bad3-aa39762b0200
             $tbData = [
-                'user' => $tbUser,
+                'userLanding' => $tbUser,
                 'userToken' => $tbUserToken,
-                'userProfile' => $tbUserProfile,
+                'userTenant' => $tbUserProfile,
                 'token' => $tbToken,
                 'expires_at' => now()->addHour(),
             ];

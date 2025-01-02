@@ -28,8 +28,8 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
     public function tbGetPaymentMethod(Request $request)
     {
         try {
-            $tbStripeId = 'cus_RB6jvmea5u8gkC'; //costomerId
-            $tbPayment = $this->tbStripeService->tbGetSavedCards($tbStripeId);
+            $tbCustomerId = $request->customerId;
+            $tbPayment = $this->tbStripeService->tbGetSavedCards($tbCustomerId);
 
             return $this->tbSendResponse($tbPayment, 'Metodos de pagos correcto.');
         } catch (\Exception $e) {
@@ -96,7 +96,6 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             $tbPayment = $this->tbStripeService->tbAddCard($tbStripeId, $request['card_number'], $request['expiration_month'], $request['expiration_year'], $request['cvc']);
 
             return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
-
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
         }
@@ -152,7 +151,6 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             $tbAddBillingAddress = $this->tbStripeService->tbAddBillingAddress($tbStripeId, $billingAddress);
 
             return $this->tbSendResponse($tbAddBillingAddress, 'Dirección de factura agregada exitosamente');
-
         } catch (\Exception $e) {
             // Manejo de excepciones
             return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
@@ -185,7 +183,6 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             $tbAddBillingAddress = $this->tbStripeService->tbAddBillingAddress($tbStripeId, $billingAddress);
 
             return $this->tbSendResponse($tbAddBillingAddress, 'Dirección de factura modificada exitosamente');
-
         } catch (\Exception $e) {
             // Manejo de excepciones
             return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
@@ -201,7 +198,6 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             // tbRemoveBillingAddress(string $tbCustomerId)
 
             return $this->tbSendResponse($tbRemoveBillingAddress, 'Dirección de factura removida exitosamente');
-
         } catch (\Exception $e) {
             // Manejo de excepciones
             return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
