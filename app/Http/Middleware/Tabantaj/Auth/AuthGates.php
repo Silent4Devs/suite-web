@@ -15,10 +15,36 @@ use Illuminate\Support\Facades\Gate;
 
 class AuthGates
 {
+
+    public $tbTenantManager;
+
+    public function __construct(TBTenantTenantManager $tbTenantManager)
+    {
+        $this->tbTenantManager = $tbTenantManager;
+    }
+
     public function handle($request, Closure $next)
     {
 
         $user = \Auth::user();
+
+        try {
+            $tbSubdomain = explode('.', $request->getHost(), 2)[0];
+
+            $tbTenant = Tenant::whereHas(
+                'domains',
+                fn($tbQuery) =>
+                $tbQuery->where('domain', $tbSubdomain)
+            )->firstOrFail();
+
+            $this->tbTenantManager->tbSetTenant($tbTenant);
+            tenancy()->initialize($tbTenant);
+            app()->instance('tbCurrentTenant', $tbTenant);
+        } catch (ModelNotFoundException) {
+            abort(404, 'Tenant not found for the given subdomain.');
+        } catch (\Exception $tbException) {
+            abort(500, 'An unexpected error occurred.');
+        }
 
         if ($user) {
             // Cache roles and permissions to minimize database queries
