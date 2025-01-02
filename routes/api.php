@@ -42,6 +42,7 @@ Route::get('/stripe/getBillingAddressMethod', [TbTenantPaymentMetodController::c
 Route::post('/stripe/addBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbAddBillingAddressMethod']);
 Route::post('/stripe/updateBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbUpdateBillingAddressMethod']);
 Route::post('/stripe/removeBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbRemoveBillingAddressMethod']);
+Route::post('/stripe/createSubcriptions', [TbTenantPaymentMetodController::class, 'createSubscriptionForMultipleProducts']);
 //products
 Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
 Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);

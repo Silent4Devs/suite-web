@@ -465,4 +465,74 @@ class TBTenantStripeService
             throw new Exception("Error al actualizar la dirección de facturación: " . $e->getMessage());
         }
     }
+
+    /**
+     * Crea una suscripción para varios productos de un cliente en Stripe.
+     *
+     * Este método permite crear una suscripción con múltiples productos seleccionados
+     * por un cliente en Stripe. Los productos se agregan usando los IDs de precio de 
+     * cada producto, y la suscripción será configurada según el intervalo de pago 
+     * definido en los precios de los productos.
+     *
+     * @param string $tbCustomerId El ID del cliente en Stripe.
+     * @param array $productPriceIds Un arreglo de IDs de precios de los productos a suscribir.
+     * 
+     * @return array Un arreglo con el ID de la sesión de Stripe y la URL para el pago en Stripe.
+     * @throws \Stripe\Exception\ApiErrorException Si ocurre un error en la API de Stripe.
+     */
+    public function createSubscriptionForMultipleProducts(string $tbCustomerId, array $productPriceIds): array
+    {
+        try {
+            $customer = \Stripe\Customer::retrieve($tbCustomerId);
+
+            if (!$customer) {
+                throw new Exception("Cliente no encontrado en Stripe.");
+            }
+
+            $lineItems = [];
+            $productDetails = [];
+            foreach ($productPriceIds as $priceId) {
+
+                $price = \Stripe\Price::retrieve($priceId);
+                $product = \Stripe\Product::retrieve($price->product);
+
+                $lineItems[] = [
+                    'price' => $priceId,
+                    'quantity' => 1,
+                ];
+
+                $productDetails[] = [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $price->unit_amount / 100,
+                    'currency' => strtoupper($price->currency),
+                    'interval' => $price->recurring->interval ?? null,
+                ];
+            }
+
+            if (empty($lineItems)) {
+                throw new Exception("No se proporcionaron productos para contratar.");
+            }
+
+            $session = \Stripe\Checkout\Session::create([
+                'customer' => $tbCustomerId,
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'subscription',
+                'success_url' => env('APP_URL') . '/success?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => env('APP_URL') . '/cancel',
+                'payment_intent_data' => [
+                    'setup_future_usage' => 'off_session',
+                ],
+            ]);
+
+            return [
+                'session_id' => $session->id,
+                'url' => $session->url,
+                'product_details' => $productDetails,
+            ];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            throw new Exception("No se pudo procesar la contratación: " . $e->getMessage());
+        }
+    }
 }

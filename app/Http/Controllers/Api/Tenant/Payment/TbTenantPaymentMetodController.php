@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Http\Controllers\Api\Tenant\Utilities\TbTenantUtilities;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
+use Barryvdh\Debugbar\Twig\Extension\Dump;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -198,6 +199,21 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             // tbRemoveBillingAddress(string $tbCustomerId)
 
             return $this->tbSendResponse($tbRemoveBillingAddress, 'Dirección de factura removida exitosamente');
+        } catch (\Exception $e) {
+            // Manejo de excepciones
+            return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function createSubscriptionForMultipleProducts(Request $request)
+    {
+        try {
+            $tbCustomerId = $request->customerId;
+            $productPriceIds = $request->productPriceIds; // Customer ID
+
+            $tbCreateSubcription = $this->tbStripeService->createSubscriptionForMultipleProducts($tbCustomerId, $productPriceIds);
+
+            return $this->tbSendResponse($tbCreateSubcription, 'Pago correcto');
         } catch (\Exception $e) {
             // Manejo de excepciones
             return $this->tbSendError('Ha ocurrido un error inesperado', ['error' => $e->getMessage()], 500);
