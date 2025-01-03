@@ -828,15 +828,6 @@ class ContratosController extends AppBaseController
 
             $ruta_carpeta = storage_path('app/public/' . $ruta);
 
-            // $arrayLog = [
-            //     'nombre_f' => $nombre_f,
-            //     'ruta' => $ruta,
-            //     'ruta_carpeta' => $ruta_carpeta,
-            //     'extension' => $request->file('file_contrato')->getClientOriginalExtension()
-            // ];
-
-            // \Log::info($arrayLog);
-
             // Dar permisos chmod 777 a la carpeta
             chmod($ruta_carpeta, 0777);
 
