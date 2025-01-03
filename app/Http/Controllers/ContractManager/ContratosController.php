@@ -830,7 +830,13 @@ class ContratosController extends AppBaseController
 
             File::chmod($ruta_carpeta, 0777);
 
-            \Log::info($nombre_f, $ruta, $ruta_carpeta);
+            $arrayLog = [
+                'nombre_f' => $nombre_f,
+                'ruta' => $ruta,
+                'ruta_carpeta' => $ruta_carpeta
+            ];
+
+            \Log::info($arrayLog);
 
             // Dar permisos chmod 777 a la carpeta
             // chmod($ruta_carpeta, 0777);
