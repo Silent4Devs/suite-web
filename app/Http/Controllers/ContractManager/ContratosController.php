@@ -833,7 +833,8 @@ class ContratosController extends AppBaseController
             $arrayLog = [
                 'nombre_f' => $nombre_f,
                 'ruta' => $ruta,
-                'ruta_carpeta' => $ruta_carpeta
+                'ruta_carpeta' => $ruta_carpeta,
+                'extension' => $request->file('file_contrato')->getClientOriginalExtension()
             ];
 
             \Log::info($arrayLog);
