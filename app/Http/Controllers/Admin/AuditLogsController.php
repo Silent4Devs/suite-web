@@ -64,10 +64,10 @@ class AuditLogsController extends Controller
         return view('admin.auditLogs.index');
     }
 
-    public function show(AuditLog $auditLog)
+    public function show($id_auditLog)
     {
         abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $auditLog = AuditLog::where('id', $id_auditLog)->first();
         return view('admin.auditLogs.show', compact('auditLog'));
     }
 }

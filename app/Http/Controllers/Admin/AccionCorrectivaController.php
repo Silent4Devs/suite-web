@@ -132,7 +132,7 @@ class AccionCorrectivaController extends Controller
                 $query->rp_name = $query->reporto->name;
                 $query->rp_foto = $query->reporto->foto;
             }
-            if(isset($query->empleados)){
+            if (isset($query->empleados)) {
                 $query->registro = $query->empleados->name;
             }
             // dd($query_ac[0]->reporto);
@@ -154,7 +154,7 @@ class AccionCorrectivaController extends Controller
         $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
         $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
-        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'teams', 'query_ac','accionesCorrectivas'));
+        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'teams', 'query_ac', 'accionesCorrectivas'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()
@@ -171,7 +171,7 @@ class AccionCorrectivaController extends Controller
 
     public function aprobaroRechazarAc(Request $request)
     {
-        $accionCorrectiva = AccionCorrectiva::with('quejascliente','nombrereporta')->find($request->id);
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente', 'nombrereporta')->find($request->id);
         $esAprobada = $request->aprobada == 'true' ? true : false;
         // dd($esAprobada);
         $accionCorrectiva->update([
@@ -272,10 +272,12 @@ class AccionCorrectivaController extends Controller
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
     }
 
-    public function edit(AccionCorrectiva $accionCorrectiva)
+    public function edit($id_accionCorrectiva)
     {
-        // dd($accionCorrectiva);
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
+
         $users = User::getAll();
         $puestos = Puesto::getAll();
 
@@ -323,9 +325,11 @@ class AccionCorrectivaController extends Controller
         return view('admin.actionsCorrective.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
-    public function update(Request $request, AccionCorrectiva $accionCorrectiva)
+    public function update(Request $request, $id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
 
         $request->validate([
             'tema' => 'required|string',
@@ -370,9 +374,11 @@ class AccionCorrectivaController extends Controller
         return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(AccionCorrectiva $accionCorrectiva)
+    public function show($id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
@@ -381,10 +387,10 @@ class AccionCorrectivaController extends Controller
         return view('admin.actionsCorrective.show', compact('accionCorrectiva', 'actividades'));
     }
 
-    public function destroy(AccionCorrectiva $accionCorrectiva)
+    public function destroy($id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
         $accionCorrectiva->delete();
 
         Alert::success('éxito', 'Registro eliminado con éxito');

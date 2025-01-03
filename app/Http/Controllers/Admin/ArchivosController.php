@@ -55,7 +55,7 @@ class ArchivosController extends Controller
             });
 
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? '<a href="'.$row->nombre->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
+                return $row->nombre ? '<a href="' . $row->nombre->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->addColumn('estado_estado', function ($row) {
                 return $row->estado ? $row->estado->estado : '';
@@ -89,7 +89,7 @@ class ArchivosController extends Controller
         $archivo = Archivo::create($request->all());
 
         if ($request->input('nombre', false)) {
-            $archivo->addMedia(storage_path('tmp/uploads/'.$request->input('nombre')))->toMediaCollection('nombre');
+            $archivo->addMedia(storage_path('tmp/uploads/' . $request->input('nombre')))->toMediaCollection('nombre');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -99,9 +99,11 @@ class ArchivosController extends Controller
         return redirect()->route('admin.archivos.index');
     }
 
-    public function edit(Archivo $archivo)
+    public function edit($id_archivo)
     {
         abort_if(Gate::denies('archivo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $archivo = Archivo::where('id', $id_archivo)->first();
 
         $carpetas = Carpetum::all()->pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -112,8 +114,10 @@ class ArchivosController extends Controller
         return view('admin.archivos.edit', compact('carpetas', 'estados', 'archivo'));
     }
 
-    public function update(UpdateArchivoRequest $request, Archivo $archivo)
+    public function update(UpdateArchivoRequest $request, $id_archivo)
     {
+        $archivo = Archivo::where('id', $id_archivo)->first();
+
         $archivo->update($request->all());
 
         if ($request->input('nombre', false)) {
@@ -122,7 +126,7 @@ class ArchivosController extends Controller
                     $archivo->nombre->delete();
                 }
 
-                $archivo->addMedia(storage_path('tmp/uploads/'.$request->input('nombre')))->toMediaCollection('nombre');
+                $archivo->addMedia(storage_path('tmp/uploads/' . $request->input('nombre')))->toMediaCollection('nombre');
             }
         } elseif ($archivo->nombre) {
             $archivo->nombre->delete();
@@ -131,19 +135,19 @@ class ArchivosController extends Controller
         return redirect()->route('admin.archivos.index');
     }
 
-    public function show(Archivo $archivo)
+    public function show($id_archivo)
     {
         abort_if(Gate::denies('archivo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $archivo = Archivo::where('id', $id_archivo)->first();
         $archivo->load('carpeta', 'estado', 'team');
 
         return view('admin.archivos.show', compact('archivo'));
     }
 
-    public function destroy(Archivo $archivo)
+    public function destroy($id_archivo)
     {
         abort_if(Gate::denies('archivo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $archivo = Archivo::where('id', $id_archivo)->first();
         $archivo->delete();
 
         return back();
