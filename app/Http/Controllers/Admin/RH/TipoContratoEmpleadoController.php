@@ -70,7 +70,7 @@ class TipoContratoEmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoContratoEmpleado $tipoContratoEmpleado)
+    public function show($id_tipoContratoEmpleado)
     {
         abort_if(Gate::denies('tipos_de_contrato_para_empleados_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     }

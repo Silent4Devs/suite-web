@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
+use Stancl\Tenancy\Facades\Tenancy;
 
 class User extends Authenticatable implements Auditable
 {
@@ -24,8 +25,26 @@ class User extends Authenticatable implements Auditable
 
     public $table = 'users';
 
+    protected $guard = 'tenants';
+
+    protected $connection = 'tenant';
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        self::created(function (self $user) {
+            $registrationRole = config('panel.registration_default_role');
+
+            if ($registrationRole && !$user->roles()->get()->contains($registrationRole)) {
+                $user->roles()->attach($registrationRole);
+            }
+        });
+    }
+
     protected $hidden = [
-        'remember_token', 'two_factor_code',
+        'remember_token',
+        'two_factor_code',
         'password',
     ];
 
@@ -97,14 +116,16 @@ class User extends Authenticatable implements Auditable
 
     public static function getCurrentUser()
     {
+        //dd(User::on('tenant')->find(Auth::id()));
         if (! Auth::check()) {
             return null; // or handle the unauthenticated case as needed
         }
+        $cacheKey = 'Auth_user:user' . Auth::user()->id;
 
-        $cacheKey = 'Auth_user:user'.Auth::user()->id;
+        \Artisan::call('cache:clear');
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () {
-            return Auth::user();
+            return \App\Models\User::on('tenant')->find(Auth::id());
         });
     }
 
@@ -143,23 +164,11 @@ class User extends Authenticatable implements Auditable
         return $this->roles()->where('id', 1)->exists();
     }
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        self::created(function (self $user) {
-            $registrationRole = config('panel.registration_default_role');
-
-            if (! $user->roles()->get()->contains($registrationRole)) {
-                $user->roles()->attach($registrationRole);
-            }
-        });
-    }
-
     public function generateTwoFactorCode()
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 
@@ -178,12 +187,12 @@ class User extends Authenticatable implements Auditable
 
     public function getEmailVerifiedAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setEmailVerifiedAtAttribute($value)
     {
-        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function setPasswordAttribute($input)
@@ -204,12 +213,12 @@ class User extends Authenticatable implements Auditable
 
     public function getVerifiedAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setVerifiedAtAttribute($value)
     {
-        $this->attributes['verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function roles()
@@ -239,12 +248,12 @@ class User extends Authenticatable implements Auditable
 
     public function getTwoFactorExpiresAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setTwoFactorExpiresAtAttribute($value)
     {
-        $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     //# Get empleado_id

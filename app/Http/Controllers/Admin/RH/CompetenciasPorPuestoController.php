@@ -67,10 +67,10 @@ class CompetenciasPorPuestoController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas', 'puestos'));
     }
 
-    public function indexCompetenciasPorPuesto(Request $request, $puesto)
+    public function indexCompetenciasPorPuesto(Request $request, $id_puesto)
     {
         if ($request->ajax()) {
-            $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($puesto));
+            $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($id_puesto));
 
             return datatables()->of($competencias)->toJson();
         }
@@ -81,10 +81,10 @@ class CompetenciasPorPuestoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($puesto)
+    public function create($id_puesto)
     {
         abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $puesto = Puesto::find(intval($puesto));
+        $puesto = Puesto::find(intval($id_puesto));
         $competencias = Competencia::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
@@ -95,19 +95,19 @@ class CompetenciasPorPuestoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $puesto)
+    public function store(Request $request, $id_puesto)
     {
         abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'competencia_id' => 'required|exists:ev360_competencias,id',
             'nivel_esperado' => 'required|numeric',
         ]);
-        $exists = CompetenciaPuesto::where('puesto_id', '=', intval($puesto))
+        $exists = CompetenciaPuesto::where('puesto_id', '=', intval($id_puesto))
             ->where('competencia_id', '=', $request->competencia_id)
             ->exists();
         if (! $exists) {
             $puestoCompetencia = CompetenciaPuesto::create([
-                'puesto_id' => intval($puesto),
+                'puesto_id' => intval($id_puesto),
                 'competencia_id' => $request->competencia_id,
                 'nivel_esperado' => $request->nivel_esperado,
             ]);

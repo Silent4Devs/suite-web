@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -24,7 +26,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers {
-        logout as performLogout;
+        guard as protected baseGuard;
     }
 
     /**
@@ -44,21 +46,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function guard()
+    {
+        // Usa el guard del tenant
+        return Auth::guard('tenants');
+    }
+
     public function redirectTo()
     {
         if (auth()->user()->is_admin) {
-            // $numero_bloqueo = LockedPlanTrabajo::count();
-            // if ($numero_bloqueo == 1) {
-            //     $bloqueo = LockedPlanTrabajo::first();
-            //     if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
-            //         $bloqueo->update([
-            //             'locked_to' => Carbon::now(),
-            //             'blocked' => '0',
-            //             'locked_by' => 0,
-            //         ]);
-            //     }
-            // }
-
             return '/admin/portal-comunicacion';
         }
 
@@ -67,6 +63,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        $tenant = $user->tenant;
         if ($user->two_factor) {
             $user->generateTwoFactorCode();
             $user->notify(new TwoFactorCodeNotification);
@@ -75,17 +72,6 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        // $numero_bloqueo = LockedPlanTrabajo::count();
-        // if ($numero_bloqueo == 1) {
-        //     $bloqueo = LockedPlanTrabajo::first();
-        //     if (intval($bloqueo->blocked) == 1 && intval($bloqueo->locked_by) == auth()->user()->id) {
-        //         $bloqueo->update([
-        //             'locked_to' => Carbon::now(),
-        //             'blocked' => '0',
-        //             'locked_by' => 0,
-        //         ]);
-        //     }
-        // }
         $this->performLogout($request);
 
         return redirect('/');

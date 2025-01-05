@@ -105,8 +105,9 @@
         use App\Models\Organizacion;
         use App\Models\User;
         use App\Models\Empleado;
-        $usuario = User::getCurrentUser();
-        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+        $databaseName = \DB::connection()->getDatabaseName();
+        $usuario = Auth::user();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado_id);
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;

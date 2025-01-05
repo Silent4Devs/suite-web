@@ -13,17 +13,24 @@ class DisponibilidadEmpleadosSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        $ids_empleados = Empleado::getAltaDataColumns()->sortBy('id')->pluck('id');
+        // Obtener IDs de empleados activos
+        $ids_empleados = Empleado::getAltaDataColumns()->sortBy('id')->pluck('id')->toArray();
 
-        foreach ($ids_empleados as $key => $id) {
-            $empleados[] =
-                [
-                    'empleado_id' => $id,
-                    'disponibilidad' => 1,
-                ];
+        // Validar que los IDs existen en la tabla empleados
+        $ids_validos = Empleado::whereIn('id', $ids_empleados)->pluck('id')->toArray();
+
+        $empleados = [];
+        foreach ($ids_validos as $id) {
+            $empleados[] = [
+                'empleado_id' => $id,
+                'disponibilidad' => 1,
+            ];
         }
 
-        DisponibilidadEmpleados::insert($empleados);
+        // Insertar datos si hay empleados válidos
+        if (!empty($empleados)) {
+            DisponibilidadEmpleados::insert($empleados);
+        }
     }
+
 }
