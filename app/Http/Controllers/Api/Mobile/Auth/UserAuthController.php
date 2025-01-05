@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mobile\Auth;
+namespace App\Http\Controllers\Api\Mobile\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;

@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Mobile\Auth\UserAuthController;
+
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\Tenant\TBTenantRegisterController;
 use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\Mobile\Auth\UserAuthController;
 use App\Http\Controllers\Api\Mobile\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\Mobile\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
 use App\Http\Controllers\Api\Mobile\Documentos\tbApiMobileControllerDocumentos;
@@ -54,7 +55,7 @@ Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
     Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
@@ -151,7 +152,7 @@ Route::apiResource('api/v1/ar/formulas', FormulasController::class);
 Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOptionsFormulas']);
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
 
