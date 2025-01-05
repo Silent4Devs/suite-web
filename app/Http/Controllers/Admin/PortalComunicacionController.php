@@ -34,7 +34,6 @@ class PortalComunicacionController extends Controller
 
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $hoy = Carbon::now();
 
         $politica_existe = PoliticaSgsi::getAll()->count();

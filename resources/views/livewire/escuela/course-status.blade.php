@@ -1,5 +1,16 @@
 <div class="d-flex" style="gap: 20px;">
     <style>
+        /* Animación de Spinner */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .curso-progreso-barra {
             height: 10px;
             border-radius: 100px;
@@ -46,22 +57,86 @@
     </style>
 
     <x-loading-indicator />
-
     <div style="width: 100%; ">
         <div style="position: sticky; top:80px;">
             {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
             <!--Para que me traiga correctamente el video hay que agregar -->
-            <div class="video-curso-box">
-                @if ($current && $current->iframe)
-                    <div class="box-iframe-video-courses d-none">
-                        {!! $current->iframe !!}
+            @if ($current)
+                @if ($current->iframe)
+                    <div class="video-curso-box">
+                        <div class="box-iframe-video-courses d-none">
+                            {!! $current->iframe !!}
+                        </div>
+                        <div id="player3" class="w-100"></div>
                     </div>
-                    <div id="player3" class="w-100"></div>
                     {{-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> --}}
                 @else
-                    <p>Sin registro</p>
+                    @switch($current->platform_format)
+                        @case('Documento')
+                            <div class="card card-body">
+                                @switch($current->file_format)
+                                    @case('pdf')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                        </div>
+                                    @break
+
+                                    @case('docx')
+                                        <div>
+                                            <iframe src="https://docs.google.com/viewer?embedded=true&url={{ $archivoUrl }}"
+                                                width="100%" height="400"></iframe>
+                                        </div>
+                                    @break
+
+                                    @case('pptx')
+                                        <div>
+                                            <embed src="{{ asset('storage/' . $this->current->resource->url) }}" width="100%"
+                                                height="600px">
+                                            </embed>
+                                            {{-- <iframe src="https://docs.google.com/viewer?embedded=true&url={{ asset('storage/' . $this->current->resource->url) }}" width="600" height="400"></iframe> --}}
+                                        </div>
+                                    @break
+
+                                    @default
+                                @endswitch
+                                <div>
+                                    @if ($current->completed)
+                                        Leccion Completada
+                                    @else
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @endif
+                                </div>
+                            </div>
+                        @break
+
+                        @case('Texto')
+                            <div class="card card-body">
+                                <div>
+                                    <p>{{ $current->text_lesson }}</p>
+                                </div>
+
+                                <div>
+                                    @if (!$current->completed)
+                                        <button class="btn btn-primary" type="button" wire:click="completedLesson">Completar
+                                            Lección</button>
+                                    @else
+                                        Leccion Completada
+                                    @endif
+                                </div>
+                            </div>
+                        @break
+
+                        @default
+                            <h1>Default</h1>
+                    @endswitch
                 @endif
-            </div>
+            @else
+                <p>Sin registro</p>
+            @endif
+
 
             <div class="row" style="margin-top: 36px;">
                 <div class="col-12">
@@ -118,13 +193,15 @@
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             @if ($this->next)
-                                <div  wire:click="changeLesson({{ $this->next }}, 'next')" class="d-flex align-items-center gap-2" style="color: #3b8ddf; cursor: pointer;">
+                                <div id="btnAdvance" wire:click="changeLesson({{ $this->next }}, 'next')"
+                                    class="d-flex align-items-center gap-2" style="color: #3b8ddf; cursor: pointer;">
                                     <span>Siguiente tema </span>
                                     <i class="material-icons-outlined">arrow_forward_ios</i>
                                 </div>
                             @else
                                 <a href="#" id="test" class="text-muted">
-                                    <div class="d-flex align-items-center gap-2" style="color: #3b8ddf; cursor: pointer;">
+                                    <div class="d-flex align-items-center gap-2"
+                                        style="color: #3b8ddf; cursor: pointer;">
                                         <span>Siguiente tema</span>
                                         <i class="material-icons-outlined">arrow_forward_ios</i>
                                     </div>
@@ -252,7 +329,8 @@
                                 <li style="list-style: none;">
                                     <div>
                                         <span class="inline-block rounded-full border-2 border-gray-500"></span>
-                                        <a class="cursor:pointer;" wire:click="alertSection()">{{ $evaluation->name }}
+                                        <a class="cursor:pointer;"
+                                            wire:click="alertSection()">{{ $evaluation->name }}
                                         </a>
                                     </div>
                                 </li>
@@ -280,27 +358,12 @@
         </ul>
     </div>
     @section('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
             var player;
             var complet;
-
-            function refreshPage($type) {
-                if ($type === "boton") {
-                    setTimeout(function() {
-                        initializeYouTubePlayer();
-                    }, 1000); // Puedes ajustar el tiempo de espera si es necesario
-                } else {
-                    setTimeout(function() {
-                        initializeYouTubePlayer();
-                    }, 1500);
-                }
-            }
-
-            document.addEventListener('livewire:update', function() {
-                console.log('Componente Livewire actualizado');
-                initializeYouTubePlayer();
-            });
+            let current = @json($current);
 
             document.addEventListener('DOMContentLoaded', function() {
                 // Aquí carga la API de YouTube IFrame
@@ -321,18 +384,19 @@
 
             var videoId = getYouTubeVideoId();
 
-            //esto siempre se tiene que ejecutar por la api de youtube
-            function onYouTubeIframeAPIReady() {
-                initializeYouTubePlayer();
-            }
-
             function initializeYouTubePlayer() {
-                console.log("aqui");
+                console.log("inicializando el reproductor..");
                 var videoId = getYouTubeVideoId(); // Obtener el ID del video desde el iframe
                 player = new YT.Player('player3', {
                     height: '460',
                     width: '940',
                     videoId: videoId, // Usar el ID del video obtenido
+                    playerVars: {
+                        rel: 0,
+                        modestbranding: 1,
+                        controls: 1,
+                        showinfo: 0
+                    },
                     events: {
                         'onReady': onPlayerReady,
                         'onStateChange': onPlayerStateChange
@@ -350,35 +414,34 @@
             function onPlayerStateChange(event) {
                 if (event.data == YT.PlayerState.PLAYING) {
                     // El video ha comenzado a reproducirse
-                    startTrackingProgress();
                 } else if (event.data == YT.PlayerState.ENDED) {
                     console.log('El video ha terminado');
-                    if (!@json($current->completed)) {
+                    console.log(current);
+                    if (!current.completed) {
+                        console.log('completado eric', current);
                         complet = true;
                         @this.completed();
                     }
+                    const endScreen = document.getElementById('end-screen');
+                    endScreen.style.display = 'flex'; // Mostrar la pantalla fina
+
+                    setTimeout(() => {
+                        const btnAdvance = document.getElementById('btnAdvance');
+                        btnAdvance.click();
+                    }, 5000); // 6 segundos de retraso
+
                 }
-                initializeYouTubePlayer();
-
-            }
-
-            // Función para rastrear el progreso del video
-            function startTrackingProgress() {
-                setInterval(function() {
-                    var currentTime = player.getCurrentTime();
-                    var duration = player.getDuration();
-                    var progress = (currentTime / duration) * 100;
-
-                    console.log('Progreso del video: ' + progress + '%');
-
-                    // Aquí puedes actualizar la UI o realizar otras acciones basadas en el progreso
-                }, 1000); // Actualiza cada segundo
             }
 
             document.addEventListener('render', event => {
                 setTimeout(function() {
                     initializeYouTubePlayer();
                 }, 500);
+            });
+            document.addEventListener('reloadCurrent', event => {
+                let reload = event.detail.current;
+                current = reload;
+                console.log('entro', reload);
             });
         </script>
     @endsection

@@ -370,10 +370,14 @@
             height: 150px;
         }
     </style>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
 @endsection
 
 @section('content')
-
     <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de
         {{ $organizacion }}
     </h5>
@@ -384,7 +388,7 @@
             <img class="object-cover w-20 h-20 border-2 rounded-full" style="border-color: var(--color-tbj)"
                 src="{{ $org_foto }}">
         </div> --}}
-        @if (is_null($organizacionTree))
+        {{-- @if (is_null($organizacionTree))
             <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
                 <div class="flex">
                     <div class="py-1"><svg class="w-6 h-6 mr-4 text-blue-500 fill-current"
@@ -405,47 +409,47 @@
                 <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
                     style="width: 640px;height: 357px;">
             </div>
-        @else
-            <div class="row">
-                <div class="m-0 mt-3 col-lg-8 col-md-12 col-sm-12" style="margin: 0px !important">
-                    <div class="form-group col-sm-12 col-md-12 col-lg-12 w-100" style="margin: 0px !important">
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-4">
-                                <input type="hidden" id="id_empleado">
-                                <label for="participantes_search"> <span
-                                        class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
-                                        <i class="mr-1 fas fa-user-circle"></i>
-                                        Empleado
-                                    </span></label>
-                                <input class="form-control" type="search" id="participantes_search"
-                                    placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
-                                <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
-                                    style="position: absolute; top: 42px; right: 18px;"></i>
-                                <div id="participantes_sugeridos" style="position: absolute;width: 90%;z-index: 1;"></div>
-                                @if ($errors->has('participantes'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('participantes') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="col-sm-12 col-lg-4">
-                                <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
-                                        <i class="mr-1 fas fa-building"></i>
-                                        Área
-                                    </span></label>
-                                <select name="areas" id="areas" class="form-control">
-                                    <option value="" selected disabled>-- Selecciona área --</option>
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">
-                                            <span><i class="mr-1 fas fa-building"></i></span> {{ $area->area }}
-                                        </option>
-                                    @endforeach
-                                    <option id="ver_todos_option" value=null>
-                                        <span><i class="mr-1 fas fa-building">Todas las areas</i></span>
+        @else --}}
+        <div class="row">
+            <div class="m-0 mt-3 col-lg-8 col-md-12 col-sm-12" style="margin: 0px !important">
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 w-100" style="margin: 0px !important">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4">
+                            <input type="hidden" id="id_empleado">
+                            <label for="participantes_search"> <span
+                                    class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
+                                    <i class="mr-1 fas fa-user-circle"></i>
+                                    Empleado
+                                </span></label>
+                            <input class="form-control" type="search" id="participantes_search"
+                                placeholder="Nombre del empleado" style="position: relative" autocomplete="off" />
+                            <i id="cargando_participantes" class="fas fa-cog fa-spin text-muted"
+                                style="position: absolute; top: 42px; right: 18px;"></i>
+                            <div id="participantes_sugeridos" style="position: absolute;width: 90%;z-index: 1;"></div>
+                            @if ($errors->has('participantes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('participantes') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label for="areas"> <span class="text-sm leading-tight md:text-sm lg:text-sm">
+                                    <i class="mr-1 fas fa-building"></i>
+                                    Área
+                                </span></label>
+                            <select name="areas" id="areas" class="form-control">
+                                <option value="" selected disabled>-- Selecciona área --</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">
+                                        <span><i class="mr-1 fas fa-building"></i></span> {{ $area->area }}
                                     </option>
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-lg-4" id="tools_box">
+                                @endforeach
+                                <option id="ver_todos_option" value=null>
+                                    <span><i class="mr-1 fas fa-building">Todas las areas</i></span>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-lg-4" id="tools_box">
                                 <p class="m-0">
                                     <i class="mr-1 fas fa-box-open"></i>
                                     Caja de Herramientas
@@ -463,39 +467,38 @@
                                                 title="Cambiar orientación del diagrama">
                                         </div>
                                     </div>
-                                    <div class="pl-0 col-3" id="export_csv"></div>
-                                    <div class="pl-0 col-3" id="shot_screen"></div>
+                                    {{-- <div class="pl-0 col-3" id="export_csv"></div>
+                                    <div class="pl-0 col-3" id="shot_screen"></div> --}}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="m-0 range-slider h-100">
-                        <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
-                            <i class="mr-1 fas fa-search-plus"></i>
-                            Control de zoom
-                        </span>
-                        <div class="d-flex justify-content-center align-items-center" style="height: 75%">
-                            <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
-                                max="200">
-                            <span id="output" class="range-slider__value">30</span>
-                        </div>
                     </div>
                 </div>
             </div>
-            {{-- <div id="exportData"></div> --}}
-            <div id="chart-container" class="m-0" style="position: relative">
-                {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="m-0 range-slider h-100">
+                    <span class="mb-4 text-sm leading-tight md:text-sm lg:text-sm">
+                        <i class="mr-1 fas fa-search-plus"></i>
+                        Control de zoom
+                    </span>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 75%">
+                        <input id="zoomer" class="range-slider__range" type="range" value="30" min="10"
+                            max="200">
+                        <span id="output" class="range-slider__value">30</span>
+                    </div>
+                </div>
             </div>
-        @endif
+        </div>
+        {{-- <div id="exportData"></div> --}}
+        <div id="chart-container" class="m-0" style="position: relative">
+            {{-- <div id="chart-side" class="sidenav" style="width: 0px"></div> --}}
+        </div>
+        {{-- @endif --}}
     </div>
     {{-- Cargando... --}}
     {{-- <div id="cargandoInformacionAnimated" style="position: absolute; top:250px; right:500px;display: none;">
         <i class="fas fa-circle-notch fa-spin" style="font-size: 80px;"></i>
     </div> --}}
     {{-- End cargando... --}}
-
 @endsection
 @section('scripts')
     <script type="module">
@@ -541,6 +544,11 @@
                 clearTimeout(timeout);
                 if (inputSearchEmpleados.value.trim() !== '') {
                     timeout = setTimeout(function() {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
                         $.ajax({
                             type: "POST",
                             url: url_empleados,
@@ -553,22 +561,32 @@
                             success: function(data) {
                                 $("#cargando_participantes").hide();
                                 participantesSugeridos.show();
-                                const sugeridos = $("#participantes_sugeridos ul");
+                                const sugeridos = $("#participantes_sugeridos");
+                                const ul = $("<ul></ul>");
                                 sugeridos.empty();
-                                if (data) {
+                                if (data.length > 0) {
                                     const usuarios = JSON.parse(data);
-                                    usuarios.forEach(usuario => {
-                                        const listItem = $(`<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'>
-                                <i class='mr-2 fas fa-user-circle'></i>${usuario.name}
-                            </button>`);
-                                        listItem.on('click', function() {
-                                            seleccionarUsuario(usuario.id,
-                                                usuario.name, usuario.email);
-                                        });
-                                        sugeridos.append(listItem);
+                                    usuarios.map((item) => {
+                                        ul.append(
+                                            $("<li></li>").append(
+                                                $(
+                                                    "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action'>")
+                                                .html(
+                                                    `<i class='mr-2 fas fa-user-circle'></i>${item.name}`
+                                                    )
+                                                .on('click', function() {
+                                                    seleccionarUsuario(item.id,
+                                                        item.name);
+                                                })
+                                            )
+                                        );
+
                                     });
+
+                                    sugeridos.append(ul);
+
                                 } else {
-                                    sugeridos.append(
+                                    participantesSugeridos.append(
                                         "<li class='list-group-item list-group-item-action'>Sin coincidencias encontradas</li>"
                                     );
                                 }
@@ -587,16 +605,16 @@
                 });
             });
 
-            window.seleccionarUsuario = function(id, name, email) {
+            window.seleccionarUsuario = function(id, name) {
                 $('.areas').val(null).trigger('change');
                 document.querySelector("#zoomer").value = 30;
                 document.querySelector("#output").innerHTML = 30;
                 const orientacion = localStorage.getItem('orientationOrgChart');
                 document.getElementById("contenedorOrganigrama").style.pointerEvents = 'none';
                 renderOrganigrama(OrgChart, orientacion, id);
-                $("#participantes_search").val(name);
-                $("#id_empleado").val(id);
-                $("#email").val(email);
+                // $("#participantes_search").val(name);
+                // $("#id_empleado").val(id);
+                // $("#email").val(email);
                 $("#participantes_sugeridos").hide();
             };
 
@@ -613,7 +631,7 @@
 
                 const url_organigrama = "{{ route('admin.organigrama.index') }}";
                 const data = {
-                    "area_filter": area_filter,
+                    'area_filter': area_filter,
                     id,
                     area_id
                 };
@@ -643,20 +661,28 @@
                 };
 
                 mostrarCargando();
-
+                let dataChart;
                 $.ajax({
                     type: "GET",
                     data,
                     url: url_organigrama,
                     success: function(response) {
+
                         ocultarCargando();
-                        var ejemplo = JSON.parse(response.replaceAll('children_organigrama',
-                            'children'));
+                        if (response.hasOwnProperty("children") && response.children.length > 0) {
+                            dataChart = response
+                        } else {
+                            let responseString = JSON.stringify(response);
+                            dataChart = JSON.parse(responseString.replace(/children_organigrama/g,
+                                'children'));
+                            dataChart.children.map((item) => {
+                                return item.children = item.childrenOrganigrama;
+                            });
+                        }
                         const orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
-                            'data': JSON.parse(response.replaceAll('children_organigrama',
-                                'children')),
+                            'data': dataChart,
                             'depth': 999,
                             'nodeContent': 'puesto',
                             'withImage': true,

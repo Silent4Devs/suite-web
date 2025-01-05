@@ -143,8 +143,6 @@ class ReportesRegistros extends Component
 
     public function exportExcel()
     {
-        // dd(1);
-
         $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
         return Excel::download($export, 'reporte_colaborador_registro.xlsx');
@@ -161,7 +159,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint.'/registrosTimesheet/', $data);
+        $response = Http::post($apiEndpoint . '/registrosTimesheet/', $data);
 
         if ($response->successful()) {
             dd($response->json());
@@ -181,7 +179,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint.'/timesheetAreas/', $data);
+        $response = Http::post($apiEndpoint . '/timesheetAreas/', $data);
 
         if ($response->successful()) {
             dd($response->json());
@@ -202,7 +200,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint.'/timesheetProyectos/', $data);
+        $response = Http::post($apiEndpoint . '/timesheetProyectos/', $data);
 
         if ($response->successful()) {
             dd($response->json());

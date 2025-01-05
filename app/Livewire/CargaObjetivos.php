@@ -63,7 +63,16 @@ class CargaObjetivos extends Component
 
     public function render()
     {
-        $this->empleados = Empleado::getaltaAllObjetivosGenerales()->sortBy('name');
+        // $this->empleados = Empleado::getaltaAllObjetivosGenerales()->sortBy('name');
+        $this->empleados = Empleado::alta()->select(
+            'id',
+            'n_empleado',
+            'name',
+            'puesto_id',
+            'area_id',
+            'perfil_empleado_id',
+            'foto'
+        )->with(['objetivos', 'area:id,area', 'perfil:id,nombre', 'puestoRelacionado:id,puesto'])->get()->sortBy('name');
         $this->cuentasCero();
 
         if ($this->select_area != 0) {

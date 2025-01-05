@@ -2,6 +2,7 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\Escuela\Platform;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ class Lesson extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    protected $appends = ['completed', 'completed_user'];
+    protected $appends = ['completed', 'completed_user', 'platform_format', 'file_format'];
 
     // Funcion para indicar a que usuario permanece el avance del curso
     public function getCompletedAttribute()
@@ -28,6 +29,28 @@ class Lesson extends Model implements Auditable
     {
         return $this->users->contains($id);
     }
+
+    public function getPlatformFormatAttribute()
+    {
+        $platf = Platform::where('id', $this->platform_id)->first();
+        return $platf->name;
+        //  dd($this->formatType);
+    }
+
+    public function getFileFormatAttribute()
+    {
+
+        if($this->resource){
+            $ruta = storage_path('app/' . $this->resource->url);
+
+            // Obtener la extensión del archivo
+            $informacionArchivo = pathinfo($ruta);
+            $extension = $informacionArchivo['extension'];
+
+            return $extension;
+        }
+    }
+
     //Relacion uno a uno
 
     public function description()

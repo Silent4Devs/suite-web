@@ -352,30 +352,16 @@
                         data: $("#formIniciarEvaluacion").serialize(),
                         dataType: "JSON",
                         beforeSend: function() {
-                            Swal.fire({
-                                title: 'Iniciando evaluación',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                            toastr.info('Iniciando evaluación, espere un momento...');
                         },
                         success: function(response) {
                             if (response.success) {
-                                Swal.fire({
-                                    title: 'Evaluación iniciada',
-                                    text: "Ha sido iniciada correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success(
+                                    'Evaluación iniciada, recargaremos la página, espere un momento...'
+                                );
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
                             }
                         },
                         error: function(request, status, error) {
@@ -403,30 +389,16 @@
                             data: $("#formPostergarEvaluacion").serialize(),
                             dataType: "JSON",
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Iniciando evaluación',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info('Iniciando evaluación, espere un momento...');
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    Swal.fire({
-                                    title: 'Evaluación iniciada con una nueva fecha de finalización',
-                                    text: "Ha sido iniciada correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                    toastr.success(
+                                        'Evaluación iniciada con una nueva fecha de finalización, recargaremos la página, espere un momento...'
+                                    );
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
                                 }
                             },
                             error: function(request, status, error) {
@@ -456,30 +428,17 @@
                             type: 'POST',
                             url: url,
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Cerrando evaluación',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 1000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info(
+                                    'Cerrando evaluación, espere un momento...');
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    Swal.fire({
-                                    title: 'Evaluación cerrada',
-                                    text: "Ha sido cerrada correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                    });
+                                    toastr.success(
+                                        'Evaluación cerrada, recargaremos la página, espere un momento...'
+                                    );
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
                                 }
                             },
                             error: function(request, status, error) {
@@ -516,13 +475,7 @@
                     dataType: "JSON",
                     success: function(response) {
                         if (response.success) {
-                            Swal.fire({
-                            title: 'Competencia Vinculada a la evaluacion',
-                            text: "Ha sido vinculada correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                            });
+                            toastr.success('Competencia Vinculada a la evaluacion');
                         }
                     },
                     error: function(request, status, error) {
@@ -548,13 +501,7 @@
                     dataType: "JSON",
                     success: function(response) {
                         if (response.success) {
-                            Swal.fire({
-                            title: 'Competencia desvinculada a la evaluacion',
-                            text: "Ha sido desvinculada correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                            });
+                            toastr.success('Competencia desvinculada a la evaluacion');
                         }
                     },
                     error: function(request, status, error) {
@@ -581,13 +528,7 @@
                     dataType: "JSON",
                     success: function(response) {
                         if (response.success) {
-                            Swal.fire({
-                            title: 'Objetivo vinculado a la evaluacion',
-                            text: "Ha sido vinculado correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                            });
+                            toastr.success('Objetivo vinculado a la evaluacion');
                         }
                     },
                     error: function(request, status, error) {
@@ -613,13 +554,7 @@
                     dataType: "JSON",
                     success: function(response) {
                         if (response.success) {
-                            Swal.fire({
-                            title: 'Objetivo desvinculado a la evaluacion',
-                            text: "Ha sido desvinculado correctamente",
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Aceptar'
-                            });
+                            toastr.success('Objetivo desvinculado a la evaluacion');
                         }
                     },
                     error: function(request, status, error) {
@@ -744,20 +679,7 @@
                     type: "GET",
                     url: url,
                     beforeSend: function() {
-                        Swal.fire({
-                        title: 'Obteniendo información',
-                        text: "Espere unos instantes...",
-                        icon: 'info',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        timer: 10000, // Tiempo en milisegundos (5 segundos)
-                        didOpen: () => {
-                            Swal.showLoading(); // Muestra un indicador de carga
-                        },
-                        willClose: () => {
-                            console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                        }
-                        });
+                        toastr.info('Obteniendo información, espere un momento...');
                     },
                     success: function(response) {
                         let contenedor = document.getElementById('evaluadoresBody');
@@ -802,30 +724,16 @@
                             data: evaluado_evaluador,
                             dataType: "JSON",
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Quitando evaluador',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                               });
+                                toastr.info('Quitando evaluador, espere un momento...');
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    Swal.fire({
-                                    title: 'Evaluador removido',
-                                    text: "Ha sido removido correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                    toastr.success(
+                                        'Evaluador removido, recargaremos la página, espere un momento...'
+                                    );
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
                                 }
 
                                 if (response.error) {
@@ -865,39 +773,22 @@
                             data: evaluado_evaluador,
                             dataType: "JSON",
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Agregar evaluador',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info(
+                                    'Agregando evaluador, espere un momento...');
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    Swal.fire({
-                                    title: 'Evaluador agregado',
-                                    text: "Ha sido removida correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                    });
+                                    toastr.success(
+                                        'Evaluador agregado, recargaremos la página, espere un momento...'
+                                    );
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
                                 }
                                 if (response.exists) {
-                                    Swal.fire({
-                                    title: 'Este evaluador',
-                                    text: "no puede ser asignado nuevamente...",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                    });
+                                    toastr.info(
+                                        'Este evaluador no puede ser asignado nuevamente...'
+                                    );
                                 }
                                 if (response.error) {
                                     toastr.error('Ha ocurrido un error');
@@ -932,29 +823,12 @@
                             url: url,
                             dataType: "JSON",
                             beforeSend: function() {
-                                Swal.fire({
-                                title: 'Enviando recordatorio',
-                                text: "Espere unos instantes...",
-                                icon: 'info',
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 10000, // Tiempo en milisegundos (5 segundos)
-                                didOpen: () => {
-                                    Swal.showLoading(); // Muestra un indicador de carga
-                                },
-                                willClose: () => {
-                                    console.log("El mensaje se cerró automáticamente después de 5 segundos");
-                                }
-                                });
+                                toastr.info(
+                                    'Enviando recordatorio, espere un momento...'
+                                );
                             },
                             success: function(response) {
-                                Swal.fire({
-                                    title: 'Recordatorio enviado',
-                                    text: "Ha sido enviado correctamente",
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Aceptar'
-                                });
+                                toastr.success('Recordatorio enviado');
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 toastr.error(errorThrown);

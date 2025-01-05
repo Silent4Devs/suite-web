@@ -119,7 +119,7 @@ services:
       - tabantajnetwork
     # networks:
     #   - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 4g
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
@@ -151,6 +151,7 @@ services:
     # networks:
     #   - tabantajnetwork
     volumes:
+      - ./infra/rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       - rabbitmq_data:/var/lib/rabbitmq
 
   goservices:

@@ -1092,12 +1092,12 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::where('id', $id)->first();
 
-        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
-
         $aprobar->update([
             'estatus' => 'aprobado',
             'comentarios' => $request->comentarios,
         ]);
+
+        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
 
         $solicitante = Empleado::getDataColumns()->where('id', $aprobar->empleado_id)->first();
 

@@ -186,11 +186,13 @@ class AccionCorrectivaController extends Controller
 
         if ($esAprobada) {
             Alert::success('éxito', 'Registro aprobado con éxito');
+
             return redirect(route('admin.accion-correctivas.index'));
             // return view('admin.actionsCorrective.index');
             // return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
         } else {
             Alert::success('éxito', 'Registro rechazado con éxito');
+
             return redirect(route('admin.accion-correctivas.index'));
             // return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
         }
@@ -347,7 +349,7 @@ class AccionCorrectivaController extends Controller
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();

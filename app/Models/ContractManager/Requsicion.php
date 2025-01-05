@@ -1198,7 +1198,7 @@ class Requsicion extends Model implements Auditable
             $tipo = 'RQ-';
         }
 
-        $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);
+        $codigo = $tipo.sprintf('%02d-%04d', $parte1, $parte2);
 
         return $codigo;
     }
@@ -1238,13 +1238,19 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoJefe;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
             $user = User::where('id', $requisicion->id_user)->first();
 
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
             $listaPart = $listaReq->participantes;
 
-            $jefe = $user->empleado->supervisor;
+            // Validar que $user y $user->empleado existen antes de acceder a $supervisor
+            $jefe = $user?->empleado?->supervisor;
+
+            if (is_null($jefe)) {
+                return null; // Retornar null si $jefe no está definido
+            }
+
             $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
             $nivel = $supList->nivel ?? null; // Asignar null si no está definido
@@ -1268,6 +1274,7 @@ class Requsicion extends Model implements Auditable
 
             // Si no se encuentra responsable disponible, retornar $jefe
             return $jefe;
+
         }
     }
 
@@ -1280,7 +1287,7 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoResponsableFinanzas;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
             $listaReq = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
             $listaPart = $listaReq->participantes;
 
@@ -1308,35 +1315,51 @@ class Requsicion extends Model implements Auditable
             $responsable = $requisicion->registroFirmas->delegadoComprador;
 
             return $responsable; // Retornar el responsable si se encuentra disponible
-        }else{
+        } else {
 
             $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 
+            if (!$comprador || !$comprador->user) {
+                return false; // Validación para evitar intentar acceder a una propiedad de null
+            }
+
             $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
+
+            if (!$listaReq || !$listaReq->participantes) {
+                return false; // Validación adicional para asegurar que la lista y sus participantes existan
+            }
+
             $listaPart = $listaReq->participantes;
 
             $supList = $listaPart->where('empleado_id', $comprador->user->id)->where('numero_orden', 1)->first();
+
+            if (!$supList || !$supList->nivel) {
+                return false; // Validación para verificar que $supList y su nivel existan
+            }
 
             $nivel = $supList->nivel;
 
             $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
             foreach ($participantesNivel as $key => $partNiv) {
-                if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
+                if (
+                    isset($partNiv->empleado) &&
+                    isset($partNiv->empleado->disponibilidad) &&
+                    $partNiv->empleado->disponibilidad->disponibilidad == 1
+                ) {
                     $responsable = $partNiv->empleado;
 
                     return $responsable;
-
-                    break;
                 }
             }
 
             return false;
+
         }
     }
 
-    public function getListaSustitutosAttribute(){
+    public function getListaSustitutosAttribute()
+    {
 
         $requisicion = self::where('id', $this->id)->first();
 
@@ -1364,7 +1387,7 @@ class Requsicion extends Model implements Auditable
             }
 
             return $sustitutosLD;
-       } elseif ($requisicion->firma_finanzas === null) {
+        } elseif ($requisicion->firma_finanzas === null) {
 
             $LD = ListaDistribucion::where('modelo', 'KatbolRequsicion')->first();
             $participantes = $LD->participantes;
