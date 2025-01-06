@@ -29,7 +29,7 @@
         @else
             <div class="datatable-fix">
                 <div class="row justify-content-center">
-                    <div class="col-md-3 filtro_caja mt-2" style="">
+                    <div class="col-md-3 filtro_caja mt-2" style="" >
                         <label for=""><i class="fas fa-filter"></i> Filtrar por Tipo</label>
                         <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
