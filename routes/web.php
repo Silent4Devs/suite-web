@@ -69,7 +69,7 @@ Route::group(['middleware' => ['tenant']], function () {
     Route::get('correotestqueue', [QueueCorreo::class, 'index']);
     Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
 
-    Route::get('/', [LoginController::class, 'showLoginForm']);
+    Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
     Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
