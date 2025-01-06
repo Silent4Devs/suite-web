@@ -344,7 +344,7 @@ class ContratosController extends AppBaseController
             $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
-            chmod($ruta_carpeta, 0777);
+            // chmod($ruta_carpeta, 0777);
 
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
@@ -368,7 +368,7 @@ class ContratosController extends AppBaseController
             $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
-            chmod($ruta_carpeta, 0777);
+            // chmod($ruta_carpeta, 0777);
         }
 
         // Move file from tmp directory if name is send
@@ -525,7 +525,7 @@ class ContratosController extends AppBaseController
         Storage::put('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName, $image);
 
         // Dar permisos chmod 777 a la carpeta
-        chmod($ruta_carpeta, 0777);
+        // chmod($ruta_carpeta, 0777);
 
         // Obtener la URL de la imagen guardada
         $imageUrl = Storage::url('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/aprobacionFirma/' . $imageName);
@@ -871,7 +871,7 @@ class ContratosController extends AppBaseController
             $ruta_carpeta = storage_path('app/public/' . $ruta);
 
             // Dar permisos chmod 777 a la carpeta
-            chmod($ruta_carpeta, 0777);
+            // chmod($ruta_carpeta, 0777);
 
             $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id . $fecha_inicio . $nombre;
