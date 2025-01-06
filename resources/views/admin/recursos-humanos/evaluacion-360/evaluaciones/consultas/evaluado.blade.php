@@ -21,6 +21,8 @@
     <div class="print-none">
         {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado]) }}
     </div>
+    <br>
+    <br>
     <div class="mt-4 card">
         <div class="print-none py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Resúmen de la</strong> evaluación </h3>
