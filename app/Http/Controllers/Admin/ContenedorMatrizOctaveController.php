@@ -74,7 +74,7 @@ class ContenedorMatrizOctaveController extends Controller
         return redirect()->route('admin.contenedores.edit', ['contenedor' => $contenedor, 'matriz' => $matriz]);
     }
 
-    public function edit(Request $request, $contenedor, MatrizOctaveContenedor $matrizOctaveContenedor, $matriz)
+    public function edit(Request $request, $contenedor, $id_matrizOctaveContenedor, $matriz)
     {
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
