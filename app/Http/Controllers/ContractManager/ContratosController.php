@@ -823,6 +823,8 @@ class ContratosController extends AppBaseController
 
             $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
+            dd($ruta, $request->file('file_contrato')->getClientOriginalExtension(), $request->file('file_contrato')->getClientOriginalName(), file_get_contents($request->file('file_contrato')));
+
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($request->file('file_contrato')));
 
