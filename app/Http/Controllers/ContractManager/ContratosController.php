@@ -824,10 +824,10 @@ class ContratosController extends AppBaseController
 
             $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
-            Log::info('File uploaded: ' . $request->file('file')->getClientOriginalName());
-            Log::info('File type: ' . $request->file('file')->getClientOriginalExtension());
-            Log::info('File size: ' . $request->file('file')->getSize());
-            Log::info('File MIME type: ' . $request->file('file')->getMimeType());
+            Log::info('File uploaded: ' . $request->file('file_contrato')->getClientOriginalName());
+            Log::info('File type: ' . $request->file('file_contrato')->getClientOriginalExtension());
+            Log::info('File size: ' . $request->file('file_contrato')->getSize());
+            Log::info('File MIME type: ' . $request->file('file_contrato')->getMimeType());
 
 
             // Guardar el archivo en el disco 'public' con la ruta específica
