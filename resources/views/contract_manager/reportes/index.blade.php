@@ -359,7 +359,7 @@
                         </button>
                     </div>
                     <div class="seleccionar">
-                        <select class="form-control" searchable="Buscar..." name="contrato" id="contrato"
+                        <select class="form-control" searchable="Buscar..." name="contrato" style="" id="contrato"
                             class="">
                             <option value="" selected disabled>Seleccione un contrato</option>
                             @forelse($contratos as $item_contrato)
