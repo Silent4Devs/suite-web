@@ -1052,7 +1052,7 @@ class ContratosController extends AppBaseController
 
         $request->validate([
             'file' => 'required|mimes:' . $mines . '|max:' . $tamaño_limite,
-ion->config_megas_permitido_docs) * 1024;
+        ]);
 
         // $request->validate([
         //     'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
