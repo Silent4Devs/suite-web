@@ -916,9 +916,9 @@ class EV360EvaluacionesController extends Controller
         //Inhabilidato temporalmente
         $usuario = User::getCurrentUser()->empleado->id;
         if ($usuario == $evaluado) {
-            $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
+            $cons_evaluacion = Evaluacion::with('rangos')->where('id',intval($evaluacion))->first();
 
-            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+            if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
                 // dd($informacion_obtenida);
@@ -1185,15 +1185,16 @@ class EV360EvaluacionesController extends Controller
         } else {
             abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+
             $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
 
             if ($cons_evaluacion === null) {
                 // Manejar el caso en que no se encuentra la evaluación
-                $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
+                return redirect()->route('admin.rh-evaluacion360.index')->with('error', 'No existe el registro.');
             }
 
 
-            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+            if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
 
