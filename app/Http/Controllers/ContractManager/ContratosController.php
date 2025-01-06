@@ -559,14 +559,14 @@ class ContratosController extends AppBaseController
             abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $contrato = $this->contratoRepository->find($id);
             $areas = Area::getAll();
-            // dd($areas->count());
+
             $formatoFecha = new FormatearFecha;
             if (! $contrato) {
                 return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
             }
             $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
-            // dd($contratos);
+
             $proveedores = TimesheetCliente::get();
             if (! is_null($contrato->fecha_inicio)) {
                 $contrato->fecha_inicio = $contrato->fecha_inicio;
@@ -583,7 +583,7 @@ class ContratosController extends AppBaseController
             $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-            // dd($convenios);
+
             $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
             $organizacion = Organizacion::getFirst();
@@ -594,8 +594,7 @@ class ContratosController extends AppBaseController
 
             // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
-            // dd($firma->aprobadores);
-            // $exampleVar = $firma->aprobadores[0];
+
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             $firmar = false;
             $firmado = false;
