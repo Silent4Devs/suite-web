@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 
 class ContratosController extends AppBaseController
 {
@@ -823,7 +824,11 @@ class ContratosController extends AppBaseController
 
             $ruta = 'contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato;
 
-            $request->file('file_contrato')->store($ruta . '/' . $nombre_f, 'alsea');
+            Log::info('File uploaded: ' . $request->file('file')->getClientOriginalName());
+            Log::info('File type: ' . $request->file('file')->getClientOriginalExtension());
+            Log::info('File size: ' . $request->file('file')->getSize());
+            Log::info('File MIME type: ' . $request->file('file')->getMimeType());
+
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta . '/' . $nombre_f, file_get_contents($request->file('file_contrato')));
@@ -1047,20 +1052,7 @@ class ContratosController extends AppBaseController
 
         $request->validate([
             'file' => 'required|mimes:' . $mines . '|max:' . $tamaño_limite,
-        ]);
-        $storagePath = Storage::disk('local')->put('katbol-contratos-tmp/', $request->file);
-        $storageName = basename($storagePath);
-
-        return response()->json(['status' => 'success', 'fileName' => $storageName]);
-    }
-
-    public function validateDocument(Request $request)
-    {
-        // $organizacion = Organizacion::first();
-
-        // $mines = str_replace('.', '', $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt');
-
-        // $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024;
+ion->config_megas_permitido_docs) * 1024;
 
         // $request->validate([
         //     'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
