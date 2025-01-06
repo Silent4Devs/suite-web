@@ -34,7 +34,7 @@
     "spatie/async": "^1.6",
     "spatie/calendar-links": "^1.6",
     "spatie/geocoder": "^3.10",
-    "spatie/laravel-backup": "^8.6",
+    "spatie/laravel-backup": "^9.2",
     "spatie/laravel-db-snapshots": "^2.5",
     "spatie/laravel-medialibrary": "^11.0",
     "spatie/laravel-permission": "^6.0",
