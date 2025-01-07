@@ -316,7 +316,7 @@
                             @endforelse
                         </select>
                         <button type="submit" class="btn tb-btn-primary" id="buscar_proveedor"
-                                onclick="buscarproveedor($('#proveedor').val()); return false;">
+                            onclick="buscarproveedor($('#proveedor').val()); return false;">
                             Generar reporte
                         </button>
 
@@ -369,7 +369,7 @@
                             @endforelse
                         </select>
                         <button type="submit" class="btn tb-btn-primary" id="buscar_contrato"
-                                onclick="buscarcontrato($('#contrato').val()); return false;">
+                            onclick="buscarcontrato($('#contrato').val()); return false;">
                             Generar reporte
                         </button>
                     </div>
@@ -435,7 +435,7 @@
             data: {
                 valor: valorPuesto
             },
-            url: '{{ route('provedor_reporte') }}',
+            url: '{{ route('contract_manager.provedor_reporte') }}',
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -467,7 +467,7 @@
             data: {
                 valor: valorPuesto
             },
-            url: '{{ route('contrato_reporte') }}',
+            url: '{{ route('contract_manager.contrato_reporte') }}',
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -23,13 +23,11 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -112,7 +110,7 @@
                                             <blockquote>{!! $minuta->tema_tratado !!}</blockquote>
                                         </div>
 
-                                        <a href="{{ route('minutas.revisiones.revisar', $revision->id) }}"
+                                        <a href="{{ route('admin.minutas.revisiones.revisar', $revision->id) }}"
                                             style="outline: none; text-decoration: none; font-size: small; font-family: Arial, Helvetica, sans-serif; background-color: #358765; padding: 10px; border-radius: 10px; color: white;">
                                             Revisar Minuta
                                         </a>
