@@ -48,10 +48,12 @@ class TBTenantCreateTenantAction
      */
     protected function tbPrepareTenantData(array $tbData, string $tbDomain): array
     {
+        $db_host = env('DB_HOST');
+        $db_username = env('DB_PORT');
         return array_merge($tbData, [
             'db_name' => $tbDomain ?? 'default_db_name',
-            'db_host' => 'localhost',
-            'db_username' => 'postgres',
+            'db_host' => $db_host,
+            'db_username' => $db_username,
             'db_password' => '',
             'tb_user_data' => [
                 'name' => $tbData['name'] ?? null,
@@ -111,7 +113,7 @@ class TBTenantCreateTenantAction
      */
     protected function tbCreateDatabaseForTenant(Tenant $tbTenant)
     {
-        $tbDatabaseName = 'tenant_'.str_replace('-', '_', $tbTenant->id);
+        $tbDatabaseName = 'tenant_' . str_replace('-', '_', $tbTenant->id);
         $tbTenant->update(['db_name' => $tbDatabaseName]);
 
         DB::statement("CREATE DATABASE $tbDatabaseName");
@@ -170,7 +172,7 @@ class TBTenantCreateTenantAction
             DB::connection('tenant')->commit();
         } catch (Exception $tbException) {
             DB::connection('tenant')->rollBack();
-            Log::error('Error al insertar datos iniciales: '.$tbException->getMessage());
+            Log::error('Error al insertar datos iniciales: ' . $tbException->getMessage());
             throw $tbException;
         }
     }
