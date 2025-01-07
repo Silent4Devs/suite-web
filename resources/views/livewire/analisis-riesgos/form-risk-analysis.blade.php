@@ -352,6 +352,42 @@
     </script>
 
     {{-- table sheets --}}
+    <script>
+        let cont = 0;
+        function tablaLivewire(id_tabla) {
+            $('#' + id_tabla).attr('id', id_tabla + cont);
+            let dtButtons = [
+
+            ];
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                order: [
+                    [0, 'desc']
+                ],
+                destroy: true,
+                render: true,
+            };
+
+            let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
+
+            return table;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                tablaLivewire('datatable-risk-analysis');
+            }, 200);
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                tablaLivewire('datatable-risk-analysis-controls');
+            }, 200);
+        });
+        document.addEventListener('livewire:init', function () {
+            console.log("update")
+        });
+    </script>
     {{-- <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {

@@ -81,7 +81,7 @@
 
     </div>
 
-    {{-- @livewire('analisis-riesgos.head-map-risk-two', ['RiskAnalysisId' => $riskAnalysisId]) --}}
+    @livewire('analisis-riesgos.head-map-risk-two', ['RiskAnalysisId' => $riskAnalysisId])
 
     @livewire('analisis-riesgos.form-risk-analysis', ['RiskAnalysisId' => $riskAnalysisId])
 

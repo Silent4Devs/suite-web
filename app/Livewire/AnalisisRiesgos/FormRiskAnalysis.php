@@ -460,6 +460,8 @@ class FormRiskAnalysis extends Component
                 ->where('status', 'in-progress')
                 ->first();
             $this->period_id = $period->id;
+        $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
+
 
             // get answers table general
             $existSheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period->id)->exists();
@@ -504,7 +506,7 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
-        $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
+        // $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
 
         // $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 

@@ -103,16 +103,10 @@ class TreatmentPlan extends Component
     #[On('treatmentPlan')]
     public function treatmentPlan($data)
     {
-        // dd($data);
         $period = $data['period'];
         $riskAnalysisId = $data['riskAnalysisId'];
-        // dd($period, $riskAnalysisId);
         $risk = TBRiskAnalysisModel::find($riskAnalysisId);
-
         $this->sheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period)->whereNotNull('initial_risk')->get();
-        // dd($this->sheets);
-        // dd($this->sheets);
-        // dd($this->sheets->count());
         if (! is_null($period)) {
             foreach ($this->sheets as $key => $sheet) {
                 if (! $sheet->sheet->require_treatment_plan) {
