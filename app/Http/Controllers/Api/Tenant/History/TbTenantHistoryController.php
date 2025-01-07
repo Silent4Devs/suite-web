@@ -6,11 +6,9 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TbTenantHistoryController extends TbTenantBaseController
 {
-
     protected $tbTenantManager;
 
     protected $tbStripeService;

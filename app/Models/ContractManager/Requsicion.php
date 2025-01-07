@@ -1319,13 +1319,13 @@ class Requsicion extends Model implements Auditable
 
             $comprador = Comprador::with('user')->where('id', $this->comprador_id)->first();
 
-            if (!$comprador || !$comprador->user) {
+            if (! $comprador || ! $comprador->user) {
                 return false; // Validación para evitar intentar acceder a una propiedad de null
             }
 
             $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
 
-            if (!$listaReq || !$listaReq->participantes) {
+            if (! $listaReq || ! $listaReq->participantes) {
                 return false; // Validación adicional para asegurar que la lista y sus participantes existan
             }
 
@@ -1333,7 +1333,7 @@ class Requsicion extends Model implements Auditable
 
             $supList = $listaPart->where('empleado_id', $comprador->user->id)->where('numero_orden', 1)->first();
 
-            if (!$supList || !$supList->nivel) {
+            if (! $supList || ! $supList->nivel) {
                 return false; // Validación para verificar que $supList y su nivel existan
             }
 

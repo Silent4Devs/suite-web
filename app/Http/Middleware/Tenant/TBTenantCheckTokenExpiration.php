@@ -4,7 +4,6 @@ namespace App\Http\Middleware\Tenant;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantCheckTokenExpiration
 {
@@ -18,7 +17,7 @@ class TBTenantCheckTokenExpiration
         $user = $request->user();
         $token = $user ? $user->currentAccessToken() : null;
 
-        if (!$token || $token->expires_at < now()) {
+        if (! $token || $token->expires_at < now()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token expirado o inválido',

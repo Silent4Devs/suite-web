@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Tenant;
 
-use App\Http\Controllers\Api\tbApiPanelControlController;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
@@ -32,7 +31,7 @@ class TBTenantVisitantesMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ["Visitantes"];
+        $tbModulosValidos = ['Visitantes'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 

@@ -2,7 +2,6 @@
 
 namespace App\Models\Tenant;
 
-use App\Models\Tenant\TbTenantsModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -51,6 +50,6 @@ class TbTenantUserModel extends Authenticatable
         return $this->belongsTo(TbTenantsModel::class, 'tenant_Id', 'id')
             ->when($this->email, function ($query, $email) {
                 $query->where('email', $email);
-        });
+            });
     }
 }

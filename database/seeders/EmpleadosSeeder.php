@@ -30,21 +30,21 @@ class EmpleadosSeeder extends Seeder
             'telefono_movil' => null,
             'n_empleado' => 1,
             'direccion' => 'Not provided',
-            'sede_id' =>  Sede::first()->id,
+            'sede_id' => Sede::first()->id,
             'telefono' => null,
             'n_registro' => null,
             'genero' => null,
             'email' => 'example@example.com',
-            'resumen' => ''
+            'resumen' => '',
         ]);
     }
 }
-// name, 
-// area_id, 
-// puesto_id, 
-// supervisor_id , 
-// perfil_empleado_id, 
-// genero, 
-// email , 
-// sede_id, 
+// name,
+// area_id,
+// puesto_id,
+// supervisor_id ,
+// perfil_empleado_id,
+// genero,
+// email ,
+// sede_id,
 // antiguedad

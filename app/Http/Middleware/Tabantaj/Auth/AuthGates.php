@@ -3,19 +3,16 @@
 namespace App\Http\Middleware\Tabantaj\Auth;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Models\Tenant;
+use App\Models\User;
 use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AuthGates
 {
-
     public $tbTenantManager;
 
     public function __construct(TBTenantTenantManager $tbTenantManager)
@@ -33,8 +30,7 @@ class AuthGates
 
             $tbTenant = Tenant::whereHas(
                 'domains',
-                fn($tbQuery) =>
-                $tbQuery->where('domain', $tbSubdomain)
+                fn ($tbQuery) => $tbQuery->where('domain', $tbSubdomain)
             )->firstOrFail();
 
             $this->tbTenantManager->tbSetTenant($tbTenant);

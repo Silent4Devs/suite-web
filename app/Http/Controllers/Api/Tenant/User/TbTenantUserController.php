@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\Tenant\User;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
+use App\Models\Tenant\TbTenantUserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Tenant\TbTenantUserModel;
-use Illuminate\Support\Facades\DB;
 
 class TbTenantUserController extends TbTenantBaseController
 {
@@ -35,7 +34,7 @@ class TbTenantUserController extends TbTenantBaseController
     {
         $user = TbTenantUserModel::find($id);
 
-        if (!$user) {
+        if (! $user) {
             return $this->tbSendError('Usuario no encontrado.', ['error' => 'ID del usuario mal']);
         }
 

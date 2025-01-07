@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware\Tenant;
 
-use App\Http\Controllers\Api\tbApiPanelControlController;
-use App\Models\Tenant;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
@@ -25,9 +23,7 @@ class TBTenantTimesheetMiddleware
     /**
      * Maneja una solicitud entrante.
      *
-     * @param \Illuminate\Http\Request $tbRequest
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $tbNext
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $tbNext
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
@@ -35,7 +31,7 @@ class TBTenantTimesheetMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ["Gestión de Talento", "Gestión Financiera"];
+        $tbModulosValidos = ['Gestión de Talento', 'Gestión Financiera'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 

@@ -66,7 +66,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -144,7 +144,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $equipo->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$equipo->foto);
             }
 
             // Encode spaces in the URL

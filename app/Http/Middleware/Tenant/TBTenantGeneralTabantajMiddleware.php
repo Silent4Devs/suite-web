@@ -20,6 +20,7 @@ class TBTenantGeneralTabantajMiddleware
         $this->tbTenantManager = $tbTenantManager;
         $this->tbStripeService = $tbStripeService;
     }
+
     /**
      * Handle an incoming request.
      *
@@ -45,7 +46,7 @@ class TBTenantGeneralTabantajMiddleware
     public function consultaApi()
     {
         try {
-            $apiController = new tbApiPanelControlController();
+            $apiController = new tbApiPanelControlController;
             $response = $apiController->getData();
 
             $client = $response->original[0];

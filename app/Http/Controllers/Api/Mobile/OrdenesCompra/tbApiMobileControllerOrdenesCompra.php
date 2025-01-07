@@ -210,7 +210,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 if (removeUnicodeCharacters($comprador->user->email) === removeUnicodeCharacters($user->email)) {
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar. En espera del comprador directo: ' . $comprador->user->name;
+                    $mensaje = 'No tiene permisos para firmar. En espera del comprador directo: '.$comprador->user->name;
 
                     return response(json_encode([
                         'orden' => $mensaje,
@@ -220,7 +220,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 if (removeUnicodeCharacters($user->email) === removeUnicodeCharacters($solicitante->email)) {
                     $tipo_firma = 'firma_solicitante_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar. En espera del solicitante directo: ' . $solicitante->name;
+                    $mensaje = 'No tiene permisos para firmar. En espera del solicitante directo: '.$solicitante->name;
 
                     return response(json_encode([
                         'orden' => $mensaje,
@@ -231,7 +231,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                     if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
                         $tipo_firma = 'firma_finanzas_orden';
                     } else {
-                        $mensaje = 'No tiene permisos para firmar En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
+                        $mensaje = 'No tiene permisos para firmar En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
                         return response(json_encode([
                             'requisicion' => $mensaje,
@@ -312,7 +312,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 'rfc' => $requisicion->sucursal->rfc,
                 'razon_social' => $requisicion->sucursal->descripcion,
                 'direccion' => $requisicion->sucursal->direccion,
-                'url_foto_empresa' => 'razon_social/' . $imagen_logo,
+                'url_foto_empresa' => 'razon_social/'.$imagen_logo,
             ];
 
             $json_requisicion['info_pago'] = [

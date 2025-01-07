@@ -117,7 +117,7 @@ return [
                 'password' => env('REDIS_PASSWORD', null),
                 'port' => env('REDIS_PORT', 6379),
                 'database' => env('REDIS_DB', 0),
-                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':session:' : null,
+                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':session:' : null,
             ],
 
             'cache' => [
@@ -125,7 +125,7 @@ return [
                 'password' => env('REDIS_PASSWORD', null),
                 'port' => env('REDIS_PORT', 6379),
                 'database' => env('REDIS_CACHE_DB', 1),
-                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':cache:' : null,
+                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':cache:' : null,
             ],
 
             'queues' => [
@@ -133,7 +133,7 @@ return [
                 'password' => env('REDIS_PASSWORD', null),
                 'port' => env('REDIS_PORT', 6379),
                 'database' => env('REDIS_CACHE_DB', 2),
-                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':queue:' : null,
+                'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':queue:' : null,
             ],
         ],
 
@@ -172,7 +172,7 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DB', 0),
-            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':session:' : null,
+            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':session:' : null,
         ],
 
         'cache' => [
@@ -180,7 +180,7 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
-            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':cache:' : null,
+            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':cache:' : null,
         ],
 
         'queues' => [
@@ -188,7 +188,7 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 2),
-            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey() . ':queue:' : null,
+            'prefix' => tenancy()->initialized ? tenancy()->tenant->getTenantKey().':queue:' : null,
         ],
 
     ],

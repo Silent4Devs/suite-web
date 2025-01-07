@@ -4,20 +4,16 @@ namespace App\Http\Controllers\Api\Tenant;
 
 use App\Actions\Tenant\TBTenantCreateTenantAction;
 use App\Http\Controllers\Controller;
-use App\Models\Tenant\TbTenantUserModel;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Database\QueryException;
 
 class TbTenantRegisterController extends Controller
 {
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function submit(Request $request): JsonResponse
     {
@@ -29,7 +25,7 @@ class TbTenantRegisterController extends Controller
             unset($tbData['domain']);
             // Crear el inquilino
             $tbTenant = (new TBTenantCreateTenantAction)($tbData, $tbDomain);
-            
+
             // Generar la URL completa del tenant
             $tbTenantUrl = $this->tbGenerateTenantUrl($tbDomain, 'users.login');
 
@@ -50,9 +46,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Valida los datos del formulario de registro.
-     *
-     * @param Request $request
-     * @return array
      */
     protected function tbValidateTenantData(Request $request): array
     {
@@ -62,13 +55,13 @@ class TbTenantRegisterController extends Controller
                 'string',
                 'unique:domains',
                 'regex:/^[a-zA-Z0-9-]+$/',
-                'max:50'
+                'max:50',
             ],
             'company' => [
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-zA-Z0-9\s.,]+$/'
+                'regex:/^[a-zA-Z0-9\s.,]+$/',
             ],
             'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|max:255|unique:tenants',
@@ -81,7 +74,7 @@ class TbTenantRegisterController extends Controller
                 'regex:/[A-Z]/',
                 'regex:/[a-z]/',
                 'regex:/[0-9]/',
-                'regex:/[@$!%*?&]/'
+                'regex:/[@$!%*?&]/',
             ],
             'cargo' => 'required|string|max:100',
             'sede' => 'required|string|max:150',
@@ -93,10 +86,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Genera la URL de redirección para el dominio del inquilino.
-     *
-     * @param string $tbDomain
-     * @param string $tbRouteName
-     * @return string
      */
     protected function tbGenerateTenantUrl(string $tbDomain, string $tbRouteName): string
     {
@@ -109,11 +98,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Genera una respuesta JSON de éxito.
-     *
-     * @param string $tbMessage
-     * @param array $tbData
-     * @param int $tbStatus
-     * @return JsonResponse
      */
     private function tbSuccessResponse(string $tbMessage, array $tbData = [], int $tbStatus = 200): JsonResponse
     {
@@ -126,9 +110,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Genera una respuesta JSON para errores de validación.
-     *
-     * @param ValidationException $tbException
-     * @return JsonResponse
      */
     private function tbValidationErrorResponse(ValidationException $tbException): JsonResponse
     {
@@ -141,9 +122,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Genera una respuesta JSON para errores de base de datos.
-     *
-     * @param QueryException $tbException
-     * @return JsonResponse
      */
     private function tbDatabaseErrorResponse(QueryException $tbException): JsonResponse
     {
@@ -156,11 +134,6 @@ class TbTenantRegisterController extends Controller
 
     /**
      * Genera una respuesta JSON genérica para errores.
-     *
-     * @param string $tbMessage
-     * @param string|null $tbError
-     * @param int $tbStatus
-     * @return JsonResponse
      */
     private function tbErrorResponse(string $tbMessage, ?string $tbError = null, int $tbStatus = 500): JsonResponse
     {
@@ -171,8 +144,6 @@ class TbTenantRegisterController extends Controller
         ], $tbStatus);
     }
 }
-
-
 
 /**
  * Peticion de ejemplo para la api.
@@ -190,7 +161,6 @@ class TbTenantRegisterController extends Controller
 //     "direccion": "123 Calle Falsa",
 //     "resumen": "Este es un resumen de la empresa"
 // }
-
 
 // {
 //     "success": true,

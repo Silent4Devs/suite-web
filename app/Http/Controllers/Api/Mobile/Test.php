@@ -61,7 +61,7 @@ class Test extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -171,7 +171,7 @@ class Test extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $user->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
         }
 
         // Encode spaces in the URL

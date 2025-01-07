@@ -56,7 +56,7 @@ class TbTimesheetApiMobileController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $timesheet->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$timesheet->empleado->foto);
         }
 
         // Encode spaces in the URL
@@ -159,7 +159,7 @@ class TbTimesheetApiMobileController extends Controller
                 $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
             }
         } else {
-            $ruta = asset('storage/empleados/imagenes/' . $usuario->empleado->foto);
+            $ruta = asset('storage/empleados/imagenes/'.$usuario->empleado->foto);
         }
 
         $usuario->ruta_foto = $this->encodeSpecialCharacters($ruta);
@@ -201,7 +201,7 @@ class TbTimesheetApiMobileController extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $aprobacion->empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$aprobacion->empleado->foto);
             }
 
             // Encode spaces in the URL

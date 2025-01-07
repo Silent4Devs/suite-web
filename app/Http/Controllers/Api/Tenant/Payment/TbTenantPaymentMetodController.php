@@ -6,13 +6,10 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Http\Controllers\Api\Tenant\Utilities\TbTenantUtilities;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
-use Barryvdh\Debugbar\Twig\Extension\Dump;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TbTenantPaymentMetodController extends TbTenantBaseController
 {
-
     protected $tbTenantManager;
 
     protected $tbStripeService;
@@ -43,10 +40,11 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
         try {
             //$tbStripeId = 'cus_RB6jvmea5u8gkC';
             $tbStripeId = 'cus_RABmnSCQX7qE8h'; //costumerId $tbStripeId
-            $tbPaymentId =  'card_1QQa2ELyj74Bldhk1lqfe0JN';
+            $tbPaymentId = 'card_1QQa2ELyj74Bldhk1lqfe0JN';
             // $tbPaymentId = 'pm_1PZ8wJLyj74BldhkpOzeyWPs';
 
             $tbPayment = $this->tbStripeService->tbAddPaymentMethod($tbStripeId, $tbPaymentId);
+
             return $this->tbSendResponse($tbPayment, 'Metodo de pago agregado y vinculado correctamente.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
@@ -88,7 +86,7 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             }
 
             // Verificar si hay errores
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 // Retornar los errores
                 return $this->tbSendError('Validation failed', ['errors' => $errors]);
             }
@@ -139,7 +137,7 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             // Validamos la dirección utilizando tbValidateAddress
             $addressValidation = $this->tbTenantUtilities->tbValidateAddress($billingAddress);
 
-            if (!empty($addressValidation)) {
+            if (! empty($addressValidation)) {
                 // Enviamos los errores si la validación falla
                 return $this->tbSendError(
                     'Ha habido un error al validar la dirección de facturación',
@@ -158,7 +156,6 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
         }
     }
 
-
     public function tbUpdateBillingAddressMethod(Request $request)
     {
         try {
@@ -171,7 +168,7 @@ class TbTenantPaymentMetodController extends TbTenantBaseController
             // Validamos la dirección utilizando tbValidateAddress
             $addressValidation = $this->tbTenantUtilities->tbValidateAddress($billingAddress);
 
-            if (!empty($addressValidation)) {
+            if (! empty($addressValidation)) {
                 // Enviamos los errores si la validación falla
                 return $this->tbSendError(
                     'Ha habido un error al validar la dirección de facturación',

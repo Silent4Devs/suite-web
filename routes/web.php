@@ -1,55 +1,28 @@
 <?php
 
-use App\Http\Controllers\Admin\AnalisisdeRiesgosController;
-use App\Http\Controllers\Admin\ArbolRiesgosOctaveController;
-use App\Http\Controllers\Admin\AreasController;
-use App\Http\Controllers\Admin\AusenciasController;
 use App\Http\Controllers\Admin\CalendarioOficialController;
-use App\Http\Controllers\Admin\ContenedorMatrizOctaveController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
-use App\Http\Controllers\Admin\DashboardPermisosController;
-use App\Http\Controllers\Admin\DayOffController;
 use App\Http\Controllers\Admin\DenunciasController;
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\EmpleadoController;
-use App\Http\Controllers\Admin\EnvioDocumentosController;
 use App\Http\Controllers\Admin\Escuela\CapacitacionesController;
-use App\Http\Controllers\Admin\FirmasModuleController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\Admin\IncidentesDayOffController;
-use App\Http\Controllers\Admin\IncidentesVacacionesController;
 use App\Http\Controllers\Admin\InicioUsuarioController;
-use App\Http\Controllers\Admin\MatrizRiesgosController;
 use App\Http\Controllers\Admin\MejorasController;
-use App\Http\Controllers\Admin\OrganizacionController;
-use App\Http\Controllers\Admin\PermisosGoceSueldoController;
 use App\Http\Controllers\Admin\PortalComunicacionController;
 use App\Http\Controllers\Admin\ProcesosOctaveController;
-use App\Http\Controllers\Admin\PuestosController;
 use App\Http\Controllers\Admin\QuejasClienteController;
 use App\Http\Controllers\Admin\QuejasController;
 use App\Http\Controllers\Admin\RiesgosController;
 use App\Http\Controllers\Admin\SeguridadController;
-use App\Http\Controllers\Admin\SolicitudDayOffController;
-use App\Http\Controllers\Admin\SolicitudPermisoGoceSueldoController;
 use App\Http\Controllers\Admin\SolicitudVacacionesController;
 use App\Http\Controllers\Admin\SugerenciasController;
-use App\Http\Controllers\Admin\TablaCalendarioController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\VacacionesController;
-use App\Http\Controllers\Admin\VisitanteQuoteController;
-use App\Http\Controllers\Admin\VisitantesAvisoPrivacidadController;
-use App\Http\Controllers\Admin\VisitantesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CertificatesController;
-use App\Http\Controllers\Central\LoginTenantController;
-use App\Http\Controllers\Central\RegisterTenantController;
 use App\Http\Controllers\ContractManager\ContratosController;
-use App\Http\Controllers\ContractManager\DashboardController;
 use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
-use App\Http\Controllers\RevisionDocumentoController;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
@@ -1468,8 +1441,6 @@ Route::group(['middleware' => ['tenant']], function () {
             Route::post('userCatalogueTraining/{id}/rechazado', [CertificatesController::class, 'rechazado'])->name('user-catalogue-training.rechazado');
         });
 
-
-
         Route::group(['middleware' => ['gestor_documental']], function () {
             //Documentos
             Route::get('documentos/publicados', [DocumentosController::class, 'publicados'])->name('documentos.publicados');
@@ -1652,10 +1623,9 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::get('pasarela-pago/planes-precios', 'PasarelaPagoController@planesPrecios')->name('pasarela-pago.planes-precios');
         Route::get('pasarela-pago/pre-pago', 'PasarelaPagoController@prePago')->name('pasarela-pago.pre-pago');
         Route::match(['post', 'get'], 'pasarela-pago/pago', 'PasarelaPagoController@pago')->name('pasarela-pago.pago'); ///{plan}
-        Route::post('subscription', 'PasarelaPagoController@subscription')->name("pasarela-pago.create");
+        Route::post('subscription', 'PasarelaPagoController@subscription')->name('pasarela-pago.create');
         Route::get('pasarela-pago/pago-confirmacion', 'PasarelaPagoController@pagoConfirmado')->name('pasarela-pago.pago-confirmado');
         Route::post('pasarela-pago/bolsa', 'PasarelaPagoController@bolsa')->name('pasarela-pago.bolsa');
-
 
         Route::get('pasarela-pago/apps/capacitaciones', 'PasarelaPagoAppsController@capacitaciones')->name('pasarela-pago.apps.capacitaciones');
         Route::get('pasarela-pago/apps/gestion-normativa', 'PasarelaPagoAppsController@gestionNormativa')->name('pasarela-pago.apps.gestion-normativa');

@@ -99,6 +99,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
+
         return view('admin.categoriaCapacitacion.show', compact('categoriaCapacitacion'));
     }
 
@@ -111,6 +112,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
+
         return view('admin.categoriaCapacitacion.edit', compact('categoriaCapacitacion'));
     }
 

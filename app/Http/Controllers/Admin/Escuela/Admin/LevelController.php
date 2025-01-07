@@ -92,6 +92,7 @@ class LevelController extends Controller
     public function show($id_level)
     {
         $level = Level::where('id', $id_level)->first();
+
         return view('admin.escuela.admin.levels.show', compact('level'));
     }
 
@@ -104,6 +105,7 @@ class LevelController extends Controller
     public function edit($id_level)
     {
         $level = Level::where('id', $id_level)->first();
+
         return view('admin.escuela.admin.levels.edit', compact('level'));
     }
 

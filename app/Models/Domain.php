@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Stancl\Tenancy\Database\Models\Domain as BaseDomain;
 use App\Exceptions\DomainCannotBeChangedException;
 use Illuminate\Support\Str;
+use Stancl\Tenancy\Database\Models\Domain as BaseDomain;
 
 /**
  * @property int $id
@@ -25,7 +23,6 @@ class Domain extends BaseDomain
     ];
 
     protected $fillable = ['domain', 'tenant_id'];
-
 
     public static function booted()
     {
@@ -51,14 +48,13 @@ class Domain extends BaseDomain
 
     public static function domainFromSubdomain(string $subdomain): string
     {
-        return $subdomain . '.' . config('tenancy.central_domains')[0];
+        return $subdomain.'.'.config('tenancy.central_domains')[0];
     }
 
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);
     }
-    
 
     public function makePrimary(): self
     {

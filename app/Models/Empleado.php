@@ -369,6 +369,7 @@ class Empleado extends Model implements Auditable
         }
 
         $lider->children_organigrama = $childrens;
+
         return $lider;
 
         // return self::select(

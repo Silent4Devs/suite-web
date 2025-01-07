@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TbTenantProfileController extends TbTenantBaseController
 {
@@ -43,5 +42,4 @@ class TbTenantProfileController extends TbTenantBaseController
             return $this->tbSendError($e, ['error' => $e]);
         }
     }
-
 }

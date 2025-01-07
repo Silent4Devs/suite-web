@@ -101,7 +101,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                             $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                         }
                     } elseif ($empleado) {
-                        $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                        $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
                     } else {
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png'); // Valor predeterminado si no hay empleado
                     }
@@ -127,7 +127,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                                 $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                             }
                         } else {
-                            $ruta_supervisor = asset('storage/empleados/imagenes/' . $supervisorFoto);
+                            $ruta_supervisor = asset('storage/empleados/imagenes/'.$supervisorFoto);
                         }
                     } else {
                         $supervisorName = 'N/A';
@@ -163,7 +163,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                             $ruta_comprador = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                         }
                     } else {
-                        $ruta_comprador = asset('storage/empleados/imagenes/' . $comp->foto);
+                        $ruta_comprador = asset('storage/empleados/imagenes/'.$comp->foto);
                     }
 
                     // Encode spaces in the URL
@@ -177,7 +177,7 @@ class tbApiMobileControllerRequisiciones extends Controller
 
                     $json_requisicion[$keyReq] = [
                         'id' => $requisicion->id,
-                        'folio' => 'RQ-00-00-' . $requisicion->id,
+                        'folio' => 'RQ-00-00-'.$requisicion->id,
                         'fecha_solicitud' => $requisicion->fecha,
                         'referencia' => $requisicion->referencia,
                         'proveedor' => $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto'),
@@ -260,7 +260,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                             $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                         }
                     } elseif ($empleado) {
-                        $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                        $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
                     } else {
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png'); // Valor predeterminado si no hay empleado
                     }
@@ -286,7 +286,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                                 $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                             }
                         } else {
-                            $ruta_supervisor = asset('storage/empleados/imagenes/' . $supervisorFoto);
+                            $ruta_supervisor = asset('storage/empleados/imagenes/'.$supervisorFoto);
                         }
                     } else {
                         $supervisorName = 'N/A';
@@ -322,7 +322,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                             $ruta_comprador = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                         }
                     } else {
-                        $ruta_comprador = asset('storage/empleados/imagenes/' . $comp->foto);
+                        $ruta_comprador = asset('storage/empleados/imagenes/'.$comp->foto);
                     }
 
                     // Encode spaces in the URL
@@ -336,7 +336,7 @@ class tbApiMobileControllerRequisiciones extends Controller
 
                     $json_requisicion[$keyReq] = [
                         'id' => $requisicion->id,
-                        'folio' => 'RQ-00-00-' . $requisicion->id,
+                        'folio' => 'RQ-00-00-'.$requisicion->id,
                         'fecha_solicitud' => $requisicion->fecha,
                         'referencia' => $requisicion->referencia,
                         'proveedor' => $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto'),
@@ -546,7 +546,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del solicitante directo:' . $firma_siguiente->solicitante->name . '';
+                    $mensaje = 'No tiene permisos para firmar En espera del solicitante directo:'.$firma_siguiente->solicitante->name.'';
 
                     return response(
                         json_encode([
@@ -578,7 +578,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar. En espera del jefe directo:' . $firma_siguiente->jefe->name . '';
+                    $mensaje = 'No tiene permisos para firmar. En espera del jefe directo:'.$firma_siguiente->jefe->name.'';
 
                     return response(
                         json_encode([
@@ -625,7 +625,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     //responsable_finanzas_id
                     $tipo_firma = 'firma_finanzas';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar En espera de finanzas:' . $firma_siguiente->responsableFinanzas->name;
+                    $mensaje = 'No tiene permisos para firmar En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
                     return response(
                         json_encode([
@@ -666,7 +666,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del comprador:' . $comprador->user->name . '';
+                    $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
 
                     return response(
                         json_encode([
@@ -680,7 +680,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     //comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar En espera del comprador:' . $comprador->user->name . '';
+                    $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
 
                     return response(
                         json_encode([
@@ -742,7 +742,7 @@ class tbApiMobileControllerRequisiciones extends Controller
             'rfc' => $requisicion->sucursal->rfc,
             'razon_social' => $requisicion->sucursal->descripcion,
             'direccion' => $requisicion->sucursal->direccion,
-            'url_foto_empresa' => 'razon_social/' . $imagen_logo,
+            'url_foto_empresa' => 'razon_social/'.$imagen_logo,
         ];
 
         foreach ($requisicion->productos_requisiciones as $producto) {

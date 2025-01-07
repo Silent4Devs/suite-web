@@ -62,8 +62,8 @@ class CourseStatus extends Component
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
-        if(isset($this->current->resource)){
-            $this->archivoUrl = asset('storage/' . $this->current->resource->url);  // Asegúrate de que el archivo sea accesible
+        if (isset($this->current->resource)) {
+            $this->archivoUrl = asset('storage/'.$this->current->resource->url);  // Asegúrate de que el archivo sea accesible
         }
     }
 
@@ -74,7 +74,7 @@ class CourseStatus extends Component
         // dd($this->current);
 
         // lastReview
-        $fechaYHora = $this->fecha . ' ' . $this->hora;
+        $fechaYHora = $this->fecha.' '.$this->hora;
         $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
             ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
@@ -115,7 +115,6 @@ class CourseStatus extends Component
         //     $this->current = $this->course->lastfinishedlesson;
         // }
 
-
         $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
@@ -128,6 +127,7 @@ class CourseStatus extends Component
     {
         $usuario = User::getCurrentUser();
         $this->current->users()->attach($usuario->id);
+
         return redirect(route('admin.curso-estudiante', $this->course->id));
     }
 
@@ -269,7 +269,7 @@ class CourseStatus extends Component
     public function download()
     {
         // dd($this->current->resource);
-        return response()->download(storage_path('app/' . $this->current->resource->url));
+        return response()->download(storage_path('app/'.$this->current->resource->url));
     }
 
     public function alertSection()

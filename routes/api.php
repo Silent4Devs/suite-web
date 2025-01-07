@@ -1,8 +1,6 @@
 <?php
 
-
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\Tenant\TBTenantRegisterController;
 use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\Mobile\Auth\UserAuthController;
@@ -22,6 +20,7 @@ use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
 use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
 use App\Http\Controllers\Api\Tenant\Product\TbTenantProductMetodController;
 use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
+use App\Http\Controllers\Api\Tenant\TBTenantRegisterController;
 use App\Http\Controllers\Api\Tenant\User\TbTenantUserController;
 use Illuminate\Support\Facades\Route;
 

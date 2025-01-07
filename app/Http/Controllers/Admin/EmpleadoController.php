@@ -1450,12 +1450,13 @@ class EmpleadoController extends Controller
             if ($nombre != null) {
                 $usuarios = DB::table('empleados')
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
-                    ->select('empleados.id','empleados.name')
+                    ->select('empleados.id', 'empleados.name')
                     ->where('name', 'ILIKE', '%'.$nombre.'%')
                     ->where('empleados.estatus', 'alta')
                     ->whereNull('empleados.deleted_at')
                     ->take(5)
                     ->get();
+
                 return json_encode($usuarios);
             }
         }
