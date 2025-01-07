@@ -48,8 +48,11 @@ class TBTenantCreateTenantAction
      */
     protected function tbPrepareTenantData(array $tbData, string $tbDomain): array
     {
-        $db_host = env('DB_HOST');
-        $db_username = env('DB_PORT');
+        $db_host = config('database.connections.pgsql.host');
+        $db_port = config('database.connections.pgsql.port');
+        $db_username = config('database.connections.pgsql.username$db_username');
+        // $db_host = env('DB_HOST');
+        // $db_username = env('DB_PORT');
         return array_merge($tbData, [
             'db_name' => $tbDomain ?? 'default_db_name',
             'db_host' => $db_host,
