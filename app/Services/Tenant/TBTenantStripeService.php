@@ -265,6 +265,7 @@ class TBTenantStripeService
                     'id' => $product->id,
                     'name' => $product->name,
                     'prices' => $formattedPrices,
+                    'img' => $product->metadata['img'] ?? null,
                 ];
             }
 
