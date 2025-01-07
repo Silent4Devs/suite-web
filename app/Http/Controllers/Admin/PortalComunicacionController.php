@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
@@ -26,6 +27,8 @@ class PortalComunicacionController extends Controller
      */
     public function index()
     {
+        // dd(Auth::guard(), User::getAll());
+
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $hoy = Carbon::now();

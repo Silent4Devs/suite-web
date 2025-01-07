@@ -92,8 +92,10 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.courses.show', compact('course'));
     }
 
@@ -103,8 +105,9 @@ class CourseController extends Controller
      * @param  int  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         // $this->authorize('dicatated', $course);
 
         // dd($course);
@@ -123,8 +126,10 @@ class CourseController extends Controller
      * @param  int  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id_course)
     {
+        $course = Course::where('id', $id_course)->first();
+
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => ['required', "unique:courses,slug,$course->id,id", 'max:255', 'string'],
@@ -175,26 +180,31 @@ class CourseController extends Controller
      * @param  int  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id_course)
     {
         //
     }
 
-    public function goals(Course $course)
+    public function goals($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.courses.goals', compact('course'));
     }
 
-    public function status(Course $course)
+    public function status($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         $course->status = 2;
         $course->save();
 
         return back();
     }
 
-    public function quizDetails(Course $course)
+    public function quizDetails($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.evaluationquizdetails', compact('course'));
     }
 }

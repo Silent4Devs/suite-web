@@ -113,8 +113,6 @@ class InicioUsuarioController extends Controller
         $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
 
-        // dd($empleado->estado_disponibilidad);
-
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {
             $usuarioVinculadoConEmpleado = true;

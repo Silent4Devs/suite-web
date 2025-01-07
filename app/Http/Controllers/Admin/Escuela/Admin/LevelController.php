@@ -89,8 +89,10 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Level $level)
+    public function show($id_level)
     {
+        $level = Level::where('id', $id_level)->first();
+
         return view('admin.escuela.admin.levels.show', compact('level'));
     }
 
@@ -100,8 +102,10 @@ class LevelController extends Controller
      * @param  int  Level $level
      * @return \Illuminate\Http\Response
      */
-    public function edit(Level $level)
+    public function edit($id_level)
     {
+        $level = Level::where('id', $id_level)->first();
+
         return view('admin.escuela.admin.levels.edit', compact('level'));
     }
 
@@ -111,8 +115,10 @@ class LevelController extends Controller
      * @param  int  Level $level
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Level $level)
+    public function update(Request $request, $id_level)
     {
+        $level = Level::where('id', $id_level)->first();
+
         $request->validate([
             'name' => 'required|unique:levels,name,'.$level->id,
         ]);

@@ -19,8 +19,9 @@ class CourseController extends Controller
         return view('admin.courses.show', compact('course'));
     }
 
-    public function approved(Course $course)
+    public function approved($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         if (! $course->lessons || ! $course->goals || ! $course->requirements || ! $course->image) {
             return back()->with('info', 'No se puede publicar un curso que no este completo');
         }

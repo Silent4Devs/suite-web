@@ -22,6 +22,8 @@ export default defineConfig({
 
         // modulos css
         "resources/css/centroAtencion.css",
+        "resources/js/app_teanet.js",
+        "resources/css/app.css"
       ],
       refresh: true
     })

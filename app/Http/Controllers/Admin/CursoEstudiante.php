@@ -10,7 +10,6 @@ use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
-use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {
@@ -53,11 +52,6 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            // $results = Async::run([
-            //     fn() => Evaluation::where('course_id', $curso_id)->get(),
-            //     fn() => Course::where('id', $curso_id)->first(),
-            // ]);
-
             $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
             $curso = Course::getAll()->where('id', $curso_id)->first();
 
@@ -101,9 +95,9 @@ class CursoEstudiante extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(course $course)
+    public function show($id_course)
     {
-        // $this->authorize('published', $course);
+        $course = Course::where('id', $id_course)->first();
 
         $similares = Course::where('category_id', $course->category_id)
             ->where('id', '!=', $course->id)
@@ -130,8 +124,9 @@ class CursoEstudiante extends Controller
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
-    public function enrolled(Course $course)
+    public function enrolled($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         $course->students()->attach(User::getCurrentUser()->id);
 
         return redirect()->route('admin.curso-estudiante', $course->id);
