@@ -48,6 +48,21 @@ services:
       - tabantajnetwork
     mem_limit: 6g
 
+  postgres-tenant:
+    image: postgres:16-alpine
+    container_name: postgres-tenant
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - tenant-database:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    networks:
+      - tabantajnetwork
+    mem_limit: 6g
+
   php:
     build:
       context: "./infra/php/"
