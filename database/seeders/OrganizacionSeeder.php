@@ -29,3 +29,41 @@ class OrganizacionSeeder extends Seeder
         ]);
     }
 }
+
+// INSERT INTO public.organizacions
+// (
+//     id,
+//     empresa, ...
+//     direccion, ...
+//     telefono, 
+//     correo, 
+//     pagina_web, 
+//     giro, 
+//     servicios,
+//     mision, 
+//     ision, 
+//     valores, 
+//     created_at, 
+//     updated_at, 
+//     deleted_at, 
+//     team_id, 
+//     antecedentes, 
+//     logotipo, 
+//     razon_social, 
+//     rfc, 
+//     representante_legal, 
+//     fecha_constitucion, 
+//     num_empleados, 
+//     tamano, 
+//     linkedln, 
+//     youtube, 
+//     facebook, 
+//     twitter, 
+//     dia_timesheet, ...
+//     inicio_timesheet, ...
+//     fin_timesheet, ...
+//     fecha_registro_timesheet, 
+//     semanas_min_timesheet, 
+//     semanas_adicionales ...
+//     )
+// VALUES(nextval('organizacions_id_seq'::regclass), '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', 0, '', '', '', '', '', 'Viernes'::character varying, 'Lunes'::character varying, 'Domingo'::character varying, '', 0, '2'::smallint);

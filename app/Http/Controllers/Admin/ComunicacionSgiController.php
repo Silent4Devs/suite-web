@@ -178,10 +178,10 @@ class ComunicacionSgiController extends Controller
         return [];
     }
 
-    public function edit(ComunicacionSgi $comunicacionSgi)
+    public function edit($id_comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $comunicacionSgi = ComunicacionSgi::where('id', $id_comunicacionSgi)->first();
         $empleados = Empleado::getaltaAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
@@ -189,9 +189,10 @@ class ComunicacionSgiController extends Controller
         return view('admin.comunicacionSgis.edit', compact('comunicacionSgi', 'documentos', 'imagenes', 'empleados'));
     }
 
-    public function update(UpdateComunicacionSgiRequest $request, ComunicacionSgi $comunicacionSgi)
+    public function update(UpdateComunicacionSgiRequest $request, $id_comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $comunicacionSgi = ComunicacionSgi::where('id', $id_comunicacionSgi)->first();
 
         $request->validate([
             'titulo' => 'required',
@@ -272,19 +273,19 @@ class ComunicacionSgiController extends Controller
         return redirect()->route('admin.comunicacion-sgis.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(ComunicacionSgi $comunicacionSgi)
+    public function show($id_comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $comunicacionSgi = ComunicacionSgi::where('id', $id_comunicacionSgi)->first();
         $comunicacionSgi->load('team', 'documentos_comunicacion', 'imagenes_comunicacion');
 
         return view('admin.comunicacionSgis.show', compact('comunicacionSgi'));
     }
 
-    public function destroy(ComunicacionSgi $comunicacionSgi)
+    public function destroy($id_comunicacionSgi)
     {
         abort_if(Gate::denies('comunicados_generales_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $comunicacionSgi = ComunicacionSgi::where('id', $id_comunicacionSgi)->first();
         $comunicacionSgi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

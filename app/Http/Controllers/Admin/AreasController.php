@@ -77,7 +77,7 @@ class AreasController extends Controller
             $file = $request->file('foto_area');
             //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+            $new_name_image = 'UID_' . $area->id . '_' . $hash_name . '.png';
 
             // Call the ImageService to consume the external API
             // $apiResponse = ImageService::consumeImageCompresorApi($file);
@@ -104,10 +104,10 @@ class AreasController extends Controller
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Area $area)
+    public function edit($id_area)
     {
         abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
@@ -145,9 +145,9 @@ class AreasController extends Controller
             //Si existe la imagen entonces se elimina al editarla
             $file = $request->file('foto_area');
 
-            $filePath = '/app/public/areas/'.$area->foto_area;
+            $filePath = '/app/public/areas/' . $area->foto_area;
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
+            $new_name_image = 'UID_' . $area->id . '_' . $hash_name . '.png';
 
             if (Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
@@ -187,19 +187,19 @@ class AreasController extends Controller
         return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Area $area)
+    public function show($id_area)
     {
         abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $area->load('team', 'grupo');
 
         return view('admin.areas.show', compact('area'));
     }
 
-    public function destroy(Area $area)
+    public function destroy($id_area)
     {
         abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $area->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -232,7 +232,7 @@ class AreasController extends Controller
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::getFirst();
         $organizacion = ! is_null($organizacionDB) ? Organizacion::getFirst()->empresa : 'la organización';
-        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $org_foto = ! is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
         $organizacion = Organizacion::getFirst();
 

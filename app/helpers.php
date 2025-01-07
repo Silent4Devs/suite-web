@@ -1,5 +1,7 @@
 <?php
 
+use App\PloiManager;
+
 //remove unicodes from string
 function removeUnicodeCharacters($string)
 {

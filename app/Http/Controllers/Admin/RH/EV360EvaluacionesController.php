@@ -430,9 +430,10 @@ class EV360EvaluacionesController extends Controller
         }
     }
 
-    public function evaluacion(Evaluacion $evaluacion)
+    public function evaluacion($id_evaluacion)
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_evaluacion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
         $evaluacion->load('autor');
 
         $lista_evaluados = [];
@@ -2050,8 +2051,9 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
     }
 
-    public function enviarCorreoAEvaluadores(Evaluacion $evaluacion)
+    public function enviarCorreoAEvaluadores($id_evaluacion)
     {
+        $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
         foreach ($evaluadores as $evaluador_id) {
             $evaluados_ids = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
