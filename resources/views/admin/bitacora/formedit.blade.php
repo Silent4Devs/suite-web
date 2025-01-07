@@ -1226,8 +1226,6 @@
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
 
-
-
         const fileInput = document.getElementById("file_contrato");
         const statusText = document.getElementById("compressStatus");
 
@@ -1247,20 +1245,29 @@
             statusText.textContent = "Comprimiendo archivo...";
 
             try {
+
                 const arrayBuffer = await selectedFile.arrayBuffer();
+
 
                 const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
 
                 pdfDoc.setCreator("");
                 pdfDoc.setProducer("");
+                pdfDoc.removePage(0);
 
                 const compressedPdfBytes = await pdfDoc.save({
-                    useObjectStreams: true
+                    useObjectStreams: true,
+                    updateFieldAppearances: false,
                 });
 
                 const compressedBlob = new Blob([compressedPdfBytes], {
                     type: "application/pdf"
                 });
+
+                const fileSizeKB = compressedBlob.size / 1024;
+                if (fileSizeKB > 3000) {
+                    throw new Error("El archivo comprimido sigue siendo demasiado grande.");
+                }
 
                 const compressedFile = new File([compressedBlob],
                     `compressed-${selectedFile.name}`, {
@@ -1271,10 +1278,12 @@
                 dataTransfer.items.add(compressedFile);
                 fileInput.files = dataTransfer.files;
 
-                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
+                statusText.textContent =
+                    `Archivo comprimido exitosamente (${fileSizeKB.toFixed(2)} KB): ${compressedFile.name}`;
             } catch (error) {
                 console.error("Error al comprimir el PDF:", error);
-                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
+                statusText.textContent =
+                    "No se pudo comprimir el archivo. Asegúrate de que sea menor a 3 MB.";
             }
         });
 
