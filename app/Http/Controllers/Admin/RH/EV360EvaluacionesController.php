@@ -2053,32 +2053,37 @@ class EV360EvaluacionesController extends Controller
     public function enviarCorreoAEvaluadores(Evaluacion $evaluacion)
     {
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
-        foreach ($evaluadores as $evaluador) {
-            $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
-                ->where('evaluador_id', $evaluador)
+        foreach ($evaluadores as $evaluador_id) {
+            $evaluados_ids = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador_id)
                 ->where('evaluado', false)
                 ->pluck('evaluado_id')
                 ->unique()
                 ->toArray();
+
+            $evaluados = Empleado::select('id', 'name', 'area_id', 'puesto_id')
+                ->whereIn('id', $evaluados_ids)
+                ->get(); // Ahora es una colección de objetos Empleado
+
             $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
-            $evaluados = $empleados->find($evaluados);
-            $evaluador_model = $empleados->find($evaluador);
-            if (count($evaluados)) {
-                $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
-                if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
-                    if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
-                        sleep(4); //use usleep(500000) for half a second or less
-                    }
+
+            $evaluador_model = $empleados->get($evaluador_id);
+
+            if ($evaluados->count() && $evaluador_model) {
+                $email = removeUnicodeCharacters($evaluador_model->email);
+                if ($email) {
+                    Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador_model, $evaluados));
                 }
             }
         }
+
 
         return response()->json(['success' => true]);
     }
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->queue(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
     }
 
     public function enviarInvitacionDeEvaluacion(Request $request)
