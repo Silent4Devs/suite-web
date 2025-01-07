@@ -452,6 +452,9 @@
                                 {{ $errors->first('file_contrato') }}
                             </div>
                         @endif
+
+                        <p id="compressStatus" class="mt-2 text-muted"></p>
+
                         {{-- </div> --}}
                     </div>
 
@@ -713,6 +716,62 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const fileInput = document.getElementById("file_contrato");
+        const statusText = document.getElementById("compressStatus");
+
+        fileInput.addEventListener("change", async (event) => {
+            const selectedFile = event.target.files[0];
+
+            if (!selectedFile) {
+                statusText.textContent = "No se ha seleccionado ningún archivo.";
+                return;
+            }
+
+            if (selectedFile.type !== "application/pdf") {
+                statusText.textContent = "El archivo seleccionado no es un PDF.";
+                return;
+            }
+
+            statusText.textContent = "Comprimiendo archivo...";
+
+            try {
+                const arrayBuffer = await selectedFile.arrayBuffer();
+
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+
+                pdfDoc.setCreator("");
+                pdfDoc.setProducer("");
+
+                const compressedPdfBytes = await pdfDoc.save({
+                    useObjectStreams: true
+                });
+
+                const compressedBlob = new Blob([compressedPdfBytes], {
+                    type: "application/pdf"
+                });
+
+                const compressedFile = new File([compressedBlob],
+                    `compressed-${selectedFile.name}`, {
+                        type: "application/pdf",
+                    });
+
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(compressedFile);
+                fileInput.files = dataTransfer.files;
+
+                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
+            } catch (error) {
+                console.error("Error al comprimir el PDF:", error);
+                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
     function showContent() {
