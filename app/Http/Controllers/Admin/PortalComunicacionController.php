@@ -17,8 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use VXM\Async\AsyncFacade as Async;
-use Illuminate\Support\Facades\DB;
 
 class PortalComunicacionController extends Controller
 {
@@ -30,7 +28,6 @@ class PortalComunicacionController extends Controller
     public function index()
     {
         // dd(Auth::guard(), User::getAll());
-
 
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

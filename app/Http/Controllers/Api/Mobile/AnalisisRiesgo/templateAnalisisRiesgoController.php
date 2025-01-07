@@ -767,7 +767,7 @@ class templateAnalisisRiesgoController extends Controller
                     Arr::forget($item, 'status');
 
                     $fileName = $item->url;
-                    $path = asset('storage/analisis_riesgo/template/questions/' . $fileName);
+                    $path = asset('storage/analisis_riesgo/template/questions/'.$fileName);
                     $item->url = $path;
                 }
                 break;
@@ -1001,9 +1001,9 @@ class templateAnalisisRiesgoController extends Controller
             $imagen = $imagenes[$key];
             $name = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = pathinfo($imagen->getClientOriginalName(), PATHINFO_EXTENSION);
-            $new_name_image = 'Template_AR_Question_Image_' . $name . '_' . $date . '.' . $extension;
+            $new_name_image = 'Template_AR_Question_Image_'.$name.'_'.$date.'.'.$extension;
 
-            $route = storage_path() . '/app/public/analisis_riesgo/template/questions/' . $new_name_image;
+            $route = storage_path().'/app/public/analisis_riesgo/template/questions/'.$new_name_image;
             $image = $new_name_image;
 
             // Call the ImageService to consume the external API

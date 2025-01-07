@@ -159,7 +159,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint . '/registrosTimesheet/', $data);
+        $response = Http::post($apiEndpoint.'/registrosTimesheet/', $data);
 
         if ($response->successful()) {
             dd($response->json());
@@ -179,7 +179,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint . '/timesheetAreas/', $data);
+        $response = Http::post($apiEndpoint.'/timesheetAreas/', $data);
 
         if ($response->successful()) {
             dd($response->json());
@@ -200,7 +200,7 @@ class ReportesRegistros extends Component
         ];
 
         $apiEndpoint = env('REPORTSERVICE_API');
-        $response = Http::post($apiEndpoint . '/timesheetProyectos/', $data);
+        $response = Http::post($apiEndpoint.'/timesheetProyectos/', $data);
 
         if ($response->successful()) {
             dd($response->json());

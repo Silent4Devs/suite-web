@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Tenant;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
-use App\Models\Tenant; // Ajusta esto al nombre del modelo de inquilino
+use Illuminate\Support\Facades\Redis; // Ajusta esto al nombre del modelo de inquilino
 
 class CheckRedisConnection extends Command
 {
@@ -35,16 +35,18 @@ class CheckRedisConnection extends Command
         if ($tenantId) {
 
             $tenant = Tenant::find($tenantId);
-            if (!$tenant) {
+            if (! $tenant) {
                 $this->error("Tenant with ID {$tenantId} not found.");
+
                 return Command::FAILURE;
             }
             tenancy()->initialize($tenant);
         } else {
-            
+
             $tenant = tenancy()->tenant;
-            if (!$tenant) {
-                $this->error("No tenant is currently initialized, and no tenant ID was provided.");
+            if (! $tenant) {
+                $this->error('No tenant is currently initialized, and no tenant ID was provided.');
+
                 return Command::FAILURE;
             }
         }
@@ -57,9 +59,9 @@ class CheckRedisConnection extends Command
         Redis::connection('cache')->set($cacheKey, 'cache_value');
         Redis::connection('queues')->set($queueKey, 'queue_value');
 
-        $this->info("Tenant {$tenant->id} - Session Key: " . Redis::connection('sessionredis')->get($sessionKey));
-        $this->info("Tenant {$tenant->id} - Cache Key: " . Redis::connection('cache')->get($cacheKey));
-        $this->info("Tenant {$tenant->id} - Queue Key: " . Redis::connection('queues')->get($queueKey));
+        $this->info("Tenant {$tenant->id} - Session Key: ".Redis::connection('sessionredis')->get($sessionKey));
+        $this->info("Tenant {$tenant->id} - Cache Key: ".Redis::connection('cache')->get($cacheKey));
+        $this->info("Tenant {$tenant->id} - Queue Key: ".Redis::connection('queues')->get($queueKey));
 
         tenancy()->end();
 

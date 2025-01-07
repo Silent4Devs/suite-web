@@ -3,17 +3,14 @@
 namespace App\Services\Tenant;
 
 use App\Models\Tenant;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Config;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class TBTenantTenantManager
 {
     /**
-     * @var mixed $tbTenant Instancia del tenant actual.
+     * @var mixed Instancia del tenant actual.
      */
     protected $tbTenant;
 
@@ -22,7 +19,7 @@ class TBTenantTenantManager
      *
      * Establece el tenant actual y configura la conexión y autenticación para este.
      *
-     * @param mixed $tbTenant Instancia del tenant.
+     * @param  mixed  $tbTenant  Instancia del tenant.
      * @return void
      */
     public function tbSetTenant($tbTenant)
@@ -49,7 +46,7 @@ class TBTenantTenantManager
      *
      * Configura la conexión de base de datos para el tenant actual.
      *
-     * @param mixed $tbTenant Instancia del tenant.
+     * @param  mixed  $tbTenant  Instancia del tenant.
      * @return void
      */
     protected function tbConfigureTenantConnection($tbTenant)
@@ -67,7 +64,7 @@ class TBTenantTenantManager
         try {
             DB::connection('tenant')->getPdo();
         } catch (\Exception $tbException) {
-            dd("Connection failed: " . $tbException->getMessage());
+            dd('Connection failed: '.$tbException->getMessage());
         }
 
         Schema::connection('tenant')->getConnection()->reconnect();
@@ -80,7 +77,7 @@ class TBTenantTenantManager
      *
      * Configura la autenticación para el tenant actual.
      *
-     * @param mixed $tbTenant Instancia del tenant.
+     * @param  mixed  $tbTenant  Instancia del tenant.
      * @return void
      */
     protected function tbConfigureAuthTenant($tbTenant)
@@ -93,7 +90,7 @@ class TBTenantTenantManager
      *
      * Obtiene el tenant a partir de un subdominio en la solicitud HTTP.
      *
-     * @param \Illuminate\Http\Request $tbRequest Solicitud HTTP entrante.
+     * @param  \Illuminate\Http\Request  $tbRequest  Solicitud HTTP entrante.
      * @return string ID de Stripe del tenant encontrado.
      */
     public function tbGetTenantFromRequest($tbRequest)
@@ -102,8 +99,7 @@ class TBTenantTenantManager
 
         $tbTenant = Tenant::whereHas(
             'domains',
-            fn($tbQuery) =>
-            $tbQuery->where('domain', $tbSubdomain)
+            fn ($tbQuery) => $tbQuery->where('domain', $tbSubdomain)
         )->firstOrFail();
 
         return $tbTenant->stripe_id;

@@ -11,7 +11,6 @@ use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
-
 /**
  * @property-read string $plan_name The tenant's subscription plan name
  * @property-read bool $on_active_subscription Is the tenant actively subscribed (not on grace period)
@@ -20,8 +19,8 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  */
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
+    use Billable, HasDatabase, HasDomains;
     use HasFactory;
-    use HasDatabase, HasDomains, Billable;
 
     protected $casts = [
         'trial_ends_at' => 'datetime',
@@ -65,6 +64,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         if (count($parts) === 1) { // If subdomain
             $domain = Domain::domainFromSubdomain($domain);
         }
+
         //dd($domain, $route, $parameters, $absolute);
         return tenant_route($domain, $route, $parameters, $absolute);
     }

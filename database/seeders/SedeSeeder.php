@@ -19,22 +19,22 @@ class SedeSeeder extends Seeder
             'sede' => 'Direccion General',
             'descripcion' => 'Direccion General',
             'organizacion_id' => Organizacion::first()->id,
-            'direccion' => 'Direccion General'
+            'direccion' => 'Direccion General',
         ]);
     }
 }
 // INSERT INTO public.sedes
 // (
-//     id, 
+//     id,
 //     sede,
-//     descripcion, 
-//     created_at, 
-//     updated_at, 
-//     deleted_at, 
-//     organizacion_id, 
-//     team_id, 
+//     descripcion,
+//     created_at,
+//     updated_at,
+//     deleted_at,
+//     organizacion_id,
+//     team_id,
 //     direccion,
-//     foto_sedes, 
-//     latitude, 
+//     foto_sedes,
+//     latitude,
 //     longitud)
 // VALUES(nextval('sedes_id_seq'::regclass), '', '', '', '', '', 0, 0, '', '', 0, 0);

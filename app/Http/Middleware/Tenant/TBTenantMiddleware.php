@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware\Tenant;
 
-use Closure;
 use App\Models\Tenant;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
+use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
 
 class TBTenantMiddleware
 {
@@ -28,8 +27,7 @@ class TBTenantMiddleware
 
             $tbTenant = Tenant::whereHas(
                 'domains',
-                fn($tbQuery) =>
-                $tbQuery->where('domain', $tbSubdomain)
+                fn ($tbQuery) => $tbQuery->where('domain', $tbSubdomain)
             )->firstOrFail();
 
             $this->tbTenantManager->tbSetTenant($tbTenant);

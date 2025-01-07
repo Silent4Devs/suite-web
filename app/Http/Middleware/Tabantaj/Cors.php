@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware\Tabantaj;
 
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class Cors
 {

@@ -10,7 +10,6 @@ use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
-use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {

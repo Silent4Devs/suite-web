@@ -32,7 +32,7 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
         $data = $usuario->empleado->id;
 
         $año = Carbon::now()->format('Y');
-        $finDayOff = '31-12-' . $año;
+        $finDayOff = '31-12-'.$año;
 
         $solicitudesDayOff = SolicitudDayOff::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
 
@@ -226,7 +226,7 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             // Encode spaces in the URL
@@ -468,7 +468,7 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
                         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                     }
                 } else {
-                    $ruta = asset('storage/empleados/imagenes/' . $solicitante->foto);
+                    $ruta = asset('storage/empleados/imagenes/'.$solicitante->foto);
                 }
 
                 // Encode spaces in the URL
@@ -563,7 +563,7 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $empleado->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
             }
 
             $empleado->ruta_foto = $this->encodeSpecialCharacters($ruta);

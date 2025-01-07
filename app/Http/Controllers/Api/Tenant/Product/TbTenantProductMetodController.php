@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TbTenantProductMetodController extends TbTenantBaseController
 {
@@ -23,8 +22,9 @@ class TbTenantProductMetodController extends TbTenantBaseController
     public function tbGetProductMethod(Request $request)
     {
         try {
-            $tbIdProduct = "prod_QJoDHqbaelALBQ";
+            $tbIdProduct = 'prod_QJoDHqbaelALBQ';
             $tbProduct = $this->tbStripeService->tbGetProductDetailsById($tbIdProduct);
+
             return $this->tbSendResponse($tbProduct, 'Metodos de pagos correcto.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
@@ -35,6 +35,7 @@ class TbTenantProductMetodController extends TbTenantBaseController
     {
         try {
             $tbProduct = $this->tbStripeService->tbGetAllActiveProducts();
+
             return $this->tbSendResponse($tbProduct, 'Todos los productos.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
@@ -46,6 +47,7 @@ class TbTenantProductMetodController extends TbTenantBaseController
         try {
             $tbCustomerId = $request->customerId;
             $tbProduct = $this->tbStripeService->tbGetProductsByCustomer($tbCustomerId);
+
             return $this->tbSendResponse($tbProduct, 'Todos los productos contratados.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
@@ -56,6 +58,7 @@ class TbTenantProductMetodController extends TbTenantBaseController
     {
         try {
             $tbProduct = $this->tbStripeService->tbGetUnpurchasedProducts();
+
             return $this->tbSendResponse($tbProduct, 'Todos los productos del usuario.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);
@@ -67,6 +70,7 @@ class TbTenantProductMetodController extends TbTenantBaseController
         try {
             $tbCustomerId = $request->customerId;
             $tbProduct = $this->tbStripeService->tbGetInactiveSubscriptionsByCustomer($tbCustomerId);
+
             return $this->tbSendResponse($tbProduct, 'Todos los productos no contratados.');
         } catch (\Exception $e) {
             return $this->tbSendError($e, ['error' => $e]);

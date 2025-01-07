@@ -73,6 +73,7 @@ class UserController extends Controller
     public function show($id_user)
     {
         $user = User::where('id', $id_user)->first();
+
         return view('admin.users.show', [
             'user' => $user,
         ]);

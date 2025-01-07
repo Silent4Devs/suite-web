@@ -70,7 +70,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $documento->responsable->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$documento->responsable->foto);
             }
 
             // Encode spaces in the URL
@@ -88,7 +88,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->texto_descripcion = $comunicado->descripcion;
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
-            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
+            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/'.$comunicado->imagenes_comunicacion->first()->imagen);
             $comunicado->ruta_imagen = encodeSpecialCharacters($ruta_comunicado);
         }
 
@@ -105,7 +105,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         foreach ($noticias as $key_noticia => $noticia) {
             $noticia->texto_descripcion = $noticia->descripcion;
             $noticia->tipo_imagen = $noticia->imagenes_comunicacion->first()->tipo;
-            $ruta_noticia = asset('storage/imagen_comunicado_SGI/' . $noticia->imagenes_comunicacion->first()->imagen);
+            $ruta_noticia = asset('storage/imagen_comunicado_SGI/'.$noticia->imagenes_comunicacion->first()->imagen);
             $noticia->ruta_imagen = encodeSpecialCharacters($ruta_noticia);
         }
 
@@ -117,7 +117,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
             $news[] = $imageNews;
         }
 
-        $cumpleaños = Cache::remember('Portal_cumpleaños_' . $authId, 3600, function () use ($hoy) {
+        $cumpleaños = Cache::remember('Portal_cumpleaños_'.$authId, 3600, function () use ($hoy) {
             return Empleado::alta()->select('id', 'name', 'area_id', 'puesto_id', 'foto', 'cumpleaños', 'estatus')->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->makeHidden([
                 'avatar',
                 'avatar_ruta',
@@ -161,7 +161,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $nuevo->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$nuevo->foto);
             }
 
             // Encode spaces in the URL
@@ -215,7 +215,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
                     $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
                 }
             } else {
-                $ruta = asset('storage/empleados/imagenes/' . $cumple->foto);
+                $ruta = asset('storage/empleados/imagenes/'.$cumple->foto);
             }
 
             // Encode spaces in the URL
@@ -331,7 +331,7 @@ class tbApiMobileControllerPortalComunicacion extends Controller
         }
 
         // dd($mes_fecha, $mes_cumpleanos);
-        $fecha_cumpleanos = $dia_cumpleanos . ' de ' . $mes_cumpleanos;
+        $fecha_cumpleanos = $dia_cumpleanos.' de '.$mes_cumpleanos;
 
         return $fecha_cumpleanos;
     }

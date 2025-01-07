@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\Tenant as Controllers;
-
-use App\Http\Middleware\OwnerOnly;
-use App\Http\Middleware\Tenant\CheckSubscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -27,7 +23,6 @@ Route::middleware('tenant', PreventAccessFromCentralDomains::class)->name('tenan
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name('impersonate');
-
 
     Route::namespace('App\\Http\\Controllers\\Tenant')->group(function () {
         Auth::routes();

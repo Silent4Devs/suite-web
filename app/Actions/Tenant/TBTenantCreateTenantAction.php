@@ -2,16 +2,15 @@
 
 namespace App\Actions\Tenant;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
 use App\Models\Tenant\TbTenantUserModel;
 use App\Services\Tenant\TBTenantTenantManager;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Create a tenant with the necessary information for the application.
@@ -24,10 +23,9 @@ class TBTenantCreateTenantAction
     /**
      * Crea un nuevo inquilino con el dominio especificado, datos de usuario y cliente en Stripe si es necesario.
      *
-     * @param array $tbData Datos del inquilino.
-     * @param string $tbDomain Dominio del inquilino.
-     * @param bool $tbCreateStripeCustomer Indica si se debe crear un cliente en Stripe.
-     * @return Tenant
+     * @param  array  $tbData  Datos del inquilino.
+     * @param  string  $tbDomain  Dominio del inquilino.
+     * @param  bool  $tbCreateStripeCustomer  Indica si se debe crear un cliente en Stripe.
      */
     public function __invoke(array $tbData, string $tbDomain, bool $tbCreateStripeCustomer = true): Tenant
     {
@@ -81,7 +79,7 @@ class TBTenantCreateTenantAction
 
         $tbUserId = $tbData['userId'] ?? null;
 
-        if (!$tbUserId) {
+        if (! $tbUserId) {
             throw new \InvalidArgumentException("El ID del usuario no esta definido en los datos proporcionados.{$tbUserId}");
         }
 
@@ -113,7 +111,7 @@ class TBTenantCreateTenantAction
      */
     protected function tbCreateDatabaseForTenant(Tenant $tbTenant)
     {
-        $tbDatabaseName = 'tenant_' . str_replace('-', '_', $tbTenant->id);
+        $tbDatabaseName = 'tenant_'.str_replace('-', '_', $tbTenant->id);
         $tbTenant->update(['db_name' => $tbDatabaseName]);
 
         DB::statement("CREATE DATABASE $tbDatabaseName");
@@ -131,7 +129,7 @@ class TBTenantCreateTenantAction
                 '--force' => true,
             ]);
         } else {
-            throw new Exception("No se pudo conectar a la base de datos del inquilino.");
+            throw new Exception('No se pudo conectar a la base de datos del inquilino.');
         }
     }
 
@@ -155,11 +153,10 @@ class TBTenantCreateTenantAction
                 'updated_at' => now(),
             ]);
 
-
             DB::connection('tenant')->table('users')->insert([
                 'name' => $tbUserData['name'],
                 'email' => $tbUserData['email'],
-                'empleado_id'  => 1,
+                'empleado_id' => 1,
                 'password' => Hash::make($tbUserData['password']),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -173,7 +170,7 @@ class TBTenantCreateTenantAction
             DB::connection('tenant')->commit();
         } catch (Exception $tbException) {
             DB::connection('tenant')->rollBack();
-            Log::error("Error al insertar datos iniciales: " . $tbException->getMessage());
+            Log::error('Error al insertar datos iniciales: '.$tbException->getMessage());
             throw $tbException;
         }
     }

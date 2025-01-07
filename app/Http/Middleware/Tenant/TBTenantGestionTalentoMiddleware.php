@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Tenant;
 
-use App\Http\Controllers\Api\tbApiPanelControlController;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
@@ -20,6 +19,7 @@ class TBTenantGestionTalentoMiddleware
         $this->tbTenantManager = $tbTenantManager;
         $this->tbStripeService = $tbStripeService;
     }
+
     /**
      * Handle an incoming request.
      *
@@ -31,7 +31,7 @@ class TBTenantGestionTalentoMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ["Gestión de Talento"];
+        $tbModulosValidos = ['Gestión de Talento'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
         if ($tbEstado) {

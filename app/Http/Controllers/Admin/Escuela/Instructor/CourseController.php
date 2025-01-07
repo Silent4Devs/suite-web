@@ -95,6 +95,7 @@ class CourseController extends Controller
     public function show($id_course)
     {
         $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.courses.show', compact('course'));
     }
 
@@ -187,6 +188,7 @@ class CourseController extends Controller
     public function goals($id_course)
     {
         $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.courses.goals', compact('course'));
     }
 
@@ -202,6 +204,7 @@ class CourseController extends Controller
     public function quizDetails($id_course)
     {
         $course = Course::where('id', $id_course)->first();
+
         return view('admin.escuela.instructor.evaluationquizdetails', compact('course'));
     }
 }

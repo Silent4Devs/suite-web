@@ -28,9 +28,8 @@ class DisponibilidadEmpleadosSeeder extends Seeder
         }
 
         // Insertar datos si hay empleados válidos
-        if (!empty($empleados)) {
+        if (! empty($empleados)) {
             DisponibilidadEmpleados::insert($empleados);
         }
     }
-
 }

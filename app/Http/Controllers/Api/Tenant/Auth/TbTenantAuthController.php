@@ -4,19 +4,12 @@ namespace App\Http\Controllers\Api\Tenant\Auth;
 
 use App\Http\Controllers\Api\Tenant\TbTenantBaseController;
 use App\Models\Tenant;
-use App\Models\Tenant\TbTenantsModel;
 use App\Models\Tenant\TbTenantUserImpersonationTokensModel;
 use App\Models\Tenant\TbTenantUserModel;
 use App\Services\Tenant\TBTenantStripeService;
 use App\Services\Tenant\TBTenantTenantManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\Sanctum;
 
 class TbTenantAuthController extends TbTenantBaseController
 {
@@ -49,7 +42,7 @@ class TbTenantAuthController extends TbTenantBaseController
             $tbUserProfile = null;
 
             if (isset($tbUser->tenant_Id)) {
-                # code...
+                // code...
                 $tbUserToken = TbTenantUserImpersonationTokensModel::updateOrCreate(
                     [
                         'tenant_id' => $tbUser->tenant_Id,
@@ -57,7 +50,7 @@ class TbTenantAuthController extends TbTenantBaseController
                     ],
                     [
                         'token' => $tbToken,
-                        'auth_guard' => "test_data",
+                        'auth_guard' => 'test_data',
                         'redirect_url' => 'www.suite-web.test',
                     ]
                 );
@@ -92,6 +85,7 @@ class TbTenantAuthController extends TbTenantBaseController
     public function tbLogout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
+
         return $this->tbSendResponse([], 'Logged out successfully.');
     }
 }

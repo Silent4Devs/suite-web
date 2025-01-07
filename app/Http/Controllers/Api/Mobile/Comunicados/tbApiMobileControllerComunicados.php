@@ -30,7 +30,7 @@ class tbApiMobileControllerComunicados extends Controller
 
         foreach ($comunicados as $key_comunicados => $comunicado) {
             $comunicado->tipo_imagen = $comunicado->imagenes_comunicacion->first()->tipo;
-            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/' . $comunicado->imagenes_comunicacion->first()->imagen);
+            $ruta_comunicado = asset('storage/imagen_comunicado_SGI/'.$comunicado->imagenes_comunicacion->first()->imagen);
             $comunicado->ruta_imagen = $ruta_comunicado;
         }
 
@@ -114,7 +114,7 @@ class tbApiMobileControllerComunicados extends Controller
         }
 
         // dd($mes_fecha, $mes_cumpleanos);
-        $fecha_cumpleanos = $dia_cumpleanos . ' de ' . $mes_cumpleanos;
+        $fecha_cumpleanos = $dia_cumpleanos.' de '.$mes_cumpleanos;
 
         return $fecha_cumpleanos;
     }

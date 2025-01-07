@@ -3,8 +3,6 @@
 namespace App\Http\Middleware\Tabantaj\Auth;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class Authenticate extends Middleware
 {

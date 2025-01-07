@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantProyectosMiddleware
 {
-
     protected $tbTenantManager;
 
     protected $tbStripeService;
@@ -20,6 +19,7 @@ class TBTenantProyectosMiddleware
         $this->tbTenantManager = $tbTenantManager;
         $this->tbStripeService = $tbStripeService;
     }
+
     /**
      * Handle an incoming request.
      *
@@ -31,7 +31,7 @@ class TBTenantProyectosMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ["Gestión de Talento", "Gestión Financiera", 'Gestión Contractual'];
+        $tbModulosValidos = ['Gestión de Talento', 'Gestión Financiera', 'Gestión Contractual'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 

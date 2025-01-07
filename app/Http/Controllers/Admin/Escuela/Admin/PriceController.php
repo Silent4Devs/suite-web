@@ -69,6 +69,7 @@ class PriceController extends Controller
     public function edit($id_price)
     {
         $price = Price::where('id', $id_price)->first();
+
         return view('admin.prices.edit', compact('price'));
     }
 
