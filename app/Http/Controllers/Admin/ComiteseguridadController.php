@@ -107,7 +107,7 @@ class ComiteseguridadController extends Controller
         }
     }
 
-    public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)
+    public function update(UpdateComiteseguridadRequest $request, $id_comiteseguridad)
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -115,7 +115,7 @@ class ComiteseguridadController extends Controller
             'nombre_comite' => 'required|max:255',
             'descripcion' => 'required',
         ]);
-
+        $comiteseguridad = Comiteseguridad::find($id_comiteseguridad);
         $comiteseguridad->update($request->all());
 
         $miembros = MiembrosComiteSeguridad::where('comite_id', '=', $comiteseguridad->id)->with('asignacion')->get();
@@ -150,11 +150,11 @@ class ComiteseguridadController extends Controller
         }
     }
 
-    public function destroy(Comiteseguridad $comiteseguridad)
+    public function destroy($id_comiteseguridad)
     {
         try {
             abort_if(Gate::denies('comformacion_comite_seguridad_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+            $comiteseguridad = Comiteseguridad::find($id_comiteseguridad);
             $comiteseguridad->delete();
 
             return back()->with('deleted', 'Registro eliminado con éxito');

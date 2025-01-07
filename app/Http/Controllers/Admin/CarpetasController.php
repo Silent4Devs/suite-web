@@ -80,35 +80,36 @@ class CarpetasController extends Controller
         return redirect()->route('admin.carpeta.index');
     }
 
-    public function edit(Carpetum $carpetum)
+    public function edit($id_carpetum)
     {
         abort_if(Gate::denies('carpetum_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $carpetum = Carpetum::where('id', $id_carpetum)->first();
         $carpetum->load('team');
 
         return view('admin.carpeta.edit', compact('carpetum'));
     }
 
-    public function update(UpdateCarpetumRequest $request, Carpetum $carpetum)
+    public function update(UpdateCarpetumRequest $request, $id_carpetum)
     {
+        $carpetum = Carpetum::where('id', $id_carpetum)->first();
         $carpetum->update($request->all());
 
         return redirect()->route('admin.carpeta.index');
     }
 
-    public function show(Carpetum $carpetum)
+    public function show($id_carpetum)
     {
         abort_if(Gate::denies('carpetum_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $carpetum = Carpetum::where('id', $id_carpetum)->first();
         $carpetum->load('team');
 
         return view('admin.carpeta.show', compact('carpetum'));
     }
 
-    public function destroy(Carpetum $carpetum)
+    public function destroy($id_carpetum)
     {
         abort_if(Gate::denies('carpetum_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $carpetum = Carpetum::where('id', $id_carpetum)->first();
         $carpetum->delete();
 
         return back();

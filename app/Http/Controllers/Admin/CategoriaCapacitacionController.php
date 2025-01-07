@@ -95,10 +95,10 @@ class CategoriaCapacitacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoriaCapacitacion $categoriaCapacitacion)
+    public function show($id_categoriaCapacitacion)
     {
         abort_if(Gate::denies('capacitaciones_categorias_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
         return view('admin.categoriaCapacitacion.show', compact('categoriaCapacitacion'));
     }
 
@@ -107,10 +107,10 @@ class CategoriaCapacitacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoriaCapacitacion $categoriaCapacitacion)
+    public function edit($id_categoriaCapacitacion)
     {
         abort_if(Gate::denies('capacitaciones_categorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
         return view('admin.categoriaCapacitacion.edit', compact('categoriaCapacitacion'));
     }
 
@@ -119,9 +119,12 @@ class CategoriaCapacitacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoriaCapacitacion $categoriaCapacitacion)
+    public function update(Request $request, $id_categoriaCapacitacion)
     {
         abort_if(Gate::denies('capacitaciones_categorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
+
         $request->validate([
             'nombre' => 'required|string|unique:categoria_capacitacions,nombre|max:255,'.$categoriaCapacitacion->id,
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
@@ -135,9 +138,10 @@ class CategoriaCapacitacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoriaCapacitacion $categoriaCapacitacion)
+    public function destroy($id_categoriaCapacitacion)
     {
         abort_if(Gate::denies('capacitaciones_categorias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $categoriaCapacitacion = CategoriaCapacitacion::where('id', $id_categoriaCapacitacion)->first();
         $categoriaCapacitacion->delete();
 
         return redirect()->route('admin.categoriaCapacitacion.index');

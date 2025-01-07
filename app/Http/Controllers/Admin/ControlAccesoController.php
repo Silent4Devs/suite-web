@@ -109,9 +109,10 @@ class ControlAccesoController extends Controller
         return redirect()->route('admin.control-accesos.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(ControlAcceso $controlAcceso)
+    public function edit($id_controlAcceso)
     {
         abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $controlAcceso = ControlAcceso::where('id', $id_controlAcceso)->first();
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
         $responsables = Empleado::getAll();
@@ -119,9 +120,10 @@ class ControlAccesoController extends Controller
         return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos', 'responsables'));
     }
 
-    public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)
+    public function update(UpdateControlAccesoRequest $request, $id_controlAcceso)
     {
         abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $controlAcceso = ControlAcceso::where('id', $id_controlAcceso)->first();
 
         $controlAcceso->update($request->all());
         $files = $request->file('files');
@@ -139,19 +141,19 @@ class ControlAccesoController extends Controller
         return redirect()->route('admin.control-accesos.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(ControlAcceso $controlAcceso)
+    public function show($id_controlAcceso)
     {
         abort_if(Gate::denies('control_de_accesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $controlAcceso = ControlAcceso::where('id', $id_controlAcceso)->first();
         $controlAcceso->load('team');
 
         return view('admin.controlAccesos.show', compact('controlAcceso'));
     }
 
-    public function destroy(ControlAcceso $controlAcceso)
+    public function destroy($id_controlAcceso)
     {
         abort_if(Gate::denies('control_de_accesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $controlAcceso = ControlAcceso::where('id', $id_controlAcceso)->first();
         $controlAcceso->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
