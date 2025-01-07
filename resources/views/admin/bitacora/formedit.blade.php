@@ -1245,45 +1245,34 @@
             statusText.textContent = "Comprimiendo archivo...";
 
             try {
-
                 const arrayBuffer = await selectedFile.arrayBuffer();
-
 
                 const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
 
                 pdfDoc.setCreator("");
                 pdfDoc.setProducer("");
-                pdfDoc.removePage(0);
 
                 const compressedPdfBytes = await pdfDoc.save({
-                    useObjectStreams: true,
-                    updateFieldAppearances: false,
+                    useObjectStreams: true
                 });
 
                 const compressedBlob = new Blob([compressedPdfBytes], {
                     type: "application/pdf"
                 });
 
-                const fileSizeKB = compressedBlob.size / 1024;
-                if (fileSizeKB > 3000) {
-                    throw new Error("El archivo comprimido sigue siendo demasiado grande.");
-                }
-
                 const compressedFile = new File([compressedBlob],
-                    `compressed-${selectedFile.name}`, {
-                        type: "application/pdf",
-                    });
+                `compressed-${selectedFile.name}`, {
+                    type: "application/pdf",
+                });
 
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(compressedFile);
                 fileInput.files = dataTransfer.files;
 
-                statusText.textContent =
-                    `Archivo comprimido exitosamente (${fileSizeKB.toFixed(2)} KB): ${compressedFile.name}`;
+                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
             } catch (error) {
                 console.error("Error al comprimir el PDF:", error);
-                statusText.textContent =
-                    "No se pudo comprimir el archivo. Asegúrate de que sea menor a 3 MB.";
+                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
             }
         });
 
