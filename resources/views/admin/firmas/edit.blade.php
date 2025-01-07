@@ -51,7 +51,7 @@
                 <div class="col-12">
                     <p>Seleccione cuántos participantes de aprobación tendrá tu lista.</p>
                     <div class="anima-focus">
-                        <select id="participantes" name="participantes[]" class="form-control" multiple="multiple">
+                        <select id="participantes" name="participantes[]" class="form-control" style="" multiple="multiple">
                             @foreach ($empleados as $empleado)
                                 <option value="{{ $empleado->id }}" data-avatar="{{ $empleado->avatar }}" {{ in_array($empleado->id, $participantes) ? 'selected' : '' }}>
                                     {{ $empleado->name }}

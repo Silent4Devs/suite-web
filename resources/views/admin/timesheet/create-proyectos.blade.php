@@ -79,9 +79,9 @@
                         <label for="cliente_id" class="asterisco">Cliente*</label>
                     </div>
 
-                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -1.5rem;"
+                    <div class="form-group col-md-4 anima-focus" style="position: relative; top: -2rem;"
                         id="caja_areas_seleccionadas_create">
-                        <select class="select2-multiple form-control" multiple="multiple" id="areas_seleccionadas"
+                        <select class="select2-multiple form-control" placeholder="" multiple="multiple" id="areas_seleccionadas"
                             name="areas_seleccionadas[]">
                             @foreach ($areas as $area)
                                 <option value="{{ $area->id }}">{{ $area->area }}</option>

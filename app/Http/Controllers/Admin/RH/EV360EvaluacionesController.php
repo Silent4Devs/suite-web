@@ -917,9 +917,9 @@ class EV360EvaluacionesController extends Controller
         //Inhabilidato temporalmente
         $usuario = User::getCurrentUser()->empleado->id;
         if ($usuario == $evaluado) {
-            $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
+            $cons_evaluacion = Evaluacion::with('rangos')->where('id',intval($evaluacion))->first();
 
-            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+            if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
                 // dd($informacion_obtenida);
@@ -1185,9 +1185,17 @@ class EV360EvaluacionesController extends Controller
             }
         } else {
             abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $cons_evaluacion = Evaluacion::with('rangos')->find($evaluacion);
 
-            if (optional($cons_evaluacion->rangos)->isNotEmpty()) {
+
+            $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
+
+            if ($cons_evaluacion === null) {
+                // Manejar el caso en que no se encuentra la evaluación
+                return redirect()->route('admin.rh-evaluacion360.index')->with('error', 'No existe el registro.');
+            }
+
+
+            if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
                 $informacion_obtenida = $ev360ResumenTabla->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado);
 
@@ -2047,32 +2055,37 @@ class EV360EvaluacionesController extends Controller
     {
         $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
-        foreach ($evaluadores as $evaluador) {
-            $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
-                ->where('evaluador_id', $evaluador)
+        foreach ($evaluadores as $evaluador_id) {
+            $evaluados_ids = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+                ->where('evaluador_id', $evaluador_id)
                 ->where('evaluado', false)
                 ->pluck('evaluado_id')
                 ->unique()
                 ->toArray();
+
+            $evaluados = Empleado::select('id', 'name', 'area_id', 'puesto_id')
+                ->whereIn('id', $evaluados_ids)
+                ->get(); // Ahora es una colección de objetos Empleado
+
             $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
-            $evaluados = $empleados->find($evaluados);
-            $evaluador_model = $empleados->find($evaluador);
-            if (count($evaluados)) {
-                $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
-                if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
-                    if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
-                        sleep(4); //use usleep(500000) for half a second or less
-                    }
+
+            $evaluador_model = $empleados->get($evaluador_id);
+
+            if ($evaluados->count() && $evaluador_model) {
+                $email = removeUnicodeCharacters($evaluador_model->email);
+                if ($email) {
+                    Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador_model, $evaluados));
                 }
             }
         }
+
 
         return response()->json(['success' => true]);
     }
 
     public function enviarNotificacionAlEvaluador($email, $evaluacion, $evaluador, $evaluados)
     {
-        Mail::to(removeUnicodeCharacters($email))->queue(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
+        Mail::to(removeUnicodeCharacters($email))->send(new RecordatorioEvaluadores($evaluacion, $evaluador, $evaluados));
     }
 
     public function enviarInvitacionDeEvaluacion(Request $request)
