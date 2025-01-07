@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   nginx-tabantaj:
@@ -192,6 +192,8 @@ services:
 
 volumes:
   tabantaj-database:
+    driver: local
+  tenant-database:
     driver: local
   rabbitmq_data:
     driver: local
