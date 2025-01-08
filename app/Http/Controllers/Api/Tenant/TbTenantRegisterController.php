@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class TbTenantRegisterController extends Controller
+class TbtenantRegisterController extends Controller
 {
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.

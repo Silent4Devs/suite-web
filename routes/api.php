@@ -20,11 +20,11 @@ use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
 use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
 use App\Http\Controllers\Api\Tenant\Product\TbTenantProductMetodController;
 use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
-use App\Http\Controllers\Api\Tenant\TBTenantRegisterController;
+use App\Http\Controllers\Api\Tenant\TBtenantRegisterController;
 use App\Http\Controllers\Api\Tenant\User\TbTenantUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/rtenant', [TBTenantRegisterController::class, 'submit']);
+Route::post('/rtenant', [TBtenantRegisterController::class, 'submit']);
 Route::post('/user/login', [TbTenantAuthController::class, 'tbLogin']);
 Route::post('/user/register', [TbTenantUserController::class, 'tbRegister']);
 
