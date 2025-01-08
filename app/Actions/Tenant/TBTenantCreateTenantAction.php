@@ -49,7 +49,8 @@ class TBTenantCreateTenantAction
     protected function tbPrepareTenantData(array $tbData, string $tbDomain): array
     {
         $db_host = env('DB_HOST');
-        $db_username = env('DB_PORT');
+        $db_username = env('DB_USERNAME');
+        $db_password = env('DB_PASSWORD');
         return array_merge($tbData, [
             'db_name' => $tbDomain ?? 'default_db_name',
             'db_host' => $db_host,
