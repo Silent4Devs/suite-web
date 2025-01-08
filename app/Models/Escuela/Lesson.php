@@ -2,7 +2,6 @@
 
 namespace App\Models\Escuela;
 
-use App\Models\Escuela\Platform;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +32,7 @@ class Lesson extends Model implements Auditable
     public function getPlatformFormatAttribute()
     {
         $platf = Platform::where('id', $this->platform_id)->first();
+
         return $platf->name;
         //  dd($this->formatType);
     }
@@ -40,8 +40,8 @@ class Lesson extends Model implements Auditable
     public function getFileFormatAttribute()
     {
 
-        if($this->resource){
-            $ruta = storage_path('app/' . $this->resource->url);
+        if ($this->resource) {
+            $ruta = storage_path('app/'.$this->resource->url);
 
             // Obtener la extensión del archivo
             $informacionArchivo = pathinfo($ruta);

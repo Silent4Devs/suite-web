@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\iso27;
 
 use App\Functions\PorcentajeDecApl2022;
 use App\Http\Controllers\Controller;
+use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
 use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores2022;
 use App\Mail\NotificacionDeclaracionAplicabilidadResponsables2022;
 use App\Models\Empleado;

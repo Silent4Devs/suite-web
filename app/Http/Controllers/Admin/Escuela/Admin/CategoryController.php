@@ -100,8 +100,10 @@ class CategoryController extends Controller
      * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id_category)
     {
+        $category = Category::where('id', $id_category)->first();
+
         return view('admin.escuela.admin.categories.edit', compact('category'));
     }
 
@@ -111,8 +113,9 @@ class CategoryController extends Controller
      * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id_category)
     {
+        $category = Category::where('id', $id_category)->first();
         $request->validate([
             'name' => 'required|unique:categories,name,'.$category->id,
         ]);

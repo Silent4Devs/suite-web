@@ -43,8 +43,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request, $id_user)
     {
+        $user = User::where('id', $id_user)->first();
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -69,8 +70,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id_user)
     {
+        $user = User::where('id', $id_user)->first();
+
         return view('admin.users.show', [
             'user' => $user,
         ]);
@@ -82,8 +85,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id_user)
     {
+        $user = User::where('id', $id_user)->first();
         $roles = Role::getAll();
 
         return view('admin.users.edit', [
@@ -98,8 +102,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id_user)
     {
+        $user = User::where('id', $id_user)->first();
         $user->roles()->sync($request->roles);
 
         Alert::toast('El usuario fue actualizado exitosamente', 'success');
@@ -113,8 +118,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_user)
     {
+        $user = User::where('id', $id_user)->first();
         $user->delete();
         Alert::toast('El usuario fue eliminado exitosamente', 'success');
 

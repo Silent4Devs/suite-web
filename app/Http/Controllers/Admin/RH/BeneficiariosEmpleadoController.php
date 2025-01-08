@@ -64,9 +64,9 @@ class BeneficiariosEmpleadoController extends Controller
      * @param  \App\Models\RH\BeneficiariosEmpleado  $beneficiariosEmpleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $beneficiariosEmpleado)
+    public function update(Request $request, $id_beneficiariosEmpleado)
     {
-        $beneficiariosEmpleado = BeneficiariosEmpleado::find($beneficiariosEmpleado);
+        $beneficiariosEmpleado = BeneficiariosEmpleado::find($id_beneficiariosEmpleado);
 
         $beneficiariosEmpleado->update([
             $request->typeInput => $request->value,
@@ -81,9 +81,9 @@ class BeneficiariosEmpleadoController extends Controller
      * @param  \App\Models\RH\BeneficiariosEmpleado  $beneficiariosEmpleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy($beneficiariosEmpleado)
+    public function destroy($id_beneficiariosEmpleado)
     {
-        $beneficiariosEmpleado = BeneficiariosEmpleado::find($beneficiariosEmpleado);
+        $beneficiariosEmpleado = BeneficiariosEmpleado::find($id_beneficiariosEmpleado);
 
         $beneficiariosEmpleado->delete();
 

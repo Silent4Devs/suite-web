@@ -113,10 +113,10 @@ class AuditoriaAnualController extends Controller
         return redirect()->route('admin.auditoria-anuals.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(AuditoriaAnual $auditoriaAnual)
+    public function edit($id_auditoriaAnual)
     {
         abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $auditoriaAnual = AuditoriaAnual::where('id', $id_auditoriaAnual)->first();
         $auditorliders = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $auditoriaAnual->load('auditorlider', 'team');
@@ -126,9 +126,11 @@ class AuditoriaAnualController extends Controller
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }
 
-    public function update(Request $request, AuditoriaAnual $auditoriaAnual)
+    public function update(Request $request, $id_auditoriaAnual)
     {
         abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $auditoriaAnual = AuditoriaAnual::where('id', $id_auditoriaAnual)->first();
 
         $request->validate([
             'nombre' => 'required|string',
@@ -143,19 +145,19 @@ class AuditoriaAnualController extends Controller
         return redirect()->route('admin.auditoria-anuals.index');
     }
 
-    public function show(AuditoriaAnual $auditoriaAnual)
+    public function show($id_auditoriaAnual)
     {
         abort_if(Gate::denies('programa_anual_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $auditoriaAnual = AuditoriaAnual::where('id', $id_auditoriaAnual)->first();
         $auditoriaAnual->load('team');
 
         return view('admin.auditoriaAnuals.show', compact('auditoriaAnual'));
     }
 
-    public function destroy(AuditoriaAnual $auditoriaAnual)
+    public function destroy($id_auditoriaAnual)
     {
         abort_if(Gate::denies('programa_anual_auditoria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $auditoriaAnual = AuditoriaAnual::where('id', $id_auditoriaAnual)->first();
         $auditoriaAnual->delete();
 
         return back();

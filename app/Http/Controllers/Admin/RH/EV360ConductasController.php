@@ -40,21 +40,21 @@ class EV360ConductasController extends Controller
         }
     }
 
-    public function edit(Request $request, $conducta)
+    public function edit(Request $request, $id_conducta)
     {
-        $conducta = Conducta::find(intval($conducta));
+        $conducta = Conducta::find(intval($id_conducta));
         if ($request->ajax()) {
             return response()->json(['conducta' => $conducta]);
         }
     }
 
-    public function update(Request $request, $conducta)
+    public function update(Request $request, $id_conducta)
     {
         $request->validate([
             'definicion' => 'required|string|max:1000',
         ]);
         if ($request->ajax()) {
-            $conducta = Conducta::find(intval($conducta));
+            $conducta = Conducta::find(intval($id_conducta));
             $conducta->update([
                 'definicion' => $request->definicion,
             ]);
@@ -64,10 +64,10 @@ class EV360ConductasController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function destroy(Request $request, $conducta)
+    public function destroy(Request $request, $id_conducta)
     {
         if ($request->ajax()) {
-            $conducta = Conducta::find(intval($conducta));
+            $conducta = Conducta::find(intval($id_conducta));
             $competencia = $conducta->competencia_id;
             $eliminacion = $conducta->delete();
             $this->resetCounter(intval($competencia));

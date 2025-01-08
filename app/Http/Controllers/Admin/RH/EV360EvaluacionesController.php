@@ -430,9 +430,10 @@ class EV360EvaluacionesController extends Controller
         }
     }
 
-    public function evaluacion(Evaluacion $evaluacion)
+    public function evaluacion($id_evaluacion)
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_evaluacion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
         $evaluacion->load('autor');
 
         $lista_evaluados = [];
@@ -916,7 +917,7 @@ class EV360EvaluacionesController extends Controller
         //Inhabilidato temporalmente
         $usuario = User::getCurrentUser()->empleado->id;
         if ($usuario == $evaluado) {
-            $cons_evaluacion = Evaluacion::with('rangos')->where('id',intval($evaluacion))->first();
+            $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
 
             if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
@@ -1185,14 +1186,12 @@ class EV360EvaluacionesController extends Controller
         } else {
             abort_if(Gate::denies('seguimiento_evaluaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
             $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
 
             if ($cons_evaluacion === null) {
                 // Manejar el caso en que no se encuentra la evaluación
                 return redirect()->route('admin.rh-evaluacion360.index')->with('error', 'No existe el registro.');
             }
-
 
             if ($cons_evaluacion && optional($cons_evaluacion->rangos)->isNotEmpty()) {
                 $ev360ResumenTabla = new Ev360ResumenTablaParametros;
@@ -2050,8 +2049,9 @@ class EV360EvaluacionesController extends Controller
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.lista-evaluaciones-por-empleado', compact('lista_evaluaciones', 'empleado'));
     }
 
-    public function enviarCorreoAEvaluadores(Evaluacion $evaluacion)
+    public function enviarCorreoAEvaluadores($id_evaluacion)
     {
+        $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
         $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();
         foreach ($evaluadores as $evaluador_id) {
             $evaluados_ids = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
@@ -2076,7 +2076,6 @@ class EV360EvaluacionesController extends Controller
                 }
             }
         }
-
 
         return response()->json(['success' => true]);
     }
