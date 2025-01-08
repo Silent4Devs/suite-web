@@ -55,7 +55,7 @@ class TBTenantCreateTenantAction
             'db_name' => $tbDomain ?? 'default_db_name',
             'db_host' => $db_host,
             'db_username' => $db_username,
-            'db_password' => '',
+            'db_password' => $db_password,
             'tb_user_data' => [
                 'name' => $tbData['name'] ?? null,
                 'email' => $tbData['email'] ?? null,
