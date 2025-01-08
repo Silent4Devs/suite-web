@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api\Tenant;
 
-use App\Actions\Tenant\TBTenantCreateTenantAction;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Actions\Tenant\TBTenantCreateTenantAction;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class TbtenantRegisterController extends Controller
+
+class TbTenantRegisterTenancyController extends Controller
 {
     /**
      * Procesa la solicitud de registro de un nuevo inquilino.

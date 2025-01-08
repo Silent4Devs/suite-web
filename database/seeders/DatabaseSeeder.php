@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
                 PanelInicioSeeder::class,
                 PanelOrganizacionSeeder::class,
                 PermissionRoleTableSeeder::class,
-                LanguageSeeder::class,
+                //LanguageSeeder::class,
                 GlosarioSeeder::class,
                 RoleUserTableSeeder::class,
                 Clausula9001Seeder::class,
