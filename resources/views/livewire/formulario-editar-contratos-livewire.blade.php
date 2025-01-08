@@ -144,7 +144,7 @@
                         @if ($proveedores)
                             @foreach ($proveedores as $proveedoress)
                                 <option value="{{ $proveedoress->id }}"
-                                    {{ $proveedoress->id == $proveedor_id ? 'selected' : '' }}>
+                                    {{ $proveedoress->id == $prov_id ? 'selected' : '' }}>
                                     {{ $proveedoress->nombre }}</option>
                             @endforeach
                         @else
