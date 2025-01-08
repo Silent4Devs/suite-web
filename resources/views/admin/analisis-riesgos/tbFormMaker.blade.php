@@ -108,6 +108,9 @@
                     const formula = @json($question->getFormula->formula);
                     updateStatus();
 
+                    const myModal = document.getElementById('formRiskAnalysis');
+                    const coords = [];
+
                     const numbers = formula.match(/\$fv([^+\-*\/]+)/g).map(num => num.replace('$fv', ''));
                     // console.log(numbers)
                     numbers.map((number) => {
@@ -124,13 +127,15 @@
                                     inputElement.addEventListener('input', function () {
                                         actualizarFormula();
                                         updateStatus();
-                                        // console.log("item")
                                     });
-                                    setTimeout(() => {
-                                        console.log(itm.id)
-                                        Livewire.dispatch('saveCoordinates', { id: itm.id }); // Despachar evento de Livewire
-                                    }, 500);
+                                    if (!coords.includes(itm.id)) {
+                                        coords.push(itm.id);
+                                    }
 
+                                    myModal.setAttribute('data-coords', JSON.stringify(coords));
+                                    // setTimeout(() => {
+                                    //     Livewire.dispatch('saveCoordinates', { id: itm.id });
+                                    // }, 500);
                                 }
                             }
                         })

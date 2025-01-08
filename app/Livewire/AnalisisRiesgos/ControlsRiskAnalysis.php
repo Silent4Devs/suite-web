@@ -28,18 +28,29 @@ class ControlsRiskAnalysis extends Component
 
     protected $listeners = ['reload' => 'reload'];
 
+    //function para poder recargar el datatable de controles
+    public function updatedControlsSheet($value, $key)
+    {
+        // Sirve para detectar cambios en cualquier archivo cargado
+        if (str_contains($key, 'file')) {
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+        }
+    }
+
     // #[On('updateData')]
     public function reload($sheetId)
     {
-        // dd("aaa");
         $this->sheetId = $sheetId;
         $this->getControlsSheet();
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
     }
 
     public function deleteFile($index)
     {
         $this->controlsSheet[$index]['fileStatus'] = false;
         $this->controlsSheet[$index]['file'] = null;
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+
     }
 
     public function download($path)
@@ -117,6 +128,8 @@ class ControlsRiskAnalysis extends Component
 
         $this->dispatch('responseTableControls');
         $this->getControlsSheet();
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+
     }
 
     public function getControlsSheet()

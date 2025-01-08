@@ -26,7 +26,7 @@ class HeadMapRiskTwo extends Component
     {
         $this->reset(['scales', 'prob', 'initialRisk', 'residualRisk']);
         $this->getInfo();
-        $this->emit('reloadGraph', $this->initialRisk, $this->residualRisk);
+        $this->dispatch('reloadGraph', $this->initialRisk, $this->residualRisk);
     }
 
     public function getInfo()

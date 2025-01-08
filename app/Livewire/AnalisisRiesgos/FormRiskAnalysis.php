@@ -95,6 +95,12 @@ class FormRiskAnalysis extends Component
 
     // protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
 
+    // #[On('reloadDataTable')]
+    // public function reloadDataTable($table)
+    // {
+    //     $this->dispatch('reloadDataTableView',table:$table);
+    // }
+
     #[On('riskConfirm')]
     public function riskConfirm()
     {
@@ -259,6 +265,7 @@ class FormRiskAnalysis extends Component
         $this->getQuestionsAnswer();
         $this->getInitialResidualRisk();
         $this->dispatch('reload',sheetId:$this->sheetId)->to(ControlsRiskAnalysis::class);
+        $this->dispatch('execute-script', table:'datatable-risk-analysis');
         $this->dispatch('calculateScale');
 
     }
@@ -363,6 +370,7 @@ class FormRiskAnalysis extends Component
 
         $this->dispatch('responseForm', $this->sheetForm['edit']);
         $this->dispatch('calculateScale');
+        $this->dispatch('reloadGraphics')->to(HeadMapRiskTwo::class);
 
     }
 
@@ -402,8 +410,13 @@ class FormRiskAnalysis extends Component
     }
 
     #[On('formData')]
-    public function formData($data)
+    public function formData($data,$coords)
     {
+        $newCoords = json_decode($coords);
+        // if(count($newCoords) > 0){
+            $this->scalesCoordinates = $newCoords;
+        // }
+        // dd($this->scalesCoordinates);
         $this->questionsAnswer = $data;
         if (! $this->sheetForm['edit']) {
             $this->saveForm();
@@ -511,6 +524,7 @@ class FormRiskAnalysis extends Component
         // $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 
         // $this->dispatch('scriptTabla');
+        // $this->dispatch('execute-script', table:'datatable-risk-analysis');
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }

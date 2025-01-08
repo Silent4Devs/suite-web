@@ -28,7 +28,7 @@ class TreatmentPlan extends Component
 
     public $objetivo;
 
-    protected $listeners = ['treatmentPlan'];
+    // protected $listeners = ['treatmentPlan'];
 
     public function saveTreatmentPlan()
     {

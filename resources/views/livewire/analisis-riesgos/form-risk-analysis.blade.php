@@ -22,6 +22,10 @@
         .inputfile-3+label {
             color: #006DDB;
         }
+        .dropdown-item:focus, .dropdown-item:hover {
+            background-color: #006DDB !important;
+            color: #FFFFFF !important;
+}
     </style>
     <h4 style="margin: 0px;">Formulario</h4>
     <hr style="margin-top: 20px;">
@@ -84,7 +88,7 @@
                             @endforeach
                             <td>
                                 <div class="btn-group dropstart">
-                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    <button class="btn dropdown-toggle-split" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                         <i class="material-symbols-outlined">
                                             more_vert
@@ -131,7 +135,7 @@
     </div>
 
     {{-- Modal --}}
-    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" data-coords=null  tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
         <div class="modal-dialog modal-xl">
             <div wire:loading>
@@ -267,8 +271,8 @@
                     {{-- @endif --}}
 
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="button" class="btn tb-btn-secondary" data-bs-dismiss="modal"
-                            onclick="limpiarFormulario()">CANCELAR</button>
+                        <button type="button" class="btn tb-btn-secondary" style="color: #FFFFFF !important;" data-bs-dismiss="modal"
+                            onclick="limpiarFormulario()">CERRAR</button>
                         <button wire:click="riskConfirmMessage" class="btn tb-btn-primary">CONFIRMAR RIESGO
                             {{ $sheetForm['status'] === 2 ? 'RESIDUAL' : 'INICIAL' }}</button>
                     </div>
@@ -325,6 +329,7 @@
         document.getElementById('submitButton').addEventListener('click', function(e) {
             const form = document.getElementById('Form');
             const formData = new FormData(form);
+            const myModal = document.getElementById('formRiskAnalysis');
 
             const data = {};
             formData.forEach((value, key) => {
@@ -332,7 +337,10 @@
             });
 
             if (form.checkValidity()) {
-                Livewire.dispatch('formData', {data});
+                const coords = myModal.getAttribute('data-coords');
+                console.log(coords)
+                Livewire.dispatch('formData', {data,coords});
+                // console.log(coords)
             }
         });
     </script>
@@ -348,6 +356,9 @@
         function limpiarFormulario() {
             const form = document.getElementById('Form');
             form.reset();
+            window.dispatchEvent(new CustomEvent('execute-script', {
+                detail: { message: '¡Evento disparado desde JavaScript!' }
+            }));
         }
     </script>
 
@@ -387,23 +398,29 @@
         document.addEventListener('livewire:init', function () {
             console.log("update")
         });
-    </script>
-    {{-- <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('scriptTabla', () => {
+
+        document.addEventListener('DOMContentLoaded', function () {
+            Livewire.on('execute-script', function (table) {
                 setTimeout(() => {
-                    tablaLivewire('datatable-risk-analysis');
-                }, 200);
-
+                tablaLivewire(table.table);
+            }, 200);
             });
-
-            // Livewire.on('scriptTabla2', () => {
-            //     setTimeout(() => {
-            //         tablaLivewire('datatable-risk-analysis-controls');
-            //     }, 200);
-            // });
         });
-    </script> --}}
+
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const exampleModal = document.getElementById('formRiskAnalysis');
+
+        //     // Escuchar el evento "hidden.bs.modal"
+        //     exampleModal.addEventListener('hidden.bs.modal', function () {
+        //         setTimeout(() => {
+        //         tablaLivewire('datatable-risk-analysis');
+        //     }, 200);
+        //     });
+        // });
+
+
+    </script>
+
 
     {{-- alerts --}}
     @yield('js')
@@ -549,3 +566,4 @@
             })
         });
     </script>
+

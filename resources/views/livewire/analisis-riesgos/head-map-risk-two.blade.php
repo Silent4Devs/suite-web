@@ -21,10 +21,13 @@
             initialRiskGraphic();
             residualRiskGraphic();
 
-            Livewire.on('reloadGraph', (initialRisk, residualRisk) => {
-
-                initialRiskGraphic(initialRisk);
-                residualRiskGraphic(residualRisk);
+            Livewire.on('reloadGraph', (data) => {
+                console.log(data[0],data[1]);
+                // console.log(initialRisk,residualRisk)
+                setTimeout(() => {
+                    initialRiskGraphic(data[0]);
+                    residualRiskGraphic(data[1]);
+                }, 100);
             });
 
             function initialRiskGraphic(initialRisk = null) {
@@ -43,6 +46,7 @@
                     const filterStartIndex = probMax * probMax;
 
                     const dataNew = initialRisk ? initialRisk : @json($initialRisk);
+                    console.log(dataNew);
 
 
                     var chartDom = document.getElementById('map-position-cl');
