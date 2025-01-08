@@ -1863,7 +1863,10 @@ class EV360EvaluacionesController extends Controller
 
         abort_if(Gate::denies('seguimiento_evaluaciones_grafica'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::with('evaluados:id,name,area_id,puesto_id,supervisor_id', 'rangos')->find(intval($id_evaluacion));
-        // dd($evaluacion->rangos);
+        if ($evaluacion === null) {
+            // Manejar el caso en que no se encuentra la evaluación
+            return redirect()->route('admin.rh-evaluacion360.index')->with('error', 'No existe el registro.');
+        }
         if (optional($evaluacion->rangos)->isNotEmpty()) {
             $evaluados = $evaluacion->evaluados;
             $lista_evaluados = collect();
