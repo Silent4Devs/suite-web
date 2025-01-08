@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionOrdenCompraCancelada;
+use App\Models\ClausulasOc;
 use App\Models\ContractManager\CentroCosto as KatbolCentroCosto;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
@@ -120,10 +121,31 @@ class OrdenCompraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function clausulas()
     {
-        //
+        return view('contract_manager.ordenes-compra.clausulas');
     }
+
+
+    public function clausulas_save(Request $request)
+    {
+        // Verifica si ya existe un registro para la organización
+        $clausulas = ClausulasOc::where('organizacion_id', 1)->first();
+
+        if ($clausulas) {
+            // Si ya existe, puedes actualizarlo si es necesario o solo retornar
+            return redirect('/contract_manager/orden-compra')->with('message', 'Ya existe una cláusula registrada.');
+        } else {
+            // Si no existe, se crea un nuevo registro
+            $clausulas = new ClausulasOc;
+            $clausulas->descripcion = $request->descripcion;
+            $clausulas->organizacion_id = 1;
+            $clausulas->save();
+        }
+
+        return redirect('/contract_manager/katbol')->with('message', 'Cláusula creada con éxito.');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -843,7 +865,8 @@ class OrdenCompraController extends Controller
         $letras = $f->format($numero);
 
         $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedoroc_id)->first();
-        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras'));
+        $clausulas = ClausulasOc::first();
+        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'clausulas'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('orden_compra.pdf');
