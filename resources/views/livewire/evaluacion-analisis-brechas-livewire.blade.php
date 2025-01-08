@@ -436,7 +436,7 @@
                             <div class="col-1">
                                 <button class="boton-transparente boton-sin-borde" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
-                                    {!! $imageImprimir !!}
+                                    {!! $imageImprimir ?? 'Imprimir' !!}
                                 </button>
                             </div>
                         </div>
@@ -514,7 +514,7 @@
 
                                     <button class="boton-transparentev2" style="color: var(--color-tbj);"
                                         onclick="window.print()">
-                                        IMPRIMIR {!! $imageImprimir !!}
+                                        IMPRIMIR {!! $imageImprimir ?? null !!}
                                     </button>
 
                                 </div>
