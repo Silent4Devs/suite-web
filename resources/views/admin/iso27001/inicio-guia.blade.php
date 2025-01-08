@@ -12,6 +12,17 @@
         .container-fluid {
             padding: 0 !important;
         }
+
+        .btn-green-oval {
+            background-color: #28a745;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
     </style>
     <div class="d-flex">
         <div class="info-inicio-guia">
@@ -32,7 +43,7 @@
             </ul>
 
             <div class="mt-5">
-                <a href="{{ route('admin.iso27001.normas-guia') }}" class="btn btn-continuar-iso">
+                <a href="{{ route('admin.iso27001.normas-guia') }}" class="btn btn-continuar-iso btn-green-oval">
                     CONTINUAR
                 </a>
             </div>
