@@ -381,20 +381,6 @@
                 </td>
             </tr>
         </table>
-        <table class="table-politicas">
-            <tr>
-                <td colspan="2">
-                    <p>
-                        Los términos y condiciones que se establecen a continuación regirán la relación con carácter de
-                        contrato comercial de la presente orden de compra (“OC”), entre SILENT4BUSINESS, S.A. de
-                        C.V(“Cliente”) y la persona física o moral señalada en el anverso y/o anexo a la presente OC
-                        (“presentador”) por la prestación de cualquier tipo de servicios y/o entrega de bienes o
-                        productos (“los servicios”) de conformidad con las
-                    </p>
-
-                    <h5 style="margin-top: 30px; text-align:center;">CLAUSULAS</h5>
-                </td>
-            </tr>
 
             @php
                 // Dividir las cláusulas usando los números como delimitadores
@@ -402,24 +388,43 @@
 
                 // Limpiar cada cláusula eliminando saltos de línea adicionales
                 $clausulasArray = array_map(fn($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
+
+                // Extraer el primer valor como párrafo de ancho completo
+                // $firstClause = array_shift($clausulasArray);
+
+                // Dividir las cláusulas restantes en dos columnas equilibradas
+                $half = ceil(count($clausulasArray) / 2);
+                $leftColumn = array_slice($clausulasArray, 0, $half);
+                $rightColumn = array_slice($clausulasArray, $half);
             @endphp
 
-            @foreach ($clausulasArray as $index => $clausula)
-                {{-- Abrir una nueva fila cada dos cláusulas --}}
-                @if ($index % 2 == 0)
-                    <tr>
-                @endif
+        <div style="width: 100% !important; vertical-align: top; padding-right: 10px;">
+            <p style="font-size: 11px; margin: 0;">{{ $leftColumn[0] }}</p>
+        </div>
 
-                {{-- Mostrar la cláusula en la celda --}}
-                <td style="font-size: 11px;">{{ $clausula }}</td>
+        <table class="table-politicas">
+            <thead>
+                <tr>
 
-                {{-- Cerrar la fila después de dos cláusulas --}}
-                @if ($index % 2 == 1 || $index == count($clausulasArray) - 1)
-                    </tr>
-                @endif
-            @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width: 50%; vertical-align: top; padding-right: 10px;">
+                        @foreach ($leftColumn as $key => $clausula)
+                            @if ($key > 0)
+                                <p style="font-size: 11px; margin: 0;">{{ $clausula }}</p>
+                            @endif
+                        @endforeach
+                    </td>
+                    <td style="width: 50%; vertical-align: top; padding-left: 10px;">
+                        @foreach ($rightColumn as $clausula)
+                        <p style="font-size: 11px; margin: 0;">{{ $clausula }}</p>
+                        @endforeach
+                    </td>
+                </tr>
+            </tbody>
         </table>
-
     </div>
 </body>
 

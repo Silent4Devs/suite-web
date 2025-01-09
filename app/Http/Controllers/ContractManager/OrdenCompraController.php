@@ -123,7 +123,11 @@ class OrdenCompraController extends Controller
      */
     public function clausulas()
     {
-        return view('contract_manager.ordenes-compra.clausulas');
+        $clausulas = null;
+
+        $clausulas = ClausulasOc::where('organizacion_id', 1)->first();
+
+        return view('contract_manager.ordenes-compra.clausulas', compact('clausulas'));
     }
 
 
@@ -134,7 +138,10 @@ class OrdenCompraController extends Controller
 
         if ($clausulas) {
             // Si ya existe, puedes actualizarlo si es necesario o solo retornar
-            return redirect('/contract_manager/orden-compra')->with('message', 'Ya existe una cláusula registrada.');
+            $clausulas->update([
+                'descripcion' => $request->descripcion,
+            ]);
+            return redirect('/contract_manager/orden-compra')->with('message', 'Clausula modificada.');
         } else {
             // Si no existe, se crea un nuevo registro
             $clausulas = new ClausulasOc;
