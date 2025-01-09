@@ -23,7 +23,6 @@
 
             Livewire.on('reloadGraph', (data) => {
                 console.log(data[0],data[1]);
-                // console.log(initialRisk,residualRisk)
                 setTimeout(() => {
                     initialRiskGraphic(data[0]);
                     residualRiskGraphic(data[1]);
@@ -271,7 +270,7 @@
                 for (let i = 1; i <= n; i++) {
                     for (let j = 1; j <= n; j++) {
                         const valor = i * j;
-                        //grafica inicia en ocupa intervalor de 0,0 para la coordenada 1,1
+                        //grafica inicia en intervalor de 0,0 para la coordenada 1,1
                         data.push([i - 1, j - 1, valor]);
                     }
                 }

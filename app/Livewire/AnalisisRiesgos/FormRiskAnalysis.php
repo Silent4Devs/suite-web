@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Spatie\Backup\Tasks\Cleanup\Period;
 
 class FormRiskAnalysis extends Component
 {
@@ -92,14 +91,6 @@ class FormRiskAnalysis extends Component
     ];
 
     public $answersForm =[] ;
-
-    // protected $listeners = ['formData', 'closePeriod', 'saveCoordinates', 'riskConfirm', 'destroySheet'];
-
-    // #[On('reloadDataTable')]
-    // public function reloadDataTable($table)
-    // {
-    //     $this->dispatch('reloadDataTableView',table:$table);
-    // }
 
     #[On('riskConfirm')]
     public function riskConfirm()
@@ -243,7 +234,6 @@ class FormRiskAnalysis extends Component
                     'value' => $answerRegister->answer->value,
                 ];
             }
-            // dd($this->answersForm);
         } else {
             $this->answersForm = [];
             $this->sheetForm['edit'] = false;
@@ -252,7 +242,6 @@ class FormRiskAnalysis extends Component
 
     public function chageStatusForm($status, $id)
     {
-        // dd($id);
         $this->sheetId = $id;
 
         $this->sheetForm['status'] = $status;
@@ -321,7 +310,6 @@ class FormRiskAnalysis extends Component
             'start' => $endDate,
         ]);
 
-        // $this->verifyPeriodProgress = true;
         $this->verifyAnswers = false;
         $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
         $this->period_id = null;
@@ -413,10 +401,8 @@ class FormRiskAnalysis extends Component
     public function formData($data,$coords)
     {
         $newCoords = json_decode($coords);
-        // if(count($newCoords) > 0){
             $this->scalesCoordinates = $newCoords;
-        // }
-        // dd($this->scalesCoordinates);
+
         $this->questionsAnswer = $data;
         if (! $this->sheetForm['edit']) {
             $this->saveForm();

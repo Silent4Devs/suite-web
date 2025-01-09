@@ -159,7 +159,6 @@
                     {{-- Form --}}
                     <div class="card" style="width: 100%; margin:0px;">
                         <form id='Form' class="card-body" onsubmit="return false;">
-                            {{-- {{ $sheetId }} --}}
                             @foreach ($sections as $section)
                                 <div style="width:100%; column-gap: 20px;">
                                     <div class="encabezado">
@@ -266,9 +265,9 @@
                         @endif
                     </div>
                     {{-- controls --}}
-                    {{-- @if ($sheetId) --}}
+
                         @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
-                    {{-- @endif --}}
+
 
                     <div class="d-flex justify-content-end gap-3">
                         <button type="button" class="btn tb-btn-secondary" style="color: #FFFFFF !important;" data-bs-dismiss="modal"
@@ -340,7 +339,6 @@
                 const coords = myModal.getAttribute('data-coords');
                 console.log(coords)
                 Livewire.dispatch('formData', {data,coords});
-                // console.log(coords)
             }
         });
     </script>
@@ -406,19 +404,6 @@
             }, 200);
             });
         });
-
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const exampleModal = document.getElementById('formRiskAnalysis');
-
-        //     // Escuchar el evento "hidden.bs.modal"
-        //     exampleModal.addEventListener('hidden.bs.modal', function () {
-        //         setTimeout(() => {
-        //         tablaLivewire('datatable-risk-analysis');
-        //     }, 200);
-        //     });
-        // });
-
-
     </script>
 
 
