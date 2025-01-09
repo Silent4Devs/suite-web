@@ -15,47 +15,49 @@ class RequsicionExport implements FromCollection, WithHeadings, WithStyles
      */
     public function collection()
     {
-        return DB::table('requisiciones')
-            ->select(
-                DB::raw("CONCAT('OC-00-00-', requisiciones.id) as Folio"),
-                'requisiciones.fecha as Fecha De Solicitud',
-                'requisiciones.referencia as Referencia',
-                'requisiciones.area as ÁreaQueSolicita',
-                'users.name as Solicitante',
-                'contratos.nombre_servicio as Proyecto',
-                'proveedor_o_c_s.nombre as Proveedor',
-                'requisiciones.moneda as Tipo de Moneda',
-                'requisiciones.sub_total as SUBTOTAL',
-                'requisiciones.iva as IVA',
-                'requisiciones.total as Total'
-            )
-            ->join('contratos', 'requisiciones.contrato_id', '=', 'contratos.id')
-            ->join('proveedores_requisiciones_catalogos', 'requisiciones.id', '=', 'proveedores_requisiciones_catalogos.requisicion_id')
-            ->join('proveedor_o_c_s', 'proveedores_requisiciones_catalogos.proveedor_id', '=', 'proveedor_o_c_s.id') // Unión con la tabla de proveedores
-            ->join('users', 'requisiciones.id_user', '=', 'users.id') // Agrega el join con la tabla usuarios
-            ->whereNotNull('requisiciones.firma_solicitante')
-            ->whereNotNull('requisiciones.firma_jefe')
-            ->whereNotNull('requisiciones.firma_finanzas')
-            ->whereNotNull('requisiciones.firma_compras')
-            ->where('requisiciones.archivo', false)
-            ->groupBy(
-                'requisiciones.id',
-                'requisiciones.fecha',
-                'requisiciones.referencia',
-                'requisiciones.area',
-                'users.name',
-                'contratos.nombre_servicio',
-                'proveedor_o_c_s.nombre',
-                'requisiciones.moneda',
-            )
-            ->orderByDesc('requisiciones.id')
-            ->get();
+       return DB::table('requisiciones')
+        ->select(
+             DB::raw("CONCAT('OC-00-00-', requisiciones.id) as Folio"),
+            'requisiciones.fecha as Fecha De Solicitud',
+            'requisiciones.referencia as Referencia',
+            'requisiciones.area as ÁreaQueSolicita',
+            'users.name as Solicitante',
+            'contratos.nombre_servicio as Proyecto',
+            'proveedor_o_c_s.nombre as Proveedor',
+            'requisiciones.moneda as Tipo de Moneda',
+            'requisiciones.cambio as Tipo de Cambio',
+            'requisiciones.sub_total as SUBTOTAL',
+            'requisiciones.iva as IVA',
+            'requisiciones.total as Total'
+        )
+        ->join('contratos', 'requisiciones.contrato_id', '=', 'contratos.id')
+        ->join('proveedores_requisiciones_catalogos', 'requisiciones.id', '=', 'proveedores_requisiciones_catalogos.requisicion_id')
+        ->join('proveedor_o_c_s', 'proveedores_requisiciones_catalogos.proveedor_id', '=', 'proveedor_o_c_s.id') // Unión con la tabla de proveedores
+        ->join('users', 'requisiciones.id_user', '=', 'users.id') // Agrega el join con la tabla usuarios
+        ->whereNotNull('requisiciones.firma_solicitante')
+        ->whereNotNull('requisiciones.firma_jefe')
+        ->whereNotNull('requisiciones.firma_finanzas')
+        ->whereNotNull('requisiciones.firma_compras')
+        ->where('requisiciones.archivo', false)
+        ->groupBy(
+            'requisiciones.id',
+            'requisiciones.fecha',
+            'requisiciones.referencia',
+            'requisiciones.area',
+            'users.name',
+            'contratos.nombre_servicio',
+            'proveedor_o_c_s.nombre',
+            'requisiciones.moneda',
+            'requisiciones.cambio',
+        )
+        ->orderByDesc('requisiciones.id')
+        ->get();
 
     }
 
     public function headings(): array
     {
-        return ['Folio', 'Fecha De Solicitud', 'Referencia', 'Área que Solicita', 'Solicitante', 'Proyecto', 'Proveedor', 'Tipo de Moneda', 'SUBTOTAL', 'IVA', 'Total'];
+        return ['Folio', 'Fecha De Solicitud', 'Referencia', 'Área que Solicita', 'Solicitante','Proyecto','Proveedor','Tipo de Moneda','Tipo de Cambio', 'SUBTOTAL','IVA', 'Total'];
     }
 
     public function styles(Worksheet $sheet)
@@ -78,6 +80,7 @@ class RequsicionExport implements FromCollection, WithHeadings, WithStyles
             'I' => ['width' => 20],
             'J' => ['width' => 20],
             'K' => ['width' => 20],
+            'L' => ['width' => 20],
         ];
     }
 }
