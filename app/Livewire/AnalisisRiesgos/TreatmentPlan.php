@@ -117,6 +117,11 @@ class TreatmentPlan extends Component
         }
     }
 
+    public function mount(){
+        $this->dispatch('handleReloadTreatmentPlan',)->to(FormRiskAnalysis::class);
+        // $this->skipRender();
+    }
+
     public function render()
     {
         return view('livewire.analisis-riesgos.treatment-plan');

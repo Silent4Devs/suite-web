@@ -92,6 +92,14 @@ class FormRiskAnalysis extends Component
 
     public $answersForm =[] ;
 
+    #[On('handleReloadTreatmentPlan')]
+    public function handleReloadTreatmentPlan()
+    {
+        $this->skipRender();
+        $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
+        // $this->dispatch('execute-script', table:'datatable-risk-analysis');
+    }
+
     #[On('riskConfirm')]
     public function riskConfirm()
     {
@@ -459,7 +467,7 @@ class FormRiskAnalysis extends Component
                 ->where('status', 'in-progress')
                 ->first();
             $this->period_id = $period->id;
-        $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
+        // $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
 
 
             // get answers table general
@@ -505,12 +513,10 @@ class FormRiskAnalysis extends Component
                 $this->sheetTables = $sheetsTable;
             }
         }
-        // $this->dispatch('treatmentPlan',['period' => $this->period_id, 'riskAnalysisId'=>$this->riskAnalysisId])->to(TreatmentPlan::class);
 
         // $this->dispatch('analisis-riesgos.treatment-plan', 'treatmentPlan', $this->period_id, $this->riskAnalysisId);
 
         // $this->dispatch('scriptTabla');
-        // $this->dispatch('execute-script', table:'datatable-risk-analysis');
 
         return view('livewire.analisis-riesgos.form-risk-analysis');
     }
