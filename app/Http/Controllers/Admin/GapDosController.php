@@ -86,10 +86,10 @@ class GapDosController extends Controller
         return redirect()->route('admin.gap-dos.index');
     }
 
-    public function edit(GapDo $gapDo)
+    public function edit($id_gapDo)
     {
         abort_if(Gate::denies('gap_do_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapDo = GapDo::where('id', $id_gapDo)->first();
         $gapDo->load('team');
 
         return view('admin.gapDos.edit', compact('gapDo'));
@@ -126,19 +126,19 @@ class GapDosController extends Controller
         //return redirect()->route('admin.gap-tres.index');
     }
 
-    public function show(GapDo $gapDo)
+    public function show($id_gapDo)
     {
         abort_if(Gate::denies('gap_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapDo = GapDo::where('id', $id_gapDo)->first();
         $gapDo->load('team');
 
         return view('admin.gapDos.show', compact('gapDo'));
     }
 
-    public function destroy(GapDo $gapDo)
+    public function destroy($id_gapDo)
     {
         abort_if(Gate::denies('gap_do_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapDo = GapDo::where('id', $id_gapDo)->first();
         $gapDo->delete();
 
         return back();
