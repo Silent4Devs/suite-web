@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
             \App\Http\Middleware\Tabantaj\Auth\AuthGates::class,
-            \App\Http\Middleware\Tenant\TbTenantMiddleware::class,
+            //\App\Http\Middleware\Tenant\TbTenantMiddleware::class,
 
         ],
         'api' => [
@@ -72,7 +72,7 @@ class Kernel extends HttpKernel
         'course' => \App\Http\Middleware\Tabantaj\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
         //milddleware control accesos tenant
-        'tenant' => \App\Http\Middleware\Tenant\TBTenantMiddleware::class,
+        //'tenant' => \App\Http\Middleware\Tenant\TBTenantMiddleware::class,
         'Tbcheck.token.expiration' => \App\Http\Middleware\Tenant\TBTenantCheckTokenExpiration::class,
         'general_tabantaj' => \App\Http\Middleware\Tenant\TBTenantGeneralTabantajMiddleware::class,
         'gestion_contractual' => \App\Http\Middleware\Tenant\TBTenantGestionContractualMiddleware::class,

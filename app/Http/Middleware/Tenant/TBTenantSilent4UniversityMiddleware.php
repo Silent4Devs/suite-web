@@ -27,13 +27,10 @@ class TBTenantSilent4UniversityMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
-
-        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
         $tbModulosValidos = ['Capacitaciones'];
 
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
 
         if ($tbEstado) {
             return $tbNext($tbRequest);
