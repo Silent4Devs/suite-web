@@ -135,16 +135,17 @@ class PlanaccionCorrectivaController extends Controller
         //return view('admin.actionsCorrective.plan_accion')->with('ids', $id)->with('users', $users);
     }
 
-    public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
+    public function edit($id_planaccionCorrectiva)
     {
         //        abort_if(Gate::denies('planaccion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $planaccionCorrectiva = PlanaccionCorrectiva::where('id', $id_planaccionCorrectiva)->first();
 
         $accioncorrectivas = AccionCorrectiva::all()->pluck('tema', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
-        //dd($planaccionCorrectiva);
 
         return view('admin.planaccionCorrectivas.edit', compact('accioncorrectivas', 'responsables', 'planaccionCorrectiva'));
     }
@@ -190,19 +191,19 @@ class PlanaccionCorrectivaController extends Controller
         return redirect()->route('admin.planaccion-correctivas.index');*/
     }
 
-    public function show(PlanaccionCorrectiva $planaccionCorrectiva)
+    public function show($id_planaccionCorrectiva)
     {
         //        abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planaccionCorrectiva = PlanaccionCorrectiva::where('id', $id_planaccionCorrectiva)->first();
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
 
         return view('admin.planaccionCorrectivas.show', compact('planaccionCorrectiva'));
     }
 
-    public function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
+    public function destroy($id_planaccionCorrectiva)
     {
         //        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planaccionCorrectiva = PlanaccionCorrectiva::where('id', $id_planaccionCorrectiva)->first();
         $planaccionCorrectiva->delete();
         Alert::success('éxito', 'Información eliminada con éxito');
 

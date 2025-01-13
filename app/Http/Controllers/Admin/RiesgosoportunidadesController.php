@@ -83,9 +83,11 @@ class RiesgosoportunidadesController extends Controller
         return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Riesgosoportunidade $riesgosoportunidade)
+    public function edit($id_riesgosoportunidade)
     {
         abort_if(Gate::denies('riesgosoportunidade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $riesgosoportunidade = Riesgosoportunidade::where('id', $id_riesgosoportunidade)->first();
 
         $controls = Controle::all()->pluck('control', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -94,26 +96,29 @@ class RiesgosoportunidadesController extends Controller
         return view('admin.riesgosoportunidades.edit', compact('controls', 'riesgosoportunidade'));
     }
 
-    public function update(UpdateRiesgosoportunidadeRequest $request, Riesgosoportunidade $riesgosoportunidade)
+    public function update(UpdateRiesgosoportunidadeRequest $request, $id_riesgosoportunidade)
     {
+        $riesgosoportunidade = Riesgosoportunidade::where('id', $id_riesgosoportunidade)->first();
+
         $riesgosoportunidade->update($request->all());
 
         return redirect()->route('admin.riesgosoportunidades.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Riesgosoportunidade $riesgosoportunidade)
+    public function show($id_riesgosoportunidade)
     {
         abort_if(Gate::denies('riesgosoportunidade_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $riesgosoportunidade = Riesgosoportunidade::where('id', $id_riesgosoportunidade)->first();
 
         $riesgosoportunidade->load('control', 'team');
 
         return view('admin.riesgosoportunidades.show', compact('riesgosoportunidade'));
     }
 
-    public function destroy(Riesgosoportunidade $riesgosoportunidade)
+    public function destroy($id_riesgosoportunidade)
     {
         abort_if(Gate::denies('riesgosoportunidade_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $riesgosoportunidade = Riesgosoportunidade::where('id', $id_riesgosoportunidade)->first();
         $riesgosoportunidade->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
