@@ -85,7 +85,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo',
-                'timesheet_proyectos.estatus'
+                'timesheet.estatus'
             )->orderBy('fecha_dia', 'asc')
             ->distinct()
             ->get()
