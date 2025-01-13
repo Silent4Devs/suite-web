@@ -1,49 +1,80 @@
-<div>
-    <div class="row">
-        <div class="col s12" style="margin-bottom: 30px;">
-            <h4 class="titulo-form">GENERAR REPORTE</h4>
-            <p class="instrucciones">Por favor seleccione el tipo de reporte</p>
-        </div>
-    </div>
-    <center>
+<div style="padding:5rem;">
+    <div class="generar-reporte mb-3" style="background-color:white; border-radius: 15px">
         <div class="row">
-            <div class="col s12 m8">
-                <a href="#organizacion" class="a_btn">
-                    <img src="{{ asset('img/reportes/org.svg') }}" style="left: 40px; width: 100%; padding-bottom: 6px;">
-                    <span style="color:var(--color-tbj)"><strong>Organización</strong></span>
-                </a>
-
-                <a href="#proveedores" class="a_btn">
-                    <img src="{{ asset('img/reportes/prov.svg') }}"
-                        style="left: 40px; width: 100%; padding-bottom: 6px;">
-                    <span style="color:var(--color-tbj)"><strong>Proveedores</strong></span>
-                </a>
-
-                <a href="#contratos" class="a_btn">
-                    <img src="{{ asset('img/reportes/contr.svg') }}"
-                        style="left: 40px; width: 100%; padding-bottom: 6px;">
-                    <span style="color:var(--color-tbj)"><strong>Contratos</strong></span>
-                </a>
+            <div class="col s12" style="margin-bottom: 30px;">
+                <h4 class="titulo-form ms-3 mt-3">GENERAR REPORTE</h4>
+                <p class="instrucciones ms-3">Por favor seleccione el tipo de reporte</p>
             </div>
         </div>
-    </center>
+        <center>
+            <div class="row">
+                <div class="col s12 m8 mb-4">
+                    <button wire:click="setMenu(1)" class="a_btn">
+                        <span class="material-symbols-outlined"
+                            style="left: 40px; width: 100%; padding-bottom: 6px; font-size: 6rem; display:block; color:var(--color-tbj);">
+                            corporate_fare
+                        </span>
+                        <span
+                            style="font-weight: 500; white-space: nowrap; color:var(--color-tbj)"><strong>Organización</strong></span>
+                    </button>
+
+                    <button wire:click="setMenu(2)" class="a_btn">
+                        <span class="material-symbols-outlined"
+                            style="left: 40px; width: 100%; padding-bottom: 6px; font-size: 6rem; display:block; color:var(--color-tbj);">
+                            assignment_ind
+                        </span>
+                        <span style="color:var(--color-tbj)"><strong>Proveedores</strong></span>
+                    </button>
+
+                    <button wire:click="setMenu(3)" class="a_btn">
+                        <span class="material-symbols-outlined"
+                            style="left: 40px; width: 100%; padding-bottom: 6px; font-size: 6rem; display:block; color:var(--color-tbj);">
+                            article
+                        </span>
+                        <span style="color:var(--color-tbj)"><strong>Contratos</strong></span>
+                    </button>
+                </div>
+            </div>
+        </center>
+    </div>
 
     <div class="row">
         <div class="col s12 m12">
+            <div class="w-100 d-flex justify-content-center">
+                <div wire:loading class="loading-overlay mb-5 mt-2">
+                    <div class="spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div wire:loading.remove>
+                @if ($showMenu === 1)
+                    <section id="organizacion">
+                        @include('contract_manager.reportes.organizacion')
+                    </section>
+                @endif
 
-            <section id="organizacion">
-                @include('contract_manager.reportes.organizacion')
-            </section>
+                @if ($showMenu === 2)
+                    <section id="proveedores">
+                        @include('contract_manager.reportes.proveedor')
+                    </section>
+                @endif
 
-
-            <section id="proveedores">
-                @include('contract_manager.reportes.proveedor')
-            </section>
-
-
-            <section id="contratos">
-                @include('contract_manager.reportes.contrato')
-            </section>
+                @if ($showMenu === 3)
+                    <section id="contratos">
+                        @include('contract_manager.reportes.contrato')
+                    </section>
+                @endif
+            </div>
 
             <p style="opacity: 0.9; margin-top: 30px;">
                 <span style="font-weight: bold;"><span style="color: #2395AA;">Nota:</span></span> Para la
@@ -53,3 +84,5 @@
         </div>
     </div>
 </div>
+
+

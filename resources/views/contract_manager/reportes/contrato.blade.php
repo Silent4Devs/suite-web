@@ -1,13 +1,20 @@
-<div style="display: flex; justify-content: space-between; padding:10px; margin-bottom: 20px;">
-    <h4 class="sub-titulo-form">REPORTE CONTRATO</h4>
-    <button class="btn" style="bottom: 25px !important;"
-        onclick="printJS({
-        printable: 'contrato_reporte',
-        type: 'html',
-        css: '{{ asset('css/reports.css/reports.css') }}',})">
-        <i class="fas fa-print"></i>
-        Imprimir Reporte
-    </button>
+<div class="caja-blue mb-4">
+    <div>
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="height: 200px;">
+    </div>
+    <div>
+        <h4 style="font-size: 22px; font-weight: bolder;">REPORTE CONTRATO</h4>
+        <h5 class="text-left" style="font-size: 17px; margin-top:10px;">En esta sección puedes ver tus contratos</h5>
+        <p style="width:60%;">
+            Aquí podrás generar, consultar y gestionar reportes de contratos de forma eficiente,
+            permitiendo un análisis detallado y un control preciso de cada acuerdo,
+            Optimiza tu flujo de trabajo y garantiza la transparencia en todo el proceso.
+        </p>
+        <button wire:click="imprimirReporteContrato()" class="btn mt-3"
+            style="background-color: #fff; color: var(--color-tbj) !important;">
+            <i class="fas fa-print"></i>Imprimir Reporte
+        </button>
+    </div>
 </div>
 <div class="seleccionar">
     <select class="form-control" searchable="Buscar..." name="contrato" id="contrato" class=""

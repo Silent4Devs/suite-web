@@ -1,94 +1,126 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('css/reports/reports_proveedores.css') }}{{ config('app.cssVersion') }}" />
 @foreach ($proveedor_seleccionado as $it_proveedor)
     <div class="card-content">
-        <table class="encabezado">
-            <thead>
+        <div class="flex header-doc">
+            <div class="flex-item item-doc-img">
+                <img src="{{ asset('img/global/silent4business.png') }}" style="width: 100%; max-width: 150px;">
+            </div>
+            <div class="flex-item" style="font-family: Arial, sans-serif; color: #333;">
+                <p style="margin: 5px 0;">
+                    <strong style="color: #49598A;">Nombre:</strong> {{ $organizacion->empresa }}
+                </p>
+                <p style="margin: 5px 0;">
+                    <strong style="color: #49598A;">Dirección:</strong>
+                    {{ $organizacion->direccion }}
+                </p>
+                <p style="margin: 5px 0;">
+                    <strong style="color: #49598A;">Teléfono:</strong> {{ $organizacion->telefono }}
+                </p>
+                <p style="margin: 5px 0;">
+                    <strong style="color: #49598A;">Correo:</strong>
+                    <a href="mailto:{{ $organizacion->correo }}"
+                        style="text-decoration: none; color: #1d72b8;">{{ $organizacion->correo }}</a>
+                </p>
+                <p style="margin: 5px 0;">
+                    <strong style="color: #49598A;">Página web:</strong>
+                    <a href="{{ $organizacion->pagina_web }}" target="_blank"
+                        style="text-decoration: none; color: #1d72b8;">{{ $organizacion->pagina_web }}</a>
+                </p>
+            </div>
+            <div class="flex-item item-header-doc-info"
+                style="text-align: center; font-family: Arial, sans-serif; color: #333;">
+                <h4 style="font-size: 20px; color: #49598A; margin: 10px 0; font-weight: bold; text-transform: uppercase;">
+                    Reporte de proveedor
+                </h4>
+                <p style="font-size: 14px; margin: 5px 0; color: #666;">
+                    <strong>Fecha de consulta:</strong> {{ $hoy }}
+                </p>
+            </div>
+        </div>
+        <div class="doc-blue p-3">
+            <table class="arriba_derecha text-white text-center">
                 <tr>
-                    <th>
-                        <div class="logo_organizacion"></div>
-                    </th>
-                    <th>
-                        <font style="font-weight: lighter;">Ficha de proveedor:</font> <br>
-                        <font>{{ $it_proveedor->nombre_comercial }}</font>
-                    </th>
-                    <th>{{ $hoy }}</th>
+                    <th>Razón social</th>
                 </tr>
-            </thead>
-        </table>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->razon_social }}</div>
+                    </td>
+                </tr>
+            </table>
 
-        <h1>DATOS GENERALES</h1>
-        <table class="line_dato">
-            <tr>
-                <th>Razón social</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->razon_social }}</div>
-                </td>
-            </tr>
-        </table>
+            <table class="line_dato text-white">
+                <tr>
+                    <th style="width: 33.33%;">Nombre comercial del proveedor</th>
+                    <th style="width: 33.33%;">RFC persona moral o persona física</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->nombre }}</div>
+                    </td>
+                    <td>
+                        <div>{{ $it_proveedor->rfc }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="background-color: #EEE;">
+            <div class="titulo-tablas">
+                <div class="col-12">
+                    <strong>DOMICILIO FISCAL</strong>
+                </div>
+            </div>
+            <table class="line_dato">
+                <tr>
+                    <th>Calle y número</th>
+                    <th>Colonia</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->calle }}</div>
+                    </td>
+                    <td>
+                        <div>{{ $it_proveedor->colonia }}</div>
+                    </td>
+                </tr>
+            </table>
 
-        <table class="line_dato">
-            <tr>
-                <th>Nombre comercial del proveedor</th>
-                <th>RFC persona moral o persona física</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->nombre_comercial }}</div>
-                </td>
-                <td>
-                    <div>{{ $it_proveedor->rfc }}</div>
-                </td>
-            </tr>
-        </table>
+            <table class="line_dato">
+                <tr>
+                    <th>Ciudad o municipio/ país</th>
+                    <th>Código postal</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->ciudad }}</div>
+                    </td>
+                    <td>
+                        <div>{{ $it_proveedor->codigo_postal }}</div>
+                    </td>
+                </tr>
+            </table>
 
-        <h1>DOMICILIO FISCAL</h1>
-        <table class="line_dato">
-            <tr>
-                <th>Calle y número</th>
-                <th>Colonia</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->calle }}</div>
-                </td>
-                <td>
-                    <div>{{ $it_proveedor->colonia }}</div>
-                </td>
-            </tr>
-        </table>
+            <table class="line_dato">
+                <tr>
+                    <th>Teléfono</th>
+                    <th>Página web</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->telefono }}</div>
+                    </td>
+                    <td>
+                        <div>{{ $it_proveedor->pagina_web }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-        <table class="line_dato">
-            <tr>
-                <th>Ciudad o municipio/ país</th>
-                <th>Código postal</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->ciudad }}</div>
-                </td>
-                <td>
-                    <div>{{ $it_proveedor->codigo_postal }}</div>
-                </td>
-            </tr>
-        </table>
-
-        <table class="line_dato">
-            <tr>
-                <th>Teléfono</th>
-                <th>Página web</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->telefono }}</div>
-                </td>
-                <td>
-                    <div>{{ $it_proveedor->pagina_web }}</div>
-                </td>
-            </tr>
-        </table>
-
-        <h1>DATOS DEL CONTACTO</h1>
+        <div class="titulo-tablas">
+            <div class="col-12">
+                <strong>FIANZA/RESPONSABILIDAD CIVIL</strong>
+            </div>
+        </div>
         <table class="line_dato">
             <tr>
                 <th>Nombre completo del contacto</th>
@@ -96,10 +128,10 @@
             </tr>
             <tr>
                 <td>
-                    <div>{{ $it_proveedor->nombre_completo }}</div>
+                    <div>{{ $it_proveedor->nombre_contacto }}</div>
                 </td>
                 <td>
-                    <div>{{ $it_proveedor->puesto }}</div>
+                    <div>{{ $it_proveedor->puesto_contacto }}</div>
                 </td>
             </tr>
         </table>
@@ -114,33 +146,39 @@
                     <div>{{ $it_proveedor->correo }}</div>
                 </td>
                 <td>
-                    <div>{{ $it_proveedor->celular }}</div>
+                    <div>{{ $it_proveedor->celular_contacto }}</div>
                 </td>
             </tr>
         </table>
 
-        <h1>DATOS COMPLEMENTARIOS</h1>
-        <table class="line_dato">
-            <tr>
-                <th>Objeto social / descripción del servicio o producto</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->objeto_descripcion }}</div>
-                </td>
-            </tr>
-        </table>
+        <div style="background-color: #EEE;">
+            <div class="titulo-tablas">
+                <div class="col-12">
+                    <strong>DATOS COMPLEMENTARIOS</strong>
+                </div>
+            </div>
+            <table class="line_dato">
+                <tr>
+                    <th>Objeto social / descripción del servicio o producto</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->objeto_descripcion }}</div>
+                    </td>
+                </tr>
+            </table>
 
-        <table class="line_dato">
-            <tr>
-                <th>Cobertura, rango geográfico en el cual presta los servicios</th>
-            </tr>
-            <tr>
-                <td>
-                    <div>{{ $it_proveedor->cobertura }}</div>
-                </td>
-            </tr>
-        </table>
+            <table class="line_dato">
+                <tr>
+                    <th>Cobertura, rango geográfico en el cual presta los servicios</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>{{ $it_proveedor->cobertura }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
         <h1>CONTRATO</h1>
         <table class="tabla">

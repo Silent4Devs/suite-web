@@ -1,20 +1,27 @@
-<div style="display: flex; justify-content: space-between; padding:10px; margin-bottom: 20px;">
-    <h4 class="sub-titulo-form">REPORTE PROVEEDOR</h4>
-    <button class="btn" style="bottom: 25px !important;"
-        onclick="printJS({
-        printable: 'proveedor_reporte',
-        type: 'html',
-        css: '{{ asset('css/reports.css/reports.css') }}',})">
-        <i class="fas fa-print"></i>
-        Imprimir Reporte
-    </button>
+<div class="caja-blue mb-4">
+    <div>
+        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="height: 200px;">
+    </div>
+    <div>
+        <h4 style="font-size: 22px; font-weight: bolder;">REPORTE PROVEEDORES</h4>
+        <h5 class="text-left" style="font-size: 17px; margin-top:10px;">En esta sección puedes datos de los proveedores</h5>
+        <p class="m-1" style="width: 60%;">
+            Aquí podrás consultar de manera fácil y rápida,
+            la información general de los proveedores registrados,
+            permitiéndote acceder a los datos clave para un mejor seguimiento y gestión.
+        </p>
+        <button wire:click="imprimirReporteProveedor()" class="btn mt-3"
+            style="background-color: #fff; color: var(--color-tbj) !important;">
+            <i class="fas fa-print"></i>Imprimir Reporte
+        </button>
+    </div>
 </div>
 <div class="seleccionar">
     <select class="form-control" searchable="Buscar..." name="proveedor" id="proveedor" wire:model.live="proveedor_id"
         wire:change="getProveedorID">
         <option value="" selected disabled>Seleccione un proveedor</option>
         @forelse($proveedores as $item_proveedor)
-            <option value="{{ $item_proveedor->id }}">{{ $item_proveedor->nombre_comercial }}
+            <option value="{{ $item_proveedor->id }}">{{ $item_proveedor->razon_social }}
             </option>
         @empty
             <option value="">No hay proveedores registrados</option>
