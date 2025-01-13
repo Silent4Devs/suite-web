@@ -302,26 +302,35 @@ class TBTenantStripeService
     public function tbTenantSubscriptionStatusOnPremise($tbModulosValidos)
     {
         try {
+            $clientKey = env('CLIENT_KEY');
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://192.168.9.113/api/onPremise/clientes");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['uuid' => $clientKey]));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Accept: application/json',
+            ]);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($ch);
-            $jsonData = json_decode($response, true);
-            curl_close($ch);
-
             if (curl_errno($ch)) {
+                curl_close($ch);
                 return response()->json([
                     'message' => 'Error al obtener los datos de la API externa',
                     'error' => curl_error($ch),
                 ], 500);
             }
 
+            curl_close($ch);
+
+            $jsonData = json_decode($response, true);
+
             if (!empty($jsonData) && is_array($jsonData)) {
                 foreach ($jsonData as $cliente) {
-                    if ($cliente['key'] == env('CLIENT_KEY') && $cliente['Estatus'] === true) {
+                    if ($cliente['Estatus'] === 'Activo') {
                         if (!empty($cliente['modulos']) && is_array($cliente['modulos'])) {
                             foreach ($cliente['modulos'] as $modulo) {
                                 if (in_array($modulo['nombre_catalogo'], $tbModulosValidos) && $modulo['estatus'] === true) {
