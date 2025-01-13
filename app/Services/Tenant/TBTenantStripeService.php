@@ -305,7 +305,7 @@ class TBTenantStripeService
             $clientKey = env('CLIENT_KEY');
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://192.168.9.113/api/onPremise/clientes");
+            curl_setopt($ch, CURLOPT_URL, "http://192.168.9.113/api/onPremise/clientes");
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['uuid' => $clientKey]));
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -327,10 +327,9 @@ class TBTenantStripeService
             curl_close($ch);
 
             $jsonData = json_decode($response, true);
-
             if (!empty($jsonData) && is_array($jsonData)) {
                 foreach ($jsonData as $cliente) {
-                    if ($cliente['Estatus'] === 'Activo') {
+                    if ($cliente['Estatus'] === true) {
                         if (!empty($cliente['modulos']) && is_array($cliente['modulos'])) {
                             foreach ($cliente['modulos'] as $modulo) {
                                 if (in_array($modulo['nombre_catalogo'], $tbModulosValidos) && $modulo['estatus'] === true) {

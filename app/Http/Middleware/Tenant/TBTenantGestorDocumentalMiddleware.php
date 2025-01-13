@@ -30,7 +30,6 @@ class TBTenantGestorDocumentalMiddleware
         $tbModulosValidos = ['Gestor Documental'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
-
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {
