@@ -303,9 +303,10 @@ class TBTenantStripeService
     {
         try {
             $clientKey = env('CLIENT_KEY');
+            $clientKeyApi = env('CLIENT_KEYAPI');
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://192.168.9.113/api/onPremise/clientes");
+            curl_setopt($ch, CURLOPT_URL, $clientKeyApi); //"http://192.168.9.113/api/onPremise/clientes");
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['uuid' => $clientKey]));
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
