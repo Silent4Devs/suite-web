@@ -827,7 +827,7 @@ class OrdenCompraController extends Controller
 
     public function pdf($id)
     {
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id', $id)->first();
         $user = User::find($requisiciones->id_finanzas_oc);
 
         if ($user) {

@@ -121,10 +121,11 @@
                                 <div class="form-row mt-3">
                                     <div class="anima-focus" style="width: 70rem;">
                                         <select id="nivel2" name="nivel2[]" class="form-control" multiple="multiple">
-                                            @foreach ($usuarios as $usuario)
-                                                <option value="{{ $usuario->id }}"
-                                                    {{ in_array($usuario->id, $nivelData2 ?? []) ? 'selected' : '' }}>
-                                                    {{ $usuario->name }}
+                                            @foreach ($empleados as $empleado)
+                                                <option value="{{ $empleado->id }}"
+                                                    data-avatar="{{ asset('storage/empleados/imagenes/' . $empleado->avatar) }}"
+                                                    {{ in_array($empleado->id, $nivelData2 ?? []) ? 'selected' : '' }}>
+                                                    {{ $empleado->name }}
                                                 </option>
                                             @endforeach
                                         </select>

@@ -163,10 +163,10 @@ class CartaAceptacionRiesgosController extends Controller
         return redirect(route('admin.carta-aceptacion.index'));
     }
 
-    public function update(Request $request, CartaAceptacion $cartaAceptacion)
+    public function update(Request $request, $id_cartaAceptacion)
     {
+        $cartaAceptacion = CartaAceptacion::where('id', $id_cartaAceptacion)->first();
         $cartaAceptacion->update($request->all());
-        // $cartaAceptacion = CartaAceptacion::create($request->all());
 
         return redirect(route('admin.carta-aceptacion.index'));
     }
@@ -211,8 +211,9 @@ class CartaAceptacionRiesgosController extends Controller
         return view('admin.CartaAceptacionRiesgos.show', compact('aprobadores', 'route', 'miAprobacion', 'esAprobador', 'aprobadores', 'cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
 
-    public function destroy(CartaAceptacion $cartaAceptacion)
+    public function destroy($id_cartaAceptacion)
     {
+        $cartaAceptacion = CartaAceptacion::where('id', $id_cartaAceptacion)->first();
         $cartaAceptacion->delete();
 
         return back();

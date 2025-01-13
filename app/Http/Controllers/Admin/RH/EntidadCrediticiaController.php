@@ -99,10 +99,10 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function show($entidadCrediticia)
+    public function show($id_entidadCrediticia)
     {
         abort_if(Gate::denies('entidades_crediticeas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+        $entidadCrediticia = EntidadCrediticia::find($id_entidadCrediticia);
         //
     }
 
@@ -112,10 +112,10 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function edit($entidadCrediticia)
+    public function edit($id_entidadCrediticia)
     {
         abort_if(Gate::denies('entidades_crediticeas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+        $entidadCrediticia = EntidadCrediticia::find($id_entidadCrediticia);
 
         return view('admin.recursos-humanos.entidades-crediticias.edit', compact('entidadCrediticia'));
     }
@@ -126,10 +126,10 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $entidadCrediticia)
+    public function update(Request $request, $id_entidadCrediticia)
     {
         abort_if(Gate::denies('entidades_crediticeas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+        $entidadCrediticia = EntidadCrediticia::find($id_entidadCrediticia);
         $request->validate([
             'entidad' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:4000',
@@ -146,10 +146,10 @@ class EntidadCrediticiaController extends Controller
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */
-    public function destroy($entidadCrediticia)
+    public function destroy($id_entidadCrediticia)
     {
         abort_if(Gate::denies('entidades_crediticeas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entidadCrediticia = EntidadCrediticia::find($entidadCrediticia);
+        $entidadCrediticia = EntidadCrediticia::find($id_entidadCrediticia);
         $entidadCrediticia->delete();
 
         return redirect()->route('admin.entidades-crediticias.index')->with('success', 'Entidad crediticia eliminada');

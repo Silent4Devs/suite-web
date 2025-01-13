@@ -104,10 +104,10 @@ class AreasController extends Controller
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Area $area)
+    public function edit($id_area)
     {
         abort_if(Gate::denies('crear_area_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
@@ -187,19 +187,19 @@ class AreasController extends Controller
         return redirect()->route('admin.areas.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Area $area)
+    public function show($id_area)
     {
         abort_if(Gate::denies('crear_area_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $area->load('team', 'grupo');
 
         return view('admin.areas.show', compact('area'));
     }
 
-    public function destroy(Area $area)
+    public function destroy($id_area)
     {
         abort_if(Gate::denies('crear_area_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area = Area::where('id', $id_area)->first();
         $area->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

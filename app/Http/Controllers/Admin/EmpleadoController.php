@@ -1524,12 +1524,6 @@ class EmpleadoController extends Controller
     {
         $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
-        $request->validate([
-            // 'name' => 'required|string|max:255',
-            // 'email'=>'required|email|max:255',
-            'cumpleaños' => 'required|date',
-            'telefono_movil' => 'nullable|string|max:255',
-        ]);
         $empleado->update([
             // 'name' => $request->name,
             // 'email'=>$request->email,

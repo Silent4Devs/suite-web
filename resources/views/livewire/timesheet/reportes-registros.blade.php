@@ -100,7 +100,7 @@
                             <option value="100">100</option>
                         </select>
                         <button id="" class="btn px-5 ml-4" style="background-color:#D5FFE7; border: #fff"
-                            wire:click="RegistroTimesheet()">
+                            wire:click="exportExcel()">
                             Excel
                         </button>
                     </div>

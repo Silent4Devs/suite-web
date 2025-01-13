@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Events\TimesheetEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\NuevoProyectoJob;
+use App\Mail\NotificacionNuevoProyecto;
 use App\Mail\TimesheetHorasSobrepasadas;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
@@ -791,16 +792,7 @@ class TimesheetController extends Controller
                         }
                     }
 
-                    dispatch(
-                        new NuevoProyectoJob(
-                            $correos,
-                            $nuevo_proyecto->proyecto,
-                            $nuevo_proyecto->identificador,
-                            $nuevo_proyecto->cliente->nombre,
-                            User::getCurrentUser()->empleado->name,
-                            $nuevo_proyecto->id
-                        )
-                    );
+                    Mail::to($correos)->queue(new NotificacionNuevoProyecto($nuevo_proyecto->proyecto, $nuevo_proyecto->identificador, $nuevo_proyecto->cliente->nombre, User::getCurrentUser()->empleado->name,$nuevo_proyecto->id));
                 }
             } catch (\Throwable $th) {
                 return response()->json([

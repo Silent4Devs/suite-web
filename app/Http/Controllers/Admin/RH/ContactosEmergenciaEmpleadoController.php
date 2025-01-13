@@ -64,9 +64,9 @@ class ContactosEmergenciaEmpleadoController extends Controller
      * @param  \App\Models\RH\ContactosEmergenciaEmpleado  $contactosEmergenciaEmpleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $contactosEmergenciaEmpleado)
+    public function update(Request $request, $id_contactosEmergenciaEmpleado)
     {
-        $contactosEmergenciaEmpleado = ContactosEmergenciaEmpleado::find($contactosEmergenciaEmpleado);
+        $contactosEmergenciaEmpleado = ContactosEmergenciaEmpleado::find($id_contactosEmergenciaEmpleado);
 
         $contactosEmergenciaEmpleado->update([
             $request->typeInput => $request->value,
@@ -81,9 +81,9 @@ class ContactosEmergenciaEmpleadoController extends Controller
      * @param  \App\Models\RH\ContactosEmergenciaEmpleado  $contactosEmergenciaEmpleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy($contactosEmergenciaEmpleado)
+    public function destroy($id_contactosEmergenciaEmpleado)
     {
-        $contactosEmergenciaEmpleado = ContactosEmergenciaEmpleado::find($contactosEmergenciaEmpleado);
+        $contactosEmergenciaEmpleado = ContactosEmergenciaEmpleado::find($id_contactosEmergenciaEmpleado);
 
         $contactosEmergenciaEmpleado->delete();
 

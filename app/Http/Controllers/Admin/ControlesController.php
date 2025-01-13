@@ -78,35 +78,37 @@ class ControlesController extends Controller
         return redirect()->route('admin.controles.index');
     }
 
-    public function edit(Controle $controle)
+    public function edit($id_controle)
     {
         abort_if(Gate::denies('controle_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $controle = Controle::where('id', $id_controle)->first();
         $controle->load('team');
 
         return view('admin.controles.edit', compact('controle'));
     }
 
-    public function update(UpdateControleRequest $request, Controle $controle)
+    public function update(UpdateControleRequest $request, $id_controle)
     {
+        $controle = Controle::where('id', $id_controle)->first();
+
         $controle->update($request->all());
 
         return redirect()->route('admin.controles.index');
     }
 
-    public function show(Controle $controle)
+    public function show($id_controle)
     {
         abort_if(Gate::denies('controle_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $controle = Controle::where('id', $id_controle)->first();
         $controle->load('team');
 
         return view('admin.controles.show', compact('controle'));
     }
 
-    public function destroy(Controle $controle)
+    public function destroy($id_controle)
     {
         abort_if(Gate::denies('controle_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $controle = Controle::where('id', $id_controle)->first();
         $controle->delete();
 
         return back();

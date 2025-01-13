@@ -334,74 +334,6 @@
 
             ];
 
-            @can('analisis_de_riesgo_integral_agregar')
-                let btnAgregar = {
-                    // text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    // titleAttr: 'Agregar sede',
-                    // url: "{{ route('admin.matriz-riesgos.create') }}",
-                    // className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
-                // let btnImport = {
-                // text: '<i class="pl-2 pr-3 fas fa-file-csv"></i> CSV Importar',
-                // titleAttr: 'Importar datos por CSV',
-                // className: "btn-xs btn-outline-primary rounded ml-2 pr-3",
-                // action: function(e, dt, node, config){
-                // $('#csvImportModal').modal('show');
-                // }
-                // };
-                dtButtons.push(btnAgregar);
-                // dtButtons.push(btnImport);
-            @endcan
-            @can('analisis_de_riesgo_integral_eliminar')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-                let deleteButton = {
-                    text: deleteButtonTrans,
-                    url: "{{ route('admin.matriz-riesgos.sistema-gestion.destroy', 'id') }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).data(), function(entry) {
-                            return entry.id
-                        });
-
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
-
-                            return
-                        }
-
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
-                    }
-                }
-                //dtButtons.push(deleteButton)
-            @endcan
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             let id_matriz = @json($id_matriz);
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -412,6 +344,9 @@
                 ajax: {
                     url: "/admin/matriz-seguridad/sistema-gestion/data",
                     method: 'POST',
+                    data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
                 },
                 columns: [{
                         data: 'identificador',

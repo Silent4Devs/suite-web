@@ -77,7 +77,7 @@
                 {{ $documento->nombre ?? 'Documento no encontrado' }}</h5>
             {{-- <h3 class="mb-2 text-center text-white"><strong>Vista del documento:
                 {{ $documento->nombre }}</strong></h3> --}}
-            <a href="{{ url()->previous() }}">Regresar</a>
+            <a class="btn btn-primary" href="{{ url()->previous() }}">Regresar</a>
             <div class="mt-5">
                 <div class="py-3 col-md-10 col-sm-9 bg-primary align-self-center " style="margin-top:-40px; ">
 
