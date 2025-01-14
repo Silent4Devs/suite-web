@@ -78,6 +78,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'empleado_name',
                 'empleado_area',
                 'supervisor_name',
+                'timesheet.estatus',
                 'timesheet_horas.horas_lunes',
                 'timesheet_horas.horas_martes',
                 'timesheet_horas.horas_miercoles',
@@ -85,7 +86,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo',
-                'timesheet.estatus'
+                'timesheet_proyectos.estatus',
             )->orderBy('fecha_dia', 'asc')
             ->distinct()
             ->get()
@@ -107,7 +108,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                     'Empleado' => $timesheet->empleado_name,
                     'Supervisor' => $timesheet->supervisor_name,
                     'Area' => $timesheet->empleado_area,
-                    'Estatus Proyecto' => $timesheet->estatus,
+                    'Estatus' => $timesheet->estatus,
                     'Total de Horas' => $total_horas,
                 ];
             });
@@ -122,7 +123,7 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
             'Empleado',
             'Supervisor',
             'Area',
-            'Estatus Proyecto',
+            'Estatus',
             'Total de Horas',
         ];
     }
