@@ -78,34 +78,40 @@ class EnlacesEjecutarController extends Controller
         return redirect()->route('admin.enlaces-ejecutars.index');
     }
 
-    public function edit(EnlacesEjecutar $enlacesEjecutar)
+    public function edit($id_enlacesEjecutar)
     {
         abort_if(Gate::denies('enlaces_ejecutar_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $enlacesEjecutar = EnlacesEjecutar::where('id', $id_enlacesEjecutar)->first();
 
         $enlacesEjecutar->load('team');
 
         return view('admin.enlacesEjecutars.edit', compact('enlacesEjecutar'));
     }
 
-    public function update(UpdateEnlacesEjecutarRequest $request, EnlacesEjecutar $enlacesEjecutar)
+    public function update(UpdateEnlacesEjecutarRequest $request, $id_enlacesEjecutar)
     {
+        $enlacesEjecutar = EnlacesEjecutar::where('id', $id_enlacesEjecutar)->first();
+
         $enlacesEjecutar->update($request->all());
 
         return redirect()->route('admin.enlaces-ejecutars.index');
     }
 
-    public function show(EnlacesEjecutar $enlacesEjecutar)
+    public function show($id_enlacesEjecutar)
     {
         abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $enlacesEjecutar = EnlacesEjecutar::where('id', $id_enlacesEjecutar)->first();
 
         $enlacesEjecutar->load('team');
 
         return view('admin.enlacesEjecutars.show', compact('enlacesEjecutar'));
     }
 
-    public function destroy(EnlacesEjecutar $enlacesEjecutar)
+    public function destroy($id_enlacesEjecutar)
     {
         abort_if(Gate::denies('enlaces_ejecutar_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $enlacesEjecutar = EnlacesEjecutar::where('id', $id_enlacesEjecutar)->first();
 
         $enlacesEjecutar->delete();
 

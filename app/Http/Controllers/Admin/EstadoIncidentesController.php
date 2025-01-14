@@ -72,35 +72,36 @@ class EstadoIncidentesController extends Controller
         return redirect()->route('admin.estado-incidentes.index');
     }
 
-    public function edit(EstadoIncidente $estadoIncidente)
+    public function edit($id_estadoIncidente)
     {
         abort_if(Gate::denies('estado_incidente_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estadoIncidente = EstadoIncidente::where('id', $id_estadoIncidente)->first();
         $estadoIncidente->load('team');
 
         return view('admin.estadoIncidentes.edit', compact('estadoIncidente'));
     }
 
-    public function update(UpdateEstadoIncidenteRequest $request, EstadoIncidente $estadoIncidente)
+    public function update(UpdateEstadoIncidenteRequest $request, $id_estadoIncidente)
     {
+        $estadoIncidente = EstadoIncidente::where('id', $id_estadoIncidente)->first();
         $estadoIncidente->update($request->all());
 
         return redirect()->route('admin.estado-incidentes.index');
     }
 
-    public function show(EstadoIncidente $estadoIncidente)
+    public function show($id_estadoIncidente)
     {
         abort_if(Gate::denies('estado_incidente_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estadoIncidente = EstadoIncidente::where('id', $id_estadoIncidente)->first();
         $estadoIncidente->load('team');
 
         return view('admin.estadoIncidentes.show', compact('estadoIncidente'));
     }
 
-    public function destroy(EstadoIncidente $estadoIncidente)
+    public function destroy($id_estadoIncidente)
     {
         abort_if(Gate::denies('estado_incidente_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estadoIncidente = EstadoIncidente::where('id', $id_estadoIncidente)->first();
         $estadoIncidente->delete();
 
         return back();

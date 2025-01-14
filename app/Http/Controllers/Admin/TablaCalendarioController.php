@@ -84,26 +84,26 @@ class TablaCalendarioController extends Controller
         return view('admin.tabla-calendario.show', compact('fecha'));
     }
 
-    public function edit(Calendario $calendario)
+    public function edit($id_calendario)
     {
         abort_if(Gate::denies('eventos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $calendario = Calendario::where('id', $id_calendario)->first();
         return view('admin.tabla-calendario.edit', compact('calendario'));
     }
 
-    public function update(Request $request, Calendario $calendario)
+    public function update(Request $request, $id_calendario)
     {
         abort_if(Gate::denies('eventos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $calendario = Calendario::where('id', $id_calendario)->first();
         $fecha = $calendario->update($request->all());
-
         return redirect(route('admin.tabla-calendario.index'))->with(['success' => 'Registro Actualizado']);
     }
 
-    public function destroy(Calendario $calendario)
+    public function destroy($id_calendario)
     {
         abort_if(Gate::denies('eventos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $calendario = Calendario::where('id', $id_calendario)->first();
         $calendario->delete();
-
         return redirect(route('admin.tabla-calendario.index'))->with(['success' => 'Registro Eliminado']);
     }
 }

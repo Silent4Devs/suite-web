@@ -91,10 +91,10 @@ class PlanMejoraController extends Controller
         return redirect()->route('admin.plan-mejoras.index');
     }
 
-    public function edit(PlanMejora $planMejora)
+    public function edit($id_planMejora)
     {
         abort_if(Gate::denies('plan_mejora_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planMejora = PlanMejora::where('id', $id_planMejora)->first();
         $mejoras = Registromejora::all()->pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -104,26 +104,28 @@ class PlanMejoraController extends Controller
         return view('admin.planMejoras.edit', compact('mejoras', 'responsables', 'planMejora'));
     }
 
-    public function update(UpdatePlanMejoraRequest $request, PlanMejora $planMejora)
+    public function update(UpdatePlanMejoraRequest $request, $id_planMejora)
     {
+        $planMejora = PlanMejora::where('id', $id_planMejora)->first();
+
         $planMejora->update($request->all());
 
         return redirect()->route('admin.plan-mejoras.index');
     }
 
-    public function show(PlanMejora $planMejora)
+    public function show($id_planMejora)
     {
         abort_if(Gate::denies('plan_mejora_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planMejora = PlanMejora::where('id', $id_planMejora)->first();
         $planMejora->load('mejora', 'responsable', 'team');
 
         return view('admin.planMejoras.show', compact('planMejora'));
     }
 
-    public function destroy(PlanMejora $planMejora)
+    public function destroy($id_planMejora)
     {
         abort_if(Gate::denies('plan_mejora_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planMejora = PlanMejora::where('id', $id_planMejora)->first();
         $planMejora->delete();
 
         return back();

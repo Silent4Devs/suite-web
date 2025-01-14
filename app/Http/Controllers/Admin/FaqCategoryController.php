@@ -72,35 +72,36 @@ class FaqCategoryController extends Controller
         return redirect()->route('admin.faq-categories.index');
     }
 
-    public function edit(FaqCategory $faqCategory)
+    public function edit($id_faqCategory)
     {
         abort_if(Gate::denies('faq_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqCategory = FaqCategory::where('id', $id_faqCategory)->first();
         $faqCategory->load('team');
 
         return view('admin.faqCategories.edit', compact('faqCategory'));
     }
 
-    public function update(UpdateFaqCategoryRequest $request, FaqCategory $faqCategory)
+    public function update(UpdateFaqCategoryRequest $request, $id_faqCategory)
     {
+        $faqCategory = FaqCategory::where('id', $id_faqCategory)->first();
         $faqCategory->update($request->all());
 
         return redirect()->route('admin.faq-categories.index');
     }
 
-    public function show(FaqCategory $faqCategory)
+    public function show($id_faqCategory)
     {
         abort_if(Gate::denies('faq_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqCategory = FaqCategory::where('id', $id_faqCategory)->first();
         $faqCategory->load('team');
 
         return view('admin.faqCategories.show', compact('faqCategory'));
     }
 
-    public function destroy(FaqCategory $faqCategory)
+    public function destroy($id_faqCategory)
     {
         abort_if(Gate::denies('faq_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqCategory = FaqCategory::where('id', $id_faqCategory)->first();
         $faqCategory->delete();
 
         return back();
