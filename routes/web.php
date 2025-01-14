@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('tenant', 'central.landing')->name('central.landing');
 
-// Route::group(['middleware' => ['tenant']], function () {
+//Route::group(['middleware' => ['tenant']], function () {
 
 // Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 // Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);

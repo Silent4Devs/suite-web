@@ -28,39 +28,14 @@ class TBTenantGeneralTabantajMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
-
-        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
-
         $tbModulosValidos = [];
 
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
 
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {
             abort(403, 'Acceso denegado: Suscripción no válida.');
-        }
-    }
-
-    public function consultaApi()
-    {
-        try {
-            $apiController = new tbApiPanelControlController;
-            $response = $apiController->getData();
-
-            $client = $response->original[0];
-
-            if ($client['key'] == env('CLIENT_KEY') && $client['Estatus'] == true) {
-                // Filtrar el módulo que cumpla con las condiciones deseadas
-                return true;
-            } else {
-                // Procesa la respuesta según sea necesario
-                return false;
-            }
-        } catch (\Throwable $th) {
-            //throw $th;
-            abort(403);
         }
     }
 }
