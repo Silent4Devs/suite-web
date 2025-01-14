@@ -133,7 +133,7 @@ class templateAnalisisRiesgoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Template_Analisis_Riesgos $template_Analisis_Riesgos)
+    public function destroy($template_Analisis_Riesgos)
     {
         //
     }

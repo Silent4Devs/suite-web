@@ -143,10 +143,10 @@ class InformacionDocumetadaController extends Controller
         return redirect()->route('admin.informacion-documetadas.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(InformacionDocumetada $informacionDocumetada)
+    public function edit($id_informacionDocumetada)
     {
         abort_if(Gate::denies('informacion_documetada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $informacionDocumetada = InformacionDocumetada::where('id', $id_informacionDocumetada)->first();
         $politicas = PoliticaSgsi::getAll()->pluck('politicasgsi', 'id');
 
         $users = User::getAll();
@@ -162,8 +162,9 @@ class InformacionDocumetadaController extends Controller
         return view('admin.informacionDocumetadas.edit', compact('politicas', 'elaboros', 'revisos', 'aprobacions', 'informacionDocumetada'));
     }
 
-    public function update(UpdateInformacionDocumetadaRequest $request, InformacionDocumetada $informacionDocumetada)
+    public function update(UpdateInformacionDocumetadaRequest $request, $id_informacionDocumetada)
     {
+        $informacionDocumetada = InformacionDocumetada::where('id', $id_informacionDocumetada)->first();
         $informacionDocumetada->update($request->all());
         $informacionDocumetada->politicas()->sync($request->input('politicas', []));
 
@@ -185,7 +186,7 @@ class InformacionDocumetadaController extends Controller
     public function show(InformacionDocumetada $informacionDocumetada)
     {
         abort_if(Gate::denies('informacion_documentada_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $informacionDocumetada = InformacionDocumetada::where('id', $id_informacionDocumetada)->first();
         $informacionDocumetada->load('politicas', 'elaboro', 'reviso', 'aprobacion', 'team');
 
         return view('admin.informacionDocumetadas.show', compact('informacionDocumetada'));
@@ -194,7 +195,7 @@ class InformacionDocumetadaController extends Controller
     public function destroy(InformacionDocumetada $informacionDocumetada)
     {
         abort_if(Gate::denies('informacion_documetada_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $informacionDocumetada = InformacionDocumetada::where('id', $id_informacionDocumetada)->first();
         $informacionDocumetada->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

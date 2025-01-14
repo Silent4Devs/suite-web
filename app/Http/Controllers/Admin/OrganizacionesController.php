@@ -76,17 +76,19 @@ class OrganizacionesController extends Controller
         return redirect()->route('admin.organizaciones.index');
     }
 
-    public function edit(Organizacione $organizacione)
+    public function edit($id_organizacione)
     {
         abort_if(Gate::denies('organizacione_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $organizacione = Organizacione::where('id', $id_organizacione)->first();
         $organizacione->load('team');
 
         return view('admin.organizaciones.edit', compact('organizacione'));
     }
 
-    public function update(UpdateOrganizacioneRequest $request, Organizacione $organizacione)
+    public function update(UpdateOrganizacioneRequest $request, $id_organizacione)
     {
+        $organizacione = Organizacione::where('id', $id_organizacione)->first();
+
         $organizacione->update($request->all());
 
         alert()->success('Post Created', 'Successfully')->toToast();
@@ -94,19 +96,19 @@ class OrganizacionesController extends Controller
         return redirect()->route('admin.organizaciones.index');
     }
 
-    public function show(Organizacione $organizacione)
+    public function show($id_organizacione)
     {
         abort_if(Gate::denies('organizacione_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $organizacione = Organizacione::where('id', $id_organizacione)->first();
         $organizacione->load('team');
 
         return view('admin.organizaciones.show', compact('organizacione'));
     }
 
-    public function destroy(Organizacione $organizacione)
+    public function destroy($id_organizacione)
     {
         abort_if(Gate::denies('organizacione_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $organizacione = Organizacione::where('id', $id_organizacione)->first();
         $organizacione->delete();
 
         return back();

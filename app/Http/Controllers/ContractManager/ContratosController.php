@@ -1068,15 +1068,6 @@ class ContratosController extends AppBaseController
         return Excel::download(new ReporteClienteExport, 'cliente.xlsx');
     }
 
-    // public function downloadFile(Request $request){
-    //     // dd($request->file_contrato);
-    //     // $file = '/7factura-0.pdf';
-    //     // $path = '/app/public/contratos/1_contrato_01/entregables/pdf';
-
-    //     return response()->download(storage_path($path.$file));
-
-    // }
-
     public function obtenerArchivos(Request $request)
     {
         $contrato_id = $request->contratoId;

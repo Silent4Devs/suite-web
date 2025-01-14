@@ -193,9 +193,12 @@ class PuestosController extends Controller
         return redirect()->route('admin.puestos.index')->with('success', 'Puesto Creado');
     }
 
-    public function edit(Puesto $puesto)
+    public function edit($id_puesto)
     {
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $puesto = Puesto::where('id', $id_puesto)->first();
+
         $json = '[{
                     "abr":"zh",
                     "idioma":"Chinese"
@@ -275,9 +278,10 @@ class PuestosController extends Controller
         return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos', 'firma', 'firmar', 'firmado', 'aprobacionFirmaPuesto', 'aprobacionFirmaPuestoHisotricoLast'));
     }
 
-    public function update(UpdatePuestoRequest $request, Puesto $puesto)
+    public function update(UpdatePuestoRequest $request, $id_puesto)
     {
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $puesto = Puesto::where('id', $id_puesto)->first();
         $puesto->update($request->all());
         $request->validate([
             'puesto' => 'required|unique:puestos,puesto,'.$puesto->id,
@@ -324,10 +328,10 @@ class PuestosController extends Controller
         return redirect()->route('admin.puestos.index');
     }
 
-    public function show(Puesto $puesto)
+    public function show($id_puesto)
     {
         abort_if(Gate::denies('puestos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $puesto = Puesto::where('id', $id_puesto)->first();
         $puesto->load('team');
         // $empleados = Empleado::with('area')->get();
         // $idiomas = PuestoIdiomaPorcentajePivot::get();
@@ -423,10 +427,10 @@ class PuestosController extends Controller
         return view('admin.puestos.aprobacion-firma-historico', compact('aprobaciones_historico', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
-    public function destroy(Puesto $puesto)
+    public function destroy($id_puesto)
     {
         abort_if(Gate::denies('puestos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $puesto = Puesto::where('id', $id_puesto)->first();
         $puesto->delete();
 
         return back();

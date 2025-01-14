@@ -152,10 +152,10 @@ class MaterialSgsiController extends Controller
         return redirect()->route('admin.material-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(MaterialSgsi $materialSgsi)
+    public function edit($id_materialSgsi)
     {
         abort_if(Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $materialSgsi = MaterialSgsi::where('id', $id_materialSgsi)->first();
         $arearesponsables = Area::getAllPluck();
         $documentos = DocumentoMaterialSgsi::get();
         $materialSgsi->load('arearesponsable', 'team');
@@ -163,10 +163,10 @@ class MaterialSgsiController extends Controller
         return view('admin.materialSgsis.edit', compact('arearesponsables', 'materialSgsi', 'documentos'));
     }
 
-    public function update(UpdateMaterialSgsiRequest $request, MaterialSgsi $materialSgsi)
+    public function update(UpdateMaterialSgsiRequest $request, $id_materialSgsi)
     {
         abort_if(Gate::denies('material_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $materialSgsi = MaterialSgsi::where('id', $id_materialSgsi)->first();
         $materialSgsi->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -183,19 +183,19 @@ class MaterialSgsiController extends Controller
         return redirect()->route('admin.material-sgsis.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(MaterialSgsi $materialSgsi)
+    public function show($id_materialSgsi)
     {
         abort_if(Gate::denies('material_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $materialSgsi = MaterialSgsi::where('id', $id_materialSgsi)->first();
         $materialSgsi->load('arearesponsable', 'team');
 
         return view('admin.materialSgsis.show', compact('materialSgsi'));
     }
 
-    public function destroy(MaterialSgsi $materialSgsi)
+    public function destroy($id_materialSgsi)
     {
         abort_if(Gate::denies('material_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $materialSgsi = MaterialSgsi::where('id', $id_materialSgsi)->first();
         $materialSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
