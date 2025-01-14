@@ -38,41 +38,64 @@
         flex-direction: column;
         justify-content: center;
     }
+    .titulo-tablas {
+        background-color: #D9D9D9;
+        border-left: 20px var(--color-tbj) solid;
+    }
+    .apartado-tablas{
+        background-color: #eee;
+    }
+    .titulo-tablas .flex-item {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 15px;
+    }
+    .row{
+        margin: 0 !important;
+    }
 
-	.line_dato{
-		width: 100%;
-		font-size: 12pt;
-		margin-top: 20pt;
-	}
-	.line_dato tr{
-		border-bottom: none !important;
-	}
-	.line_dato th{
-		text-align: left;
-		padding: 10pt;
-		width: 50%;
-	}
-	.line_dato.celda3 th{
-		width: 33.33%;
-	}
-	.line_dato.celda4 th{
-		width: 25%;
-	}
-	.line_dato td{
-		padding: 0pt 10pt;
-	}
-	.line_dato td div{
-		width: 100%;
-	}
+    .line_dato {
+        width: 100%;
+        font-size: 12pt;
+        margin-top: 10pt; /* Reduce el margen superior */
+        /* background-color: #EEFCFF; Fondo opcional */
+        border-collapse: collapse; /* Colapsa los bordes de las celdas */
+    }
+
+    .line_dato th{
+        text-align: left; /* Alinea el texto a la izquierda */
+        width: 50%;
+    }
+
+    .line_dato td {
+        width: 50%;
+        text-align: left; /* Alinea el texto a la izquierda */
+        padding: 5px 10px; /* Espaciado uniforme en encabezado y celdas */
+        vertical-align: middle; /* Centra el contenido verticalmente */
+        width: auto; /* Deja que las columnas se ajusten automáticamente */
+    }
+
+    .line_dato.celda3 th,
+    .line_dato.celda4 th {
+        width: auto; /* Elimina restricciones de ancho */
+    }
+
+    .line_dato td div {
+        margin: 0; /* Elimina márgenes internos de los <div> */
+        padding: 0; /* Asegura que no haya espaciado adicional */
+        width: 100%; /* Asegura que ocupe todo el ancho de la celda */
+    }
 
 	.tabla{
 		border-collapse: collapse;
+        display: flex;
+        justify-content: center;
 	}
 	.tabla th{
 		background: #eee;
 		padding: 2pt;
 		border: 1pt solid #ccc;
-		text-align: center;
+		text-align: left;
 	}
 	.tabla td{
 		padding: 2pt;

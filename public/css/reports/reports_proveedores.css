@@ -1,0 +1,155 @@
+/*reportes -------------------------*/
+.card-content {
+    font-family: arial;
+}
+.encabezado {
+    width: 100%;
+    border-collapse: collapse;
+}
+.encabezado th:nth-child(2) {
+    width: 60%;
+}
+.encabezado th {
+    border: 1pt solid #ccc;
+    width: 20%;
+    font-size: 13pt;
+    text-align: center;
+}
+.encabezado th img {
+    width: 90%;
+}
+
+h1 {
+    width: 100%;
+    padding: 2pt 0;
+    /* margin-top: 50pt; */
+    text-align: center;
+    font-size: 15pt;
+    /* background: linear-gradient(104deg, rgba(0,188,214,1) 38%, rgba(0,214,194,1) 100%); */
+    border-radius: 100pt;
+    /* color: var(--color-tbj); */
+}
+.arriba_derecha {
+    width: 100%;
+    text-align: right;
+}
+.header-doc .flex-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.titulo-tablas {
+    background-color: #d9d9d9;
+    border-left: 20px var(--color-tbj) solid;
+}
+.apartado-tablas {
+    background-color: #eee;
+}
+.titulo-tablas .flex-item {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 15px;
+}
+.row {
+    margin: 0 !important;
+}
+
+.line_dato {
+    width: 100%;
+    font-size: 12pt;
+    margin-top: 10pt; /* Reduce el margen superior */
+    /* background-color: #EEFCFF; Fondo opcional */
+    border-collapse: collapse; /* Colapsa los bordes de las celdas */
+}
+
+.line_dato th {
+    text-align: left; /* Alinea el texto a la izquierda */
+    width: 50%;
+}
+
+.line_dato td {
+    width: 50%;
+    text-align: left; /* Alinea el texto a la izquierda */
+    padding: 5px 10px; /* Espaciado uniforme en encabezado y celdas */
+    vertical-align: middle; /* Centra el contenido verticalmente */
+    width: auto; /* Deja que las columnas se ajusten automáticamente */
+}
+
+.line_dato.celda3 th,
+.line_dato.celda4 th {
+    width: auto; /* Elimina restricciones de ancho */
+}
+
+.line_dato td div {
+    margin: 0; /* Elimina márgenes internos de los <div> */
+    padding: 0; /* Asegura que no haya espaciado adicional */
+    width: 100%; /* Asegura que ocupe todo el ancho de la celda */
+}
+
+.tabla {
+    border-collapse: collapse;
+    display: flex;
+    justify-content: center;
+}
+.tabla th {
+    background: #eee;
+    padding: 2pt;
+    border: 1pt solid #ccc;
+    text-align: left;
+}
+.tabla td {
+    padding: 2pt;
+    border: 1pt solid #ccc;
+}
+/* -- */
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.caja-blue {
+    background-color: var(--color-tbj);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 70px;
+    padding-block: 20px;
+    border-radius: 15px;
+}
+.flex-item {
+    width: 100%;
+    max-height: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    align-self: stretch;
+    text-align: left;
+}
+.header-doc .flex-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.item-header-doc-info {
+    background-color: #eefcff;
+}
+.item-doc-img {
+    border-left: 20px var(--color-tbj) solid;
+    max-width: 200px;
+}
+.img-doc {
+    width: 130px;
+}
+.doc-blue {
+    border-right: 20px var(--color-tbj) solid;
+    background-color: var(--color-tbj);
+    color: #fff !important;
+}
+
+.doc-blue strong,
+.doc-blue .flex-item {
+    color: #fff !important;
+}
