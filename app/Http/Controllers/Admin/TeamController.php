@@ -77,37 +77,35 @@ class TeamController extends Controller
         return redirect()->route('admin.teams.index');
     }
 
-    public function edit(Team $team)
+    public function edit($id_team)
     {
         abort_if(Gate::denies('team_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $team = Team::where('id', $id_team)->first();
         $team->load('owner');
 
         return view('admin.teams.edit', compact('team'));
     }
 
-    public function update(UpdateTeamRequest $request, Team $team)
+    public function update(UpdateTeamRequest $request, $id_team)
     {
+        $team = Team::where('id', $id_team)->first();
         $team->update($request->all());
-
         return redirect()->route('admin.teams.index');
     }
 
-    public function show(Team $team)
+    public function show($id_team)
     {
         abort_if(Gate::denies('team_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $team = Team::where('id', $id_team)->first();
         $team->load('owner');
-
         return view('admin.teams.show', compact('team'));
     }
 
-    public function destroy(Team $team)
+    public function destroy($id_team)
     {
         abort_if(Gate::denies('team_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $team = Team::where('id', $id_team)->first();
         $team->delete();
-
         return back();
     }
 
