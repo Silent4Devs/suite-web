@@ -205,20 +205,6 @@ class SubidaExcel extends Controller
         return redirect('CargaDocs')->with('success', 'All good!');
     }
 
-    // public function FaqCategoria()
-    // {
-    //     Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
-
-    //     return redirect('CargaDocs')->with('success', 'All good!');
-    // }
-
-    // public function FaqPregunta()
-    // {
-    //     Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
-
-    //     return redirect('CargaDocs')->with('success', 'All good!');
-    // }
-
     public function AnalisisRiesgo(Request $request)
     {
         if ($request->eliminar == 'true') {
