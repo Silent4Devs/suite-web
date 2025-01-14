@@ -70,7 +70,7 @@
 }
 
 .custom-icon-delete{
-    font-size: 60px;
+    font-size: 60px !important;
     color: #FF0000;
 }
 

@@ -188,6 +188,7 @@ class FormRiskAnalysis extends Component
     public function getInitialResidualRisk()
     {
         $pivot = TBPeriodSheetRiskAnalysisModel::where('period_id', $this->period_id)->where('sheet_id', $this->sheetId)->first();
+        // dd($pivot->residual_risk);
 
         foreach ($this->scales as $scale) {
             switch (true) {
@@ -205,10 +206,26 @@ class FormRiskAnalysis extends Component
             }
         }
 
+        foreach($this->scales as $scale){
+            switch(true) {
+                case ! is_null($pivot->residual_risk) && $pivot->residual_risk <= $scale->valor:
+                    if ($scale->riesgo_aceptable === true) {
+                        $this->risks['approveResidual'] = true;
+                        break 2;
+                    } else {
+                        $this->risks['approveResidual'] = false;
+                        break 2;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         $max = $this->probImpa->valor_max * $this->probImpa->valor_max;
 
         $formulaRI = round(($pivot->initial_risk / $max) * 100,2);
-        $formulaRR = ($pivot->residual_risk / $max) * 100;
+        $formulaRR = round(($pivot->residual_risk / $max) * 100,2);
         $this->risks['id'] = $pivot->id;
         $this->risks['initial'] = $formulaRI;
         $this->risks['residual'] = $formulaRR;
@@ -309,17 +326,19 @@ class FormRiskAnalysis extends Component
         }
     }
 
+    #[On('closePeriod')]
     public function closePeriod($id)
     {
         $registerPeriod = TBPeriodRiskAnalysisModel::find($id);
         $endDate = Carbon::now()->format('d-M-Y');
         $registerPeriod->update([
             'status' => 'completed',
-            'start' => $endDate,
+            'end' => $endDate,
         ]);
 
         $this->verifyAnswers = false;
-        $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
+        $this->dispatch('reloadGraphics')->to(HeadMapRiskTwo::class);
+        // $this->dispatch('analisis-riesgos.head-map-risk-two', 'reloadGraphics');
         $this->period_id = null;
 
     }
@@ -337,6 +356,7 @@ class FormRiskAnalysis extends Component
         }
     }
 
+    #[On('destroySheet')]
     public function destroySheet($id)
     {
         $sheet = TBSheetRiskAnalysisModel::find($id);
@@ -393,6 +413,8 @@ class FormRiskAnalysis extends Component
         $this->sheetForm['edit'] = true;
         $this->getQuestionsAnswer();
         $this->getInitialResidualRisk();
+        $this->dispatch('reloadGraphics')->to(HeadMapRiskTwo::class);
+
     }
 
     public function getAnswerWithoutPrefix()

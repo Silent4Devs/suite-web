@@ -22,10 +22,12 @@
         .inputfile-3+label {
             color: #006DDB;
         }
-        .dropdown-item:focus, .dropdown-item:hover {
+
+        .dropdown-item:focus,
+        .dropdown-item:hover {
             background-color: #006DDB !important;
             color: #FFFFFF !important;
-}
+        }
     </style>
     <h4 style="margin: 0px;">Formulario</h4>
     <hr style="margin-top: 20px;">
@@ -45,7 +47,7 @@
             </button>
         @endif
 
-        <button wire:click="$dispatch('finishPeriod',{{$period_id}})" type="button"
+        <button wire:click="$dispatch('finishPeriod',{{ $period_id }})" type="button"
             style="width: 180px; height: 50px; background-color:#FA8E00; color:#FFFFFF;" class="btn">
             Finalizar
         </button>
@@ -97,7 +99,8 @@
                                     <ul class="dropdown-menu">
                                         @if (!$sheetTable->sheet->initial_risk_confirm)
                                             <li>
-                                                <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#formRiskAnalysis"
+                                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#formRiskAnalysis"
                                                     wire:click="chageStatusForm(1,{{ $sheetTable->sheet->id }})">
                                                     <p class="m-0">Evaluar/editar formulario</p>
                                                 </a>
@@ -105,8 +108,8 @@
                                         @endif
                                         @if ($sheetTable->sheet->initial_risk_confirm)
                                             <li>
-                                                <a class="dropdown-item" type="button" data-toggle="modal"
-                                                    data-target="#formRiskAnalysis"
+                                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#formRiskAnalysis"
                                                     wire:click="chageStatusForm(2,{{ $sheetTable->sheet->id }})">
                                                     <p class="m-0">Finalizar /editar formulario</p>
                                                 </a>
@@ -114,7 +117,7 @@
                                         @endif
                                         <li>
                                             <a class="dropdown-item" type="button"
-                                                wire:click="$emit('confirmDeleteSheet',{{$sheetTable->sheet->id}})">
+                                                wire:click="$dispatch('confirmDeleteSheet',{{ $sheetTable->sheet->id }})">
                                                 <p class="m-0">Eliminar</p>
                                             </a>
                                         </li>
@@ -135,7 +138,8 @@
     </div>
 
     {{-- Modal --}}
-    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" data-coords=null  tabindex="-1" aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div wire:ignore.self class="modal fade" id="formRiskAnalysis" data-coords=null tabindex="-1"
+        aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
         <div class="modal-dialog modal-xl">
             <div wire:loading>
@@ -208,6 +212,15 @@
                                 style="height: 190px; width:50%; background-color:{{ $sheetForm['bg'] }}; border-radius: 16px 0px 0px 16px;">
                                 <h6>Nivel de riesgo residual</h6>
                                 <h2>{{ $risks['initial'] }}% / {{ $risks['residual'] }}%</h2>
+                                <div style="width: auto; padding:5px; background: {{ $risks['approveResidual'] ? '#78BB50' : '#FF9898' }}; border-radius: 11px;">
+                                    @if ($risks['approveResidual'])
+                                        <h6 style="color:#FFFFFF" class="mb-0">Aceptable</h6>
+                                    @else
+                                        <h6 style="color:#FFFFFF" class="mb-0">
+                                            No aceptable
+                                        </h6>
+                                    @endif
+                                </div>
                             </div>
                             <div class="d-flex flex-row align-items-center justify-content-center gap-6"
                                 style="height: 190px; width:100%; border-radius: 0px 16px 16px 0px;">
@@ -266,12 +279,12 @@
                     </div>
                     {{-- controls --}}
 
-                        @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
+                    @livewire('analisis-riesgos.controls-risk-analysis', ['riskAnalysisId' => $riskAnalysisId])
 
 
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="button" class="btn tb-btn-secondary" style="color: #FFFFFF !important;" data-bs-dismiss="modal"
-                            onclick="limpiarFormulario()">CERRAR</button>
+                        <button type="button" class="btn tb-btn-secondary" style="color: #FFFFFF !important;"
+                            data-bs-dismiss="modal" onclick="limpiarFormulario()">CERRAR</button>
                         <button wire:click="riskConfirmMessage" class="btn tb-btn-primary">CONFIRMAR RIESGO
                             {{ $sheetForm['status'] === 2 ? 'RESIDUAL' : 'INICIAL' }}</button>
                     </div>
@@ -322,196 +335,204 @@
         </div>
     </div>
 
+
+
 </div>
-    {{-- send form --}}
-    <script>
-        document.getElementById('submitButton').addEventListener('click', function(e) {
-            const form = document.getElementById('Form');
-            const formData = new FormData(form);
-            const myModal = document.getElementById('formRiskAnalysis');
+{{-- send form --}}
+<script>
+    document.getElementById('submitButton').addEventListener('click', function(e) {
+        const form = document.getElementById('Form');
+        const formData = new FormData(form);
+        const myModal = document.getElementById('formRiskAnalysis');
 
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        if (form.checkValidity()) {
+            const coords = myModal.getAttribute('data-coords');
+            console.log(coords)
+            Livewire.dispatch('formData', {
+                data,
+                coords
             });
+        }
+    });
+</script>
 
-            if (form.checkValidity()) {
-                const coords = myModal.getAttribute('data-coords');
-                console.log(coords)
-                Livewire.dispatch('formData', {data,coords});
+<script>
+    function handleApplicability(checkbox, index) {
+        const isChecked = checkbox.checked;
+    }
+</script>
+
+{{-- clear form --}}
+<script>
+    function limpiarFormulario() {
+        const form = document.getElementById('Form');
+        form.reset();
+        window.dispatchEvent(new CustomEvent('execute-script', {
+            detail: {
+                message: '¡Evento disparado desde JavaScript!'
             }
-        });
-    </script>
+        }));
+    }
+</script>
 
-    <script>
-        function handleApplicability(checkbox, index) {
-            const isChecked = checkbox.checked;
-        }
-    </script>
+{{-- table sheets --}}
+<script>
+    let cont = 0;
 
-    {{-- clear form --}}
-    <script>
-        function limpiarFormulario() {
-            const form = document.getElementById('Form');
-            form.reset();
-            window.dispatchEvent(new CustomEvent('execute-script', {
-                detail: { message: '¡Evento disparado desde JavaScript!' }
-            }));
-        }
-    </script>
+    function tablaLivewire(id_tabla) {
+        $('#' + id_tabla).attr('id', id_tabla + cont);
+        let dtButtons = [
 
-    {{-- table sheets --}}
-    <script>
-        let cont = 0;
-        function tablaLivewire(id_tabla) {
-            $('#' + id_tabla).attr('id', id_tabla + cont);
-            let dtButtons = [
+        ];
 
-            ];
+        let dtOverrideGlobals = {
+            buttons: dtButtons,
+            order: [
+                [0, 'desc']
+            ],
+            destroy: true,
+            render: true,
+        };
 
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order: [
-                    [0, 'desc']
-                ],
-                destroy: true,
-                render: true,
-            };
+        let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
 
-            let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
+        return table;
+    }
 
-            return table;
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            tablaLivewire('datatable-risk-analysis');
+        }, 200);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            tablaLivewire('datatable-risk-analysis-controls');
+        }, 200);
+    });
+    document.addEventListener('livewire:init', function() {
+        console.log("update")
+    });
 
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+        Livewire.on('execute-script', function(table) {
             setTimeout(() => {
-                tablaLivewire('datatable-risk-analysis');
-            }, 200);
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                tablaLivewire('datatable-risk-analysis-controls');
-            }, 200);
-        });
-        document.addEventListener('livewire:init', function () {
-            console.log("update")
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            Livewire.on('execute-script', function (table) {
-                setTimeout(() => {
                 tablaLivewire(table.table);
             }, 200);
-            });
         });
-    </script>
+    });
+</script>
 
 
-    {{-- alerts --}}
-    @yield('js')
+{{-- alerts --}}
+@yield('js')
 
-    {{-- alert finish period sheet --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("finishPeriod", id => {
-                Swal.fire({
-                    html: `
+{{-- alert finish period sheet --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Livewire.on("finishPeriod", (id) => {
+            Swal.fire({
+                html: `
                     <h3 class="mb-0" style="color:#575757; font-size:22px;"><strong>Esta acción finaliza el periodo de Análisis</strong></h3>
                     <span class="material-symbols-outlined" style="font-size:60px;">analytics</span>
                     <h6 style="color:#575757;"><strong>¿Estás seguro que deseas realizar esta accion?</strong></h6>
                     <h6>Esta acción será permanente y no podrá deshacerse</h6>
                     `,
-                    showCancelButton: true,
-                    customClass: {
-                        title: 'custom-title',
-                        confirmButton: 'btn tb-btn-primary',
-                        cancelButton: 'custom-cancel-button'
-                    },
-                    confirmButtonText: "Finalizar Análisis",
-                    cancelButtonText: "Regresar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emit('closePeriod', id);
-                        Swal.fire({
-                            title: "Finalizado",
-                            text: "El periodo de analisis finalizo con éxito",
-                            icon: "success"
-                        });
-                    }
-                });
-            })
-        });
-    </script>
-
-    {{-- alert response form sheet --}}
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("responseForm", (edit) => {
-                let title = "";
-                let action = "";
-                if (!edit) {
-                    title = "Guardado";
-                    action = "guardo";
-                } else {
-                    title = "Editado";
-                    action = "edito";
+                showCancelButton: true,
+                customClass: {
+                    title: 'custom-title',
+                    confirmButton: 'btn tb-btn-primary',
+                    cancelButton: 'custom-cancel-button'
+                },
+                confirmButtonText: "Finalizar Análisis",
+                cancelButtonText: "Regresar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('closePeriod', {id});
+                    Swal.fire({
+                        title: "Finalizado",
+                        text: "El periodo de analisis finalizo con éxito",
+                        icon: "success"
+                    });
                 }
-                Swal.fire({
-                    title: title,
-                    text: `Se ${action} exitosamente el formulario`,
-                    icon: "success"
-                });
-            })
-        });
-    </script>
+            });
+        })
+    });
+</script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("responseTableControls", () => {
-                Swal.fire({
-                    title: 'Guardado y/o Editado',
-                    text: `Se guardo y/o edito exitosamente los controles`,
-                    icon: "success"
-                });
-            })
-        });
-    </script>
+{{-- alert response form sheet --}}
 
-    {{-- Message confirm --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Livewire.on("riskConfirmMessage", () => {
-                Swal.fire({
-                    html: `
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Livewire.on("responseForm", (edit) => {
+            let title = "";
+            let action = "";
+            if (!edit) {
+                title = "Guardado";
+                action = "guardo";
+            } else {
+                title = "Editado";
+                action = "edito";
+            }
+            Swal.fire({
+                title: title,
+                text: `Se ${action} exitosamente el formulario`,
+                icon: "success"
+            });
+        })
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Livewire.on("responseTableControls", () => {
+            Swal.fire({
+                title: 'Guardado y/o Editado',
+                text: `Se guardo y/o edito exitosamente los controles`,
+                icon: "success"
+            });
+        })
+    });
+</script>
+
+{{-- Message confirm --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Livewire.on("riskConfirmMessage", () => {
+            Swal.fire({
+                html: `
                     <h3 class="mb-0" style="color:#575757; font-size:22px;"><strong>Confirmar riesgo </strong></h3>
                     <h6 style="color:#575757;"><strong>¿Estás seguro que deseas realizar esta accion?</strong></h6>
                     <h6>Esta acción será permanente y no podrá deshacerse</h6>
                     `,
-                    showCancelButton: true,
-                    customClass: {
-                        title: 'custom-title',
-                        confirmButton: 'btn tb-btn-primary',
-                        cancelButton: 'custom-cancel-button'
-                    },
-                    confirmButtonText: "Confirmar Riesgo",
-                    cancelButtonText: "Regresar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.dispatch('riskConfirm');
-                        Swal.fire({
-                            title: "Confirmado",
-                            text: "El riesgo se confirmo con éxito",
-                            icon: "success"
-                        });
-                    }
-                });
-            })
+                showCancelButton: true,
+                customClass: {
+                    title: 'custom-title',
+                    confirmButton: 'btn tb-btn-primary',
+                    cancelButton: 'custom-cancel-button'
+                },
+                confirmButtonText: "Confirmar Riesgo",
+                cancelButtonText: "Regresar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('riskConfirm');
+                    Swal.fire({
+                        title: "Confirmado",
+                        text: "El riesgo se confirmo con éxito",
+                        icon: "success"
+                    });
+                }
+            });
+        })
 
-            Livewire.on("confirmDeleteSheet", (id) => {
-                console.log(id)
-                Swal.fire({
-                    html: `
+        Livewire.on("confirmDeleteSheet", (id) => {
+            console.log(id)
+            Swal.fire({
+                html: `
                 <div class='d-flex justify-content-center'>
                     <div class="fondo-icon-delete">
                     <i class="material-symbols-outlined custom-icon-delete">
@@ -522,19 +543,19 @@
                 <h2 class='title'>Eliminar este elemento</h2>
                 <p class='text'>¿Estás seguro de querer eliminar este registro?</p>
                 `,
-                    showCancelButton: true,
-                    confirmButtonText: "Si, Eliminar",
-                    cancelButtonText: "Cancelar",
-                    customClass: {
-                        confirmButton: 'btn-primary',
-                        cancelButton: 'btn-secondary',
-                    },
-                    reverseButtons: true,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emit('destroySheet',id);
-                        Swal.fire({
-                            html: `
+                showCancelButton: true,
+                confirmButtonText: "Si, Eliminar",
+                cancelButtonText: "Cancelar",
+                customClass: {
+                    confirmButton: 'btn-primary',
+                    cancelButton: 'btn-secondary',
+                },
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('destroySheet', {id});
+                    Swal.fire({
+                        html: `
                         <div class='d-flex justify-content-center'>
                             <div class="fondo-icon-succeed">
                             <span class="material-symbols-outlined custom-icon-succeed">
@@ -545,10 +566,9 @@
                         <h2 class='title'>Acción realizada con éxito</h2>
                         <p class='text'>Se elimino el registro exitosamente</p>
                         `,
-                        });
-                    }
-                });
-            })
-        });
-    </script>
-
+                    });
+                }
+            });
+        })
+    });
+</script>
