@@ -382,46 +382,24 @@
             </tr>
         </table>
 
-            @php
-                // Dividir las cláusulas usando los números como delimitadores
-                $clausulasArray = preg_split('/(?=\d+\.)/', $clausulas->descripcion, -1, PREG_SPLIT_NO_EMPTY);
-
-                // Limpiar cada cláusula eliminando saltos de línea adicionales
-                $clausulasArray = array_map(fn($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
-
-                // Extraer el primer valor como párrafo de ancho completo
-                // $firstClause = array_shift($clausulasArray);
-
-                // Dividir las cláusulas restantes en dos columnas equilibradas
-                $half = ceil(count($clausulasArray) / 2);
-                $leftColumn = array_slice($clausulasArray, 0, $half);
-                $rightColumn = array_slice($clausulasArray, $half);
-            @endphp
-
-        <div style="width: 100% !important; vertical-align: top; padding-right: 10px;">
-            <p style="font-size: 11px; margin: 0;">{{ $leftColumn[0] }}</p>
-        </div>
+        <div style="page-break-after: always;"></div>
 
         <table class="table-politicas">
-            <thead>
-                <tr>
-
-                </tr>
-            </thead>
             <tbody>
                 <tr>
-                    <td style="width: 50%; vertical-align: top; padding-right: 10px;">
-                        @foreach ($leftColumn as $key => $clausula)
-                            @if ($key > 0)
-                                <p style="font-size: 11px; margin: 0;">{{ $clausula }}</p>
-                            @endif
-                        @endforeach
+                    <td>{!! $firstClause !!}
+                        <table>
+                            <tr>
+                                <td style="width: 75%; vertical-align: top;">
+                                    <p style="font-size: 10px; margin: 0;">{!! $textoIzquierdoHtml !!}</p>
+                                </td>
+                                <td style="width: 75%; vertical-align: top;">
+                                    <p style="font-size: 10px; margin: 0;">{!! $textoDerechoHtml !!}</p>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td style="width: 50%; vertical-align: top; padding-left: 10px;">
-                        @foreach ($rightColumn as $clausula)
-                        <p style="font-size: 11px; margin: 0;">{{ $clausula }}</p>
-                        @endforeach
-                    </td>
+
                 </tr>
             </tbody>
         </table>
