@@ -63,7 +63,6 @@
                 transform: rotate(1800deg);
             }
         }
-
     </style>
     @if ($revisionMinuta->estatus != 1)
         <div class="row w-100 justify-content-center">
@@ -112,8 +111,8 @@
                         <div class="col-sm-12 col-lg-6">
                             <form method="POST" id="form-revision">
                                 <div class="form-group">
-                                    <label for="comentarios"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                                    <label for="comentarios"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                            height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
                                             <path
                                                 d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                             <path
@@ -125,7 +124,8 @@
                                 <input id="revision" type="hidden" name="revision" value="{{ $revisionMinuta->id }}">
                                 <button id="aprobar" class="btn btn-outline-success"><i class="mr-1 fas fa-thumbs-up"></i>
                                     Aprobar</button>
-                                <button id="rechazar" class="btn btn-outline-danger"><i class="mr-1 fas fa-thumbs-down"></i>
+                                <button id="rechazar" class="btn btn-outline-danger"><i
+                                        class="mr-1 fas fa-thumbs-down"></i>
                                     Rechazar</button>
                             </form>
                         </div>
@@ -138,7 +138,6 @@
                 </div>
             </div>
     @endif
-
 @endsection
 @section('scripts')
     <script>
@@ -162,7 +161,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ route('minutas.revisiones.approve') }}",
+                            url: "{{ route('admin.minutas.revisiones.approve') }}",
                             data: {
                                 _token: "{{ csrf_token() }}",
                                 revision,
@@ -212,7 +211,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "{{ route('minutas.revisiones.reject') }}",
+                                url: "{{ route('admin.minutas.revisiones.reject') }}",
                                 data: {
                                     _token: "{{ csrf_token() }}",
                                     revision,

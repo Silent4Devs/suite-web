@@ -469,7 +469,6 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::getAll();
-        $teams = Team::get();
         $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
@@ -482,7 +481,7 @@ class MatrizRiesgosController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
+        return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
 
     public function SistemaGestionData(Request $request)

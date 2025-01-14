@@ -255,7 +255,6 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         }
     }
 
-
     public function aprobarObjetivo($objetivoId)
     {
         try {

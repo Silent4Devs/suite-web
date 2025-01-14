@@ -70,23 +70,21 @@ class GapUnoConcentradoIsoController extends Controller
     {
         //
         if ($request->ajax()) {
+            $gapun = GapUnoConcentratoIso::findOrFail($id);
             switch ($request->name) {
                 case 'evidencia':
-                    $gapun = GapUnoConcentratoIso::findOrFail($id);
                     $gapun->evidencia = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'recomendacion':
-                    $gapun = GapUnoConcentratoIso::findOrFail($id);
                     $gapun->recomendacion = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'valoracion':
-                    $gapun = GapUnoConcentratoIso::findOrFail($id);
                     $gapun->valoracion = $request->value;
                     $gapun->save();
 

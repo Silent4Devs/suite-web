@@ -8,6 +8,8 @@ class UpdateUserRequest extends FormRequest
 {
     public function rules()
     {
+        $userID = request()->route('user');
+
         return [
             'name' => [
                 'string',
@@ -15,7 +17,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'unique:users,email,'.request()->route('user')->id,
+                'unique:users,email,'.$userID,
             ],
             'roles.*' => [
                 'integer',

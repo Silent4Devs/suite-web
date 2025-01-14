@@ -220,10 +220,10 @@ class ActivosController extends Controller
         return redirect()->route('admin.activos.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Activo $activo)
+    public function edit($id_activo)
     {
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $activo = Activo::where('id', $id_activo)->first();
         $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -249,10 +249,10 @@ class ActivosController extends Controller
         return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
     }
 
-    public function update(UpdateActivoRequest $request, Activo $activo)
+    public function update(UpdateActivoRequest $request, $id_activo)
     {
         abort_if(Gate::denies('inventario_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $activo = Activo::where('id', $id_activo)->first();
         $data = [];
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {
@@ -291,19 +291,19 @@ class ActivosController extends Controller
         return redirect()->route('admin.activos.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Activo $activo)
+    public function show($id_activo)
     {
         abort_if(Gate::denies('inventario_activos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $activo = Activo::where('id', $id_activo)->first();
         $activo->load('tipoactivo', 'subtipo', 'dueno', 'ubicacion', 'team', 'activoIncidentesDeSeguridads');
 
         return view('admin.activos.show', compact('activo'));
     }
 
-    public function destroy(Activo $activo)
+    public function destroy($id_activo)
     {
         abort_if(Gate::denies('inventario_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $activo = Activo::where('id', $id_activo)->first();
         $activo->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

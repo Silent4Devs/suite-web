@@ -117,7 +117,8 @@
 {{-- nuevo diseño --}}
 
 <!-- Modal Structure -->
-<div id="convenios_modificados" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
+<div id="convenios_modificados" class="modal"
+    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
     <strong class="txt-frm">Convenios Modificados</strong>
     <ul>
         @foreach ($convenios as $convenio)
@@ -132,7 +133,9 @@
 </div>
 
 
-<div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+<div id="modalOverlay"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;">
+</div>
 
 @if ($aprobacionFirmaContrato->count())
     <div class="col-12">
@@ -226,7 +229,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Obtener los elementos del modal y botones
         const openModalButton = document.getElementById('openModal');
         const closeModalButton = document.getElementById('closeModal');
@@ -234,19 +237,19 @@
         const overlay = document.getElementById('modalOverlay');
 
         // Abrir el modal
-        openModalButton.addEventListener('click', function () {
+        openModalButton.addEventListener('click', function() {
             modal.style.display = 'block';
             overlay.style.display = 'block';
         });
 
         // Cerrar el modal
-        closeModalButton.addEventListener('click', function () {
+        closeModalButton.addEventListener('click', function() {
             modal.style.display = 'none';
             overlay.style.display = 'none';
         });
 
         // Cerrar el modal al hacer clic en el overlay
-        overlay.addEventListener('click', function () {
+        overlay.addEventListener('click', function() {
             modal.style.display = 'none';
             overlay.style.display = 'none';
         });
@@ -594,12 +597,66 @@
 
     });
 </script> --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const url = "{{ route('contract_manager.contratos-katbol.validar-documento') }}";
         $('.input-field').click(function(e) {
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
+
+        const fileInput = document.getElementById("file_contrato");
+        const statusText = document.getElementById("compressStatus");
+
+        fileInput.addEventListener("change", async (event) => {
+            const selectedFile = event.target.files[0];
+
+            if (!selectedFile) {
+                statusText.textContent = "No se ha seleccionado ningún archivo.";
+                return;
+            }
+
+            if (selectedFile.type !== "application/pdf") {
+                statusText.textContent = "El archivo seleccionado no es un PDF.";
+                return;
+            }
+
+            statusText.textContent = "Comprimiendo archivo...";
+
+            try {
+                const arrayBuffer = await selectedFile.arrayBuffer();
+
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+
+                pdfDoc.setCreator("");
+                pdfDoc.setProducer("");
+
+                const compressedPdfBytes = await pdfDoc.save({
+                    useObjectStreams: true
+                });
+
+                const compressedBlob = new Blob([compressedPdfBytes], {
+                    type: "application/pdf"
+                });
+
+                const compressedFile = new File([compressedBlob],
+                `compressed-${selectedFile.name}`, {
+                    type: "application/pdf",
+                });
+
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(compressedFile);
+                fileInput.files = dataTransfer.files;
+
+                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
+            } catch (error) {
+                console.error("Error al comprimir el PDF:", error);
+                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
+            }
+        });
+
         // $('.input_file_validar').change(function(e) {
 
         //     $('.caja_input_file_activa .errors').remove();

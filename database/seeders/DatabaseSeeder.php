@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
                 // Ev360RangosResultadoSeeder::class,    // sin uso
                 ActividadFaseSeeder::class,
                 OrganizacionSeeder::class,
-                // SedeSeeder::class,  // sin sedes que mostrar | seeder no util
+                SedeSeeder::class,  // sin sedes que mostrar | seeder no util
                 // GrupoSeeder::class,  // seeder no util
                 AreaSeeder::class,
                 PuestoSeeder::class,
                 PerfilEmpleadosSeeder::class,
                 TipoContratosEmpleadoSeeder::class,
-                EmpleadosSeeder::class,
-                UsersTableSeeder::class,
+                // EmpleadosSeeder::class,
+                // UsersTableSeeder::class,
                 // MacroprocesoSeeder::class, // seeder no util
                 // DocumentoSeeder::class, // seeder no util
                 PlanImplementacionSeeder::class,  // Necesario se carga inicialmente el Diagrama Universal de Gantt
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
                 PanelInicioSeeder::class,
                 PanelOrganizacionSeeder::class,
                 PermissionRoleTableSeeder::class,
-                LanguageSeeder::class,
+                //LanguageSeeder::class,
                 GlosarioSeeder::class,
                 RoleUserTableSeeder::class,
                 Clausula9001Seeder::class,

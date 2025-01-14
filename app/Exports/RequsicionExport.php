@@ -8,14 +8,11 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-
-use function Laravel\Prompts\select;
-
-class RequsicionExport implements  FromCollection, WithHeadings, WithStyles
+class RequsicionExport implements FromCollection, WithHeadings, WithStyles
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
        return DB::table('requisiciones')
@@ -28,6 +25,7 @@ class RequsicionExport implements  FromCollection, WithHeadings, WithStyles
             'contratos.nombre_servicio as Proyecto',
             'proveedor_o_c_s.nombre as Proveedor',
             'requisiciones.moneda as Tipo de Moneda',
+            'requisiciones.cambio as Tipo de Cambio',
             'requisiciones.sub_total as SUBTOTAL',
             'requisiciones.iva as IVA',
             'requisiciones.total as Total'
@@ -50,6 +48,7 @@ class RequsicionExport implements  FromCollection, WithHeadings, WithStyles
             'contratos.nombre_servicio',
             'proveedor_o_c_s.nombre',
             'requisiciones.moneda',
+            'requisiciones.cambio',
         )
         ->orderByDesc('requisiciones.id')
         ->get();
@@ -58,7 +57,7 @@ class RequsicionExport implements  FromCollection, WithHeadings, WithStyles
 
     public function headings(): array
     {
-        return ['Folio', 'Fecha De Solicitud', 'Referencia', 'Área que Solicita', 'Solicitante','Proyecto','Proveedor','Tipo de Moneda', 'SUBTOTAL','IVA', 'Total'];
+        return ['Folio', 'Fecha De Solicitud', 'Referencia', 'Área que Solicita', 'Solicitante','Proyecto','Proveedor','Tipo de Moneda','Tipo de Cambio', 'SUBTOTAL','IVA', 'Total'];
     }
 
     public function styles(Worksheet $sheet)
@@ -81,6 +80,7 @@ class RequsicionExport implements  FromCollection, WithHeadings, WithStyles
             'I' => ['width' => 20],
             'J' => ['width' => 20],
             'K' => ['width' => 20],
+            'L' => ['width' => 20],
         ];
     }
 }

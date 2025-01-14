@@ -121,10 +121,10 @@ class CompetenciasController extends Controller
         return redirect()->route('admin.competencia.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Competencium $competencium)
+    public function edit($id_competencium)
     {
         abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $competencium = Competencium::where('id', $id_competencium)->first();
         $nombrecolaboradors = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $competencium->load('nombrecolaborador', 'team');
@@ -132,10 +132,10 @@ class CompetenciasController extends Controller
         return view('admin.competencia.edit', compact('nombrecolaboradors', 'competencium'));
     }
 
-    public function update(UpdateCompetenciumRequest $request, Competencium $competencium)
+    public function update(UpdateCompetenciumRequest $request, $id_competencium)
     {
         abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $competencium = Competencium::where('id', $id_competencium)->first();
         $competencium->update($request->all());
 
         if (count($competencium->certificados) > 0) {
@@ -157,19 +157,19 @@ class CompetenciasController extends Controller
         return redirect()->route('admin.competencia.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Competencium $competencium)
+    public function show($id_competencium)
     {
         abort_if(Gate::denies('competencias_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $competencium = Competencium::where('id', $id_competencium)->first();
         $competencium->load('nombrecolaborador', 'team');
 
         return view('admin.competencia.show', compact('competencium'));
     }
 
-    public function destroy(Competencium $competencium)
+    public function destroy($id_competencium)
     {
         abort_if(Gate::denies('competencias_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $competencium = Competencium::where('id', $id_competencium)->first();
         $competencium->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -184,7 +184,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-        //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium;
         $model->id = $request->input('crud_id', 0);
@@ -209,8 +209,10 @@ class CompetenciasController extends Controller
         return view('admin.competencia.expedientes', compact('areas'));
     }
 
-    public function miCurriculum(Request $request, Empleado $empleado)
+    public function miCurriculum(Request $request, $id_empleado)
     {
+        $empleado = Empleado::where('id', $id_empleado)->first();
+
         $usuario = User::getCurrentUser();
 
         if ($usuario->empleado->id == $empleado->id) {
@@ -237,10 +239,10 @@ class CompetenciasController extends Controller
         }
     }
 
-    public function editarCompetencias(Empleado $empleado)
+    public function editarCompetencias($id_empleado)
     {
         $usuario = User::getCurrentUser();
-
+        $empleado = Empleado::where('id', $id_empleado)->first();
         if ($usuario->empleado->id == $empleado->id) {
 
             $isEditAdmin = false;
@@ -256,8 +258,9 @@ class CompetenciasController extends Controller
         }
     }
 
-    public function cargarDocumentos(Request $request, Empleado $empleado)
+    public function cargarDocumentos(Request $request, $id_empleado)
     {
+        $empleado = Empleado::where('id', $id_empleado)->first();
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
@@ -359,8 +362,9 @@ class CompetenciasController extends Controller
         return $pdf->download('competencias.pdf');
     }
 
-    public function cargarCertificacion(Request $request, Empleado $empleado)
+    public function cargarCertificacion(Request $request, $id_empleado)
     {
+        $empleado = Empleado::where('id', $id_empleado)->first();
         if ($request->esVigente == 'true') {
             $request->validate([
                 'nombre' => 'required|string|max:255',

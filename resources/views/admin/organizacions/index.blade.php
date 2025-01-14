@@ -175,7 +175,7 @@
 
                     <div class="col-md-12 col-sm-12">
                         <div class="card vrd-agua">
-                            <span class="mb-1 text-center text-white">DATOS GENERALES</span>
+                            <span class="mb-1 text-center">DATOS GENERALES</span>
                         </div>
                     </div>
 
@@ -347,7 +347,7 @@
 
                     <div class="col-md-12 col-sm-12">
                         <div class="card vrd-agua">
-                            <p class="mb-1 text-center text-white">DATOS COMPLEMENTARIOS</p>
+                            <p class="mb-1 text-center">DATOS COMPLEMENTARIOS</p>
                         </div>
                     </div>
                     @if ($panel_rules->representante_legal)
