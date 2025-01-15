@@ -2129,6 +2129,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     // ordenes de compra
     Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
+    Route::get('orden-compra-clausulas', 'OrdenCompraController@clausulas')->name('orden-compra.clausulas');
+    Route::post('orden-compra-clausulas-save', 'OrdenCompraController@clausulas_save')->name('orden-compra.clausulas-save');
     Route::match(['get', 'post'], 'orden-compra/getocindex', 'OrdenCompraController@getOCIndex')->name('orden-compra.get-oc-index');
     Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
     Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
