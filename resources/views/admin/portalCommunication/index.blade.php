@@ -358,11 +358,13 @@
                                         style="font-size:12px;">Leer más</a>
                                 </div>
                                 <div class="caja-img-comunicados-portal">
-                                    @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
-                                        <video autoplay muted controls src="{{ asset($imagen) }}"
-                                            class="img-vid-com"></video>
-                                    @else
-                                        <img class="img-vid-com" src="{{ asset($imagen) }}" alt="">
+                                    @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo)
+                                        @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
+                                            <video autoplay muted controls src="{{ asset($imagen) }}"
+                                                class="img-vid-com"></video>
+                                        @else
+                                            <img class="img-vid-com" src="{{ asset($imagen) }}" alt="">
+                                        @endif
                                     @endif
                                 </div>
                             </div>
