@@ -51,9 +51,9 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_domingo',
                 'timesheet_proyectos.estatus'
             )
-            ->where('estatus_time', '!=', 'papelera')
-            ->where('estatus_time', '!=', 'rechazado')
-            ->where('estatus_time', '!=', 'Rechazada')
+            ->where('timesheet.estatus', '!=', 'papelera')
+            ->where('timesheet.estatus', '!=', 'rechazado')
+            ->where('timesheet.estatus', '!=', 'Rechazada')
             ->where('timesheet_proyectos.estatus', '!=', 'papelera')
             ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
             ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')

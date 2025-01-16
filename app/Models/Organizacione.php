@@ -45,4 +45,10 @@ class Organizacione extends Model implements Auditable
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
+    // Relación uno a muchos con ClausulasOc
+    public function clausulas()
+    {
+        return $this->hasMany(ClausulasOc::class, 'organizacion_id');
+    }
 }
