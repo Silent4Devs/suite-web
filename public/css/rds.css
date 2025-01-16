@@ -1123,7 +1123,7 @@ ul.menu-modulos li a{
     border-radius: 28px;
     box-shadow: 0px 1px 4px #00000024;
     background-position: 100% 100%;
-    background-size: auto 25%;
+    background-size: auto 21%;
     background-repeat: no-repeat;
     backdrop-filter: sepia(200%);
     transition: 0.1s;
@@ -1145,7 +1145,7 @@ ul.menu-modulos li a::before{
     font-size: 13px;
 }
 ul.menu-modulos li a:hover{
-    background-size: auto 28%;
+    background-size: auto 22%;
 
 }
 ul.menu-modulos li a i{
