@@ -24,6 +24,7 @@ use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
+use App\Http\Controllers\TbLoginController;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
 Route::group(['middleware' => ['tenant']], function () {
 
-    // Route::get('correotestqueue', [QueueCorreo::class, 'index']);
-    // Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
+    Route::post('login/authenticate', [TbLoginController::class, 'login'])->name('login.authenticate');
 
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
