@@ -43,4 +43,10 @@ class TBSheetRiskAnalysisModel extends Model
     {
         return $this->hasMany(TBPeriodSheetRiskAnalysisModel::class, 'sheet_id');
     }
+
+    public function sheetPeriod()
+    {
+        return $this->hasOne(TBPeriodSheetRiskAnalysisModel::class, 'sheet_id');
+    }
+
 }

@@ -36,7 +36,7 @@
         @if ($verifyPeriod)
             <button type="button" id="register"
                 style=";width: 180px; height: 50px; background-color: #ECFBFF; border: 1px solid #9EB4C9; color:#006DDB;"
-                class="btn" data-toggle="modal" data-target="#RegisterSheet">
+                class="btn" data-toggle="modal" data-target="#RegisterSheet" wire:click="getSheetRegisters">
                 Registrar
             </button>
         @else
@@ -84,7 +84,7 @@
                                     </td>
                                 @else
                                     <td>
-                                        Sin datos registrados
+                                        N/A
                                     </td>
                                 @endisset
                             @endforeach
@@ -139,7 +139,8 @@
 
     {{-- Modal --}}
     <div wire:ignore.self class="modal fade" id="formRiskAnalysis" data-coords=null tabindex="-1"
-        aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
 
         <div class="modal-dialog modal-xl">
             <div wire:loading>
@@ -212,7 +213,8 @@
                                 style="height: 190px; width:50%; background-color:{{ $sheetForm['bg'] }}; border-radius: 16px 0px 0px 16px;">
                                 <h6>Nivel de riesgo residual</h6>
                                 <h2>{{ $risks['initial'] }}% / {{ $risks['residual'] }}%</h2>
-                                <div style="width: auto; padding:5px; background: {{ $risks['approveResidual'] ? '#78BB50' : '#FF9898' }}; border-radius: 11px;">
+                                <div
+                                    style="width: auto; padding:5px; background: {{ $risks['approveResidual'] ? '#78BB50' : '#FF9898' }}; border-radius: 11px;">
                                     @if ($risks['approveResidual'])
                                         <h6 style="color:#FFFFFF" class="mb-0">Aceptable</h6>
                                     @else
@@ -294,8 +296,8 @@
     </div>
 
     {{-- Modal Registro --}}
-    <div wire:ignore class="modal fade" id="RegisterSheet" tabindex="-1" aria-labelledby="RegisterSheetModalLabel"
-        aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="RegisterSheet" tabindex="-1"
+        aria-labelledby="RegisterSheetModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content" style="background:none; border:none; gap:28px;">
                 <div class="card" style="width: 100%; margin:0px;">
@@ -314,7 +316,47 @@
                             sin retomar los valores utilizados anteriormente</p>
                         <hr style="margin-top: 10px;">
                         <div>
-                            table
+                            <table class="table w-100 datatable datatable-risk-analysis"
+                                id="datatable-register-sheets">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Periodo</th>
+                                        <th>Fecha</th>
+                                        <th>Probabilidad</th>
+                                        <th>Impacto</th>
+                                        <th>Riesgo Inicial</th>
+                                        <th>Riesgo Residual</th>
+                                        <th>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="select-all" wire:click="toggleSelectAll($event.target.checked)">
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($sheetsRegisters)
+                                        @foreach ($sheetsRegisters as $sheetRegister)
+                                            <tr>
+                                                <td>{{ $sheetRegister->code_id }}</td>
+                                                <td>{{ $sheetRegister->sheetPeriod->period->name }}</td>
+                                                <td>De {{ $sheetRegister->start }} al {{ $sheetRegister->end }}</td>
+                                                <td>{{ $sheetRegister->prob }}</td>
+                                                <td>{{ $sheetRegister->imp }}</td>
+                                                <td>{{ $sheetRegister->sheetPeriod->initial_risk }}</td>
+                                                <td>{{ $sheetRegister->sheetPeriod->residual_risk }}</td>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{ $sheetRegister->id }}" wire:model="selectedIds"
+                                                            onchange="verifyChecked(event)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                         <div style="display:flex; justify-content:flex-end; flex-direction:row; gap:17px;">
                             <button style="width: 163px; height: auto; color:#006DDB;"
@@ -325,7 +367,8 @@
                                 class="btn tb-btn-secondary">
                                 No Aceptar
                             </button>
-                            <button style="width: 163px; height: auto;" class="btn tb-btn-primary">
+                            <button wire:click='regainSheet' style="width: 163px; height: auto;"
+                                class="btn tb-btn-primary">
                                 Agregar
                             </button>
                         </div>
@@ -452,7 +495,9 @@
                 cancelButtonText: "Regresar",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.dispatch('closePeriod', {id});
+                    Livewire.dispatch('closePeriod', {
+                        id
+                    });
                     Swal.fire({
                         title: "Finalizado",
                         text: "El periodo de analisis finalizo con éxito",
@@ -553,7 +598,9 @@
                 reverseButtons: true,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.dispatch('destroySheet', {id});
+                    Livewire.dispatch('destroySheet', {
+                        id
+                    });
                     Swal.fire({
                         html: `
                         <div class='d-flex justify-content-center'>
@@ -571,4 +618,50 @@
             });
         })
     });
+</script>
+
+<script>
+    let statusSelectAll = false;
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectAllCheckbox = document.getElementById('select-all');
+
+        selectAllCheckbox.addEventListener('change', (e) => {
+            console.log("new click")
+            console.log(statusSelectAll)
+            const isChecked = e.target.checked;
+            statusSelectAll = e.target.checked;
+            const checkboxes = document.querySelectorAll('tbody .form-check-input');
+
+            // Cambiar el estado de todos los checkboxes en tbody
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = isChecked;
+            });
+        });
+    });
+
+    function verifyChecked(event) {
+        // console.log("verify")
+        // console.log(event.target.checked)
+        const checkboxes = document.querySelectorAll('tbody .form-check-input');
+        let total = checkboxes.length; // Total de checkboxes
+        let checked = 0; // Checkboxes marcados (true)
+        let unchecked = 0; // Checkboxes no marcados (false)
+        const selectAllCheckbox = document.getElementById('select-all');
+
+        // Recorremos todos los checkboxes y contamos cuántos están marcados y cuántos no
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                checked++;
+            } else {
+                unchecked++;
+            }
+        });
+
+        if(checked === total ){
+            selectAllCheckbox.checked = true;
+        }else{
+            selectAllCheckbox.checked = false;
+        }
+
+    }
 </script>

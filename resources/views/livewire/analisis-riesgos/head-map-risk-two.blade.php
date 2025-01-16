@@ -1,20 +1,107 @@
 <div>
+    <style>
+        .spinner-border {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            margin: auto;
+
+        }
+
+        [wire\:loading] {
+            display: none;
+        }
+
+        [wire\:loading.remove] {
+            display: flex;
+            justify-content:center;
+            align-items:center;
+        }
+    </style>
     <div class="row">
         <div class="col-6" style="padding-right: 14px; padding-left: 14px;">
             <div class="card card-body shadow-sm mb-0">
-                <h4 style="margin: 0px; color:#306BA9;">Riesgo Inicial</h4>
+                <div class="d-flex justify-content-between">
+                    <h4 style="margin: 0px; color:#306BA9;">Riesgo Inicial</h4>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#historyRR"
+                        wire:click="getHistoryRR">
+                        <i class="material-symbols-outlined" style="color:#006DDB; cursor: pointer;">
+                            history
+                        </i>
+                    </button>
+                </div>
                 <hr style="margin-top: 10px; margin-bottom: 20px;">
                 <div id="map-position-cl" style="width: 100%; height: 350px;"></div>
             </div>
         </div>
         <div class="col-6 " style="padding-right: 14px; padding-left: 14px;">
             <div class="card card-body shadow-sm mb-0">
-                <h4 style="margin: 0px; color:#306BA9;">Riesgo Residual</h4>
+                <div class="d-flex justify-content-between">
+                    <h4 style="margin: 0px; color:#306BA9;">Riesgo Residual</h4>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#historyRR">
+                        <i class="material-symbols-outlined" style="color:#006DDB; cursor: pointer;">
+                            history
+                        </i>
+                    </button>
+                </div>
                 <hr style="margin-top: 10px; margin-bottom: 20px;">
                 <div id="map-position-cl-v2" style="width: 100%; height: 350px;"></div>
             </div>
         </div>
     </div>
+
+    <div wire:ignore.self class="modal fade" id="historyRR" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        {{-- <div> --}}
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="background:none; border: none;">
+                    <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+            </button>
+        {{-- </div> --}}
+        <div wire:loading>
+            <div class="spinner-border text-primary" role="status" sty>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div wire:loading.remove>
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h6 style="margin: 0px; color:#606060;">Histórico del Nivel de Riesgo</h6>
+                        <hr style="margin-top: 10px; margin-bottom: 20px;">
+                        <table class="table w-100 datatable datatable-rr-history" id="datatable-rr-history">
+                            <thead>
+                                <tr>
+                                    <th>Periodo</th>
+                                    <th>Fecha</th>
+                                    <th>Riesgo Inicial</th>
+                                    <th>Riesgo Residual</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($historiesRR)
+                                    @foreach ($historiesRR as $historyRR)
+                                        <tr>
+                                            <th>{{ $historyRR->period_name }}</th>
+                                            <th>{{ $historyRR->start }}</th>
+                                            <th>{{ $historyRR->period_name }}</th>
+                                            <th>{{ $historyRR->initial_risk }}</th>
+                                            <th>{{ $historyRR->residual_risk }}</th>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
@@ -22,7 +109,7 @@
             residualRiskGraphic();
 
             Livewire.on('reloadGraph', (data) => {
-                console.log(data[0],data[1]);
+                console.log(data[0], data[1]);
                 setTimeout(() => {
                     initialRiskGraphic(data[0]);
                     residualRiskGraphic(data[1]);
@@ -333,6 +420,43 @@
                     colors: colors
                 }
             }
+        });
+    </script>
+    {{-- datatable --}}
+    <script>
+
+        function tableLivewire(id_tabla) {
+            $('#' + id_tabla).attr('id', id_tabla );
+            let dtButtons = [
+
+            ];
+
+            let dtOverrideGlobals = {
+                buttons: dtButtons,
+                order: [
+                    [0, 'desc']
+                ],
+                destroy: true,
+                render: true,
+            };
+
+            let table = $('#' + id_tabla ).DataTable(dtOverrideGlobals);
+
+            return table;
+        }
+
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     setTimeout(() => {
+        //         tablaLivewire('datatable-rr-history');
+        //     }, 300);
+        // });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('reloadTableRR', function(table) {
+                setTimeout(() => {
+                    tableLivewire(table.table);
+                }, 200);
+            });
         });
     </script>
 </div>
