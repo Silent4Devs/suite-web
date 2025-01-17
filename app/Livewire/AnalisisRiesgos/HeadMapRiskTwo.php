@@ -2,7 +2,6 @@
 
 namespace App\Livewire\AnalisisRiesgos;
 
-use App\Models\TBAnswerSheetRiskAnalysisModel;
 use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBRiskAnalysis_ProbImpArModel;
@@ -29,7 +28,7 @@ class HeadMapRiskTwo extends Component
 
     public function getHistoryRR()
     {
-        $registers = TBSheetRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)->get();
+        $registers = TBSheetRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)->orderBy('id', 'ASC')->get();
         foreach ($registers as $register) {
             $register->initial_risk = $register->sheetPeriod?->initial_risk ? $register->sheetPeriod?->initial_risk : "N/A";
             $register->residual_risk = $register->sheetPeriod?->residual_risk ? $register->sheetPeriod?->residual_risk : "N/A";

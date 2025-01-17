@@ -23,4 +23,5 @@ class TBAnswerSheetRiskAnalysisModel extends Model
     {
         return $this->hasOne(TBQuestionRiskAnalysisModel::class, 'id');
     }
+
 }

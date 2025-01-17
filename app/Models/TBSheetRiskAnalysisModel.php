@@ -22,6 +22,7 @@ class TBSheetRiskAnalysisModel extends Model
         'residual_risk_confirm',
         'require_treatment_plan',
         'treatment_plan_id',
+        'history_id',
     ];
 
     protected static function boot()

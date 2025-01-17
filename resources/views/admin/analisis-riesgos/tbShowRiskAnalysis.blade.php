@@ -58,6 +58,16 @@
             color: white;
             border-color: #007bff;
         }
+
+        .spinner-border {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            margin: auto;
+
+        }
     </style>
     <div class="mt-4 card card-body shadow-sm">
         <h4 style="margin: 0px;">Análisis de riesgo: {{ $riskAnalysis->name }}</h4>

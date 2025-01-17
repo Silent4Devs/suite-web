@@ -14,6 +14,7 @@ use App\Models\TBSectionRiskAnalysisModel;
 use App\Models\TBSettingsAr_FormulasArModel;
 use App\Models\TBSettingsAr_QuestionsArModel;
 use App\Models\TBSheetRiskAnalysisModel;
+use App\Models\TBVersionSheetRiskAnalysisModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -96,6 +97,34 @@ class FormRiskAnalysis extends Component
 
     public $selectedIds = [];
 
+    public function cloneAnswerSheet($regainSheetId, $newSheetId)
+    {
+        $answersPivot = TBAnswerRASheetRAModel::where('sheet_id', $regainSheetId)->get();
+
+        foreach ($answersPivot as $answerPivot) {
+            $newAnswer= new TBAnswerSheetRiskAnalysisModel;
+            $cloneAnswer = $answerPivot->answer->replicate();
+            $newAnswer->fill($cloneAnswer->toArray());
+            $newAnswer->save();
+
+            $newAnswerPivot= new TBAnswerRASheetRAModel;
+            $cloneAnswerPivot = $answerPivot->replicate();
+            $newAnswerPivot->fill($cloneAnswerPivot->toArray());
+            $newAnswerPivot->answer_id = $newAnswer->id;
+            $newAnswerPivot->sheet_id = $newSheetId;
+            $newAnswerPivot->save();
+        }
+
+    }
+
+    public function createHistory($sheetRegister)
+    {
+        $newHistory = new TBVersionSheetRiskAnalysisModel;
+        $cloneSheet = $sheetRegister->replicate();
+        $newHistory->fill($cloneSheet->toArray());
+        $newHistory->save();
+    }
+
     public function regainSheet()
     {
         if(!empty($this->selectedIds)){
@@ -103,12 +132,11 @@ class FormRiskAnalysis extends Component
 
             foreach($this->selectedIds as $regainSheet){
                 $sheetRegister = TBSheetRiskAnalysisModel::where('id',$regainSheet)->first();
+                $this->createHistory($sheetRegister);
                 $newSheet = new TBSheetRiskAnalysisModel;
 
                 $cloneSheet = $sheetRegister->replicate();
                 $newSheet->fill($cloneSheet->toArray());
-                // dd($this->period_id);
-                // dd($newSheet,$sheetRegister->sheetPeriod);
                 $newSheet->residual_risk_confirm = false;
                 $newSheet->save();
 
@@ -122,6 +150,8 @@ class FormRiskAnalysis extends Component
 
                 $this->saveRequireTreatmentPlan($newSheet,$sheetRegister->sheetPeriod->residual_risk);
 
+                $this->cloneAnswerSheet($regainSheet,$newSheet->id);
+
             }
         }else{
             dd("esta vacio");
@@ -130,16 +160,12 @@ class FormRiskAnalysis extends Component
         $this->dispatch('execute-script', table:'datatable-risk-analysis');
     }
 
-
     public function toggleSelectAll($isSelected)
     {
-        // dd($isSelected);
-        $this->skipRender();
+        // $this->skipRender();
         if ($isSelected) {
-            // Seleccionar todos los IDs
             $this->selectedIds = $this->sheetsRegisters->pluck('id')->toArray();
         } else {
-            // Deseleccionar todos los IDs
             $this->selectedIds = [];
         }
     }

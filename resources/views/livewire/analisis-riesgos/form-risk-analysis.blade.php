@@ -36,7 +36,7 @@
         @if ($verifyPeriod)
             <button type="button" id="register"
                 style=";width: 180px; height: 50px; background-color: #ECFBFF; border: 1px solid #9EB4C9; color:#006DDB;"
-                class="btn" data-toggle="modal" data-target="#RegisterSheet" wire:click="getSheetRegisters">
+                class="btn" data-bs-toggle="modal" data-bs-target="#RegisterSheet" wire:click="getSheetRegisters">
                 Registrar
             </button>
         @else
@@ -137,19 +137,26 @@
         </table>
     </div>
 
-    {{-- Modal --}}
+    {{-- Modal sheet --}}
     <div wire:ignore.self class="modal fade" id="formRiskAnalysis" data-coords=null tabindex="-1"
         aria-labelledby="formRiskAnalysisModalLabel" aria-hidden="true" data-bs-backdrop="static"
         data-bs-keyboard="false">
 
-        <div class="modal-dialog modal-xl">
-            <div wire:loading>
-                <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+        <div wire:loading>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
+        </div>
+        <div class="modal-dialog modal-xl">
+
             <div wire:loading.remove>
                 <div class="modal-content" style="background:none; border:none; gap:28px;">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="background:none; border: none;">
+                            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+                        </button>
+                    </div>
                     {{-- header --}}
                     <div class="card d-flex align-items-center"
                         style="width: 100%; margin:0px; padding-top:31px; padding-bottom:31px; background-color:{{ $sheetForm['bg'] }};">
@@ -297,80 +304,94 @@
 
     {{-- Modal Registro --}}
     <div wire:ignore.self class="modal fade" id="RegisterSheet" tabindex="-1"
-        aria-labelledby="RegisterSheetModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content" style="background:none; border:none; gap:28px;">
-                <div class="card" style="width: 100%; margin:0px;">
-                    <div class="card-body">
-                        <h5 style="display: flex; justify-content:center;">Desea retomar algún riesgo del periodo
-                            anterior</h5>
-                        <span class="material-symbols-outlined"
-                            style="display: flex; justify-content:center; font-size:60px;">
-                            breaking_news
-                        </span>
-                        <p style="display: flex; justify-content:center;">Esta acción te permite cargar Análisis de
-                            periodos anteriores</p>
-                        <p style="display: flex; justify-content:center;">En caso de AGREGAR deberá enlistar los riegos
-                            registrados en el periodo anterior</p>
-                        <p style="display: flex; justify-content:center;">En caso de NO ACEPTAR se creará un registro
-                            sin retomar los valores utilizados anteriormente</p>
-                        <hr style="margin-top: 10px;">
-                        <div>
-                            <table class="table w-100 datatable datatable-risk-analysis"
-                                id="datatable-register-sheets">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Periodo</th>
-                                        <th>Fecha</th>
-                                        <th>Probabilidad</th>
-                                        <th>Impacto</th>
-                                        <th>Riesgo Inicial</th>
-                                        <th>Riesgo Residual</th>
-                                        <th>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="select-all" wire:click="toggleSelectAll($event.target.checked)">
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($sheetsRegisters)
-                                        @foreach ($sheetsRegisters as $sheetRegister)
-                                            <tr>
-                                                <td>{{ $sheetRegister->code_id }}</td>
-                                                <td>{{ $sheetRegister->sheetPeriod->period->name }}</td>
-                                                <td>De {{ $sheetRegister->start }} al {{ $sheetRegister->end }}</td>
-                                                <td>{{ $sheetRegister->prob }}</td>
-                                                <td>{{ $sheetRegister->imp }}</td>
-                                                <td>{{ $sheetRegister->sheetPeriod->initial_risk }}</td>
-                                                <td>{{ $sheetRegister->sheetPeriod->residual_risk }}</td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="{{ $sheetRegister->id }}" wire:model="selectedIds"
-                                                            onchange="verifyChecked(event)">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                        <div style="display:flex; justify-content:flex-end; flex-direction:row; gap:17px;">
-                            <button style="width: 163px; height: auto; color:#006DDB;"
-                                class="btn btn-simple-secondary" data-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button wire:click="verifyStatus" style="width: 163px; height: auto;"
-                                class="btn tb-btn-secondary">
-                                No Aceptar
-                            </button>
-                            <button wire:click='regainSheet' style="width: 163px; height: auto;"
-                                class="btn tb-btn-primary">
-                                Agregar
-                            </button>
+        aria-labelledby="RegisterSheetModalLabel" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div wire:loading>
+            <div class="spinner-border text-primary" role="status" sty>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl">
+            <div wire:loading.remove>
+                <div class="modal-content" style="background:none; border:none; gap:28px;">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="background:none; border: none;">
+                            <i class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body card" style="width: 100%; margin:0px;">
+                        <div class="card-body">
+                            <h5 style="display: flex; justify-content:center;">Desea retomar algún riesgo del periodo
+                                anterior</h5>
+                            <span class="material-symbols-outlined"
+                                style="display: flex; justify-content:center; font-size:60px;">
+                                breaking_news
+                            </span>
+                            <p style="display: flex; justify-content:center;">Esta acción te permite cargar Análisis de
+                                periodos anteriores</p>
+                            <p style="display: flex; justify-content:center;">En caso de AGREGAR deberá enlistar los riegos
+                                registrados en el periodo anterior</p>
+                            <p style="display: flex; justify-content:center;">En caso de NO ACEPTAR se creará un registro
+                                sin retomar los valores utilizados anteriormente</p>
+                            <hr style="margin-top: 10px;">
+                            <div>
+                                <table class="table  datatable datatable-risk-analysis"
+                                    id="datatable-register-sheets">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Periodo</th>
+                                            <th>Fecha</th>
+                                            <th>Probabilidad</th>
+                                            <th>Impacto</th>
+                                            <th>Riesgo Inicial</th>
+                                            <th>Riesgo Residual</th>
+                                            <th>
+                                                <div class="form-check" >
+                                                    <input  class="form-check-input" type="checkbox" id="select-all" wire:click="toggleSelectAll($event.target.checked)">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($sheetsRegisters)
+                                            @foreach ($sheetsRegisters as $sheetRegister)
+                                                <tr>
+                                                    <td>{{ $sheetRegister->code_id }}</td>
+                                                    <td>{{ $sheetRegister->sheetPeriod->period->name }}</td>
+                                                    <td>De {{ $sheetRegister->start }} al {{ $sheetRegister->end }}</td>
+                                                    <td>{{ $sheetRegister->prob }}</td>
+                                                    <td>{{ $sheetRegister->imp }}</td>
+                                                    <td>{{ $sheetRegister->sheetPeriod->initial_risk }}</td>
+                                                    <td>{{ $sheetRegister->sheetPeriod->residual_risk }}</td>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="{{ $sheetRegister->id }}" wire:model="selectedIds"
+                                                                onchange="verifyChecked(event)">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="display:flex; justify-content:flex-end; flex-direction:row; gap:17px; margin-top:20px;">
+                                <button style="width: 163px; height: auto; color:#006DDB;"
+                                    class="btn btn-simple-secondary" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button wire:click="verifyStatus" style="width: 163px; height: auto;"
+                                    class="btn tb-btn-secondary">
+                                    No Aceptar
+                                </button>
+                                <button wire:click='regainSheet' style="width: 163px; height: auto;"
+                                    class="btn tb-btn-primary">
+                                    Agregar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

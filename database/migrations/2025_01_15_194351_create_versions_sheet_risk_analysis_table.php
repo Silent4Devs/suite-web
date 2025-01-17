@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('treatment_plan_id')->nullable();
             $table->foreign('risk_analysis_id')->references('id')->on('risk_analysis')->onDelete('cascade');
             $table->foreign('treatment_plan_id')->references('id')->on('plan_implementacions')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
