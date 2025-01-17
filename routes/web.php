@@ -24,6 +24,7 @@ use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
+use App\Http\Controllers\TbLoginController;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,8 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
 Route::group(['middleware' => ['tenant']], function () {
 
-    // Route::get('correotestqueue', [QueueCorreo::class, 'index']);
-    // Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
+    Route::post('login/authenticate', [TbLoginController::class, 'login'])->name('login.authenticate');
+    Route::post('logout/leave', [TbLoginController::class, 'logout'])->name('logout.leave');
 
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
@@ -42,7 +43,7 @@ Route::group(['middleware' => ['tenant']], function () {
     Auth::routes();
 
     // Tabla-Calendario
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized']], function () {
 
         // Route::group(['middleware' => ['general_tabantaj']], function () {
         // Inicio usuario
