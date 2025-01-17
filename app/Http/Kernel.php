@@ -50,10 +50,11 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Tabantaj\Auth\Authenticate::class,
-        'active' => \App\Http\Middleware\Tabantaj\User\ActiveUser::class,
-        'isActive' => \App\Http\Middleware\Tabantaj\User\IsActiveUser::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'autorized' => \App\Http\Middleware\AutorizacionMiddleware::class,
+        // 'auth' => \App\Http\Middleware\Tabantaj\Auth\Authenticate::class,
+        // 'active' => \App\Http\Middleware\Tabantaj\User\ActiveUser::class,
+        // 'isActive' => \App\Http\Middleware\Tabantaj\User\IsActiveUser::class,
+        // 'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\Tabantaj\RedirectIfAuthenticated::class,
@@ -62,7 +63,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\Tabantaj\User\IsAdmin::class,
-        '2fa' => \App\Http\Middleware\Tabantaj\TwoFactorMiddleware::class,
+        // '2fa' => \App\Http\Middleware\Tabantaj\TwoFactorMiddleware::class,
         'cors' => \App\Http\Middleware\Tabantaj\Cors::class,
         'primeros.pasos' => \App\Http\Middleware\Tabantaj\User\PrimerosPasos::class,
         'version_iso_2013' => \App\Http\Middleware\Tabantaj\VersionIso2013::class,
