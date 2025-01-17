@@ -69,51 +69,8 @@ class TbLoginController extends Controller
             });
         }
 
-        return redirect(route('inicio-Usuario.index'));
+        return redirect(route('admin.inicio-Usuario.index'));
 
-        // if ($user->empleado->foto == null || $user->empleado->foto == '0') {
-        //     if ($user->empleado->genero == 'H') {
-        //         $ruta = asset('storage/empleados/imagenes/man.png');
-        //     } elseif ($user->empleado->genero == 'M') {
-        //         $ruta = asset('storage/empleados/imagenes/woman.png');
-        //     } else {
-        //         $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-        //     }
-        // } else {
-        //     $ruta = asset('storage/empleados/imagenes/'.$user->empleado->foto);
-        // }
-
-        // // Encode spaces in the URL
-        // $user->ruta_foto = encodeSpecialCharacters($ruta);
-
-        // $user->idEmpleado = $user->empleado->id;
-
-        // $user->id_puesto = $user->empleado->puestoRelacionado->id;
-        // $user->nombre_puesto = $user->empleado->puesto;
-
-        // $user->id_area = $user->empleado->area->id;
-        // $user->nombre_area = $user->empleado->area->area;
-
-        // $supervisor = $user->empleado->es_supervisor;
-
-        // //Genera un nuevo token para el usuario
-        // $token = $user->createToken('auth_token')->plainTextToken;
-
-        // $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
-
-        // // Store token in Redis with expiration
-        // Cache::put($this->tokenCachePrefix.$token, [
-        //     'user_id' => $user->id,
-        //     'expiration' => $expiration,
-        // ], config('sanctum.expiration') * 60); // store in seconds
-
-        // //devuelve una respuesta JSON con el token generado y el tipo de token
-        // return response()->json([
-        //     'access_token' => $token,
-        //     'user' => $user->toArray(),
-        //     'supervisor' => $supervisor,
-        //     'expiration' => $expiration,
-        // ]);
     }
 
     public function getUser(){
@@ -124,30 +81,13 @@ class TbLoginController extends Controller
 
     public function logout()
     {
-        $token = request()->bearerToken();
-
-        if (! $token) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Token not provided',
-                'data' => null,
-            ], 400);
-        }
-
-        // Remove token from Redis
-        Cache::forget($this->tokenCachePrefix.$token);
-
-        /** @var PersonalAccessToken $model */
-        $model = Sanctum::$personalAccessTokenModel;
-
-        $accessToken = $model::findToken($token);
-        $accessToken->delete();
-
-        return response()->json([
-            'status' => 'Success',
-            'message' => 'Hasta la proxima',
-            'data' => null,
-        ], 200);
+        Auth::logout();
+        // Invalida la sesión actual y regenera el token CSRF
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
+        // return redirect('/login');
+        // // Redirecciona al usuario después del logout
+        return redirect(route('users.login'));
     }
 
     public function testLog()

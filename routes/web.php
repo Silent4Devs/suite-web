@@ -35,6 +35,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 Route::group(['middleware' => ['tenant']], function () {
 
     Route::post('login/authenticate', [TbLoginController::class, 'login'])->name('login.authenticate');
+    Route::post('logout/leave', [TbLoginController::class, 'logout'])->name('logout.leave');
 
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');

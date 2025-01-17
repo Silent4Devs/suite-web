@@ -49,6 +49,8 @@ class AutorizacionMiddleware
             }
 
             return $next($request);
+        }else{
+            return redirect(route('users.login'));
         }
     }
 }
