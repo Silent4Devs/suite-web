@@ -25,20 +25,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @php
+                        $contrato_importe_total = $contratos->monto_pago;
+                        $contrato_importe_total_dolares = $contratos->dolares->monto_dolares ?? 0;
+                    @endphp
+                    @foreach ($contratos->ampliaciones as $ampliacion)
                         @php
-                            $contrato_importe_total = $contratos->monto_pago;
-                            $contrato_importe_total_dolares = $contratos->dolares->monto_dolares ?? 0;
+                            $contrato_importe_total += $ampliacion->importe;
+                            if (!empty($contratos->dolares) && $contratos->dolares->valor_dolar != 0) {
+                                $contrato_importe_total_dolares += $ampliacion->importe / $contratos->dolares->valor_dolar;
+                            }
                         @endphp
-                        @foreach ($contratos->ampliaciones as $ampliacion)
-                            @php
-                                $contrato_importe_total += $ampliacion->importe;
-                                if (!empty($contratos->dolares)) {
-                                    # code...
-                                    $contrato_importe_total_dolares +=
-                                        $ampliacion->importe / $contratos->dolares->valor_dolar;
-                                }
-                            @endphp
-                        @endforeach
+                    @endforeach
+
                         <tr class="black-text">
                             <td>{{ $contratos->no_contrato }}</td>
                             <td>
