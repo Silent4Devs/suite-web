@@ -241,7 +241,8 @@
     </div>
 
     @if ($listavacia == 'vacia')
-        <script>|
+        <script>
+            |
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     // title: 'No es posible acceder a esta vista.',
@@ -365,26 +366,29 @@
                 if (result.isConfirmed) {
                     // Realizamos la solicitud AJAX para eliminar el análisis FODA
                     $.ajax({
-                        type: "POST", // Usamos POST porque se enviará un _method: DELETE
+                        type: "POST",
                         url: deleteUrl,
                         data: {
-                            _token: '{{ csrf_token() }}', // Agregar el token CSRF
-                            _method: 'DELETE' // Indicamos que es una eliminación
+                            _token: '{{ csrf_token() }}',
+                            _method: 'DELETE'
                         },
                         dataType: "json",
                         success: function(response) {
-                            // Recargamos la tabla de análisis FODA o el contenido necesario
-                            location.reload();
-
-                            // Mostramos el mensaje de éxito
-                            Swal.fire(
-                                '¡Eliminado!',
-                                'El análisis FODA ha sido eliminado correctamente.',
-                                'success'
-                            );
+                            console.log(response); // Para verificar la respuesta
+                            // Si la respuesta es exitosa, recargamos la página
+                            if (response.message) {
+                                Swal.fire(
+                                    '¡Eliminado!',
+                                    response.message,
+                                    'success'
+                                );
+                                location
+                            .reload(); // Recarga la página para reflejar los cambios
+                            }
                         },
                         error: function(xhr, status, error) {
-                            // Si ocurre algún error, mostramos un mensaje de error
+                            console.log(xhr
+                            .responseText); // Ver el error detallado en caso de que haya uno
                             Swal.fire(
                                 'Error',
                                 'Hubo un problema al intentar eliminar el análisis FODA.',
@@ -392,6 +396,7 @@
                             );
                         }
                     });
+
                 }
             });
         }
