@@ -241,7 +241,7 @@
     </div>
 
     @if ($listavacia == 'vacia')
-        <script>
+        <script>|
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     // title: 'No es posible acceder a esta vista.',
@@ -346,32 +346,54 @@
     // Funcion para borrar el Análisis FODA
 
     @can('analisis_foda_eliminar')
-        function deleteItem(itemId) {
+        window.deleteItem = function(itemId) {
+            // Generamos la URL dinámica para el DELETE
             let deleteUrl = "{{ route('admin.entendimiento-organizacions.destroy', 'id') }}";
-            //sE RECIBE EL ID Y SE REEMPLAZA en la ruta
             deleteUrl = deleteUrl.replace('id', itemId);
-            //Mensaje de confirmacion
-            if (confirm('¿Seguro que deseas eliminar el Análisis FODA?')) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    type: 'POST',
-                    url: deleteUrl,
-                    data: {
-                        ids: [itemId],
-                        _method: 'DELETE'
-                    },
-                    success: function(data) {
-                        console.log('Item deleted successfully');
-                        //Se recarga la pagina
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error deleting item:', error);
-                    }
-                });
-            }
+
+            // Mostramos el SweetAlert de confirmación
+            Swal.fire({
+                title: '¿Seguro que deseas eliminar este análisis FODA?',
+                text: "Esta acción no podrá ser revertida.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, eliminar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizamos la solicitud AJAX para eliminar el análisis FODA
+                    $.ajax({
+                        type: "POST", // Usamos POST porque se enviará un _method: DELETE
+                        url: deleteUrl,
+                        data: {
+                            _token: '{{ csrf_token() }}', // Agregar el token CSRF
+                            _method: 'DELETE' // Indicamos que es una eliminación
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            // Recargamos la tabla de análisis FODA o el contenido necesario
+                            location.reload();
+
+                            // Mostramos el mensaje de éxito
+                            Swal.fire(
+                                '¡Eliminado!',
+                                'El análisis FODA ha sido eliminado correctamente.',
+                                'success'
+                            );
+                        },
+                        error: function(xhr, status, error) {
+                            // Si ocurre algún error, mostramos un mensaje de error
+                            Swal.fire(
+                                'Error',
+                                'Hubo un problema al intentar eliminar el análisis FODA.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
         }
     @endcan
 </script>

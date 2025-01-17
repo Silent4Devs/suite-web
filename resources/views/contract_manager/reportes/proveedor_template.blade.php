@@ -180,7 +180,12 @@
             </table>
         </div>
 
-        <h1>CONTRATO</h1>
+        <div class="titulo-tablas">
+            <div class="col-12">
+                <strong>CONTRATO</strong>
+            </div>
+        </div>
+
         <table class="tabla">
             <tr>
                 <th>N° contrato</th>
@@ -208,7 +213,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9">No hay contratos de este proveedor</td>
+                    <td colspan="9" style="padding: 20px;">No hay contratos de este proveedor</td>
                 </tr>
             @endforelse
         </table>

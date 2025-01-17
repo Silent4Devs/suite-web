@@ -184,7 +184,7 @@ class ReportesComponent extends Component
         // Retorna el PDF como descarga
         return response()->streamDownload(
             fn() => print($pdf->output()),
-            'contrato-pdf.pdf'
+            'proveedor-pdf.pdf'
         );
     }
 }

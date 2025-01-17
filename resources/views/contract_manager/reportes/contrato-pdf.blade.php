@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Contrato</title>
+    <title>Contrato-pdf</title>
     <link rel="preload" type="text/css" href="{{ asset('css/reports/reports_contratos_pdf.css') }}{{ config('app.cssVersion') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reports/reports_contratos_pdf.css') }}{{ config('app.cssVersion') }}" />
 
@@ -49,7 +49,7 @@
                     <td class="td-blue-header">
                         <h4
                             style="font-size: 13px; color: #49598A; margin: 10px 0; font-weight: bold; text-transform: uppercase;">
-                            Reporte de la Organización
+                            reporte de contrato
                         </h4>
                         <p style="font-size: 14px; margin: 5px 0; color: #666;">
                             <strong>Fecha de consulta:</strong> {{ date('d/m/y') }}

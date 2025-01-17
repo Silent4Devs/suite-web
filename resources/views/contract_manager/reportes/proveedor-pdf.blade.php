@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Proveedor-pdf</title>
     <link rel="preload" type="text/css" href="{{ asset('css/reports/reports_proveedores_pdf.css') }}{{ config('app.cssVersion') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reports/reports_proveedores_pdf.css') }}{{ config('app.cssVersion') }}" />
 </head>
 
 <body>
     @foreach ($proveedor_seleccionado as $it_proveedor)
-        <div class="card-content">
+
             <table class="encabezado">
                 <tr>
                     <td class="td-img-doc">
@@ -247,7 +247,7 @@
                     @endforelse
                 </table>
             </div>
-        </div>
+
     @endforeach
 
 
