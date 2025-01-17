@@ -4,7 +4,6 @@ namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\HistoricoCedulaCumplimiento;
-use Illuminate\Http\Request;
 
 class HistoricoCedulaController extends Controller
 {

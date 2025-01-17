@@ -33,6 +33,7 @@ class RolesApiController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role = Role::where('id', $id_role)->first();
+
         return new RoleResource($role->load(['permissions']));
     }
 

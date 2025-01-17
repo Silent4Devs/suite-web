@@ -47,6 +47,7 @@ class GlosarioController extends Controller
     public function show($glosario)
     {
         $glosario = Glosario::find($glosario);
+
         return view('admin.glosarios.show', compact('glosario'));
     }
 

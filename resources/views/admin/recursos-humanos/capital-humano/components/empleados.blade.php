@@ -184,8 +184,7 @@
 
                         <li>
                             <a href="{{ route('admin.levels.index') }}">
-                                <img src="{{ asset('assets/levels.svg') }}" width="60" height="70"
-                                    style="margin-top: -10px;">
+                                <i class="fa-solid fa-chart-area"></i>
                                 <span>
                                     Niveles Escuela
                                 </span>

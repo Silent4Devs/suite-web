@@ -112,7 +112,7 @@ class ModeloController extends Controller
      */
     public function edit($id_modelo)
     {
-        $modelo = Modelo::where('id', $id_modelo)-first();
+        $modelo = Modelo::where('id', $id_modelo)->first();
         $marca = Marca::getAll();
 
         return view('admin.modelo.edit', compact('tipoactivos'));
@@ -151,6 +151,7 @@ class ModeloController extends Controller
     public function destroy($id_modelo)
     {
         $modelo = Modelo::where('id', $id_modelo)->first();
+
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 

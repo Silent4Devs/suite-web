@@ -17,7 +17,6 @@ use App\Models\Empleado;
 use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\Matriz31000ActivosInfo;
 use App\Models\MatrizIso31000;
-use App\Models\MatrizIso31000ControlesPivot;
 //use Illuminate\Support\Facades\Request;
 use App\Models\MatrizNist;
 use App\Models\MatrizOctave;

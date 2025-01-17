@@ -431,9 +431,9 @@ class tbApiMobileControllerDocumentos extends Controller
 
     public function sendEmailToNextLevel($email, $id_documento, $id_revisor, $id_historialRevisionDocumento)
     {
-        $documento = Documento::where('id',$id_documento)->first();
-        $revisor = RevisionDocumento::where('id',$id_revisor)->first();
-        $historialRevisionDocumento = HistorialRevisionDocumento::where('id',$id_historialRevisionDocumento)->first();
+        $documento = Documento::where('id', $id_documento)->first();
+        $revisor = RevisionDocumento::where('id', $id_revisor)->first();
+        $historialRevisionDocumento = HistorialRevisionDocumento::where('id', $id_historialRevisionDocumento)->first();
         Mail::to(removeUnicodeCharacters($email))->queue(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
@@ -480,7 +480,7 @@ class tbApiMobileControllerDocumentos extends Controller
 
     public function publishDocumentInFolder($path_documento_aprobacion, $id_documento)
     {
-        $documento = Documento::where('id',$id_documento)->first();
+        $documento = Documento::where('id', $id_documento)->first();
         $this->createDocumentosPublicadosIfNotExists();
         $path_documentos_publicados = 'public/Documentos publicados';
         switch ($documento->tipo) {
@@ -538,7 +538,7 @@ class tbApiMobileControllerDocumentos extends Controller
 
     public function moveBeforeVersionOfDirectory($path_documento_version_anterior, $id_documento)
     {
-        $documento = Documento::where('id',$id_documento)->first();
+        $documento = Documento::where('id', $id_documento)->first();
         $this->createDocumentoVersionesAnterioresIfNotExists();
         $path_documentos_versiones_anteriores = 'public/Documento versiones anteriores';
         switch ($documento->tipo) {

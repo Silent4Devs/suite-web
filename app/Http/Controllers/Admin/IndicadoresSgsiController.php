@@ -186,6 +186,7 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $indicadoresSgsi = IndicadoresSgsi::where('id', $id_indicadoresSgsi)->first();
+
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
 

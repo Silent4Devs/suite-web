@@ -4,10 +4,6 @@ namespace app\Http\Controllers\Api\Mobile\Comunicados;
 
 use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
-use App\Models\Empleado;
-use App\Models\FelicitarCumpleaños;
-use App\Models\Organizacione;
-use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;

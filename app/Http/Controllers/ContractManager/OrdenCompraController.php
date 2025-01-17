@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrdenCompraAprobada;
 use App\Mail\RequisicionesEmail;
 use App\Mail\RequisicionOrdenCompraCancelada;
+use App\Models\ClausulasOc;
 use App\Models\ContractManager\CentroCosto as KatbolCentroCosto;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
@@ -88,6 +89,53 @@ class OrdenCompraController extends Controller
         $buttonCompras = false;
 
         return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function clausulas()
+    {
+        $clausulas = null;
+
+        $clausulas = ClausulasOc::where('organizacion_id', 1)->first();
+
+        return view('contract_manager.ordenes-compra.clausulas', compact('clausulas'));
+    }
+
+    public function clausulas_save(Request $request)
+    {
+        // Verifica si ya existe un registro para la organización
+        $clausulas = ClausulasOc::where('organizacion_id', 1)->first();
+
+        if ($clausulas) {
+            // Si ya existe, puedes actualizarlo si es necesario o solo retornar
+            $clausulas->update([
+                'descripcion' => $request->descripcion,
+            ]);
+
+            return redirect('/contract_manager/orden-compra')->with('message', 'Clausula modificada.');
+        } else {
+            // Si no existe, se crea un nuevo registro
+            $clausulas = new ClausulasOc;
+            $clausulas->descripcion = $request->descripcion;
+            $clausulas->organizacion_id = 1;
+            $clausulas->save();
+        }
+
+        return redirect('/contract_manager/katbol')->with('message', 'Cláusula creada con éxito.');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
@@ -798,7 +846,41 @@ class OrdenCompraController extends Controller
         $letras = $f->format($numero);
 
         $proveedores = KatbolProveedorOC::where('id', $requisiciones->proveedoroc_id)->first();
-        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras'));
+        $clausulas = ClausulasOc::first();
+
+        // Dividir las cláusulas usando los números como delimitadores
+        $clausulasArray = preg_split('/(?=\d+\.)/', $clausulas->descripcion, -1, PREG_SPLIT_NO_EMPTY);
+
+        // Limpiar cada cláusula eliminando saltos de línea adicionales
+        $clausulasArray = array_map(fn ($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
+
+        // Reunir números que fueron separados incorrectamente
+        $correctedClauses = [];
+        for ($key = 0; $key < count($clausulasArray); $key++) {
+            if (isset($clausulasArray[$key + 1]) && preg_match('/^\d+$/', trim($clausulasArray[$key]))) {
+                // Combinar número separado con la siguiente cláusula sin espacio adicional
+                $correctedClauses[] = $clausulasArray[$key].$clausulasArray[$key + 1];
+                $key++; // Saltar la siguiente entrada ya que se ha combinado
+            } else {
+                $correctedClauses[] = $clausulasArray[$key];
+            }
+        }
+
+        // Extraer el primer valor como párrafo de ancho completo
+        $firstClause = array_shift($correctedClauses);
+
+        // Calcular el punto medio
+        $midPoint = ceil(count($correctedClauses) / 2);
+
+        // Dividir las cláusulas en dos partes
+        $textoIzquierdo = array_slice($correctedClauses, 0, $midPoint);
+        $textoDerecho = array_slice($correctedClauses, $midPoint);
+
+        // Puedes convertir los arrays a cadenas HTML si lo necesitas
+        $textoIzquierdoHtml = implode('<br><br>', $textoIzquierdo);
+        $textoDerechoHtml = implode('<br><br>', $textoDerecho);
+
+        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'firstClause', 'textoIzquierdoHtml', 'textoDerechoHtml'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('orden_compra.pdf');

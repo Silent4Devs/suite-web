@@ -20,7 +20,6 @@ use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
 use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
 use App\Http\Controllers\Api\Tenant\Product\TbTenantProductMetodController;
 use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
-use App\Http\Controllers\Api\Tenant\TBtenantRegisterController;
 use App\Http\Controllers\Api\Tenant\TbTenantRegisterTenancyController;
 use App\Http\Controllers\Api\Tenant\User\TbTenantUserController;
 use Illuminate\Support\Facades\Route;

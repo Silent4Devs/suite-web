@@ -17,8 +17,6 @@ use App\Imports\EmpleadoImport;
 use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;
-use App\Imports\FaqCategoriaImport;
-use App\Imports\FaqPreguntaImport;
 use App\Imports\GrupoImport;
 use App\Imports\MatrizRequisitoLegaleImport;
 use App\Imports\MinutasaltadireccionImport;

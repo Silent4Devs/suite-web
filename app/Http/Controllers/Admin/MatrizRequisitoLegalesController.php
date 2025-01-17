@@ -317,7 +317,7 @@ class MatrizRequisitoLegalesController extends Controller
     public function evaluar($id)
     {
         $empleados = Empleado::getAltaEmpleadosWithArea();
-        $requisito = MatrizRequisitoLegale::where('id', $id)->first();;
+        $requisito = MatrizRequisitoLegale::where('id', $id)->first();
         $planes_implementacion = PlanImplementacion::where('id', '!=', 1)->get();
 
         return view('admin.matrizRequisitoLegales.evaluar', compact('requisito', 'empleados', 'planes_implementacion'));

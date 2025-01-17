@@ -111,6 +111,7 @@ class ProcesoController extends Controller
     {
         abort_if(Gate::denies('procesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proceso = Proceso::where('id', $id_proceso)->first();
+
         return view('admin.procesos.show', compact('proceso'));
     }
 

@@ -1914,6 +1914,27 @@ Route::group(['middleware' => ['tenant']], function () {
                         Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
                         Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
 
+                        // ordenes de compra
+                        Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
+                        Route::get('orden-compra-clausulas', 'OrdenCompraController@clausulas')->name('orden-compra.clausulas');
+                        Route::post('orden-compra-clausulas-save', 'OrdenCompraController@clausulas_save')->name('orden-compra.clausulas-save');
+                        Route::match(['get', 'post'], 'orden-compra/getocindex', 'OrdenCompraController@getOCIndex')->name('orden-compra.get-oc-index');
+                        Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
+                        Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
+                        Route::post('orden-compra/updateOrdenCompra/{id}', 'OrdenCompraController@updateOrdenCompra')->name('orden-compra.updateOrdenCompra');
+                        Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
+                        Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
+                        Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
+                        Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
+                        // Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
+                        Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
+                        Route::get('orden-compra/filtrar', 'OrdenCompraController@filtrarPorEstado')->name('orden-compra.filtrarPorEstado');
+                        Route::get('orden-compra/filtrar_solicitante', 'OrdenCompraController@filtrarPorEstado2')->name('orden-compra.filtrarPorEstado2');
+                        Route::get('orden-compra/filtrar_compras', 'OrdenCompraController@filtrarPorEstado3')->name('orden-compra.filtrarPorEstado3');
+                        Route::get('orden-compra/aprobadores', 'OrdenCompraController@indexAprobadores')->name('orden-compra.indexAprobadores');
+                        Route::get('orden-compra/aprobados/{id}', 'OrdenCompraController@firmarAprobadores')->name('orden-compra.firmarAprobadores');
+                        Route::get('orden-compra/{id}/editar-orden-compra', 'OrdenCompraController@editarOrdenCompra')->name('orden-compra.editarOrdenCompra');
+                        Route::post('orden-compra/{id}/cancelarOrdenCompra', 'OrdenCompraController@cancelarOrdenCompra')->name('requisiciones.cancelarOrdenCompra');
                         //Razon Social - Sucursales
                         Route::resource('sucursales', 'SucursalController');
                         Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');

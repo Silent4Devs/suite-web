@@ -77,6 +77,7 @@
                                 <img id="comunicado-carrusel-primer-item" src="{{ asset('img/Carrusel_inicio.png') }}"
                                     class="item-main-carrusel active">
                                 @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                                @if(isset($carrusel->imagenes_comunicacion->first()->tipo))
                                     @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
                                         <video id="comunicado-carrusel-{{ $carrusel->id }}" muted controls
                                             src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
@@ -87,6 +88,7 @@
                                             class=" item-main-carrusel"
                                             onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
                                     @endif
+                                @endif
                                 @endforeach
                             </div>
                         </div>
@@ -95,6 +97,7 @@
                                 <img src="{{ asset('img/Carrusel_inicio.png') }}" alt="">
                             </div>
                             @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                            @if(isset($carrusel->imagenes_comunicacion->first()->tipo))
                                 @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
                                     <div class="caja-img-menu-crr-vertical"
                                         onclick="boletin('comunicado-carrusel-{{ $carrusel->id }}')"
@@ -111,6 +114,7 @@
                                             onerror="this.src='{{ asset('img/Carrusel_inicio.png') }}'; this.onerror=null;">
                                     </div>
                                 @endif
+                            @endif
                             @endforeach
                         </div>
                     </div>
@@ -354,11 +358,13 @@
                                         style="font-size:12px;">Leer más</a>
                                 </div>
                                 <div class="caja-img-comunicados-portal">
-                                    @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
-                                        <video autoplay muted controls src="{{ asset($imagen) }}"
-                                            class="img-vid-com"></video>
-                                    @else
-                                        <img class="img-vid-com" src="{{ asset($imagen) }}" alt="">
+                                    @if (isset($comunicacionSgi->imagenes_comunicacion->first()->tipo))
+                                        @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
+                                            <video autoplay muted controls src="{{ asset($imagen) }}"
+                                                class="img-vid-com"></video>
+                                        @else
+                                            <img class="img-vid-com" src="{{ asset($imagen) }}" alt="">
+                                        @endif
                                     @endif
                                 </div>
                             </div>
