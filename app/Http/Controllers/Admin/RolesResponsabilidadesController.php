@@ -90,7 +90,7 @@ class RolesResponsabilidadesController extends Controller
     public function edit($id_rolesResponsabilidade)
     {
         abort_if(Gate::denies('roles_responsabilidade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rolesResponsabilidade =RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
+        $rolesResponsabilidade = RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
         $rolesResponsabilidade->load('team');
 
         return view('admin.rolesResponsabilidades.edit', compact('rolesResponsabilidade'));
@@ -98,7 +98,7 @@ class RolesResponsabilidadesController extends Controller
 
     public function update(UpdateRolesResponsabilidadeRequest $request, $id_rolesResponsabilidade)
     {
-        $rolesResponsabilidade =RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
+        $rolesResponsabilidade = RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
         $rolesResponsabilidade->update($request->all());
 
         return redirect()->route('admin.roles-responsabilidades.index')->with('success', 'Editado con éxito');
@@ -107,7 +107,7 @@ class RolesResponsabilidadesController extends Controller
     public function show($id_rolesResponsabilidade)
     {
         abort_if(Gate::denies('roles_responsabilidade_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rolesResponsabilidade =RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
+        $rolesResponsabilidade = RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
         $rolesResponsabilidade->load('team');
 
         return view('admin.rolesResponsabilidades.show', compact('rolesResponsabilidade'));
@@ -116,7 +116,7 @@ class RolesResponsabilidadesController extends Controller
     public function destroy($id_rolesResponsabilidade)
     {
         abort_if(Gate::denies('roles_responsabilidade_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rolesResponsabilidade =RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
+        $rolesResponsabilidade = RolesResponsabilidade::where('id', $id_rolesResponsabilidade)->first();
         $rolesResponsabilidade->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

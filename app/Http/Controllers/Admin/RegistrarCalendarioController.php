@@ -82,6 +82,7 @@ class RegistrarCalendarioController extends Controller
     public function edit($id_calendario)
     {
         $calendario = Calendario::where('id', $id_calendario)->first();
+
         return view('admin.registrarGlosario.edit', compact('calendario'));
     }
 

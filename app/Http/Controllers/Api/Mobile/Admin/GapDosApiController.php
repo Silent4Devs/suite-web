@@ -32,6 +32,7 @@ class GapDosApiController extends Controller
     {
         abort_if(Gate::denies('gap_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapDo = GapDo::where('id', $id_gapDo)->first();
+
         return new GapDoResource($gapDo->load(['team']));
     }
 

@@ -32,6 +32,7 @@ class PermissionsApiController extends Controller
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permission = Permission::where('id', $id_permission)->first();
+
         return new PermissionResource($permission);
     }
 

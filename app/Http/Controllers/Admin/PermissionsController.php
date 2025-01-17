@@ -75,6 +75,7 @@ class PermissionsController extends Controller
     {
         abort_if(Gate::denies('permission_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permission = Permission::where('id', $id_permission)->first();
+
         return view('admin.permissions.edit', compact('permission'));
     }
 
@@ -90,6 +91,7 @@ class PermissionsController extends Controller
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $permission = Permission::where('id', $id_permission)->first();
+
         return view('admin.permissions.show', compact('permission'));
     }
 

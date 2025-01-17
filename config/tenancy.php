@@ -21,7 +21,7 @@ return [
         'localhost',
         'suite-web.test',
         'qusuite.silent4business.com',
-        '192.168.9.78'
+        '192.168.9.78',
     ],
 
     /**

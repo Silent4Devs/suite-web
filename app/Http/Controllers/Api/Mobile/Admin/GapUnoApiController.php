@@ -32,6 +32,7 @@ class GapUnoApiController extends Controller
     {
         abort_if(Gate::denies('gap_uno_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapUno = GapUno::where('id', $id_gapUno)->first();
+
         return new GapUnoResource($gapUno->load(['team']));
     }
 

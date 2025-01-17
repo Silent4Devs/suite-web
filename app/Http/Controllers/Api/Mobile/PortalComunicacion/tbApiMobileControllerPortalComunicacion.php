@@ -7,8 +7,6 @@ use App\Models\Comiteseguridad;
 use App\Models\ComunicacionSgi;
 use App\Models\Documento;
 use App\Models\Empleado;
-use App\Models\FelicitarCumpleaños;
-use App\Models\Organizacione;
 use App\Models\PoliticaSgsi;
 use App\Models\User;
 use Carbon\Carbon;

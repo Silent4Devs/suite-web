@@ -103,6 +103,7 @@ class MacroprocesoController extends Controller
     {
         abort_if(Gate::denies('macroprocesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroproceso = Macroproceso::where('id', $id_macroproceso)->first();
+
         return view('admin.macroprocesos.show', compact('macroproceso'));
     }
 
