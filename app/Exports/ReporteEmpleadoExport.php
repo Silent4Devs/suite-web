@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
@@ -32,13 +33,23 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
 
     public $hoy;
 
+    public $areas;
+
+    public $area_id = 0;
+
+    public $empleados_estatus;
+
+    public $emp_id;
+
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function __construct(?string $fecha_inicio, ?string $fecha_fin)
+    public function __construct(?string $fecha_inicio, ?string $fecha_fin, ?string $area_id, ?string $emp_id)
     {
         $this->fecha_inicio = $fecha_inicio;
         $this->fecha_fin = $fecha_fin;
+        $this->area_id = $area_id;
+        $this->emp_id = $emp_id;
     }
 
     public function buscarKeyEnArray($search, $array)
@@ -62,9 +73,27 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
     }
 
 
+    public function updatedAreaId($value)
+    {
+        $this->area_id = $value;
+        $this->empleados = null;
+    }
+
+
     public function collection()
     {
+        $this->areas = Area::getAll();
         $this->empleados = Empleado::getSelectEmpleadosWithArea();
+
+        if ($this->area_id && $this->empleados_estatus) {
+            $empleados_list = $this->empleados->where('area_id', $this->area_id)->where('estatus', 'alta');
+        } elseif ($this->area_id) {
+            $empleados_list = $this->empleados->where('area_id', $this->area_id)->where('estatus', 'alta');
+        } elseif ($this->empleados_estatus) {
+            $empleados_list = $this->empleados->where('estatus', 'alta');
+        } else {
+            $empleados_list = $this->empleados;
+        }
 
         //calendario tabla
         $calendario_array = [];
@@ -142,7 +171,7 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
             $this->semanas_totales_calendario += $total_weeks_year;
         }
         $this->horas_totales_filtros_empleados = 0;
-        foreach ($this->empleados as $empleado_list) {
+        foreach ($empleados_list as $empleado_list) {
 
             $horas_total_time = 0;
 
@@ -176,7 +205,6 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
             ->where('estatus', '!=', 'Rechazada')
             ->where('estatus', '!=', 'papelera')
             ->get();
-
 
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
