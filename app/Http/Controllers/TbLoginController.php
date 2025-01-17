@@ -31,7 +31,7 @@ class TbLoginController extends Controller
 
         $user = Auth::user();
 
-        dd($user);
+        // dd($user);
         //Busca al usuario en la base de datos por email
         // $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
         //     ->where('email', request('email'))
@@ -49,31 +49,27 @@ class TbLoginController extends Controller
             return $url;
         }
 
-        if ($user) {
-            // dd(3, $user, User::getCurrentUser());
-            // Cache roles and permissions to minimize database queries
-            $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
-                $roles = Role::getAll();
-                $permissionsArray = [];
-                foreach ($roles as $role) {
-                    foreach ($role->permissions as $permission) {
-                        $permissionsArray[$permission->title][] = $role->id;
-                    }
+        $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
+            $roles = Role::getAll();
+            $permissionsArray = [];
+            foreach ($roles as $role) {
+                foreach ($role->permissions as $permission) {
+                    $permissionsArray[$permission->title][] = $role->id;
                 }
-
-                return $permissionsArray;
-            });
-
-            // Define gates for each permission
-            foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function ($user) use ($roles) {
-                    // Check if user has any of the roles associated with this permission
-                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
-                });
             }
 
-            // return redirect(route('admin.inicio-Usuario.index'));
+            return $permissionsArray;
+        });
+
+        // Define gates for each permission
+        foreach ($permissionsArray as $title => $roles) {
+            Gate::define($title, function ($user) use ($roles) {
+                // Check if user has any of the roles associated with this permission
+                return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
+            });
         }
+
+        return redirect(route('inicio-Usuario.index'));
 
         // if ($user->empleado->foto == null || $user->empleado->foto == '0') {
         //     if ($user->empleado->genero == 'H') {
@@ -152,5 +148,10 @@ class TbLoginController extends Controller
             'message' => 'Hasta la proxima',
             'data' => null,
         ], 200);
+    }
+
+    public function testLog()
+    {
+        dd(Auth::user());
     }
 }

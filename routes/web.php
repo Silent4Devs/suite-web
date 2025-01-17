@@ -42,7 +42,7 @@ Route::group(['middleware' => ['tenant']], function () {
     Auth::routes();
 
     // Tabla-Calendario
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized']], function () {
 
         // Route::group(['middleware' => ['general_tabantaj']], function () {
         // Inicio usuario
