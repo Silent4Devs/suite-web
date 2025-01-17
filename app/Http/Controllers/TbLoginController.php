@@ -73,25 +73,12 @@ class TbLoginController extends Controller
 
     }
 
-    public function getUser(){
-        $user =  User::getCurrentUser();
-
-        return $user;
-    }
-
     public function logout()
     {
-        Auth::logout();
         // Invalida la sesión actual y regenera el token CSRF
-        // $request->session()->invalidate();
-        // $request->session()->regenerateToken();
-        // return redirect('/login');
-        // // Redirecciona al usuario después del logout
-        return redirect(route('users.login'));
-    }
+        Auth::logout();
 
-    public function testLog()
-    {
-        dd(Auth::user());
+        // Redirecciona al usuario después del logout
+        return redirect(route('users.login'));
     }
 }

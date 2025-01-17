@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Role;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,38 +20,36 @@ class AutorizacionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(Auth::user());
         $user = Auth::user();
 
-        // dd($user->roles->contains('title', 'Admin'), $user->can('mi_perfil_acceder'));
-        if ($user) {
-            $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
-                $roles = Role::getAll();
-                // dump($roles);
-                $permissionsArray = [];
-                foreach ($roles as $role) {
-                    // dump($role->permissions);
-                    foreach ($role->permissions as $permission) {
-                        // dump($permission);
-                        $permissionsArray[$permission->title][] = $role->id;
-                    }
-                }
-                return $permissionsArray;
-            });
-
-
-
-            // Define gates for each permission
-            foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function ($user) use ($roles) {
-                    // Check if user has any of the roles associated with this permission
-                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
-                });
-            }
-
-            return $next($request);
-        }else{
-            return redirect(route('users.login'));
+        if (!$user) {
+            return redirect()->route('users.login');
         }
+
+        if (!User::getCurrentUser()->is_active) {
+            return redirect()->route('users.usuario-bloqueado');
+        }
+
+        $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
+            return Role::with('permissions')->get()->flatMap(function ($role) {
+                return $role->permissions->mapWithKeys(function ($permission) use ($role) {
+                    return [$permission->title => [$role->id]];
+                });
+            })->reduce(function ($carry, $item) {
+                foreach ($item as $key => $value) {
+                    $carry[$key] = array_merge($carry[$key] ?? [], $value);
+                }
+                return $carry;
+            }, []);
+        });
+
+        // Define gates for each permission
+        foreach ($permissionsArray as $title => $roles) {
+            Gate::define($title, function ($user) use ($roles) {
+                return $user->roles->pluck('id')->intersect($roles)->isNotEmpty();
+            });
+        }
+
+        return $next($request);
     }
 }
