@@ -10,11 +10,11 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Excel;
 
 class ReportesEmpleados extends Component
 {
@@ -476,7 +476,8 @@ class ReportesEmpleados extends Component
 
     }
 
-    public function exportExcel(){
+    public function exportExcel()
+    {
 
         $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin);
 

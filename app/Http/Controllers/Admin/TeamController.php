@@ -90,6 +90,7 @@ class TeamController extends Controller
     {
         $team = Team::where('id', $id_team)->first();
         $team->update($request->all());
+
         return redirect()->route('admin.teams.index');
     }
 
@@ -98,6 +99,7 @@ class TeamController extends Controller
         abort_if(Gate::denies('team_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $team = Team::where('id', $id_team)->first();
         $team->load('owner');
+
         return view('admin.teams.show', compact('team'));
     }
 
@@ -106,6 +108,7 @@ class TeamController extends Controller
         abort_if(Gate::denies('team_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $team = Team::where('id', $id_team)->first();
         $team->delete();
+
         return back();
     }
 

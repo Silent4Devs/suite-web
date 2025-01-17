@@ -105,7 +105,6 @@ class OrdenCompraController extends Controller
         return view('contract_manager.ordenes-compra.clausulas', compact('clausulas'));
     }
 
-
     public function clausulas_save(Request $request)
     {
         // Verifica si ya existe un registro para la organización
@@ -116,6 +115,7 @@ class OrdenCompraController extends Controller
             $clausulas->update([
                 'descripcion' => $request->descripcion,
             ]);
+
             return redirect('/contract_manager/orden-compra')->with('message', 'Clausula modificada.');
         } else {
             // Si no existe, se crea un nuevo registro
@@ -127,7 +127,6 @@ class OrdenCompraController extends Controller
 
         return redirect('/contract_manager/katbol')->with('message', 'Cláusula creada con éxito.');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -853,14 +852,14 @@ class OrdenCompraController extends Controller
         $clausulasArray = preg_split('/(?=\d+\.)/', $clausulas->descripcion, -1, PREG_SPLIT_NO_EMPTY);
 
         // Limpiar cada cláusula eliminando saltos de línea adicionales
-        $clausulasArray = array_map(fn($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
+        $clausulasArray = array_map(fn ($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
 
         // Reunir números que fueron separados incorrectamente
         $correctedClauses = [];
         for ($key = 0; $key < count($clausulasArray); $key++) {
             if (isset($clausulasArray[$key + 1]) && preg_match('/^\d+$/', trim($clausulasArray[$key]))) {
                 // Combinar número separado con la siguiente cláusula sin espacio adicional
-                $correctedClauses[] = $clausulasArray[$key] . $clausulasArray[$key + 1];
+                $correctedClauses[] = $clausulasArray[$key].$clausulasArray[$key + 1];
                 $key++; // Saltar la siguiente entrada ya que se ha combinado
             } else {
                 $correctedClauses[] = $clausulasArray[$key];
@@ -881,7 +880,7 @@ class OrdenCompraController extends Controller
         $textoIzquierdoHtml = implode('<br><br>', $textoIzquierdo);
         $textoDerechoHtml = implode('<br><br>', $textoDerecho);
 
-        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'firstClause','textoIzquierdoHtml','textoDerechoHtml'));
+        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'firstClause', 'textoIzquierdoHtml', 'textoDerechoHtml'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('orden_compra.pdf');

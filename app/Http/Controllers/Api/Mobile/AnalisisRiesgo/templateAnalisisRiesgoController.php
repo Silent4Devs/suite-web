@@ -12,7 +12,6 @@ use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
 use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
-use App\Models\Template_Analisis_Riesgos;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

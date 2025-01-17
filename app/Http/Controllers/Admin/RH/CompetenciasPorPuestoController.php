@@ -72,6 +72,7 @@ class CompetenciasPorPuestoController extends Controller
         if ($request->ajax()) {
             try {
                 $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($puesto));
+
                 // dd($competencias);
                 return datatables()->of($competencias)->toJson();
             } catch (\Throwable $th) {
@@ -80,6 +81,7 @@ class CompetenciasPorPuestoController extends Controller
             }
         }
     }
+
     // puestos 15, competencias 2,3,4,5,6,7,8,24 truena 142 funciona 2,3,4,5,6,7,8,23
     /**
      * Show the form for creating a new resource.

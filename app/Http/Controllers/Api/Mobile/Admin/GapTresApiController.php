@@ -32,6 +32,7 @@ class GapTresApiController extends Controller
     {
         abort_if(Gate::denies('gap_tre_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapTre = GapTre::where('id', $id_gapTre)->first();
+
         return new GapTreResource($gapTre->load(['team']));
     }
 

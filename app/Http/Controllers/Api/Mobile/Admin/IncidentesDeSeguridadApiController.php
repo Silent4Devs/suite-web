@@ -33,6 +33,7 @@ class IncidentesDeSeguridadApiController extends Controller
     {
         abort_if(Gate::denies('incidentes_de_seguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $incidentesDeSeguridad = IncidentesDeSeguridad::where('id', $id_incidentesDeSeguridad)->first();
+
         return new IncidentesDeSeguridadResource($incidentesDeSeguridad->load(['activos', 'estado', 'team']));
     }
 

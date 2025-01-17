@@ -5,15 +5,15 @@ namespace App\Exports;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
-use App\Models\TimesheetHoras;
+use App\Traits\getWeeksFromRange;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Carbon\Carbon;
-use App\Traits\getWeeksFromRange;
 
 class ReporteEmpleadoExport implements FromCollection, WithHeadings
 {
     use getWeeksFromRange;
+
     public $fecha_inicio;
 
     public $fecha_fin;
@@ -60,7 +60,6 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
 
         return false;
     }
-
 
     public function collection()
     {
@@ -170,13 +169,12 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)
-            ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
-            ->where('empleado_id', $empleado_list->id)
-            ->where('estatus', '!=', 'rechazado')
-            ->where('estatus', '!=', 'Rechazada')
-            ->where('estatus', '!=', 'papelera')
-            ->get();
-
+                ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
+                ->where('empleado_id', $empleado_list->id)
+                ->where('estatus', '!=', 'rechazado')
+                ->where('estatus', '!=', 'Rechazada')
+                ->where('estatus', '!=', 'papelera')
+                ->get();
 
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
@@ -294,10 +292,11 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
                 }
             }
 
-            $calendario_column = implode(' ', array_map(function($horas) {
+            $calendario_column = implode(' ', array_map(function ($horas) {
                 // Elimina las etiquetas HTML, los caracteres &nbsp; y otros espacios innecesarios
                 $horas_limpias = strip_tags($horas); // Eliminar etiquetas HTML
                 $horas_limpias = html_entity_decode($horas_limpias); // Decodificar entidades HTML como &nbsp;
+
                 return trim($horas_limpias); // Eliminar espacios adicionales
             }, $calendario_tabla_empleado));
 

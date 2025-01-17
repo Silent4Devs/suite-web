@@ -33,6 +33,7 @@ class UsersApiController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user = User::where('id', $id_user)->first();
+
         return new UserResource($user->load(['roles', 'organizacion', 'area', 'puesto', 'team']));
     }
 
