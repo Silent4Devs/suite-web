@@ -1780,7 +1780,7 @@ Route::group(['middleware' => ['tenant']], function () {
     });
 
     //KATBOL
-    Route::group(['middleware' => ['general_tabantaj']], function () {
+    // Route::group(['middleware' => ['general_tabantaj']], function () {
         Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
             Route::group(['middleware' => 'primeros.pasos'], function () {
 
@@ -1947,5 +1947,5 @@ Route::group(['middleware' => ['tenant']], function () {
                 });
             });
         });
-    });
+    // });
 });
