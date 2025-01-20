@@ -1,4 +1,4 @@
-<div class="content-custom-design invisible">
+<div class="content-custom-design invisible scroll_estilo">
     <button class="btn btn-close-custom"
         onclick="document.querySelector('.content-custom-design').classList.add('invisible')">
         <i class="material-symbols-outlined">close</i>
@@ -54,7 +54,7 @@
     </div>
 
     <p class="mt-5">
-        Estilo
+        Cuidado de la vista
     </p>
 
     <div class="d-flex gap-4">
@@ -65,7 +65,7 @@
         </div>
         <div class="d-flex align-items-center flex-column btn-theme-estilo" onclick="themeContrast(true);"
             data-estilo="true">
-            <small style="font-size: 10px;">Transparente</small>
+            <small style="font-size: 10px;">Opaco</small>
             <div class="example-menu-position" style="border-top: 10px solid #8ec6ff; background-color: #fff;"></div>
         </div>
     </div>
