@@ -979,6 +979,7 @@ header.mostrar-menu {
 .content-custom-design{
     width: 300px;
     height: 100%;
+    overflow: auto;
     position: fixed;
     top: 0;
     right: 0;
@@ -1067,13 +1068,11 @@ header.mostrar-menu {
 }
 
 
-.transparente *{
-    opacity: 0.97 !important;
+body.transparente {
+    background-image: none !important;
+    background-color: #fffef7 !important;
+    opacity: 0.75;
 }
-.transparente{
-    background-color: #4ab5db !important;
-}
-
 
 .btn-primary {
     background-color: var(--color-tbj) !important;
