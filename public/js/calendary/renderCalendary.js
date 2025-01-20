@@ -12,8 +12,8 @@ function renderCalendar() {
         const jsonEvents = {
             id: id,
             title: nombre,
-            start: fecha ? TbConvertStringToTimeStamp(fecha, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: fecha ? TbConvertStringToTimeStamp(fecha, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(fechaInicio(fecha), 'MM/DD/YYYY'),
+            end: TbConvertStringToTimeStamp(fechaFin(fecha), 'MM/DD/YYYY'),
             color: "#AFD6E5"
         };
         eventsCalendar.push(jsonEvents);
@@ -30,8 +30,8 @@ function renderCalendar() {
         const jsonRecursos = {
             id: id,
             title: cursoscapacitaciones,
-            start: fecha_curso ? TbConvertStringToTimeStamp(fecha_curso, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: fecha_fin ? TbConvertStringToTimeStamp(fecha_fin, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(fecha_curso, 'DD-MM-YYYY hh:mm:ss'),
+            end: TbConvertStringToTimeStamp(fecha_fin, 'DD-MM-YYYY hh:mm:ss'),
             color: "#D6E5A1"
         };
         eventsCalendar.push(jsonRecursos);
@@ -47,8 +47,8 @@ function renderCalendar() {
         const jsonContratos = {
             id: id,
             title: nombre_servicio,
-            start: fecha_inicio ? TbConvertStringToTimeStamp(fecha_inicio, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: fecha_fin ? TbConvertStringToTimeStamp(fecha_fin, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: fecha_inicio ? TbConvertStringToTimeStamp(fecha_inicio, 'YYYY-MM-DD') : null,
+            end: fecha_fin ? TbConvertStringToTimeStamp(fecha_fin, 'YYYY-MM-DD') : null,
             color: "#C0AEE5"
         };
         eventsCalendar.push(jsonContratos);
@@ -65,8 +65,8 @@ function renderCalendar() {
         const jsonFacturas = {
             id: calendarId,
             title: title,
-            start: start ? TbConvertStringToTimeStamp(start, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: end ? TbConvertStringToTimeStamp(end, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(start, 'YYYY-MM-DD'),
+            end: TbConvertStringToTimeStamp(end, 'YYYY-MM-DD'),
             color: "#E6A8C1"
         };
         eventsCalendar.push(jsonFacturas);
@@ -83,8 +83,8 @@ function renderCalendar() {
         const jsonCumples = {
             id: calendarId,
             title: title,
-            start: start ? TbConvertStringToTimeStamp(start, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: end ? TbConvertStringToTimeStamp(end, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(start, 'YYYY-MM-DD'),
+            end: TbConvertStringToTimeStamp(end, 'YYYY-MM-DD'),
             color: "#E5C5A4"
         };
         eventsCalendar.push(jsonCumples);
@@ -101,8 +101,8 @@ function renderCalendar() {
         const jsonAniversario = {
             id: calendarId,
             title: title,
-            start: start ? TbConvertStringToTimeStamp(start, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: end ? TbConvertStringToTimeStamp(end, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(start, 'YYYY-MM-DD'),
+            end: TbConvertStringToTimeStamp(end, 'YYYY-MM-DD'),
             color: "#A9E6CF"
         };
         eventsCalendar.push(jsonAniversario);
@@ -119,8 +119,8 @@ function renderCalendar() {
         const jsonRevisiones = {
             id: calendarId,
             title: title,
-            start: start ? TbConvertStringToTimeStamp(start, 'DD-MM-YYYY hh:mm:ss') : null,
-            end: end ? TbConvertStringToTimeStamp(end, 'DD-MM-YYYY hh:mm:ss') : null,
+            start: TbConvertStringToTimeStamp(start, 'YYYY-MM-DD'),
+            end: TbConvertStringToTimeStamp(end, 'YYYY-MM-DD'),
             color: "FFF4AF"
         };
         eventsCalendar.push(jsonRevisiones);
