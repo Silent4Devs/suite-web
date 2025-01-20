@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Role;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,26 +20,20 @@ class AutorizacionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(Auth::user());
-        $user = Auth::user();
+        $user = User::getCurrentUser();
 
-        // dd($user->roles->contains('title', 'Admin'), $user->can('mi_perfil_acceder'));
         if ($user) {
+
             $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
                 $roles = Role::getAll();
-                // dump($roles);
                 $permissionsArray = [];
                 foreach ($roles as $role) {
-                    // dump($role->permissions);
                     foreach ($role->permissions as $permission) {
-                        // dump($permission);
                         $permissionsArray[$permission->title][] = $role->id;
                     }
                 }
                 return $permissionsArray;
             });
-
-
 
             // Define gates for each permission
             foreach ($permissionsArray as $title => $roles) {
