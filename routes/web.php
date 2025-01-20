@@ -43,7 +43,7 @@ Route::group(['middleware' => ['tenant']], function () {
     Auth::routes();
 
     // Tabla-Calendario
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'activeUser', 'doubleAuth']], function () {
 
         // Route::group(['middleware' => ['general_tabantaj']], function () {
         // Inicio usuario
@@ -1659,7 +1659,7 @@ Route::group(['middleware' => ['tenant']], function () {
         // Fin visitantes
     });
 
-    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         // Change password
         if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
             Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
@@ -1686,7 +1686,7 @@ Route::group(['middleware' => ['tenant']], function () {
     Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
     Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
 
-    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::group(['namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth']], function () {
         // Two Factor Authentication
         if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
             Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
@@ -1695,7 +1695,7 @@ Route::group(['middleware' => ['tenant']], function () {
         }
     });
 
-    Route::group(['middleware' => ['auth', '2fa']], function () {
+    Route::group(['middleware' => ['autorized', 'doubleAuth']], function () {
         //Ruta ImportExcel
         Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
         Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
@@ -1769,7 +1769,7 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
     });
 
-    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::group(['namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth']], function () {
         Route::view('sitemap', 'admin.sitemap.index');
         // Route::view('stepper', 'stepper');
         //Route::view('admin/gantt', 'admin.gantt.grap');
@@ -1781,7 +1781,7 @@ Route::group(['middleware' => ['tenant']], function () {
 
     //KATBOL
     Route::group(['middleware' => ['general_tabantaj']], function () {
-        Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
+        Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
             Route::group(['middleware' => 'primeros.pasos'], function () {
 
                 Route::group(['middleware' => ['katbol']], function () {
