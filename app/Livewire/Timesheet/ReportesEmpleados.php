@@ -65,6 +65,8 @@ class ReportesEmpleados extends Component
 
     public $empleadosQuery;
 
+    public $emp_id;
+
     public function mount()
     {
         $this->empleados_estatus = 'alta';
@@ -479,7 +481,7 @@ class ReportesEmpleados extends Component
     public function exportExcel()
     {
 
-        $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin);
+        $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
         return Excel::download($export, 'reporte_area.xlsx');
     }

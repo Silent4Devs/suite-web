@@ -92,7 +92,7 @@ class Kernel extends ConsoleKernel
         //Comando otorgar permisos (777) al storage
         $schedule->command('chmod -R 777 storage/')
             ->timezone('America/Mexico_City')
-            ->everyHour()
+            ->hourly()
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
