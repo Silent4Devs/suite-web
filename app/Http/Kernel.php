@@ -51,10 +51,11 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'autorized' => \App\Http\Middleware\AutorizacionMiddleware::class,
+        'activeUser' => \App\Http\Middleware\UsuarioActivoMiddleware::class,
+        'doubleAuth' => \App\Http\Middleware\DobleAutenticacionMiddleware::class,
         // 'auth' => \App\Http\Middleware\Tabantaj\Auth\Authenticate::class,
         // 'active' => \App\Http\Middleware\Tabantaj\User\ActiveUser::class,
         // 'isActive' => \App\Http\Middleware\Tabantaj\User\IsActiveUser::class,
-        // 'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\Tabantaj\RedirectIfAuthenticated::class,

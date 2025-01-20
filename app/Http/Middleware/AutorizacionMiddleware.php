@@ -20,36 +20,32 @@ class AutorizacionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        $user = User::getCurrentUser();
 
-        if (!$user) {
-            return redirect()->route('users.login');
-        }
+        if ($user) {
 
-        if (!User::getCurrentUser()->is_active) {
-            return redirect()->route('users.usuario-bloqueado');
-        }
-
-        $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
-            return Role::with('permissions')->get()->flatMap(function ($role) {
-                return $role->permissions->mapWithKeys(function ($permission) use ($role) {
-                    return [$permission->title => [$role->id]];
-                });
-            })->reduce(function ($carry, $item) {
-                foreach ($item as $key => $value) {
-                    $carry[$key] = array_merge($carry[$key] ?? [], $value);
+            $permissionsArray = Cache::remember('permissions_array', now()->addMinutes(60), function () {
+                $roles = Role::getAll();
+                $permissionsArray = [];
+                foreach ($roles as $role) {
+                    foreach ($role->permissions as $permission) {
+                        $permissionsArray[$permission->title][] = $role->id;
+                    }
                 }
-                return $carry;
-            }, []);
-        });
-
-        // Define gates for each permission
-        foreach ($permissionsArray as $title => $roles) {
-            Gate::define($title, function ($user) use ($roles) {
-                return $user->roles->pluck('id')->intersect($roles)->isNotEmpty();
+                return $permissionsArray;
             });
-        }
 
-        return $next($request);
+            // Define gates for each permission
+            foreach ($permissionsArray as $title => $roles) {
+                Gate::define($title, function ($user) use ($roles) {
+                    // Check if user has any of the roles associated with this permission
+                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
+                });
+            }
+
+            return $next($request);
+        }else{
+            return redirect(route('users.login'));
+        }
     }
 }

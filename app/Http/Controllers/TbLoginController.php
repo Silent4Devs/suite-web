@@ -69,7 +69,7 @@ class TbLoginController extends Controller
             });
         }
 
-        return redirect(route('admin.inicio-Usuario.index'));
+        return redirect(route('admin.portal-comunicacion.index'));
 
     }
 
