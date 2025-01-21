@@ -4,16 +4,12 @@
     <div class="card card-body">
         <div class="">
                 <div class="form-group">
-                    <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
-                    <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text"
-                        name="title" id="title" wire:model="title" required>
-                    @if ($errors->has('title'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('title') }}
-                        </div>
-                    @endif
-                    <span class="nombre_rol_error text-danger errors"></span>
-                    <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
+                    <div class="anima-focus">
+                        <input class="form-control" type="text"
+                        wire:model="titleRol" required>
+                        <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
+                    </div>
+                    <div>@error('titleRol') {{ $message }} @enderror</div>
                 </div>
                 <p class="text-muted"><i class="fas fa-info-circle"></i> Asignar Permisos</p>
 
@@ -28,9 +24,7 @@
                     <div class="col-12 datatable-fix">
                         <table class="table w-100" id="tblPermissions">
                             <thead>
-                                <th>
-
-                                </th>
+                                <th></th>
                                 <th>No.</th>
                                 <th>Nombre</th>
                                 <th>Slug</th>

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class EditRolesLivewire extends Component
@@ -12,14 +13,17 @@ class EditRolesLivewire extends Component
     public $role = null;
     public $permisos = null;
     public $permisosAsignados = [];
+
+    #[Validate('required|min:3|max:250', as: 'Nombre del Rol', message: 'El nombre del rol no puede estar vacio')]
     public $titleRol = null;
+
     public $allSelected = false;
 
     public function mount($id_role)
     {
         $this->role = Role::where('id', $id_role)->first();
         $this->permisos = Permission::getAll();
-        $this->titleRol = $role->title;
+        $this->titleRol = $this->role->title;
 
         $this->cargarPermisosRol();
     }
@@ -64,6 +68,20 @@ class EditRolesLivewire extends Component
     }
 
     public function updateRol(){
-        dd("funcionamiento");
+        $this->validate();
+
+        $this->role->update([
+            'name' => $this->titleRol,
+        ]);
+
+        // Filtrar los permisos asignados para obtener solo los IDs que están marcados como asignados
+        $permissionsIds = collect($this->permisosAsignados)
+        ->filter(fn($permiso) => $permiso['asignado'])
+        ->pluck('id')
+        ->toArray();
+
+        // Sincronizar los permisos con el rol
+        $this->role->permissions()->sync($permissionsIds);
+        // dd("Correcto");
     }
 }
