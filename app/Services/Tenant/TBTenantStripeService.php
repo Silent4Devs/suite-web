@@ -287,10 +287,9 @@ class TBTenantStripeService
                 foreach ($tbSuscripciones as $tbSuscripcion) {
                     if (in_array($tbSuscripcion['name'], $tbModulosValidos) && $tbSuscripcion['active'] === true) {
                         return true;
-                    } else {
-                        return false;
                     }
                 }
+                return false;
             } else {
                 return false;
             }

@@ -76,7 +76,6 @@ class Kernel extends HttpKernel
         //milddleware control accesos tenant
         'tenant' => \App\Http\Middleware\Tenant\TBTenantMiddleware::class,
         'Tbcheck.token.expiration' => \App\Http\Middleware\Tenant\TBTenantCheckTokenExpiration::class,
-        'general_tabantaj' => \App\Http\Middleware\Tenant\TBTenantGeneralTabantajMiddleware::class,
         'gestion_contractual' => \App\Http\Middleware\Tenant\TBTenantGestionContractualMiddleware::class,
         'gestion_financiera' => \App\Http\Middleware\Tenant\TBTenantGestionFinancieraMiddleware::class,
         'katbol' => \App\Http\Middleware\Tenant\TBTenantKatbolMiddleware::class,

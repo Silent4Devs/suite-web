@@ -68,6 +68,10 @@ class Empleado extends Model implements Auditable
 
     protected $table = 'empleados';
 
+    protected $guard = 'tenants';
+
+    protected $connection = 'tenant';
+
     protected $casts = [
         'supervisor_id' => 'int',
         'area_id' => 'int',
