@@ -26,6 +26,12 @@
             <option value="">No hay contratos registrados</option>
         @endforelse
     </select>
+    <!-- Mensaje de error para el usuario -->
+    @if (session()->has('error'))
+        <div class="alert alert-danger mt-3">
+            {{ session('error') }}
+        </div>
+    @endif
     <div wire:loading>
         <div class="spinner-grow text-primary" role="status">
             <span class="sr-only"></span>

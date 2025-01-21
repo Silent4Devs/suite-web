@@ -84,7 +84,6 @@ class ReportesComponent extends Component
 
     public function getContratoID()
     {
-
         $contrato_seleccionado = Contrato::where('id', $this->contrato_id)->get();
         $cedula_cumplimiento = KatbolCedulaCumplimiento::where('contrato_id', $this->contrato_id)->get();
         $facturas_de_contrato = KatbolFactura::where('contrato_id', $this->contrato_id)->get();
@@ -128,6 +127,10 @@ class ReportesComponent extends Component
     }
     public function imprimirReporteContrato()
     {
+        if (empty($this->contrato_id)) {
+            session()->flash('error', 'Debes seleccionar un contrato antes de imprimir el reporte.');
+            return;
+        }
         // Obtén los datos necesarios para la vista del reporte
         $contrato_seleccionado = Contrato::where('id', $this->contrato_id)->get();
         $cedula_cumplimiento = KatbolCedulaCumplimiento::where('contrato_id', $this->contrato_id)->get();
@@ -167,6 +170,10 @@ class ReportesComponent extends Component
     }
     public function imprimirReporteProveedor()
     {
+        if (empty($this->proveedor_id)) {
+            session()->flash('error', 'Debes seleccionar un proveedor antes de imprimir el reporte.');
+            return;
+        }
         $proveedor_seleccionado = KatbolProveedores::where('id', '=', $this->proveedor_id)->get();
         $contratos_de_proveedor = Contrato::where('proveedor_id', '=', $this->proveedor_id)->get();
         $organizacion = Organizacion::getFirst();
