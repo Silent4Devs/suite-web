@@ -47,13 +47,6 @@ class TimesheetController extends Controller
 
     public $modelo_proyectos = 'TimesheetProyecto';
 
-    // private $timesheetService;
-
-    // public function __construct(TimesheetService $timesheetService)
-    // {
-    //     $this->timesheetService = $timesheetService;
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -64,14 +57,6 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
-        // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
-        // dd($times);
-        // $todos_contador = $times->count();
-        // $borrador_contador = $times->where('estatus', 'papelera')->count();
-        // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
-        // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
-        // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
-
         $empleado_name = User::getCurrentUser()->empleado->name;
 
         $organizacion_actual = $this->obtenerOrganizacion();
@@ -79,11 +64,6 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.mis-registros', compact(
-            // 'times',
-            // 'rechazos_contador',
-            // 'todos_contador',
-            // 'borrador_contador',
-            // 'pendientes_contador'
             'logo_actual',
             'empresa_actual',
             'estatus',
