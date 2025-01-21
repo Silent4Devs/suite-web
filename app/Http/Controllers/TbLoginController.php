@@ -31,13 +31,6 @@ class TbLoginController extends Controller
 
         $user = Auth::user();
 
-        // dd($user);
-        //Busca al usuario en la base de datos por email
-        // $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
-        //     ->where('email', request('email'))
-        //     ->firstOrFail()
-        //     ->makeHidden(['empleado', 'empleado_id', 'n_empleado', 'roles']);
-
         function encodeSpecialCharacters($url)
         {
             // Handle spaces

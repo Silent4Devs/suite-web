@@ -1833,7 +1833,6 @@ Route::group(['middleware' => ['tenant']], function () {
                 });
 
                 Route::group(['middleware' => ['gestion_financiera']], function () {
-                    // Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
 
                     //requisiciones
                     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
@@ -1844,6 +1843,7 @@ Route::group(['middleware' => ['tenant']], function () {
                     // Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
                     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
                     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
+                    Route::post('requisiciones/{id}/cancelarRequisicion', 'RequisicionesController@cancelarRequisicion')->name('requisiciones.cancelarRequisicion');
                     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
                     Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
                     Route::get('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
