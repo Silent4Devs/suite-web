@@ -47,12 +47,12 @@ class TimesheetController extends Controller
 
     public $modelo_proyectos = 'TimesheetProyecto';
 
-    private $timesheetService;
+    // private $timesheetService;
 
-    public function __construct(TimesheetService $timesheetService)
-    {
-        $this->timesheetService = $timesheetService;
-    }
+    // public function __construct(TimesheetService $timesheetService)
+    // {
+    //     $this->timesheetService = $timesheetService;
+    // }
 
     /**
      * Display a listing of the resource.
@@ -1262,14 +1262,21 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        $counters = $this->timesheetService->totalCounters();
-        $areas_array = $this->timesheetService->totalRegisterByAreas();
-        $proyectos = $this->timesheetService->getRegistersByProyects();
+        // Resolver manualmente el servicio TimesheetService
+        $timesheetService = app(TimesheetService::class);
 
+        // Utilizar el servicio para obtener los datos necesarios
+        $counters = $timesheetService->totalCounters();
+        $areas_array = $timesheetService->totalRegisterByAreas();
+        $proyectos = $timesheetService->getRegistersByProyects();
+
+        // Obtener los proyectos desde el modelo TimesheetProyecto
         $proyectos_array = TimesheetProyecto::get();
 
+        // Retornar la vista con los datos necesarios
         return view('admin.timesheet.dashboard', compact('counters', 'areas_array', 'proyectos', 'proyectos_array'));
     }
+
 
     public function reportes()
     {
