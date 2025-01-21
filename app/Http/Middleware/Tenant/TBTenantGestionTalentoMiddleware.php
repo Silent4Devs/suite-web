@@ -31,7 +31,7 @@ class TBTenantGestionTalentoMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ['Gestión de Talento'];
+        $tbModulosValidos = ['Gestión de talento'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
         if ($tbEstado) {
