@@ -410,9 +410,6 @@ class TimesheetController extends Controller
                         DB::rollback();
                         //Limpia la cache para que no muestre registros que no existen en la base
                         $this->forgetCache();
-
-                        dd($e);
-
                         // throw $e;
                         return response()->json(['status' => 400]);
                     }
