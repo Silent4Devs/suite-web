@@ -425,12 +425,16 @@ class PuestosController extends Controller
 
     public function destroy(Puesto $puesto)
     {
+        // Verifica permisos
         abort_if(Gate::denies('puestos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Elimina el puesto
         $puesto->delete();
 
-        return back();
+        // Redirige con un mensaje de éxito
+        return redirect()->back()->with('success', 'Puesto eliminado correctamente.');
     }
+
 
     public function massDestroy(MassDestroyPuestoRequest $request)
     {

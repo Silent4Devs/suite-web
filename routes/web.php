@@ -229,7 +229,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Puestos
     Route::controller(PuestosController::class)->group(function () {
+        // Ruta para eliminar un solo puesto
+        Route::delete('puestos/{puesto}', 'destroy')->name('puestos.destroy');
+
+        // Ruta para eliminación masiva
         Route::delete('puestos/destroy', 'massDestroy')->name('puestos.massDestroy');
+
         Route::post('puestos/delete-language', 'deleteLanguage')->name('puestos.deleteLanguage');
         Route::post('puestos/parse-csv-import', 'parseCsvImport')->name('puestos.parseCsvImport');
         Route::post('puestos/process-csv-import', 'processCsvImport')->name('puestos.processCsvImport');
