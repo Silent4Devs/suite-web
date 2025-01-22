@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Permission;
 use App\Models\Role;
 use Livewire\Attributes\Validate;
@@ -9,6 +10,8 @@ use Livewire\Component;
 
 class EditRolesLivewire extends Component
 {
+
+    use LivewireAlert;
 
     public $role = null;
     public $permisos = null;
@@ -68,20 +71,32 @@ class EditRolesLivewire extends Component
     }
 
     public function updateRol(){
-        $this->validate();
+        try {
+            $this->validate();
 
-        $this->role->update([
-            'name' => $this->titleRol,
-        ]);
+            $this->role->update([
+                'name' => $this->titleRol,
+            ]);
 
-        // Filtrar los permisos asignados para obtener solo los IDs que están marcados como asignados
-        $permissionsIds = collect($this->permisosAsignados)
-        ->filter(fn($permiso) => $permiso['asignado'])
-        ->pluck('id')
-        ->toArray();
+            // Filtrar los permisos asignados para obtener solo los IDs que están marcados como asignados
+            $permissionsIds = collect($this->permisosAsignados)
+            ->filter(fn($permiso) => $permiso['asignado'])
+            ->pluck('id')
+            ->toArray();
 
-        // Sincronizar los permisos con el rol
-        $this->role->permissions()->sync($permissionsIds);
-        // dd("Correcto");
+            // Sincronizar los permisos con el rol
+            $this->role->permissions()->sync($permissionsIds);
+
+            // Emitir el evento para SweetAlert2
+            $this->dispatch('mostrarMensajeExito');
+        } catch (\Throwable $th) {
+            //throw $th;
+            $this->dispatch('mostrarMensajeError');
+        }
+    }
+
+    public function redirectToIndex()
+    {
+        return redirect()->route('admin.roles.index');
     }
 }

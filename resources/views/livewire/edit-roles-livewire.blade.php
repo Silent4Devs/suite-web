@@ -42,10 +42,6 @@
                         </table>
                     </div>
                 </div>
-                @if ($role->id != null)
-                    <input type="hidden" id="role_id" value="{{ $role->id }}">
-                @endif
-                <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
         </div>
         <div class="form-group text-end mt-5">
             <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-primary">Cancelar</a>
@@ -54,4 +50,31 @@
             </button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('mostrarMensajeExito', function(e) {
+            Swal.fire({
+                icon: 'success',
+                title: 'El rol fue actualizado exitosamente',
+                text: 'Serás redirigido en breve...',
+                timer: 5000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didClose: () => {
+                    window.location.href = "{{ route('admin.roles.index') }}";
+                }
+            });
+        });
+
+        document.addEventListener('mostrarMensajeError', function(e) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error al actualizar el rol',
+                text: 'Intente nuevamente mas tarde',
+                timer: 5000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
+        });
+    </script>
 </div>
