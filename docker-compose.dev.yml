@@ -1,29 +1,36 @@
 services:
-  php:
-    #uncomment this if you will use only docker compose
-    build:
-      context: "."
-      dockerfile: Dockerfile.prod
-    #     # target: php-production  # Specify the target build stage if applicable
-    #     # args:
-    #     # - BUILD_ENV=production  # Pass any necessary build arguments
-    # #container_name: php-tabantaj
-    #uncomment this if you will use only docker compose
-    #image: johnvo95/tabantaj_php-tabantaj:latest
-    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=500
-    container_name: php-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/app
-      - caddy_data:/data
-      - caddy_config:/config
-    ports:
-      - 80:8000
-      - 443:443
-      - 443:443/udp
-    networks:
-      - tabantajnetwork
+  # nginx-tabantaj:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #     # - 8080:8080
+  #   volumes:
+  #     - .:/var/www/html
+  #     - ./infra/nginx/nginx.conf:/etc/nginx/default.conf
+  #     - ./infra/nginx/ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - php
+  #     - postgres-tabantaj
+  #     - redis-tabantaj
+  #   env_file:
+  #     - .env
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "30m"
+  #       max-file: "1"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 20s
+  #   networks:
+  #     - tabantajnetwork
 
   postgres-tabantaj:
     image: postgres:16-alpine
@@ -33,25 +40,46 @@ services:
     volumes:
       # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
       - tabantaj-database:/var/lib/postgresql/data
-      - ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
+      #- ./infra/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    env_file:
+      - .env
     ports:
       - "5432:5432"
+    # networks:
+    #   - tabantajnetwork
     networks:
       - tabantajnetwork
     mem_limit: 6g
 
+  php:
+    #uncomment this if you will use only docker compose
+    build:
+      context: "./infra/php/"
+      dockerfile: Dockerfile
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
+    #uncomment this if you will use only docker compose
+    #image: johnvo95/tabantaj_php-tabantaj:latest
+    container_name: php-tabantaj
+    command: php artisan octane:start
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 9000:80
+    networks:
+      - tabantajnetwork
 
   queue-worker:
     build:
-      context: "."
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     volumes:
-      - .:/app
-    command: php artisan queue:work --tries=3
+      - .:/var/www/html
+    command: php artisan queue:work --tries=6
     depends_on:
       - php
     container_name: queue-worker-tabantaj
@@ -61,23 +89,25 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
+    mem_limit: 3g
 
   schedule-worker:
     build:
-      context: "."
-      dockerfile: Dockerfile.prod
+      context: "./infra/php/"
+      dockerfile: Dockerfile
     depends_on:
       - php
     restart: unless-stopped
     tty: true
     container_name: schedule-worker-tabantaj
     volumes:
-      - .:/app
+      - .:/var/www/html
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
+    mem_limit: 3g
 
   redis-tabantaj:
     image: redis:alpine
@@ -86,27 +116,44 @@ services:
     tty: true
     volumes:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
-      - ./infra/redis/sysctl.conf:/etc/sysctl.conf # Mount the sysctl configuration file
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    # networks:
+    #   - tabantajnetwork
+    mem_limit: 4g
 
-  # rabbitmq-tabantaj:
-  #   image: rabbitmq:3-management-alpine
-  #   container_name: rabbitmq-tabantaj
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 5672:5672
-  #     - 15672:15672
-  #   restart: unless-stopped
-  #   tty: true
-  #   networks:
-  #     - tabantajnetwork
-  #   # networks:
-  #   #   - tabantajnetwork
-  #   volumes:
-  #     - rabbitmq_data:/var/lib/rabbitmq
+  rdadmin-tabantaj:
+    image: erikdubbelboer/phpredisadmin:latest
+    container_name: rdadmin-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 6360:80
+    env_file:
+      - .env
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
+    mem_limit: 1g
+
+  rabbitmq-tabantaj:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-tabantaj
+    env_file:
+      - .env
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    tty: true
+    networks:
+      - tabantajnetwork
+    # networks:
+    #   - tabantajnetwork
+    volumes:
+      - ./infra/rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - rabbitmq_data:/var/lib/rabbitmq
 
   goservices:
     image: ghcr.io/silent4devs/goservices:latest
@@ -133,27 +180,180 @@ services:
   #     - reportservice_data:/reportservice
   #   networks:
   #     - tabantajnetwork
-    # networks:
-    #   - tabantajnetwork
+  #   # networks:
+  #   #   - tabantajnetwork
+
+  # newrelic-redis:
+  #   container_name: newrelic-redis
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "redis-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-go:
+  #   container_name: newrelic-go
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "goservices"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-rabbit-tabantaj:
+  #   container_name: newrelic-rabbit-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "rabbit-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-queue-worker-tabantaj:
+  #   container_name: newrelic-queue-worker-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "queue-worker-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-schedule-worker-tabantaj:
+  #   container_name: newrelic-schedule-worker-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "schedule-worker-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-php-tabantaj:
+  #   container_name: newrelic-php-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "php-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-postgres-tabantaj:
+  #   container_name: newrelic-postgres-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "postgres-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # newrelic-nginx-tabantaj:
+  #   container_name: newrelic-nginx-tabantaj
+  #   image: newrelic/infrastructure:latest
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   pid: host
+  #   privileged: true
+  #   tty: true
+  #   volumes:
+  #     - "/:/host:ro"
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     NRIA_LICENSE_KEY: "0841dbce0e17ccb0f7de92dad0fea418FFFFNRAL"
+  #     NRIA_DISPLAY_NAME: "nginx-tabantaj"
+  #   restart: unless-stopped
+  #   networks:
+  #     - tabantajnetwork
+
+  # logstash-tabantaj:
+  #   image: docker.elastic.co/logstash/logstash:8.8.1
+  #   container_name: logstash-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - ./infra/logstash:/usr/share/logstash/pipeline
+  #   environment:
+  #     ELASTICSEARCH_HOST: "https://log-api.newrelic.com/log/v1"
+  #     ELASTICSEARCH_PORT: 9200
+  #   ports:
+  #     - 5044:5044
+  #   depends_on:
+  #     - newrelic-php-tabantaj
+  #   networks:
+  #     - tabantajnetwork
 
 volumes:
   tabantaj-database:
     driver: local
-  caddy_data:
+  rabbitmq_data:
     driver: local
-  caddy_config:
-    driver: local
-  reportservice_data:
-    driver: local
-  # rabbitmq_data:
-  #   driver: local
   # pgadmin-data:
   #   driver: local
   goservices_data:
     driver: local
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
+  # reportservice_data:
   #   driver: local
 
 networks:

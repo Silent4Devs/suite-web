@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM shinsenter/php:8.2-roadrunner
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -30,7 +30,10 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev
+    libsodium-dev \
+    # Install required libraries for FrankenPHP
+    libevent-dev \
+    libssl3
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
