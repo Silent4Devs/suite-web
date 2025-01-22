@@ -1,5 +1,5 @@
 <div>
-    {{-- Success is as dangerous as failure. --}}
+    {{-- Stop trying to control. --}}
     <h5 class="col-12 titulo_general_funcion">Editar: Rol</h5>
     <div class="card card-body">
         <div class="">
@@ -45,7 +45,7 @@
         </div>
         <div class="form-group text-end mt-5">
             <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-primary">Cancelar</a>
-            <button class="btn btn-primary" type="submit" wire:click="updateRol">
+            <button class="btn btn-primary" type="submit" wire:click="createRol">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -55,7 +55,7 @@
         document.addEventListener('mostrarMensajeExito', function(e) {
             Swal.fire({
                 icon: 'success',
-                title: 'El rol fue actualizado exitosamente',
+                title: 'El rol fue creado exitosamente',
                 text: 'Serás redirigido en breve...',
                 timer: 5000,
                 showConfirmButton: false,
@@ -69,7 +69,7 @@
         document.addEventListener('mostrarMensajeError', function(e) {
             Swal.fire({
                 icon: 'error',
-                title: 'Ha ocurrido un error al actualizar el rol',
+                title: 'Ha ocurrido un error al crear el rol',
                 text: 'Intente nuevamente mas tarde',
                 timer: 5000,
                 showConfirmButton: false,
