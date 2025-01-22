@@ -50,56 +50,28 @@
             </thead>
             <tbody>
                 @foreach ($empleados as $empleado)
-                    <tr>
-                        <td>
-                            <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
-                        </td>
-                        @if ($empleado->n_empleado)
-                            <td>{{ $empleado->n_empleado }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        <td>{{ $empleado->name }}</td>
-                        @if ($empleado->email)
-                            <td>{{ $empleado->email }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        @if ($empleado->telefono)
-                            <td>{{ $empleado->telefono }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        <td>{{ $empleado->area->area }}</td>
-                        <td>{{ $empleado->puesto }}</td>
-                        @if (optional($empleado->supervisor)->name)
-                            <td>{{ optional($empleado->supervisor)->name }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        <td>{{ $empleado->antiguedad }}</td>
-                        <td>{{ $empleado->estatus }}</td>
-                        @if (optional($empleado->sede)->sede)
-                            <td>{{ optional($empleado->sede)->sede }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        @if ($empleado->cumpleaños)
-                            <td>{{ $empleado->cumpleaños }}</td>
-                        @else
-                            <td>Sin Registro</td>
-                        @endif
-                        <td>
-                            <a href="{{ route('admin.empleados.edit', $empleado->id) }}"><i class="fas fa-edit"></i></a>
-
-                            <a href="{{ route('admin.empleados.show', $empleado->id) }}"><i class="fas fa-eye"></i></a>
-
-                            <a href="{{ route('admin.empleado.solicitud-baja', $empleado->id) }}"><i
-                                    class="fas fa-trash-alt text-danger"></i></a>
-
-                        </td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td>
+                        <img src="{{ $empleado->avatar_ruta }}" width="40px;" alt="Avatar">
+                    </td>
+                    <td>{{ $empleado->n_empleado ?? 'Sin Registro' }}</td>
+                    <td>{{ $empleado->name }}</td>
+                    <td>{{ $empleado->email ?? 'Sin Registro' }}</td>
+                    <td>{{ $empleado->telefono ?? 'Sin Registro' }}</td>
+                    <td>{{ $empleado->area->area }}</td>
+                    <td>{{ $empleado->puesto }}</td>
+                    <td>{{ optional($empleado->supervisor)->name ?? 'Sin Registro' }}</td>
+                    <td>{{ $empleado->antiguedad }}</td>
+                    <td>{{ $empleado->estatus }}</td>
+                    <td>{{ optional($empleado->sede)->sede ?? 'Sin Registro' }}</td>
+                    <td>{{ $empleado->cumpleaños ?? 'Sin Registro' }}</td>
+                    <td>
+                        <a href="{{ route('admin.empleados.edit', $empleado->id) }}"><i class="fas fa-edit"></i></a>
+                        <a href="{{ route('admin.empleados.show', $empleado->id) }}"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('admin.empleado.solicitud-baja', $empleado->id) }}"><i class="fas fa-trash-alt text-danger"></i></a>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
 

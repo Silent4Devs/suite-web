@@ -59,5 +59,6 @@ class ObjetivoEmpleadoObserver
         Cache::forget('Empleados:empleados_alta_all_evaluaciones');
         Cache::forget('Empleados:empleados_all_objetivos_empleado');
         Cache::forget('Empleados:empleados_alta_all_objetivos_generales');
+        Cache::forget('Empleados:empleados_index_all');
     }
 }

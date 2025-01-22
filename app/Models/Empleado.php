@@ -298,6 +298,22 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getIndexAll(){
+        return Cache::remember('Empleados:empleados_index_all', 3600 * 6, function () {
+            $empleados = self::select('id', 'n_empleado', 'name', 'foto', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'cumpleaños', 'sede_id')->orderBy('name', 'ASC')
+            ->with('supervisor:id,name,foto,puesto_id,genero','area:id,area','puesto:id,puesto','sede:id,sede')
+            ->alta()
+            ->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
+
+                return $empleado;
+            });
+
+            return $empleados;
+        });
+    }
+
     public static function getAllEvaluaciones()
     {
         return Cache::remember('Empleados:empleados_all_evaluaciones', 3600 * 6, function () {
@@ -375,37 +391,6 @@ class Empleado extends Model implements Auditable
         $lider->children_organigrama = $childrens;
 
         return $lider;
-
-        // return self::select(
-        //     'id',
-        //     'name',
-        //     'area_id',
-        //     'foto',
-        //     'puesto_id',
-        //     'antiguedad',
-        //     'email',
-        //     'telefono',
-        //     'estatus',
-        //     'n_registro',
-        //     'n_empleado',
-        //     'genero',
-        //     'telefono_movil',
-        // )
-        // ->with([
-        //     'children' => function ($query) {
-        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-        //     },
-        //     'supervisor' => function ($query) {
-        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-        //     },
-        //     'area' => function ($query) {
-        //         $query->select('id', 'area');
-        //     }
-        // ])
-        // ->alta()
-        // ->vacanteActiva()
-        // ->whereNull('supervisor_id')
-        // ->first();
     }
 
     public static function getAllOrganigramaTreeElse($id)
