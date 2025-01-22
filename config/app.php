@@ -185,6 +185,9 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         \VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class,
 
+        //versionable
+        Venturecraft\Revisionable\RevisionableServiceProvider::class
+
     ],
 
     /*

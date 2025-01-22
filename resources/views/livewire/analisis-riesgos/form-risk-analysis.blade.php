@@ -531,7 +531,6 @@
 </script>
 
 {{-- alert response form sheet --}}
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         Livewire.on("responseForm", (edit) => {
@@ -685,4 +684,19 @@
         }
 
     }
+</script>
+
+{{-- close modals --}}
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Livewire.on('close-modal', function(modal) {
+            // 'RegisterSheet'
+            const modal = bootstrap.Modal.getInstance(document.getElementById(modal));
+            if (modal) {
+                modal.hide();
+            }
+        });
+    });
 </script>

@@ -44,7 +44,8 @@
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
     "vxm/laravel-async": "^5.0",
-    "yajra/laravel-datatables-oracle": "^11.0"
+    "yajra/laravel-datatables-oracle": "^11.0",
+    "venturecraft/revisionable": "1.*"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.13",

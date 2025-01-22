@@ -67,7 +67,6 @@
                                             <tr>
                                                 <th>{{ $historyRR->period_name }}</th>
                                                 <th>{{ $historyRR->start }}</th>
-                                                <th>{{ $historyRR->period_name }}</th>
                                                 <th>{{ $historyRR->initial_risk }}</th>
                                                 <th>{{ $historyRR->residual_risk }}</th>
                                             </tr>

@@ -1,56 +1,58 @@
 <div>
     <div>
         {{-- Template selector and carrucel --}}
-        <div class="mt-4 card card-body shadow-sm" >
-            <h5 class="title-carrucel">Template de Analisis de riesgos</h5>
-            <h6 style="margin-bottom: :0px;">Seleciona el template que utilizarás para evaluar el nivel de cumplimiento de tu organización</h6>
-            <hr class="hr-custom" style="margin-bottom: 24px;">
-            <a class="btn-show-todos" href="{{ route('admin.top-template-analisis-riesgos') }}">
-                Ver todos los templates <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-            </a>
+        <div class="mt-4 card shadow-sm" >
+            <div class="card-body">
+                <h5 class="title-carrucel">Template de Analisis de riesgos</h5>
+                <h6 style="margin-bottom: :0px;">Seleciona el template que utilizarás para evaluar el nivel de cumplimiento de tu organización</h6>
+                <hr class="hr-custom" style="margin-bottom: 24px;">
+                <a class="btn-show-todos" href="{{ route('admin.top-template-analisis-riesgos') }}">
+                    Ver todos los templates <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                </a>
 
-            <div class="content-limit caja-carrusel">
-                <div class="arrow-carrusel-izq" style="margin-right: 10px;">
-                    <i class="material-icons-outlined">arrow_back_ios</i>
-                </div>
-                <div class="carrusel-infinito" style="margin: 0px 10px 0px 10px;">
-                    @foreach ($templates as $index => $analisis)
-                        <div class="item-carrusel" style="{{ $index == 0 ? 'margin-left:25px;' : '' }}"
-                            wire:click="SelectCard({{ $analisis->id }})">
-                            <span title="{{ $analisis->nombre }}">
-                                <div class="card card-carrusel"
-                                    style="{{ $selectedCard === $analisis->id ? 'background-color: #3AAE65;' : '' }}">
-                                    <div class="card-body" style="padding: 18px 32px 10px 29px;">
-                                        <div class="row">
-                                            <div class="d-flex justify-content-start align-items-center">
-                                                <div class="col-2">
-                                                    <i class="material-icons-outlined" style="font-size:32px;">
-                                                        bookmark_border
-                                                    </i>
-                                                </div>
-                                                <div class="col-10" style="padding-right:0;">
-                                                    <h6 style="margin-bottom: 0px;">
-                                                        {{ \Illuminate\Support\Str::limit($analisis->nombre, 20, $end = '...') }}
-                                                    </h6>
-                                                    <p class="m-0">Selecciona tu template</p>
+                <div class="content-limit caja-carrusel">
+                    <div class="arrow-carrusel-izq" style="margin-right: 10px;">
+                        <i class="material-icons-outlined">arrow_back_ios</i>
+                    </div>
+                    <div class="carrusel-infinito" style="margin: 0px 10px 0px 10px;">
+                        @foreach ($templates as $index => $analisis)
+                            <div class="item-carrusel" style="{{ $index == 0 ? 'margin-left:25px;' : '' }}"
+                                wire:click="SelectCard({{ $analisis->id }})">
+                                <span title="{{ $analisis->nombre }}">
+                                    <div class="card card-carrusel"
+                                        style="{{ $selectedCard === $analisis->id ? 'background-color: #3AAE65;' : '' }}">
+                                        <div class="card-body" style="padding: 18px 32px 10px 29px;">
+                                            <div class="row">
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <div class="col-2">
+                                                        <i class="material-icons-outlined" style="font-size:32px;">
+                                                            bookmark_border
+                                                        </i>
+                                                    </div>
+                                                    <div class="col-10" style="padding-right:0;">
+                                                        <h6 style="margin-bottom: 0px;">
+                                                            {{ \Illuminate\Support\Str::limit($analisis->nombre, 20, $end = '...') }}
+                                                        </h6>
+                                                        <p class="m-0">Selecciona tu template</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </span>
-                        </div>
-                    @endforeach
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="arrow-carrusel-der" style="margin-left: 10px;">
+                        <i class="material-icons-outlined">arrow_forward_ios</i>
+                    </div>
                 </div>
-                <div class="arrow-carrusel-der" style="margin-left: 10px;">
-                    <i class="material-icons-outlined">arrow_forward_ios</i>
-                </div>
-            </div>
 
-            <div class="d-flex justify-content-end" >
-                <a class="btn tb-btn-primary" href="{{ route('admin.templates.create') }}">
-                    Crear template +
-                </a>
+                <div class="d-flex justify-content-end" >
+                    <a class="btn tb-btn-primary" href="{{ route('admin.templates.create') }}">
+                        Crear template +
+                    </a>
+                </div>
             </div>
         </div>
         {{-- Form --}}

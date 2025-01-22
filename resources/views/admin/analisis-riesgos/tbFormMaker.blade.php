@@ -2,7 +2,6 @@
 @switch($question->type)
     @case('1')
         <div>
-            {{-- @dump($answersForm ? $answersForm[$question->id] : '') --}}
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input class="form-control" placeholder="" name="qs-{{ $question->id }}" maxlength="255"
                     required="{{ $question->obligatory }}" wire:model.defer="answersForm.{{$question->id}}.value">

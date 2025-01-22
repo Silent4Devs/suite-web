@@ -158,6 +158,8 @@ class FormRiskAnalysis extends Component
         }
         $this->dispatch('execute-script', table:'datatable-register-sheets');
         $this->dispatch('execute-script', table:'datatable-risk-analysis');
+        $this->dispatch('close-modal');
+
     }
 
     public function toggleSelectAll($isSelected)
@@ -500,6 +502,8 @@ class FormRiskAnalysis extends Component
                 $this->createSheet();
             }
         }
+            $this->dispatch('execute-script', table:'datatable-register-sheets');
+            $this->dispatch('execute-script', table:'datatable-risk-analysis');
     }
 
     #[On('destroySheet')]
