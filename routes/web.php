@@ -608,6 +608,7 @@ Route::group(['middleware' => ['tenant']], function () {
 
                     Route::get('{empleado}/carga-objetivos-empleado', 'RH\EvaluacionesDesempenoController@cargaObjetivosEmpleado')->name('carga-objetivos-empleado');
                     Route::get('{area}/carga-objetivos-area', 'RH\EvaluacionesDesempenoController@cargaObjetivosArea')->name('carga-objetivos-area');
+                    Route::get('carga-objetivos-notificacion', 'RH\EvaluacionesDesempenoController@cargarObjetivosNotificacion')->name('carga-objetivos-notificacion');
                     Route::get('objetivos-importar', 'RH\EvaluacionesDesempenoController@objetivosImportar')->name('objetivos-importar');
                     Route::get('{empleado}/objetivos-papelera', 'RH\EvaluacionesDesempenoController@objetivosPapelera')->name('objetivos-papelera');
                     Route::get('objetivos-exportar', 'RH\EvaluacionesDesempenoController@objetivosExportar')->name('objetivos-exportar');
