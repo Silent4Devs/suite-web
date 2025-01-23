@@ -2,7 +2,7 @@
     {{-- Success is as dangerous as failure. --}}
     <h5 class="col-12 titulo_general_funcion">Editar: Rol</h5>
     <div class="card card-body">
-        <div class="">
+        <div class="mt-4">
                 <div class="form-group">
                     <div class="anima-focus">
                         <input class="form-control" type="text"
@@ -13,11 +13,13 @@
                 </div>
                 <p class="text-muted"><i class="fas fa-info-circle"></i> Asignar Permisos</p>
 
-                <div class="row">
-                    <label>
-                        <input type="checkbox" wire:click="toggleSelectAll($event.target.checked)" {{ $allSelected ? 'checked' : '' }}>
-                        Seleccionar todos
-                    </label>
+                <div class="row mt-4 mb-3">
+                    <div class="col-3">
+                        <label>
+                            <input type="checkbox" wire:click="toggleSelectAll($event.target.checked)" {{ $allSelected ? 'checked' : '' }}>
+                            Seleccionar todos
+                        </label>
+                    </div>
                 </div>
 
                 <div class="row">
