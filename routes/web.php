@@ -1756,7 +1756,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('/', 'SistemaGestion')->name('matriz-seguridad.sistema-gestion');
             Route::post('identificadorExist', 'identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
             Route::post('data', 'SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
-            Route::get('create', 'createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
+            Route::get('create', 'createSistemaGestion')->name('matriz-riesgos.create');
             Route::post('store', 'storeSistemaGestion')->name('matriz-riesgos.sistema-gestion.store');
             Route::get('edit/{id}', 'editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
             Route::put('update/{id}', 'updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
