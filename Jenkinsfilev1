@@ -16,9 +16,10 @@ pipeline {
                             # Crea un archivo de configuración SSH temporal
                             echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
 
-                            # Verifica que el repositorio esté configurado con SSH
+                            # Verifica que el repositorio esté configurado con SSH y agrega el directorio como seguro
                             sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "
                                 cd /var/contenedores/suite-web &&
+                                git config --global --add safe.directory /var/contenedores/suite-web &&
                                 git remote set-url origin git@github.com:user/repo.git &&
                                 echo $SSH_PASSWORD | sudo -S git pull
                             "
