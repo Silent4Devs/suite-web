@@ -13,20 +13,11 @@ pipeline {
                             # Elimina la clave antigua del archivo known_hosts
                             ssh-keygen -f "/root/.ssh/known_hosts" -R $SERVER_IP || true
 
-                            # Obtiene la clave SSH de GitHub para evitar el error de verificación de clave
-                            ssh-keyscan github.com >> ~/.ssh/known_hosts
-
                             # Crea un archivo de configuración SSH temporal
                             echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
 
-                            # Ejecuta los comandos en el servidor remoto
-                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "
-                                cd /var/contenedores/suite-web &&
-                                echo $SSH_PASSWORD | sudo -S chown -R desarrollo:desarrollo .git &&
-                                git config --global --add safe.directory /var/contenedores/suite-web &&
-                                git remote set-url origin git@github.com:user/repo.git &&
-                                echo $SSH_PASSWORD | sudo -S git pull
-                            "
+                            # Realiza la conexión SSH y ejecuta el comando de git pull
+                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedores/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
 
                             # Elimina el archivo de configuración SSH temporal
                             rm /tmp/ssh_config
