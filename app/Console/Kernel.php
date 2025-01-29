@@ -93,12 +93,11 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             exec('chmod -R 777 storage');
         })->timezone('America/Mexico_City')
-          ->everyMinute() // Se ejecutará cada minuto
+          ->daily() // Se ejecutará cada minuto
           ->name('set-storage-permissions')
           ->withoutOverlapping()
           ->onOneServer()
-          ->sentryMonitor('set-storage-permissions-monitor')
-          ->between('06:00', '23:59'); // Se ejecuta entre las 6 AM y las 11:59 PM
+          ->sentryMonitor('set-storage-permissions-monitor');
 
 
         // Limpiar los respaldos diariamente a las 11:00 PM
