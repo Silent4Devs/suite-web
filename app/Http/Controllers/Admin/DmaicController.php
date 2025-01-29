@@ -95,9 +95,11 @@ class DmaicController extends Controller
         return redirect()->route('admin.dmaics.index');
     }
 
-    public function edit(Dmaic $dmaic)
+    public function edit($id_dmaic)
     {
         abort_if(Gate::denies('dmaic_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $dmaic = Dmaic::where('id', $id_dmaic)->first();
 
         $mejoras = Registromejora::all()->pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -106,25 +108,28 @@ class DmaicController extends Controller
         return view('admin.dmaics.edit', compact('mejoras', 'dmaic'));
     }
 
-    public function update(UpdateDmaicRequest $request, Dmaic $dmaic)
+    public function update(UpdateDmaicRequest $request, $id_dmaic)
     {
+        $dmaic = Dmaic::where('id', $id_dmaic)->first();
         $dmaic->update($request->all());
 
         return redirect()->route('admin.dmaics.index');
     }
 
-    public function show(Dmaic $dmaic)
+    public function show($id_dmaic)
     {
         abort_if(Gate::denies('dmaic_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $dmaic = Dmaic::where('id', $id_dmaic)->first();
 
         $dmaic->load('mejora', 'team');
 
         return view('admin.dmaics.show', compact('dmaic'));
     }
 
-    public function destroy(Dmaic $dmaic)
+    public function destroy($id_dmaic)
     {
         abort_if(Gate::denies('dmaic_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $dmaic = Dmaic::where('id', $id_dmaic)->first();
 
         $dmaic->delete();
 

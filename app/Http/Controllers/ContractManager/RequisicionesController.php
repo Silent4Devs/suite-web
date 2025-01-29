@@ -84,16 +84,6 @@ class RequisicionesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function eliminarProveedores()
-    {
-        //codigo
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -320,46 +310,6 @@ class RequisicionesController extends Controller
 
         return $responsable;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function Firmar($tipo_firma, $id)
-    // {
-    //     try {
-    //         $requisicion = KatbolRequsicion::where('id', $id)->first();
-    //         $organizacion = Organizacion::getFirst();
-    //         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
-    //         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-
-    //         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
-
-    //         $user = User::find($requisicion->id_finanzas);
-
-    //         if ($user) {
-    //             $firma_finanzas_name = $user->name;
-    //         } else {
-    //             $firma_finanzas_name = null;
-    //         }
-
-    //         $firma_siguiente = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
-
-    //         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
-
-    //         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
-
-    //         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
-
-    //         $alerta = $this->validacionLista($tipo_firma);
-
-    //         return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'requisicion', 'organizacion', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'firma_finanzas_name', 'alerta'));
-    //     } catch (\Exception $e) {
-    //         return view('contract_manager.requisiciones.error');
-    //     }
-    // }
 
     public function removeUnicodeCharacters($string)
     {
@@ -641,13 +591,6 @@ class RequisicionesController extends Controller
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto', 'buttonSolicitante', 'buttonJefe', 'buttonFinanzas', 'buttonCompras', 'empleadoActual', 'sustitutosLD'));
     }
-
-    // public function getRequisicionIndexAprobador()
-    // {
-    //     $requisiciones = KatbolRequsicion::getArchivoFalseAll();
-
-    //     return datatables()->of($requisiciones)->toJson();
-    // }
 
     public function firmarAprobadores($id)
     {

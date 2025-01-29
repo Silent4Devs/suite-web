@@ -119,8 +119,10 @@ class ProcesosOctaveController extends Controller
         return view('admin.procesosOctave.edit', compact('activosProceso', 'riesgo', 'tecnologicoSeleccionado', 'reputacionalSeleccionado', 'legalSeleccionado', 'cumplimientoSeleccionado', 'operacionalSeleccionado', 'servicio_seleccionado', 'procesosOctave', 'areas', 'procesos', 'activosInfo', 'servicios', 'matriz'));
     }
 
-    public function update(Request $request, MatrizOctaveProceso $procesosOctave)
+    public function update(Request $request, $id_procesosOctave)
     {
+        $procesosOctave = MatrizOctaveProceso::where('id', $id_procesosOctave)->first();
+
         $procesosOctave->update($request->all());
         $matriz = $request->matriz_id;
         $old_proceso = $this->obtenerRamas($procesosOctave);

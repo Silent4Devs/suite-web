@@ -126,10 +126,10 @@ class PlanBaseActividadesController extends Controller
         return redirect()->route('admin.plan-base-actividades.index');
     }
 
-    public function edit(PlanBaseActividade $planBaseActividade)
+    public function edit($id_planBaseActividade)
     {
         abort_if(Gate::denies('plan_base_actividade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planBaseActividade = PlanBaseActividade::where('id', $id_planBaseActividade)->first();
         $users = User::getAll();
 
         $actividad_padres = PlanBaseActividade::getAll()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -147,8 +147,9 @@ class PlanBaseActividadesController extends Controller
         return view('admin.planBaseActividades.edit', compact('actividad_padres', 'ejecutars', 'estatuses', 'responsables', 'colaboradors', 'planBaseActividade'));
     }
 
-    public function update(UpdatePlanBaseActividadeRequest $request, PlanBaseActividade $planBaseActividade)
+    public function update(UpdatePlanBaseActividadeRequest $request, $id_planBaseActividade)
     {
+        $planBaseActividade = PlanBaseActividade::where('id', $id_planBaseActividade)->first();
         $planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
@@ -189,32 +190,19 @@ class PlanBaseActividadesController extends Controller
         // }
     }
 
-    /*public function update(Request $request, $id){
-    if ($request->ajax()) {​​
-        switch ($request->name) {​​
-            case 'estatus_id':
-                $gapun = PlanBaseActividade::findOrFail($id);
-                $gapun->estatus_id = $request->value;
-                $gapun->save();
-                return response()->json(['success' => true]);
-                break;
-            }​
-        }
-    }*/
-
-    public function show(PlanBaseActividade $planBaseActividade)
+    public function show($id_planBaseActividade)
     {
         abort_if(Gate::denies('plan_base_actividade_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planBaseActividade = PlanBaseActividade::where('id', $id_planBaseActividade)->first();
         $planBaseActividade->load('actividad_padre', 'ejecutar', 'estatus', 'responsable', 'colaborador', 'team');
 
         return view('admin.planBaseActividades.show', compact('planBaseActividade'));
     }
 
-    public function destroy(PlanBaseActividade $planBaseActividade)
+    public function destroy($id_planBaseActividade)
     {
         abort_if(Gate::denies('plan_base_actividade_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planBaseActividade = PlanBaseActividade::where('id', $id_planBaseActividade)->first();
         $planBaseActividade->delete();
 
         return back();

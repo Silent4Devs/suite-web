@@ -29,15 +29,17 @@ class UsersApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(User $user)
+    public function show($id_user)
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $user = User::where('id', $id_user)->first();
 
         return new UserResource($user->load(['roles', 'organizacion', 'area', 'puesto', 'team']));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id_user)
     {
+        $user = User::where('id', $id_user)->first();
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
 
@@ -46,10 +48,10 @@ class UsersApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(User $user)
+    public function destroy($id_user)
     {
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $user = User::where('id', $id_user)->first();
         $user->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

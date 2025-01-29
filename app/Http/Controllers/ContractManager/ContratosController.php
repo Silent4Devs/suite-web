@@ -37,12 +37,12 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Log;
 
 class ContratosController extends AppBaseController
 {
@@ -824,11 +824,10 @@ class ContratosController extends AppBaseController
 
             $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
 
-            Log::info('File uploaded: ' . $request->file('file_contrato')->getClientOriginalName());
-            Log::info('File type: ' . $request->file('file_contrato')->getClientOriginalExtension());
-            Log::info('File size: ' . $request->file('file_contrato')->getSize());
-            Log::info('File MIME type: ' . $request->file('file_contrato')->getMimeType());
-
+            Log::info('File uploaded: '.$request->file('file_contrato')->getClientOriginalName());
+            Log::info('File type: '.$request->file('file_contrato')->getClientOriginalExtension());
+            Log::info('File size: '.$request->file('file_contrato')->getSize());
+            Log::info('File MIME type: '.$request->file('file_contrato')->getMimeType());
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
@@ -1067,15 +1066,6 @@ class ContratosController extends AppBaseController
         // dd('Hola');
         return Excel::download(new ReporteClienteExport, 'cliente.xlsx');
     }
-
-    // public function downloadFile(Request $request){
-    //     // dd($request->file_contrato);
-    //     // $file = '/7factura-0.pdf';
-    //     // $path = '/app/public/contratos/1_contrato_01/entregables/pdf';
-
-    //     return response()->download(storage_path($path.$file));
-
-    // }
 
     public function obtenerArchivos(Request $request)
     {

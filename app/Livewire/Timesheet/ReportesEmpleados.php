@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Timesheet;
 
+use App\Exports\ReporteEmpleadoExport;
 use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Area;
 use App\Models\Empleado;
@@ -9,6 +10,7 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -62,6 +64,8 @@ class ReportesEmpleados extends Component
     public $fecha_fin_empleado;
 
     public $empleadosQuery;
+
+    public $emp_id;
 
     public function mount()
     {
@@ -472,5 +476,13 @@ class ReportesEmpleados extends Component
             }
         })->get();
 
+    }
+
+    public function exportExcel()
+    {
+
+        $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+
+        return Excel::download($export, 'reporte_area.xlsx');
     }
 }

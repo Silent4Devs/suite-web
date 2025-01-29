@@ -48,6 +48,7 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\User;
 use App\Models\VersionesIso;
+use Illuminate\Support\Facades\Auth;
 // use App\Services\SentimentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

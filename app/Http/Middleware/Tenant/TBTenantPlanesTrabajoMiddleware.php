@@ -27,9 +27,13 @@ class TBTenantPlanesTrabajoMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
+        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
+
+        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
+
         $tbModulosValidos = ['Centro de Atención', 'Planes de Trabajo'];
 
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 
         if ($tbEstado) {
             return $tbNext($tbRequest);
