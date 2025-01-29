@@ -90,12 +90,16 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
 
         //Comando otorgar permisos (777) al storage
-        $schedule->command('chmod -R 777 storage/')
-            ->timezone('America/Mexico_City')
-            ->hourly()
-            ->withoutOverlapping()
-            ->onOneServer()
-            ->sentryMonitor();
+        $schedule->call(function () {
+            exec('chmod -R 777 storage');
+        })->timezone('America/Mexico_City')
+          ->everyMinute() // Se ejecutará cada minuto
+          ->name('set-storage-permissions')
+          ->withoutOverlapping()
+          ->onOneServer()
+          ->sentryMonitor('set-storage-permissions-monitor')
+          ->between('06:00', '23:59'); // Se ejecuta entre las 6 AM y las 11:59 PM
+
 
         // Limpiar los respaldos diariamente a las 11:00 PM
         $schedule->command('backup:clean')
