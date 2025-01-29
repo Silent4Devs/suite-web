@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "select2": "^4.0.13",
     "signature_pad": "^4.1.6",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "chokidar": "^3.6.0"
   }
 }

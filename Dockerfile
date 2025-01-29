@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -29,6 +29,7 @@ RUN apk add --no-cache \
     zlib-dev \
     sudo \
     zip \
+    xml \
     unzip \
     libsodium-dev
 
@@ -65,9 +66,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
-# Install npm
-RUN npm install -g npm@latest
+# Install PHP dependencies including Laravel Octane
+RUN composer install --no-dev --optimize-autoloader
 
-# Healthcheck
-HEALTHCHECK --interval=15m --timeout=3s \
-    CMD curl --fail http://localhost/ || exit 1
+# Expose the port RoadRunner will run on
+EXPOSE 9000
+
+# Define the command to run Octane
+CMD ["php", "artisan", "octane:start", "--server=roadrunner"]

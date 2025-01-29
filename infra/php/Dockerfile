@@ -71,3 +71,14 @@ RUN chown -R www-data:www-data /var/www \
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install PHP dependencies including Laravel Octane
+RUN composer install --no-dev --no-autoloader --no-ansi --no-scripts --audit
+
+# Expose the port RoadRunner will run on
+EXPOSE 9000
+
+# Define the command to run Octane
+CMD ["php", "artisan", "octane:start", "--server=roadrunner"]

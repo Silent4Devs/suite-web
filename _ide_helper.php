@@ -11701,9 +11701,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Delete a reserved job from the queue.
          *
-         * @param string $queue
-         * @param \Illuminate\Queue\Jobs\RedisJob $job
-         * @return void 
+         * @throws AMQPProtocolChannelException
          * @static 
          */
         public static function deleteReserved($queue, $job)
@@ -11715,10 +11713,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Delete a reserved job from the reserved queue and release it.
          *
-         * @param string $queue
-         * @param \Illuminate\Queue\Jobs\RedisJob $job
-         * @param int $delay
-         * @return void 
+         * @throws RuntimeException
          * @static 
          */
         public static function deleteAndRelease($queue, $job, $delay)
@@ -11730,8 +11725,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Delete all of the jobs from the queue.
          *
-         * @param string $queue
-         * @return int 
          * @static 
          */
         public static function clear($queue)
@@ -11743,8 +11736,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the queue or return the default.
          *
-         * @param string|null $queue
-         * @return string 
+         * @throws Throwable
          * @static 
          */
         public static function getQueue($queue)
@@ -11756,7 +11748,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the connection for the queue.
          *
-         * @return \Illuminate\Redis\Connections\Connection 
+         * @throws AMQPProtocolChannelException
          * @static 
          */
         public static function getConnection()
@@ -11768,7 +11760,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the underlying Redis instance.
          *
-         * @return \Illuminate\Contracts\Redis\Factory 
          * @static 
          */
         public static function getRedis()
