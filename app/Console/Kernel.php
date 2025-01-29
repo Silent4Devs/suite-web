@@ -112,7 +112,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')
             //->days([2, 5])
             ->daily()
-            ->at('23:40')
+            ->at('23:45')
             ->onOneServer()
             ->sentryMonitor();
 
@@ -128,7 +128,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('transfer:file')
             ->timezone('America/Mexico_City')
             ->daily()
-            ->at('01:00')
+            ->at('02:00')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();

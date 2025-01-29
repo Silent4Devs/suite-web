@@ -46,17 +46,21 @@ class CapacitacionesReactivarIntentos extends Command
     public function handle()
     {
         // Obtén la fecha y hora actuales
-        $tiempo = Carbon::now();
-        $tiempoMenosOchoHoras = $tiempo->subHours(8);
+        $tiempoMenosOchoHoras = Carbon::now()->subHours(8);
 
-        $searchRetrys = UserEvaluation::where('number_of_attempts', 0)
-            ->where('score', '<', 100)
-            ->where('last_attempt', '<', $tiempoMenosOchoHoras) // Verifica que hayan pasado 8 horas
-            ->get();
+        UserEvaluation::where('number_of_attempts', 0)
+        ->where('score', '<', 100)
+        ->where('last_attempt', '<', $tiempoMenosOchoHoras)
+        ->update(['number_of_attempts' => 3]);
 
-        foreach ($searchRetrys as $retry) {
-            $retry->number_of_attempts = 3;
-            $retry->save();
-        }
+        // $searchRetrys = UserEvaluation::where('number_of_attempts', 0)
+        //     ->where('score', '<', 100)
+        //     ->where('last_attempt', '<', $tiempoMenosOchoHoras) // Verifica que hayan pasado 8 horas
+        //     ->get();
+
+        // foreach ($searchRetrys as $retry) {
+        //     $retry->number_of_attempts = 3;
+        //     $retry->save();
+        // }
     }
 }
