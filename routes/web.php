@@ -1645,15 +1645,14 @@ Route::group(['middleware' => ['tenant']], function () {
         Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
         Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
         Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
-        Route::resource('visitantes', 'VisitantesController');
+        Route::resource('visitantes', 'VisitantesController')->only(['menu', 'index','dashboard', 'autorizar' , 'configuracion']);
 
         Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
             Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
             Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
             Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
             Route::resource('/', RegistroVisitantesController::class);
-            Route::resource('/', MejorasController::class);
-            Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+            // Route::resource('/', MejorasController::class);
         });
         // Fin visitantes
     });
