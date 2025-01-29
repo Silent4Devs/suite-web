@@ -16,14 +16,11 @@ pipeline {
                             # Crea un archivo de configuración SSH temporal
                             echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
 
-                            # Verifica la conexión SSH antes de ejecutar git pull
-                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "echo Connection successful"
-
                             # Realiza la conexión SSH y ejecuta el comando de git pull
                             sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedores/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
 
                             # Elimina el archivo de configuración SSH temporal
-                            rm -f /tmp/ssh_config
+                            rm /tmp/ssh_config
                         '''
                     }
                 }
