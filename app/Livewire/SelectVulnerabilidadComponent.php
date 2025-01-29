@@ -18,7 +18,7 @@ class SelectVulnerabilidadComponent extends Component
 
     public function render()
     {
-        $vulnerabilidades = getAll();
+        $vulnerabilidades = Vulnerabilidad::getAll();
         $amenazas = Amenaza::get();
 
         return view('livewire.select-vulnerabilidad-component', compact('vulnerabilidades', 'amenazas'));

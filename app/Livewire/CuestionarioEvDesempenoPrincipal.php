@@ -111,9 +111,16 @@ class CuestionarioEvDesempenoPrincipal extends Component
         if ($this->evaluacionDesempeno->{'activar_'.str_replace('_evaluado', '', $propiedad)}) {
             $total = $this->$propiedad->count();
             $contestadas = $this->$propiedad->where('estatus_calificado', true)->count();
-            $this->$destino = round((($contestadas / $total) * 100), 2);
-            if ($this->$destino == 100.0) {
-                $this->$destino = 100;
+
+            // Evitar división por cero
+            if ($total > 0) {
+                $this->$destino = round((($contestadas / $total) * 100), 2);
+                if ($this->$destino == 100.0) {
+                    $this->$destino = 100;
+                }
+            } else {
+                // Si no hay elementos, asignar 0 al destino
+                $this->$destino = 0;
             }
         }
     }
