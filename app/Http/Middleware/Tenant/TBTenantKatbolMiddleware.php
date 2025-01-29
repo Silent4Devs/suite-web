@@ -31,8 +31,6 @@ class TBTenantKatbolMiddleware
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
 
-        dd($tbEstado);
-
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {
