@@ -434,8 +434,15 @@ class EV360EvaluacionesController extends Controller
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_evaluacion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $evaluacion = Evaluacion::where('id', $id_evaluacion)->first();
-        $evaluacion->load('autor');
 
+        if ($evaluacion) {
+            $evaluacion->load('autor');
+        } else {
+
+            // Maneja el caso donde no se encuentra la evaluación
+            return redirect(route('admin.ev360-evaluaciones.index'))
+            ->with('error', 'El registro no existe.');
+        }
         $lista_evaluados = [];
         //close evaluation if the end date is passed and if the evaluation is not closed
         if ($evaluacion->estatus == Evaluacion::ACTIVE) {
@@ -481,24 +488,13 @@ class EV360EvaluacionesController extends Controller
         } else {
             $lista_evaluados = [];
         }
-        // dd($lista_evaluados[0]['evaluadores'][0]->evaluador);
-        // dd($evaluacion, $evaluados_evaluacion, $evaluados, $lista_evaluados);
-        // $competencias = Competencia::select('id', 'nombre')->get();
-        // $objetivos = Objetivo::select('id', 'nombre')->get();
-        // $competencias_seleccionadas = EvaluacionCompetencia::where('evaluacion_id', $evaluacion->id)->pluck('competencia_id')->toArray();
-        // $objetivos_seleccionados = EvaluacionObjetivo::where('evaluacion_id', $evaluacion->id)->pluck('objetivo_id')->toArray();
-        // $competencias_seleccionadas_text = EvaluacionCompetencia::with(['competencia' => function ($q) {
-        //     $q->with(['tipo']);
-        // }])->where('evaluacion_id', $evaluacion->id)->get();
-        // $objetivos_seleccionados_text = EvaluacionObjetivo::with(['objetivo' => function ($q) {
-        //     $q->with(['tipo', 'metrica']);
-        // }])->where('evaluacion_id', $evaluacion->id)->get();
+
         $total_evaluaciones = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->count();
         $contestadas = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->where('evaluado', true)->count();
         $progreso = floatval(number_format((($contestadas / $total_evaluaciones) * 100), 2));
 
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'total_evaluaciones', 'contestadas', 'progreso', 'lista_evaluados'));
-        // return view('admin.recursos-humanos.evaluacion-360.evaluaciones.evaluacion', compact('evaluacion', 'competencias', 'competencias_seleccionadas', 'competencias_seleccionadas_text', 'total_evaluaciones', 'contestadas', 'progreso', 'objetivos', 'objetivos_seleccionados', 'objetivos_seleccionados_text'));
+
     }
 
     public function getParticipantes(Request $request, $evaluacion)
