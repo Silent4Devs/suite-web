@@ -45,7 +45,7 @@
                     <div class="col-5 p-2 mt-3" style="text-align: left;">
                         <br>
                         <span class="" style="color:var(--color-tbj); font-size:20px;font-weight:bold;">
-                            Reporte Determinación de alcance
+                            Reporte Determinación de alcances
                         </span>
 
                     </div>
