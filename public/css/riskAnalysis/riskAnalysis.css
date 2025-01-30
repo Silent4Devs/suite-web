@@ -17,6 +17,8 @@
 .carrusel-infinito {
     width: 100%;
     display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
     align-items: start;
     gap: 20px;
     overflow: hidden;
@@ -31,6 +33,7 @@
     align-items: center;
     /* justify-content: center; */
     cursor: pointer;
+    user-select: none;
     transition: 0.1s;
 }
 
@@ -44,23 +47,37 @@
 
 .item-carrusel {
     min-width: 239px;
-    width: 239px;
+    width: 278px;
     height: auto;
     background-color: #fff;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
-
 .card-carrusel {
     width: 100%;
     height: 77px;
     margin-bottom: 0px;
-    background-color: #3889AD;
+    background-color: #3889AD !important;
     color: #FFFFFF;
     border: 1px solid #CFCFCF;
     border-radius: 8px;
     box-shadow: 0px 1px 4px #0000000F;
+    transition: background-color 0.3s ease-in-out;
+}
+.card-carrusel:hover {
+    background-color: #12B2A7 !important;
+}
+.card-carrusel.selected {
+    background-color: #3AAE65 !important;
+}
+.nombre-templates {
+    transition: transform 0.3s ease-out, text-shadow 0.3s ease-out;
 }
 
+.nombre-templates:hover {
+    transform: translateX(15px);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
 .datatable-rds td {
     border-bottom: none !important;
 }
@@ -93,9 +110,11 @@
     opacity: 1;
 }
 
-.btn-show-todos, .btn-show-todos:hover {
+a.btn-show-todos, a.btn-show-todos:hover {
+    color: #057BE2 !important;
     width: 188px;
     height: 26px;
+    padding: 15px 111px;
     background: #DEF9FF;
     border: 1px solid #057BE2;
     border-radius: 4px;
@@ -103,9 +122,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #057BE2;
     margin-left: 115px;
     margin-bottom: 14px;
+    white-space: nowrap;
+}
+.btn-show-todos span {
+    margin-left: 6px;
+    font-size: 16px;
 }
 
 .input-fecha {
@@ -133,7 +156,7 @@
     width: 250px;
     max-width: 250px;
     min-height: 231px;
-    background: #FFFFFF;
+    background: #FFFFFF!;
     box-shadow: 0px 1px 4px #00000024;
     border-radius: 16px;
     opacity: 1;
@@ -141,10 +164,13 @@
 }
 
 .item-header {
-    background: none;
+    background: #FFFFFF;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #ffffff !important;
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
 }
 
 .item-title {
@@ -191,4 +217,9 @@
 
 .icon-option{
     font-size: 20px;
+}
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: #006DDB !important;
+    color: #FFFFFF !important;
 }
