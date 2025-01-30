@@ -442,7 +442,7 @@
                     <img src="{{ asset($logotipo) }}" style="object-position: left center;">
                 </div>
                 <span class="title-item-menu-header mt-4">ADMINISTRACIÓN</span>
-                <div class="overflow-auto scroll_estilo" style="max-height:400px;  width: 120%;">
+                <div class="overflow-auto scroll_estilo" style="max-height:300px;">
                     <ul class="menu-list-admin-header ">
                         @if ($usuario->can('clausulas_auditorias_acceder') || $usuario->can('clasificaciones_auditorias_acceder'))
                             <li class="li-click-list-header">

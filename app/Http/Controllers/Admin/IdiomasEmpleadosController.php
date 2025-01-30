@@ -73,8 +73,9 @@ class IdiomasEmpleadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IdiomaEmpleado $idiomaEmpleado)
+    public function update(Request $request, $id_idiomaEmpleado)
     {
+        $idiomaEmpleado = IdiomaEmpleado::where('id', $id_idiomaEmpleado)->first();
         // if (array_key_exists('nombre', $request->all())) {
         //     $request->validate([
         //         'nombre' => 'required|string|max:255',
@@ -143,8 +144,9 @@ class IdiomasEmpleadosController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Idioma Eliminado', 'idioma' => $idiomaEmpleado]);
     }
 
-    public function deleteCertificado(IdiomaEmpleado $idiomaEmpleado)
+    public function deleteCertificado($id_idiomaEmpleado)
     {
+        $idiomaEmpleado = IdiomaEmpleado::where('id', $id_idiomaEmpleado)->first();
         if (Storage::disk('public')->exists($idiomaEmpleado->ruta_absoluta_documento)) {
             Storage::disk('public')->delete($idiomaEmpleado->ruta_absoluta_documento);
         }

@@ -12,7 +12,6 @@ use App\Models\TBSectionTemplateAr_QuestionTemplateArModel;
 use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
 use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
-use App\Models\Template_Analisis_Riesgos;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -133,7 +132,7 @@ class templateAnalisisRiesgoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Template_Analisis_Riesgos $template_Analisis_Riesgos)
+    public function destroy($template_Analisis_Riesgos)
     {
         //
     }

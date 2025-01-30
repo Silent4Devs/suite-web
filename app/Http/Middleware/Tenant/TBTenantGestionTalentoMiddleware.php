@@ -27,9 +27,13 @@ class TBTenantGestionTalentoMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $tbModulosValidos = ['Gestión de Talento'];
+        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
 
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
+        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
+
+        $tbModulosValidos = ['Gestión de talento'];
+
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {

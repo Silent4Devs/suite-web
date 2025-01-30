@@ -68,6 +68,10 @@ class Empleado extends Model implements Auditable
 
     protected $table = 'empleados';
 
+    protected $guard = 'tenants';
+
+    protected $connection = 'tenant';
+
     protected $casts = [
         'supervisor_id' => 'int',
         'area_id' => 'int',
@@ -276,7 +280,7 @@ class Empleado extends Model implements Auditable
     public static function getSelectEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_select_area', 3600 * 6, function () {
-            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->get();
+            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->where('estatus', 'alta')->get();
         });
     }
 
@@ -291,6 +295,22 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('Empleados:empleados_alta_all', 3600 * 6, function () {
             return self::orderBy('name')->alta()->get();
+        });
+    }
+
+    public static function getIndexAll(){
+        return Cache::remember('Empleados:empleados_index_all', 3600 * 6, function () {
+            $empleados = self::select('id', 'n_empleado', 'name', 'foto', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'cumpleaños', 'sede_id')->orderBy('name', 'ASC')
+            ->with('supervisor:id,name,foto,puesto_id,genero','area:id,area','puesto:id,puesto','sede:id,sede')
+            ->alta()
+            ->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
+
+                return $empleado;
+            });
+
+            return $empleados;
         });
     }
 
@@ -371,37 +391,6 @@ class Empleado extends Model implements Auditable
         $lider->children_organigrama = $childrens;
 
         return $lider;
-
-        // return self::select(
-        //     'id',
-        //     'name',
-        //     'area_id',
-        //     'foto',
-        //     'puesto_id',
-        //     'antiguedad',
-        //     'email',
-        //     'telefono',
-        //     'estatus',
-        //     'n_registro',
-        //     'n_empleado',
-        //     'genero',
-        //     'telefono_movil',
-        // )
-        // ->with([
-        //     'children' => function ($query) {
-        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-        //     },
-        //     'supervisor' => function ($query) {
-        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-        //     },
-        //     'area' => function ($query) {
-        //         $query->select('id', 'area');
-        //     }
-        // ])
-        // ->alta()
-        // ->vacanteActiva()
-        // ->whereNull('supervisor_id')
-        // ->first();
     }
 
     public static function getAllOrganigramaTreeElse($id)

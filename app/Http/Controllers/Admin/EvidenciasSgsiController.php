@@ -128,10 +128,10 @@ class EvidenciasSgsiController extends Controller
         return redirect()->route('admin.evidencias-sgsis.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(EvidenciasSgsi $evidenciasSgsi)
+    public function edit($id_evidenciasSgsi)
     {
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $evidenciasSgsi = EvidenciasSgsi::where('id', $id_evidenciasSgsi)->first();
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::getAltaEmpleadosWithArea();
         $areas = Area::getAll();
@@ -140,9 +140,10 @@ class EvidenciasSgsiController extends Controller
         return view('admin.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));
     }
 
-    public function update(UpdateEvidenciasSgsiRequest $request, EvidenciasSgsi $evidenciasSgsi)
+    public function update(UpdateEvidenciasSgsiRequest $request, $id_evidenciasSgsi)
     {
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $evidenciasSgsi = EvidenciasSgsi::where('id', $id_evidenciasSgsi)->first();
         $evidenciasSgsi->update($request->all());
         $files = $request->file('files');
         if ($request->hasFile('files')) {
@@ -171,19 +172,19 @@ class EvidenciasSgsiController extends Controller
         return redirect()->route('admin.evidencias-sgsis.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(EvidenciasSgsi $evidenciasSgsi)
+    public function show($id_evidenciasSgsi)
     {
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $evidenciasSgsi = EvidenciasSgsi::where('id', $id_evidenciasSgsi)->first();
         $evidenciasSgsi->load('responsable', 'team');
 
         return view('admin.evidenciasSgsis.show', compact('evidenciasSgsi'));
     }
 
-    public function destroy(EvidenciasSgsi $evidenciasSgsi)
+    public function destroy($id_evidenciasSgsi)
     {
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $evidenciasSgsi = EvidenciasSgsi::where('id', $id_evidenciasSgsi)->first();
         $evidenciasSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
