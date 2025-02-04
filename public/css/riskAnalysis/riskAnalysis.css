@@ -64,11 +64,11 @@
     box-shadow: 0px 1px 4px #0000000F;
     transition: background-color 0.3s ease-in-out;
 }
-.card-carrusel:hover {
-    background-color: #12B2A7 !important;
-}
 .card-carrusel.selected {
     background-color: #3AAE65 !important;
+}
+.card-carrusel:hover {
+    background-color: #12B2A7 !important;
 }
 .nombre-templates {
     transition: transform 0.3s ease-out, text-shadow 0.3s ease-out;

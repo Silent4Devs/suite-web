@@ -20,7 +20,7 @@
                     <div class="carrusel-infinito">
                         @foreach ($templates as $index => $analisis)
                             <div class="item-carrusel">
-                                <div class="card card-carrusel {{ $selectedCard === $analisis->id ? 'selected' : '' }}">
+                                <div class="card card-carrusel {{ $selectedCard === $analisis->id ? 'selected' : '' }}" wire:click="SelectCard({{ $analisis->id }})">
                                     <div class="card-body" style="padding: 18px 32px 10px 29px; color:#FFFFFF;">
                                         <div class="row">
                                             <div
@@ -222,24 +222,34 @@
                 @endforeach
             </div>
         </div>
-
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 const carrusel = document.querySelector(".carrusel-infinito");
                 const btnIzquierda = document.querySelector(".arrow-carrusel-izq");
                 const btnDerecha = document.querySelector(".arrow-carrusel-der");
+                const tarjetas = document.querySelectorAll(".card-carrusel");
 
-                const scrollAmount = 300; // Distancia a desplazar por clic
-
+                const scrollAmount = 300;
                 btnDerecha.addEventListener("click", () => {
-                    carrusel.scrollLeft += scrollAmount; // Mueve hacia la derecha
+                    carrusel.scrollLeft += scrollAmount;
                 });
 
                 btnIzquierda.addEventListener("click", () => {
-                    carrusel.scrollLeft -= scrollAmount; // Mueve hacia la izquierda
+                    carrusel.scrollLeft -= scrollAmount;
+                });
+
+
+                tarjetas.forEach((tarjeta) => {
+                    tarjeta.addEventListener("click", function () {
+                        // Remueve la clase 'selected' de todas las tarjetas
+                        tarjetas.forEach((t) => t.classList.remove("selected"));
+                        // Agrega la clase 'selected' a la tarjeta clickeada
+                        this.classList.add("selected");
+                    });
                 });
             });
         </script>
+
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
