@@ -5,8 +5,6 @@
         @csrf
         @method('PATCH')
 
-        @csrf
-
         <div class="card card-body">
             <div class="row" style="margin-left: 10px; margin-right: 10px;">
                 <div class="col s12" style="margin-top: 30px;">

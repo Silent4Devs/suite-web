@@ -88,18 +88,16 @@ class ContratosController extends AppBaseController
     public function create()
     {
         abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $contratos = new Contrato;
-        $areas = Area::getAll();
-        $organizacion = Organizacion::getFirst();
-        $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
-        // $dolares = DolaresContrato::where('contrato_id', $id)->first();
-        $dolares = null;
-        $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
-        $razones_sociales = Sucursal::getArchivoFalse();
 
-        $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+        // Gestión Contractual
+        $firma = FirmaModule::withwhereHas('modulo', function ($query) {
+            return $query->where('name', '=', 'Gestión Contractual');
+        })
+        ->withwhereHas('submodulo', function ($query) {
+            return $query->where('name', '=', 'Contratos');
+        })->first();
 
-        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas', 'proyectos', 'firma', 'razones_sociales'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        return view('contract_manager.contratos-katbol.create', compact('firma'));
     }
 
     /**
