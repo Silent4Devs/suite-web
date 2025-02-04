@@ -15,10 +15,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/yearpicker.css') }}">
 
-    @vite(['public/css/app.css'])
-    @vite(['public/css/global/style.css'])
-    @vite(['public/css/global/admin.css'])
-    @vite(['public/css/rds.css'])
+    @vite(['public/css/app.css' . config('app.cssVersion')])
+    @vite(['public/css/global/style.css' . config('app.cssVersion')])
+    @vite(['public/css/global/admin.css' . config('app.cssVersion')])
+    @vite(['public/css/rds.css' . config('app.cssVersion')])
     {{-- @vite(['public/css/global/darkMode.css']) --}}
     <link rel="stylesheet" type="text/css"
         href="{{ asset('css/global/responsive.css') }}{{ config('app.cssVersion') }}">
