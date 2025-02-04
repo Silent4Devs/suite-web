@@ -130,10 +130,11 @@ class PlanAuditoriaController extends Controller
         return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium' => $planAuditorium]);
     }
 
-    public function edit(PlanAuditorium $planAuditorium)
+    public function edit($id_planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $equipo_seleccionado = $planAuditorium->auditados->pluck('id')->toArray();
@@ -146,10 +147,10 @@ class PlanAuditoriaController extends Controller
         return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado', 'actividadesAuditoria'));
     }
 
-    public function update(Request $request, PlanAuditorium $planAuditorium)
+    public function update(Request $request, $id_planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
         $request->validate([
             'fecha_inicio_auditoria' => 'required|date',
             'nombre_auditoria' => 'required|string',
@@ -180,19 +181,19 @@ class PlanAuditoriaController extends Controller
         return redirect()->route('admin.plan-auditoria.index');
     }
 
-    public function show(PlanAuditorium $planAuditorium)
+    public function show($id_planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
         $planAuditorium->load('auditados', 'team', 'actividadesPlan');
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));
     }
 
-    public function destroy(PlanAuditorium $planAuditorium)
+    public function destroy($id_planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
         $planAuditorium->delete();
 
         return back();

@@ -28,15 +28,17 @@ class GapTresApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(GapTre $gapTre)
+    public function show($id_gapTre)
     {
         abort_if(Gate::denies('gap_tre_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
 
         return new GapTreResource($gapTre->load(['team']));
     }
 
-    public function update(UpdateGapTreRequest $request, GapTre $gapTre)
+    public function update(UpdateGapTreRequest $request, $id_gapTre)
     {
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
         $gapTre->update($request->all());
 
         return (new GapTreResource($gapTre))
@@ -44,10 +46,10 @@ class GapTresApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(GapTre $gapTre)
+    public function destroy($id_gapTre)
     {
         abort_if(Gate::denies('gap_tre_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
         $gapTre->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

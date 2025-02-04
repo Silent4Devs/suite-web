@@ -151,10 +151,10 @@ class SedeController extends Controller
         return redirect()->route('admin.sedes.index')->with('success', 'Guardado con éxito');
     }
 
-    public function edit(Sede $sede)
+    public function edit($id_sede)
     {
         abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $sede = Sede::where('id', $id_sede)->first();
         $organizacions = Organizacion::getAll()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sede->load('organizacion', 'team');
@@ -186,19 +186,19 @@ class SedeController extends Controller
         return redirect()->route('admin.sedes.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(Sede $sede)
+    public function show($id_sede)
     {
         abort_if(Gate::denies('sedes_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $sede = Sede::where('id', $id_sede)->first();
         $sede->load('organizacion', 'team');
 
         return view('admin.sedes.show', compact('sede'));
     }
 
-    public function destroy(Sede $sede)
+    public function destroy($id_sede)
     {
         abort_if(Gate::denies('sedes_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $sede = Sede::where('id', $id_sede)->first();
         $sede->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -211,7 +211,7 @@ class SedeController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function obtenerListaSedes(Sede $sedes)
+    public function obtenerListaSedes($id_sedes)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$sede = Sede::getAll();

@@ -17,8 +17,6 @@ use App\Imports\EmpleadoImport;
 use App\Imports\EntendimientoOrganizacionImport;
 use App\Imports\EstadoIncidenteImport;
 use App\Imports\EvaluacionImport;
-use App\Imports\FaqCategoriaImport;
-use App\Imports\FaqPreguntaImport;
 use App\Imports\GrupoImport;
 use App\Imports\MatrizRequisitoLegaleImport;
 use App\Imports\MinutasaltadireccionImport;
@@ -204,20 +202,6 @@ class SubidaExcel extends Controller
 
         return redirect('CargaDocs')->with('success', 'All good!');
     }
-
-    // public function FaqCategoria()
-    // {
-    //     Excel::import(new FaqCategoriaImport, request()->file('faqcategoria'));
-
-    //     return redirect('CargaDocs')->with('success', 'All good!');
-    // }
-
-    // public function FaqPregunta()
-    // {
-    //     Excel::import(new FaqPreguntaImport, request()->file('faqpregunta'));
-
-    //     return redirect('CargaDocs')->with('success', 'All good!');
-    // }
 
     public function AnalisisRiesgo(Request $request)
     {

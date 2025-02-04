@@ -80,10 +80,10 @@ class GapTresController extends Controller
         return redirect()->route('admin.gap-tres.index');
     }
 
-    public function edit(GapTre $gapTre)
+    public function edit($id_gapTre)
     {
         abort_if(Gate::denies('gap_tre_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
         $gapTre->load('team');
 
         return view('admin.gapTres.edit', compact('gapTre'));
@@ -120,19 +120,19 @@ class GapTresController extends Controller
         //return redirect()->route('admin.gap-tres.index');
     }
 
-    public function show(GapTre $gapTre)
+    public function show($id_gapTre)
     {
         abort_if(Gate::denies('gap_tre_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
         $gapTre->load('team');
 
         return view('admin.gapTres.show', compact('gapTre'));
     }
 
-    public function destroy(GapTre $gapTre)
+    public function destroy($id_gapTre)
     {
         abort_if(Gate::denies('gap_tre_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $gapTre = GapTre::where('id', $id_gapTre)->first();
         $gapTre->delete();
 
         return back();

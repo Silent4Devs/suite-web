@@ -31,7 +31,7 @@ class TBTenantSilent4UniversityMiddleware
 
         $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
 
-        $tbModulosValidos = ['Capacitaciones'];
+        $tbModulosValidos = ['Capacitación'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
 

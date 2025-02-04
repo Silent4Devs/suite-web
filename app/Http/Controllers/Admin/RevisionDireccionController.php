@@ -91,10 +91,10 @@ class RevisionDireccionController extends Controller
         return redirect()->route('admin.revision-direccions.index');
     }
 
-    public function edit(RevisionDireccion $revisionDireccion)
+    public function edit($id_revisionDireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $revisionDireccion = RevisionDireccion::where('id', $id_revisionDireccion)->first();
         $revisionDireccion->load('team');
 
         return view('admin.revisionDireccions.edit', compact('revisionDireccion'));
@@ -110,19 +110,19 @@ class RevisionDireccionController extends Controller
         return redirect()->route('admin.revision-direccions.index');
     }
 
-    public function show(RevisionDireccion $revisionDireccion)
+    public function show($id_revisionDireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $revisionDireccion = RevisionDireccion::where('id', $id_revisionDireccion)->first();
         $revisionDireccion->load('team');
 
         return view('admin.revisionDireccions.show', compact('revisionDireccion'));
     }
 
-    public function destroy(RevisionDireccion $revisionDireccion)
+    public function destroy($id_revisionDireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $revisionDireccion = RevisionDireccion::where('id', $id_revisionDireccion)->first();
         $revisionDireccion->delete();
 
         return back();
