@@ -1,165 +1,110 @@
 <?php
 
-namespace App\Livewire\Timesheet;
+namespace App\Exports;
 
-use App\Exports\ReporteEmpleadoExport;
-use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
-use App\Traits\getWeeksFromRange;
+use App\Models\TimesheetHoras;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
-use Excel;
+use App\Traits\getWeeksFromRange;
 
-class ReportesEmpleados extends Component
+class ReporteEmpleadoExport implements FromCollection, WithHeadings
 {
     use getWeeksFromRange;
-    use LivewireAlert;
+    public $fecha_inicio;
 
-    public $hoy_format;
-
-    public $empleado;
+    public $fecha_fin;
 
     public $empleados;
 
-    public $timesheet;
+    public $times_faltantes_empleado;
 
-    public $hoy;
-
-    public $areas;
-
-    public $times_empleado;
-
-    public $times_empleado_horas;
-
-    public $proyectos;
-
-    public $proyectos_detalle;
-
-    public $horas_totales = 0;
+    public $semanas_totales_calendario;
 
     public $horas_totales_filtros_empleados;
 
     public $calendario_tabla;
 
-    public $times_faltantes_empleado;
+    public $hoy_format;
 
-    public $empleados_estatus;
+    public $hoy;
 
-    public $semanas_totales_calendario = 0;
+    public $areas;
 
     public $area_id = 0;
 
-    public $fecha_inicio;
-
-    public $fecha_fin;
-
-    public $fecha_inicio_empleado;
-
-    public $fecha_fin_empleado;
-
-    public $empleadosQuery;
+    public $empleados_estatus;
 
     public $emp_id;
 
-    public function mount()
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function __construct(?string $fecha_inicio, ?string $fecha_fin, ?string $area_id, ?string $emp_id)
     {
-        $this->empleados_estatus = 'alta';
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
-        $this->fecha_fin = Carbon::now()->format('Y-m-d');
+        $this->fecha_inicio = $fecha_inicio;
+        $this->fecha_fin = $fecha_fin;
+        $this->area_id = $area_id;
+        $this->emp_id = $emp_id;
     }
+
+    public function buscarKeyEnArray($search, $array)
+    {
+        foreach ($array as $key => $value) {
+            if ($key == $search) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function existsWeeksInMonth($search, $array)
+    {
+        if (in_array($search, $array)) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     public function updatedAreaId($value)
     {
         $this->area_id = $value;
-        $this->empleado = null;
+        $this->empleados = null;
     }
 
-    public function updatedFechaInicio($value)
-    {
-        $this->fecha_inicio = $value;
-        if ($this->fecha_inicio > now()->format('Y-m-d')) {
-            $this->alert('info', 'La fecha de inicio no puede ser posterior a la fecha de hoy', [
-                'position' => 'top-end',
-                'timer' => 3000,
-                'toast' => true,
-            ]);
-            $this->fecha_inicio = now()->endOfMonth()->subMonths(2)->format('Y-m-d');
-        }
-        $this->empleado = null;
-    }
 
-    public function updatedFechaFin($value)
-    {
-        $this->fecha_fin = $value;
-        if (intval(Carbon::parse($this->fecha_fin)->format('Y')) > intval(now()->format('Y'))) {
-            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( '.now()->format('Y').' )', [
-                'position' => 'top-end',
-                'timer' => 3000,
-                'toast' => true,
-            ]);
-            $this->fecha_fin = now()->format('Y-m-d');
-        } else {
-            if ($this->fecha_fin < $this->fecha_inicio) {
-                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-                $this->fecha_fin = now()->format('Y-m-d');
-            }
-        }
-        $this->empleado = null;
-    }
-
-    public function updatedFechaInicioEmpleado($value)
-    {
-        $this->fecha_inicio_empleado = $value;
-        $this->buscarEmpleado($this->empleado->id);
-    }
-
-    public function updatedFechaFinEmpleado($value)
-    {
-        $this->fecha_fin_empleado = $value;
-        $this->buscarEmpleado($this->empleado->id);
-    }
-
-    public function updateEmpleadosEstatus($value)
-    {
-        $this->empleados_estatus = $value;
-    }
-
-    public function render()
+    public function collection()
     {
         $this->areas = Area::getAll();
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
-
-        $this->hoy = Carbon::now();
-        $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
-        $this->empleados = collect();
+        $this->empleados = Empleado::getSelectEmpleadosWithArea();
 
         if ($this->area_id && $this->empleados_estatus) {
-            $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
+            $empleados_list = $this->empleados->where('area_id', $this->area_id)->where('estatus', 'alta');
         } elseif ($this->area_id) {
-            $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id);
+            $empleados_list = $this->empleados->where('area_id', $this->area_id)->where('estatus', 'alta');
         } elseif ($this->empleados_estatus) {
-            $empleados_list = $this->empleadosQuery->where('estatus', $this->empleados_estatus);
+            $empleados_list = $this->empleados->where('estatus', 'alta');
         } else {
-            $empleados_list = $this->empleadosQuery;
+            $empleados_list = $this->empleados;
         }
 
         //calendario tabla
         $calendario_array = [];
 
+        $this->hoy = Carbon::now();
+
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
         $total_months = 0;
+        $datos = [];
 
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
@@ -230,6 +175,8 @@ class ReportesEmpleados extends Component
 
             $horas_total_time = 0;
 
+            $horas_total_time = 0;
+
             $fecha_registro_timesheet = Organizacion::getFechaRegistroTimesheet();
 
             if ($this->fecha_inicio) {
@@ -252,12 +199,12 @@ class ReportesEmpleados extends Component
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)
-                ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
-                ->where('empleado_id', $empleado_list->id)
-                ->where('estatus', '!=', 'rechazado')
-                ->where('estatus', '!=', 'Rechazada')
-                ->where('estatus', '!=', 'papelera')
-                ->get();
+            ->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)
+            ->where('empleado_id', $empleado_list->id)
+            ->where('estatus', '!=', 'rechazado')
+            ->where('estatus', '!=', 'Rechazada')
+            ->where('estatus', '!=', 'papelera')
+            ->get();
 
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
@@ -301,7 +248,7 @@ class ReportesEmpleados extends Component
                     $fecha_inicio_timesheet_faltantes_empleado = Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY);
                 }
             } else {
-                $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
+                $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
             }
             if (! $fecha_inicio_timesheet_faltantes_empleado) {
                 $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
@@ -375,113 +322,58 @@ class ReportesEmpleados extends Component
                 }
             }
 
-            // array empleados
-            $this->empleados->push([
-                'id' => $empleado_list->id,
-                'avatar_ruta' => $empleado_list->avatar_ruta,
-                'estatus' => $empleado_list->estatus,
-                'horas_totales' => $horas_totales_empleado_calendar,
-                'name' => $empleado_list->name,
-                'area' => $empleado_list->area ? $empleado_list->area->area : '',
-                'puesto' => $empleado_list->puesto,
-                'times_atrasados' => $times_atrasados,
-                'times_faltantes' => $this->times_faltantes_empleado,
-                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : ($empleado_list->fecha_baja == null ? 'Fecha no registrada' : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y')),
-                'calendario' => $calendario_tabla_empleado,
-            ]);
+            $calendario_column = implode(' ', array_map(function($horas) {
+                // Elimina las etiquetas HTML, los caracteres &nbsp; y otros espacios innecesarios
+                $horas_limpias = strip_tags($horas); // Eliminar etiquetas HTML
+                $horas_limpias = html_entity_decode($horas_limpias); // Decodificar entidades HTML como &nbsp;
+                return trim($horas_limpias); // Eliminar espacios adicionales
+            }, $calendario_tabla_empleado));
+
+            // Divide los valores de calendario en un array
+            $calendario_dividido = explode(' ', $calendario_column);
+
+            $datos[] = [
+                'Nombre' => $empleado_list->name,
+                'Area' => $empleado_list->area ? $empleado_list->area->area : '',
+                'Puesto' => $empleado_list->puesto,
+                'Estatus' => $empleado_list->estatus,
+                'Fecha' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : ($empleado_list->fecha_baja == null ? 'Fecha no registrada' : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y')),
+                'Calendario' => $calendario_column,
+                'Total de Horas' => $horas_totales_empleado_calendar,
+                'Atrasos' => $times_atrasados,
+            ];
         }
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
-        $this->dispatch('scriptTabla');
-
-        return view('livewire.timesheet.reportes-empleados');
+        return collect($datos);
     }
 
-    public function buscarKeyEnArray($search, $array)
+    public function headings(): array
     {
-        foreach ($array as $key => $value) {
-            if ($key == $search) {
-                return true;
-            }
-        }
-
-        return false;
+        return [
+            'Nombre',
+            'Area',
+            'Puesto',
+            'Estatus',
+            'Fecha',
+            'Calendario',
+            'Total de Horas',
+            'Atrasos',
+        ];
     }
 
-    public function existsWeeksInMonth($search, $array)
+    public function headingsStyle(): array
     {
-        if (in_array($search, $array)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function correoRetraso($id, $sem_falt)
-    {
-        $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
-
-        foreach ($this->empleados as $key => $empleado_a) {
-            if ($empleado_a['id'] == $id) {
-                $semanas_faltantes = $sem_falt;
-            }
-        }
-
-        Mail::to(removeUnicodeCharacters($empleado->email))
-            ->queue(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
-
-        $this->alert('success', 'Correo Enviado!');
-
-        $this->empleado = null;
-    }
-
-    public function correoMasivo()
-    {
-        foreach ($this->empleados as $empleado) {
-            if ($empleado['times_atrasados'] > 0) {
-                $this->correoRetraso($empleado['id'], $empleado['times_atrasados']);
-            }
-        }
-
-        $this->alert('success', 'Correos Enviados!');
-        $this->empleado = null;
-    }
-
-    public function timeDuplicado()
-    {
-        // Paso 1: Identificar los duplicados y conservar el menor id
-        $duplicadosDelete = Timesheet::select('fecha_dia', 'empleado_id', DB::raw('MIN(id) as id_minimo'))
-            ->groupBy('fecha_dia', 'empleado_id')
-            ->havingRaw('COUNT(*) > 1')
-            ->pluck('id_minimo');
-
-        // Paso 2: Eliminar los registros duplicados, excepto los identificados en el paso 1
-        Timesheet::whereNotIn('id', $duplicadosDelete)->delete();
-
-        // Paso 1: Identificar combinaciones duplicadas
-        $duplicados = Timesheet::select('fecha_dia', 'empleado_id')
-            ->groupBy('fecha_dia', 'empleado_id')
-            ->havingRaw('COUNT(*) > 1')
-            ->get();
-
-        // Paso 2: Obtener registros completos
-        $resultados = Timesheet::where(function ($query) use ($duplicados) {
-            foreach ($duplicados as $duplicado) {
-                $query->orWhere(function ($q) use ($duplicado) {
-                    $q->where('fecha_dia', $duplicado->fecha_dia)
-                        ->where('empleado_id', $duplicado->empleado_id);
-                });
-            }
-        })->get();
-
-    }
-
-    public function exportExcel(){
-
-        $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
-
-        return Excel::download($export, 'reporte_area.xlsx');
+        return [
+            'font' => [
+                'color' => ['rgb' => 'FFFFFF'], // Color del texto (blanco)
+            ],
+            'fill' => [
+                'fillType' => 'solid',
+                'startColor' => ['rgb' => '00FF00'], // Color de fondo (verde)
+            ],
+        ];
     }
 }
