@@ -168,7 +168,7 @@
                                     </button>
                                 </div>
                                 <div class="mt-3">
-                                    <a style="all: unset; color: #747474; cursor: pointer;" href="">
+                                    <a style="all: unset; color: #747474; cursor: pointer;" href="{{ route('admin.inicioUsuario.mis-cursos') }}" >
                                         {{-- href="{{ route('admin.inicioUsuario.mis-cursos') }}"> --}}
                                         <i class="bi bi-trophy"></i>
                                         Mis logros

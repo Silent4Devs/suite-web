@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\TBControlRiskAnalysisModel;
 use App\Models\TBSheetRA_ControlRAModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Str;
@@ -25,18 +26,31 @@ class ControlsRiskAnalysis extends Component
 
     public $folder;
 
-    protected $listeners = ['reload'];
+    protected $listeners = ['reload' => 'reload'];
 
+    //function para poder recargar el datatable de controles
+    public function updatedControlsSheet($value, $key)
+    {
+        // Sirve para detectar cambios en cualquier archivo cargado
+        if (str_contains($key, 'file')) {
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+        }
+    }
+
+    // #[On('updateData')]
     public function reload($sheetId)
     {
         $this->sheetId = $sheetId;
         $this->getControlsSheet();
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
     }
 
     public function deleteFile($index)
     {
         $this->controlsSheet[$index]['fileStatus'] = false;
         $this->controlsSheet[$index]['file'] = null;
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+
     }
 
     public function download($path)
@@ -112,8 +126,10 @@ class ControlsRiskAnalysis extends Component
             }
         }
 
-        $this->emit('responseTableControls');
+        $this->dispatch('responseTableControls');
         $this->getControlsSheet();
+        $this->dispatch('execute-script', table:'datatable-risk-analysis-controls');
+
     }
 
     public function getControlsSheet()
@@ -186,8 +202,8 @@ class ControlsRiskAnalysis extends Component
 
     public function render()
     {
-        // $this->emit('ejecutarScript');
-        $this->emit('scriptTabla2');
+        // $this->dispatch('ejecutarScript');
+        // $this->dispatch('scriptTabla2');
 
         return view('livewire.analisis-riesgos.controls-risk-analysis');
     }

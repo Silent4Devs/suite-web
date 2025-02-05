@@ -33,8 +33,8 @@ const RecordFormula = ({item, handleChangeStatus, handleChangeTitle,deleteFormul
         <div className="row d-flex align-items-center ">
             <div className="col-5 col-sm-2 d-flex align-items-center flex-column">
                 <label htmlFor={`riesgo-${item.id}`} >Define el Riesgo</label>
-                <div className="form-group pl-0 anima-focus">
-                    <input style={{width: "24px", height:"24px"}} type="checkbox" className="form-control" name={`riesgo-${item.id}`} checked={item.riesgo} onChange={(e)=>handleChangeStatus(item.id)}/>
+                <div className="form-checked form-control d-flex justify-content-center pl-0 anima-focus border-0">
+                    <input style={{width: "24px", height:"24px"}} type="checkbox" className="" name={`riesgo-${item.id}`} checked={item.riesgo} onChange={(e)=>handleChangeStatus(item.id)}/>
                 </div>
             </div>
             <div className="col-6 col-sm-3 d-flex flex-column">

@@ -285,11 +285,11 @@
                 getAdvance = getIndex + 1;
                 switch (getIndex) {
                     case 1:
-                        Livewire.emit('renderSaveDataGeneral');
-                        Livewire.emit('renderSaveEscala');
-                        Livewire.emit('renderSaveProbImp');
-                        Livewire.emit('renderReloadEscala', template_id);
-                        Livewire.emit('renderReloadProbImp', template_id);
+                        Livewire.dispatch('renderSaveDataGeneral');
+                        Livewire.dispatch('renderSaveEscala');
+                        Livewire.dispatch('renderSaveProbImp');
+                        Livewire.dispatch('renderReloadEscala', {template_id});
+                        Livewire.dispatch('renderReloadProbImp', {template_id});
                         break;
                     case 2:
                         saveGenerateFormTemplate(save);
@@ -360,8 +360,8 @@
                 let getIndex = $('.point--active').index();
                 switch (getIndex) {
                     case 1:
-                        Livewire.emit('renderReloadEscala', template_id);
-                        Livewire.emit('renderReloadProbImp', template_id);
+                        Livewire.dispatch('renderReloadEscala', {template_id});
+                        Livewire.dispatch('renderReloadProbImp', {template_id});
                         break;
                     case 2:
                         reloadGenerateFormTemplate(reload)
@@ -497,18 +497,20 @@
             let validacion1, validacion2;
 
             Livewire.on('validateEscala', function(newValue) {
-                validacion1 = newValue;
+                validacion1 = newValue.send;
                 compararVariables();
             });
 
             Livewire.on('validateProb_Imp', function(newValue) {
-                validacion2 = newValue;
+                validacion2 = newValue.send;
                 compararVariables();
             });
 
             const compararVariables = () => {
-
+                console.log("comparacion")
                 if (validacion1 !== 'undefined' && validacion2 !== 'undefined') {
+                    console.log("object1")
+                    console.log(validacion1.send, validacion2.send)
                     if (validacion1 === validacion2) {
                         console.log('Las variables son iguales:');
                         resetValidate()

@@ -18,4 +18,10 @@ class TBAnswerSheetRiskAnalysisModel extends Model
         'question_id',
         'value',
     ];
+
+    public function questionR()
+    {
+        return $this->hasOne(TBQuestionRiskAnalysisModel::class, 'id');
+    }
+
 }

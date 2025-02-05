@@ -22,6 +22,7 @@ class TBSheetRiskAnalysisModel extends Model
         'residual_risk_confirm',
         'require_treatment_plan',
         'treatment_plan_id',
+        'history_id',
     ];
 
     protected static function boot()
@@ -43,4 +44,10 @@ class TBSheetRiskAnalysisModel extends Model
     {
         return $this->hasMany(TBPeriodSheetRiskAnalysisModel::class, 'sheet_id');
     }
+
+    public function sheetPeriod()
+    {
+        return $this->hasOne(TBPeriodSheetRiskAnalysisModel::class, 'sheet_id');
+    }
+
 }

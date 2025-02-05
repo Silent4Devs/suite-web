@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalisisdeRiesgosController;
 use App\Http\Controllers\Admin\CalendarioOficialController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DenunciasController;
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
     Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
     Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
 
     Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
     Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
@@ -913,6 +915,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
             Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
             Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
+            Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+            Route::get('risk-analysis', [AnalisisdeRiesgosController::class, 'RiskAnalysis'])->name('risk-analysis-index');
+            Route::get('risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'ShowRiskAnalysis'])->name('show-risk-analysis');
+            Route::get('logs-template-risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'LogsTemplateRiskAnalysis'])->name('logs-template-risk-analysis');
+
+        Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+        // Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+        Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
 
             Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
             Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');

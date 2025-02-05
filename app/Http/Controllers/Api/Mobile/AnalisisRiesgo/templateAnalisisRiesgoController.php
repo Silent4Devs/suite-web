@@ -1041,10 +1041,11 @@ class templateAnalisisRiesgoController extends Controller
     {
         $questions = $request['questions'];
         $formulas = $request['formulas'];
-
         foreach ($questions as $question) {
+            // dd($question['question_id']);
             try {
-                $questionRegister = TBSettingsTemplateAR_TBQuestionTemplateARModel::findOrFail($question['question_id']);
+                $questionRegister = TBSettingsTemplateAR_TBQuestionTemplateARModel::where('question_id', $question['question_id'])->first();
+                // dd($questionRegister);
                 DB::beginTransaction();
 
                 $questionRegister->update([
@@ -1054,6 +1055,7 @@ class templateAnalisisRiesgoController extends Controller
                 DB::commit();
             } catch (\Throwable $th) {
                 //throw $th;
+                dd($th);
                 DB::rollback();
 
                 continue;
@@ -1084,7 +1086,7 @@ class templateAnalisisRiesgoController extends Controller
     public function createQuestionsDefault($templateId, $sectionId)
     {
         $sectionRegister = TBSectionTemplateAnalisisRiesgoModel::where('template_id', $templateId)->first();
-
+        // dd($sectionRegister);
         $optionId = ([
             'title' => 'ID',
             'position' => 0,
@@ -1140,7 +1142,7 @@ class templateAnalisisRiesgoController extends Controller
         ]);
 
         TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
-            'template_id' => $sectionRegister->id,
+            'template_id' => $templateId,
             'question_id' => $questionOptionId->id,
             'is_show' => false,
         ]);
@@ -1153,7 +1155,7 @@ class templateAnalisisRiesgoController extends Controller
         ]);
 
         TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
-            'template_id' => $sectionRegister->id,
+            'template_id' => $templateId,
             'question_id' => $questionOptionDescription->id,
             'is_show' => false,
         ]);
@@ -1166,7 +1168,7 @@ class templateAnalisisRiesgoController extends Controller
         ]);
 
         TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
-            'template_id' => $sectionRegister->id,
+            'template_id' => $templateId,
             'question_id' => $questionOptionOwner->id,
             'is_show' => false,
         ]);
@@ -1179,7 +1181,7 @@ class templateAnalisisRiesgoController extends Controller
         ]);
 
         TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
-            'template_id' => $sectionRegister->id,
+            'template_id' => $templateId,
             'question_id' => $questionOptionProb->id,
             'is_show' => false,
         ]);
@@ -1192,7 +1194,7 @@ class templateAnalisisRiesgoController extends Controller
         ]);
 
         TBSettingsTemplateAR_TBQuestionTemplateARModel::create([
-            'template_id' => $sectionRegister->id,
+            'template_id' => $templateId,
             'question_id' => $questionOptionImpa->id,
             'is_show' => false,
         ]);
