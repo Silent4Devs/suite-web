@@ -16,20 +16,18 @@
         }
     @endphp
 
-    <form method="POST" action="{{ route('password.request') }}" style="height: 513px">
+    <form method="POST" action="{{ route('password.update') }}" style="height: 513px">
         @csrf
 
         <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
         <h3 class="mt-2" style="color: var(--color-tbj); font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>
-        <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña, una vez realizada esta
-            acción oprime el botón
-            "Reestablecer contraseña" y automáticamente quedarás logeado dentro de TABANTAJ</p>
-        <input name="token" value="{{ $token }}" type="hidden">
+        <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña y, al confirmarla, presiona el botón "Restablecer contraseña". Una vez completado el proceso, ingresarás automáticamente a TABANTAJ.</p>
+        {{-- <input name="token" value="{{ $token }}" type="hidden"> --}}
 
         <div class="form-group">
             <input id="email" type="email" name="email"
                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus
-                placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}" readonly>
+                placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}" >
 
             @if ($errors->has('email'))
                 <small class="text-danger">
@@ -37,6 +35,7 @@
                 </small>
             @endif
         </div>
+        <br>
         <div class="form-group" style="position: relative">
             <input id="password" type="password" name="password" class="form-control" required
                 placeholder="{{ trans('global.login_password') }}">
@@ -48,12 +47,14 @@
                 </small>
             @endif
         </div>
+        <br>
         <div class="form-group" style="position: relative">
             <input id="password-confirm" type="password" name="password_confirmation" class="form-control" required
                 placeholder="{{ trans('global.login_password_confirmation') }}">
             <span style="position: absolute; top:21px;right: 8px;"><i id="tooglePasswordConfirmation"
                     class="fas fa-eye-slash"></i></span>
         </div>
+        <br>
 
         <div class="row">
             <div class="col-12">

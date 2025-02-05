@@ -46,6 +46,7 @@ use App\Http\Controllers\ContractManager\ContratosController;
 use App\Http\Controllers\ContractManager\DashboardController;
 use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\RevisionDocumentoController;
 use App\Http\Controllers\SubidaExcel;
@@ -92,15 +93,21 @@ Route::prefix('certificates')->controller(CertificatesController::class)->group(
 
 Auth::routes();
 
+Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
+    ->name('password.expired')
+    ->middleware('auth');
+
+Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+    ->name('password.update')
+    ->middleware('auth');
+
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
     Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
     Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
-    //log-viewer
     //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
     // Agrupamos las rutas relacionadas con el controlador UsersController
@@ -699,6 +706,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
         Route::view('visualizar-logs', 'admin.visualizar-logs.index')->name('visualizar-logs.index');
 
+        Route::middleware(['auth', 'password.expired'])->group(function () {
         Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
         Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
         Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
@@ -706,6 +714,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
         // Route::resource('portal-comunicacion', 'PortalComunicacionController');
         Route::resource('portal-comunicacion', 'PortalComunicacionController');
+        });
 
         Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
         Route::post('plantTrabajoBase/listaDataTables', 'PlanTrabajoBaseController@listaDataTables')->name('plantTrabajoBase.listaDataTables');

@@ -72,6 +72,13 @@ class User extends Authenticatable implements Auditable
         });
     }
 
+    public function passwordExpired()
+    {
+        $diasExpiracion = 182; // Cambia esto según tus necesidades
+        return $this->password_changed_at === null ||
+            Carbon::parse($this->password_changed_at)->addDays($diasExpiracion)->isPast();
+    }
+
     public static function getAll()
     {
         return Cache::remember('Users:users_all', 3600 * 13, function () {
