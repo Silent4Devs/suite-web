@@ -47,8 +47,8 @@ function renderCalendar() {
         const jsonContratos = {
             id: id,
             title: nombre_servicio,
-            start: TbConvertStringToTimeStamp(fecha_inicio, 'YYYY-MM-DD'),
-            end: TbConvertStringToTimeStamp(fecha_fin, 'YYYY-MM-DD'),
+            start: fecha_inicio ? TbConvertStringToTimeStamp(fecha_inicio, 'YYYY-MM-DD') : null,
+            end: fecha_fin ? TbConvertStringToTimeStamp(fecha_fin, 'YYYY-MM-DD') : null,
             color: "#C0AEE5"
         };
         eventsCalendar.push(jsonContratos);

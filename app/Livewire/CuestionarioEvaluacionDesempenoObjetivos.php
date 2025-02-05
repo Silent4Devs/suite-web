@@ -418,10 +418,18 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     {
         $nPreguntas = $this->objetivos_evaluado->count();
         $contestadas = $this->objetivos_evaluado->where('estatus_calificado', true)->count();
-        $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
+
+        // Verificar si $nPreguntas es mayor que 0 antes de realizar la división
+        if ($nPreguntas > 0) {
+            $this->porcentajeCalificado = round((($contestadas / $nPreguntas) * 100), 2);
+        } else {
+            // Si no hay preguntas, asignar un valor predeterminado (0 en este caso)
+            $this->porcentajeCalificado = 0;
+        }
 
         $this->sendDataToParent();
     }
+
 
     public function cambiarSeccion($llave)
     {
