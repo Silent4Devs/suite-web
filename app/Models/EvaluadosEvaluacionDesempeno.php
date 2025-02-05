@@ -404,48 +404,42 @@ class EvaluadosEvaluacionDesempeno extends Model
     {
         $evaluado = self::find($this->id);
 
+        // Filtrar evaluadores excluyendo al mismo evaluado
         $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
+
+        // Agrupar calificaciones por objetivo_id
         $calificacionesAgrupadas = [];
 
         foreach ($evaluadores as $evlrs) {
-            $evrs = $evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo);
-            foreach ($evrs as $pregunta) {
-                $calificacion = [
-                    'objetivo_id' => $pregunta->objetivo_id,
-                    'nombre' => $pregunta->infoObjetivo->objetivo,
-                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
-                    'estatus_calificado' => $pregunta->estatus_calificado,
-                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
-                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
-                ];
+            foreach ($evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo) as $pregunta) {
+                $objetivoId = $pregunta->objetivo_id;
+                $valorMaximo = $pregunta->infoObjetivo->valor_maximo_unidad_objetivo;
+                $valorMinimo = $pregunta->infoObjetivo->valor_minimo_unidad_objetivo;
+                $calificacionObjetivo = $pregunta->calificacion_objetivo;
+                $estatusCalificado = $pregunta->estatus_calificado;
 
-                // Agrupar por objetivo_id
-                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
-                    $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
+                // Manejo de calificación total evitando división por 0 y considerando valores negativos
+                if ($valorMaximo == 0) {
+                    $calificacionTotal = 0;
+                } else {
+                    $calificacionNormalizada = ($calificacionObjetivo - $valorMinimo) / ($valorMaximo - $valorMinimo);
+                    $calificacionTotal = round(($calificacionNormalizada * $evlrs->porcentaje_objetivos), 2);
                 }
 
-                $calificacionesAgrupadas[$pregunta->objetivo_id][] = $calificacion;
+                // Asegurar que el array esté inicializado
+                if (!isset($calificacionesAgrupadas[$objetivoId])) {
+                    $calificacionesAgrupadas[$objetivoId] = [
+                        'objetivo_id' => $objetivoId,
+                        'calificacion_total' => 0,
+                        'estatus_calificado' => $estatusCalificado,
+                    ];
+                }
+
+                // Sumar la calificación total
+                $calificacionesAgrupadas[$objetivoId]['calificacion_total'] += $calificacionTotal;
             }
         }
 
-        $calificacionesSumadas = [];
-
-        foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
-            $suma = 0;
-
-            foreach ($calificaciones as $calificacion) {
-                $suma += $calificacion['calificacion_total'];
-            }
-
-            $calificacionesSumadas[] = [
-                'objetivo_id' => $objetivo_id,
-                'calificacion_total' => $suma,
-                'estatus_calificado' => $calificacion['estatus_calificado'],
-            ];
-        }
-
-        return [
-            'calif_escala' => $calificacionesSumadas,
-        ];
+        return ['calif_escala' => array_values($calificacionesAgrupadas)];
     }
 }
