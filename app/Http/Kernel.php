@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         'course' => \App\Http\Middleware\CourseMiddleware::class,
+        'password.expired' => \App\Http\Middleware\PasswordExpired::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 
