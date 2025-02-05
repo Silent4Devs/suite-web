@@ -223,7 +223,6 @@
 
     @case('12')
         <div>
-            {{$question->id}}
             {{-- {{isset($answersForm[$question->id]) && isset($answersForm[$question->id]->value) ? $answersForm[$question->id]->value : '' }} --}}
             <div class="form-group pl-0 mb-0 anima-focus">
                 <input class="form-control" placeholder="" name="qs-{{ $question->id }}"

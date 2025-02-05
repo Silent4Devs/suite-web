@@ -187,7 +187,7 @@
                                                         <label>
                                                             @if ($question->type != 10)
                                                                 {{ $question->title }}
-                                                                {{ $question->type }}
+                                                                {{-- {{ $question->type }} --}}
                                                                 <span
                                                                     style="color:#FF0000">{{ $question->obligatory ? '*' : null }}</span>
                                                             @endif
