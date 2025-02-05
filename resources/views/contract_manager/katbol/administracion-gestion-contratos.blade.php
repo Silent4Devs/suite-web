@@ -60,6 +60,14 @@
                 </a>
             </li>
         @endcan
+        <li>
+            <a href="{{ route('contract_manager.orden-compra.clausulas') }}">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>
+                    Clausulas OC
+                </span>
+            </a>
+        </li>
     </ul>
 @else
     <div class="row" style="margin-left: -10px">

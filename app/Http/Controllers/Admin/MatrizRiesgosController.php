@@ -250,7 +250,7 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_de_riesgo_vinculo'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots'])->where('id_analisis', '=', $request->id)->orderByDesc('id')->get();
+            $query = MatrizRiesgo::with(['controles', 'matriz_riesgos_controles_pivots'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
