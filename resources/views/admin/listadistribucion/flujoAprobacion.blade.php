@@ -46,7 +46,7 @@
                                     {{ $empleado->name }}</option>
                             @endforeach
                         </select>
-                        <label for="superaprobadores" style="color:#057BE2;">Super Aprobadores</label>
+                        <label for="superaprobadores" style="color:#057BE2;">Super Aprobadores </label>
                     </div>
                 </div>
             </div>

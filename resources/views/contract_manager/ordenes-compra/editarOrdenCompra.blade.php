@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-@section('titulo', 'Actualizar Orden de Compra')
+{{-- @section('titulo', 'Actualizar Orden de Compra') --}}
 
 <link rel="stylesheet" href="{{ asset('css/requisitions/requisitions.css') }}">
 <link rel="stylesheet" href="{{ asset('css/requisitions/jquery.signature.css') }}{{ config('app.cssVersion') }}">
@@ -273,7 +273,7 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-nombre" name="nombre"
-                                    value="{{ $requisicion->proveedor->nombre ?? '' }}" placeholder=""
+                                    value="{{ $requisicion->proveedor_catalogo_oc ?? $requisicion->proveedorOC->nombre ?? '' }}" placeholder=""
                                     class="form-control">
                                 <label for="proveedor-nombre">
                                     Nombre Comercial
@@ -283,7 +283,7 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-rfc" name="rfc"
-                                    value="{{ $requisicion->proveedor->rfc ?? '' }}" placeholder=""
+                                    value="{{ $requisicion->proveedorOC->rfc ?? '' }}" placeholder=""
                                     class="form-control">
                                 <label for="proveedor-rfc">
                                     RFC
@@ -295,7 +295,7 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-contacto"
-                                    value="{{ $requisicion->proveedor->contacto ?? '' }}" name="contacto"
+                                    value="{{ $requisicion->proveedorOC->contacto ?? '' }}" name="contacto"
                                     placeholder="" class="form-control">
                                 <label for="proveedor-contacto">
                                     Nombre del contacto
@@ -305,7 +305,7 @@
                         <div class="col s12 l9 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-direccion"
-                                    value="{{ $proveedor->direccion ?? '' }}" placeholder="" name="direccion"
+                                    value="{{ $requisicion->proveedorOC->direccion ?? $proveedor->direccion ?? '' }}" placeholder="" name="direccion"
                                     class="form-control">
                                 <label for="proveedor-direccion">
                                     Dirección
@@ -317,7 +317,7 @@
                         <div class="col s12 l6 ">
                             <div class="anima-focus">
                                 <input type="text" id="envio" name="direccion_envio"
-                                    value="{{ $requisicion->direccion_envio_proveedor ?? '' }}" placeholder=""
+                                    value="{{ $requisicion->proveedorOC->envio ?? $requisicion->direccion_envio_proveedor ?? '' }}" placeholder=""
                                     class="form-control">
                                 <label for="envio">
                                     Envío a
@@ -327,7 +327,7 @@
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
                                 <input type="text" id="proveedor-razon"
-                                    value="{{ $proveedor->facturacion ?? '' }}" placeholder="" name="facturacion"
+                                    value="{{ $requisicion->proveedorOC->facturacion ?? $proveedor->facturacion ?? '' }}" placeholder="" name="facturacion"
                                     class="form-control">
                                 <label for="proveedor-razon">
                                     Facturación a
@@ -336,7 +336,7 @@
                         </div>
                         <div class="col s12 l3 ">
                             <div class="anima-focus">
-                                <input type="text" value="{{ $requisicion->credito_proveedor ?? '' }}"
+                                <input type="text" value="{{ $requisicion->proveedorOC->credito ?? $requisicion->credito_proveedor ?? '' }}"
                                     name="credito_proveedor" placeholder="" id="cred_prov" class="form-control">
                                 <label for="cred_prov">
                                     Crédito disponible

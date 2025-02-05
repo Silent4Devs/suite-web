@@ -86,31 +86,67 @@
                                 @endif
 
                             </td>
-                            @php
-
-                                $user = Illuminate\Support\Facades\DB::table('users')
-                                    ->select('id', 'name')
-                                    ->where('id', $requisicion->id_user)
-                                    ->first();
-
-                            @endphp
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_comprador_orden))
                                         @php
-                                            $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                ->where('id', $requisicion->comprador_id)
-                                                ->first();
+                                            if ($requisicion->registroFirmas) {
+                                                $compradorName =
+                                                    $requisicion->obtener_responsable_comprador->name ?? false;
+                                            } else {
+                                                $compradorName = $requisicion->comprador->user->name;
+                                            }
                                         @endphp
-                                        <p>Comprador: {{ $comprador->user->name }}</p>
+
+                                        @if ($compradorName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El comprador no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_solicitante_orden))
-                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
+                                        <p>Solicitante: {{ $requisicion->userSolicitante->name ?? '' }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas_orden))
-                                        <p>Finanzas</p>
+                                        @php
+                                            if ($requisicion->registroFirmas) {
+                                                $finanzasName =
+                                                    $requisicion->obtener_responsable_finanzas_orden_compra->name ??
+                                                    false;
+                                            } else {
+                                                $finanzasName = 'Sin identificar';
+                                            }
+                                        @endphp
+
+                                        @if ($finanzasName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El responsable de finanzas no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
                                     @default

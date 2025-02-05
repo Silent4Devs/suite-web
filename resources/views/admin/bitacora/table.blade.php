@@ -431,7 +431,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="estatus" class="txt-tamaño">Adjuntar
                     Contrato<font class="asterisco">*</font></label><br>
                 <div class="">
@@ -452,6 +452,9 @@
                                 {{ $errors->first('file_contrato') }}
                             </div>
                         @endif
+
+                        <p id="compressStatus" class="mt-2 text-muted"></p>
+
                         {{-- </div> --}}
                     </div>
 
@@ -470,7 +473,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="vigencia_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
@@ -482,7 +485,18 @@
                     </div>
                 @endif
             </div>
-
+            <div class="form-group col-md-4">
+                <label for="no_pagos" class="txt-tamaño">
+                    &nbsp;No. Pagos<font class="asterisco">*</font>
+                </label><br>
+                <input type="number" name="no_pagos" id="no_pagos" value="{{ old('no_pagos', '') }}"
+                    class="form-control" required min="1">
+                @if ($errors->has('no_pagos'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_pagos') }}
+                    </div>
+                @endif
+            </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
@@ -529,21 +543,10 @@
                 @endif
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label for="no_pagos" class="txt-tamaño">
-                    &nbsp;No. Pagos<font class="asterisco">*</font>
-                </label><br>
-                <input type="number" name="no_pagos" id="no_pagos" value="{{ old('no_pagos', '') }}"
-                    class="form-control" required min="1">
-                @if ($errors->has('no_pagos'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_pagos') }}
-                    </div>
-                @endif
-            </div>
+
+        <div style="padding-left: 0%;">
+            @livewire('moneda-ext-contratos-create')
         </div>
-        @livewire('moneda-ext-contratos-create')
 
         <div class="col s12">
             <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
@@ -713,6 +716,62 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const fileInput = document.getElementById("file_contrato");
+        const statusText = document.getElementById("compressStatus");
+
+        fileInput.addEventListener("change", async (event) => {
+            const selectedFile = event.target.files[0];
+
+            if (!selectedFile) {
+                statusText.textContent = "No se ha seleccionado ningún archivo.";
+                return;
+            }
+
+            if (selectedFile.type !== "application/pdf") {
+                statusText.textContent = "El archivo seleccionado no es un PDF.";
+                return;
+            }
+
+            statusText.textContent = "Comprimiendo archivo...";
+
+            try {
+                const arrayBuffer = await selectedFile.arrayBuffer();
+
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+
+                pdfDoc.setCreator("");
+                pdfDoc.setProducer("");
+
+                const compressedPdfBytes = await pdfDoc.save({
+                    useObjectStreams: true
+                });
+
+                const compressedBlob = new Blob([compressedPdfBytes], {
+                    type: "application/pdf"
+                });
+
+                const compressedFile = new File([compressedBlob],
+                    `compressed-${selectedFile.name}`, {
+                        type: "application/pdf",
+                    });
+
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(compressedFile);
+                fileInput.files = dataTransfer.files;
+
+                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
+            } catch (error) {
+                console.error("Error al comprimir el PDF:", error);
+                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
     function showContent() {

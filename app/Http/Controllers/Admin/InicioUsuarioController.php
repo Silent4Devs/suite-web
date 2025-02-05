@@ -48,7 +48,7 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\User;
 use App\Models\VersionesIso;
-use App\Services\SentimentService;
+// use App\Services\SentimentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -112,8 +112,6 @@ class InicioUsuarioController extends Controller
 
         $usuario = User::getCurrentUser();
         $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
-
-        // dd($empleado->estado_disponibilidad);
 
         $usuarioVinculadoConEmpleado = false;
         if ($empleado) {
@@ -587,7 +585,7 @@ class InicioUsuarioController extends Controller
             ],
         );
 
-        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+        // $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $quejas = Quejas::create([
             'anonimo' => $request->anonimo,
@@ -604,7 +602,7 @@ class InicioUsuarioController extends Controller
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -663,7 +661,7 @@ class InicioUsuarioController extends Controller
             ],
         );
 
-        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+        // $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $denuncias = Denuncias::create([
             'anonimo' => $request->anonimo,
@@ -675,7 +673,7 @@ class InicioUsuarioController extends Controller
             'ubicacion' => $request->ubicacion,
             'fecha' => $request->fecha,
             'estatus' => 'nuevo',
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -733,7 +731,7 @@ class InicioUsuarioController extends Controller
             'beneficios' => 'required',
         ]);
 
-        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+        // $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $mejoras = Mejoras::create([
             'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
@@ -745,7 +743,7 @@ class InicioUsuarioController extends Controller
             'tipo' => $request->tipo,
             'otro' => $request->otro,
             'estatus' => 'nuevo',
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -784,7 +782,7 @@ class InicioUsuarioController extends Controller
             ],
         );
 
-        $sentimientos = SentimentService::analyzeSentiment($request->descripcion);
+        // $sentimientos = SentimentService::analyzeSentiment($request->descripcion);
 
         $sugerencias = Sugerencias::create([
             'empleado_sugirio_id' => User::getCurrentUser()->empleado->id,
@@ -795,7 +793,7 @@ class InicioUsuarioController extends Controller
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'estatus' => 'nuevo',
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([
@@ -841,7 +839,7 @@ class InicioUsuarioController extends Controller
             'procedente' => 'required',
         ]);
 
-        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+        // $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
@@ -855,7 +853,7 @@ class InicioUsuarioController extends Controller
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'procedente' => $incidente_procedente,
             'justificacion' => $request->justificacion,
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         if ($incidente_procedente) {
@@ -922,7 +920,7 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+        // $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $riesgos = RiesgoIdentificado::create([
             'titulo' => $request->titulo,
@@ -935,7 +933,7 @@ class InicioUsuarioController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
-            'sentimientos' => $sentimientos,
+            // 'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

@@ -16,10 +16,10 @@
         <table class="encabezado">
             <tr>
                 <td class="td-img-doc">
-                    @if ($requisiciones->sucursal->mylogo)
-                        <img src="{{ public_path('razon_social/' . trim($requisiciones->sucursal->mylogo)) }}">
+                    @if ($organizacion->logo)
+                    <td><img src="{{ asset($organizacion->logo) }}" style="width:100%; max-width:150px; position: relative; right: 6rem;"></td>
                     @else
-                        <img src="{{ public_path('sinLogo.png') }}">
+                        <td><img src="{{ asset('sinLogo.png') }}" style="width:100%; max-width:150px; position: relative; right: 6rem;"></td>
                     @endif
                 </td>
                 <td class="info-header">

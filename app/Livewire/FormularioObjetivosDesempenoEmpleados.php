@@ -26,7 +26,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 {
     use LivewireAlert;
 
-    protected $listeners = ['enviarPapelera'];
+    protected $listeners = ['enviarPapelera', 'aprobarObjetivo', 'rechazarObjetivo'];
 
     public $id_emp;
 
@@ -92,6 +92,8 @@ class FormularioObjetivosDesempenoEmpleados extends Component
 
     public $maximo_objetivo = null;
 
+    public $permisoAprobacion = false;
+
     protected $rules = [
         'objetivo_estrategico' => 'required|string|max:255',
         'descripcion' => 'nullable|string',
@@ -148,6 +150,15 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             $fecha_fin = Carbon::parse($periodo->fecha_fin);
 
             $this->permiso_carga = $hoy->between($fecha_inicio, $fecha_fin);
+        }
+
+        $empleado = Empleado::where('id', $this->id_emp)->first();
+        $usuario = User::getCurrentUser();
+        // $usuario->can('objetivos_estrategicos_agregar')
+        if ($usuario->roles->contains('title', 'Admin') || $usuario->empleado->id == $empleado->supervisor->id) {
+            $this->permisoAprobacion = true;
+        } else {
+            $this->permisoAprobacion = false;
         }
     }
 
@@ -244,27 +255,77 @@ class FormularioObjetivosDesempenoEmpleados extends Component
         }
     }
 
-    public function revision($id_obj, $estado)
+    public function aprobarObjetivo($objetivoId)
     {
         try {
-            $est_obj = Objetivo::find($id_obj);
+            $est_obj = Objetivo::find($objetivoId);
             $empleado = Empleado::getAltaDataColumns()->find($this->id_emp);
 
-            if ($estado == 'aprobar') {
-                $est_obj->update([
-                    'esta_aprobado' => 1,
-                ]);
+            $est_obj->update([
+                'esta_aprobado' => 1,
+            ]);
+
+            $this->forgetCache();
+
+            try {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoAprobado($empleado, $est_obj));
-                $this->render();
-            } elseif ($estado == 'rechazar') {
-                $est_obj->update([
-                    'esta_aprobado' => 2,
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->alert('error', 'Error al Enviar Correo', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'Ha habido un error al intentar enviar el correo, se enviara cuando el servicio vuelva a estar disponible.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
                 ]);
-                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoRechazado($empleado, $est_obj));
-                $this->render();
             }
+
+            $this->render();
         } catch (\Throwable $th) {
-            $this->alert('error', 'Error al Enviar Correo', [
+            $this->alert('error', 'Error al Aprobar Objetivo', [
+                'position' => 'center',
+                'timer' => 6000,
+                'toast' => false,
+                'text' => 'Ha habido un error al intentar aprobar el objetivo, intente de nuevo.',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Entendido',
+                'timerProgressBar' => true,
+            ]);
+        }
+    }
+
+    public function rechazarObjetivo($objetivoId)
+    {
+        try {
+            $est_obj = Objetivo::find($objetivoId);
+            $empleado = Empleado::getAltaDataColumns()->find($this->id_emp);
+
+            $est_obj->update([
+                'esta_aprobado' => 2,
+            ]);
+
+            $this->forgetCache();
+
+            try {
+                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoRechazado($empleado, $est_obj));
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->alert('error', 'Error al Enviar Correo', [
+                    'position' => 'center',
+                    'timer' => 6000,
+                    'toast' => false,
+                    'text' => 'Ha habido un error al intentar rechazar el objetivo, intente de nuevo.',
+                    'showConfirmButton' => true,
+                    'confirmButtonText' => 'Entendido',
+                    'timerProgressBar' => true,
+                ]);
+            }
+
+            $this->render();
+        } catch (\Throwable $th) {
+            $this->alert('error', 'Error al Rechazar Objetivo', [
                 'position' => 'center',
                 'timer' => 6000,
                 'toast' => false,
@@ -294,9 +355,10 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             return;
         }
 
+        $empleado = Empleado::where('id', $this->id_emp)->first();
         $usuario = User::getCurrentUser();
-
-        if ($usuario->can('objetivos_estrategicos_agregar') || $usuario->empleado->es_supervisor) {
+        // $usuario->can('objetivos_estrategicos_agregar')
+        if ($usuario->roles->contains('title', 'Admin') || $usuario->empleado->id == $empleado->supervisor->id) {
             $estatus = 1;
         } else {
             $estatus = 0;

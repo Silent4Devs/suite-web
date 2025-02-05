@@ -1,3 +1,4 @@
+<h5 class="col-12 titulo_general_funcion">Centro de Atención: <span style="font-weight: lighter;">Quejas</span></h5>
 <div class="cards-status-centro-atencion">
     <div class="card-status-centro" style="background-color: #4A98FF !important;">
         <i class="material-symbols-outlined">warning</i>
@@ -43,7 +44,7 @@
     </div>
 </div>
 
-<div class="card card-body box-sentimientos mt-4">
+{{-- <div class="card card-body box-sentimientos mt-4">
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
@@ -79,7 +80,7 @@
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
-</div>
+</div> --}}
 
 <div class="row">
     <div class="col-6 col-md-2">
@@ -152,7 +153,7 @@
                 <th style="min-width:200px;">Ubicación</th>
                 <th style="min-width:200px;">Externos</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th>Opciones</th>
+                <th style="min-width: 250px;">Opciones</th>
             </tr>
         </thead>
     </table>
@@ -597,7 +598,7 @@
                 				<a href="/admin/desk/${data}/quejas-edit/"><i class="fas fa-edit"></i></a>
                                 @endcan
 
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-quejas-${data}">
+                                <button type="button" class="btn d-none" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-quejas-${data}">
                                     <i class="fa-regular fa-face-smile"></i>
                                 </button>
                                 `;

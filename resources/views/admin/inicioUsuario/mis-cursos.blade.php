@@ -8,6 +8,11 @@
     <h6>Mis Certificaciones</h6>
 
     @foreach ($cursosUser as $cursoUser)
+        <div class="d-none">
+            {{ $cursoUser->curso->title }} <br>
+            {{ $cursoUser->completado }} <br>
+            {{ $cursoUser->curso->certificado }}
+        </div>
         @if ($cursoUser->completado == 100 && $cursoUser->curso->certificado)
             <div class="card card-body mt-4">
                 <div class="d-flex justify-content-between align-items-center">
@@ -34,8 +39,10 @@
                         <strong>{{ $user->empleado->name }}</strong>
                     </div>
                     <div class="firma-fecha">
-                        <div class="firma-instructor">
-                            <img src="{{ $cursoUser->curso->firma_instructor }}" alt="" style="width: 100%;">
+                        <div class="firma-instructor {{ $cursoUser->curso->firma_habilitar ? '' : 'sin-firma' }}">
+                            @if ($cursoUser->curso->firma_habilitar)
+                                <img src="{{ $cursoUser->curso->firma_instructor }}" alt="" style="width: 100%;">
+                            @endif
                         </div>
                         <div class="fecha-certificado">
                             {{ Carbon\Carbon::parse($cursoUser->curso->created_at)->format('d/m/Y') }}

@@ -175,9 +175,8 @@
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             @if ($convenios->count() > 0)
                 <div class="col s12 right-align">
-                    <a class="waves-effect waves-light btn modal-trigger" href="#convenios_modificados">Visualizar
-                        Convenios
-                        Modificados</a>
+                    <!-- Botón para abrir el modal -->
+                    <a id="openModal" class="waves-effect waves-light btn">Visualizar Convenios Modificados</a>
                 </div>
             @endif
         </div>
@@ -437,12 +436,16 @@
                                 <span>OK</span>
                             </div> --}}
                         <input class="form-control input_file_validar" type="file" name="file_contrato"
-                            accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }} readonly>
+                            id="file_contrato" accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt"
+                            {{ $show_contrato ? 'disabled' : '' }} readonly>
                         @if ($errors->has('file_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('file_contrato') }}
                             </div>
                         @endif
+
+                        <p id="compressStatus" class="mt-2 text-muted"></p>
+
                     @endif
 
                 @endif
@@ -463,6 +466,32 @@
                 <div class="ml-4 display-flex">
                     <label class="red-text">{{ $errors->first('Type') }}</label>
                 </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
+                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
+                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
+                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
+                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('vigencia_contrato'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('vigencia_contrato') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
+                <input type="number" name="no_pagos" id="no_pagos"
+                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
+                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('no_pagos'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('no_pagos') }}
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -524,31 +553,6 @@
                 @endif
             </div>
         </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
-                <label for="vigencia_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*</font></label>
-                <input type="text" name="vigencia_contrato" id="vigencia_contrato"
-                    value="{{ old('vigencia_contrato', $contrato->vigencia_contrato) }}" class="form-control"
-                    required maxlength="150" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('vigencia_contrato'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('vigencia_contrato') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="no_pagos" class="txt-tamaño">No. Pagos<font class="asterisco">*</font></label>
-                <input type="number" name="no_pagos" id="no_pagos"
-                    value="{{ old('no_pagos', $contrato->no_pagos) }}" class="form-control" required
-                    pattern="[0-9]+" min="0" step="1" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('no_pagos'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('no_pagos') }}
-                    </div>
-                @endif
-            </div>
-        </div>
 
         @livewire('moneda-ext-contratos-edit', ['id_contrato' => $contrato->id])
 
@@ -575,7 +579,7 @@
                             <div class="inline input-field linea">
                                 <div class="switch" style="margin-top: -5px; margin-left: 8px;">
                                     @if (isset($contratos))
-                                        @if ($contrato->documento)
+                                        @if (isset($contrato->documento) || isset($contratos->folio))
                                             <div class="custom-control custom-switch form">
                                                 <input type="checkbox" class="custom-control-input" id="check_fianza"
                                                     name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}
@@ -629,128 +633,101 @@
                             <div class="ml-4 display-flex">
                                 <label class="red-text">{{ $errors->first('Type') }}</label>
                             </div>
-            </div>
-            </td>
-
-            </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <br>
-        <br>
-        <br>
-    </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
-    </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">
-                Nombre del Supervisor 1<font class="asterisco">*</font>
-            </label>
-            <div>
-                <input type="text" name="pmp_asignado" id="pmp_asignado"
-                    value="{{ old('pmp_asignado', $contratos->pmp_asignado) }}" maxlength="250" class="form-control"
-                    {{ $show_contrato ? 'readonly' : '' }} required>
+                        </td>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Puesto</label>
-            <div>
-                <input type="text" name="puesto" id="puesto" value="{{ old('puesto', $contratos->puesto) }}"
-                    maxlength="250" class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
-            </div>
+        <div class="row">
+            <br>
+            <br>
+            <br>
         </div>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
+        </div>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">
+                    Nombre del Supervisor 1<font class="asterisco">*</font>
+                </label>
+                <div>
+                    <input type="text" name="pmp_asignado" id="pmp_asignado"
+                        value="{{ old('pmp_asignado', $contratos->pmp_asignado) }}" maxlength="250"
+                        class="form-control" {{ $show_contrato ? 'readonly' : '' }} required>
+                </div>
+            </div>
 
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Área</label>
-            <div>
-                <input type="text" name="area" id="area" value="{{ old('area', $contratos->area) }}"
-                    maxlength="250" class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
-                @if ($errors->has('area'))
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">Puesto</label>
+                <div>
+                    <input type="text" name="puesto" id="puesto"
+                        value="{{ old('puesto', $contratos->puesto) }}" maxlength="250" class="form-control"
+                        {{ $show_contrato ? 'readonly' : '' }}>
+                </div>
+            </div>
+
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">Área</label>
+                <div>
+                    <input type="text" name="area" id="area" value="{{ old('area', $contratos->area) }}"
+                        maxlength="250" class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
+                    @if ($errors->has('area'))
+                        <div class="invalid-feedback red-text">
+                            {{ $errors->first('area') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">Nombre del Supervisor 2</label>
+                <input type="text" name="administrador_contrato" id="administrador_contrato"
+                    value="{{ old('administrador_contrato', $contratos->administrador_contrato) }}" maxlength="250"
+                    class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('administrador_contrato'))
                     <div class="invalid-feedback red-text">
-                        {{ $errors->first('area') }}
+                        {{ $errors->first('administrador_contrato') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">Puesto</label>
+                <input type="text" name="cargo_administrador" id="cargo_administrador"
+                    value="{{ old('cargo_administrador', $contratos->cargo_administrador) }}" maxlength="250"
+                    class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('cargo_administrador'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('cargo_administrador') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="distancia form-group col-md-4">
+                <label class="txt-tamaño">Área</label>
+                <input type="text" name="area_administrador" id="area_administrador"
+                    value="{{ old('area_administrador', $contratos->area_administrador) }}" maxlength="250"
+                    class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
+                @if ($errors->has('area_administrador'))
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('area_administrador') }}
                     </div>
                 @endif
             </div>
         </div>
-
-    </div>
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Nombre del Supervisor 2</label>
-            <input type="text" name="administrador_contrato" id="administrador_contrato"
-                value="{{ old('administrador_contrato', $contratos->administrador_contrato) }}" maxlength="250"
-                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
-            @if ($errors->has('administrador_contrato'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('administrador_contrato') }}
-                </div>
-            @endif
+        <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+            <div class="col s12 right-align btn-grd distancia">
+                @if (!$show_contrato)
+                    <a href="{{ route('contract_manager.contratos-katbol.index') }}"
+                        class="btn btn-outline-primary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                @endif
+            </div>
         </div>
-
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Puesto</label>
-            <input type="text" name="cargo_administrador" id="cargo_administrador"
-                value="{{ old('cargo_administrador', $contratos->cargo_administrador) }}" maxlength="250"
-                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
-            @if ($errors->has('cargo_administrador'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('cargo_administrador') }}
-                </div>
-            @endif
-        </div>
-
-        <div class="distancia form-group col-md-4">
-            <label class="txt-tamaño">Área</label>
-            <input type="text" name="area_administrador" id="area_administrador"
-                value="{{ old('area_administrador', $contratos->area_administrador) }}" maxlength="250"
-                class="form-control" {{ $show_contrato ? 'readonly' : '' }}>
-            @if ($errors->has('area_administrador'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('area_administrador') }}
-                </div>
-            @endif
-        </div>
-        {{-- <div class="row"></div>
-    <div class="row">
-        <br>
-        <label class="txt-tamaño" for="firma">
-            Firma:</label>
-        <br/>
-        <br>
-        @if ($contratos->firma1 != null)
-            <p>Ya existe una firma registrada para este contrato</p>
-            <p>Si desea cambiar la firma registrada de click en el recuadro de abajo y
-                firme el espacio.</p><br>
-            <label class="txt-tamaño">Actualizar firma </label>
-            <input type="checkbox" style="pointer-events: auto; opacity: 1; width: 20px; height: 20px" unchecked
-            onclick="var input = document.getElementById('signature64');
-            if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-        @endif
-    </div>
-    <div class="col s12 m3 distancia"></div>
-    <div class="distancia form-group col-md-4">
-        <div id="signaturePad" >
-            <textarea id="signature64" name="signed" style="display:none" disabled="disabled"></textarea>
-        </div>
-        <button id="clear" class="btn btn-primary btn-sm">Borrar firma</button>
-        <br/>
-    </div> --}}
-
-    </div>
-    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
-        <div class="col s12 right-align btn-grd distancia">
-            @if (!$show_contrato)
-                <a href="{{ route('contract_manager.contratos-katbol.index') }}"
-                    class="btn btn-outline-primary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            @endif
-        </div>
-    </div>
 
     </div>
     </div>
@@ -759,17 +736,24 @@
 {{-- nuevo diseño --}}
 
 <!-- Modal Structure -->
-<div id="convenios_modificados" class="modal">
-    <div class="modal-content">
-        <strong class=" txt-frm">Convenios Modificados</strong>
+<div id="convenios_modificados" class="modal"
+    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; z-index: 1000; padding: 20px;">
+    <strong class="txt-frm">Convenios Modificados</strong>
+    <ul>
         @foreach ($convenios as $convenio)
             <li style="margin-top:10px; margin-left:20px; font-size:12pt; font-weight: lighter; color:#000;">
-                {{ $convenio->no_convenio }}</label>
+                {{ $convenio->no_convenio }}
+            </li>
         @endforeach
+    </ul>
+    <div class="modal-footer" style="text-align: right; margin-top: 10px;">
+        <button id="closeModal" class="modal-close waves-effect waves-green btn-flat">Cerrar</button>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-    </div>
+</div>
+
+
+<div id="modalOverlay"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;">
 </div>
 
 @if ($aprobacionFirmaContrato->count())
@@ -862,6 +846,35 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.0.3/autoNumeric.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener los elementos del modal y botones
+        const openModalButton = document.getElementById('openModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modal = document.getElementById('convenios_modificados');
+        const overlay = document.getElementById('modalOverlay');
+
+        // Abrir el modal
+        openModalButton.addEventListener('click', function() {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Cerrar el modal
+        closeModalButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Cerrar el modal al hacer clic en el overlay
+        overlay.addEventListener('click', function() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let no_contrato = document.getElementById('no_contrato');
@@ -1015,19 +1028,26 @@
 
 <script>
     $(document).ready(function() {
+        // Verifica si los campos vienen del backend
+        let checkFianzaInicial = {{ $contratos->folio ? 'true' : 'false' }};
 
-        if ($('#check_fianza').checked) {
-            $(".td_fianza").fadeOut(0);
-        } else {
+        // Al cargar la página, ajusta la visibilidad según el valor inicial
+        if (checkFianzaInicial) {
             $(".td_fianza").fadeIn(0);
-        }
-    });
-    $(document).on('change', '#check_fianza', function(e) {
-        if (this.checked) {
-            $(".td_fianza").fadeIn(0);
+            $('#check_fianza').prop('checked', true);
         } else {
             $(".td_fianza").fadeOut(0);
+            $('#check_fianza').prop('checked', false);
         }
+
+        // Al cambiar el checkbox, ajusta la visibilidad
+        $(document).on('change', '#check_fianza', function(e) {
+            if (this.checked) {
+                $(".td_fianza").fadeIn(0);
+            } else {
+                $(".td_fianza").fadeOut(0);
+            }
+        });
     });
 </script>
 
@@ -1181,9 +1201,9 @@
     });
 </script>
 
-<script>
+{{-- <script>
     $("#dolares_filtro").select2('destroy');
-</script>
+</script> --}}
 
 {{-- <script type="text/javascript">
     $(document).on('change', '#dolares_filtro', function(event) {
@@ -1196,12 +1216,66 @@
 
     });
 </script> --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const url = "{{ route('contract_manager.contratos-katbol.validar-documento') }}";
         $('.input-field').click(function(e) {
             $('.input-field:hover').addClass('caja_input_file_activa');
         });
+
+        const fileInput = document.getElementById("file_contrato");
+        const statusText = document.getElementById("compressStatus");
+
+        fileInput.addEventListener("change", async (event) => {
+            const selectedFile = event.target.files[0];
+
+            if (!selectedFile) {
+                statusText.textContent = "No se ha seleccionado ningún archivo.";
+                return;
+            }
+
+            if (selectedFile.type !== "application/pdf") {
+                statusText.textContent = "El archivo seleccionado no es un PDF.";
+                return;
+            }
+
+            statusText.textContent = "Comprimiendo archivo...";
+
+            try {
+                const arrayBuffer = await selectedFile.arrayBuffer();
+
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+
+                pdfDoc.setCreator("");
+                pdfDoc.setProducer("");
+
+                const compressedPdfBytes = await pdfDoc.save({
+                    useObjectStreams: true
+                });
+
+                const compressedBlob = new Blob([compressedPdfBytes], {
+                    type: "application/pdf"
+                });
+
+                const compressedFile = new File([compressedBlob],
+                `compressed-${selectedFile.name}`, {
+                    type: "application/pdf",
+                });
+
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(compressedFile);
+                fileInput.files = dataTransfer.files;
+
+                statusText.textContent = `Archivo comprimido exitosamente: ${compressedFile.name}`;
+            } catch (error) {
+                console.error("Error al comprimir el PDF:", error);
+                statusText.textContent = "Ocurrió un error al comprimir el archivo.";
+            }
+        });
+
         // $('.input_file_validar').change(function(e) {
 
         //     $('.caja_input_file_activa .errors').remove();

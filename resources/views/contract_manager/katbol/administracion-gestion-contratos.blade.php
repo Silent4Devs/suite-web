@@ -1,52 +1,64 @@
 @can('administracion_sistema_gestion_contratos_acceder')
-    <ul class="mt-4">
+    <ul class="menu-modulos">
         @can('katbol_ordenes_compra_acceso')
-            <li><a href="{{ route('contract_manager.orden-compra') }}">
-                    <div>
-                        <i class="fa-solid fa-file-invoice"></i>
+            <li>
+                <a href="{{ route('contract_manager.orden-compra') }}">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>
                         Ordenes de Compra
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_proveedores_ordenes_compra_acceso')
-            <li><a href="{{ route('contract_manager.proveedores.index') }}">
-                    <div>
-                        <i class="fa-solid fa-address-card"></i>
+            <li>
+                <a href="{{ route('contract_manager.proveedores.index') }}">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>
                         Proveedores de Ordenes de Compra
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_producto_acceso')
-            <li><a href="{{ route('contract_manager.productos.index') }}">
-                    <div>
-                        <i class="fa-brands fa-product-hunt"></i>
+            <li>
+                <a href="{{ route('contract_manager.productos.index') }}">
+                    <i class="fa-brands fa-product-hunt"></i>
+                    <span>
                         Productos
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_compradores_acceso')
-            <li><a href="{{ route('contract_manager.compradores.index') }}">
-                    <div>
-                        <i class="fa-solid fa-user-tie"></i>
+            <li>
+                <a href="{{ route('contract_manager.compradores.index') }}">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>
                         Compradores
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_centro_costos_acceso')
-            <li><a href="{{ route('contract_manager.centro-costos.index') }}">
-                    <div>
-                        <i class="fa-solid fa-landmark"></i>
+            <li>
+                <a href="{{ route('contract_manager.centro-costos.index') }}">
+                    <i class="fa-solid fa-landmark"></i>
+                    <span>
                         Centro de Costos
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
         @can('katbol_sucursales_acceso')
-            <li><a href="{{ route('contract_manager.sucursales.index') }}">
-                    <div>
-                        <i class="fa-solid fa-building-user"></i>
+            <li>
+                <a href="{{ route('contract_manager.sucursales.index') }}">
+                    <i class="fa-solid fa-building-user"></i>
+                    <span>
                         Razón Social
-                    </div>
-                </a></li>
+                    </span>
+                </a>
+            </li>
         @endcan
     </ul>
 @else

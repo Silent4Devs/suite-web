@@ -19,6 +19,7 @@ use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Services\RequisicionService;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +32,7 @@ use Throwable;
 class RequisicionesCreateComponent extends Component
 {
     use LivewireAlert;
+    use ObtenerOrganizacion;
     use WithFileUploads;
 
     public $user;
@@ -251,7 +253,7 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;

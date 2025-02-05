@@ -53,6 +53,25 @@
         <div class="card-body">
             <h5>Catálogo de Capacitaciones</h5>
             <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <span>Mostrando</span>
+                            <select name="" id="" class="form-control ml-2" wire:model.live="perPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search"
+                            style="max-width: 150px;">
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered w-100 tblCSV">
                 <thead class="thead-dark">
                     <tr>
@@ -111,10 +130,17 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" wire:click="getRegister({{ $register->id }})">
-                                            <div class="d-flex align-items-start">
+                                            <div class="d-flex align-items-center">
                                                 <i class="material-icons-outlined"
                                                     style="width: 24px;font-size:18px;">edit_outline</i>
                                                 Editar
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item" wire:click="deleteMessage({{ $register->id }})">
+                                            <div class="d-flex align-items-center">
+                                                <i class="material-symbols-outlined"
+                                                    style="width: 24px;font-size:18px;">delete</i>
+                                                Eliminar
                                             </div>
                                         </a>
                                     </div>
@@ -124,6 +150,46 @@
                     @endforeach
                 </tbody>
             </table>
+            <div >
+                {{ $registers->links('pagination::TbPagination') }}
+            </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('deleteMessage', event => {
+            Swal.fire({
+                title: "Eliminar este elemento",
+                text: "¿Estás seguro de querer eliminar este registro?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.call('delete');
+
+                }
+            });
+        });
+
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('useRegister', () => {
+
+                Swal.fire({
+                    title: "Error",
+                    text: "Este registro está en uso y no puede ser eliminado.",
+                    icon: "error"
+                });
+            });
+            Livewire.on('registerDelete', () => {
+                Swal.fire({
+                    title: "Eliminado",
+                    text: "El registro se eliminó exitosamente",
+                    icon: "success"
+                });
+            });
+        });
+    </script>
 </div>

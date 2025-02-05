@@ -5,10 +5,13 @@ namespace App\Livewire;
 use App\Models\Empleado;
 use App\Models\RH\GruposEvaluado;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Ev360GrupoEvaluadosCreate extends Component
 {
+    use LivewireAlert;
+
     public $open = false;
 
     public $empleados = [];
@@ -20,14 +23,21 @@ class Ev360GrupoEvaluadosCreate extends Component
         'empleados' => 'required',
     ];
 
-    protected $mesages = [
+    protected $messages = [
         'nombreGrupo.required' => 'Debes agregar un nombre para el grupo',
         'nombreGrupo.max' => 'El nombre no debe exceder los 255 carácteres',
     ];
 
     public function openModal()
     {
-        $this->dispatch('openModalClick');
+        $this->open = true;
+        $this->dispatch('openModal'); // Usamos dispatch para emitir el evento
+    }
+
+    public function closeModal()
+    {
+        $this->open = false;
+        $this->dispatch('closeModal'); // Usamos dispatch para emitir el evento
     }
 
     public function save()
@@ -39,6 +49,8 @@ class Ev360GrupoEvaluadosCreate extends Component
         ]);
 
         $grupo->empleados()->sync($this->empleados);
+
+        $this->alert('success', '¡Excelente! El grupo ha sido creado con éxito.');
 
         $this->dispatch('grupoEvaluadosSaved');
         $this->dispatch('select2');

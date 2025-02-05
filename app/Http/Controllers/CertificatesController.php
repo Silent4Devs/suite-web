@@ -201,7 +201,7 @@ class CertificatesController extends Controller
             //throw $th;
         }
 
-        $comentario = ComentariosProcesosListaDistribucion::create([
+        $comment = ComentariosProcesosListaDistribucion::create([
             'comentario' => $request->comentario,
             'proceso_id' => $aprobacion->id,
         ]);
@@ -221,11 +221,13 @@ class CertificatesController extends Controller
         }
         $emailresponsable = $catalogueTraining->empleado->email;
 
-        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new RejectionNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining));
+        Mail::to(removeUnicodeCharacters($emailresponsable))->queue(new RejectionNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining, $comment));
 
         foreach ($aprobacion->participantes as $participante) {
-            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new RejectionNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining));
+            Mail::to(removeUnicodeCharacters($participante->participante->empleado->email))->queue(new RejectionNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining, $comment));
         }
+
+        $catalogueTraining->delete();
 
         return redirect(route('admin.portal-comunicacion.index'));
     }

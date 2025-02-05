@@ -1,25 +1,61 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\UserAuthController;
 use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
-use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
-use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
-use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
-use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
-use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
-use App\Http\Controllers\Api\V1\OrdenesCompra\tbApiMobileControllerOrdenesCompra;
-use App\Http\Controllers\Api\V1\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
-use App\Http\Controllers\Api\V1\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
-use App\Http\Controllers\Api\V1\Requisiciones\tbApiMobileControllerRequisiciones;
-use App\Http\Controllers\Api\V1\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
-use App\Http\Controllers\Api\V1\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
-use App\Http\Controllers\Api\V1\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
-use App\Http\Controllers\Api\V1\Timesheet\TbTimesheetApiMobileController;
+use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\FormulasController;
+use App\Http\Controllers\Api\Mobile\AnalisisRiesgo\templateAnalisisRiesgoController;
+use App\Http\Controllers\Api\Mobile\Auth\UserAuthController;
+use App\Http\Controllers\Api\Mobile\Comunicados\tbApiMobileControllerComunicados;
+use App\Http\Controllers\Api\Mobile\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
+use App\Http\Controllers\Api\Mobile\Documentos\tbApiMobileControllerDocumentos;
+use App\Http\Controllers\Api\Mobile\OrdenesCompra\tbApiMobileControllerOrdenesCompra;
+use App\Http\Controllers\Api\Mobile\PerfilUsuario\tbApiMobileControllerPerfilUsuario;
+use App\Http\Controllers\Api\Mobile\PortalComunicacion\tbApiMobileControllerPortalComunicacion;
+use App\Http\Controllers\Api\Mobile\Requisiciones\tbApiMobileControllerRequisiciones;
+use App\Http\Controllers\Api\Mobile\SolicitudDayOff\tbApiMobileControllerSolicitudDayOff;
+use App\Http\Controllers\Api\Mobile\SolicitudPermisoGoceSueldo\tbApiMobileControllerSolicitudPermisoGoceSueldo;
+use App\Http\Controllers\Api\Mobile\SolicitudVacaciones\tbApiMobileControllerSolicitudVacaciones;
+use App\Http\Controllers\Api\Mobile\Timesheet\TbTimesheetApiMobileController;
+use App\Http\Controllers\Api\Tenant\Auth\TbTenantAuthController;
+use App\Http\Controllers\Api\Tenant\History\TbTenantHistoryController;
+use App\Http\Controllers\Api\Tenant\Payment\TbTenantPaymentMetodController;
+use App\Http\Controllers\Api\Tenant\Product\TbTenantProductMetodController;
+use App\Http\Controllers\Api\Tenant\Profile\TbTenantProfileController;
+use App\Http\Controllers\Api\Tenant\TBtenantRegisterController;
+use App\Http\Controllers\Api\Tenant\TbTenantRegisterTenancyController;
+use App\Http\Controllers\Api\Tenant\User\TbTenantUserController;
+use Illuminate\Support\Facades\Route;
+
+Route::post('/rtenant', [TbTenantRegisterTenancyController::class, 'submit']);
+Route::post('/user/login', [TbTenantAuthController::class, 'tbLogin']);
+Route::post('/user/register', [TbTenantUserController::class, 'tbRegister']);
+
+Route::middleware(['auth:sanctum', 'Tbcheck.token.expiration'])->group(function () {
+    Route::post('/stripe/history', [TbTenantHistoryController::class, 'tbGetHistory']);
+    Route::get('/stripe/profile', [TbTenantProfileController::class, 'tbGetCostumerInfo']);
+    Route::get('/stripe/suscriptions', [TbTenantProfileController::class, 'tbGetCostumerSubscriptions']);
+    Route::get('/stripe/statusSuscription', [TbTenantProfileController::class, 'tbGetSubscriptionStatus']);
+    //pagos
+    Route::post('/stripe/paymentMethod', [TbTenantPaymentMetodController::class, 'tbGetPaymentMethod']);
+    Route::get('/stripe/addPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddPaymentMethod']);
+    Route::get('/stripe/addCardPaymentMethod', [TbTenantPaymentMetodController::class, 'tbAddCardPaymentMethod']);
+    Route::get('/stripe/removePaymentMethod', [TbTenantPaymentMetodController::class, 'tbRemovePaymentMethod']);
+    Route::get('/stripe/getBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbGetBillingAddressMethod']);
+    Route::post('/stripe/addBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbAddBillingAddressMethod']);
+    Route::post('/stripe/updateBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbUpdateBillingAddressMethod']);
+    Route::post('/stripe/removeBillingAddressMethod', [TbTenantPaymentMetodController::class, 'tbRemoveBillingAddressMethod']);
+    Route::post('/stripe/createSubcriptions', [TbTenantPaymentMetodController::class, 'createSubscriptionForMultipleProducts']);
+    //products
+    Route::get('/stripe/productMethod', [TbTenantProductMetodController::class, 'tbGetProductMethod']);
+    Route::get('/stripe/UnpurchasedProducts', [TbTenantProductMetodController::class, 'tbGetUnpurchasedProducts']);
+    Route::get('/stripe/productAll', [TbTenantProductMetodController::class, 'tbGetAllActiveProducts']);
+    Route::post('/stripe/productSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostProductsByCustomer']);
+    Route::post('/stripe/productInactiveSuscriptionAll', [TbTenantProductMetodController::class, 'tbPostInactiveSubscriptionsByCustomer']);
+});
 
 Route::post('/loginMobile', [UserAuthController::class, 'login']);
 Route::post('checkToken', [UserAuthController::class, 'checkToken']);
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
     Route::post('/refreshToken', [UserAuthController::class, 'refreshToken']);
     Route::get('inicioUsuario', [InicioUsuarioController::class, 'index']);
@@ -116,7 +152,7 @@ Route::apiResource('api/v1/ar/formulas', FormulasController::class);
 Route::get('api/v1/ar/formulas/options/{id}', [FormulasController::class, 'getOptionsFormulas']);
 Route::get('api/v1/ar/formulas/sections/{id}', [FormulasController::class, 'getSections']);
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
 

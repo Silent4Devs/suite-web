@@ -31,27 +31,31 @@
                             <img src="{{ asset($lastCourse->cursos->image->url) }}" alt="Imagen">
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="card-body" style="padding-left:0px; padding-right:0px;">
-                            <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
-                            @if (isset($lastCourse->cursos->instructor))
-                                @if (isset($lastCourse->cursos->instructor->empleado))
-                                    <div class="d-flex align-items-center gap-1 my-4">
-                                        <div class="img-person">
-                                            <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
-                                                alt="{{ $lastCourse->cursos->instructor->name }}">
+                    <div class="col-md-5 d-flex">
+                        <div class="card-body d-flex align-items-center" style="padding-left:50px; padding-right:0px;">
+                            <div>
+                                <h5 class="card-title" style="color:#000000;">{{ $lastCourse->cursos->title }}</h5>
+                                @if (isset($lastCourse->cursos->instructor))
+                                    @if (isset($lastCourse->cursos->instructor->empleado))
+                                        <div class="d-flex align-items-center gap-1 my-4">
+                                            <div class="img-person">
+                                                <img src="{{ $lastCourse->cursos->instructor->empleado->avatar_ruta }}"
+                                                    alt="{{ $lastCourse->cursos->instructor->name }}">
+                                            </div>
+                                            <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }}
+                                            </span>
                                         </div>
-                                        <span class="course-teacher"> {{ $lastCourse->cursos->instructor->name }} </span>
-                                    </div>
+                                    @endif
+                                @else
+                                    <p class="course-teacher">Instructor no asignado </p>
                                 @endif
-                            @else
-                                <p class="course-teacher">Instructor no asignado </p>
-                            @endif
 
-                            <div class="caja-info-card-advance">
-                                <p class="title-advance">{{ $lastCourse->advance . '%' }} completado</p>
-                                <div class="curso-progreso-barra">
-                                    <div class="indicador-progreso-barra" style="width: {{ $lastCourse->advance . '%' }};">
+                                <div class="caja-info-card-advance">
+                                    <p class="title-advance">{{ $lastCourse->advance . '%' }} completado</p>
+                                    <div class="curso-progreso-barra">
+                                        <div class="indicador-progreso-barra"
+                                            style="width: {{ $lastCourse->advance . '%' }};">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +63,7 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-center justify-content-center">
                         <a href="{{ route('admin.curso-estudiante', $lastCourse->cursos->id) }}"
-                            class="btn btn-last-course">
+                            class="btn btn-last-course btn-primary">
                             Reanudar Curso
                         </a>
 
@@ -112,7 +116,7 @@
 
                             <div class="d-flex justify-content-center">
                                 <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}"
-                                    class="btn btn-mi-course">Ir a
+                                    class="btn btn-mi-course btn-outline-primary">Ir a
                                     mi
                                     curso</a>
                             </div>

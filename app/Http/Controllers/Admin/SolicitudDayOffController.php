@@ -253,6 +253,58 @@ class SolicitudDayOffController extends Controller
         }
     }
 
+    public function updateAprobacion(Request $request, $id)
+    {
+        $empleado = User::getCurrentUser()->empleado;
+
+        if ($empleado->es_supervisor || Gate::allows('solicitud_dayoff_aprobar')) {
+
+            $request->validate([
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date',
+                'empleado_id' => 'required|int',
+                'dias_solicitados' => 'required|int',
+                'año' => 'required|int',
+                'autoriza' => 'required|int',
+                'aprobacion' => 'required|int',
+            ]);
+
+            $solicitud = SolicitudDayOff::find($id);
+
+            $empleados = Empleado::getAll();
+
+            $supervisor = $empleados->find($request->autoriza);
+            $solicitante = $empleados->find($request->empleado_id);
+
+            $solicitud->update($request->all());
+
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = removeUnicodeCharacters($participante->empleado->email);
+                    }
+                }
+
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = removeUnicodeCharacters($usuario->usuario->email);
+                    }
+                }
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));
+            } else {
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
+            }
+            Alert::success('éxito', 'Información añadida con éxito');
+
+            return redirect(route('admin.solicitud-dayoff.aprobacion'));
+        } else {
+            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
+        }
+    }
+
     public function destroy(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');

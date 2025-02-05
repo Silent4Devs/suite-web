@@ -365,10 +365,7 @@ header {
     border-radius: 14px;
     border: none;
     font-size: 11px;
-
-    position: absolute;
-    top: 80px;
-    right: 20px;
+    justify-content: right;
 }
 
 .breadcrumb a {
@@ -1462,4 +1459,8 @@ table td {
 
 .table th{
     border-color: #cdcdcd !important;
+}
+
+.container-fluid{
+    padding-bottom: 40px;
 }

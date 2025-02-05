@@ -26,7 +26,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus');
+        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus', 'supervisor_id');
     }
 
     public function evaluadoresObjetivos($id_periodo = null)
@@ -199,18 +199,23 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         foreach ($evaluadores as $evlrs) {
             foreach ($evlrs->preguntasCuestionario as $pregunta) {
-                $calificacion = [
-                    'competencia_id' => $pregunta->competencia_id,
-                    'competencia' => $pregunta->infoCompetencia->competencia,
-                    'calificacion_competencia' => $pregunta->calificacion_competencia,
-                    'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
-                ];
+                try {
+                    $calificacion = [
+                        'competencia_id' => $pregunta->competencia_id,
+                        'competencia' => $pregunta->infoCompetencia->competencia,
+                        'calificacion_competencia' => $pregunta->calificacion_competencia,
+                        'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
+                    ];
 
-                if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
-                    $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                        $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    }
+
+                    $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    dd($pregunta, $pregunta->calificacion_competencia, $pregunta->infoCompetencia->nivel_esperado, $evlrs->porcentaje_competencias);
                 }
-
-                $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
             }
         }
 

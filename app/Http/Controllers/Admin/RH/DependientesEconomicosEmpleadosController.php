@@ -64,9 +64,9 @@ class DependientesEconomicosEmpleadosController extends Controller
      * @param  \App\Models\RH\DependientesEconomicosEmpleados  $dependientesEconomicosEmpleados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $dependientesEconomicosEmpleados)
+    public function update(Request $request, $id_dependientesEconomicosEmpleados)
     {
-        $dependientesEconomicosEmpleados = DependientesEconomicosEmpleados::find($dependientesEconomicosEmpleados);
+        $dependientesEconomicosEmpleados = DependientesEconomicosEmpleados::find($id_dependientesEconomicosEmpleados);
 
         $dependientesEconomicosEmpleados->update([
             $request->typeInput => $request->value,
@@ -81,9 +81,9 @@ class DependientesEconomicosEmpleadosController extends Controller
      * @param  \App\Models\RH\DependientesEconomicosEmpleados  $dependientesEconomicosEmpleados
      * @return \Illuminate\Http\Response
      */
-    public function destroy($dependientesEconomicosEmpleados)
+    public function destroy($id_dependientesEconomicosEmpleados)
     {
-        $dependientesEconomicosEmpleados = DependientesEconomicosEmpleados::find($dependientesEconomicosEmpleados);
+        $dependientesEconomicosEmpleados = DependientesEconomicosEmpleados::find($id_dependientesEconomicosEmpleados);
 
         $dependientesEconomicosEmpleados->delete();
 

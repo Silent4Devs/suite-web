@@ -8,6 +8,10 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
+
+        #form_id {
+            display: none;
+        }
     </style>
 
     @include('partials.flashMessages')
@@ -150,7 +154,7 @@
                                                 </a>
                                             @endif
 
-                                            @if ($req->estado_orden == 'curso')
+                                            @if ($req->estado_orden == 'curso' || $req->estado_orden == 'fin')
                                                 <a href="#"
                                                     onclick="mostrarAlerta3('{{ $urlButtonCancelar }}', {{ $data }})"
                                                     class="dropdown-item" title="Cancelar Orden">
@@ -173,6 +177,12 @@
             </div>
         </div>
     </div>
+    <form method="GET" id="form_id" style="position: relative; left: 10rem; "
+        action="{{ route('contract_manager.orden-compra.excel') }}">
+        <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
+            IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
+        </button>
+    </form>
 @endsection
 @section('scripts')
     @parent
@@ -207,7 +217,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                Swal.fire('¡Cancelado!', 'La Orden de Compra ha sido cancelada.', 'success')
+                                Swal.fire('¡Cancelado!', 'La orden de compra ha sido cancelada.', 'success')
                                     .then(
                                         () => {
                                             window.location.reload(); // Refresca la página
@@ -247,8 +257,12 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] // Include indexes of all columns
+                        columns: ['th:not(:last-child):visible']
+                    },
+                    action: function(e, dt, button, config) {
+                        document.getElementById('form_id').submit();
                     }
+
                 },
                 // {
                 //     extend: 'pdfHtml5',

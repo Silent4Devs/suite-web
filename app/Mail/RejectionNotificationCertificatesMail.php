@@ -17,10 +17,13 @@ class RejectionNotificationCertificatesMail extends Mailable
 
     public $catalogueTraining;
 
-    public function __construct($id, $catalogueTraining)
+    public $comment;
+
+    public function __construct($id, $catalogueTraining, $comment)
     {
         $this->id = $id;
         $this->catalogueTraining = $catalogueTraining;
+        $this->comment = $comment;
     }
 
     /**

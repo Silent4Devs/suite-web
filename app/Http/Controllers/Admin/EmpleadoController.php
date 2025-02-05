@@ -1043,7 +1043,7 @@ class EmpleadoController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion', 'id'));
     }
 
     public function getListaDocumentos($id_empleado)
@@ -1449,9 +1449,11 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = DB::table('empleados')
-                    ->where('name', 'ILIKE', '%'.$nombre.'%')
                     ->join('areas', 'empleados.area_id', '=', 'areas.id')
-                    ->where('empleados.estado', 'alta')
+                    ->select('empleados.id', 'empleados.name')
+                    ->where('name', 'ILIKE', '%'.$nombre.'%')
+                    ->where('empleados.estatus', 'alta')
+                    ->whereNull('empleados.deleted_at')
                     ->take(5)
                     ->get();
 
@@ -1495,7 +1497,8 @@ class EmpleadoController extends Controller
                 'foto' => $new_name_image,
             ]);
 
-            return response()->json(['success' => 'Imágen actualizada']);
+            // return response()->json(['success' => 'Imágen actualizada']);
+            return redirect()->back()->with(['success' => 'Foto actualizada']);
         } else {
             return response()->json(['error' => 'Ocurrió un error, intente nuevamente']);
 
@@ -1521,12 +1524,6 @@ class EmpleadoController extends Controller
     {
         $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
-        $request->validate([
-            // 'name' => 'required|string|max:255',
-            // 'email'=>'required|email|max:255',
-            'cumpleaños' => 'required|date',
-            'telefono_movil' => 'nullable|string|max:255',
-        ]);
         $empleado->update([
             // 'name' => $request->name,
             // 'email'=>$request->email,

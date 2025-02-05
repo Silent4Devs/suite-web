@@ -47,7 +47,7 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La requisicion: {{ $last_unread_notification->data['slug'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
@@ -63,22 +63,24 @@
                         <i class="pr-2 fas fa-tasks text-success"></i>
                         {{-- @endif --}}
                         &nbsp;&nbsp;
-                        La orden de compra correspondiente: {{ $last_unread_notification->data['slug'] }}
+                        La {{ $last_unread_notification->data['slug'] }}
                         ha
                         sido cancelada
                     </div>
                 @break
 
                 @default
-
-                <p>prueba test</p>
             @endswitch
         </a>
     </div>
     @if ($place == 'notificaciones-page')
         <div class="text-muted" style="flex-basis: calc(15% - 2px)">
             <i class="fas fa-clock"></i>
-            {{ \Carbon\Carbon::parse($last_unread_notification->data['time'])->diffForHumans() }}
+            {{ is_array(optional($last_unread_notification)->data) && array_key_exists('time', $last_unread_notification->data)
+            ? \Carbon\Carbon::parse($last_unread_notification->data['time'])->diffForHumans()
+            : 'Sin notificaciones' }}
+
+
         </div>
         @if (!$readed)
             <div style="flex-basis: calc(5% - 2px)">
