@@ -272,11 +272,11 @@
                                                             wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                     </div> --}}
 
-                                                @if (!empty($obj_evidencias[0]))
+                                                @if (!empty($obj_evidencias[$key]))
                                                     @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
                                                         <div class="row align-items-center">
                                                             <div class="col-1">
-                                                                F1
+                                                                Evidencia {{$key_evidencia + 1}}
                                                             </div>
                                                             <div class="col-3">
                                                                 <a class="btn-link" data-toggle="modal"
