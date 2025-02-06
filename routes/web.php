@@ -25,6 +25,7 @@ use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
+use App\Http\Controllers\TbLoginController;
 use App\Http\Controllers\UsuarioBloqueado;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
@@ -37,13 +38,16 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 // Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 // Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
 
+    Route::post('login/authenticate', [TbLoginController::class, 'login'])->name('login.authenticate');
+    Route::post('logout/leave', [TbLoginController::class, 'logout'])->name('logout.leave');
+
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
 Auth::routes();
 
 // Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
 
     // Route::group(['middleware' => ['general_tabantaj']], function () {
     // Inicio usuario
@@ -1668,7 +1672,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Fin visitantes
     });
 
-    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         // Change password
         if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
             Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
@@ -1695,7 +1699,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
     Route::get('/tareas', 'TareasNotificacionesController@index')->name('tareas');
 
-    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::group(['namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth']], function () {
         // Two Factor Authentication
         if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
             Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
@@ -1704,7 +1708,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         }
     });
 
-    Route::group(['middleware' => ['auth', '2fa']], function () {
+    Route::group(['middleware' => ['autorized', 'doubleAuth']], function () {
         //Ruta ImportExcel
         Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
         Route::post('CargaAmenaza', 'SubidaExcel@Amenaza')->name('carga-amenaza');
@@ -1778,7 +1782,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('ExportGrupoArea', 'ExportExcelReport@GrupoArea')->name('descarga-grupo_area');
     });
 
-    Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::group(['namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth']], function () {
         Route::view('sitemap', 'admin.sitemap.index');
         // Route::view('stepper', 'stepper');
         //Route::view('admin/gantt', 'admin.gantt.grap');
@@ -1789,7 +1793,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     //KATBOL
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
+    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
             Route::group(['middleware' => ['katbol']], function () {
