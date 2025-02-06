@@ -406,19 +406,14 @@ class AnswerEvaluationUser extends Component
         $this->getEvaluation($evaluation);
         $this->totalQuizQuestions = count($this->evaluation->questions);
         $this->startQuiz();
-        // dump($this->retry);
-        // dd($this->userEvaluationId->score, $this->percentage, ($this->userEvaluationId->score < $this->percentage));
         if (! $this->retry) {
-            // dd(1);
             $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', User::getCurrentUser()->id)->pluck('question_id')->toArray();
 
             $this->count = count($this->answeredQuestions) + 1;
         } else {
-            // dd(2);
             $this->count = ($this->totalQuizQuestions + 1) - count($this->answeredQuestionsretry);
         }
 
-        // dd(3);
         return view('livewire.escuela.answer-evaluation-user');
     }
 }
