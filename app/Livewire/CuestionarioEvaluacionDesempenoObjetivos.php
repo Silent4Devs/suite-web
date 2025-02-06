@@ -149,10 +149,12 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                         // If the condition is met, update the assigned condition and values
                         $currentCondition = $obj_esc;
                         $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
+                        break;
                     } elseif ($currentCondition !== null && $currentCondition->valor === $obj_esc->valor) {
                         // If a subsequent condition matches the current condition's value, update the assigned condition and values
                         $currentCondition = $obj_esc;
                         $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
+                        break;
                     }
                 }
             }
@@ -179,7 +181,6 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
                                 $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
                                 $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
-                                // dd($this->calificacion_autoescala);
                             }
                             break;
                         case '3':
