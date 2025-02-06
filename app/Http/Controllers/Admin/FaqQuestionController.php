@@ -83,10 +83,10 @@ class FaqQuestionController extends Controller
         return redirect()->route('admin.faq-questions.index');
     }
 
-    public function edit(FaqQuestion $faqQuestion)
+    public function edit($id_faqQuestion)
     {
         abort_if(Gate::denies('faq_question_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqQuestion = FaqQuestion::where('id', $id_faqQuestion)->first();
         $categories = FaqCategory::all()->pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $faqQuestion->load('category', 'team');
@@ -94,26 +94,27 @@ class FaqQuestionController extends Controller
         return view('admin.faqQuestions.edit', compact('categories', 'faqQuestion'));
     }
 
-    public function update(UpdateFaqQuestionRequest $request, FaqQuestion $faqQuestion)
+    public function update(UpdateFaqQuestionRequest $request, $id_faqQuestion)
     {
+        $faqQuestion = FaqQuestion::where('id', $id_faqQuestion)->first();
         $faqQuestion->update($request->all());
 
         return redirect()->route('admin.faq-questions.index');
     }
 
-    public function show(FaqQuestion $faqQuestion)
+    public function show($id_faqQuestion)
     {
         abort_if(Gate::denies('faq_question_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqQuestion = FaqQuestion::where('id', $id_faqQuestion)->first();
         $faqQuestion->load('category', 'team');
 
         return view('admin.faqQuestions.show', compact('faqQuestion'));
     }
 
-    public function destroy(FaqQuestion $faqQuestion)
+    public function destroy($id_faqQuestion)
     {
         abort_if(Gate::denies('faq_question_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $faqQuestion = FaqQuestion::where('id', $id_faqQuestion)->first();
         $faqQuestion->delete();
 
         return back();

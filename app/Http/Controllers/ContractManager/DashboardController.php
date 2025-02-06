@@ -200,8 +200,8 @@ class DashboardController extends Controller
         $clientesContratos = Contrato::where('proveedor_id', '=', $request->valor)->get();
 
         $res = '
-            <div class="col l12">
-                <div class="ct-chart card z-depth-2 border-radius-6">
+            <div>
+                <div class="ct-chart card border border-0 z-depth-2 border-radius-6">
                     <div class="card-content m-3">
                     ';
         foreach ($clientes as $cliente) {
@@ -275,8 +275,8 @@ class DashboardController extends Controller
             ';
         $res .= $sec2;
         $sec3 = '
-            <div class="col s12 select_ajax_live">
-                <div class="card">
+            <div class="select_ajax_live">
+                <div class="card border border-0">
                     <div class="card-content m-3">
                         <h4 class="card-title graficas_titulos graficas_titulo2">
                            Contratos
@@ -285,7 +285,7 @@ class DashboardController extends Controller
                         <p style="padding:10px 15px; font-size:13px;"><strong>Instrucciones<span style="color:red">*</span>: </strong>
                             Selecciona el <strong>contrato</strong> dando clic en la siguiente lista desplegable.
                         </p>
-                        <select searchable="Buscar..." name="contrato" id="contrato" onchange="buscarcontrato()" class="" style="opacity:1 !important;">
+                        <select searchable="Buscar..." name="contrato" id="contrato" onchange="buscarcontrato()" class="" style="opacity:1 !important; width:100%;">
                             <option value="" selected disabled>Seleccione un contrato</option>
             ';
         $res .= $sec3;

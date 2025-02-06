@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
-use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {
@@ -52,15 +52,8 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            // $results = Async::run([
-            //     fn() => Evaluation::where('course_id', $curso_id)->get(),
-            //     fn() => Course::where('id', $curso_id)->first(),
-            // ]);
-
-            $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->first();
-            $curso = Course::where('id', $curso_id)->first();
-
-            // [$evaluacionesLeccion, $curso] = $results;
+            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+            $curso = Course::getAll()->where('id', $curso_id)->first();
 
             if (! $curso) {
                 abort(404);
@@ -102,9 +95,9 @@ class CursoEstudiante extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(course $course)
+    public function show($id_course)
     {
-        // $this->authorize('published', $course);
+        $course = Course::where('id', $id_course)->first();
 
         $similares = Course::where('category_id', $course->category_id)
             ->where('id', '!=', $course->id)
@@ -131,8 +124,9 @@ class CursoEstudiante extends Controller
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
-    public function enrolled(Course $course)
+    public function enrolled($id_course)
     {
+        $course = Course::where('id', $id_course)->first();
         $course->students()->attach(User::getCurrentUser()->id);
 
         return redirect()->route('admin.curso-estudiante', $course->id);
@@ -200,5 +194,44 @@ class CursoEstudiante extends Controller
         $lastCourse = $cursos_usuario->sortBy('last_review')->last();
 
         return view('admin.escuela.estudiante.courses-inscribed', compact('usuario', 'cursos_usuario', 'lastCourse'));
+    }
+
+    public function porcentageCourses()
+    {
+        $evaluationUsers = UserEvaluation::where('completed', true)->where('score', 0)->where('last_attempt', null)->get();
+        $approve = false;
+        // dd($evaluationUsers);
+        foreach ($evaluationUsers as $userEvaluation) {
+            $approve = false;
+            $correctAnswers = $userEvaluation->userAnswers->where('is_correct', true)->count();
+            $totalAnswers = $userEvaluation->userAnswers->count();
+            $score = ($correctAnswers / $totalAnswers) * 100;
+            $sizeQuiz = $userEvaluation->evaluations;
+
+            if ($totalAnswers != $sizeQuiz->questions->count()) {
+                switch ($score) {
+                    case $score >= 100:
+                        $score = 100;
+                        break;
+                    case $score >= 80 && $score < 100:
+                        $score = $score;
+                        break;
+                    default:
+                        $newScore = (($correctAnswers) / $sizeQuiz->questions->count()) * 100;
+                        $score = $newScore;
+                        break;
+                }
+            }
+
+            if ($score >= 80) {
+                $approve = true;
+            }
+
+            $userEvaluation->update([
+                'approved' => $approve,
+                'score' => $score,
+            ]);
+
+        }
     }
 }

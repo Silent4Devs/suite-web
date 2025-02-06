@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\TimesheetEvent;
 use App\Http\Controllers\Controller;
-use App\Jobs\NuevoProyectoJob;
+use App\Mail\NotificacionNuevoProyecto;
 use App\Mail\TimesheetHorasSobrepasadas;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
@@ -39,18 +39,13 @@ use PDF;
 use Throwable;
 use VXM\Async\AsyncFacade as Async;
 
+ini_set('memory_limit', '1024M'); // Increase memory limit to 1GB
+
 class TimesheetController extends Controller
 {
     use ObtenerOrganizacion;
 
     public $modelo_proyectos = 'TimesheetProyecto';
-
-    private $timesheetService;
-
-    public function __construct(TimesheetService $timesheetService)
-    {
-        $this->timesheetService = $timesheetService;
-    }
 
     /**
      * Display a listing of the resource.
@@ -62,14 +57,6 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cacheKey = 'timesheet-'.User::getCurrentUser()->empleado->id;
 
-        // $times = Timesheet::getPersonalTimesheet()->sortBy('fecha_dia');
-        // dd($times);
-        // $todos_contador = $times->count();
-        // $borrador_contador = $times->where('estatus', 'papelera')->count();
-        // $pendientes_contador = $times->where('estatus', 'pendiente')->count();
-        // $aprobados_contador = $times->where('estatus', 'aprobado')->count();
-        // $rechazos_contador = $times->where('estatus', 'rechazado')->count();
-
         $empleado_name = User::getCurrentUser()->empleado->name;
 
         $organizacion_actual = $this->obtenerOrganizacion();
@@ -77,11 +64,6 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.mis-registros', compact(
-            // 'times',
-            // 'rechazos_contador',
-            // 'todos_contador',
-            // 'borrador_contador',
-            // 'pendientes_contador'
             'logo_actual',
             'empresa_actual',
             'estatus',
@@ -129,18 +111,13 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_configuracion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $results = Async::run([
-            fn () => Organizacion::getFirst(),
-            fn () => Timesheet::count(),
-            fn () => Timesheet::orderBy('fecha_dia')->first(),
-            fn () => Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count(),
-            fn () => Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
-                ->where('estatus', 'pendiente')
-                ->count(),
-        ]);
-
-        // Unpack the results from the async calls
-        [$organizacion, $timesheetCount, $time_viejo, $rechazos_contador, $aprobar_contador] = $results;
+        $organizacion = Organizacion::getFirst();
+        $timesheetCount = Timesheet::count();
+        $time_viejo = Timesheet::orderBy('fecha_dia')->first();
+        $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
+        $aprobar_contador = Timesheet::where('aprobador_id', User::getCurrentUser()->empleado->id)
+            ->where('estatus', 'pendiente')
+            ->count();
 
         $time_exist = $timesheetCount > 0 ? true : false;
         if ($time_exist) {
@@ -412,6 +389,8 @@ class TimesheetController extends Controller
                         DB::rollback();
                         //Limpia la cache para que no muestre registros que no existen en la base
                         $this->forgetCache();
+
+                        dd($e);
 
                         // throw $e;
                         return response()->json(['status' => 400]);
@@ -696,9 +675,13 @@ class TimesheetController extends Controller
     public function proyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $clientes = TimesheetCliente::getAll();
-
+        $clientesPromise = Async::run(fn () => TimesheetCliente::getAll());
         $organizacion_actual = $this->obtenerOrganizacion();
+
+        // Wait for both promises to complete
+        $clientes = $clientesPromise->wait();
+
+        // Extract data from the organization
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
@@ -708,9 +691,12 @@ class TimesheetController extends Controller
     public function createProyectos()
     {
         abort_if(Gate::denies('timesheet_administrador_proyectos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Run asynchronous tasks individually
         $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
+
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
@@ -787,16 +773,7 @@ class TimesheetController extends Controller
                         }
                     }
 
-                    dispatch(
-                        new NuevoProyectoJob(
-                            $correos,
-                            $nuevo_proyecto->proyecto,
-                            $nuevo_proyecto->identificador,
-                            $nuevo_proyecto->cliente->nombre,
-                            User::getCurrentUser()->empleado->name,
-                            $nuevo_proyecto->id
-                        )
-                    );
+                    Mail::to($correos)->queue(new NotificacionNuevoProyecto($nuevo_proyecto->proyecto, $nuevo_proyecto->identificador, $nuevo_proyecto->cliente->nombre, User::getCurrentUser()->empleado->name, $nuevo_proyecto->id));
                 }
             } catch (\Throwable $th) {
                 return response()->json([
@@ -874,19 +851,25 @@ class TimesheetController extends Controller
         if (! $proyecto) {
             return redirect()->route('admin.timesheet-proyectos')->with('error', 'El registro fue eliminado ');
         }
-        $areas = TimesheetProyectoArea::where('proyecto_id', $id)
-            ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
-            ->get('areas.area');
 
-        $sedes = TimesheetProyecto::getAll('sedes_'.$id)->where('timesheet_proyectos.id', $id)
-            ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
-            ->get('sedes.sede');
+        // Run asynchronous queries
+        $results = Async::run([
+            fn () => TimesheetProyectoArea::where('proyecto_id', $id)
+                ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
+                ->get('areas.area'),
 
-        $clientes = TimesheetProyecto::getAll('clientes_'.$id)->where('timesheet_proyectos.id', $id)
-            ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
-            ->get('timesheet_clientes.nombre');
+            fn () => TimesheetProyecto::getAll('sedes_'.$id)
+                ->where('timesheet_proyectos.id', $id)
+                ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
+                ->get('sedes.sede'),
 
-        // dd($proyecto, $areas, $sedes);
+            fn () => TimesheetProyecto::getAll('clientes_'.$id)
+                ->where('timesheet_proyectos.id', $id)
+                ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
+                ->get('timesheet_clientes.nombre'),
+        ]);
+
+        [$areas, $sedes, $clientes] = $results;
 
         return view('admin.timesheet.show-proyectos', compact('proyecto', 'areas', 'sedes', 'clientes'));
     }
@@ -1082,12 +1065,12 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $aprobar = Timesheet::where('id', $id)->first();
 
-        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
-
         $aprobar->update([
             'estatus' => 'aprobado',
             'comentarios' => $request->comentarios,
         ]);
+
+        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
 
         $solicitante = Empleado::getDataColumns()->where('id', $aprobar->empleado_id)->first();
 
@@ -1261,18 +1244,21 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        $counters = $this->timesheetService->totalCounters();
-        $areas_array = $this->timesheetService->totalRegisterByAreas();
-        $proyectos = $this->timesheetService->getRegistersByProyects();
+        // Resolver manualmente el servicio TimesheetService
+        $timesheetService = app(TimesheetService::class);
 
-        $proyectos_array = TimesheetProyecto::getAll();
+        // Utilizar el servicio para obtener los datos necesarios
+        $counters = $timesheetService->totalCounters();
+        $areas_array = $timesheetService->totalRegisterByAreas();
+        $proyectos = $timesheetService->getRegistersByProyects();
 
-        return view(
-            // 'admin.timesheet.dashboard'
-            'admin.timesheet.dashboard',
-            compact('counters', 'areas_array', 'proyectos', 'proyectos_array')
-        );
+        // Obtener los proyectos desde el modelo TimesheetProyecto
+        $proyectos_array = TimesheetProyecto::get();
+
+        // Retornar la vista con los datos necesarios
+        return view('admin.timesheet.dashboard', compact('counters', 'areas_array', 'proyectos', 'proyectos_array'));
     }
+
 
     public function reportes()
     {

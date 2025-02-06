@@ -1,3 +1,4 @@
+<h5 class="col-12 titulo_general_funcion">Centro de Atención: <span style="font-weight: lighter;">Quejas de clientes</span></h5>
 <div class="cards-status-centro-atencion">
     <div class="card-status-centro" style="background-color: #4A98FF !important;">
         <i class="material-symbols-outlined">warning</i>
@@ -43,7 +44,7 @@
     </div>
 </div>
 
-<div class="card card-body box-sentimientos mt-4">
+{{-- <div class="card card-body box-sentimientos mt-4">
     <div class="card-sentimiento">
         <div>
             <span>No prioritario</span><br>
@@ -79,7 +80,7 @@
         </div>
         <img src="{{ asset('img/centroAtencion/emoji5.png') }}" alt="Emoji">
     </div>
-</div>
+</div> --}}
 <div class="row">
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-celeste">
@@ -150,7 +151,7 @@
                 <th style="min-width:80px;">Estatus</th>
                 <th>Prioridad</th>
                 <th style="min-width:150px;">Acción Correctiva</th>
-                <th>Opciones</th>
+                <th style="min-width: 250px;">Opciones</th>
             </tr>
         </thead>
     </table>
@@ -608,7 +609,7 @@
                 				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>
                                 <a onclick='EliminarQuejaCliente("/admin/desk/${data}/quejas-clientes-delete"); return false;'><i style="color:#000" class="ml-2 fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a>
 
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-clientes-${data}">
+                                <button type="button" class="btn d-none" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-clientes-${data}">
                                     <i class="fa-regular fa-face-smile"></i>
                                 </button>
                                 `;

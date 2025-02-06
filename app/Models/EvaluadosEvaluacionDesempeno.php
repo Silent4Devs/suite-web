@@ -26,7 +26,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus');
+        return $this->belongsTo(Empleado::class, 'evaluado_desempeno_id', 'id')->select('id', 'name', 'email', 'area_id', 'puesto_id', 'foto', 'estatus', 'supervisor_id');
     }
 
     public function evaluadoresObjetivos($id_periodo = null)
@@ -133,22 +133,42 @@ class EvaluadosEvaluacionDesempeno extends Model
     public function getCalificacionesObjetivosEvaluadoAttribute()
     {
         $evaluado = self::find($this->id);
-
         $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
 
         $calificacionesAgrupadas = [];
 
         foreach ($evaluadores as $evlrs) {
             foreach ($evlrs->preguntasCuestionarioAplican as $pregunta) {
+                $valor_maximo = (float) $pregunta->infoObjetivo->valor_maximo_unidad_objetivo;
+                $valor_minimo = (float) $pregunta->infoObjetivo->valor_minimo_unidad_objetivo;
+                $calificacion_objetivo = (float) $pregunta->calificacion_objetivo;
+                $porcentaje = (float) $evlrs->porcentaje_objetivos;
+
+                // Lógica para manejar valores negativos y máximos en 0
+                if ($valor_maximo > 0) {
+                    // Caso normal: dividir por el valor máximo
+                    $calificacion_total = ($calificacion_objetivo / $valor_maximo) * $porcentaje;
+                } elseif ($valor_maximo == 0 && $valor_minimo < 0) {
+                    // Caso especial: valor máximo es 0 y mínimo negativo (objetivo de 0 incidencias, rechazos, etc.)
+                    if ($calificacion_objetivo === 0) {
+                        $calificacion_total = $porcentaje; // Máxima calificación si logramos 0
+                    } else {
+                        $calificacion_total = (1 - (($calificacion_objetivo - $valor_minimo) / abs($valor_minimo))) * $porcentaje;
+                    }
+                } else {
+                    // Si no hay datos válidos, asumimos calificación 0
+                    $calificacion_total = 0;
+                }
+
                 $calificacion = [
                     'objetivo_id' => $pregunta->objetivo_id,
                     'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
-                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
-                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
+                    'calificacion_objetivo' => $calificacion_objetivo,
+                    'calificacion_total' => round($calificacion_total, 2),
                 ];
 
                 // Agrupar por objetivo_id
-                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -157,35 +177,23 @@ class EvaluadosEvaluacionDesempeno extends Model
         }
 
         $calificacionesSumadas = [];
-
         foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
-            $suma = 0;
-
-            foreach ($calificaciones as $calificacion) {
-                $suma += $calificacion['calificacion_total'];
-            }
-
+            $suma = array_sum(array_column($calificaciones, 'calificacion_total'));
             $calificacionesSumadas[] = [
                 'objetivo_id' => $objetivo_id,
-                'tipo' => $calificacion['tipo'],
-                'calificacion_total' => $suma,
+                'tipo' => $calificaciones[0]['tipo'],
+                'calificacion_total' => round($suma, 2),
             ];
         }
 
         $totalCalificaciones = count($calificacionesSumadas);
-
-        $sumaTotal = 0;
-        foreach ($calificacionesSumadas as $calificacion) {
-            $sumaTotal += $calificacion['calificacion_total'];
-        }
-
+        $sumaTotal = array_sum(array_column($calificacionesSumadas, 'calificacion_total'));
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
-        $promedioRedondeado = round($promedio, 2);
 
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
-            'promedio_total' => $promedioRedondeado,
+            'promedio_total' => round($promedio, 2),
         ];
     }
 
@@ -199,18 +207,23 @@ class EvaluadosEvaluacionDesempeno extends Model
 
         foreach ($evaluadores as $evlrs) {
             foreach ($evlrs->preguntasCuestionario as $pregunta) {
-                $calificacion = [
-                    'competencia_id' => $pregunta->competencia_id,
-                    'competencia' => $pregunta->infoCompetencia->competencia,
-                    'calificacion_competencia' => $pregunta->calificacion_competencia,
-                    'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
-                ];
+                try {
+                    $calificacion = [
+                        'competencia_id' => $pregunta->competencia_id,
+                        'competencia' => $pregunta->infoCompetencia->competencia,
+                        'calificacion_competencia' => $pregunta->calificacion_competencia,
+                        'calificacion_total' => round((($pregunta->calificacion_competencia / $pregunta->infoCompetencia->nivel_esperado) * $evlrs->porcentaje_competencias), 2),
+                    ];
 
-                if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
-                    $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    if (! isset($calificacionesAgrupadas[$pregunta->competencia_id])) {
+                        $calificacionesAgrupadas[$pregunta->competencia_id] = [];
+                    }
+
+                    $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    dd($pregunta, $pregunta->calificacion_competencia, $pregunta->infoCompetencia->nivel_esperado, $evlrs->porcentaje_competencias);
                 }
-
-                $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
             }
         }
 
@@ -250,7 +263,6 @@ class EvaluadosEvaluacionDesempeno extends Model
     public function calificacionesObjetivosEvaluadoPeriodo($periodo)
     {
         $evaluado = self::find($this->id);
-
         $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
 
         $calificacionesAgrupadas = [];
@@ -258,16 +270,37 @@ class EvaluadosEvaluacionDesempeno extends Model
         foreach ($evaluadores as $evlrs) {
             $evrs = $evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo);
             foreach ($evrs as $pregunta) {
+                $valor_maximo = (float) $pregunta->infoObjetivo->valor_maximo_unidad_objetivo;
+                $valor_minimo = (float) $pregunta->infoObjetivo->valor_minimo_unidad_objetivo;
+                $calificacion_objetivo = (float) $pregunta->calificacion_objetivo;
+                $porcentaje = (float) $evlrs->porcentaje_objetivos;
+
+                // Lógica para manejar valores negativos y máximos en 0
+                if ($valor_maximo > 0) {
+                    // Caso normal: dividir por el valor máximo
+                    $calificacion_total = ($calificacion_objetivo / $valor_maximo) * $porcentaje;
+                } elseif ($valor_maximo == 0 && $valor_minimo < 0) {
+                    // Caso especial: valor máximo es 0 y mínimo negativo (objetivo de 0 incidencias, rechazos, etc.)
+                    if ($calificacion_objetivo === 0) {
+                        $calificacion_total = $porcentaje; // Máxima calificación si logramos 0
+                    } else {
+                        $calificacion_total = (1 - (($calificacion_objetivo - $valor_minimo) / abs($valor_minimo))) * $porcentaje;
+                    }
+                } else {
+                    // Si no hay datos válidos, asumimos calificación 0
+                    $calificacion_total = 0;
+                }
+
                 $calificacion = [
                     'objetivo_id' => $pregunta->objetivo_id,
                     'nombre' => $pregunta->infoObjetivo->objetivo,
                     'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
-                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
-                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
+                    'calificacion_objetivo' => $calificacion_objetivo,
+                    'calificacion_total' => round($calificacion_total, 2),
                 ];
 
                 // Agrupar por objetivo_id
-                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -276,38 +309,28 @@ class EvaluadosEvaluacionDesempeno extends Model
         }
 
         $calificacionesSumadas = [];
-
         foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
-            $suma = 0;
-
-            foreach ($calificaciones as $calificacion) {
-                $suma += $calificacion['calificacion_total'];
-            }
+            $suma = array_sum(array_column($calificaciones, 'calificacion_total'));
 
             $calificacionesSumadas[] = [
                 'objetivo_id' => $objetivo_id,
-                'nombre' => $calificacion['nombre'],
-                'tipo' => $calificacion['tipo'],
-                'calificacion_total' => $suma,
+                'nombre' => $calificaciones[0]['nombre'],
+                'tipo' => $calificaciones[0]['tipo'],
+                'calificacion_total' => round($suma, 2),
             ];
         }
 
         $totalCalificaciones = count($calificacionesSumadas);
-
-        $sumaTotal = 0;
-        foreach ($calificacionesSumadas as $calificacion) {
-            $sumaTotal += $calificacion['calificacion_total'];
-        }
-
+        $sumaTotal = array_sum(array_column($calificacionesSumadas, 'calificacion_total'));
         $promedio = $totalCalificaciones > 0 ? $sumaTotal / $totalCalificaciones : 0;
-        $promedioRedondeado = round($promedio, 2);
 
         return [
             'calif_agrup' => $calificacionesAgrupadas,
             'calif_total' => $calificacionesSumadas,
-            'promedio_total' => $promedioRedondeado,
+            'promedio_total' => round($promedio, 2),
         ];
     }
+
 
     public function calificacionesCompetenciasEvaluadoPeriodo($periodo)
     {
@@ -381,48 +404,42 @@ class EvaluadosEvaluacionDesempeno extends Model
     {
         $evaluado = self::find($this->id);
 
+        // Filtrar evaluadores excluyendo al mismo evaluado
         $evaluadores = $evaluado->evaluadoresObjetivos->where('evaluador_desempeno_id', '!=', $this->evaluado_desempeno_id);
+
+        // Agrupar calificaciones por objetivo_id
         $calificacionesAgrupadas = [];
 
         foreach ($evaluadores as $evlrs) {
-            $evrs = $evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo);
-            foreach ($evrs as $pregunta) {
-                $calificacion = [
-                    'objetivo_id' => $pregunta->objetivo_id,
-                    'nombre' => $pregunta->infoObjetivo->objetivo,
-                    'tipo' => $pregunta->infoObjetivo->tipo_objetivo,
-                    'estatus_calificado' => $pregunta->estatus_calificado,
-                    'calificacion_objetivo' => $pregunta->calificacion_objetivo,
-                    'calificacion_total' => round((($pregunta->calificacion_objetivo / $pregunta->infoObjetivo->valor_maximo_unidad_objetivo) * $evlrs->porcentaje_objetivos), 2),
-                ];
+            foreach ($evlrs->preguntasCuestionarioAplican->where('periodo_id', $periodo) as $pregunta) {
+                $objetivoId = $pregunta->objetivo_id;
+                $valorMaximo = $pregunta->infoObjetivo->valor_maximo_unidad_objetivo;
+                $valorMinimo = $pregunta->infoObjetivo->valor_minimo_unidad_objetivo;
+                $calificacionObjetivo = $pregunta->calificacion_objetivo;
+                $estatusCalificado = $pregunta->estatus_calificado;
 
-                // Agrupar por objetivo_id
-                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
-                    $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
+                // Manejo de calificación total evitando división por 0 y considerando valores negativos
+                if ($valorMaximo == 0) {
+                    $calificacionTotal = 0;
+                } else {
+                    $calificacionNormalizada = ($calificacionObjetivo - $valorMinimo) / ($valorMaximo - $valorMinimo);
+                    $calificacionTotal = round(($calificacionNormalizada * $evlrs->porcentaje_objetivos), 2);
                 }
 
-                $calificacionesAgrupadas[$pregunta->objetivo_id][] = $calificacion;
+                // Asegurar que el array esté inicializado
+                if (!isset($calificacionesAgrupadas[$objetivoId])) {
+                    $calificacionesAgrupadas[$objetivoId] = [
+                        'objetivo_id' => $objetivoId,
+                        'calificacion_total' => 0,
+                        'estatus_calificado' => $estatusCalificado,
+                    ];
+                }
+
+                // Sumar la calificación total
+                $calificacionesAgrupadas[$objetivoId]['calificacion_total'] += $calificacionTotal;
             }
         }
 
-        $calificacionesSumadas = [];
-
-        foreach ($calificacionesAgrupadas as $objetivo_id => $calificaciones) {
-            $suma = 0;
-
-            foreach ($calificaciones as $calificacion) {
-                $suma += $calificacion['calificacion_total'];
-            }
-
-            $calificacionesSumadas[] = [
-                'objetivo_id' => $objetivo_id,
-                'calificacion_total' => $suma,
-                'estatus_calificado' => $calificacion['estatus_calificado'],
-            ];
-        }
-
-        return [
-            'calif_escala' => $calificacionesSumadas,
-        ];
+        return ['calif_escala' => array_values($calificacionesAgrupadas)];
     }
 }

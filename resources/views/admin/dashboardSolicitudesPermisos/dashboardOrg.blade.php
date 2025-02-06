@@ -223,7 +223,7 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex">
 
             <div class="card card-body">
 
@@ -282,9 +282,47 @@
             <div class="card card-body">
 
 
-                <div mbsc-page class="demo-daily-agenda-with-week-calendar">
-                    <div style="height:100%">
-                        <div id="demo-daily-agenda"></div>
+                <style>
+                    #agnEventsContainer {
+                        max-height: 450px;
+                    }
+
+                    .agn-event-card {
+                        display: flex;
+                        align-items: center;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 10px;
+                        margin-bottom: 10px;
+                        background-color: #f9f9f9;
+                    }
+
+                    .agn-event-image {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin-right: 10px;
+                    }
+
+                    .agn-no-events {
+                        color: #999;
+                        font-style: italic;
+                    }
+                </style>
+
+                <div class="container">
+
+                    <!-- Controles de navegación -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <button id="agnPrevBtn" class="btn btn-primary">← Anterior</button>
+                        <input type="date" id="agnDatePicker" class="form-control w-auto" />
+                        <button id="agnNextBtn" class="btn btn-primary">Siguiente →</button>
+                    </div>
+
+                    <!-- Eventos del día -->
+                    <div id="agnEventsContainer">
+                        <!-- Los eventos se mostrarán aquí -->
                     </div>
                 </div>
             </div>
@@ -403,7 +441,7 @@
 
             // Ejemplo de eventos con rango de fechas (inicio, fin)
             const events = dataVacaciones.concat(dataDayOff).concat(dataPermisos);
-
+            console.log(events);
 
             renderCalendar();
 
@@ -539,88 +577,86 @@
                 eventModal.show();
             }
 
-            // calendar agenda --------------------------------------------
-            mobiscroll.setOptions({
-                locale: mobiscroll.localeEs, // Idioma: español
-                theme: 'ios', // Tema: iOS
-                themeVariant: 'light', // Variante del tema: claro
-            });
+            // agenda ---------------
 
-            let dataVacacionesAgenda = [];
-            vacacionesEvents.forEach(vacacion => {
-                dataVacacionesAgenda.push({
-                    title: vacacion['title'],
-                    start: new Date(
-                        vacacion['inicio']['año'],
-                        vacacion['inicio']['mes'] - 1,
-                        vacacion['inicio']['dia'], 0, 0,
-                    ),
-                    end: new Date(
-                        vacacion['fin']['año'],
-                        vacacion['fin']['mes'] - 1,
-                        vacacion['fin']['dia'], 0, 0,
-                    ),
-                    color: vacacion['color'],
+            const agnEvents = events;
+
+            const agnEventsContainer = document.getElementById("agnEventsContainer");
+            const agnDatePicker = document.getElementById("agnDatePicker");
+            const agnPrevBtn = document.getElementById("agnPrevBtn");
+            const agnNextBtn = document.getElementById("agnNextBtn");
+
+            // Fecha actual seleccionada
+            let agnCurrentDate = new Date();
+
+            // Formatear fecha en "d / m / Y" (sin modificar el objeto Date)
+            function agnFormatDateDMY(dateStr) {
+                const [year, month, day] = dateStr.split("-");
+                return `${day} / ${month} / ${year}`;
+            }
+
+            // Mostrar eventos para la fecha seleccionada
+            function agnDisplayEvents() {
+                const selectedDate = agnCurrentDate.toISOString().split("T")[0];
+                agnDatePicker.value = selectedDate; // Actualizar input date
+
+                agnEventsContainer.innerHTML = ""; // Limpiar contenedor
+
+                const filteredEvents = agnEvents.filter((event) => {
+                    return (
+                        selectedDate >= event.startDate && selectedDate <= event.endDate
+                    );
                 });
-            });
 
-            let dataDayOffAgenda = [];
-            dayOffEvents.forEach(day => {
-                dataDayOffAgenda.push({
-                    title: day['title'],
-                    start: new Date(
-                        day['inicio']['año'],
-                        day['inicio']['mes'] - 1,
-                        day['inicio']['dia'], 0, 0,
-                    ),
-                    end: new Date(
-                        day['fin']['año'],
-                        day['fin']['mes'] - 1,
-                        day['fin']['dia'], 0, 0,
-                    ),
-                    color: day['color'],
-                });
-            });
+                const formattedDate = agnFormatDateDMY(selectedDate); // Fecha formateada
+                agnEventsContainer.insertAdjacentHTML(
+                    "beforeend",
+                    `<h4 class="mb-3">${formattedDate}</h4>`
+                );
 
-            let dataPermisosAgenda = [];
-            permisosEvents.forEach(permiso => {
-                dataPermisosAgenda.push({
-                    title: permiso['title'],
-                    start: new Date(
-                        permiso['inicio']['año'],
-                        permiso['inicio']['mes'] - 1,
-                        permiso['inicio']['dia'], 0, 0,
-                    ),
-                    end: new Date(
-                        permiso['fin']['año'],
-                        permiso['fin']['mes'] - 1,
-                        permiso['fin']['dia'], 0, 0,
-                    ),
-                    color: permiso['color'],
-                });
-            });
-
-            var inst = mobiscroll.eventcalendar('#demo-daily-agenda', {
-                view: {
-                    agenda: {
-                        type: 'day'
-                    },
-                },
-                data: dataVacacionesAgenda.concat(dataDayOffAgenda).concat(dataPermisosAgenda),
-                onEventClick: function(args) {
-                    mobiscroll.toast({
-                        message: args.event.title,
+                if (filteredEvents.length > 0) {
+                    filteredEvents.forEach((event) => {
+                        const eventCard = `
+            <div class="agn-event-card">
+              <img src="${event.image}" alt="${
+              event.name
+            }" class="agn-event-image" />
+              <div>
+                <h5 class="mb-0">${event.name}</h5>
+                <small><strong class="me-3"> Del </strong> ${agnFormatDateDMY(
+                  event.startDate
+                )} <strong class="mx-3"> al </strong> ${agnFormatDateDMY(event.endDate)}</small>
+              </div>
+            </div>
+          `;
+                        agnEventsContainer.insertAdjacentHTML("beforeend", eventCard);
                     });
-                },
+                } else {
+                    agnEventsContainer.insertAdjacentHTML(
+                        "beforeend",
+                        `<p class="agn-no-events">No hay eventos para este día.</p>`
+                    );
+                }
+            }
+
+            // Navegar días
+            function agnChangeDay(offset) {
+                agnCurrentDate.setDate(agnCurrentDate.getDate() + offset);
+                agnDisplayEvents();
+            }
+
+            // Eventos de botones
+            agnPrevBtn.addEventListener("click", () => agnChangeDay(-1));
+            agnNextBtn.addEventListener("click", () => agnChangeDay(1));
+
+            // Evento input date
+            agnDatePicker.addEventListener("change", (e) => {
+                agnCurrentDate = new Date(e.target.value);
+                agnDisplayEvents();
             });
 
-
-            setTimeout(() => {
-                var button = document.querySelector(".mbsc-calendar-button.mbsc-reset");
-
-                // Hacer clic automáticamente en el botón
-                button.click();
-            }, 500);
+            // Inicializar agenda
+            agnDisplayEvents();
         });
     </script>
 

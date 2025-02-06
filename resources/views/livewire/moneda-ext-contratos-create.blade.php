@@ -1,6 +1,6 @@
 <div>
     {{-- The Master doesn't talk, he acts. --}}
-    <div class="row">
+    <div class="row" style="padding-left: 0%;">
         <div class="form-group col-md-4">
             <label for="tipo_cambio" class="txt-tamaño">Tipo
                 Cambio
@@ -47,41 +47,39 @@
 
     @if ($moneda_extranjera)
         {{-- <div id="campos_dolares" class="{{ $contratos->tipo_cambio == 'USD' ? '' : 'd-none' }}"> --}}
-        <div class="col l12 m12 s12">
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="monto_dolares" class="txt-tamaño required">
-                        Monto de
-                        pago ({{ $tipo_cambio }})
-                        <font class="asterisco">*</font>
-                    </label>
-                    <input min="0" required type="number" name="monto_dolares" id="monto_dolares"
-                        {{-- wire:model="monto_dolares" --}} value="{{ old('monto_dolares', $monto_dolares) }}"
-                        wire:change="convertirME($event.target.value,'monto')" class="form-control" step=".01">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="maximo_dolares" class="txt-tamaño">
-                        Monto
-                        Máximo ({{ $tipo_cambio }})
-                    </label>
-                    <input type="number" {{-- wire:model="maximo_dolares" --}} value="{{ old('maximo_dolares', $maximo_dolares) }}"
-                        name="maximo_dolares" wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo"
-                        class="form-control" step=".01">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="minimo_dolares" class="txt-tamaño">
-                        Monto
-                        Mínimo ({{ $tipo_cambio }})
-                    </label>
-                    <input type="number" {{-- wire:model="minimo_dolares" --}} value="{{ old('minimo_dolares', $minimo_dolares) }}"
-                        name="minimo_dolares" wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo"
-                        class="form-control" step=".01">
-                </div>
+        <div class="row" style="padding-left: 0%;">
+            <div class="form-group col-md-4">
+                <label for="monto_dolares" class="txt-tamaño required">
+                    Monto de
+                    pago ({{ $tipo_cambio }})
+                    <font class="asterisco">*</font>
+                </label>
+                <input min="0" required type="number" name="monto_dolares" id="monto_dolares"
+                    {{-- wire:model="monto_dolares" --}} value="{{ old('monto_dolares', $monto_dolares) }}"
+                    wire:change="convertirME($event.target.value,'monto')" class="form-control" step=".01">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="maximo_dolares" class="txt-tamaño">
+                    Monto
+                    Máximo ({{ $tipo_cambio }})
+                </label>
+                <input type="number" {{-- wire:model="maximo_dolares" --}} value="{{ old('maximo_dolares', $maximo_dolares) }}"
+                    name="maximo_dolares" wire:change="convertirME($event.target.value,'maximo')" id="dolar_maximo"
+                    class="form-control" step=".01">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="minimo_dolares" class="txt-tamaño">
+                    Monto
+                    Mínimo ({{ $tipo_cambio }})
+                </label>
+                <input type="number" {{-- wire:model="minimo_dolares" --}} value="{{ old('minimo_dolares', $minimo_dolares) }}"
+                    name="minimo_dolares" wire:change="convertirME($event.target.value,'minimo')" id="dolar_minimo"
+                    class="form-control" step=".01">
             </div>
         </div>
     @endif
 
-    <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+    <div class="row" style="padding-left: 0%;">
         <div class="form-group col-md-4">
             <label for="monto_pago" class="txt-tamaño">Monto de Pago M.X.N.<font class="asterisco">*</font></label>
             <input type="number" name="monto_pago" id="monto_pago" class="form-control" step=".01"

@@ -65,11 +65,11 @@
                         <div style="text-aling:center">
                             <a href="solicitud-vacaciones/{{ $sol->id }}/show" title="Ver Solicitud"><i
                                     class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                            <button
+                            {{--  <button
                                 onclick="eliminar('{{ route('admin.solicitud-vacaciones.destroy') }}', {{ $sol->id }})"
                                 title="Cancelar solicitud" class="btn btn-sm text-danger"
                                 style="display:inline-block"><i
-                                    class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                    class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>  --}}
                         </div>
                     @endif
 

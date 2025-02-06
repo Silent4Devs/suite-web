@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTenantsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,6 +16,12 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->string('id')->primary();
 
+            $table->string('email')->unique();
+
+            $table->string('stripe_id')->nullable()->index();
+            $table->string('pm_type')->nullable();
+            $table->string('pm_last_four', 4)->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
             // your custom columns may go here
 
             $table->timestamps();
@@ -30,4 +36,4 @@ class CreateTenantsTable extends Migration
     {
         Schema::dropIfExists('tenants');
     }
-}
+};

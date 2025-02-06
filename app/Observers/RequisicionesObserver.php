@@ -15,7 +15,6 @@ class RequisicionesObserver
     {
         event(new RequisicionesEvent($requsicion, 'create', 'requisiciones', 'Requisicion'));
         $this->forgetCache();
-
     }
 
     /**
@@ -34,7 +33,6 @@ class RequisicionesObserver
     {
         event(new RequisicionesEvent($requsicion, 'delete', 'requisiciones', 'Requisicion'));
         $this->forgetCache();
-
     }
 
     /**

@@ -115,7 +115,7 @@
     @endif
 
     <div class="col-6 p-0" style="display: flex;justify-content: end">
-        {{ $convenio->links('livewire::simple-tailwind') }}
+        {{ $convenio->links('pagination::TbPagination') }}
     </div>
 </div>
 {{-- <div class="row">

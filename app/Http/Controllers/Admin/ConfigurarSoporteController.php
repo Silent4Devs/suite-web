@@ -127,9 +127,10 @@ class ConfigurarSoporteController extends Controller
     }
 
     // UpdatePartesInteresadaRequest
-    public function update(Request $request, ConfigurarSoporteModel $ConfigurarSoporteModel)
+    public function update(Request $request, $ConfigurarSoporteModel)
     {
         abort_if(Gate::denies('configurar_soporte_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $ConfigurarSoporteModel = ConfigurarSoporteModel::find($ConfigurarSoporteModel);
         $ConfigurarSoporteModel->update($request->all());
 
         return redirect()->route('admin.configurar-soporte.index')->with('success', 'Editado con éxito');

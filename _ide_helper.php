@@ -5085,7 +5085,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function lock($name, $seconds = 0, $owner = null)
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
+            /** @var \Illuminate\Cache\FileStore $instance */
             return $instance->lock($name, $seconds, $owner);
         }
 
@@ -5099,7 +5099,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function restoreLock($name, $owner)
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
+            /** @var \Illuminate\Cache\FileStore $instance */
             return $instance->restoreLock($name, $owner);
         }
 
@@ -5111,82 +5111,71 @@ namespace Illuminate\Support\Facades {
          */
         public static function flush()
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
+            /** @var \Illuminate\Cache\FileStore $instance */
             return $instance->flush();
         }
 
         /**
-         * Remove all expired tag set entries.
+         * Get the full path for the given cache key.
          *
-         * @return void 
+         * @param string $key
+         * @return string 
          * @static 
          */
-        public static function flushStaleTags()
+        public static function path($key)
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            $instance->flushStaleTags();
+            /** @var \Illuminate\Cache\FileStore $instance */
+            return $instance->path($key);
         }
 
         /**
-         * Get the Redis connection instance.
+         * Get the Filesystem instance.
          *
-         * @return \Illuminate\Redis\Connections\Connection 
+         * @return \Illuminate\Filesystem\Filesystem 
          * @static 
          */
-        public static function connection()
+        public static function getFilesystem()
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            return $instance->connection();
+            /** @var \Illuminate\Cache\FileStore $instance */
+            return $instance->getFilesystem();
         }
 
         /**
-         * Get the Redis connection instance that should be used to manage locks.
+         * Get the working directory of the cache.
          *
-         * @return \Illuminate\Redis\Connections\Connection 
+         * @return string 
          * @static 
          */
-        public static function lockConnection()
+        public static function getDirectory()
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            return $instance->lockConnection();
+            /** @var \Illuminate\Cache\FileStore $instance */
+            return $instance->getDirectory();
         }
 
         /**
-         * Specify the name of the connection that should be used to store data.
+         * Set the working directory of the cache.
          *
-         * @param string $connection
-         * @return void 
+         * @param string $directory
+         * @return \Illuminate\Cache\FileStore 
          * @static 
          */
-        public static function setConnection($connection)
+        public static function setDirectory($directory)
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            $instance->setConnection($connection);
+            /** @var \Illuminate\Cache\FileStore $instance */
+            return $instance->setDirectory($directory);
         }
 
         /**
-         * Specify the name of the connection that should be used to manage locks.
+         * Set the cache directory where locks should be stored.
          *
-         * @param string $connection
-         * @return \Illuminate\Cache\RedisStore 
+         * @param string|null $lockDirectory
+         * @return \Illuminate\Cache\FileStore 
          * @static 
          */
-        public static function setLockConnection($connection)
+        public static function setLockDirectory($lockDirectory)
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            return $instance->setLockConnection($connection);
-        }
-
-        /**
-         * Get the Redis database instance.
-         *
-         * @return \Illuminate\Contracts\Redis\Factory 
-         * @static 
-         */
-        public static function getRedis()
-        {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            return $instance->getRedis();
+            /** @var \Illuminate\Cache\FileStore $instance */
+            return $instance->setLockDirectory($lockDirectory);
         }
 
         /**
@@ -5197,21 +5186,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function getPrefix()
         {
-            /** @var \Illuminate\Cache\RedisStore $instance */
+            /** @var \Illuminate\Cache\FileStore $instance */
             return $instance->getPrefix();
-        }
-
-        /**
-         * Set the cache key prefix.
-         *
-         * @param string $prefix
-         * @return void 
-         * @static 
-         */
-        public static function setPrefix($prefix)
-        {
-            /** @var \Illuminate\Cache\RedisStore $instance */
-            $instance->setPrefix($prefix);
         }
 
             }
@@ -11685,217 +11661,6 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
-         * 
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function laterRaw($delay, $payload, $queue = null, $attempts = 0)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->laterRaw($delay, $payload, $queue, $attempts);
-        }
-
-        /**
-         * 
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function bulkRaw($payload, $queue = null, $options = [])
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->bulkRaw($payload, $queue, $options);
-        }
-
-        /**
-         * 
-         *
-         * @throws RuntimeException
-         * @static 
-         */
-        public static function getConnection()
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->getConnection();
-        }
-
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setConnection($connection)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->setConnection($connection);
-        }
-
-        /**
-         * Job class to use.
-         *
-         * @throws Throwable
-         * @static 
-         */
-        public static function getJobClass()
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->getJobClass();
-        }
-
-        /**
-         * Gets a queue/destination, by default the queue option set on the connection.
-         *
-         * @static 
-         */
-        public static function getQueue($queue = null)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->getQueue($queue);
-        }
-
-        /**
-         * Checks if the given exchange already present/defined in RabbitMQ.
-         * 
-         * Returns false when the exchange is missing.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function isExchangeExists($exchange)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->isExchangeExists($exchange);
-        }
-
-        /**
-         * Declare an exchange in rabbitMQ, when not already declared.
-         *
-         * @static 
-         */
-        public static function declareExchange($name, $type = 'direct', $durable = true, $autoDelete = false, $arguments = [])
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->declareExchange($name, $type, $durable, $autoDelete, $arguments);
-        }
-
-        /**
-         * Delete an exchange from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function deleteExchange($name, $unused = false)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->deleteExchange($name, $unused);
-        }
-
-        /**
-         * Checks if the given queue already present/defined in RabbitMQ.
-         * 
-         * Returns false when the queue is missing.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function isQueueExists($name = null)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->isQueueExists($name);
-        }
-
-        /**
-         * Declare a queue in rabbitMQ, when not already declared.
-         *
-         * @static 
-         */
-        public static function declareQueue($name, $durable = true, $autoDelete = false, $arguments = [])
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->declareQueue($name, $durable, $autoDelete, $arguments);
-        }
-
-        /**
-         * Delete a queue from rabbitMQ, only when present in RabbitMQ.
-         *
-         * @throws AMQPProtocolChannelException
-         * @static 
-         */
-        public static function deleteQueue($name, $if_unused = false, $if_empty = false)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->deleteQueue($name, $if_unused, $if_empty);
-        }
-
-        /**
-         * Bind a queue to an exchange.
-         *
-         * @static 
-         */
-        public static function bindQueue($queue, $exchange, $routingKey = '')
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->bindQueue($queue, $exchange, $routingKey);
-        }
-
-        /**
-         * Purge the queue of messages.
-         *
-         * @static 
-         */
-        public static function purge($queue = null)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->purge($queue);
-        }
-
-        /**
-         * Acknowledge the message.
-         *
-         * @static 
-         */
-        public static function ack($job)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->ack($job);
-        }
-
-        /**
-         * Reject the message.
-         *
-         * @static 
-         */
-        public static function reject($job, $requeue = false)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->reject($job, $requeue);
-        }
-
-        /**
-         * Close the connection to RabbitMQ.
-         *
-         * @throws Exception
-         * @static 
-         */
-        public static function close()
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->close();
-        }
-
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function getChannel($forceNew = false)
-        {
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
-            return $instance->getChannel($forceNew);
-        }
-
-        /**
          * Get the maximum number of attempts for an object-based queue handler.
          *
          * @param mixed $job
@@ -11905,7 +11670,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobTries($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+            /** @var \Illuminate\Queue\SyncQueue $instance */
             return $instance->getJobTries($job);
         }
 
@@ -11919,7 +11684,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobBackoff($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+            /** @var \Illuminate\Queue\SyncQueue $instance */
             return $instance->getJobBackoff($job);
         }
 
@@ -11933,7 +11698,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobExpiration($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+            /** @var \Illuminate\Queue\SyncQueue $instance */
             return $instance->getJobExpiration($job);
         }
 
@@ -11947,7 +11712,7 @@ namespace Illuminate\Support\Facades {
         public static function createPayloadUsing($callback)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue::createPayloadUsing($callback);
+            \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
         }
 
         /**
@@ -11959,7 +11724,7 @@ namespace Illuminate\Support\Facades {
         public static function getContainer()
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+            /** @var \Illuminate\Queue\SyncQueue $instance */
             return $instance->getContainer();
         }
 
@@ -11973,7 +11738,7 @@ namespace Illuminate\Support\Facades {
         public static function setContainer($container)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue $instance */
+            /** @var \Illuminate\Queue\SyncQueue $instance */
             $instance->setContainer($container);
         }
 
@@ -25024,6 +24789,294 @@ namespace Spatie\SignalAwareCommand\Facades {
             }
     }
 
+namespace Stancl\Tenancy\Facades {
+            /**
+     * 
+     *
+     */        class Tenancy {
+                    /**
+         * Initializes the tenant.
+         *
+         * @param \Stancl\Tenancy\Contracts\Tenant|int|string $tenant
+         * @return void 
+         * @static 
+         */        public static function initialize($tenant)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        $instance->initialize($tenant);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function end()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->end();
+        }
+                    /**
+         * 
+         *
+         * @return \Stancl\Tenancy\Contracts\TenancyBootstrapper[] 
+         * @static 
+         */        public static function getBootstrappers()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->getBootstrappers();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function query()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->query();
+        }
+                    /**
+         * 
+         *
+         * @return \Stancl\Tenancy\Contracts\Tenant|\Illuminate\Database\Eloquent\Model 
+         * @static 
+         */        public static function model()
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->model();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function find($id)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->find($id);
+        }
+                    /**
+         * Run a callback in the central context.
+         * 
+         * Atomic, safely reverts to previous context.
+         *
+         * @param callable $callback
+         * @return mixed 
+         * @static 
+         */        public static function central($callback)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        return $instance->central($callback);
+        }
+                    /**
+         * Run a callback for multiple tenants.
+         * 
+         * More performant than running $tenant->run() one by one.
+         *
+         * @param \Stancl\Tenancy\Contracts\Tenant[]|\Traversable|string[]|null $tenants
+         * @param callable $callback
+         * @return void 
+         * @static 
+         */        public static function runForMultiple($tenants, $callback)
+        {
+                        /** @var \Stancl\Tenancy\Tenancy $instance */
+                        $instance->runForMultiple($tenants, $callback);
+        }
+                    /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @param-closure-this static  $macro
+         * @return void 
+         * @static 
+         */        public static function macro($name, $macro)
+        {
+                        \Stancl\Tenancy\Tenancy::macro($name, $macro);
+        }
+                    /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void 
+         * @throws \ReflectionException
+         * @static 
+         */        public static function mixin($mixin, $replace = true)
+        {
+                        \Stancl\Tenancy\Tenancy::mixin($mixin, $replace);
+        }
+                    /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */        public static function hasMacro($name)
+        {
+                        return \Stancl\Tenancy\Tenancy::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */        public static function flushMacros()
+        {
+                        \Stancl\Tenancy\Tenancy::flushMacros();
+        }
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
+         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
+         * @param string $userId
+         * @param string $redirectUrl
+         * @param string|null $authGuard
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
+         * @static 
+         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
+        {
+                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
+        }
+            }
+            /**
+     * 
+     *
+     */        class GlobalCache {
+                    /**
+         * Get a cache store instance by name, wrapped in a repository.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @static 
+         */        public static function store($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->store($name);
+        }
+                    /**
+         * Get a cache driver instance.
+         *
+         * @param string|null $driver
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @static 
+         */        public static function driver($driver = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->driver($driver);
+        }
+                    /**
+         * Resolve the given store.
+         *
+         * @param string $name
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @throws \InvalidArgumentException
+         * @static 
+         */        public static function resolve($name)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->resolve($name);
+        }
+                    /**
+         * Build a cache repository with the given configuration.
+         *
+         * @param array $config
+         * @return \Illuminate\Cache\Repository 
+         * @static 
+         */        public static function build($config)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->build($config);
+        }
+                    /**
+         * Create a new cache repository with the given implementation.
+         *
+         * @param \Illuminate\Contracts\Cache\Store $store
+         * @param array $config
+         * @return \Illuminate\Cache\Repository 
+         * @static 
+         */        public static function repository($store, $config = [])
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->repository($store, $config);
+        }
+                    /**
+         * Re-set the event dispatcher on all resolved cache repositories.
+         *
+         * @return void 
+         * @static 
+         */        public static function refreshEventDispatcher()
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->refreshEventDispatcher();
+        }
+                    /**
+         * Get the default cache driver name.
+         *
+         * @return string 
+         * @static 
+         */        public static function getDefaultDriver()
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->getDefaultDriver();
+        }
+                    /**
+         * Set the default cache driver name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */        public static function setDefaultDriver($name)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->setDefaultDriver($name);
+        }
+                    /**
+         * Unset the given driver instances.
+         *
+         * @param array|string|null $name
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function forgetDriver($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->forgetDriver($name);
+        }
+                    /**
+         * Disconnect the given driver and remove from local cache.
+         *
+         * @param string|null $name
+         * @return void 
+         * @static 
+         */        public static function purge($name = null)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        $instance->purge($name);
+        }
+                    /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function extend($driver, $callback)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->extend($driver, $callback);
+        }
+                    /**
+         * Set the application instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $app
+         * @return \Illuminate\Cache\CacheManager 
+         * @static 
+         */        public static function setApplication($app)
+        {
+                        /** @var \Illuminate\Cache\CacheManager $instance */
+                        return $instance->setApplication($app);
+        }
+            }
+    }
+
 namespace VXM\Async {
     /**
      * 
@@ -25308,6 +25361,28 @@ namespace Illuminate\Support {
             }
     }
 
+namespace Stancl\Tenancy {
+            /**
+     * 
+     *
+     */        class Tenancy {
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
+         * @param \Stancl\Tenancy\Contracts\Tenant $tenant
+         * @param string $userId
+         * @param string $redirectUrl
+         * @param string|null $authGuard
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
+         * @static 
+         */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
+        {
+                        return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
+        }
+            }
+    }
+
 namespace Illuminate\Http {
     /**
      * 
@@ -25389,6 +25464,21 @@ namespace Illuminate\Http {
             return \Illuminate\Http\Request::hasValidRelativeSignatureWhileIgnoring($ignoreQuery);
         }
 
+            }
+            /**
+     * 
+     *
+     */        class RedirectResponse {
+                    /**
+         * 
+         *
+         * @see \Stancl\Tenancy\Features\CrossDomainRedirect::bootstrap()
+         * @param string $domain
+         * @static 
+         */        public static function domain($domain)
+        {
+                        return \Illuminate\Http\RedirectResponse::domain($domain);
+        }
             }
     }
 

@@ -143,8 +143,6 @@ class ReportesRegistros extends Component
 
     public function exportExcel()
     {
-        // dd(1);
-
         $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
         return Excel::download($export, 'reporte_colaborador_registro.xlsx');

@@ -90,7 +90,8 @@
         <div class="d-flex align-items-center" style="gap: 50px;">
             <div class="d-flex align-items-center" style="gap: 15px;">
                 <div class="img-person" style="width: 100px; height: 100px;">
-                    <img src="{{ $empleado->ruta_avatar }}" alt="">
+                    <img src="{{ asset('storage/empleados/imagenes/' . '/' . $empleado->avatar) }}"
+                    alt="{{ $empleado->name }}">
                 </div>
                 <span style="font-size: 16px;">{{ $empleado->name }}</span>
             </div>
@@ -133,7 +134,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formObjetivoEdit" method="post" enctype="multipart/form-data" class="mt-3 row">
+                    <form id="formObjetivoEdit" method="POST" enctype="multipart/form-data" class="mt-3 row">
                         @method('PATCH')
                         @include('admin.recursos-humanos.evaluacion-360.objetivos._form_by_empleado', [
                             'editar' => true,
@@ -163,136 +164,12 @@
 
 @section('scripts')
     <script type="text/javascript">
-        $(function() {
-            $('#foto').on('change', function(e) {
-                let inputFile = e.currentTarget;
-                console.log('si')
-                $("#texto-imagen").text(inputFile.files[0].name);
-                // Imagen previa
-                var reader = new FileReader();
-                reader.readAsDataURL(inputFile.files[0]);
-                reader.onload = function(e) {
-                    document.getElementById('uploadPreview').src = e.target.result;
-                };
-            });
-            // $('#fotoEdit').on('change', function(e) {
-            //     let inputFile = e.currentTarget;
-            //     console.log('No')
-            //     $("#texto-imagenEdit").text(inputFile.files[0].name);
-            //     // Imagen previa
-            //     var reader = new FileReader();
-            //     reader.readAsDataURL(inputFile.files[0]);
-            //     reader.onload = function(e) {
-            //         document.querySelector('#uploadPreviewEdit').src = e.target.result;
-            //     };
-            // });
-            $('#fotoPerspectiva').on('change', function(e) {
-                let inputFile = e.currentTarget;
-                console.log('No')
-                $("#texto-imagen-perspectiva").text(inputFile.files[0].name);
-                // Imagen previa
-                var reader = new FileReader();
-                reader.readAsDataURL(inputFile.files[0]);
-                reader.onload = function(e) {
-                    document.querySelector('#uploadPreviewPerspectiva').src = e.target.result;
-                };
-            });
 
+        $('#btnCancelarEditObjetivo').click(function() {
+            $('#objetivoModal').modal('hide');
+        });
 
-            let dtButtons = [];
-            let empleado = @json($empleado);
-            let auth = @json(Auth::user()->empleado);
-            let permiso = @json($permiso);
-            let supervisor = @json($empleado->supervisor);
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                processing: true,
-                serverSide: true,
-                retrieve: true,
-                ajax: "{{ route('admin.ev360-objetivos-empleado.create', $empleado->id) }}",
-                columns: [{
-                        data: 'objetivo.tipo.nombre',
-                    }, {
-                        data: 'objetivo.nombre'
-                    },
-                    // {
-                    //     data: 'id',
-                    //     render: function(data, type, row, meta) {
-                    //         return row.evaluacion_id;
-                    //     }
-                    // },
-                    {
-                        data: 'objetivo.KPI',
-                    }, {
-                        data: 'objetivo',
-                        render: function(data, type, row, meta) {
-                            return data.meta + ' ' + row.objetivo?.metrica?.definicion;
-                        }
-                    }, {
-                        data: 'objetivo.esta_aprobado',
-                        render: function(data, type, row, meta) {
-                            if (data == 1) {
-                                return '<span class="badge badge-success">Aprobado</span>';
-                            } else if (data == 2) {
-                                let html = `
-                            <span class="badge badge-danger">No Aprobado
-                                <i class="fas fa-comment ml-1" title="${row.objetivo.comentarios_aprobacion}"></i>
-                            </span>`;
-                                return html;
-                            } else {
-                                return '<span class="badge badge-warning">Pendiente</span>';
-                            }
-                        }
-                    }, {
-                        data: 'objetivo.descripcion_meta',
-                    }, {
-                        data: 'id',
-                        render: function(data, type, row, meta) {
-
-                            let urlBtnEditar =
-                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/${row.objetivo_id}/editByEmpleado`;
-                            let urlBtnActualizar =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.objetivo_id}/empleado`;
-                            let urlBtnEliminar =
-                                `/admin/recursos-humanos/evaluacion-360/objetivos/${row.id}`;
-                            let urlShow =
-                                `/admin/recursos-humanos/evaluacion-360/${row.empleado_id}/objetivos/lista`;
-                            let botones = `
-                            <div class="row">
-                                <div class="col-12">
-                                    <button class="btn btn-sm btn-editar" title="Editar" onclick="event.preventDefault();Editar('${urlBtnEditar}','${urlBtnActualizar}')"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-eliminar text-danger" title="Eliminar" onclick="event.preventDefault();Eliminar('${urlBtnEliminar}')"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                                `;
-                            if (row.objetivo.esta_aprobado == 0) {
-                                if (auth.id == supervisor.id || permiso == true) {
-                                    botones +=
-                                        `<div class="col-12">
-                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},true);" class="btn btn-small text-success"><i class="fa-solid fa-thumbs-up"></i></button>
-                                        <button onclick="event.preventDefault();aprobarObjetivoEstrategico(${row.objetivo_id},${row.empleado_id},false);" class="btn btn-small text-danger"><i class="fa-solid fa-thumbs-down"></i></button>
-                                        </div>
-                                    </div>
-                                    `;
-                                }
-                            } else {
-                                botones += `</div>`;
-                            }
-
-                            return botones;
-                        }
-                    }
-                ],
-                order: [
-                    [1, 'asc']
-                ],
-                pageLength: 10,
-                dom: "<'row align-items-center justify-content-center container m-0 p-0'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0 p-0'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-            };
-            window.tblObjetivos = $('.tblObjetivos').DataTable(dtOverrideGlobals);
-
-            window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
+        window.aprobarObjetivoEstrategico = (objetivo, empleado, estaAprobado) => {
                 console.log(objetivo, empleado, estaAprobado);
                 let textoAprobacion = estaAprobado ? 'Aprobar' : 'Rechazar';
                 let textoAprobado = estaAprobado ? 'Aprobado' : 'Rechazado';
@@ -358,13 +235,12 @@
                     if (result.isConfirmed) {
                         Swal.fire(textoAprobado, `Objetivo ${textoAprobado} con éxito`, 'success').then(
                             () => {
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             });
                     }
                 })
 
-            }
-        });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
                 headers: {
@@ -415,6 +291,25 @@
                     type: "GET",
                     url: urlEditar,
                     beforeSend: function() {
+                        $('#objetivoModal').on('show.bs.modal', function (e) {
+                            const form = document.getElementById('formObjetivoEdit');
+                            // Verificamos si el formulario existe en el DOM
+                            if (form) {
+                                // Buscamos el botón dentro del formulario usando el id 'BtnAgregarObjetivo'
+                                const btnAgregarObjetivo = form.querySelector('#BtnAgregarObjetivo');
+
+                                // Verificamos si el botón existe dentro del formulario
+                                if (btnAgregarObjetivo) {
+                                    // Ocultamos el botón
+                                    btnAgregarObjetivo.style.display = 'none';
+                                    console.log('Botón ocultado');
+                                } else {
+                                    console.log('Botón no encontrado');
+                                }
+                            }
+
+                        });
+
                         toastr.info(
                             'Recuperando información de la conducta, espere unos instantes...');
                     },
@@ -436,11 +331,17 @@
                         $('#formObjetivoEdit #metrica_id').val(response.metrica_id).trigger(
                             'change');
 
+
                         $('#objetivoModal').modal('show');
+
                         $('#formObjetivoEdit').removeAttr('action');
                         $('#formObjetivoEdit').removeAttr('method');
                         $('#formObjetivoEdit').attr('action', urlActualizar);
                         $('#formObjetivoEdit').attr('method', 'PATCH');
+
+                        $('#objetivoModal').on('hidden.bs.modal', function() {
+                            document.getElementById('BtnAgregarObjetivo').style.display = 'inline-block';
+                        });
                     },
                     error: function(request, status, error) {
                         if (error != 'Unprocessable Entity') {
@@ -473,7 +374,7 @@
                 formDataEdit.append('nombre', nombre);
                 formDataEdit.append('KPI', kpi);
                 formDataEdit.append('meta', meta);
-                formDataEdit.append('descripcion', descripcion);
+                formDataEdit.append('descripcion_meta', descripcion);
                 formDataEdit.append('tipo_id', tipo_id);
                 formDataEdit.append('metrica_id', metrica_id);
                 // formDataEdit.append('foto', document.querySelector('#formObjetivoEdit #fotoEdit').files[0]);
@@ -494,18 +395,17 @@
                         limpiarErrores();
                         $('#objetivoModal').modal('hide');
                         toastr.success('Registro actualizado');
-                        tblObjetivos.ajax.reload();
                         document.getElementById('fotoEdit').value = "";
                         document.getElementById('texto-imagenEdit').innerHTML =
                             'Subir imágen <small class="text-danger" style="font-size: 10px">(Opcional)</small>';
                         document.getElementById('uploadPreviewEdit').src =
-                            @json(asset('img/not-available.png'))
+                            @json(asset('img/not-available.png'));
+                        location.reload();
                     },
                     error: function(request, status, error) {
                         ocultarValidando();
                         if (error != 'Unprocessable Entity') {
-                            toastr.error(
-                                'Ocurrió un error: ' + error);
+                            location.reload();
                         } else {
                             $.each(request.responseJSON.errors, function(indexInArray,
                                 valueOfElement) {
@@ -543,7 +443,7 @@
                             },
                             success: function(response) {
                                 toastr.success('Objetivo eliminado');
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                             },
                             error: function(request, status, error) {
                                 toastr.error(
@@ -621,7 +521,7 @@
                         success: function(response) {
                             if (response.success) {
                                 toastr.success('Objetivos copiados correctamente');
-                                tblObjetivos.ajax.reload();
+                                location.reload();
                                 $('#modalCopiarObjetivos').modal('hide');
                             }
                         },

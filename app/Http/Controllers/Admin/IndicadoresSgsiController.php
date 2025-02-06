@@ -142,10 +142,10 @@ class IndicadoresSgsiController extends Controller
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
-    public function edit(IndicadoresSgsi $indicadoresSgsi)
+    public function edit($id_indicadoresSgsi)
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $indicadoresSgsi = IndicadoresSgsi::where('id', $id_indicadoresSgsi)->first();
         $procesos = Proceso::getAll();
         $responsables = Empleado::getaltaAll();
         $areas = Area::getAll();
@@ -156,9 +156,10 @@ class IndicadoresSgsiController extends Controller
         return view('admin.indicadoresSgsis.edit', compact('areas', 'procesos', 'indicadoresSgsi', 'responsables'));
     }
 
-    public function update(Request $request, IndicadoresSgsi $indicadoresSgsi)
+    public function update(Request $request, $id_indicadoresSgsi)
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $indicadoresSgsi = IndicadoresSgsi::where('id', $id_indicadoresSgsi)->first();
         $request->validate([
             'nombre' => 'required|string',
             'id_area' => 'required',
@@ -181,17 +182,18 @@ class IndicadoresSgsiController extends Controller
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
-    public function show(IndicadoresSgsi $indicadoresSgsi)
+    public function show($id_indicadoresSgsi)
     {
         abort_if(Gate::denies('indicadores_sgsi_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $indicadoresSgsi = IndicadoresSgsi::where('id', $id_indicadoresSgsi)->first();
 
         return view('admin.indicadoresSgsis.show', compact('indicadoresSgsi'));
     }
 
-    public function destroy(IndicadoresSgsi $indicadoresSgsi)
+    public function destroy($id_indicadoresSgsi)
     {
         abort_if(Gate::denies('indicadores_sgsi_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $indicadoresSgsi = IndicadoresSgsi::where('id', $id_indicadoresSgsi)->first();
         $indicadoresSgsi->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

@@ -41,6 +41,8 @@ class CourseStatus extends Component
 
     public $cursoCompletado;
 
+    public $archivoUrl = null;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount($course, $evaluacionesLeccion)
     {
@@ -60,6 +62,9 @@ class CourseStatus extends Component
 
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
+        if (isset($this->current->resource)) {
+            $this->archivoUrl = asset('storage/'.$this->current->resource->url);  // Asegúrate de que el archivo sea accesible
+        }
     }
 
     public function render()
@@ -67,12 +72,14 @@ class CourseStatus extends Component
         // dd($this->course);
         // dd($this->course->lessons->where('completed', true)->count());
         // dd($this->current);
-        // $fechaYHora = $this->fecha.' '.$this->hora;
-        // $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
-        //     ->where('user_id', $this->usuario->id)->first();
+
+        // lastReview
+        $fechaYHora = $this->fecha.' '.$this->hora;
+        $cursoLastReview = UsuariosCursos::where('course_id', $this->course->id)
+            ->where('user_id', $this->usuario->id)->first();
         // dd($cursoLastReview);
 
-        // $this->updateLastReview($fechaYHora, $cursoLastReview);
+        $this->updateLastReview($fechaYHora, $cursoLastReview);
 
         //Evaluaciones para el curso en general
         $this->evaluationsUser = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
@@ -107,12 +114,21 @@ class CourseStatus extends Component
         // else{
         //     $this->current = $this->course->lastfinishedlesson;
         // }
+
         $this->dispatch('render');
 
         $this->cursoCompletado = CourseUser::where('course_id', $this->course->id)->where('user_id', $this->usuario->id)->get();
 
+        // dd($this->current);
         return view('livewire.escuela.course-status');
+    }
 
+    public function completedLesson()
+    {
+        $usuario = User::getCurrentUser();
+        $this->current->users()->attach($usuario->id);
+
+        return redirect(route('admin.curso-estudiante', $this->course->id));
     }
 
     //METODOS
@@ -122,16 +138,19 @@ class CourseStatus extends Component
         // Verificar si el usuario está yendo a una lección anterior o desea regresar
         if ($atras == 'previous') {
             $this->current = $lesson;
+            $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render'); // Renderizar la vista correctamente
 
             return;
         }
 
         // Permitir acceder a la lección seleccionada si está completada
-        if ($lesson->completed) {
+        if ($lesson->completed || $this->current->completed) {
             $this->current = $lesson;
+            $this->dispatch('reloadCurrent', current: $this->current);
             $this->dispatch('render');
 
+            // dd('aqui');
             return;
         }
 
@@ -140,6 +159,7 @@ class CourseStatus extends Component
             $this->alertaEmergente('Es necesario terminar esta lección antes de avanzar.');
             $this->dispatch('render'); // Asegurarse de renderizar la lección actual
 
+            // dd('aqui2');
             return;
         }
 
@@ -190,6 +210,7 @@ class CourseStatus extends Component
     //calculamos la propiedad previous
     public function getPreviousProperty()
     {
+
         if ($this->index == 0) {
             return null;
         } else {
@@ -203,6 +224,7 @@ class CourseStatus extends Component
         if ($this->index == $this->lecciones_orden->count() - 1) {
             return null;
         } else {
+            // dump($this->current->name);
             return $this->lecciones_orden[$this->index + 1];
         }
     }
@@ -216,18 +238,13 @@ class CourseStatus extends Component
                 $i++;
             }
         }
-        $evaluations_count = 0;
-        if (isset($this->evaluacionesGenerales)) {
-            $ids = $this->evaluacionesGenerales->pluck('id');
-            $evaluations_count = $this->evaluacionesGenerales->count();
-        } else {
-            $ids = [];
-        }
-        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('completed', true)->whereIn('evaluation_id', $ids)->count();
+
+        $ids = $this->evaluacionesGenerales->pluck('id');
+        $results = UserEvaluation::where('user_id', $this->usuario->id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
         //calcular el porcentaje del curso
-        $advance = ($i * 100) / ($this->lecciones_orden->count() + $evaluations_count);
+        $advance = ($i * 100) / ($this->lecciones_orden->count() + $this->evaluacionesGenerales->count());
 
         return round($advance, 2);
     }

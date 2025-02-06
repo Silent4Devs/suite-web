@@ -199,10 +199,10 @@ class TratamientoRiesgosController extends Controller
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(TratamientoRiesgo $tratamientoRiesgo)
+    public function show($id_tratamientoRiesgo)
     {
         abort_if(Gate::denies('tratamiento_de_los_riesgos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $tratamientoRiesgo = TratamientoRiesgo::where('id', $id_tratamientoRiesgo)->first();
         $tratamientoRiesgo->load('control', 'responsable', 'team');
         // dd($tratamientoRiesgo);
 
@@ -211,10 +211,10 @@ class TratamientoRiesgosController extends Controller
         return view('admin.tratamientoRiesgos.show', compact('route', 'tratamientoRiesgo'));
     }
 
-    public function destroy(TratamientoRiesgo $tratamientoRiesgo)
+    public function destroy($id_tratamientoRiesgo)
     {
         abort_if(Gate::denies('tratamiento_de_los_riesgos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $tratamientoRiesgo = TratamientoRiesgo::where('id', $id_tratamientoRiesgo)->first();
         $tratamientoRiesgo->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

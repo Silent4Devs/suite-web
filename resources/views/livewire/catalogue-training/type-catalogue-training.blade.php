@@ -12,12 +12,10 @@
                 </div>
                 <div class="col-12 col-sm-6 ">
                     @if ($status)
-                        <button class="btn btn-secondary " type="submit">Agregar a catalogo</button>
+                        <button class="btn btn-secondary " type="submit">Agregar a catálogo</button>
                     @else
                         <button class="btn btn-secondary " type="submit">Editar registro</button>
                     @endif
-                    <button class="btn btn-secondary " type="button" wire:click="registersRestore">Recuperar
-                        registros</button>
                 </div>
             </form>
         </div>
@@ -25,64 +23,89 @@
     <div class="card">
         <div class="card-body">
             <h4>Catálogo de Capacitaciones</h4>
-            <table class="table w-100 tblCSV mt-4">
-                <thead class="">
-                    <tr>
-                        <th style="min-width: 110px;">
-                            Id
-                        </th>
-                        <th style="min-width: 80px;">
-                            Nombre de Capacitación
-                        </th>
-                        <th style="min-width: 75px;">
-                            Fecha de creación
-                        </th>
-                        <th style="min-width: 100px;">
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($registers as $register)
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <span>Mostrando</span>
+                            <select name="" id="" class="form-control ml-2" wire:model.live="perPage">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+
+                        </div>
+                        <input type="text" class="form-control" placeholder="Buscar..." wire:model.live="search"
+                            style="max-width: 150px;">
+                    </div>
+                </div>
+            </div>
+            <div class="datatable-fix">
+                <table class="table w-100 tblCSV mt-4">
+                    <thead class="">
                         <tr>
-                            <td>
-                                {{ $register->id }}
-                            </td>
-                            <td>
-                                {{ $register->name }}
-                            </td>
-                            <td>
-                                {{ $register->date }}
-                            </td>
-                            <td>
-                                <div class="btn-group dropleft">
-                                    <button class="btn p-0 m-0" type="button" data-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" wire:click="edit({{ $register->id }})">
-                                            <div class="d-flex align-items-start">
-                                                <i class="btn-top material-icons-outlined"
-                                                    style="width: 24px;font-size:18px;">edit_outline</i>
-                                                Editar
-                                            </div>
-                                        </a>
-                                        {{-- @if (!$register->default) --}}
-                                        <a class="dropdown-item" wire:click="deleteMessage({{ $register->id }})">
-                                            <div class="d-flex align-items-start">
-                                                <i class="material-symbols-outlined"
-                                                    style="width: 24px;font-size:18px;">delete</i>
-                                                Eliminar
-                                            </div>
-                                        </a>
-                                        {{-- @endif --}}
-                                    </div>
-                                </div>
-                            </td>
+                            <th style="min-width: 110px;">
+                                Id
+                            </th>
+                            <th style="min-width: 80px;">
+                                Nombre de Capacitación
+                            </th>
+                            <th style="min-width: 75px;">
+                                Fecha de creación
+                            </th>
+                            <th style="min-width: 100px;">
+                            </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($registers as $register)
+                            <tr>
+                                <td>
+                                    {{ $register->id }}
+                                </td>
+                                <td>
+                                    {{ $register->name }}
+                                </td>
+                                <td>
+                                    {{ $register->date }}
+                                </td>
+                                <td>
+                                    <div class="btn-group dropleft">
+                                        <button class="btn p-0 m-0" type="button" data-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" wire:click="edit({{ $register->id }})">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="btn-top material-icons-outlined"
+                                                        style="width: 24px;font-size:18px;">edit_outline</i>
+                                                    Editar
+                                                </div>
+                                            </a>
+                                            {{-- @if (!$register->default) --}}
+                                            <a class="dropdown-item" wire:click="deleteMessage({{ $register->id }})">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="material-symbols-outlined"
+                                                        style="width: 24px;font-size:18px;">delete</i>
+                                                    Eliminar
+                                                </div>
+                                            </a>
+                                            {{-- @endif --}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div >
+                {{ $registers->links('pagination::TbPagination') }}
+            </div>
         </div>
     </div>
     <script>

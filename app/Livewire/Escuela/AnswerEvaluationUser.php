@@ -119,6 +119,10 @@ class AnswerEvaluationUser extends Component
                     $this->userEvaluationId->score = $this->percentage;
                 }
 
+                if ($this->userEvaluationId->score >= 80) {
+                    $this->userEvaluationId->approved = true;
+                }
+
                 $this->userEvaluationId->quiz_size = $this->totalQuizQuestions;
                 $this->userEvaluationId->number_of_attempts = $this->userEvaluationId->number_of_attempts - 1;
                 $this->userEvaluationId->last_attempt = Carbon::now();
@@ -157,6 +161,10 @@ class AnswerEvaluationUser extends Component
 
                 if (($this->userEvaluationId->score < $this->percentage)) {
                     $this->userEvaluationId->score = $this->percentage;
+                }
+
+                if ($this->userEvaluationId->score >= 80) {
+                    $this->userEvaluationId->approved = true;
                 }
 
                 $this->userEvaluationId->quiz_size = $this->totalQuizQuestions;
@@ -248,9 +256,28 @@ class AnswerEvaluationUser extends Component
         $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
         $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
         if ($this->percentage < 100 && ! $this->retry && ($this->attempt_count > 0)) {
+
+            if ($this->userEvaluationId->score == null) {
+                $this->userEvaluationId->score = $this->percentage;
+                $this->userEvaluationId->save();
+            }
+
+            if ($this->userEvaluationId->score >= 80) {
+                $this->userEvaluationId->approved = true;
+                $this->userEvaluationId->save();
+            }
+
             $this->showRetry = true;
         } else {
             $this->showRetry = false;
+            if ($this->userEvaluationId->score == null) {
+                $this->userEvaluationId->score = $this->percentage;
+                $this->userEvaluationId->save();
+            }
+            if ($this->userEvaluationId->score >= 80) {
+                $this->userEvaluationId->approved = true;
+                $this->userEvaluationId->save();
+            }
         }
     }
 

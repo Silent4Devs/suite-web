@@ -32,7 +32,7 @@
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-12">
                 <label for="" class="txt-tamaño">Observaciones<font class="asterisco">*</font></label>
-                <textarea style="padding:15px;" type="text" wire:model.live.debounce.800ms="observaciones" class="form-control"></textarea>
+                <textarea style="padding:15px;" type="text" wire:model.live.debounce.800ms="observaciones" required class="form-control"></textarea>
                 @error('observaciones')
                     <span class="red-text">{{ $message }}</span>
                 @enderror

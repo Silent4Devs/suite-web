@@ -75,35 +75,36 @@ class EstatusPlanTrabajoController extends Controller
         return redirect()->route('admin.estatus-plan-trabajos.index');
     }
 
-    public function edit(EstatusPlanTrabajo $estatusPlanTrabajo)
+    public function edit($id_estatusPlanTrabajo)
     {
         abort_if(Gate::denies('estatus_plan_trabajo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estatusPlanTrabajo = EstatusPlanTrabajo::where('id', $id_estatusPlanTrabajo)->first();
         $estatusPlanTrabajo->load('team');
 
         return view('admin.estatusPlanTrabajos.edit', compact('estatusPlanTrabajo'));
     }
 
-    public function update(UpdateEstatusPlanTrabajoRequest $request, EstatusPlanTrabajo $estatusPlanTrabajo)
+    public function update(UpdateEstatusPlanTrabajoRequest $request, $id_estatusPlanTrabajo)
     {
+        $estatusPlanTrabajo = EstatusPlanTrabajo::where('id', $id_estatusPlanTrabajo)->first();
         $estatusPlanTrabajo->update($request->all());
 
         return redirect()->route('admin.estatus-plan-trabajos.index');
     }
 
-    public function show(EstatusPlanTrabajo $estatusPlanTrabajo)
+    public function show($id_estatusPlanTrabajo)
     {
         abort_if(Gate::denies('estatus_plan_trabajo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estatusPlanTrabajo = EstatusPlanTrabajo::where('id', $id_estatusPlanTrabajo)->first();
         $estatusPlanTrabajo->load('team');
 
         return view('admin.estatusPlanTrabajos.show', compact('estatusPlanTrabajo'));
     }
 
-    public function destroy(EstatusPlanTrabajo $estatusPlanTrabajo)
+    public function destroy($id_estatusPlanTrabajo)
     {
         abort_if(Gate::denies('estatus_plan_trabajo_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $estatusPlanTrabajo = EstatusPlanTrabajo::where('id', $id_estatusPlanTrabajo)->first();
         $estatusPlanTrabajo->delete();
 
         return back();

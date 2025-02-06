@@ -9,6 +9,7 @@
         margin-top: 10px !important;
     }
 </style>
+
 <div class="card card-body">
 
     <div class="row">
@@ -106,7 +107,7 @@
                 Meta a alcanzar
             </label>
             <input type="number" class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}" id="meta"
-                aria-describedby="metaHelp" name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
+                aria-describedby="metaHelp" required name="meta" value="{{ old('meta', $objetivo->meta) }}" placeholder="">
             <small id="metaHelp" class="form-text text-muted">Ingresa la Meta del objetivo estratégico </small>
             @if ($errors->has('meta'))
                 <div class="invalid-feedback">
@@ -142,44 +143,11 @@
     <div class="row">
         <div class="col-12">
             <button id="BtnAgregarObjetivo" class="btn" style="float: right" title="Agregar objetivo">
-                Agregar objetivo a la tabla <i class="material-symbols-outlined">south</i>
+                Agregar objetivo a la tabla<i class="material-symbols-outlined">south</i>
             </button>
         </div>
     </div>
 </div>
-
-
-{{-- <div class="col-sm-12 col-lg-12 col-md-12 col-12">
-    <div class="input-group is-invalid">
-        <div class="form-group" style="width: 100%;border: solid 1px #cecece;">
-            <div class="row align-items-center" style="padding: 20px 0;">
-                <div class="col-md-6 col-sm-6 col-12 d-flex justify-content-center">
-                    <label style="cursor: pointer" for="foto{{ $editar ? 'Edit' : '' }}">
-                        <div class="d-flex align-items-center">
-                            <h5>
-                                <i class="fas fa-image iconos-crear"
-                                    style="font-size: 20pt;position: relative;top: 4px;"></i>
-                                <span id="texto-imagen{{ $editar ? 'Edit' : '' }}" class="pl-2">
-                                    Subir imágen
-                                    <small class="text-danger" style="font-size: 10px">
-                                        (Opcional)</small>
-                                </span>
-                            </h5>
-                        </div>
-                    </label>
-                </div>
-                <div class="text-center col-6">
-                    <img id="uploadPreview{{ $editar ? 'Edit' : '' }}" class="imagen-preview"
-                        src="{{ asset('img/not-available.png') }}" width="150" height="150"
-                        accept="image/png, image/gif, image/jpeg" style="clip-path: circle(60px at 50% 50%);
-                        height: 120px;" />
-                </div>
-            </div>
-            <input name="foto" type="file" accept="image/png, image/jpeg" class="form-control-file"
-                id="foto{{ $editar ? 'Edit' : '' }}" hidden="">
-        </div>
-    </div>
-</div> --}}
 
 <div class="card card-body">
     @if (!$editar)
@@ -202,14 +170,8 @@
                         <th style="vertical-align: top">
                             Objetivos Estratégicos
                         </th>
-                        {{-- <th style="vertical-align: top">
-                            Evaluación Asignada
-                        </th> --}}
                         <th style="vertical-align: top">
                             KPI
-                        </th>
-                        <th style="vertical-align: top">
-                            Meta
                         </th>
                         <th style="vertical-align: top">
                             Estatus
@@ -222,7 +184,55 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+
+                    @foreach ($objetivos as $objetivo)
+                        <tr>
+                            <td>{{ $objetivo->objetivo->tipo->nombre ?? '' }}</td>
+                            <td>{{ $objetivo->objetivo->nombre ?? ''   }}</td>
+                            <td>{{ $objetivo->objetivo->KPI ?? ''  }}</td>
+                            <td>
+                                @if ($objetivo->objetivo->esta_aprobado == 1)
+                                    <span class="badge badge-success">Aprobado</span>
+                                @elseif ($objetivo->objetivo->esta_aprobado  == 2)
+                                    <span class="badge badge-danger">
+                                        No Aprobado
+                                        @if ($objetivo->objetivo->comentarios_aprobacion)
+                                            <i class="fas fa-comment ml-1" title="{{ $objetivo->objetivo->comentarios_aprobacion }}"></i>
+                                        @endif
+                                    </span>
+                                @else
+                                    <span class="badge badge-warning">Pendiente</span>
+                                @endif
+                            </td>
+                            <td>{{ $objetivo->objetivo->descripcion_meta }}</td>
+                            <td>
+                                    <div class="d-flex align-items-center" style="gap: 4px;">
+                                        <button class="btn btn-sm btn-editar me-2" title="Editar"
+                                            onclick="event.preventDefault();Editar('/admin/recursos-humanos/evaluacion-360/{{ $objetivo->empleado_id }}/objetivos/{{ $objetivo->objetivo->id }}/editByEmpleado', '/admin/recursos-humanos/evaluacion-360/objetivos/{{ $objetivo->objetivo->id }}/empleado')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-eliminar text-danger me-2" title="Eliminar"
+                                            onclick="event.preventDefault();Eliminar('{{ route('admin.ev360-objetivos-empleado.destroyByEmpleado', ['objetivo' => $objetivo->objetivo->id]) }}')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        @if (true)
+                                            <button onclick="event.preventDefault();aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);"
+                                                class="btn btn-small text-success me-2">
+                                                <i class="fa-solid fa-thumbs-up"></i>
+                                            </button>
+                                            <button onclick="event.preventDefault();aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, false);"
+                                                class="btn btn-small text-danger">
+                                                <i class="fa-solid fa-thumbs-down"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
+
             <div class="modal fade" id="modalCopiarObjetivos" data-backdrop="static" data-keyboard="false"
                 tabindex="-1" aria-labelledby="modalCopiarObjetivosLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -231,16 +241,15 @@
                             <h5 class="modal-title" id="modalCopiarObjetivosLabel"><i
                                     class="mr-2 fas fa-copy"></i>Copiar
                                 Objetivos</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                <button type="button" class="close" id="closeModalBtn">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                         </div>
                         <div class="modal-body">
                             <div id="contenidoModal"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary"
-                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-outline-primary" id="btnCerrarModal">Cerrar</button>
                             <button type="button" id="btnGuardarCopiaObjs" class="btn btn-primary">Guardar</button>
                         </div>
                         @include('layouts.loader')
@@ -251,7 +260,29 @@
     @endif
 </div>
 
+
+
 <script>
+    document.getElementById('BtnAgregarObjetivo').addEventListener('click', function (event) {
+    setTimeout(function () {
+        event.preventDefault();
+        location.reload();
+    }, 3000); //
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Botón "Cerrar" en el footer
+    document.getElementById('btnCerrarModal').addEventListener('click', function () {
+        $('#modalCopiarObjetivos').modal('hide');
+    });
+
+    // Ícono de cierre (tache)
+    document.getElementById('closeModalBtn').addEventListener('click', function () {
+        $('#modalCopiarObjetivos').modal('hide');
+    });
+    });
+
+
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnAgregarTipo').addEventListener('click', function(e) {
             e.preventDefault();

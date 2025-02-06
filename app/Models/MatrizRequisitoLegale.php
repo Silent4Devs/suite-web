@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Cache;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -15,7 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class MatrizRequisitoLegale extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'matriz_requisito_legales';
 

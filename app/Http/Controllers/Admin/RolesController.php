@@ -108,11 +108,11 @@ class RolesController extends Controller
         }
     }
 
-    public function edit(Role $role)
+    public function edit($id_role)
     {
-
         try {
             abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $role = Role::where('id', $id_role)->first();
             $permissions = Permission::getAll();
             $role->load('permissions');
 
@@ -122,10 +122,11 @@ class RolesController extends Controller
         }
     }
 
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id_role)
     {
         try {
             abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $role = Role::where('id', $id_role)->first();
             $request->validate([
                 'nombre_rol' => "required|string|min:3|max:255|unique:roles,title,{$role->id},id,deleted_at,NULL",
             ]);
@@ -142,10 +143,11 @@ class RolesController extends Controller
         }
     }
 
-    public function show(Role $role)
+    public function show($id_role)
     {
         try {
             abort_if(Gate::denies('roles_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $role = Role::where('id', $id_role)->first();
             $role->load('permissions');
 
             return view('admin.roles.show', compact('role'));
@@ -154,17 +156,19 @@ class RolesController extends Controller
         }
     }
 
-    public function destroy(Role $role)
+    public function destroy($id_role)
     {
         abort_if(Gate::denies('roles_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $role = Role::where('id', $id_role)->first();
         $role->delete();
 
         return back();
     }
 
-    public function copiarRol(Role $role, Request $request)
+    public function copiarRol($id_role, Request $request)
     {
         abort_if(Gate::denies('roles_copiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $role = Role::where('id', $id_role)->first();
         $request->validate([
             'nombre_rol' => 'required|string|min:3|max:255|unique:roles,title,NULL,id,deleted_at,NULL',
         ]);
@@ -186,9 +190,10 @@ class RolesController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function getPermissions(Request $request, Role $role)
+    public function getPermissions(Request $request, $id_role)
     {
         if ($request->ajax()) {
+            $role = Role::where('id', $id_role)->first();
             $permissions_role = [];
             foreach ($role->permissions as $permission) {
                 $permissions_role[] = $permission->id;

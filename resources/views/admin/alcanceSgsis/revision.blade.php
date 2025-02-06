@@ -60,12 +60,14 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
                 <div class="row" style="border-right: 16px solid white">
                     <div class="col-md-11" style="padding-right:0px; padding-left:14px;">
                         <div class="card mb-1" style="background-color: #EEF5FF; box-shadow:none;border-radius:0px;">
                             <div class="mt-4"
                                 style="font-weight: bold;margin-left:55px;font-size:14px; color:var(--color-tbj);">
-                                Nombre del alcance
+                                Nombre del alcance bien
                             </div>
                             <div class="px-2 mt-2 ml-5 mr-5 mb-4" style="font-size:14px; color:#606060;">
                                 {!! $alcanceSgsi->nombre !!}

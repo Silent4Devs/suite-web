@@ -71,27 +71,32 @@ class RegistrarCalendarioController extends Controller
         return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro guardado con exito']);
     }
 
-    public function show(Calendario $calendario)
+    public function show($id_calendario)
     {
         // abort_if(Gate::denies('enlaces_ejecutar_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $calendario = Calendario::where('id', $id_calendario)->first();
 
         return view('admin.registrarGlosario.show', compact('calendario'));
     }
 
-    public function edit(Calendario $calendario)
+    public function edit($id_calendario)
     {
+        $calendario = Calendario::where('id', $id_calendario)->first();
+
         return view('admin.registrarGlosario.edit', compact('calendario'));
     }
 
-    public function update(Request $request, Calendario $calendario)
+    public function update(Request $request, $id_calendario)
     {
+        $calendario = Calendario::where('id', $id_calendario)->first();
         $fecha = $calendario->update($request->all());
 
         return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro Actualizado']);
     }
 
-    public function destroy(Calendario $calendario)
+    public function destroy($id_calendario)
     {
+        $calendario = Calendario::where('id', $id_calendario)->first();
         $calendario->delete();
 
         return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro Eliminado']);

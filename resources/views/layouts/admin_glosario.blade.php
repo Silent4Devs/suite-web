@@ -1144,7 +1144,7 @@
 
 
         </main>
-        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logoutform" action="{{ route('logout.leave') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
         </form>
     </div>

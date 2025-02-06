@@ -35,8 +35,9 @@
                 <div class="form-group w-100 mr-4 ">
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
                     @if ($origen == 'tareas-proyectos')
-                        <div class="form-control" style="background-color: #eee">{{ $proyecto_seleccionado->proyecto }}
-                        </div>
+                    <div class="form-control" style="background-color: #eee; width: 100%; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{ $proyecto_seleccionado->proyecto }}
+                    </div>
                     @endif
                     @if ($origen == 'tareas')
                         <select id="proyectos_select" class="mr-4 form-control" wire:model.debouce="proyecto_id" required>

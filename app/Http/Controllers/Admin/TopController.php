@@ -11,7 +11,6 @@ class TopController extends Controller
     {
         $top_analisis = TemplateAnalisisdeBrechas::get();
 
-        // dd($top_analisis);
         return view('admin.analisisdebrecha2022nv.top.index', compact('top_analisis'));
     }
 

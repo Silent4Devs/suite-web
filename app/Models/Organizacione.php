@@ -5,7 +5,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Organizacione extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'organizaciones';
 
@@ -45,5 +44,11 @@ class Organizacione extends Model implements Auditable
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    // Relación uno a muchos con ClausulasOc
+    public function clausulas()
+    {
+        return $this->hasMany(ClausulasOc::class, 'organizacion_id');
     }
 }

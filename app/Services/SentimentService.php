@@ -13,19 +13,23 @@ class SentimentService
 
         $texts = is_array($text) ? $text : [$text];
 
-        // Enviar el texto en el formato que espera la API
-        $response = Http::post($apiEndpoint, [
-            'texts' => $texts, // Enviar como un array bajo la clave 'texts'
-        ]);
+        try {
+            // Enviar el texto en el formato que espera la API
+            $response = Http::post($apiEndpoint, [
+                'texts' => $texts, // Enviar como un array bajo la clave 'texts'
+            ]);
 
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            return [
-                'status' => $response->status(),
-                'error' => $response->json(),
-                'body' => $response->body(),
-            ];
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                return [
+                    'status' => $response->status(),
+                    'error' => $response->json(),
+                    'body' => $response->body(),
+                ];
+            }
+        } catch (\Throwable $th) {
+            return null;
         }
     }
 }

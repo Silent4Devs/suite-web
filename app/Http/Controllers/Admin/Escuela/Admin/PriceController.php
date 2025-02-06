@@ -55,7 +55,7 @@ class PriceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Price $price)
+    public function show($id_price)
     {
         //
     }
@@ -66,8 +66,10 @@ class PriceController extends Controller
      * @param  int  Price $price
      * @return \Illuminate\Http\Response
      */
-    public function edit(Price $price)
+    public function edit($id_price)
     {
+        $price = Price::where('id', $id_price)->first();
+
         return view('admin.prices.edit', compact('price'));
     }
 
@@ -77,8 +79,9 @@ class PriceController extends Controller
      * @param  int  Price $price
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Price $price)
+    public function update(Request $request, $id_price)
     {
+        $price = Price::where('id', $id_price)->first();
         $request->validate([
             'name' => 'required|unique:prices,name,'.$price->id,
             'value' => 'required|numeric',
@@ -97,8 +100,10 @@ class PriceController extends Controller
      * @param  int  Price $price
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Price $price)
+    public function destroy($id_price)
     {
+        $price = Price::where('id', $id_price)->first();
+
         $price->delete();
 
         Alert::toast('El precio se eliminó con éxito', 'success');

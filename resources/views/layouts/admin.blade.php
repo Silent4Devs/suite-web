@@ -81,6 +81,19 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 </head>
+<style>
+    .toast {
+        background-color: #28a745 !important;
+        /* Verde bootstrap */
+        /* Azul */
+        color: #ffffff !important;
+        /* Texto blanco */
+    }
+
+    .toast .toast-close-button {
+        color: #ffffff !important;
+    }
+</style>
 
 <body class="menu-global-position-bottom">
     <div id="loading">
@@ -92,8 +105,9 @@
         use App\Models\Organizacion;
         use App\Models\User;
         use App\Models\Empleado;
-        $usuario = User::getCurrentUser();
-        $empleado = Empleado::getMyEmpleadodata($usuario->empleado->id);
+        $databaseName = \DB::connection()->getDatabaseName();
+        $usuario = Auth::user();
+        $empleado = Empleado::getMyEmpleadodata($usuario->empleado_id);
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
@@ -142,7 +156,7 @@
             </main>
         </div>
     </div>
-    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <form id="logoutform" action="{{ route('logout.leave') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
     </form>
     <!-- incluir de footer -->
@@ -255,7 +269,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script defer src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="https://cdn.ckeditor.com/4.25.0-lts/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/4.25.0-lts/standard/ckeditor.js"></script> --}}
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>

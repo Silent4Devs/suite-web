@@ -64,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditarCompetenciaLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="closeModalBtn">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -72,7 +72,6 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="cambiarNivelEsperado">Cambiar Nivel</button>
                 </div>
             </div>
@@ -81,7 +80,16 @@
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ícono de cierre (tache)
+            document.getElementById('closeModalBtn').addEventListener('click', function () {
+                $('#modalEditarCompetencia').modal('hide');
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             $.ajaxSetup({
                 headers: {
@@ -132,7 +140,8 @@
                         return botones;
                     },
                     width: '15%'
-                }],
+                }
+            ],
                 language: {
                     decimal: "",
                     emptyTable: "No hay registros",
@@ -178,9 +187,11 @@
                             <small class="errores error_nivel_esperado"></small>
                             `
                         response.forEach(nivel => {
-                            formHTML += `
-                                <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
-                                `;
+                            if (nivel.ponderacion > 0) {
+                                formHTML += `
+                                    <option value="${nivel.ponderacion}" ${nivel_actual==nivel.ponderacion?'selected':''}>${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         formHTML += `</select></form>`;
                         modalBody.innerHTML = formHTML;
@@ -297,9 +308,11 @@
                         let selectNiveles = document.querySelector('#nivel_esperado');
                         let opciones = '';
                         response.forEach(nivel => {
-                            opciones += `
-                            <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
-                            `;
+                            if (nivel.ponderacion > 0) {
+                                opciones += `
+                                    <option value="${nivel.ponderacion}">${nivel.ponderacion}</option>
+                                    `;
+                            }
                         });
                         selectNiveles.innerHTML = opciones;
 

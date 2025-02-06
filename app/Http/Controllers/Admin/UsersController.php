@@ -78,9 +78,11 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    public function edit(User $user)
+    public function edit($id_user)
     {
         abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $user = User::where('id', $id_user)->first();
 
         $roles = Role::getAll()->pluck('title', 'id');
 
@@ -99,9 +101,11 @@ class UsersController extends Controller
         return view('users.tbUsersUpdate', compact('roles', 'organizacions', 'areas', 'puestos', 'teams', 'user', 'empleados'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id_user)
     {
         abort_if(Gate::denies('usuarios_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $user = User::where('id', $id_user)->first();
 
         $user->update($request->all());
         $user->roles()->sync($request->roles);
@@ -116,9 +120,11 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    public function show(User $user)
+    public function show($id_user)
     {
         abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $user = User::where('id', $id_user)->first();
 
         $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
 
@@ -177,8 +183,10 @@ class UsersController extends Controller
         }
     }
 
-    public function cambiarVerificacion(User $user)
+    public function cambiarVerificacion($id_user)
     {
+        $user = User::where('id', $id_user)->first();
+
         if ($user->two_factor) {
             $message = "Verificación por dos factores deshabilitada para el usuario {$user->name}";
         } else {
@@ -192,8 +200,10 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index')->with('success', $message);
     }
 
-    public function toogleBloqueo(User $user)
+    public function toogleBloqueo($id_user)
     {
+        $user = User::where('id', $id_user)->first();
+
         if ($user->is_active) {
             $message = "El usuario {$user->name} ha sido bloqueado";
         } else {

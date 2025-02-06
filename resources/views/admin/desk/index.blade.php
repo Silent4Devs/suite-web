@@ -13,9 +13,13 @@
         }
     </style>
 @endsection
+@section('tituloMenu')
+    <div class="title-menu-centro-atencion">
+        <span>Centro de Atención </span>
+        <span><small class="title-auto-centro-atencion">Incidentes de seguridad</small></span>
+    </div>
+@endsection
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">Centro de Atención</h5>
-
     @include('partials.flashMessages')
     <div class="">
 
@@ -183,6 +187,20 @@
             window.menuActive = function(item) {
                 localStorage.setItem('menu-desk', item)
             }
-        })
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            setTimeout(() => {
+                document.querySelector('body').classList.remove('menu-global-hidden');
+            }, 1000);
+        });
+    </script>
+    <script>
+        $('.nav-link').click(function() {
+            document.querySelector('.title-auto-centro-atencion').innerHTML = document.querySelector(
+                '.nav-link:hover span').innerHTML;
+        });
     </script>
 @endsection

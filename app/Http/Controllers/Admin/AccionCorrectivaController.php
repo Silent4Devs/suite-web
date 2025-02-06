@@ -38,96 +38,115 @@ class AccionCorrectivaController extends Controller
         abort_if(Gate::denies('accion_correctiva_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
-        if ($request->ajax()) {
-            $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'empleados', 'reporto'])->where('aprobada', true)->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
-            $table = Datatables::of($query);
+        // if ($request->ajax()) {
+        //     $query = AccionCorrectiva::get();
+        //     $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        //     $table->addColumn('placeholder', '&nbsp;');
+        //     $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'accion_correctiva_show';
-                $editGate = 'accion_correctiva_show';
-                $deleteGate = 'accion_correctiva_show';
-                $crudRoutePart = 'accion-correctivas';
+        //     $table->editColumn('actions', function ($row) {
+        //         $viewGate = 'accion_correctiva_show';
+        //         $editGate = 'accion_correctiva_show';
+        //         $deleteGate = 'accion_correctiva_show';
+        //         $crudRoutePart = 'accion-correctivas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        //         return view('partials.datatablesActions', compact(
+        //             'viewGate',
+        //             'editGate',
+        //             'deleteGate',
+        //             'crudRoutePart',
+        //             'row'
+        //         ));
+        //     });
 
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
+        //     // $table->editColumn('id', function ($row) {
+        //     //     return $row->id ? $row->id : '';
+        //     // });
 
-            $table->addColumn('folio', function ($row) {
-                return $row->folio ? $row->folio : '';
-            });
+        //     $table->addColumn('folio', function ($row) {
+        //         return $row->folio ? $row->folio : '';
+        //     });
 
-            $table->addColumn('tema', function ($row) {
-                return $row->tema ? $row->tema : '';
-            });
+        //     $table->addColumn('tema', function ($row) {
+        //         return $row->tema ? $row->tema : '';
+        //     });
 
-            $table->addColumn('fecharegistro', function ($row) {
-                return $row->fecharegistro ? \Carbon\Carbon::parse($row->fecharegistro)->format('d-m-Y') : '';
-            });
+        //     $table->addColumn('fecharegistro', function ($row) {
+        //         return $row->fecharegistro ? \Carbon\Carbon::parse($row->fecharegistro)->format('d-m-Y') : '';
+        //     });
 
-            $table->addColumn('fecha_verificacion', function ($row) {
-                return $row->fecha_verificacion ? \Carbon\Carbon::parse($row->fecha_verificacion)->format('d-m-Y') : '';
-            });
-            $table->addColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : '';
-            });
+        //     // $table->addColumn('fecha_verificacion', function ($row) {
+        //     //     return $row->fecha_verificacion ? \Carbon\Carbon::parse($row->fecha_verificacion)->format('d-m-Y') : '';
+        //     // });
+        //     $table->addColumn('estatus', function ($row) {
+        //         return $row->estatus ? $row->estatus : '';
+        //     });
 
-            $table->addColumn('fecha_cierre', function ($row) {
-                return $row->fecha_cierre ? \Carbon\Carbon::parse($row->fecha_cierre)->format('d-m-Y') : '';
-            });
+        //     // $table->addColumn('fecha_cierre', function ($row) {
+        //     //     return $row->fecha_cierre ? \Carbon\Carbon::parse($row->fecha_cierre)->format('d-m-Y') : '';
+        //     // });
 
-            $table->addColumn('reporto', function ($row) {
-                return $row->reporto ? $row->reporto : '';
-            });
+        //     $table->addColumn('reporto', function ($row) {
+        //         return $row->reporto ? $row->reporto : '';
+        //     });
 
-            $table->addColumn('reporto_puesto', function ($row) {
-                return $row->reporto ? $row->reporto->puesto : '';
-            });
-            $table->addColumn('reporto_area', function ($row) {
-                return $row->reporto ? $row->reporto->area->area : '';
-            });
+        //     // $table->addColumn('reporto_puesto', function ($row) {
+        //     //     return $row->reporto ? $row->reporto->puesto : '';
+        //     // });
+        //     // $table->addColumn('reporto_area', function ($row) {
+        //     //     return $row->reporto ? $row->reporto->area->area : '';
+        //     // });
 
-            $table->addColumn('registro', function ($row) {
-                return $row->empleados ? $row->empleados->name : '';
-            });
+        //     $table->addColumn('registro', function ($row) {
+        //         return $row->empleados ? $row->empleados->name : '';
+        //     });
 
-            $table->addColumn('registro_puesto', function ($row) {
-                return $row->empleados ? $row->empleados->puesto : '';
-            });
-            $table->addColumn('registro_area', function ($row) {
-                return $row->empleados ? $row->empleados->area->area : '';
-            });
-            $table->addColumn('causaorigen', function ($row) {
-                return $row->causaorigen ? $row->causaorigen : '';
-            });
-            $table->addColumn('descripcion', function ($row) {
-                return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : 'n/a';
-            });
-            $table->addColumn('comentarios', function ($row) {
-                return $row->comentarios ? $row->comentarios : '';
-            });
+        //     // $table->addColumn('registro_puesto', function ($row) {
+        //     //     return $row->empleados ? $row->empleados->puesto : '';
+        //     // });
+        //     // $table->addColumn('registro_area', function ($row) {
+        //     //     return $row->empleados ? $row->empleados->area->area : '';
+        //     // });
+        //     $table->addColumn('causaorigen', function ($row) {
+        //         return $row->causaorigen ? $row->causaorigen : '';
+        //     });
+        //     // $table->addColumn('descripcion', function ($row) {
+        //     //     return $row->descripcion ? html_entity_decode(strip_tags($row->descripcion), ENT_QUOTES, 'UTF-8') : 'n/a';
+        //     // });
+        //     // $table->addColumn('comentarios', function ($row) {
+        //     //     return $row->comentarios ? $row->comentarios : '';
+        //     // });
 
-            $table->rawColumns(['actions', 'placeholder', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'documentometodo']);
+        //     $table->rawColumns(['actions', 'placeholder', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'documentometodo']);
 
-            return $table->make(true);
-        }
-
-        $users = User::getAll();
-        $puestos = Puesto::getAll();
+        //     return $table->make(true);
+        // }
+        $users = User::get();
+        $puestos = Puesto::get();
         $teams = Team::get();
 
-        $query_ac = AccionCorrectiva::getAll();
+        $query_ac = AccionCorrectiva::get();
+        foreach ($query_ac as $query) {
+            if (isset($query->reporto)) {
+                $query->rp_name = $query->reporto->name;
+                $query->rp_foto = $query->reporto->foto;
+            }
+            if (isset($query->empleados)) {
+                $query->registro = $query->empleados->name;
+            }
+            // dd($query_ac[0]->reporto);
+            // dump($query->registro);
+
+            // dump($query->reporto && $query->reporto->name ? $query->reporto->name : 'sin dato');
+
+        }
+        $accionesCorrectivas = $this->obtenerAccionesCorrectivasSinAprobacion();
+        // dd($accionesCorrectivas[0]->deskQuejaCliente[0]->id);
+
+        // dd($accionesCorrectivas);
+        // dd ($accionesCorrectivas[5]->deskQuejaCliente[0]->responsableSgi->name);
+
         $total_AC = $query_ac->count();
         $nuevos_AC = $query_ac->where('estatus', 'Sin atender')->count();
         $en_curso_AC = $query_ac->where('estatus', 'En curso')->count();
@@ -135,7 +154,7 @@ class AccionCorrectivaController extends Controller
         $cerrados_AC = $query_ac->where('estatus', 'Cerrado')->count();
         $cancelados_AC = $query_ac->where('estatus', 'No procedente')->count();
 
-        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
+        return view('admin.actionsCorrective.index', compact('total_AC', 'nuevos_AC', 'en_curso_AC', 'en_espera_AC', 'cerrados_AC', 'cancelados_AC', 'users', 'puestos', 'teams', 'query_ac', 'accionesCorrectivas'));
     }
 
     public function obtenerAccionesCorrectivasSinAprobacion()
@@ -144,12 +163,15 @@ class AccionCorrectivaController extends Controller
             $query->with('registro', 'responsableSgi');
         }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
 
-        return datatables()->of($accionesCorrectivas)->toJson();
+        return $accionesCorrectivas;
+
+        // dd($accionesCorrectivas);
+        // return datatables()->of($accionesCorrectivas)->toJson();
     }
 
     public function aprobaroRechazarAc(Request $request)
     {
-        $accionCorrectiva = AccionCorrectiva::with('quejascliente')->find($request->id);
+        $accionCorrectiva = AccionCorrectiva::with('quejascliente', 'nombrereporta')->find($request->id);
         $esAprobada = $request->aprobada == 'true' ? true : false;
         // dd($esAprobada);
         $accionCorrectiva->update([
@@ -157,15 +179,22 @@ class AccionCorrectivaController extends Controller
             'aprobacion_contestada' => true,
             'comentarios_aprobacion' => $request->comentarios,
         ]);
-        // dd($accionCorrectiva->quejasCliente);
 
         $quejasClientes = QuejasCliente::find($request->id_queja_cliente)->load('responsableSgi', 'registro', 'accionCorrectiva');
+        // dd($quejasClientes);
         Mail::to(removeUnicodeCharacters($quejasClientes->registro->email))->cc($quejasClientes->responsableSgi->email)->queue(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
         if ($esAprobada) {
-            return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
+            Alert::success('éxito', 'Registro aprobado con éxito');
+
+            return redirect(route('admin.accion-correctivas.index'));
+            // return view('admin.actionsCorrective.index');
+            // return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
         } else {
-            return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
+            Alert::success('éxito', 'Registro rechazado con éxito');
+
+            return redirect(route('admin.accion-correctivas.index'));
+            // return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
         }
     }
 
@@ -245,10 +274,12 @@ class AccionCorrectivaController extends Controller
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
     }
 
-    public function edit(AccionCorrectiva $accionCorrectiva)
+    public function edit($id_accionCorrectiva)
     {
-        // dd($accionCorrectiva);
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
+
         $users = User::getAll();
         $puestos = Puesto::getAll();
 
@@ -296,9 +327,11 @@ class AccionCorrectivaController extends Controller
         return view('admin.actionsCorrective.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
-    public function update(Request $request, AccionCorrectiva $accionCorrectiva)
+    public function update(Request $request, $id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
 
         $request->validate([
             'tema' => 'required|string',
@@ -343,9 +376,11 @@ class AccionCorrectivaController extends Controller
         return redirect()->route('admin.accion-correctivas.index')->with('success', 'Editado con éxito');
     }
 
-    public function show(AccionCorrectiva $accionCorrectiva)
+    public function show($id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
@@ -354,10 +389,10 @@ class AccionCorrectivaController extends Controller
         return view('admin.actionsCorrective.show', compact('accionCorrectiva', 'actividades'));
     }
 
-    public function destroy(AccionCorrectiva $accionCorrectiva)
+    public function destroy($id_accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $accionCorrectiva = AccionCorrectiva::where('id', $id_accionCorrectiva)->first();
         $accionCorrectiva->delete();
 
         Alert::success('éxito', 'Registro eliminado con éxito');
