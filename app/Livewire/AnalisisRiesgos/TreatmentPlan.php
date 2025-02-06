@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\PlanImplementacion;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBRiskAnalysisModel;
 use App\Models\TBSheetRiskAnalysisModel;
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class TreatmentPlan extends Component
@@ -27,7 +28,7 @@ class TreatmentPlan extends Component
 
     public $objetivo;
 
-    protected $listeners = ['treatmentPlan'];
+    // protected $listeners = ['treatmentPlan'];
 
     public function saveTreatmentPlan()
     {
@@ -99,13 +100,13 @@ class TreatmentPlan extends Component
         $this->sheetId = $id;
     }
 
-    public function treatmentPlan($period, $riskAnalysisId)
+    #[On('treatmentPlan')]
+    public function treatmentPlan($data)
     {
+        $period = $data['period'];
+        $riskAnalysisId = $data['riskAnalysisId'];
         $risk = TBRiskAnalysisModel::find($riskAnalysisId);
-
         $this->sheets = TBPeriodSheetRiskAnalysisModel::where('period_id', $period)->whereNotNull('initial_risk')->get();
-        // dd($this->sheets);
-        // dd($this->sheets->count());
         if (! is_null($period)) {
             foreach ($this->sheets as $key => $sheet) {
                 if (! $sheet->sheet->require_treatment_plan) {
@@ -114,6 +115,11 @@ class TreatmentPlan extends Component
             }
             $this->riskName = $risk->riskAnalysisGeneral->name;
         }
+    }
+
+    public function mount(){
+        $this->dispatch('handleReloadTreatmentPlan',)->to(FormRiskAnalysis::class);
+        // $this->skipRender();
     }
 
     public function render()

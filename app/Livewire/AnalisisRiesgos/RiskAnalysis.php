@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\Empleado;
 use App\Models\TBDataQuestionRiskAnalysisModel;
@@ -24,8 +24,9 @@ use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
 use App\Models\TBTemplateAnalisisRiesgoModel;
 use Carbon\Carbon;
 use Livewire\Component;
+use PHPUnit\Framework\TestStatus\Risky;
 
-class RiskAnalysisComponent extends Component
+class RiskAnalysis extends Component
 {
     public $name;
 
@@ -43,6 +44,8 @@ class RiskAnalysisComponent extends Component
 
     public $imagenID;
 
+    public $riskAnalysisId;
+
     private function resetInput()
     {
         $this->name = null;
@@ -50,7 +53,44 @@ class RiskAnalysisComponent extends Component
         $this->view = 'create';
         $this->selectedCard = null;
     }
+    public function updateRegister()
+    {
+        $risk = TBRiskAnalysisGeneralModel::find($this->riskAnalysisId);
+        $risk->update([
+            'name' => $this->name,
+            'fecha' => $this->fecha,
+            'status' => false,
+            'elaboro_id' => $this->elaboro_id,
+            'norma_id' => $this->norma_id,
+        ]);
+        $this->dispatch('limpiarNameInput');
+        // $risk = TBRiskAnalysisGeneralModel::create([
+            // 'name' => $this->name,
+            // 'fecha' => $this->fecha,
+            // 'status' => false,
+            // 'elaboro_id' => $this->elaboro_id,
+            // 'norma_id' => $this->norma_id,
+            // 'template_id' => $this->selectedCard,
+        // ]);
+        // $templateId = $this->selectedCard;
+        // $this->cloneTemplateAR($risk->id, $templateId);
+    }
+    public function changeStatus($item)
+    {
+        // $this->dispatch('limpiarNameInput');
+        $this->view = 'edit';
+        $this->riskAnalysisId = $item['id'];
+        $this->name = $item['name'];
+        $this->elaboro_id = $item['elaboro_id'];
+        $this->dispatch('edit', id:$item['elaboro_id']);
 
+    }
+    public function update()
+    {
+        $this->updateRegister();
+        $this->resetInput();
+        $this->dispatch('limpiarNameInput');
+    }
     private function cloneFormulas($riskAnalysis, $questionsFormulas, $formulas)
     {
         // dd($riskAnalysis);
@@ -202,7 +242,6 @@ class RiskAnalysisComponent extends Component
         $this->cloneScalesProb($riskAnalysis->id, $scalePivote, $scales, $probPivote, $probabilities);
         $this->cloneSectionsQuestions($sections, $riskAnalysis->id, $questionsFormulas);
         $this->cloneFormulas($riskAnalysis->id, $questionsFormulas, $formulas);
-
     }
 
     public function saveRegister()
@@ -232,9 +271,9 @@ class RiskAnalysisComponent extends Component
         if ($this->selectedCard) {
             $this->saveRegister();
             $this->resetInput();
-            $this->emit('limpiarNameInput');
+            $this->dispatch('limpiarNameInput');
         } else {
-            $this->emit('selectedCardAlert');
+            $this->dispatch('selectedCardAlert');
         }
     }
 

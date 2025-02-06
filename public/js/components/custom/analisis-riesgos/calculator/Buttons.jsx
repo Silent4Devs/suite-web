@@ -36,7 +36,7 @@ const Buttons = ({ inputHandler, clearInput, backspace, changePlusMinus, addForm
         9
       </button>
       <button type="button" className="btn-calculator exp" onClick={inputHandler}>
-        x
+        *
       </button>
       <button type="button" className="btn-calculator" onClick={inputHandler}>
         4

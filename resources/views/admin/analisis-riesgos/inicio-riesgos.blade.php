@@ -2,8 +2,8 @@
 @section('styles')
     <style>
         .instrucciones {
-            background-color: rgb(52, 117, 178);
-            color: white;
+            background-color: #3B7EB2 !important;
+            color: white !important;
             border-radius: 8px !important;
             padding: 15px;
             margin-bottom: 20px;
@@ -41,13 +41,13 @@
     @include('partials.flashMessages')
 
     <div class="card card-body instrucciones">
-        <div class="row no-gutters">
+        <div class="row ">
             <div class="col-md-auto"> <!-- Use col-md-auto to let Bootstrap determine the width based on content -->
-                <img src="{{ asset('img/brechas-blue.png') }}" style="width: 128px; height: 119px;">
+                <img src="{{ asset('img/brechas-blue.png') }}" style="width: 192px; height: 119px;">
             </div>
-            <div class="col-md-10" style="margin-left: 10px;">
+            <div class="col-md-9" >
                 <h3>¿Qué es? Análisis de Riesgos</h3>
-                <p style="font-size:14px; font:normal;">El análisis de riesgos es un proceso que se utiliza para identificar, evaluar y gestionar los riesgos potenciales que pueden afectar a una empresa, proyecto o cualquier otra iniciativa. Es una herramienta fundamental para la toma de decisiones estratégicas, ya que permite anticipar posibles problemas y tomar medidas para prevenirlos o minimizar su impacto.El análisis de riesgos es un proceso que permite identificar, evaluar y gestionar los riesgos potenciales que pueden afectar a una empresa, proyecto o cualquier otra iniciativa.</p>
+                <p style="font-size:12px; font:normal;">El análisis de riesgos es un proceso que se utiliza para identificar, evaluar y gestionar los riesgos potenciales que pueden afectar a una empresa, proyecto o cualquier otra iniciativa. Es una herramienta fundamental para la toma de decisiones estratégicas, ya que permite anticipar posibles problemas y tomar medidas para prevenirlos o minimizar su impacto.El análisis de riesgos es un proceso que permite identificar, evaluar y gestionar los riesgos potenciales que pueden afectar a una empresa, proyecto o cualquier otra iniciativa.</p>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                 <img src="{{ asset('img/brechas-inicio-a.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Templates</h4>
-                    <a href="{{route('admin.template-analisis-riesgo.create')}}" class="btn btn-info">Generar</a>
+                    <a href="{{route('admin.template-analisis-riesgo.create')}}" class="btn tb-btn-primary">Generar</a>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <img src="{{ asset('img/brechas-inicio-b.png') }}" alt="">
                 <div class="d-flex flex-column align-items-center">
                     <h4>Análisis de Riesgos</h4>
-                    <a href="{{route('admin.risk-analysis-index')}}" class="btn btn-info">Generar</a>
+                    <a href="{{route('admin.risk-analysis-index')}}" class="btn tb-btn-primary">Generar</a>
                 </div>
             </div>
         </div>
