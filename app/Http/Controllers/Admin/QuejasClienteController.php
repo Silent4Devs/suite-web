@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use ZipArchive;
 
 class QuejasClienteController extends Controller
 {
@@ -54,7 +55,7 @@ class QuejasClienteController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejasClientes = QuejasCliente::select('id', 'cliente_id', 'nombre', 'puesto', 'telefono', 'fecha_cierre', 'estatus', 'fecha', 'titulo', 'accion_correctiva_id')->where('archivado', false)->get();
+        $quejasClientes = QuejasCliente::where('archivado', false)->get();
 
         return datatables()->of($quejasClientes)->toJson();
     }
@@ -75,6 +76,7 @@ class QuejasClienteController extends Controller
             'correo_cliente' => 'required',
             'correo' => 'required',
             'canal' => 'required',
+            'estatus' => 'required',
         ]);
 
         $correo_cliente = intval($request->correo_cliente) == 1 ? true : false;
@@ -218,7 +220,7 @@ class QuejasClienteController extends Controller
             'fecha_cierre' => $request->fecha_cierre ? $request->fecha_cierre : $quejasClientes->fecha_cierre,
             'ubicacion' => $request->ubicacion ? $request->ubicacion : $quejasClientes->ubicacion,
             'descripcion' => $request->descripcion ? $request->descripcion : $quejasClientes->descripcion,
-            'estatus' => 'En curso' ? 'En curso' : $quejasClientes->estatus,
+            'estatus' => 'En curso' ? 'En curso' : $request->estatus,
             'comentarios' => $request->comentarios ? $request->comentarios : $quejasClientes->comentarios,
             'canal' => $request->canal ? $request->canal : $quejasClientes->canal,
             'otro_canal' => $request->otro_canal ? $request->otro_canal : $quejasClientes->otro_canal,
@@ -296,11 +298,11 @@ class QuejasClienteController extends Controller
             }
         }
 
-        if ($queja_procedente == false) {
-            $quejasClientes->update([
-                'estatus' => 'No procedente',
-            ]);
-        }
+        // if ($queja_procedente == false) {
+        //     $quejasClientes->update([
+        //         'estatus' => 'No procedente',
+        //     ]);
+        // }
 
         if ($cerrar_ticket) {
             $quejasClientes->update([
@@ -836,5 +838,33 @@ class QuejasClienteController extends Controller
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
 
         return view('admin.desk.quejas-clientes.show', compact('quejasClientes', 'id_quejas'));
+    }
+
+    public function descargarEvidencia($id)
+    {
+
+        $evidencia = EvidenciaQuejasClientes::where('quejas_clientes_id', $id)->first();
+
+        if (!$evidencia) {
+            abort(404, 'No hay evidencias disponibles.');
+        }
+
+        // Reemplaza espacios en blanco en el nombre del archivo
+        $fileName = trim($evidencia->evidencia);
+
+        // Genera la ruta correcta del archivo
+        $filePath = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'evidencias_quejas_clientes' . DIRECTORY_SEPARATOR . $fileName);
+
+        // Verificar si el archivo existe
+        if (!file_exists($filePath)) {
+            return response()->json([
+                'error' => 'Archivo no encontrado',
+                'path' => $filePath,
+                'exists' => file_exists($filePath) ? 'Sí' : 'No'
+            ], 404);
+        }
+
+        return response()->download($filePath);
+
     }
 }

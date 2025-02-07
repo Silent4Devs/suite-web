@@ -101,6 +101,7 @@ Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
     ->name('password.update')
     ->middleware('auth');
 
+
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -742,6 +743,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // TODO QuejasCliente
         // Route::post('desk/{quejas}/analisis_queja-update', 'DeskController@updateAnalisisQuejas')->name('desk.analisis_queja-update');
         Route::get('desk/quejas-clientes', [QuejasClienteController::class, 'quejasClientes'])->name('desk.quejas-clientes');
+        Route::get('desk/descargar-evidencia/{id}', 'QuejasClienteController@descargarEvidencia')->name('descargar.evidencia');
         Route::post('desk/reportes/quejas-clientes', [QuejasClienteController::class, 'storeQuejasClientes'])->name('desk.quejasClientes-store');
         Route::post('desk/{quejas}/analisis_quejaCliente-update', 'QuejasClienteController@updateAnalisisQuejasClientes')->name('desk.analisis_quejasClientes-update');
         Route::post('desk/queja-cliente/validate', 'QuejasClienteController@validateFormQuejaCliente')->name('desk.quejasClientes.validateFormQuejaCliente');
