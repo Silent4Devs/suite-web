@@ -614,7 +614,7 @@
                         </td>
                         <td>
                             <div class="td_fianza">
-                                <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
+                                <input class="form-control" type="file" name="documento"  readonly>
                             </div>
                             <div class="ml-4 display-flex">
                                 <label class="red-text">{{ $errors->first('Type') }}</label>
