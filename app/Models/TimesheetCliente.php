@@ -39,7 +39,7 @@ class TimesheetCliente extends Model
         'cobertura',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TimesheetCliente:timesheetcliente_all', 3600 * 8, function () {

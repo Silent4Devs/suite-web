@@ -1,12 +1,12 @@
 <?php
 
-//remove unicodes from string
+// remove unicodes from string
 function removeUnicodeCharacters($string)
 {
     return trim(preg_replace('/[^\x00-\x7F]/u', '', $string));
 }
 
-//Diccionary for requisitions and orders buy
+// Diccionary for requisitions and orders buy
 function getDiccionaryRequisionOrder($value)
 {
     $diccionary = [

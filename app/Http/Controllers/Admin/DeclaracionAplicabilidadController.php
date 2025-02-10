@@ -395,7 +395,7 @@ class DeclaracionAplicabilidadController extends Controller
         $content = $pdf->download()->getOriginalContent();
         Storage::put('public/Normas/ISO27001/Analísis Inicial/'.$nombre_pdf, $content);
 
-        //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
+        // $pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();
 
         /*return view('admin.declaracionaplicabilidad.plantilla', compact(
@@ -450,7 +450,7 @@ class DeclaracionAplicabilidadController extends Controller
         // dd($destinatarios);
         $tipo = $request->tipo;
         foreach ($destinatarios as $destinatario) {
-            //TODO:FALTA ENVIAR CONTROLES A MailDeclaracionAplicabilidad
+            // TODO:FALTA ENVIAR CONTROLES A MailDeclaracionAplicabilidad
             $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
             Mail::to(removeUnicodeCharacters($empleado->email))->queue(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo, []));
             $responsable = DeclaracionAplicabilidadAprobadores::where('empleado_id', $destinatario)->each(function ($item) {

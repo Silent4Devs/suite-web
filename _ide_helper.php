@@ -16,6 +16,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Foundation\Application
      */
     class App {
@@ -355,7 +356,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Get the path to the views directory.
-         * 
+         *
          * This method returns the first configured path in the array of view paths.
          *
          * @param string $path
@@ -665,7 +666,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $abstract
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @static 
          */
@@ -1191,7 +1192,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the application namespace.
          *
-         * @return string 
+         * @return string
          * @throws \RuntimeException
          * @static 
          */
@@ -1232,13 +1233,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns true if the container can return an entry for the given identifier.
-         * 
+         *
          * Returns false otherwise.
-         * 
+         *
          * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
          * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
          *
-         * @return bool 
+         * @return bool
          * @param string $id Identifier of the entry to look for.
          * @return bool 
          * @static 
@@ -1298,7 +1299,7 @@ namespace Illuminate\Support\Facades {
          * @param string $abstract
          * @param \Closure|string|null $concrete
          * @param bool $shared
-         * @return void 
+         * @return void
          * @throws \TypeError
          * @static 
          */
@@ -1450,7 +1451,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $abstract
          * @param \Closure $closure
-         * @return void 
+         * @return void
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -1510,7 +1511,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $abstract
          * @param string $alias
-         * @return void 
+         * @return void
          * @throws \LogicException
          * @static 
          */
@@ -1573,7 +1574,7 @@ namespace Illuminate\Support\Facades {
          * @param callable|string $callback
          * @param array<string, mixed> $parameters
          * @param string|null $defaultMethod
-         * @return mixed 
+         * @return mixed
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -1603,7 +1604,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|callable $abstract
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @static 
          */
@@ -1617,7 +1618,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Finds an entry of the container by its identifier and returns it.
          *
-         * @return mixed 
+         * @return mixed
          * @param string $id Identifier of the entry to look for.
          * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
          * @throws ContainerExceptionInterface Error while retrieving the entry.
@@ -1635,7 +1636,7 @@ namespace Illuminate\Support\Facades {
          * Instantiate a concrete instance of the given type.
          *
          * @param \Closure|string $concrete
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @throws \Illuminate\Contracts\Container\CircularDependencyException
          * @static 
@@ -1918,7 +1919,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -1953,6 +1954,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Foundation\Console\Kernel
      */
@@ -2077,7 +2079,7 @@ namespace Illuminate\Support\Facades {
          * @param string $command
          * @param array $parameters
          * @param \Symfony\Component\Console\Output\OutputInterface|null $outputBuffer
-         * @return int 
+         * @return int
          * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
          * @static 
          */
@@ -2214,6 +2216,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Auth\AuthManager
      * @see \Illuminate\Auth\SessionGuard
@@ -2406,7 +2409,7 @@ namespace Illuminate\Support\Facades {
          * Create the user provider implementation for the driver.
          *
          * @param string|null $provider
-         * @return \Illuminate\Contracts\Auth\UserProvider|null 
+         * @return \Illuminate\Contracts\Auth\UserProvider|null
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -2496,7 +2499,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $field
          * @param array $extraConditions
-         * @return \Symfony\Component\HttpFoundation\Response|null 
+         * @return \Symfony\Component\HttpFoundation\Response|null
          * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
          * @static 
          */
@@ -2511,7 +2514,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $field
          * @param array $extraConditions
-         * @return \Symfony\Component\HttpFoundation\Response|null 
+         * @return \Symfony\Component\HttpFoundation\Response|null
          * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
          * @static 
          */
@@ -2592,7 +2595,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Log the user out of the application on their current device only.
-         * 
+         *
          * This method does not cycle the "remember" token.
          *
          * @return void 
@@ -2606,11 +2609,11 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Invalidate other sessions for the current user.
-         * 
+         *
          * The application must be using the AuthenticateSession middleware.
          *
          * @param string $password
-         * @return \App\Models\User|null 
+         * @return \App\Models\User|null
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */
@@ -2697,7 +2700,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the cookie creator instance used by the guard.
          *
-         * @return \Illuminate\Contracts\Cookie\QueueingFactory 
+         * @return \Illuminate\Contracts\Cookie\QueueingFactory
          * @throws \RuntimeException
          * @static 
          */
@@ -2822,7 +2825,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
-         * @return \App\Models\User 
+         * @return \App\Models\User
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */
@@ -2924,7 +2927,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -2959,6 +2962,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\View\Compilers\BladeCompiler
      */
@@ -3272,7 +3276,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $name
          * @param callable $handler
-         * @return void 
+         * @return void
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -3288,7 +3292,7 @@ namespace Illuminate\Support\Facades {
          * @param string $name
          * @param callable $handler
          * @param bool $bind
-         * @return void 
+         * @return void
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -3403,7 +3407,7 @@ namespace Illuminate\Support\Facades {
          * Determine if the view at the given path is expired.
          *
          * @param string $path
-         * @return bool 
+         * @return bool
          * @throws \ErrorException
          * @static 
          */
@@ -3521,6 +3525,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @method static mixed auth(\Illuminate\Http\Request $request)
      * @method static mixed validAuthenticationResponse(\Illuminate\Http\Request $request, mixed $result)
      * @method static void broadcast(array $channels, string $event, array $payload = [])
@@ -3560,7 +3565,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Register the routes for handling broadcast authentication and sockets.
-         * 
+         *
          * Alias of "routes" method.
          *
          * @param array|null $attributes
@@ -3790,6 +3795,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Bus\Dispatcher
      * @see \Illuminate\Support\Testing\Fakes\BusFake
      */
@@ -3809,7 +3815,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Dispatch a command to its appropriate handler in the current process.
-         * 
+         *
          * Queueable jobs will be dispatched to the "sync" queue.
          *
          * @param mixed $command
@@ -3906,7 +3912,7 @@ namespace Illuminate\Support\Facades {
          * Dispatch a command to its appropriate handler behind a queue.
          *
          * @param mixed $command
-         * @return mixed 
+         * @return mixed
          * @throws \RuntimeException
          * @static 
          */
@@ -4358,6 +4364,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Cache\CacheManager
      * @see \Illuminate\Cache\Repository
      */
@@ -4392,7 +4399,7 @@ namespace Illuminate\Support\Facades {
          * Resolve the given store.
          *
          * @param string $name
-         * @return \Illuminate\Contracts\Cache\Repository 
+         * @return \Illuminate\Contracts\Cache\Repository
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -4561,7 +4568,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Retrieve multiple items from the cache by key.
-         * 
+         *
          * Items not found in the cache will have a null value.
          *
          * @param array $keys
@@ -4624,7 +4631,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
          *
-         * @return bool 
+         * @return bool
          * @param string $key The key of the item to store.
          * @param mixed $value The value of the item to store, must be serializable.
          * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
@@ -4811,7 +4818,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Delete an item from the cache by its unique key.
          *
-         * @return bool 
+         * @return bool
          * @param string $key The unique cache key of the item to delete.
          * @return bool True if the item was successfully removed. False if there was an error.
          * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -4844,7 +4851,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Wipes clean the entire cache's keys.
          *
-         * @return bool 
+         * @return bool
          * @return bool True on success and false on failure.
          * @static 
          */
@@ -4858,7 +4865,7 @@ namespace Illuminate\Support\Facades {
          * Begin executing a new tags operation if the store supports it.
          *
          * @param array|mixed $names
-         * @return \Illuminate\Cache\TaggedCache 
+         * @return \Illuminate\Cache\TaggedCache
          * @throws \BadMethodCallException
          * @static 
          */
@@ -5027,7 +5034,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -5064,7 +5071,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \BadMethodCallException
          * @static 
          */
@@ -5193,6 +5200,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Config\Repository
      */
@@ -5433,7 +5441,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -5468,6 +5476,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Cookie\CookieJar
      */
@@ -5658,7 +5667,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -5694,6 +5703,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Encryption\Encrypter
      */
     class Crypt {
@@ -5727,7 +5737,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $value
          * @param bool $serialize
-         * @return string 
+         * @return string
          * @throws \Illuminate\Contracts\Encryption\EncryptException
          * @static 
          */
@@ -5741,7 +5751,7 @@ namespace Illuminate\Support\Facades {
          * Encrypt a string without serialization.
          *
          * @param string $value
-         * @return string 
+         * @return string
          * @throws \Illuminate\Contracts\Encryption\EncryptException
          * @static 
          */
@@ -5756,7 +5766,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $payload
          * @param bool $unserialize
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Encryption\DecryptException
          * @static 
          */
@@ -5770,7 +5780,7 @@ namespace Illuminate\Support\Facades {
          * Decrypt the given string without unserialization.
          *
          * @param string $payload
-         * @return string 
+         * @return string
          * @throws \Illuminate\Contracts\Encryption\DecryptException
          * @static 
          */
@@ -5832,6 +5842,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Database\DatabaseManager
      */
@@ -6075,7 +6086,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -6112,7 +6123,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \BadMethodCallException
          * @static 
          */
@@ -6249,7 +6260,7 @@ namespace Illuminate\Support\Facades {
          * @param string $query
          * @param array $bindings
          * @param bool $useReadPdo
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Database\MultipleColumnsSelectedException
          * @static 
          */
@@ -7216,8 +7227,9 @@ namespace Illuminate\Support\Facades {
         /**
          * 
          *
+         *
          * @template TReturn of mixed
-         * 
+         *
          * Execute a Closure within a transaction.
          * @param (\Closure(static): TReturn) $callback
          * @param int $attempts
@@ -7235,7 +7247,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Start a new database transaction.
          *
-         * @return void 
+         * @return void
          * @throws \Throwable
          * @static 
          */
@@ -7249,7 +7261,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Commit the active database transaction.
          *
-         * @return void 
+         * @return void
          * @throws \Throwable
          * @static 
          */
@@ -7264,7 +7276,7 @@ namespace Illuminate\Support\Facades {
          * Rollback the active database transaction.
          *
          * @param int|null $toLevel
-         * @return void 
+         * @return void
          * @throws \Throwable
          * @static 
          */
@@ -7292,7 +7304,7 @@ namespace Illuminate\Support\Facades {
          * Execute the callback after a transaction commits.
          *
          * @param callable $callback
-         * @return void 
+         * @return void
          * @throws \RuntimeException
          * @static 
          */
@@ -7306,6 +7318,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Events\Dispatcher
      * @see \Illuminate\Support\Testing\Fakes\EventFake
@@ -7543,7 +7556,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -7699,6 +7712,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Filesystem\Filesystem
      */
     class File {
@@ -7733,7 +7747,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @param bool $lock
-         * @return string 
+         * @return string
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */
@@ -7749,7 +7763,7 @@ namespace Illuminate\Support\Facades {
          * @param string $path
          * @param int $flags
          * @param bool $lock
-         * @return array 
+         * @return array
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */
@@ -7777,7 +7791,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @param array $data
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */
@@ -7792,7 +7806,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @param array $data
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */
@@ -7806,7 +7820,7 @@ namespace Illuminate\Support\Facades {
          * Get the contents of a file one line at a time.
          *
          * @param string $path
-         * @return \Illuminate\Support\LazyCollection 
+         * @return \Illuminate\Support\LazyCollection
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */
@@ -7978,7 +7992,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $target
          * @param string $link
-         * @return void 
+         * @return void
          * @throws \RuntimeException
          * @static 
          */
@@ -8044,7 +8058,7 @@ namespace Illuminate\Support\Facades {
          * Guess the file extension from the mime-type of a given file.
          *
          * @param string $path
-         * @return string|null 
+         * @return string|null
          * @throws \RuntimeException
          * @static 
          */
@@ -8304,7 +8318,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Recursively delete a directory.
-         * 
+         *
          * The directory itself may be optionally preserved.
          *
          * @param string $directory
@@ -8397,7 +8411,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -8433,6 +8447,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Auth\Access\Gate
      */
     class Gate {
@@ -8455,7 +8470,7 @@ namespace Illuminate\Support\Facades {
          * @param \Illuminate\Auth\Access\Response|\Closure|bool $condition
          * @param string|null $message
          * @param string|null $code
-         * @return \Illuminate\Auth\Access\Response 
+         * @return \Illuminate\Auth\Access\Response
          * @throws \Illuminate\Auth\Access\AuthorizationException
          * @static 
          */
@@ -8471,7 +8486,7 @@ namespace Illuminate\Support\Facades {
          * @param \Illuminate\Auth\Access\Response|\Closure|bool $condition
          * @param string|null $message
          * @param string|null $code
-         * @return \Illuminate\Auth\Access\Response 
+         * @return \Illuminate\Auth\Access\Response
          * @throws \Illuminate\Auth\Access\AuthorizationException
          * @static 
          */
@@ -8486,7 +8501,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param \BackedEnum|string $ability
          * @param callable|array|string $callback
-         * @return \Illuminate\Auth\Access\Gate 
+         * @return \Illuminate\Auth\Access\Gate
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -8626,7 +8641,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param \BackedEnum|string $ability
          * @param array|mixed $arguments
-         * @return \Illuminate\Auth\Access\Response 
+         * @return \Illuminate\Auth\Access\Response
          * @throws \Illuminate\Auth\Access\AuthorizationException
          * @static 
          */
@@ -8655,7 +8670,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $ability
          * @param array|mixed $arguments
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Auth\Access\AuthorizationException
          * @static 
          */
@@ -8695,7 +8710,7 @@ namespace Illuminate\Support\Facades {
          * Build a policy class instance of the given type.
          *
          * @param object|string $class
-         * @return mixed 
+         * @return mixed
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
          * @static 
          */
@@ -8800,6 +8815,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Hashing\HashManager
      * @see \Illuminate\Hashing\AbstractHasher
@@ -8940,7 +8956,7 @@ namespace Illuminate\Support\Facades {
          * Get a driver instance.
          *
          * @param string|null $driver
-         * @return mixed 
+         * @return mixed
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -9022,6 +9038,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static \Illuminate\Http\Client\PendingRequest baseUrl(string $url)
      * @method static \Illuminate\Http\Client\PendingRequest withBody(\Psr\Http\Message\StreamInterface|string $content, string $contentType = 'application/json')
@@ -9414,7 +9431,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -9451,7 +9468,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \BadMethodCallException
          * @static 
          */
@@ -9464,6 +9481,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Translation\Translator
      */
@@ -9690,7 +9708,7 @@ namespace Illuminate\Support\Facades {
          * Set the default locale.
          *
          * @param string $locale
-         * @return void 
+         * @return void
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -9799,7 +9817,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -9834,6 +9852,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static void write(string $level, \Illuminate\Contracts\Support\Arrayable|\Illuminate\Contracts\Support\Jsonable|\Illuminate\Support\Stringable|array|string $message, array $context = [])
      * @method static \Illuminate\Log\Logger withContext(array $context = [])
@@ -10028,7 +10047,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Action must be taken immediately.
-         * 
+         *
          * Example: Entire website down, database unavailable, etc. This should
          * trigger the SMS alerts and wake you up.
          *
@@ -10045,7 +10064,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Critical conditions.
-         * 
+         *
          * Example: Application component unavailable, unexpected exception.
          *
          * @param string|\Stringable $message
@@ -10076,7 +10095,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Exceptional occurrences that are not errors.
-         * 
+         *
          * Example: Use of deprecated APIs, poor use of an API, undesirable things
          * that are not necessarily wrong.
          *
@@ -10107,7 +10126,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Interesting events.
-         * 
+         *
          * Example: User logs in, SQL logs.
          *
          * @param string|\Stringable $message
@@ -10166,6 +10185,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static void alwaysFrom(string $address, string|null $name = null)
      * @method static void alwaysReplyTo(string $address, string|null $name = null)
@@ -10232,7 +10252,7 @@ namespace Illuminate\Support\Facades {
          * Create a new transport instance.
          *
          * @param array $config
-         * @return \Symfony\Component\Mailer\Transport\TransportInterface 
+         * @return \Symfony\Component\Mailer\Transport\TransportInterface
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -10646,6 +10666,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Notifications\ChannelManager
      * @see \Illuminate\Support\Testing\Fakes\NotificationFake
      */
@@ -10746,7 +10767,7 @@ namespace Illuminate\Support\Facades {
          * Get a driver instance.
          *
          * @param string|null $driver
-         * @return mixed 
+         * @return mixed
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -10830,7 +10851,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $notification
          * @param callable|null $callback
-         * @return void 
+         * @return void
          * @throws \Exception
          * @static 
          */
@@ -10846,7 +10867,7 @@ namespace Illuminate\Support\Facades {
          * @param mixed $notifiable
          * @param string|\Closure $notification
          * @param callable|null $callback
-         * @return void 
+         * @return void
          * @throws \Exception
          * @static 
          */
@@ -10891,7 +10912,7 @@ namespace Illuminate\Support\Facades {
          * @param mixed $notifiable
          * @param string|\Closure $notification
          * @param callable|null $callback
-         * @return void 
+         * @return void
          * @throws \Exception
          * @static 
          */
@@ -10917,7 +10938,7 @@ namespace Illuminate\Support\Facades {
          * Assert that no notifications were sent to the given notifiable.
          *
          * @param mixed $notifiable
-         * @return void 
+         * @return void
          * @throws \Exception
          * @static 
          */
@@ -11027,7 +11048,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -11062,6 +11083,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static string sendResetLink(array $credentials, \Closure|null $callback = null)
      * @method static mixed reset(array $credentials, \Closure $callback)
@@ -11115,6 +11137,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Queue\QueueManager
      * @see \Illuminate\Queue\Queue
@@ -11746,6 +11769,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Routing\Redirector
      */
     class Redirect {
@@ -11991,7 +12015,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -12026,6 +12050,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static void createSubscription(array|string $channels, \Closure $callback, string $method = 'subscribe')
      * @method static \Illuminate\Redis\Limiters\ConcurrencyLimiterBuilder funnel(string $name)
@@ -12065,7 +12090,7 @@ namespace Illuminate\Support\Facades {
          * Resolve the given connection by name.
          *
          * @param string|null $name
-         * @return \Illuminate\Redis\Connections\Connection 
+         * @return \Illuminate\Redis\Connections\Connection
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -12520,7 +12545,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * This method belongs to Symfony HttpFoundation and is not usually needed when using Laravel.
-         * 
+         *
          * Instead, you may use the "input" method.
          *
          * @param string $key
@@ -12576,7 +12601,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Clones a request and overrides some of its parameters.
          *
-         * @return static 
+         * @return static
          * @param array|null $query The GET parameters
          * @param array|null $request The POST parameters
          * @param array|null $attributes The request attributes (parameters parsed from the PATH_INFO, ...)
@@ -12593,7 +12618,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Whether the request contains a Session object.
-         * 
+         *
          * This method does not give any information about the state of the session object,
          * like whether the session is started or not. It is just a way to check if this Request
          * is associated with a Session instance.
@@ -12622,7 +12647,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the session associated with the request.
          *
-         * @return \Illuminate\Contracts\Session\Session 
+         * @return \Illuminate\Contracts\Session\Session
          * @throws \RuntimeException
          * @static 
          */
@@ -12701,7 +12726,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get a unique fingerprint for the request / route / IP address.
          *
-         * @return string 
+         * @return string
          * @throws \RuntimeException
          * @static 
          */
@@ -12841,7 +12866,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets the parameters for this request.
-         * 
+         *
          * This method also re-initializes all properties.
          *
          * @param array $query The GET parameters
@@ -12873,7 +12898,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Creates a Request based on a given URI and configuration.
-         * 
+         *
          * The information contained in the URI always take precedence
          * over the other information (server and parameters).
          *
@@ -12895,7 +12920,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a callable able to create a Request instance.
-         * 
+         *
          * This is mainly useful when you need to override the Request class
          * to keep BC with an existing system. It should not be used for any
          * other purpose.
@@ -12910,7 +12935,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Overrides the PHP global variables according to this request instance.
-         * 
+         *
          * It overrides $_GET, $_POST, $_REQUEST, $_SERVER, $_COOKIE.
          * $_FILES is never overridden, see rfc1867
          *
@@ -12925,7 +12950,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a list of trusted proxies.
-         * 
+         *
          * You should only list the reverse proxies that you manage directly.
          *
          * @param array $proxies A list of trusted proxies, the string 'REMOTE_ADDR' will be replaced with $_SERVER['REMOTE_ADDR'] and 'PRIVATE_SUBNETS' by IpUtils::PRIVATE_SUBNETS
@@ -12964,7 +12989,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a list of trusted host patterns.
-         * 
+         *
          * You should only list the hosts you manage using regexs.
          *
          * @param array $hostPatterns A list of trusted host patterns
@@ -12990,7 +13015,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Normalizes a query string.
-         * 
+         *
          * It builds a normalized query string, where keys/value pairs are alphabetized,
          * have consistent escaping and unneeded delimiters are removed.
          *
@@ -13004,13 +13029,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Enables support for the _method request parameter to determine the intended HTTP method.
-         * 
+         *
          * Be warned that enabling this feature might lead to CSRF issues in your code.
          * Check that you are using CSRF tokens when required.
          * If the HTTP method parameter override is enabled, an html-form with method "POST" can be altered
          * and used to send a "PUT" or "DELETE" request via the _method request parameter.
          * If these methods are not protected against CSRF, this presents a possible vulnerability.
-         * 
+         *
          * The HTTP method can only be overridden when the real HTTP method is POST.
          *
          * @static 
@@ -13060,7 +13085,8 @@ namespace Illuminate\Support\Facades {
         /**
          * 
          *
-         * @internal 
+         *
+         * @internal
          * @param \Symfony\Component\HttpFoundation\callable():  SessionInterface $factory
          * @static 
          */
@@ -13073,11 +13099,11 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the client IP addresses.
-         * 
+         *
          * In the returned array the most trusted IP address is first, and the
          * least trusted one last. The "real" client IP address is the last one,
          * but this is also the least trusted one. Trusted proxies are stripped.
-         * 
+         *
          * Use this method carefully; you should use getClientIp() instead.
          *
          * @see getClientIp()
@@ -13092,13 +13118,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the client IP address.
-         * 
+         *
          * This method can read the client IP address from the "X-Forwarded-For" header
          * when trusted proxies were set via "setTrustedProxies()". The "X-Forwarded-For"
          * header value is a comma+space separated list of IP addresses, the left-most
          * being the original client, and each successive proxy that passed the request
          * adding the IP address where it received the request from.
-         * 
+         *
          * If your reverse proxy uses a different header name than "X-Forwarded-For",
          * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
          * argument of the Request::setTrustedProxies() method instead.
@@ -13128,11 +13154,11 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the path being requested relative to the executed script.
-         * 
+         *
          * The path info always starts with a /.
-         * 
+         *
          * Suppose this request is instantiated from /mysite on localhost:
-         * 
+         *
          *  * http://localhost/mysite              returns an empty string
          *  * http://localhost/mysite/about        returns '/about'
          *  * http://localhost/mysite/enco%20ded   returns '/enco%20ded'
@@ -13150,9 +13176,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the root path from which this request is executed.
-         * 
+         *
          * Suppose that an index.php file instantiates this request object:
-         * 
+         *
          *  * http://localhost/index.php         returns an empty string
          *  * http://localhost/index.php/page    returns an empty string
          *  * http://localhost/web/index.php     returns '/web'
@@ -13170,9 +13196,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the root URL from which this request is executed.
-         * 
+         *
          * The base URL never ends with a /.
-         * 
+         *
          * This is similar to getBasePath(), except that it also includes the
          * script filename (e.g. index.php) if one exists.
          *
@@ -13200,10 +13226,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the port on which the request is made.
-         * 
+         *
          * This method can read the client port from the "X-Forwarded-Port" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Port" header must contain the client port.
          *
          * @return int|string|null Can be a string if fetched from the server bag
@@ -13255,7 +13281,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the HTTP host being requested.
-         * 
+         *
          * The port name will be appended to the host if it's non-standard.
          *
          * @static 
@@ -13282,7 +13308,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the scheme and HTTP host.
-         * 
+         *
          * If the URL was called with basic authentication, the user
          * and the password are not added to the generated string.
          *
@@ -13323,12 +13349,12 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the path as relative reference from the current Request path.
-         * 
+         *
          * Only the URIs path component (no schema, host etc.) is relevant and must be given.
          * Both paths must be absolute and not contain relative parts.
          * Relative URLs from one resource to another are useful when generating self-contained downloadable document archives.
          * Furthermore, they can be used to reduce the link size in documents.
-         * 
+         *
          * Example target paths, given a base path of "/a/b/c/d":
          * - "/a/b/c/d"     -> ""
          * - "/a/b/c/"      -> "./"
@@ -13347,7 +13373,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Generates the normalized query string for the Request.
-         * 
+         *
          * It builds a normalized query string, where keys/value pairs are alphabetized
          * and have consistent escaping.
          *
@@ -13362,10 +13388,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Checks whether the request is secure or not.
-         * 
+         *
          * This method can read the client protocol from the "X-Forwarded-Proto" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Proto" header must contain the protocol: "https" or "http".
          *
          * @static 
@@ -13379,10 +13405,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the host name.
-         * 
+         *
          * This method can read the client host name from the "X-Forwarded-Host" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Host" header must contain the client host name.
          *
          * @throws SuspiciousOperationException when the host name is invalid or not trusted
@@ -13409,13 +13435,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the request "intended" method.
-         * 
+         *
          * If the X-HTTP-Method-Override header is set, and if the method is a POST,
          * then it is used to determine the "real" intended HTTP method.
-         * 
+         *
          * The _method request parameter can also be used to determine the HTTP method,
          * but only if enableHttpMethodParameterOverride() has been called.
-         * 
+         *
          * The method is always an uppercased string.
          *
          * @see getRealMethod()
@@ -13492,9 +13518,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the request format.
-         * 
+         *
          * Here is the process to determine the format:
-         * 
+         *
          *  * format defined by the user (with setRequestFormat())
          *  * _format request attribute
          *  * $default
@@ -13635,7 +13661,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the protocol version.
-         * 
+         *
          * If the application is behind a proxy, the protocol version used in the
          * requests between the client and the proxy and between the proxy and the
          * server might be different. This returns the former (from the "Via" header)
@@ -13655,7 +13681,7 @@ namespace Illuminate\Support\Facades {
          * Returns the request body content.
          *
          * @param bool $asResource If true, a resource will be returned
-         * @return string|resource 
+         * @return string|resource
          * @psalm-return ($asResource is true ? resource : string)
          * @static 
          */
@@ -13707,7 +13733,7 @@ namespace Illuminate\Support\Facades {
          * Gets the preferred format for the response by inspecting, in the following order:
          *   * the request format set using setRequestFormat;
          *   * the values of the Accept HTTP header.
-         * 
+         *
          * Note that if you use this method, you should send the "Vary: Accept" header
          * in the response to prevent any issues with intermediary HTTP caches.
          *
@@ -13787,7 +13813,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns true if the request is an XMLHttpRequest.
-         * 
+         *
          * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
          *
@@ -13816,7 +13842,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Indicates whether this request originated from a trusted proxy.
-         * 
+         *
          * This can be useful to determine whether or not to trust the
          * contents of a proxy-specific header.
          *
@@ -14445,7 +14471,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Retrieve data as a boolean value.
-         * 
+         *
          * Returns true when value is "1", "true", "on", and "yes". Otherwise, returns false.
          *
          * @param string|null $key
@@ -14493,7 +14519,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param string|null $format
          * @param string|null $tz
-         * @return \Illuminate\Support\Carbon|null 
+         * @return \Illuminate\Support\Carbon|null
          * @throws \Carbon\Exceptions\InvalidFormatException
          * @static 
          */
@@ -14638,7 +14664,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -14673,6 +14699,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Routing\ResponseFactory
      */
@@ -14793,7 +14820,7 @@ namespace Illuminate\Support\Facades {
          * @param string|null $name
          * @param array $headers
          * @param string|null $disposition
-         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse
          * @throws \Illuminate\Routing\Exceptions\StreamedResponseException
          * @static 
          */
@@ -14932,7 +14959,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -14967,6 +14994,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static \Illuminate\Routing\RouteRegistrar attribute(string $key, mixed $value)
      * @method static \Illuminate\Routing\RouteRegistrar whereAlpha(array|string $parameters)
@@ -15445,7 +15473,7 @@ namespace Illuminate\Support\Facades {
          * Substitute the route bindings onto the route.
          *
          * @param \Illuminate\Routing\Route $route
-         * @return \Illuminate\Routing\Route 
+         * @return \Illuminate\Routing\Route
          * @throws \Illuminate\Database\Eloquent\ModelNotFoundException<\Illuminate\Database\Eloquent\Model>
          * @throws \Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException
          * @static 
@@ -15460,7 +15488,7 @@ namespace Illuminate\Support\Facades {
          * Substitute the implicit route bindings for the given route.
          *
          * @param \Illuminate\Routing\Route $route
-         * @return void 
+         * @return void
          * @throws \Illuminate\Database\Eloquent\ModelNotFoundException<\Illuminate\Database\Eloquent\Model>
          * @throws \Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException
          * @static 
@@ -15564,7 +15592,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Add a middleware to the beginning of a middleware group.
-         * 
+         *
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
@@ -15580,7 +15608,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Add a middleware to the end of a middleware group.
-         * 
+         *
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
@@ -15985,7 +16013,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -16022,7 +16050,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \BadMethodCallException
          * @static 
          */
@@ -16048,6 +16076,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Database\Schema\Builder
      */
@@ -16233,7 +16262,7 @@ namespace Illuminate\Support\Facades {
          * Set the default morph key type for migrations.
          *
          * @param string $type
-         * @return void 
+         * @return void
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -16617,7 +16646,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -16655,6 +16684,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Session\SessionManager
      */
@@ -16748,7 +16778,7 @@ namespace Illuminate\Support\Facades {
          * Get a driver instance.
          *
          * @param string|null $driver
-         * @return mixed 
+         * @return mixed
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -17488,7 +17518,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -17523,6 +17553,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @method static bool has(string $location)
      * @method static string read(string $location)
@@ -18205,7 +18236,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the checksum for a file.
          *
-         * @return string|false 
+         * @return string|false
          * @throws UnableToProvideChecksum
          * @static 
          */
@@ -18278,7 +18309,7 @@ namespace Illuminate\Support\Facades {
          * Get the URL for the file at the given path.
          *
          * @param string $path
-         * @return string 
+         * @return string
          * @throws \RuntimeException
          * @static 
          */
@@ -18295,7 +18326,7 @@ namespace Illuminate\Support\Facades {
          * @param string $path
          * @param \DateTimeInterface $expiration
          * @param array $options
-         * @return array 
+         * @return array
          * @throws \RuntimeException
          * @static 
          */
@@ -18513,7 +18544,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -18553,7 +18584,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed 
+         * @return mixed
          * @throws \BadMethodCallException
          * @static 
          */
@@ -18567,6 +18598,7 @@ namespace Illuminate\Support\Facades {
             }
     /**
      * 
+     *
      *
      * @see \Illuminate\Routing\UrlGenerator
      */
@@ -18728,7 +18760,7 @@ namespace Illuminate\Support\Facades {
          * @param mixed $parameters
          * @param \DateTimeInterface|\DateInterval|int|null $expiration
          * @param bool $absolute
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -18817,7 +18849,7 @@ namespace Illuminate\Support\Facades {
          * @param \BackedEnum|string $name
          * @param mixed $parameters
          * @param bool $absolute
-         * @return string 
+         * @return string
          * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException|\InvalidArgumentException
          * @static 
          */
@@ -18833,7 +18865,7 @@ namespace Illuminate\Support\Facades {
          * @param \Illuminate\Routing\Route $route
          * @param mixed $parameters
          * @param bool $absolute
-         * @return string 
+         * @return string
          * @throws \Illuminate\Routing\Exceptions\UrlGenerationException
          * @static 
          */
@@ -18849,7 +18881,7 @@ namespace Illuminate\Support\Facades {
          * @param string|array $action
          * @param mixed $parameters
          * @param bool $absolute
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -19150,7 +19182,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -19186,6 +19218,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\Validation\Factory
      */
     class Validator {
@@ -19212,7 +19245,7 @@ namespace Illuminate\Support\Facades {
          * @param array $rules
          * @param array $messages
          * @param array $attributes
-         * @return array 
+         * @return array
          * @throws \Illuminate\Validation\ValidationException
          * @static 
          */
@@ -19384,6 +19417,7 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     *
      * @see \Illuminate\View\Factory
      */
     class View {
@@ -19423,7 +19457,7 @@ namespace Illuminate\Support\Facades {
          * @param array $views
          * @param \Illuminate\Contracts\Support\Arrayable|array $data
          * @param array $mergeData
-         * @return \Illuminate\Contracts\View\View 
+         * @return \Illuminate\Contracts\View\View
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -19498,7 +19532,7 @@ namespace Illuminate\Support\Facades {
          * Get the appropriate view engine for the given path.
          *
          * @param string $path
-         * @return \Illuminate\Contracts\View\Engine 
+         * @return \Illuminate\Contracts\View\Engine
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -19847,7 +19881,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -20043,7 +20077,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Stop injecting content into a fragment.
          *
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -20135,7 +20169,7 @@ namespace Illuminate\Support\Facades {
          * Stop injecting content into a section.
          *
          * @param bool $overwrite
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -20148,7 +20182,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Stop injecting content into a section and append it.
          *
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -20326,7 +20360,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Stop injecting content into a push section.
          *
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -20353,7 +20387,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Stop prepending content into a push section.
          *
-         * @return string 
+         * @return string
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -20421,193 +20455,6 @@ namespace Barryvdh\DomPDF\Facade {
     /**
      * 
      *
-     * @method static BasePDF setBaseHost(string $baseHost)
-     * @method static BasePDF setBasePath(string $basePath)
-     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
-     * @method static BasePDF setCallbacks(array $callbacks)
-     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
-     * @method static BasePDF setDefaultView(string $defaultView, array $options)
-     * @method static BasePDF setDom(\DOMDocument $dom)
-     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
-     * @method static BasePDF setHttpContext(resource|array $httpContext)
-     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
-     * @method static BasePDF setProtocol(string $protocol)
-     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
-     */
-    class Pdf {
-        /**
-         * Get the DomPDF instance
-         *
-         * @static 
-         */
-        public static function getDomPDF()
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->getDomPDF();
-        }
-
-        /**
-         * Show or hide warnings
-         *
-         * @static 
-         */
-        public static function setWarnings($warnings)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->setWarnings($warnings);
-        }
-
-        /**
-         * Load a HTML string
-         *
-         * @param string|null $encoding Not used yet
-         * @static 
-         */
-        public static function loadHTML($string, $encoding = null)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->loadHTML($string, $encoding);
-        }
-
-        /**
-         * Load a HTML file
-         *
-         * @static 
-         */
-        public static function loadFile($file)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->loadFile($file);
-        }
-
-        /**
-         * Add metadata info
-         *
-         * @param array<string, string> $info
-         * @static 
-         */
-        public static function addInfo($info)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->addInfo($info);
-        }
-
-        /**
-         * Load a View and convert to HTML
-         *
-         * @param array<string, mixed> $data
-         * @param array<string, mixed> $mergeData
-         * @param string|null $encoding Not used yet
-         * @static 
-         */
-        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->loadView($view, $data, $mergeData, $encoding);
-        }
-
-        /**
-         * Set/Change an option (or array of options) in Dompdf
-         *
-         * @param array<string, mixed>|string $attribute
-         * @param null|mixed $value
-         * @static 
-         */
-        public static function setOption($attribute, $value = null)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->setOption($attribute, $value);
-        }
-
-        /**
-         * Replace all the Options from DomPDF
-         *
-         * @param array<string, mixed> $options
-         * @static 
-         */
-        public static function setOptions($options, $mergeWithDefaults = false)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->setOptions($options, $mergeWithDefaults);
-        }
-
-        /**
-         * Output the PDF as a string.
-         * 
-         * The options parameter controls the output. Accepted options are:
-         * 
-         * 'compress' = > 1 or 0 - apply content stream compression, this is
-         *    on (1) by default
-         *
-         * @param array<string, int> $options
-         * @return string The rendered PDF as string
-         * @static 
-         */
-        public static function output($options = [])
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->output($options);
-        }
-
-        /**
-         * Save the PDF to a file
-         *
-         * @static 
-         */
-        public static function save($filename, $disk = null)
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->save($filename, $disk);
-        }
-
-        /**
-         * Make the PDF downloadable by the user
-         *
-         * @static 
-         */
-        public static function download($filename = 'document.pdf')
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->download($filename);
-        }
-
-        /**
-         * Return a response with the PDF to show in the browser
-         *
-         * @static 
-         */
-        public static function stream($filename = 'document.pdf')
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->stream($filename);
-        }
-
-        /**
-         * Render the PDF
-         *
-         * @static 
-         */
-        public static function render()
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->render();
-        }
-
-        /**
-         * 
-         *
-         * @param array<string> $pc
-         * @static 
-         */
-        public static function setEncryption($password, $ownerpassword = '', $pc = [])
-        {
-            /** @var \Barryvdh\DomPDF\PDF $instance */
-            return $instance->setEncryption($password, $ownerpassword, $pc);
-        }
-
-            }
-    /**
-     * 
      *
      * @method static BasePDF setBaseHost(string $baseHost)
      * @method static BasePDF setBasePath(string $basePath)
@@ -20721,9 +20568,9 @@ namespace Barryvdh\DomPDF\Facade {
 
         /**
          * Output the PDF as a string.
-         * 
+         *
          * The options parameter controls the output. Accepted options are:
-         * 
+         *
          * 'compress' = > 1 or 0 - apply content stream compression, this is
          *    on (1) by default
          *
@@ -20783,6 +20630,197 @@ namespace Barryvdh\DomPDF\Facade {
 
         /**
          * 
+         *
+         *
+         * @param array<string> $pc
+         * @static 
+         */
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setEncryption($password, $ownerpassword, $pc);
+        }
+
+            }
+    /**
+     * 
+     *
+     *
+     * @method static BasePDF setBaseHost(string $baseHost)
+     * @method static BasePDF setBasePath(string $basePath)
+     * @method static BasePDF setCanvas(\Dompdf\Canvas $canvas)
+     * @method static BasePDF setCallbacks(array $callbacks)
+     * @method static BasePDF setCss(\Dompdf\Css\Stylesheet $css)
+     * @method static BasePDF setDefaultView(string $defaultView, array $options)
+     * @method static BasePDF setDom(\DOMDocument $dom)
+     * @method static BasePDF setFontMetrics(\Dompdf\FontMetrics $fontMetrics)
+     * @method static BasePDF setHttpContext(resource|array $httpContext)
+     * @method static BasePDF setPaper(string|float[] $paper, string $orientation = 'portrait')
+     * @method static BasePDF setProtocol(string $protocol)
+     * @method static BasePDF setTree(\Dompdf\Frame\FrameTree $tree)
+     */
+    class Pdf {
+        /**
+         * Get the DomPDF instance
+         *
+         * @static 
+         */
+        public static function getDomPDF()
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->getDomPDF();
+        }
+
+        /**
+         * Show or hide warnings
+         *
+         * @static 
+         */
+        public static function setWarnings($warnings)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setWarnings($warnings);
+        }
+
+        /**
+         * Load a HTML string
+         *
+         * @param string|null $encoding Not used yet
+         * @static 
+         */
+        public static function loadHTML($string, $encoding = null)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadHTML($string, $encoding);
+        }
+
+        /**
+         * Load a HTML file
+         *
+         * @static 
+         */
+        public static function loadFile($file)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadFile($file);
+        }
+
+        /**
+         * Add metadata info
+         *
+         * @param array<string, string> $info
+         * @static 
+         */
+        public static function addInfo($info)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->addInfo($info);
+        }
+
+        /**
+         * Load a View and convert to HTML
+         *
+         * @param array<string, mixed> $data
+         * @param array<string, mixed> $mergeData
+         * @param string|null $encoding Not used yet
+         * @static 
+         */
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadView($view, $data, $mergeData, $encoding);
+        }
+
+        /**
+         * Set/Change an option (or array of options) in Dompdf
+         *
+         * @param array<string, mixed>|string $attribute
+         * @param null|mixed $value
+         * @static 
+         */
+        public static function setOption($attribute, $value = null)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOption($attribute, $value);
+        }
+
+        /**
+         * Replace all the Options from DomPDF
+         *
+         * @param array<string, mixed> $options
+         * @static 
+         */
+        public static function setOptions($options, $mergeWithDefaults = false)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOptions($options, $mergeWithDefaults);
+        }
+
+        /**
+         * Output the PDF as a string.
+         *
+         * The options parameter controls the output. Accepted options are:
+         *
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param array<string, int> $options
+         * @return string The rendered PDF as string
+         * @static 
+         */
+        public static function output($options = [])
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->output($options);
+        }
+
+        /**
+         * Save the PDF to a file
+         *
+         * @static 
+         */
+        public static function save($filename, $disk = null)
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->save($filename, $disk);
+        }
+
+        /**
+         * Make the PDF downloadable by the user
+         *
+         * @static 
+         */
+        public static function download($filename = 'document.pdf')
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->download($filename);
+        }
+
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @static 
+         */
+        public static function stream($filename = 'document.pdf')
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->stream($filename);
+        }
+
+        /**
+         * Render the PDF
+         *
+         * @static 
+         */
+        public static function render()
+        {
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->render();
+        }
+
+        /**
+         * 
+         *
          *
          * @param array<string> $pc
          * @static 
@@ -20805,11 +20843,12 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param object $export
          * @param string|null $fileName
          * @param string $writerType
          * @param array $headers
-         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
+         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
          * @throws \PhpOffice\PhpSpreadsheet\Exception
          * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
          * @static 
@@ -20823,13 +20862,14 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param string|null $disk Fallback for usage with named properties
          * @param object $export
          * @param string $filePath
          * @param string|null $diskName
          * @param string $writerType
          * @param mixed $diskOptions
-         * @return bool 
+         * @return bool
          * @throws \PhpOffice\PhpSpreadsheet\Exception
          * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
          * @static 
@@ -20842,6 +20882,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param object $export
          * @param string $filePath
@@ -20860,6 +20901,7 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param object $export
          * @param string $writerType
          * @return string 
@@ -20873,6 +20915,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param object $import
          * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $filePath
@@ -20890,6 +20933,7 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param object $import
          * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $filePath
          * @param string|null $disk
@@ -20906,6 +20950,7 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param object $import
          * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $filePath
          * @param string|null $disk
@@ -20921,6 +20966,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param \Illuminate\Contracts\Queue\ShouldQueue $import
          * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $filePath
@@ -20954,7 +21000,7 @@ namespace Maatwebsite\Excel\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -20988,6 +21034,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param string $concern
          * @param callable $handler
@@ -21028,6 +21075,7 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param string $fileName
          * @param callable|null $callback
          * @static 
@@ -21040,6 +21088,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param string $filePath
          * @param string|callable|null $disk
@@ -21054,6 +21103,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param string $filePath
          * @param string|callable|null $disk
@@ -21080,6 +21130,7 @@ namespace Maatwebsite\Excel\Facades {
         /**
          * 
          *
+         *
          * @param string $classname
          * @param callable|null $callback
          * @static 
@@ -21092,6 +21143,7 @@ namespace Maatwebsite\Excel\Facades {
 
         /**
          * 
+         *
          *
          * @param string $filePath
          * @param string|callable|null $disk
@@ -21226,7 +21278,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
          *
          * @param string $text
          * @param string|null $filename
-         * @return void|\Illuminate\Support\HtmlString|string 
+         * @return void|\Illuminate\Support\HtmlString|string
          * @throws WriterException
          * @throws InvalidArgumentException
          * @static 
@@ -21283,7 +21335,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
          * Sets the format of the QrCode.
          *
          * @param string $format
-         * @return \Generator 
+         * @return \Generator
          * @throws InvalidArgumentException
          * @static 
          */
@@ -21335,7 +21387,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
          * @param int $outterRed
          * @param int $outterGreen
          * @param int $outterBlue
-         * @return \Generator 
+         * @return \Generator
          * @throws InvalidArgumentException
          * @static 
          */
@@ -21360,7 +21412,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
          * Sets the eye style.
          *
          * @param string $style
-         * @return \Generator 
+         * @return \Generator
          * @throws InvalidArgumentException
          * @static 
          */
@@ -21375,7 +21427,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
          *
          * @param string $style
          * @param float $size
-         * @return \Generator 
+         * @return \Generator
          * @throws InvalidArgumentException
          * @static 
          */
@@ -21387,7 +21439,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
 
         /**
          * Sets the encoding for the QrCode.
-         * 
+         *
          * Possible values are
          * ISO-8859-2, ISO-8859-3, ISO-8859-4, ISO-8859-5, ISO-8859-6,
          * ISO-8859-7, ISO-8859-8, ISO-8859-9, ISO-8859-10, ISO-8859-11,
@@ -21407,7 +21459,7 @@ namespace SimpleSoftwareIO\QrCode\Facades {
 
         /**
          * Sets the error correction for the QrCode.
-         * 
+         *
          * L: 7% loss.
          * M: 15% loss.
          * Q: 25% loss.
@@ -21549,7 +21601,7 @@ namespace RealRashid\SweetAlert\Facades {
         /**
          * The default configuration for middleware alert.
          *
-         * @return \RealRashid\SweetAlert\$config 
+         * @return \RealRashid\SweetAlert\$config
          * @author Rashid Ali <realrashid05@gmail.com>
          * @static 
          */
@@ -21565,7 +21617,7 @@ namespace RealRashid\SweetAlert\Facades {
          * @param string $title
          * @param string $text
          * @param array $icon
-         * @return void 
+         * @return void
          * @author Rashid Ali <realrashid05@gmail.com>
          * @static 
          */
@@ -21582,7 +21634,7 @@ namespace RealRashid\SweetAlert\Facades {
          * @param string $text
          * @param string $deleteUrl
          * @param string $deleteMethod
-         * @return void 
+         * @return void
          * @author Rashid Ali <realrashid05@gmail.com>
          * @static 
          */
@@ -21794,7 +21846,7 @@ namespace RealRashid\SweetAlert\Facades {
          * Modal window width
          * including paddings
          * (box-sizing: border-box).
-         * 
+         *
          * Can be in px or %. The default width is 32rem
          *
          * @param string $width
@@ -21809,7 +21861,7 @@ namespace RealRashid\SweetAlert\Facades {
 
         /**
          * Modal window padding.
-         * 
+         *
          * The default padding is 1.25rem.
          *
          * @param string $padding
@@ -21825,7 +21877,7 @@ namespace RealRashid\SweetAlert\Facades {
         /**
          * Modal window background
          * (CSS background property).
-         * 
+         *
          * The default background is '#fff'.
          *
          * @param string $background
@@ -21966,7 +22018,7 @@ namespace RealRashid\SweetAlert\Facades {
 
         /**
          * Apply default styling to buttons.
-         * 
+         *
          * If you want to use your own classes (e.g. Bootstrap classes)
          * set this parameter to false.
          *
@@ -21995,7 +22047,7 @@ namespace RealRashid\SweetAlert\Facades {
 
         /**
          * If set to true, the timer will have a progress bar at the bottom of a popup.
-         * 
+         *
          * Mostly, this feature is useful with toasts.
          *
          * @author Rashid Ali <realrashid05@gmail.com>
@@ -22050,6 +22102,7 @@ namespace Barryvdh\Debugbar\Facades {
     /**
      * 
      *
+     *
      * @method static void alert(mixed $message)
      * @method static void critical(mixed $message)
      * @method static void debug(mixed $message)
@@ -22064,7 +22117,7 @@ namespace Barryvdh\Debugbar\Facades {
     class Debugbar {
         /**
          * Returns the HTTP driver
-         * 
+         *
          * If no http driver where defined, a PhpHttpDriver is automatically created
          *
          * @return \DebugBar\HttpDriverInterface 
@@ -22337,7 +22390,7 @@ namespace Barryvdh\Debugbar\Facades {
 
         /**
          * Adds a message to the MessagesCollector
-         * 
+         *
          * A message can be anything from an object to a string
          *
          * @param mixed $message
@@ -22368,7 +22421,7 @@ namespace Barryvdh\Debugbar\Facades {
          * Returns a data collector
          *
          * @param string $name
-         * @return \DebugBar\DataCollector\DataCollectorInterface 
+         * @return \DebugBar\DataCollector\DataCollectorInterface
          * @throws DebugBarException
          * @static 
          */
@@ -22488,7 +22541,7 @@ namespace Barryvdh\Debugbar\Facades {
 
         /**
          * Returns collected data
-         * 
+         *
          * Will collect the data if none have been collected yet
          *
          * @return array 
@@ -22666,7 +22719,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
          * @param string $name The name of the page.
          * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
          *     accept additional parameters.
-         * @return void 
+         * @return void
          * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been
          *     used.
          * @static 
@@ -22679,13 +22732,13 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Register a breadcrumb-generating callback for a page.
-         * 
+         *
          * For backwards-compatibility with v5.0.0 and below.
          *
          * @param string $name The name of the page.
          * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
          *     accept additional parameters.
-         * @return void 
+         * @return void
          * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been
          *     used.
          * @see self::for()
@@ -22699,7 +22752,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Register a closure to call before generating breadcrumbs for the current page.
-         * 
+         *
          * For example, this can be used to always prepend the homepage without needing to manually add it to each page.
          *
          * @param callable $callback The callback, which should accept a Generator instance as the first and only parameter.
@@ -22714,7 +22767,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Register a closure to call after generating breadcrumbs for the current page.
-         * 
+         *
          * For example, this can be used to append the current page number when using pagination.
          *
          * @param callable $callback The callback, which should accept a Generator instance as the first and only parameter.
@@ -22729,7 +22782,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Check if a breadcrumb with the given name exists.
-         * 
+         *
          * If no name is given, defaults to the current route name.
          *
          * @param string|null $name The page name.
@@ -22797,7 +22850,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Get the last breadcrumb for the current page.
-         * 
+         *
          * Optionally pass a
          *
          * @return \stdClass|null The breadcrumb for the current page.
@@ -22827,7 +22880,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
 
         /**
          * Clear the previously set route name and parameters to use when calling render() or generate() with no parameters.
-         * 
+         *
          * Next time it will revert to the default behaviour of using the current route from Laravel.
          *
          * @return void 
@@ -22858,7 +22911,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -22897,6 +22950,7 @@ namespace Laravel\Octane\Facades {
     /**
      * 
      *
+     *
      * @see \Laravel\Octane\Octane
      */
     class Octane {
@@ -22933,10 +22987,10 @@ namespace Laravel\Octane\Facades {
 
         /**
          * Concurrently resolve the given callbacks via background tasks, returning the results.
-         * 
+         *
          * Results will be keyed by their given keys - if a task did not finish, the tasks value will be "false".
          *
-         * @return array 
+         * @return array
          * @throws \Laravel\Octane\Exceptions\TaskException
          * @throws \Laravel\Octane\Exceptions\TaskTimeoutException
          * @static 
@@ -23051,6 +23105,7 @@ namespace Laravel\Octane\Facades {
 namespace Livewire {
     /**
      * 
+     *
      *
      * @see \Livewire\LivewireManager
      */
@@ -23513,6 +23568,7 @@ namespace Mgcodeur\CurrencyConverter\Facades {
     /**
      * 
      *
+     *
      * @see \Mgcodeur\CurrencyConverter\CurrencyConverter
      */
     class CurrencyConverter {
@@ -23567,7 +23623,8 @@ namespace Mgcodeur\CurrencyConverter\Facades {
         /**
          * 
          *
-         * @return \Mgcodeur\CurrencyConverter\CurrencyConverter 
+         *
+         * @return \Mgcodeur\CurrencyConverter\CurrencyConverter
          * @throws NetworkException
          * @static 
          */
@@ -23580,6 +23637,7 @@ namespace Mgcodeur\CurrencyConverter\Facades {
         /**
          * 
          *
+         *
          * @throws NetworkException | MissingAmountException | MissingCurrencyException
          * @static 
          */
@@ -23591,6 +23649,7 @@ namespace Mgcodeur\CurrencyConverter\Facades {
 
         /**
          * 
+         *
          *
          * @throws NetworkException | MissingAmountException | MissingCurrencyException
          * @static 
@@ -23607,6 +23666,7 @@ namespace Mgcodeur\CurrencyConverter\Facades {
 namespace Opcodes\LogViewer\Facades {
     /**
      * 
+     *
      *
      * @see \Opcodes\LogViewer\LogViewerService
      */
@@ -23928,6 +23988,7 @@ namespace Sentry\Laravel {
     /**
      * 
      *
+     *
      * @see \Sentry\State\HubInterface
      */
     class Facade {
@@ -24109,14 +24170,14 @@ namespace Sentry\Laravel {
         /**
          * Starts a new `Transaction` and returns it. This is the entry point to manual
          * tracing instrumentation.
-         * 
+         *
          * A tree structure can be built by adding child spans to the transaction, and
          * child spans to other spans. To start a new child span within the transaction
          * or any span, call the respective `startChild()` method.
-         * 
+         *
          * Every child span must be finished before the transaction is finished,
          * otherwise the unfinished spans are discarded.
-         * 
+         *
          * The transaction must be finished with a call to its `finish()` method, at
          * which point the transaction with all its finished child spans will be sent to
          * Sentry.
@@ -24170,6 +24231,7 @@ namespace Sentry\Laravel {
 namespace Spatie\LaravelIgnition\Facades {
     /**
      * 
+     *
      *
      * @see \Spatie\FlareClient\Flare
      */
@@ -24285,6 +24347,7 @@ namespace Spatie\LaravelIgnition\Facades {
 
         /**
          * 
+         *
          *
          * @param array<class-string<ArgumentReducer>|ArgumentReducer>|\Spatie\Backtrace\Arguments\ArgumentReducers|null $argumentReducers
          * @static 
@@ -24424,6 +24487,7 @@ namespace Spatie\LaravelIgnition\Facades {
         /**
          * 
          *
+         *
          * @param string $name
          * @param string $messageLevel
          * @param array<int, mixed> $metaData
@@ -24539,6 +24603,7 @@ namespace Spatie\LaravelIgnition\Facades {
         /**
          * 
          *
+         *
          * @param array<int, string> $fieldNames
          * @return \Spatie\FlareClient\Flare 
          * @static 
@@ -24596,6 +24661,7 @@ namespace Spatie\LaravelIgnition\Facades {
         /**
          * 
          *
+         *
          * @param string $groupName
          * @param mixed $default
          * @return array<int, mixed> 
@@ -24620,6 +24686,7 @@ namespace Spatie\LaravelIgnition\Facades {
 
         /**
          * 
+         *
          *
          * @param string $groupName
          * @param array<string, mixed> $properties
@@ -24721,6 +24788,7 @@ namespace Spatie\ResponseCache\Facades {
         /**
          * 
          *
+         *
          * @param string|array $uris
          * @param string[] $tags
          * @return \Spatie\ResponseCache\ResponseCache 
@@ -24749,6 +24817,7 @@ namespace Spatie\ResponseCache\Facades {
 namespace Spatie\SignalAwareCommand\Facades {
     /**
      * 
+     *
      *
      * @see \Spatie\SignalAwareCommand\Signal
      */
@@ -24791,62 +24860,62 @@ namespace Spatie\SignalAwareCommand\Facades {
 
 namespace Stancl\Tenancy\Facades {
             /**
-     * 
+     *
      *
      */        class Tenancy {
                     /**
          * Initializes the tenant.
          *
          * @param \Stancl\Tenancy\Contracts\Tenant|int|string $tenant
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function initialize($tenant)
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
                         $instance->initialize($tenant);
         }
                     /**
-         * 
          *
-         * @static 
+         *
+         * @static
          */        public static function end()
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
                         return $instance->end();
         }
                     /**
-         * 
          *
-         * @return \Stancl\Tenancy\Contracts\TenancyBootstrapper[] 
-         * @static 
+         *
+         * @return \Stancl\Tenancy\Contracts\TenancyBootstrapper[]
+         * @static
          */        public static function getBootstrappers()
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
                         return $instance->getBootstrappers();
         }
                     /**
-         * 
          *
-         * @static 
+         *
+         * @static
          */        public static function query()
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
                         return $instance->query();
         }
                     /**
-         * 
          *
-         * @return \Stancl\Tenancy\Contracts\Tenant|\Illuminate\Database\Eloquent\Model 
-         * @static 
+         *
+         * @return \Stancl\Tenancy\Contracts\Tenant|\Illuminate\Database\Eloquent\Model
+         * @static
          */        public static function model()
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
                         return $instance->model();
         }
                     /**
-         * 
          *
-         * @static 
+         *
+         * @static
          */        public static function find($id)
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
@@ -24854,12 +24923,12 @@ namespace Stancl\Tenancy\Facades {
         }
                     /**
          * Run a callback in the central context.
-         * 
+         *
          * Atomic, safely reverts to previous context.
          *
          * @param callable $callback
-         * @return mixed 
-         * @static 
+         * @return mixed
+         * @static
          */        public static function central($callback)
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
@@ -24867,13 +24936,13 @@ namespace Stancl\Tenancy\Facades {
         }
                     /**
          * Run a callback for multiple tenants.
-         * 
+         *
          * More performant than running $tenant->run() one by one.
          *
          * @param \Stancl\Tenancy\Contracts\Tenant[]|\Traversable|string[]|null $tenants
          * @param callable $callback
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function runForMultiple($tenants, $callback)
         {
                         /** @var \Stancl\Tenancy\Tenancy $instance */
@@ -24885,8 +24954,8 @@ namespace Stancl\Tenancy\Facades {
          * @param string $name
          * @param object|callable $macro
          * @param-closure-this static  $macro
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function macro($name, $macro)
         {
                         \Stancl\Tenancy\Tenancy::macro($name, $macro);
@@ -24896,9 +24965,9 @@ namespace Stancl\Tenancy\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
-         * @static 
+         * @static
          */        public static function mixin($mixin, $replace = true)
         {
                         \Stancl\Tenancy\Tenancy::mixin($mixin, $replace);
@@ -24907,8 +24976,8 @@ namespace Stancl\Tenancy\Facades {
          * Checks if macro is registered.
          *
          * @param string $name
-         * @return bool 
-         * @static 
+         * @return bool
+         * @static
          */        public static function hasMacro($name)
         {
                         return \Stancl\Tenancy\Tenancy::hasMacro($name);
@@ -24916,37 +24985,37 @@ namespace Stancl\Tenancy\Facades {
                     /**
          * Flush the existing macros.
          *
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function flushMacros()
         {
                         \Stancl\Tenancy\Tenancy::flushMacros();
         }
                     /**
-         * 
+         *
          *
          * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
          * @param \Stancl\Tenancy\Contracts\Tenant $tenant
          * @param string $userId
          * @param string $redirectUrl
          * @param string|null $authGuard
-         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
-         * @static 
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken
+         * @static
          */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
         {
                         return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
         }
             }
             /**
-     * 
+     *
      *
      */        class GlobalCache {
                     /**
          * Get a cache store instance by name, wrapped in a repository.
          *
          * @param string|null $name
-         * @return \Illuminate\Contracts\Cache\Repository 
-         * @static 
+         * @return \Illuminate\Contracts\Cache\Repository
+         * @static
          */        public static function store($name = null)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -24956,8 +25025,8 @@ namespace Stancl\Tenancy\Facades {
          * Get a cache driver instance.
          *
          * @param string|null $driver
-         * @return \Illuminate\Contracts\Cache\Repository 
-         * @static 
+         * @return \Illuminate\Contracts\Cache\Repository
+         * @static
          */        public static function driver($driver = null)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -24967,9 +25036,9 @@ namespace Stancl\Tenancy\Facades {
          * Resolve the given store.
          *
          * @param string $name
-         * @return \Illuminate\Contracts\Cache\Repository 
+         * @return \Illuminate\Contracts\Cache\Repository
          * @throws \InvalidArgumentException
-         * @static 
+         * @static
          */        public static function resolve($name)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -24979,8 +25048,8 @@ namespace Stancl\Tenancy\Facades {
          * Build a cache repository with the given configuration.
          *
          * @param array $config
-         * @return \Illuminate\Cache\Repository 
-         * @static 
+         * @return \Illuminate\Cache\Repository
+         * @static
          */        public static function build($config)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -24991,8 +25060,8 @@ namespace Stancl\Tenancy\Facades {
          *
          * @param \Illuminate\Contracts\Cache\Store $store
          * @param array $config
-         * @return \Illuminate\Cache\Repository 
-         * @static 
+         * @return \Illuminate\Cache\Repository
+         * @static
          */        public static function repository($store, $config = [])
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25001,8 +25070,8 @@ namespace Stancl\Tenancy\Facades {
                     /**
          * Re-set the event dispatcher on all resolved cache repositories.
          *
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function refreshEventDispatcher()
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25011,8 +25080,8 @@ namespace Stancl\Tenancy\Facades {
                     /**
          * Get the default cache driver name.
          *
-         * @return string 
-         * @static 
+         * @return string
+         * @static
          */        public static function getDefaultDriver()
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25022,8 +25091,8 @@ namespace Stancl\Tenancy\Facades {
          * Set the default cache driver name.
          *
          * @param string $name
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function setDefaultDriver($name)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25033,8 +25102,8 @@ namespace Stancl\Tenancy\Facades {
          * Unset the given driver instances.
          *
          * @param array|string|null $name
-         * @return \Illuminate\Cache\CacheManager 
-         * @static 
+         * @return \Illuminate\Cache\CacheManager
+         * @static
          */        public static function forgetDriver($name = null)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25044,8 +25113,8 @@ namespace Stancl\Tenancy\Facades {
          * Disconnect the given driver and remove from local cache.
          *
          * @param string|null $name
-         * @return void 
-         * @static 
+         * @return void
+         * @static
          */        public static function purge($name = null)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25056,8 +25125,8 @@ namespace Stancl\Tenancy\Facades {
          *
          * @param string $driver
          * @param \Closure $callback
-         * @return \Illuminate\Cache\CacheManager 
-         * @static 
+         * @return \Illuminate\Cache\CacheManager
+         * @static
          */        public static function extend($driver, $callback)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25067,8 +25136,8 @@ namespace Stancl\Tenancy\Facades {
          * Set the application instance used by the manager.
          *
          * @param \Illuminate\Contracts\Foundation\Application $app
-         * @return \Illuminate\Cache\CacheManager 
-         * @static 
+         * @return \Illuminate\Cache\CacheManager
+         * @static
          */        public static function setApplication($app)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
@@ -25080,6 +25149,7 @@ namespace Stancl\Tenancy\Facades {
 namespace VXM\Async {
     /**
      * 
+     *
      *
      * @author Vuong Minh <vuongxuongminh@gmail.com>
      * @since 1.0.0
@@ -25137,17 +25207,18 @@ namespace Yajra\DataTables\Facades {
     /**
      * 
      *
+     *
      * @mixin \Yajra\DataTables\DataTables
      * @see \Yajra\DataTables\DataTables
      */
     class DataTables {
         /**
          * Make a DataTable instance from source.
-         * 
+         *
          * Alias of make for backward compatibility.
          *
          * @param object $source
-         * @return \Yajra\DataTables\DataTableAbstract 
+         * @return \Yajra\DataTables\DataTableAbstract
          * @throws \Exception
          * @static 
          */
@@ -25160,7 +25231,7 @@ namespace Yajra\DataTables\Facades {
          * Make a DataTable instance from source.
          *
          * @param object $source
-         * @return \Yajra\DataTables\DataTableAbstract 
+         * @return \Yajra\DataTables\DataTableAbstract
          * @throws \Yajra\DataTables\Exceptions\Exception
          * @static 
          */
@@ -25244,6 +25315,7 @@ namespace Yajra\DataTables\Facades {
         /**
          * 
          *
+         *
          * @throws \Yajra\DataTables\Exceptions\Exception
          * @static 
          */
@@ -25272,7 +25344,7 @@ namespace Yajra\DataTables\Facades {
          *
          * @param object $mixin
          * @param bool $replace
-         * @return void 
+         * @return void
          * @throws \ReflectionException
          * @static 
          */
@@ -25311,6 +25383,7 @@ namespace Illuminate\Support {
     /**
      * 
      *
+     *
      * @template TKey of array-key
      * @template-covariant TValue
      * @implements \ArrayAccess<TKey, TValue>
@@ -25319,6 +25392,7 @@ namespace Illuminate\Support {
     class Collection {
         /**
          * 
+         *
          *
          * @see \Barryvdh\Debugbar\ServiceProvider::register()
          * @static 
@@ -25330,6 +25404,7 @@ namespace Illuminate\Support {
 
         /**
          * 
+         *
          *
          * @see \Maatwebsite\Excel\Mixins\DownloadCollectionMixin::downloadExcel()
          * @param string $fileName
@@ -25345,6 +25420,7 @@ namespace Illuminate\Support {
 
         /**
          * 
+         *
          *
          * @see \Maatwebsite\Excel\Mixins\StoreCollectionMixin::storeExcel()
          * @param string $filePath
@@ -25363,19 +25439,19 @@ namespace Illuminate\Support {
 
 namespace Stancl\Tenancy {
             /**
-     * 
+     *
      *
      */        class Tenancy {
                     /**
-         * 
+         *
          *
          * @see \Stancl\Tenancy\Features\UserImpersonation::bootstrap()
          * @param \Stancl\Tenancy\Contracts\Tenant $tenant
          * @param string $userId
          * @param string $redirectUrl
          * @param string|null $authGuard
-         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken 
-         * @static 
+         * @return \Stancl\Tenancy\Database\Models\ImpersonationToken
+         * @static
          */        public static function impersonate($tenant, $userId, $redirectUrl, $authGuard = null)
         {
                         return \Stancl\Tenancy\Tenancy::impersonate($tenant, $userId, $redirectUrl, $authGuard);
@@ -25392,6 +25468,7 @@ namespace Illuminate\Http {
         /**
          * 
          *
+         *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestValidation()
          * @param array $rules
          * @param mixed $params
@@ -25404,6 +25481,7 @@ namespace Illuminate\Http {
 
         /**
          * 
+         *
          *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestValidation()
          * @param string $errorBag
@@ -25419,6 +25497,7 @@ namespace Illuminate\Http {
         /**
          * 
          *
+         *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
          * @param mixed $absolute
          * @static 
@@ -25431,6 +25510,7 @@ namespace Illuminate\Http {
         /**
          * 
          *
+         *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
          * @static 
          */
@@ -25441,6 +25521,7 @@ namespace Illuminate\Http {
 
         /**
          * 
+         *
          *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
          * @param mixed $ignoreQuery
@@ -25455,6 +25536,7 @@ namespace Illuminate\Http {
         /**
          * 
          *
+         *
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
          * @param mixed $ignoreQuery
          * @static 
@@ -25466,15 +25548,15 @@ namespace Illuminate\Http {
 
             }
             /**
-     * 
+     *
      *
      */        class RedirectResponse {
                     /**
-         * 
+         *
          *
          * @see \Stancl\Tenancy\Features\CrossDomainRedirect::bootstrap()
          * @param string $domain
-         * @static 
+         * @static
          */        public static function domain($domain)
         {
                         return \Illuminate\Http\RedirectResponse::domain($domain);
@@ -25490,6 +25572,7 @@ namespace Illuminate\Console\Scheduling {
     class Event {
         /**
          * 
+         *
          *
          * @see \Sentry\Laravel\Features\ConsoleSchedulingIntegration::register()
          * @param string|null $monitorSlug
@@ -25512,11 +25595,13 @@ namespace Illuminate\Routing {
     /**
      * 
      *
+     *
      * @mixin \Illuminate\Routing\RouteRegistrar
      */
     class Router {
         /**
          * 
+         *
          *
          * @see \Laravel\Ui\AuthRouteMethods::auth()
          * @param mixed $options
@@ -25530,6 +25615,7 @@ namespace Illuminate\Routing {
         /**
          * 
          *
+         *
          * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
          * @static 
          */
@@ -25541,6 +25627,7 @@ namespace Illuminate\Routing {
         /**
          * 
          *
+         *
          * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
          * @static 
          */
@@ -25551,6 +25638,7 @@ namespace Illuminate\Routing {
 
         /**
          * 
+         *
          *
          * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
          * @static 
@@ -25569,6 +25657,7 @@ namespace Illuminate\Routing {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportLazyLoading\SupportLazyLoading::registerRouteMacro()
          * @param mixed $enabled
          * @static 
@@ -25581,6 +25670,7 @@ namespace Illuminate\Routing {
         /**
          * 
          *
+         *
          * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
          * @param mixed $roles
          * @static 
@@ -25592,6 +25682,7 @@ namespace Illuminate\Routing {
 
         /**
          * 
+         *
          *
          * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
          * @param mixed $permissions
@@ -25941,6 +26032,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Database\Eloquent\Relations\Relation<TRelatedModel, TDeclaringModel, ?TRelatedModel>
@@ -25980,6 +26072,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @template TResult
@@ -25988,6 +26081,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     class Relation {
         /**
          * 
+         *
          *
          * @see \Hammerstone\FastPaginate\RelationMixin::fastPaginate()
          * @param mixed $perPage
@@ -26004,6 +26098,7 @@ namespace Illuminate\Database\Eloquent\Relations {
         /**
          * 
          *
+         *
          * @see \Hammerstone\FastPaginate\RelationMixin::simpleFastPaginate()
          * @param mixed $perPage
          * @param mixed $columns
@@ -26019,6 +26114,7 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     /**
      * 
+     *
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
@@ -26059,6 +26155,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Database\Eloquent\Relations\HasOneOrMany<TRelatedModel, TDeclaringModel, \Illuminate\Database\Eloquent\Collection<int, TRelatedModel>>
@@ -26097,6 +26194,7 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     /**
      * 
+     *
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
@@ -26138,6 +26236,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Database\Eloquent\Relations\HasOneOrMany<TRelatedModel, TDeclaringModel, ?TRelatedModel>
@@ -26176,6 +26275,7 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     /**
      * 
+     *
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
@@ -26216,6 +26316,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Database\Eloquent\Relations\MorphOneOrMany<TRelatedModel, TDeclaringModel, \Illuminate\Database\Eloquent\Collection<int, TRelatedModel>>
@@ -26254,6 +26355,7 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     /**
      * 
+     *
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
@@ -26295,6 +26397,7 @@ namespace Illuminate\Database\Eloquent\Relations {
     /**
      * 
      *
+     *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
      * @extends \Illuminate\Database\Eloquent\Relations\MorphOneOrMany<TRelatedModel, TDeclaringModel, ?TRelatedModel>
@@ -26333,6 +26436,7 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     /**
      * 
+     *
      *
      * @template TRelatedModel of \Illuminate\Database\Eloquent\Model
      * @template TDeclaringModel of \Illuminate\Database\Eloquent\Model
@@ -26381,6 +26485,7 @@ namespace Illuminate\View {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportBladeAttributes\SupportBladeAttributes::provide()
          * @param mixed $name
          * @static 
@@ -26399,6 +26504,7 @@ namespace Illuminate\View {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $data
          * @static 
@@ -26410,6 +26516,7 @@ namespace Illuminate\View {
 
         /**
          * 
+         *
          *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $section
@@ -26423,6 +26530,7 @@ namespace Illuminate\View {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $title
          * @static 
@@ -26435,6 +26543,7 @@ namespace Illuminate\View {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $slot
          * @static 
@@ -26446,6 +26555,7 @@ namespace Illuminate\View {
 
         /**
          * 
+         *
          *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $view
@@ -26460,6 +26570,7 @@ namespace Illuminate\View {
         /**
          * 
          *
+         *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $view
          * @param mixed $params
@@ -26472,6 +26583,7 @@ namespace Illuminate\View {
 
         /**
          * 
+         *
          *
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param callable $callback
@@ -26488,6 +26600,7 @@ namespace Illuminate\View {
 namespace Spatie\MediaLibrary\MediaCollections\Models\Collections {
     /**
      * 
+     *
      *
      * @template TKey of array-key
      * @template TModel of \Spatie\MediaLibrary\MediaCollections\Models\Media
@@ -26541,6 +26654,7 @@ namespace Spatie\MediaLibrary\MediaCollections\Models\Collections {
 namespace Illuminate\Database\Eloquent {
     /**
      * 
+     *
      *
      * @template TKey of array-key
      * @template TModel of \Illuminate\Database\Eloquent\Model

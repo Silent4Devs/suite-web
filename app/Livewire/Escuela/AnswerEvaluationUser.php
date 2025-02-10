@@ -90,7 +90,7 @@ class AnswerEvaluationUser extends Component
     public function getNextQuestion()
     {
         if ($this->retry) {
-            //Return a random question from the section selected by the user for quiz.
+            // Return a random question from the section selected by the user for quiz.
             // disabled because having issues with shuffle, it works but in a wierd way.
 
             // dd($this->answeredQuestionsretry);
@@ -101,8 +101,8 @@ class AnswerEvaluationUser extends Component
                 ->inRandomOrder()
                 ->first();
 
-            //If the quiz size is greater then actual questions available in the quiz sections,
-            //Finish the quiz and take the user to results page on exhausting all question from a given section.
+            // If the quiz size is greater then actual questions available in the quiz sections,
+            // Finish the quiz and take the user to results page on exhausting all question from a given section.
             if ($question === null) {
 
                 $this->retry = false;
@@ -111,7 +111,7 @@ class AnswerEvaluationUser extends Component
                 $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
                 $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
 
-                //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
+                // Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
                 $this->userEvaluationId->quiz_size = $this->count - 1;
                 $this->userEvaluationId->completed = true;
 
@@ -131,13 +131,13 @@ class AnswerEvaluationUser extends Component
                 return $this->showResults();
             }
 
-            //Update the questions taken array so that we don't repeat same question again in the quiz
-            //We feed this array into whereNotIn chain in getNextquestion() function.
+            // Update the questions taken array so that we don't repeat same question again in the quiz
+            // We feed this array into whereNotIn chain in getNextquestion() function.
             array_push($this->answeredQuestions, $question->id);
 
             return $question;
         } else {
-            //Return a random question from the section selected by the user for quiz.
+            // Return a random question from the section selected by the user for quiz.
             // disabled because having issues with shuffle, it works but in a wierd way.
             // dd("aqui");
 
@@ -149,13 +149,13 @@ class AnswerEvaluationUser extends Component
                 ->inRandomOrder()
                 ->first();
 
-            //If the quiz size is greater then actual questions available in the quiz sections,
-            //Finish the quiz and take the user to results page on exhausting all question from a given section.
+            // If the quiz size is greater then actual questions available in the quiz sections,
+            // Finish the quiz and take the user to results page on exhausting all question from a given section.
             if ($question === null) {
                 $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
                 $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
                 $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
-                //Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
+                // Update quiz size to curret count as we have ran out of quesitons and forcing user to end the quiz ;)
                 $this->userEvaluationId->quiz_size = $this->count - 1;
                 $this->userEvaluationId->completed = true;
 
@@ -174,8 +174,8 @@ class AnswerEvaluationUser extends Component
 
                 return $this->showResults();
             }
-            //Update the questions taken array so that we don't repeat same question again in the quiz
-            //We feed this array into whereNotIn chain in getNextquestion() function.
+            // Update the questions taken array so that we don't repeat same question again in the quiz
+            // We feed this array into whereNotIn chain in getNextquestion() function.
             array_push($this->answeredQuestions, $question->id);
 
             return $question;

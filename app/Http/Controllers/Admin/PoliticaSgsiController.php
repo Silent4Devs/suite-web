@@ -152,7 +152,7 @@ class PoliticaSgsiController extends Controller
             'id_reviso_politica' => User::getCurrentUser()->empleado->id,
         ]);
 
-        //envio de corrreo
+        // envio de corrreo
         $this->solicitudAprobacion($politicaSgsi->id);
 
         $politicaSgsi->estatus = 'Pendiente';
@@ -325,7 +325,7 @@ class PoliticaSgsiController extends Controller
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
                 'modulo_id' => $lista->id,
-                'proceso_id' => $id_politica, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
+                'proceso_id' => $id_politica, // Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
             ],
             [
                 'estatus' => 'Pendiente',
@@ -344,7 +344,7 @@ class PoliticaSgsiController extends Controller
             );
         }
 
-        //Superaprobadores
+        // Superaprobadores
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
@@ -352,7 +352,7 @@ class PoliticaSgsiController extends Controller
             }
         }
 
-        //Aprobadores normales
+        // Aprobadores normales
         // for ($i = 1; $i <= $no_niveles; $i++) {
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 1) {
@@ -477,7 +477,7 @@ class PoliticaSgsiController extends Controller
         $participante_control = $proceso->participantes[0];
         $participante = $proceso->participantes[0]->participante;
 
-        //SuperAprobador
+        // SuperAprobador
         if ($participante->nivel == 0) {
             // dd("superaprobador");
             $proceso->update([

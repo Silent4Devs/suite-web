@@ -1,6 +1,7 @@
 <div class="card" style="width: 100%; margin:0px;">
     <div class="card-body">
         {{-- {{$sheetId}} --}}
+        {{-- @dump($sheetId) --}}
         @if ($sheetId)
             <div class="datatable-fix">
                 <table class="table w-100 datatable datatable-risk-analysis-controls"
@@ -95,5 +96,12 @@
         <button type="button" wire:click="saveTable" id="submitControls" class="btn tb-btn-primary">GUARDAR
             CONTROLES</button>
     </div>
-
 </div>
+<script>
+    document.addEventListener('livewire:load', function () {
+    console.log("component load")
+        // Livewire.hook('message.processed', (component) => {
+    //     console.log(`Componente ${component.fingerprint.name} listo para escuchar eventos.`);
+    // });
+});
+</script>

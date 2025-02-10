@@ -30,7 +30,7 @@ class RequisicionesEmail extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($requsicion, $organizacion, $tipo_firma)
     {
         $this->requsicion = $requsicion;

@@ -347,26 +347,26 @@ class RequisicionesController extends Controller
             ]);
             $requisicion->save();
 
-            //Buscamos supervisor
+            // Buscamos supervisor
             $supervisor = $user->empleado->supervisor;
 
-            //Buscamos modelo correspondiente a lideres
+            // Buscamos modelo correspondiente a lideres
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-            //Traemos participantes
+            // Traemos participantes
             $listaPart = $listaReq->participantes;
 
-            //Buscamos al supervisor por su id
+            // Buscamos al supervisor por su id
             $supList = $listaPart->where('empleado_id', $supervisor->id)->where('numero_orden', 1)->first();
 
-            //Buscamos en que nivel se encuentra el supervisor
+            // Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
 
-            //traemos a todos los participantes correspondientes a ese nivel
+            // traemos a todos los participantes correspondientes a ese nivel
             $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-            //Buscamos 1 por 1 los participantes del nivel (area)
+            // Buscamos 1 por 1 los participantes del nivel (area)
             foreach ($participantesNivel as $key => $partNiv) {
-                //Si su estado esta activo se le manda el correo
+                // Si su estado esta activo se le manda el correo
                 if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $partNiv->empleado;
@@ -456,23 +456,23 @@ class RequisicionesController extends Controller
 
             $organizacion = Organizacion::getFirst();
 
-            //Buscamos modelo correspondiente a lideres
+            // Buscamos modelo correspondiente a lideres
             $listaReq = ListaDistribucion::where('modelo', 'Comprador')->first();
-            //Traemos participantes
+            // Traemos participantes
             $listaPart = $listaReq->participantes;
 
-            //Buscamos al supervisor por su id
+            // Buscamos al supervisor por su id
             $supList = $listaPart->where('empleado_id', $comprador->user->id)->first();
 
-            //Buscamos en que nivel se encuentra el supervisor
+            // Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
 
-            //traemos a todos los participantes correspondientes a ese nivel
+            // traemos a todos los participantes correspondientes a ese nivel
             $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-            //Buscamos 1 por 1 los participantes del nivel (area)
+            // Buscamos 1 por 1 los participantes del nivel (area)
             foreach ($participantesNivel as $key => $partNiv) {
-                //Si su estado esta activo se le manda el correo
+                // Si su estado esta activo se le manda el correo
                 if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $partNiv->empleado;
@@ -606,7 +606,7 @@ class RequisicionesController extends Controller
 
         if ($requisicion->firma_solicitante === null) {
             if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
-                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
+                if ($user->empleado->id == $firma_siguiente->solicitante_id) { // solicitante_id
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
@@ -682,7 +682,7 @@ class RequisicionesController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
@@ -693,7 +693,7 @@ class RequisicionesController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
@@ -1132,12 +1132,12 @@ class RequisicionesController extends Controller
             $organizacion = Organizacion::getFirst();
 
             try {
-                //code...
+                // code...
                 Mail::to(trim($this->removeUnicodeCharacters($emailNuevoResponsable->email)))->queue(
                     new RequisicionesEmail($requisicion, $organizacion, $posicion_firma)
                 );
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
             }
 
             return response()->json(['success' => true]);

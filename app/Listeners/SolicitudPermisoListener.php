@@ -48,7 +48,7 @@ class SolicitudPermisoListener implements ShouldQueue
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
     }

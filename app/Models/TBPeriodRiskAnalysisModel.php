@@ -21,4 +21,9 @@ class TBPeriodRiskAnalysisModel extends Model
         'start',
         'end',
     ];
+
+    public function sheetPeriod()
+    {
+        return $this->hasOne(TBPeriodSheetRiskAnalysisModel::class, 'period_id');
+    }
 }

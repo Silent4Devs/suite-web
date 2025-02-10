@@ -31,4 +31,9 @@ class TBPeriodSheetRiskAnalysisModel extends Model
     {
         return $this->belongsTo(TBSheetRiskAnalysisModel::class, 'sheet_id');
     }
+
+    public function period()
+    {
+        return $this->belongsTo(TBPeriodRiskAnalysisModel::class, 'period_id');
+    }
 }

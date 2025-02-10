@@ -136,9 +136,9 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            //$fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
+            // $fileName = 'UID_'.$organizacions->id.'_'.$file->getClientOriginalName();
             $new_name_image = 'UID_'.$organizacions->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
@@ -147,7 +147,7 @@ class OrganizacionController extends Controller
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
                 $rutaGuardada = '/public/images/'.$new_name_image;
-                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+                // file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
 
@@ -225,9 +225,9 @@ class OrganizacionController extends Controller
             ]);
 
             $file = $request->file('logotipo');
-            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
-            //$fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
+            // $fileName = 'UID_'.$organizacion->id.'_'.$file->getClientOriginalName();
             $new_name_image = 'UID_'.$organizacion->id.'_'.$hash_name.'.png';
 
             // Call the ImageService to consume the external API
@@ -236,7 +236,7 @@ class OrganizacionController extends Controller
             // Compress and save the image
             if ($apiResponse['status'] == 200) {
                 $rutaGuardada = '/public/images/'.$new_name_image;
-                //file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
+                // file_put_contents(storage_path('app/public/'.$rutaGuardada), $apiResponse['body']);
 
                 Storage::put($rutaGuardada, $apiResponse['body']);
 

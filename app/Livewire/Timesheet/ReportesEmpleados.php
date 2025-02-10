@@ -137,7 +137,7 @@ class ReportesEmpleados extends Component
     public function render()
     {
         $this->areas = Area::getAll();
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
+        $this->empleadosQuery = Empleado::get();
 
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
@@ -153,7 +153,7 @@ class ReportesEmpleados extends Component
             $empleados_list = $this->empleadosQuery;
         }
 
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
 
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
@@ -475,7 +475,6 @@ class ReportesEmpleados extends Component
                 });
             }
         })->get();
-
     }
 
     public function exportExcel()

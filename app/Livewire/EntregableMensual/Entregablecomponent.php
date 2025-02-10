@@ -172,9 +172,9 @@ class Entregablecomponent extends Component
 
         if ($validator->fails()) {
             $this->setErrorBag($validator->errors());
+
             return; // Detener la ejecución si la validación falla
         }
-
 
         $ultimo_numero_entregable = EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count() > 0 ? EntregaMensual::select('no')->where('contrato_id', $this->contrato_id)->orderBy('id', 'desc')->first()->no : 0;
         $numero_entregable = ! is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;

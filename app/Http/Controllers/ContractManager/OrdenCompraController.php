@@ -1022,7 +1022,7 @@ class OrdenCompraController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
@@ -1033,7 +1033,7 @@ class OrdenCompraController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
                     $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
@@ -1043,7 +1043,7 @@ class OrdenCompraController extends Controller
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
-                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
+                if ($user->empleado->id == $firma_siguiente->solicitante_id) { // solicitante_id
                     $tipo_firma = 'firma_solicitante_orden';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {

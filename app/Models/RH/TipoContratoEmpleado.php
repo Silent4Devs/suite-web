@@ -17,7 +17,7 @@ class TipoContratoEmpleado extends Model implements Auditable
 
     protected $fillable = ['name', 'slug', 'description'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TipoContratoEmpleado:Tipocontratoempleado_all', 3600 * 7, function () {

@@ -28,7 +28,7 @@ class RequisicionOrdenCompraCancelada extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($requsicion, $organizacion, $tipo)
     {
         $this->requsicion = $requsicion;

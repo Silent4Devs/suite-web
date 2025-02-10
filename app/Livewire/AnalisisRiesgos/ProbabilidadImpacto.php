@@ -138,7 +138,7 @@ class ProbabilidadImpacto extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         } else {
@@ -154,12 +154,12 @@ class ProbabilidadImpacto extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         }
 
-        $this->dispatch('validateProb_Imp', $this->send);
+        $this->dispatch('validateProb_Imp', send: $this->send);
     }
 
     public function removeInput($key)
@@ -174,7 +174,7 @@ class ProbabilidadImpacto extends Component
             TBProbabilidadImpactoAnalisisRiesgoModel::destroy($id);
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
         unset($this->prob_imp[$key]);

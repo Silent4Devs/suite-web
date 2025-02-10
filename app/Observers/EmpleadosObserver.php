@@ -79,7 +79,7 @@ class EmpleadosObserver
         Cache::forget('Empleados:portal_nuevos');
         Cache::forget('Empleados:empleados_index_all');
 
-        //Users
+        // Users
         Cache::forget('Users:users_exists');
         Cache::forget('Users:users_with_empleado');
         Cache::forget('Users:user_with_role');

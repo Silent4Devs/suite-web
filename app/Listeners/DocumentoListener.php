@@ -47,7 +47,7 @@ class DocumentoListener implements ShouldQueue
             $respo = User::where('email', trim(removeUnicodeCharacters($responsable->email)))->first();
             Notification::send($respo, new DocumentoNotification($event->documento, $event->tipo_consulta, $event->tabla, $event->slug));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
     }
 }

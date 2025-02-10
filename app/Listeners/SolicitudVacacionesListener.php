@@ -49,7 +49,7 @@ class SolicitudVacacionesListener implements ShouldQueue
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
     }

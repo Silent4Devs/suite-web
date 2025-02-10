@@ -70,7 +70,7 @@ class ProveedorIndistinto extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getFirst()
     {
         return Cache::remember('Katbol:proveedorIndistinto_first', 3600 * 7, function () {

@@ -25,7 +25,7 @@ class SedeController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //dd( Sede::with(['organizacion', 'team'])->get());
+        // dd( Sede::with(['organizacion', 'team'])->get());
         if ($request->ajax()) {
             $query = Sede::with(['organizacion', 'team'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -61,7 +61,7 @@ class SedeController extends Controller
                 return $row->direccion ? $row->direccion : '';
             });
             $table->editColumn('ubicacion', function ($row) {
-                //return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
+                // return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
                 return $row->id ? $row->id : '';
             });
             $table->editColumn('descripcion', function ($row) {
@@ -77,12 +77,12 @@ class SedeController extends Controller
         }
 
         $organizacions = Organizacion::getAll();
-        //$org = $organizacions->organizacion;
-        //dd($organizacions->organizacion, $organizacions);
+        // $org = $organizacions->organizacion;
+        // dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
         $numero_sedes = Sede::getAll()->count();
 
-        //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        // $sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
 
         return view('admin.sedes.index', compact('organizacions', 'teams', 'numero_sedes'));
     }
@@ -214,7 +214,7 @@ class SedeController extends Controller
     public function obtenerListaSedes($id_sedes)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$sede = Sede::getAll();
+        // $sede = Sede::getAll();
         $sede = Sede::orderByDesc('id')->cursorPaginate(15);
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
@@ -249,7 +249,7 @@ class SedeController extends Controller
                 abort(404);
             }
 
-            //dd($sede);
+            // dd($sede);
             return view('admin.sedes.ubicacion', compact('sede'));
         } catch (\Throwable $th) {
             abort(404);

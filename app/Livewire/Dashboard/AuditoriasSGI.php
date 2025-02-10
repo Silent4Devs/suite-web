@@ -45,8 +45,8 @@ class AuditoriasSGI extends Component
                 // Lógica por defecto si $this->tabOption no coincide con ningún caso
                 break;
         }
-        //DASHBOARD AUDITORIAS
-        //Tarjetas en general
+        // DASHBOARD AUDITORIAS
+        // Tarjetas en general
         $clashallazgos = AuditoriaInternasHallazgos::select('clasificacion_hallazgo')->get();
         // dd($clashallazgos);
         $clashallazgosaudit = AuditoriaInternasHallazgos::distinct()->pluck('incumplimiento_requisito')->map(function ($item) {
@@ -137,7 +137,7 @@ class AuditoriasSGI extends Component
             // dump($totalclasificacion->id);
         }
 
-        //CLASIFICACIONES DE AUDITORIAS
+        // CLASIFICACIONES DE AUDITORIAS
 
         // Obtener los nombres de las clasificaciones para los identificadores 1, 2, 3 y 4
         $nombreauditorias = AuditoriaInterna::select('nombre_auditoria')->get();

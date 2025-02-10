@@ -72,13 +72,11 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
         return false;
     }
 
-
     public function updatedAreaId($value)
     {
         $this->area_id = $value;
         $this->empleados = null;
     }
-
 
     public function collection()
     {
@@ -95,7 +93,7 @@ class ReporteEmpleadoExport implements FromCollection, WithHeadings
             $empleados_list = $this->empleados;
         }
 
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
 
         $this->hoy = Carbon::now();

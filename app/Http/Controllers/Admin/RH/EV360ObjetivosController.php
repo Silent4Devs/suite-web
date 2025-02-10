@@ -166,13 +166,13 @@ class EV360ObjetivosController extends Controller
             if ($request->ajax()) {
                 $usuario = User::getCurrentUser();
                 if ($empleado->id == $usuario->empleado->id || $usuario->empleado->id != $empleado->supervisor->id) {
-                    //add esta_aprobado in $request
+                    // add esta_aprobado in $request
                     $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
                 }
                 $objetivo = Objetivo::create($request->all());
 
                 if ($request->hasFile('foto')) {
-                    Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
+                    Storage::makeDirectory('public/objetivos/img'); // Crear si no existe
                     $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
                     $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
                     $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
@@ -266,7 +266,7 @@ class EV360ObjetivosController extends Controller
             'esta_aprobado' => $aprobacion,
             'comentarios_aprobacion' => $request->comentarios_aprobacion,
         ]);
-        //Creacion de objetivos
+        // Creacion de objetivos
         $ev = $this->evaluacionActiva();
 
         if ($objetivo->esta_aprobado == '1' && isset($ev->id)) {
@@ -375,7 +375,7 @@ class EV360ObjetivosController extends Controller
             'esta_aprobado' => Objetivo::SIN_DEFINIR,
         ]);
         if ($request->hasFile('foto')) {
-            Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
+            Storage::makeDirectory('public/objetivos/img'); // Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
             $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
             $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;

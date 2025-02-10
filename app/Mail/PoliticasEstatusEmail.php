@@ -21,7 +21,7 @@ class PoliticasEstatusEmail extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($id_politica)
     {
         $this->id_politica = $id_politica;

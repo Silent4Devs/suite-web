@@ -97,7 +97,7 @@ class QuejasCliente extends Model implements Auditable
 
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('quejas_cliente_all', 3600 * 4, function () {
             return self::orderBy('id')->get();
         });

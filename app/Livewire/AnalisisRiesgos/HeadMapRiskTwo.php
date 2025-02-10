@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\AnalisisRiesgos;
+namespace App\Livewire\AnalisisRiesgos;
 
 use App\Models\TBPeriodRiskAnalysisModel;
 use App\Models\TBPeriodSheetRiskAnalysisModel;
 use App\Models\TBRiskAnalysis_ProbImpArModel;
 use App\Models\TBRiskAnalysis_ScalesArModel;
+use App\Models\TBSheetRiskAnalysisModel;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class HeadMapRiskTwo extends Component
@@ -20,13 +22,29 @@ class HeadMapRiskTwo extends Component
 
     public $residualRisk = [];
 
+    public $historiesRR;
+
     protected $listeners = ['reloadGraphics'];
+
+    public function getHistoryRR()
+    {
+        $registers = TBSheetRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)->orderBy('id', 'ASC')->get();
+        foreach ($registers as $register) {
+            $register->initial_risk = $register->sheetPeriod?->initial_risk ? $register->sheetPeriod?->initial_risk : "N/A";
+            $register->residual_risk = $register->sheetPeriod?->residual_risk ? $register->sheetPeriod?->residual_risk : "N/A";
+            $register->period_name = $register->sheetPeriod?->period?->name ? $register->sheetPeriod?->period?->name: "N/A";
+            $register->start = $register->sheetPeriod?->period?->start ? Carbon::parse($register->sheetPeriod?->period?->start)->format('d-m-Y') : "N/A";
+        }
+        $this->historiesRR = $registers;
+        $this->reloadGraphics();
+        $this->dispatch('reloadTableRR', table:'datatable-rr-history');
+    }
 
     public function reloadGraphics()
     {
         $this->reset(['scales', 'prob', 'initialRisk', 'residualRisk']);
         $this->getInfo();
-        $this->emit('reloadGraph', $this->initialRisk, $this->residualRisk);
+        $this->dispatch('reloadGraph', $this->initialRisk, $this->residualRisk);
     }
 
     public function getInfo()

@@ -87,8 +87,8 @@ class Empleado extends Model implements Auditable
         'antiguedad',
     ];
 
-    //public $preventsLazyLoading = true;
-    //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
+    // public $preventsLazyLoading = true;
+    // protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
         'avatar',
         'avatar_ruta',
@@ -116,7 +116,7 @@ class Empleado extends Model implements Auditable
 
     protected $with = ['area', 'supervisor'];
 
-    //, 'jefe_inmediato', 'empleados_misma_area'
+    // , 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
         'n_registro',
@@ -138,7 +138,7 @@ class Empleado extends Model implements Auditable
         'resumen',
         'puesto_id',
         'perfil_empleado_id',
-        'tipo_contrato_empleados_id', //Agregados para nueva version de perfil de empleado
+        'tipo_contrato_empleados_id', // Agregados para nueva version de perfil de empleado
         'terminacion_contrato',
         'renovacion_contrato',
         'esquema_contratacion',
@@ -179,7 +179,7 @@ class Empleado extends Model implements Auditable
         'vacante_activa',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
@@ -395,7 +395,7 @@ class Empleado extends Model implements Auditable
 
     public static function getAllOrganigramaTreeElse($id)
     {
-        //return Cache::remember('Empleados:empleados_all_organigrama_tree_else', 3600 * 6, function () use ($id) {
+        // return Cache::remember('Empleados:empleados_all_organigrama_tree_else', 3600 * 6, function () use ($id) {
         return self::select(
             'id',
             'name',
@@ -423,7 +423,7 @@ class Empleado extends Model implements Auditable
                 'childrenOrganigrama.childrenOrganigrama',
             ])
             ->where('id', $id)
-            ->first(); //Eager loading
+            ->first(); // Eager loading
         // });
     }
 
@@ -708,7 +708,7 @@ class Empleado extends Model implements Auditable
 
     public function empleados()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id'); //Sin Eager Loading
+        return $this->hasMany(self::class, 'supervisor_id', 'id'); // Sin Eager Loading
     }
 
     public function entendimiento_organizacions()
@@ -768,12 +768,12 @@ class Empleado extends Model implements Auditable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area:id,area')->alta(); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area:id,area')->alta(); // Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function childrenCrearEvaluacion()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); // Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function childrenOrganigrama()
@@ -936,7 +936,7 @@ class Empleado extends Model implements Auditable
 
         return $por_par;
     }
-    //declaraciones
+    // declaraciones
 
     public function getDeclaracionesResponsableAttribute()
     {
@@ -967,7 +967,7 @@ class Empleado extends Model implements Auditable
             ->pluck('id');
     }
 
-    //declaraciones iso
+    // declaraciones iso
 
     public function getDeclaracionesResponsable2022Attribute()
     {

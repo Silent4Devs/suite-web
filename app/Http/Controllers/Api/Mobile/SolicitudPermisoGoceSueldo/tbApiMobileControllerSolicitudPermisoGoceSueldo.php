@@ -26,7 +26,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function index()
     {
-        //abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser();
 
         $solicitudesPermisos = SolicitudPermisoGoceSueldo::with('empleado')->where('empleado_id', '=', $data->empleado->id)->orderByDesc('id')->get();
@@ -100,7 +100,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function catalogoPermisos()
     {
-        //abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $vacacion = new SolicitudPermisoGoceSueldo();
         // $autoriza = User::getCurrentUser();
         $permisos = PermisosGoceSueldo::get()->makeHidden([
@@ -173,7 +173,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function show($id)
     {
-        //abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vacacion = SolicitudPermisoGoceSueldo::with(['empleado', 'permiso'])->find($id);
 
@@ -268,7 +268,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function update(Request $request, $id)
     {
-        //abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
 
         $solicitud = SolicitudPermisoGoceSueldo::find($id);
@@ -311,7 +311,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function destroy($id_solicitud)
     {
-        //abort_if(Gate::denies('solicitud_goce_sueldo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_goce_sueldo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = SolicitudPermisoGoceSueldo::find($id_solicitud);
         $vacaciones->delete();
 
@@ -332,7 +332,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function aprobacion()
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = User::getCurrentUser()->empleado->id;
 
@@ -424,7 +424,7 @@ class tbApiMobileControllerSolicitudPermisoGoceSueldo extends Controller
 
     public function respuesta($id)
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
 
         switch ($vacacion->aprobacion) {

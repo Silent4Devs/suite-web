@@ -98,7 +98,21 @@ class RevisionDocumentoController extends Controller
         }
     }
 
-    public function edit($id_revisionDocumento)
+    // public function obtenerDocumentosMeDebenAprobarArchivo()
+    // {
+    // $usuario = User::getCurrentUser();
+    //     if ($usuario->empleado) {
+    //         $revisiones = RevisionDocumento::with(['documento' => function ($query) {
+    //             $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
+    //         }])->where('empleado_id', $usuario->empleado->id)->where('archivado', RevisionDocumento::ARCHIVADO)->get();
+
+    //         return $revisiones;
+    //     } else {
+    //         return [];
+    //     }
+    // }
+
+    public function edit(RevisionDocumento $revisionDocumento)
     {
         $revisionDocumento = RevisionDocumento::where('id', $id_revisionDocumento)->first();
         $empleadoActual = User::getCurrentUser()->empleado;
@@ -539,7 +553,7 @@ class RevisionDocumentoController extends Controller
 
         $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
-        //dd($ruta_publicacion);
+        // dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
             if (Storage::exists($ruta_publicacion_documento_anterior)) {
                 $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);

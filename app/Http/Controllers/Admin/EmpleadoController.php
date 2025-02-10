@@ -171,7 +171,7 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::getAll();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        //$perfiles = PerfilEmpleado::all();
+        // $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::getAll();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
         $empleado = new Empleado;
@@ -426,7 +426,7 @@ class EmpleadoController extends Controller
         if (Role::find(4) != null) {
             User::findOrFail($user->id)->roles()->sync(4);
         }
-        //Send email with generated password
+        // Send email with generated password
         Mail::to(removeUnicodeCharacters($empleado->email))->queue(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
@@ -597,7 +597,7 @@ class EmpleadoController extends Controller
             ]);
             if ($request->hasFile('documento')) {
                 $filenameWithExt = $request->file('documento')->getClientOriginalName();
-                //Get just filename
+                // Get just filename
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 // Get just ext
                 $extension = $request->file('documento')->getClientOriginalExtension();
@@ -642,7 +642,7 @@ class EmpleadoController extends Controller
 
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();
@@ -708,7 +708,7 @@ class EmpleadoController extends Controller
 
             if ($request->hasFile('file')) {
                 $filenameWithExt = $request->file('file')->getClientOriginalName();
-                //Get just filename
+                // Get just filename
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 // Get just ext
                 $extension = $request->file('file')->getClientOriginalExtension();
@@ -778,7 +778,7 @@ class EmpleadoController extends Controller
 
         if ($request->hasFile('file')) {
             $filenameWithExt = $request->file('file')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
@@ -1193,7 +1193,7 @@ class EmpleadoController extends Controller
         ]);
 
         $this->validateDynamicForms($request);
-        //modifique query
+        // modifique query
         $empleado = Empleado::find($id);
         $image = $empleado->foto;
         if ($request->snap_foto && $request->file('foto')) {

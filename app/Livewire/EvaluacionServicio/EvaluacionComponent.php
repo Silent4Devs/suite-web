@@ -108,7 +108,7 @@ class EvaluacionComponent extends Component
 
     public function edit($id)
     {
-        //dd("edit");
+        // dd("edit");
         $evaluacion = EvaluacionServicio::find($id);
         $this->eval_id = $evaluacion->id;
         $this->nivel_id = $evaluacion->servicio_id;
@@ -132,9 +132,9 @@ class EvaluacionComponent extends Component
 
     public function update()
     {
-        //dd("test");
+        // dd("test");
 
-        //$this->validate();
+        // $this->validate();
 
         if (! is_null($this->eval_id)) {
             $evalservicio = EvaluacionServicio::find($this->eval_id);
@@ -146,7 +146,7 @@ class EvaluacionComponent extends Component
             ]);
 
             $this->default();
-            //$this->dispatch('contentChanged');
+            // $this->dispatch('contentChanged');
             $this->alert('success', '¡Registro actualizado!');
         } else {
             $this->alert('error', '¡No has seleccionado ninguna evaluación!, presiona editar en el registro que desees modificar');

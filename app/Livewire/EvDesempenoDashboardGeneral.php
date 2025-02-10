@@ -421,31 +421,31 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function updatedAreaAnual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedGeneralAnual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedObjetivosAnual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedCompetenciasAnual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedAreaMensual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
@@ -457,19 +457,19 @@ class EvDesempenoDashboardGeneral extends Component
 
     public function updatedGeneralMensual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedObjetivosMensual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 
     public function updatedCompetenciasMensual($value)
     {
-        //dd($value);
+        // dd($value);
         $this->cargarTablas();
     }
 }

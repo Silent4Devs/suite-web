@@ -55,7 +55,7 @@ class MinutasaltadireccionController extends Controller
         // }
 
         $users = User::getAll();
-        //$teams = Team::get();
+        // $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $direccion = $organizacion_actual->direccion;
@@ -108,7 +108,7 @@ class MinutasaltadireccionController extends Controller
                 }
             }
         }
-        //Creación Minuta
+        // Creación Minuta
 
         if ($request->input('archivo', false)) {
             $minutasaltadireccion->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
@@ -118,7 +118,7 @@ class MinutasaltadireccionController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $minutasaltadireccion->id]);
         }
 
-        //Vinculación Plan de Trabajo
+        // Vinculación Plan de Trabajo
         $this->vincularActividadesPlanDeAccion($request, $minutasaltadireccion);
 
         // Almacenamiento de participantes relacionados
@@ -127,7 +127,7 @@ class MinutasaltadireccionController extends Controller
         if ($request->has('participantesExt')) {
             $this->vincularParticipantesExternos($request, $minutasaltadireccion);
         }
-        //Creación del PDF
+        // Creación del PDF
         $actividades = json_decode($request->actividades);
         $this->createPDF($minutasaltadireccion, $actividades);
 
@@ -201,14 +201,14 @@ class MinutasaltadireccionController extends Controller
         // Almacenamiento de revisiones vinculado a participantes y minutas
         Mail::to(removeUnicodeCharacters($minutasaltadireccion->responsable->email))->queue(new MinutaConfirmacionSolicitud($minutasaltadireccion));
         $numero_revision = RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision') ? intval(RevisionMinuta::where('minuta_id', $minutasaltadireccion->id)->max('no_revision')) + 1 : 1;
-        //Historial#
+        // Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
             'minuta_id' => $minutasaltadireccion->id,
             'descripcion' => $minutasaltadireccion->objetivoreunion,
             'comentarios' => $minutasaltadireccion->tema_tratado,
             'fecha' => Carbon::now(),
         ]);
-        //Revisiones#
+        // Revisiones#
         // foreach ($minutasaltadireccion->participantes as $participante) {
         //     $revisor = RevisionMinuta::create([
         //         'empleado_id' => $participante->id,
@@ -437,7 +437,7 @@ class MinutasaltadireccionController extends Controller
         if (Storage::exists($ruta_publicacion)) {
             Storage::delete($ruta_publicacion);
         }
-        //Creación del PDF
+        // Creación del PDF
         $actividades = json_decode($request->actividades);
         $this->createPDF($minutasaltadireccion, $actividades);
 
@@ -534,7 +534,7 @@ class MinutasaltadireccionController extends Controller
     {
         // dd($id);
         try {
-            //code...
+            // code...
             $revision_actual = intval(RevisionMinuta::where('minuta_id', $id)->max('no_revision'));
             $aprobacion = RevisionMinuta::where('minuta_id', '=', $id)->where('empleado_id', '=', User::getCurrentUser()->empleado->id)
                 ->where('no_revision', '=', $revision_actual)->first();
@@ -555,7 +555,7 @@ class MinutasaltadireccionController extends Controller
             return redirect(route('admin.minutasaltadireccions.index'));
         } catch (\Throwable $th) {
             return redirect(route('admin.minutasaltadireccions.index'));
-            //throw $th;
+            // throw $th;
         }
     }
 

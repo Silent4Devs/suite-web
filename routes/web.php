@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalisisdeRiesgosController;
 use App\Http\Controllers\Admin\CalendarioOficialController;
 use App\Http\Controllers\Admin\DashboardAuditoriasSGIController;
 use App\Http\Controllers\Admin\DenunciasController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContractManager\ContratosController;
 use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\TbLoginController;
@@ -42,13 +44,23 @@ Route::group(['middleware' => ['tenant']], function () {
 
     Auth::routes();
 
-    // Tabla-Calendario
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'activeUser', 'doubleAuth']], function () {
+Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
+    ->name('password.expired')
+    ->middleware('auth');
 
-        // Inicio usuario
-        Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
-        Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
-        Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+    ->name('password.update')
+    ->middleware('auth');
+
+// Tabla-Calendario
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
+    // Route::group(['middleware' => ['general_tabantaj']], function () {
+    // Inicio usuario
+    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
+    Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
+    Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
 
         Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
         Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
@@ -904,19 +916,28 @@ Route::group(['middleware' => ['tenant']], function () {
                 Route::post('vulnerabilidads/parse-csv-import', 'VulnerabilidadController@parseCsvImport')->name('vulnerabilidads.parseCsvImport');
                 Route::post('vulnerabilidads/process-csv-import', 'VulnerabilidadController@processCsvImport')->name('vulnerabilidads.processCsvImport');
 
-                //Analisis Riesgos
-                Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
-                Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
-                Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
-                Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
-                Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
-                Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
-                Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
-                Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
+            //Analisis Riesgos
+            Route::delete('analisis-riesgos/destroy', 'AnalisisdeRiesgosController@massDestroy')->name('analisis-riesgos.massDestroy');
+            Route::middleware('cacheResponse')->get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
+            Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
+            Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
+            Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+            Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+            Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
+            Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-riesgos-inicio', 'AnalisisdeRiesgosController@inicioRiesgos');
+            Route::get('top-template-analisis-riegos', 'TopController@topAnalisisRiegos')->name('top-template-analisis-riesgos');
+            Route::get('risk-analysis', [AnalisisdeRiesgosController::class, 'RiskAnalysis'])->name('risk-analysis-index');
+            Route::get('risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'ShowRiskAnalysis'])->name('show-risk-analysis');
+            Route::get('logs-template-risk-analysis/{id}', [AnalisisdeRiesgosController::class, 'LogsTemplateRiskAnalysis'])->name('logs-template-risk-analysis');
 
-                Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
-                Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
-                Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
+        Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+        // Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
+        Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
+
+            Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+            Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
+            Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
 
                 Route::get('analisis-impacto/ajustes', 'AnalisisdeImpactoController@ajustes')->name('analisis-impacto.ajustes');
                 Route::put('analisis-impacto/{id}/updateAjustesBIA', 'AnalisisdeImpactoController@updateAjustesBIA')->name('analisis-impacto.updateAjustesBIA');
@@ -1097,8 +1118,8 @@ Route::group(['middleware' => ['tenant']], function () {
             Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
             Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
 
-            //macroprocesos
-            Route::resource('macroprocesos', 'MacroprocesoController');
+        // macroprocesos
+        Route::resource('macroprocesos', 'MacroprocesoController');
 
             //Competencia Tipo
 
@@ -1229,23 +1250,23 @@ Route::group(['middleware' => ['tenant']], function () {
 
             Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
-            //Clasificacion Auditorias
-            Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
-            Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
-            Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
-            Route::get('auditorias/clasificacion-auditorias/edit/{id}', 'ClasificacionesAuditoriasController@edit')->name('auditoria-clasificacion.edit');
-            Route::post('auditorias/clasificacion-auditorias/update/{id}', 'ClasificacionesAuditoriasController@update')->name('auditoria-clasificacion.update');
-            Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
-            Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
+        // Clasificacion Auditorias
+        Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
+        Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
+        Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
+        Route::get('auditorias/clasificacion-auditorias/edit/{id}', 'ClasificacionesAuditoriasController@edit')->name('auditoria-clasificacion.edit');
+        Route::post('auditorias/clasificacion-auditorias/update/{id}', 'ClasificacionesAuditoriasController@update')->name('auditoria-clasificacion.update');
+        Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
+        Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
 
-            //Clausulas Auditorias
-            Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
-            Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
-            Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
-            Route::get('auditorias/clausulas-auditorias/edit/{id}', 'ClausulasAuditoriasController@edit')->name('auditoria-clausula.edit');
-            Route::post('auditorias/clausulas-auditorias/update/{id}', 'ClausulasAuditoriasController@update')->name('auditoria-clausula.update');
-            Route::get('auditorias/clausulas-auditorias/delete/{id}', 'ClausulasAuditoriasController@destroy')->name('auditoria-clausula.destroy');
-            Route::get('auditorias/clausulas-auditorias/datatable', 'ClausulasAuditoriasController@datatable')->name('auditoria-clausula.datatable');
+        // Clausulas Auditorias
+        Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
+        Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
+        Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
+        Route::get('auditorias/clausulas-auditorias/edit/{id}', 'ClausulasAuditoriasController@edit')->name('auditoria-clausula.edit');
+        Route::post('auditorias/clausulas-auditorias/update/{id}', 'ClausulasAuditoriasController@update')->name('auditoria-clausula.update');
+        Route::get('auditorias/clausulas-auditorias/delete/{id}', 'ClausulasAuditoriasController@destroy')->name('auditoria-clausula.destroy');
+        Route::get('auditorias/clausulas-auditorias/datatable', 'ClausulasAuditoriasController@datatable')->name('auditoria-clausula.datatable');
 
             // Revision Direccions
             Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
@@ -1774,11 +1795,19 @@ Route::group(['middleware' => ['tenant']], function () {
 
         //URL::forceScheme('https');
 
-        Route::view('post_register', 'auth.post_register');
-    });
+Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
+    Route::view('sitemap', 'admin.sitemap.index');
+    // Route::view('stepper', 'stepper');
+    // Route::view('admin/gantt', 'admin.gantt.grap');
 
-    //KATBOL
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    // URL::forceScheme('https');
+
+    Route::view('post_register', 'auth.post_register');
+});
+
+//KATBOL
+Route::group(['middleware' => ['general_tabantaj']], function () {
+    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
             Route::group(['middleware' => ['katbol']], function () {
