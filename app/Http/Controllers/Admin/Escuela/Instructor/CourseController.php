@@ -94,7 +94,7 @@ class CourseController extends Controller
      */
     public function show($id_course)
     {
-        $course = Course::where('id', $id_course)->first();
+        $course = Course::where('slug', $id_course)->first();
 
         return view('admin.escuela.instructor.courses.show', compact('course'));
     }
@@ -107,7 +107,7 @@ class CourseController extends Controller
      */
     public function edit($id_course)
     {
-        $course = Course::where('id', $id_course)->first();
+        $course = Course::where('slug', $id_course)->first();
         // $this->authorize('dicatated', $course);
 
         // dd($course);
@@ -128,7 +128,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id_course)
     {
-        $course = Course::where('id', $id_course)->first();
+        $course = Course::where('slug', $id_course)->first();
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -203,7 +203,7 @@ class CourseController extends Controller
 
     public function quizDetails($id_course)
     {
-        $course = Course::where('id', $id_course)->first();
+        $course = Course::where('slug', $id_course)->first();
 
         return view('admin.escuela.instructor.evaluationquizdetails', compact('course'));
     }

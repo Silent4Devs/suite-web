@@ -97,7 +97,7 @@ class CursoEstudiante extends Controller
      */
     public function show($id_course)
     {
-        $course = Course::where('id', $id_course)->first();
+        $course = Course::where('slug', $id_course)->first();
 
         $similares = Course::where('category_id', $course->category_id)
             ->where('id', '!=', $course->id)

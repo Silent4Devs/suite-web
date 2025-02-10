@@ -319,10 +319,11 @@ class TBTenantStripeService
             $response = curl_exec($ch);
             if (curl_errno($ch)) {
                 curl_close($ch);
-                return response()->json([
-                    'message' => 'Error al obtener los datos de la API externa',
-                    'error' => curl_error($ch),
-                ], 500);
+                return false;
+                // return response()->json([
+                //     'message' => 'Error al obtener los datos de la API externa',
+                //     'error' => curl_error($ch),
+                // ], 500);
             }
 
             curl_close($ch);
