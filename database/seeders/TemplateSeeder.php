@@ -361,7 +361,7 @@ class TemplateSeeder extends Seeder
                 'numero_pregunta' => '37',
             ],
 
-            //personas
+            // personas
 
             [
 
@@ -412,7 +412,7 @@ class TemplateSeeder extends Seeder
                 'numero_pregunta' => '45',
             ],
 
-            //fisico
+            // fisico
             [
 
                 'seccion_id' => $seccion2->id, 'pregunta' => 'Perímetros físicos de seguridad',
@@ -498,7 +498,7 @@ class TemplateSeeder extends Seeder
                 'numero_pregunta' => '59',
             ],
 
-            //tecnologicos
+            // tecnologicos
 
             [
 

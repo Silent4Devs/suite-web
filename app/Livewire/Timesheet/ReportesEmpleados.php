@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Timesheet;
 
+use App\Exports\ReporteEmpleadoExport;
 use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Area;
 use App\Models\Empleado;
@@ -9,6 +10,8 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Excel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -61,6 +64,8 @@ class ReportesEmpleados extends Component
     public $fecha_fin_empleado;
 
     public $empleadosQuery;
+
+    public $emp_id;
 
     public function mount()
     {
@@ -132,7 +137,7 @@ class ReportesEmpleados extends Component
     public function render()
     {
         $this->areas = Area::getAll();
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
+        $this->empleadosQuery = Empleado::get();
 
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
@@ -148,7 +153,7 @@ class ReportesEmpleados extends Component
             $empleados_list = $this->empleadosQuery;
         }
 
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
 
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
@@ -442,5 +447,41 @@ class ReportesEmpleados extends Component
 
         $this->alert('success', 'Correos Enviados!');
         $this->empleado = null;
+    }
+
+    public function timeDuplicado()
+    {
+        // Paso 1: Identificar los duplicados y conservar el menor id
+        $duplicadosDelete = Timesheet::select('fecha_dia', 'empleado_id', DB::raw('MIN(id) as id_minimo'))
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->pluck('id_minimo');
+
+        // Paso 2: Eliminar los registros duplicados, excepto los identificados en el paso 1
+        Timesheet::whereNotIn('id', $duplicadosDelete)->delete();
+
+        // Paso 1: Identificar combinaciones duplicadas
+        $duplicados = Timesheet::select('fecha_dia', 'empleado_id')
+            ->groupBy('fecha_dia', 'empleado_id')
+            ->havingRaw('COUNT(*) > 1')
+            ->get();
+
+        // Paso 2: Obtener registros completos
+        $resultados = Timesheet::where(function ($query) use ($duplicados) {
+            foreach ($duplicados as $duplicado) {
+                $query->orWhere(function ($q) use ($duplicado) {
+                    $q->where('fecha_dia', $duplicado->fecha_dia)
+                        ->where('empleado_id', $duplicado->empleado_id);
+                });
+            }
+        })->get();
+    }
+
+    public function exportExcel()
+    {
+
+        $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+
+        return Excel::download($export, 'reporte_area.xlsx');
     }
 }

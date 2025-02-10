@@ -193,7 +193,7 @@
     @endif
 
     <div class="col-12 d-flex justify-content-end">
-        {{ $nivelesServicio->links('livewire::simple-tailwind') }}
+        {{ $nivelesServicio->links('pagination::TbPagination') }}
     </div>
 
 </div>

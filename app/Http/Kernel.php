@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
-        //\App\Http\Middleware\XFrameHeadersMiddleware::class,
+        // \App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
     protected $middlewareGroups = [
@@ -31,16 +31,16 @@ class Kernel extends HttpKernel
             // \App\Http\Middleware\LazyLoadImages::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
-            //laravel-page-speed
+            // laravel-page-speed
             // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
             // //\RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
         ],
         'api' => [
-            'throttle:60,1',
+            'throttle:200,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\AuthGates::class,
         ],
@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         'course' => \App\Http\Middleware\CourseMiddleware::class,
+        'password.expired' => \App\Http\Middleware\PasswordExpired::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
     ];
 

@@ -21,7 +21,7 @@ class ContratosExport implements FromArray, ShouldAutoSize, WithHeadings, WithSt
 
     public function array(): array
     {
-        //Reporte de contratos
+        // Reporte de contratos
         $reporte = "
         SELECT distinct(f.no_factura) as numero_factura, f.monto_factura as importe_factura,
         (select sum(monto_factura) from facturacion where contrato_id = c.id group by contrato_id) as acumulado,

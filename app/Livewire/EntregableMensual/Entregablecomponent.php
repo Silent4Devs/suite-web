@@ -10,6 +10,7 @@ use App\Models\ContractManager\Factura;
 use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -123,27 +124,58 @@ class Entregablecomponent extends Component
 
     public function store()
     {
-        $this->validate([
-            'nombre_entregable' => 'required|max:255',
-            'descripcion' => 'required',
-            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
-            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
-            'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
-            'observaciones' => 'required',
-            'entrega_real' => 'required',
-            'factura_id' => 'required',
-            'aplica_deductiva' => 'required',
-            // 'deductiva_penalizacion' => 'numeric|max:100000000000',
-            // 'nota_credito' => 'max:255',
-        ]);
-
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
-        // $formatoFecha = new FormatearFecha;
         $fecha_inicial_formateada = $this->plazo_entrega_inicio ?: null;
         $fecha_final_formateada = $this->plazo_entrega_termina ?: null;
         $fecha_real_formateada = $this->entrega_real ?: null;
-        //  dd(EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count());
+
+        $validator = Validator::make([
+            'nombre_entregable' => $this->nombre_entregable,
+            'descripcion' => $this->descripcion,
+            'plazo_entrega_inicio' => $this->plazo_entrega_inicio,
+            'plazo_entrega_termina' => $this->plazo_entrega_termina,
+            'entrega_real' => $this->entrega_real,
+            'observaciones' => $this->observaciones,
+            'factura_id' => $this->factura_id,
+            'aplica_deductiva' => $this->aplica_deductiva,
+        ], [
+            'nombre_entregable' => 'required|max:255',
+            'descripcion' => 'required',
+            'plazo_entrega_inicio' => 'required|date',
+            'plazo_entrega_termina' => 'required|date',
+            'entrega_real' => 'required|date',
+            'observaciones' => 'required',
+            'factura_id' => 'required',
+            'aplica_deductiva' => 'required',
+        ], [
+            'plazo_entrega_inicio.before_or_equal' => 'La fecha de inicio debe ser antes o igual que la fecha final.',
+            'plazo_entrega_termina.after_or_equal' => 'La fecha final debe ser después o igual que la fecha de inicio.',
+            'entrega_real.between' => 'La fecha de entrega real debe estar entre la fecha inicial y la fecha final.',
+        ]);
+
+        $validator->after(function ($validator) use ($fecha_inicial_formateada, $fecha_final_formateada, $fecha_real_formateada) {
+            if ($fecha_inicial_formateada && $fecha_final_formateada && $fecha_inicial_formateada > $fecha_final_formateada) {
+                $validator->errors()->add('plazo_entrega_inicio', 'La fecha de inicio no puede ser después de la fecha final.');
+            }
+
+            if ($fecha_real_formateada) {
+                if ($fecha_inicial_formateada && $fecha_real_formateada < $fecha_inicial_formateada) {
+                    $validator->errors()->add('entrega_real', 'La fecha de entrega real no puede ser antes de la fecha de inicio.');
+                }
+
+                if ($fecha_final_formateada && $fecha_real_formateada > $fecha_final_formateada) {
+                    $validator->errors()->add('entrega_real', 'La fecha de entrega real no puede ser después de la fecha final.');
+                }
+            }
+        });
+
+        if ($validator->fails()) {
+            $this->setErrorBag($validator->errors());
+
+            return; // Detener la ejecución si la validación falla
+        }
+
         $ultimo_numero_entregable = EntregaMensual::all()->where('contrato_id', $this->contrato_id)->count() > 0 ? EntregaMensual::select('no')->where('contrato_id', $this->contrato_id)->orderBy('id', 'desc')->first()->no : 0;
         $numero_entregable = ! is_null($ultimo_numero_entregable) ? $ultimo_numero_entregable + 1 : null;
 

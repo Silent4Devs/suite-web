@@ -58,7 +58,7 @@ class FacturaController extends Controller
 
         $xml = $request->file('xml');
         $pdf = $request->file('pdf');
-        //$dataImg = $file->get();
+        // $dataImg = $file->get();
         $nombrex = $xml->getClientOriginalName();
         $nombrep = $pdf->getClientOriginalName();
 
@@ -71,7 +71,7 @@ class FacturaController extends Controller
         $facturafile->factura_id = $factura->id;
         $facturafile->save();
 
-        //dd($factura, $facturafile, $nombrep, $nombrex);
+        // dd($factura, $facturafile, $nombrep, $nombrex);
         // notify()->success('¡Se ha registrado satisfactoriamente el contrato!');
 
         return redirect(route('contratos.create'));
@@ -122,7 +122,7 @@ class FacturaController extends Controller
         try {
             abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            $contrato = Contrato::find($id);
+            $contrato = Contrato::where('id', $id)->first();
 
             if (! $contrato) {
                 abort(404);

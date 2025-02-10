@@ -123,7 +123,14 @@
                                                 color:#153643; margin-left:25px; margin-right:25px">
                                                 Se ha rechazado el nombre del tipo de capacitación: {{ $catalogueTraining->name }} <br>
                                             </p>
-                                            <br>
+                                            <p style="text-align: center; font-size:11pt;
+                                                color:#153643; margin-left:25px; margin-right:25px">
+                                                El motivo:
+                                            </p>
+                                            <p style="text-align: center; font-size:11pt;
+                                                color:#153643; margin-left:25px; margin-right:25px">
+                                                {{$comment->comentario}}
+                                            </p>
                                         </div>
                                     </td>
                                 </tr>

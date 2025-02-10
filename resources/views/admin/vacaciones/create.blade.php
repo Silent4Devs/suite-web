@@ -23,18 +23,20 @@
         </div>
     </div>
 
-    {!! Form::open(['route' => 'admin.vacaciones.store']) !!}
-    <div class="mt-4 card card-body">
-        <span class="sub-title-vac">Creación de lineamientos</span>
-        <hr>
-        @include('admin.vacaciones.fields-create')
-    </div>
+    <form action="{{ route('admin.vacaciones.store') }}" method="POST">
+        @csrf
+        <div class="mt-4 card card-body">
+            <span class="sub-title-vac">Creación de lineamientos</span>
+            <hr>
+            @include('admin.vacaciones.fields-create')
+        </div>
 
-    <div class="text-right form-group col-12">
-        <a href="{{ route('admin.vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-primary" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.vacaciones.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-primary" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
+
 @endsection

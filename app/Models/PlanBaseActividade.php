@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class PlanBaseActividade extends Model implements Auditable, HasMedia
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $appends = [
         'guia',
@@ -53,7 +52,7 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
         'team_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('PlanBaseActividades:PlanBaseActividades_all', 3600 * 4, function () {
@@ -164,7 +163,7 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'id');
-        //return $this->belongsTo('User');
+        // return $this->belongsTo('User');
     }
 
     public function actividad_fase()

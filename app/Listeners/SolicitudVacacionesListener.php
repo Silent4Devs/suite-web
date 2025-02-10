@@ -3,10 +3,8 @@
 namespace App\Listeners;
 
 use App\Models\Empleado;
-use App\Models\ListaInformativa;
 use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
-use Auth;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
@@ -35,24 +33,24 @@ class SolicitudVacacionesListener implements ShouldQueue
      */
     public function handle($event)
     {
+
         try {
-            $user = Auth::user();
+            $empleado = Empleado::where('id', $event->solicitud_vacation->empleado_id)->first();
+
+            $user = User::where('email', trim(removeUnicodeCharacters($empleado->email)))->first();
 
             if ($user) {
                 // Obtén el supervisor usando la relación y evita llamar a removeUnicodeCharacters si no es necesario
-                $supervisor = $user->empleado->supervisor ?? null;
+                $supervisor_empleado = $user->empleado->supervisor ?? null;
 
-                if ($supervisor) {
-                    $supervisorEmail = trim(removeUnicodeCharacters($supervisor->email));
-                    $supervisor = User::where('email', $supervisorEmail)->first();
-
-                    if ($supervisor) {
-                        Notification::send($supervisor, new SolicitudVacacionesNotification($event->solicitud_vacation, $event->tipo_consulta, $event->tabla, $event->slug));
-                    }
+                if ($supervisor_empleado) {
+                    $supervisor_usuario = User::where('email', trim(removeUnicodeCharacters($supervisor_empleado->email)))->first();
+                    Notification::send($supervisor_usuario, new SolicitudVacacionesNotification($event->solicitud_vacation, $event->tipo_consulta, $event->tabla, $event->slug));
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
+
     }
 }

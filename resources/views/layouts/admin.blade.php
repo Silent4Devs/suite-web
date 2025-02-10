@@ -76,9 +76,24 @@
     @vite(['resources/js/app.js'])
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon_tabantaj_v2.png') }}">
+    {{-- library mathjs --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.0/math.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 </head>
+<style>
+    .toast {
+        background-color: #28a745 !important;
+        /* Verde bootstrap */
+        /* Azul */
+        color: #ffffff !important;
+        /* Texto blanco */
+    }
+
+    .toast .toast-close-button {
+        color: #ffffff !important;
+    }
+</style>
 
 <body class="menu-global-position-bottom">
     <div id="loading">
@@ -102,11 +117,13 @@
         $hoy_format_global = \Carbon\Carbon::now()->format('d/m/Y');
     @endphp
 
-    @include('partials.header')
+    <div class="patrials-global">
+        @include('partials.header')
 
-    @include('partials.menu-slider')
+        @include('partials.menu-slider')
 
-    @include('partials.custom-design')
+        @include('partials.custom-design')
+    </div>
 
     {{-- @include('partials.menu') --}}
 
@@ -195,7 +212,9 @@
         </a>
     </div>
 
-    <livewire:asistente />
+    <div class="box-chat">
+        <livewire:asistente />
+    </div>
 
     <!-- inicia sección de script -->
     {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
@@ -249,7 +268,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
     <script defer src="{{ asset('js/yearpicker.js') }}"></script>
-    <script src="https://cdn.ckeditor.com/4.25.0-lts/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/4.25.0-lts/standard/ckeditor.js"></script> --}}
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@latest/dist/plugins/monthSelect/index.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
@@ -288,10 +307,17 @@
             let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado
                 .innerHTML;
             document.querySelector('#elementos_imprimir').classList.remove('d-none');
+
             document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
+            document.querySelector('.patrials-global').classList.add('vista_print');
+            document.querySelector('.box-chat').classList.add('vista_print');
+            document.querySelector('.barra-herramientas-bottom-molbile').classList.add('vista_print');
             print();
             document.querySelector('#elementos_imprimir').classList.add('d-none');
             document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
+            document.querySelector('.patrials-global').classList.remove('vista_print');
+            document.querySelector('.box-chat').classList.remove('vista_print');
+            document.querySelector('.barra-herramientas-bottom-molbile').classList.remove('vista_print');
         }
 
         function imprimirTabla(elemento, html = `
@@ -309,10 +335,17 @@
             document.getElementById('titulo_tabla').innerHTML = html;
 
             document.querySelector('#tabla_imprimir_global').classList.remove('d-none');
+
             document.querySelector('#contenido_body_general_wrapper').classList.add('vista_print');
+            document.querySelector('.patrials-global').classList.add('vista_print');
+            document.querySelector('.box-chat').classList.add('vista_print');
+            document.querySelector('.barra-herramientas-bottom-molbile').classList.add('vista_print');
             print();
-            document.querySelector('#tabla_imprimir_global').classList.add('d-none');
+            document.querySelector('#elementos_imprimir').classList.add('d-none');
             document.querySelector('#contenido_body_general_wrapper').classList.remove('vista_print');
+            document.querySelector('.patrials-global').classList.remove('vista_print');
+            document.querySelector('.box-chat').classList.remove('vista_print');
+            document.querySelector('.barra-herramientas-bottom-molbile').classList.remove('vista_print');
         }
     </script>
 

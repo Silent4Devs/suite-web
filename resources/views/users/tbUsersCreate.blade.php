@@ -43,6 +43,26 @@
           </div>
 {{-- este es el bueno --}}
             <div class="form-group">
+                <label class="required" for="empleado_id">
+                    <i class="fas fa-user-tag"></i>Empleado a vincular:
+                </label>
+                <select class="form-control {{ $errors->has('empleado_id') ? 'is-invalid' : '' }}" name="empleado_id" id="empleado_id" required>
+                    <option value="" disabled selected>-- Seleccione un empleado --</option>
+                    @foreach($empleados as $empleado)
+                        <option value="{{ $empleado->id }}" {{ old('empleado_id') == $empleado->id ? 'selected' : '' }}>
+                            {{ $empleado->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @if($errors->has('empleado_id'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('empleado_id') }}
+                    </div>
+                @endif
+                <span class="help-block">Debe vincular un empleado al usuario</span>
+            </div>
+
+            <div class="form-group">
                 <label class="required" for="roles"><i class="fas fa-briefcase iconos-crear"></i>{{ trans('cruds.user.fields.roles') }}</label>
                 <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
                     @foreach($roles as $id => $roles)

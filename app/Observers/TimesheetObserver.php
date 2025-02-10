@@ -15,9 +15,8 @@ class TimesheetObserver
      */
     public function created(Timesheet $timesheet)
     {
-
+        event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
         $this->forgetCache();
-        // event(new TimesheetEvent($timesheet, 'create', 'timesheet', 'Timesheet'));
     }
 
     /**
@@ -39,12 +38,12 @@ class TimesheetObserver
     public function deleted(Timesheet $timesheet)
     {
         $this->forgetCache();
-        // event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
+        event(new TimesheetEvent($timesheet, 'delete', 'timesheet', 'Timesheet'));
     }
 
     private function forgetCache()
     {
-        Cache::forget('Timesheet:timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('Timesheet:timesheet-'.auth()->user()->empleado->id);
         Cache::forget('Timesheet:timesheet_horas_all');
         Cache::forget('Timesheet:timesheet_all');
         Cache::forget('Timesheet:timesheet_estatus');

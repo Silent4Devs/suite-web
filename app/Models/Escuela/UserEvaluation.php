@@ -15,12 +15,17 @@ class UserEvaluation extends Model implements Auditable
 
     protected $table = 'user_evaluations';
 
+    protected $casts = [
+        'score' => 'double', // o 'double' según tus necesidades
+    ];
+
     protected $fillable = [
         'completed',
         'user_id',
         'evaluation_id',
         'score',
         'quiz_size',
+        'approved',
     ];
 
     public function users()
@@ -30,7 +35,7 @@ class UserEvaluation extends Model implements Auditable
 
     public function evaluations()
     {
-        return $this->belongsToMany('App\Models\Evaluation');
+        return $this->hasOne(Evaluation::class, 'id', 'evaluation_id');
     }
 
     public function userAnswers()

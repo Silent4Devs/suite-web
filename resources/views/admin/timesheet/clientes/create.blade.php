@@ -33,19 +33,19 @@
             <div class="form-group col-md-2 anima-focus">
                 <input id="identificador" name="identificador" placeholder="" type="text" maxlength="255"
                     class="form-control" required value="{{ old('identificador') }}">
-                {!! Form::label('identificador', 'ID*', ['class' => 'asterisco']) !!}
+                <label for="identificador" class="asterisco">ID*</label>
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" name="razon_social" placeholder="" maxlength="255" class="form-control"
+                <input name="razon_social" placeholder="" maxlength="255" class="form-control"
                     value="{{ old('razon_social') }}" required>
-                {!! Form::label('razon_social', 'Razon Social*', ['class' => 'asterisco']) !!}
+                <label for="razon_social" class="asterisco">Razón Social*</label>
             </div>
 
             <div class="form-group col-md-5 anima-focus">
-                <input type="" name="nombre" placeholder="" maxlength="255" class="form-control" required
+                <input name="nombre" placeholder="" maxlength="255" class="form-control" required
                     value="{{ old('nombre') }}">
-                {!! Form::label('nombre', 'Nombre Comercial del Cliente*', ['class' => 'asterisco']) !!}
+                <label for="nombre" class="asterisco">Nombre Comercial del Cliente*</label>
             </div>
 
             <div class="form-group col-12">
@@ -57,85 +57,72 @@
                     <input name="rfc" placeholder="" maxlength="255"
                         pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$"
                         class="form-control" value="{{ old('rfc') }}">
-                    {!! Form::label('rfc', 'RFC*', ['class' => 'asterisco']) !!}
+                    <label for="rfc" class="asterisco">RFC*</label>
                 </div>
+
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#fff;">
+                    <div class="mb-3" style="background-color:#fff;">
                         <p class="mb-1">DOMICILIO</p>
                     </div>
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="calle" class="form-control" maxlength="255" placeholder=""
-                        value="{{ old('calle') }}">
-                    {!! Form::label('calle', 'Calle y Número*', ['class' => 'asterisco']) !!}
-                </div>
-
-                <div class="form-group col-md-4  anima-focus">
-                    <input type="" name="colonia" placeholder="" maxlength="255" class="form-control"
-                        value="{{ old('colonia') }}">
-                    {!! Form::label('colonia', 'Colonia*', ['class' => 'asterisco']) !!}
+                    <input name="calle" class="form-control" maxlength="255" placeholder="" value="{{ old('calle') }}">
+                    <label for="calle" class="asterisco">Calle y Número*</label>
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="ciudad" placeholder="" maxlength="255" class="form-control"
-                        value="{{ old('ciudad') }}">
-                    {!! Form::label(
-                        'ciudad',
-                        ' Ciudad o Municipio/
-                                                                                                                                                                                                                                                                                                                                                                                            País*',
-                        ['class' => 'asterisco'],
-                    ) !!}
+                    <input name="colonia" placeholder="" maxlength="255" class="form-control" value="{{ old('colonia') }}">
+                    <label for="colonia" class="asterisco">Colonia*</label>
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="codigo_postal" placeholder="" maxlength="255" class="form-control"
+                    <input name="ciudad" placeholder="" maxlength="255" class="form-control" value="{{ old('ciudad') }}">
+                    <label for="ciudad" class="asterisco">Ciudad o Municipio / País*</label>
+                </div>
+
+                <div class="form-group col-md-4 anima-focus">
+                    <input name="codigo_postal" placeholder="" maxlength="255" class="form-control"
                         value="{{ old('codigo_postal') }}">
-                    {!! Form::label('codigo_postal', 'Código Postal*', ['class' => 'asterisco']) !!}
+                    <label for="codigo_postal" class="asterisco">Código Postal*</label>
                 </div>
 
                 <div class="form-group col-md-4 anima-focus">
                     <input id="phone" type="text" pattern="[0-9]+" title="Por favor, introduce solo números"
                         name="telefono" value="{{ old('telefono') }}" maxlength="12" class="form-control" size="20"
                         placeholder="">
-                    {!! Form::label('telefono', 'Teléfono*', ['class' => 'asterisco']) !!}
+                    <label for="telefono" class="asterisco">Teléfono*</label>
                     <div class="error-message"></div>
                 </div>
+
                 <div class="form-group col-md-4 anima-focus">
-                    <input type="" name="pagina_web" placeholder="" maxlength="255" class="form-control"
+                    <input name="pagina_web" placeholder="" maxlength="255" class="form-control"
                         value="{{ old('pagina_web') }}">
-                    {!! Form::label('pagina_web', 'Página Web*', ['class' => 'asterisco']) !!}
+                    <label for="pagina_web" class="asterisco">Página Web*</label>
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#fff;">
+                    <div class="mb-3" style="background-color:#fff;">
                         <p class="mb-1">DATOS DEL CONTACTO</p>
                     </div>
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" name="nombre_contacto" placeholder="" maxlength="255" class="form-control"
+                    <input name="nombre_contacto" placeholder="" maxlength="255" class="form-control"
                         value="{{ old('nombre_contacto') }}">
-                    {!! Form::label(
-                        'nombre_contacto',
-                        'Nombre Completo del
-                                                                                                                                                                                                                                                                                                                                                                                                contacto*',
-                        ['class' => 'asterisco'],
-                    ) !!}
-
+                    <label for="nombre_contacto" class="asterisco">Nombre Completo del contacto*</label>
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
-                    <input type="" placeholder="" name="puesto_contacto" maxlength="255" class="form-control"
+                    <input placeholder="" name="puesto_contacto" maxlength="255" class="form-control"
                         value="{{ old('puesto_contacto') }}">
-                    {!! Form::label('puesto_contacto', 'Puesto*', ['class' => 'asterisco']) !!}
+                    <label for="puesto_contacto" class="asterisco">Puesto*</label>
                 </div>
 
                 <div class="form-group col-md-6 anima-focus">
                     <input type="email" id="foo" class="form-control" maxlength="255"
                         value="{{ old('correo_contacto') }}" placeholder="" name="correo_contacto">
-                    {!! Form::label('correo_contacto', 'Correo Electronico*', ['class' => 'asterisco']) !!}
-
+                    <label for="correo_contacto" class="asterisco">Correo Electrónico*</label>
                     <h6 id="emailV"></h6>
                 </div>
 
@@ -143,36 +130,26 @@
                     <input type="tel" pattern="[0-9]+" maxlength="10" title="Por favor, introduce solo números"
                         name="celular_contacto" placeholder="" class="form-control"
                         value="{{ old('celular_contacto') }}">
-                    {!! Form::label('celular_contacto', 'Celular*', ['class' => 'asterisco']) !!}
+                    <label for="celular_contacto" class="asterisco">Celular*</label>
                     <div class="error-message"></div>
                 </div>
 
-
                 <div class="col-md-12 col-sm-12 mt-4">
-                    <div class="card vrd-agua" style="background-color:#fff;">
+                    <div class="mb-3" style="background-color:#fff;">
                         <p class="mb-1">PRODUCTOS Y/O SERVICIOS</p>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="objeto_descripcion" maxlength="550" id="objeto_descripcion"
-                        value="{{ old('objeto_descripcion', '') }}"></textarea>
-                    {!! Form::label(
-                        'objeto_descripcion',
-                        'Objeto social / Descripción
-                                                                                                                                                                                                                                                                                                                                                                                                del servicio o producto*',
-                        ['class' => 'asterisco'],
-                    ) !!}
+                    <textarea class="form-control" name="objeto_descripcion" maxlength="550" id="objeto_descripcion">{{ old('objeto_descripcion', '') }}</textarea>
+                    <label for="objeto_descripcion" class="asterisco">Objeto social / Descripción del servicio o
+                        producto*</label>
                 </div>
 
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control" name="cobertura" maxlength="550" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
-                    {!! Form::label(
-                        'cobertura',
-                        'Cobertura, Rango geográfico
-                                                                                                                                                                                                                                                                                                                                                                                            en el cual presta los servicios*',
-                        ['class' => 'asterisco'],
-                    ) !!}
+                    <textarea class="form-control" name="cobertura" maxlength="550" id="cobertura">{{ old('cobertura', '') }}</textarea>
+                    <label for="cobertura" class="asterisco">Cobertura, Rango geográfico en el cual presta los
+                        servicios*</label>
                 </div>
             </div>
 

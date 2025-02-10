@@ -238,48 +238,46 @@
                 </div> --}}
 
                 <div class="mt-5">
-                    <div class="row">
+                    <div class="d-flex flex-wrap gap-3">
                         @foreach ($escalas as $key => $e)
-                            <div class="col-3">
-                                <div class="form-row mb-3">
-                                    {{ $e->parametro }}
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="d-flex align-tiems-center" style="gap: 20px;">
-                                        <div class="form-group anima-focus" style="width: 60px;">
-                                            <input wire:model.live="array_escalas_objetivos.{{ $key }}.color"
-                                                type="color" name="" id="" class="form-control">
-                                        </div>
-                                        <div class="form-group anima-focus" style="min-width: 60px;">
-                                            <select
-                                                wire:model.live="array_escalas_objetivos.{{ $key }}.condicional"
-                                                type="text" name="escala_{{ $key }}" id=""
-                                                class="form-control">
-                                                <option value="0" disabled selected>Seleccione una Condición
-                                                </option>
-                                                <option value="1">Menor que</option>
-                                                <option value="2">Menor o igual que</option>
-                                                <option value="3">Igual que</option>
-                                                <option value="4">Mayor que</option>
-                                                <option value="5">Mayor o igual que</option>
-                                            </select>
-                                            <label for="escala_{{ $key }}"
-                                                class="required">Condicional</label>
-                                        </div>
-                                        <div class="form-group anima-focus" style="min-width: 60px;">
-                                            <input wire:model.live="array_escalas_objetivos.{{ $key }}.valor"
-                                                type="number" name="escalas_objetivos{{ $key }}valor"
-                                                id="escalas_objetivos{{ $key }}valor" class="form-control"
-                                                min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}">
-                                            <label for="escalas_objetivos{{ $key }}valor"
-                                                class="required">Valor</label>
-                                        </div>
+                        <div class="d-flex flex-column " style=" min-width: 300px;">
+                            <div class="form-row mb-3 ps-4">
+                                {{ $e->parametro }}
+                            </div>
+                            <div class="form-row mt-3">
+                                <div class="d-flex flex-wrap align-items-center gap-3 ps-3">
+                                    <div class="form-group anima-focus" style="width: 60px;">
+                                        <input
+                                            wire:model.live="array_escalas_objetivos.{{ $key }}.color"
+                                            type="color" class="form-control">
+                                    </div>
+                                    <div class="form-group anima-focus flex-grow-1" style="min-width: 140px;">
+                                        <select
+                                            wire:model.live="array_escalas_objetivos.{{ $key }}.condicional"
+                                            class="form-control">
+                                            <option value="0" disabled selected>Seleccione una Condición</option>
+                                            <option value="1">Menor que</option>
+                                            <option value="2">Menor o igual que</option>
+                                            <option value="3">Igual que</option>
+                                            <option value="4">Mayor que</option>
+                                            <option value="5">Mayor o igual que</option>
+                                        </select>
+                                        <label class="required">Condicional</label>
+                                    </div>
+                                    <div class="form-group anima-focus" style="min-width: 60px; flex-grow: 1;">
+                                        <input
+                                            wire:model.live="array_escalas_objetivos.{{ $key }}.valor"
+                                            type="number" min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}"
+                                            class="form-control">
+                                        <label class="required">Valor</label>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>
+
 
                 <div class="text-right">
                     <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"
@@ -290,27 +288,37 @@
             @endif
 
         </div>
-    @endif
+        @else
+        <div class="px-1 py-2 mb-3 rounded shadow" style="background-color: #FFFBCE; border-top:solid 1px #FFFBCE;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="bi bi-info mr-3" style="color: #818181; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="align-items-center d-flex" style="font-size: 16px; font-weight: bold; color: #818181">
+                        No es posible cargar objetivos porque no hay un periodo activo para hacerlo.</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        @endif
 
     <div class="card card-body">
         <div class="info-first-config">
             <div class="col-6">
                 <h4 class="title-config">Objetivos Estrategicos del Colaborador</h4>
             </div>
-            <div class="col-2">
+            <div class="d-flex justify-content-end">
                 @if ($cuentaObjPend > 0)
-                    <button class="btn btn-primary" wire:click.prevent=enviarCorreo>
+                    <button class="btn btn-primary me-2" wire:click.prevent="enviarCorreo">
                         Notificar Lider
                     </button>
                 @endif
-            </div>
-            <div class="col-2">
-                <a href="{{ route('admin.rh.evaluaciones-desempeno.objetivos-papelera', $id_emp) }}">
+                <a class="btn btn-primary" href="{{ route('admin.rh.evaluaciones-desempeno.objetivos-papelera', $id_emp) }}">
                     Papelera
                 </a>
-            </div>
-            <div class="col-2">
-
             </div>
             <hr class="my-4">
         </div>
@@ -326,7 +334,9 @@
                         <th>Estatus</th>
                         <th>Meta</th>
                         <th>Periodo</th>
-                        <th>Revisión</th>
+                        @if ($permisoAprobacion)
+                            <th>Revisión</th>
+                        @endif
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -339,15 +349,15 @@
                             <td>{{ $obj->objetivo->descripcion_meta }}</td>
                             <td>
                                 @switch($obj->objetivo->esta_aprobado)
-                                    @case(0)
+                                    @case("0")
                                         <span class="badge badge-warning">Pendiente</span>
                                     @break
 
-                                    @case(1)
+                                    @case("1")
                                         <span class="badge badge-success">Aprobado</span>
                                     @break
 
-                                    @case(2)
+                                    @case("2")
                                         <span class="badge badge-danger">Rechazado
                                             <i class="fas fa-comment ml-1"
                                                 title="{{ $obj->objetivo->comentarios_aprobacion }}"></i>
@@ -360,13 +370,24 @@
                             </td>
                             <td>{{ $obj->objetivo->meta }}</td>
                             <td>Periodo</td>
-                            <td>
-                                @if ($obj->objetivo->esta_aprobado == 0)
-                                    <a wire:click.prevent="revision({{ $obj->objetivo->id }}, 'aprobar')">Aprobar</a>
-                                    <a
-                                        wire:click.prevent="revision({{ $obj->objetivo->id }}, 'rechazar')">Rechazar</a>
-                                @endif
-                            </td>
+                            @if ($permisoAprobacion)
+                                <td>
+                                    @if ($obj->objetivo->esta_aprobado == 0)
+                                    <a onclick="confirmarAprobacionObjetivo({{ $obj->objetivo->id }})"
+                                    title="Aprobar">
+                                    <span class="material-symbols-outlined icono-aprobar">
+                                        thumb_up
+                                    </span>
+                                </a>
+                                <a onclick="confirmarRechazoObjetivo({{ $obj->objetivo->id }})"
+                                    title="Rechazar" >
+                                    <span class="material-symbols-outlined icono-rechazar">
+                                        thumb_down
+                                    </span>
+                                </a>
+                                    @endif
+                                </td>
+                            @endif
                             <td>
                                 <div class="dropdown btn-options-foda-card">
                                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
@@ -417,4 +438,42 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.confirmarAprobacionObjetivo = function (objetivoId) {
+                Swal.fire({
+                    title: 'Aprobar Objetivo',
+                    text: "¿Está seguro que desea aprobar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, aprobar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('aprobarObjetivo', { objetivoId });
+                    }
+                });
+            };
+
+            window.confirmarRechazoObjetivo = function (objetivoId) {
+                Swal.fire({
+                    title: 'Rechazar Objetivo',
+                    text: "¿Está seguro que desea rechazar este objetivo?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, rechazar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('rechazarObjetivo', { objetivoId });
+                    }
+                });
+            };
+        });
+    </script>
+
+
 </div>

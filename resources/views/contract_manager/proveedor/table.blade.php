@@ -51,29 +51,31 @@
                     <td>{{ $proveedores->objeto_descripcion }}</td>
                     <td>{{ $proveedores->cobertura }}</td>
                     <td>
-                        {!! Form::open(['route' => ['contract_manager.proveedor.destroy', $proveedores->id], 'method' => 'delete']) !!}
-                        <div class='row'>
-                            <div class="col s4">
-                                <a href="{{route('contract_manager.proveedor.show', [$proveedores->id]) }}"
-                                    style="color:#2395AA;">
-                                    <i class="fa-solid fa-eye" title="Mostrar"> </i>
-                                </a>
-                            </div>
-                            <div class="col s4">
-                                @can('katbol_proveedores_modificar')
-                                    <a href="{{route('contract_manager.proveedor.edit', [$proveedores->id]) }}"
-                                        style="color:#2395AA;">
-                                        <i class="fas fa-edit" title="Editar"></i>
+                        <form action="{{ route('contract_manager.proveedor.destroy', $proveedores->id) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar el registro?');">
+                            @csrf
+                            @method('DELETE')
+                            <div class='row'>
+                                <div class="col s4">
+                                    <a href="{{ route('contract_manager.proveedor.show', [$proveedores->id]) }}" style="color:#2395AA;">
+                                        <i class="fa-solid fa-eye" title="Mostrar"></i>
                                     </a>
-                                @endcan
+                                </div>
+                                <div class="col s4">
+                                    @can('katbol_proveedores_modificar')
+                                        <a href="{{ route('contract_manager.proveedor.edit', [$proveedores->id]) }}" style="color:#2395AA;">
+                                            <i class="fas fa-edit" title="Editar"></i>
+                                        </a>
+                                    @endcan
+                                </div>
+                                <div class="col s4">
+                                    @can('katbol_proveedores_eliminar')
+                                        <button type="submit" style="color: #2395AA; background: none; border: none;">
+                                            <i class="fas fa-trash" title="Borrar"></i>
+                                        </button>
+                                    @endcan
+                                </div>
                             </div>
-                            <div class="col s4">
-                                @can('katbol_proveedores_eliminar')
-                                    {!! Form::button('<i class="fas fa-trash" title="Borrar"></i>', ['type' => 'submit', 'style' => 'color: #2395AA;', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
-                                @endcan
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </td>
                 </tr>
             @endforeach

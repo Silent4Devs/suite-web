@@ -22,11 +22,13 @@ use App\Models\QuejasCliente;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
 use App\Models\User;
+use App\Services\SentimentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
+
 class QuejasClienteController extends Controller
 {
     public function quejasClientes()
@@ -73,6 +75,7 @@ class QuejasClienteController extends Controller
             'correo_cliente' => 'required',
             'correo' => 'required',
             'canal' => 'required',
+            'estatus' => 'required',
         ]);
 
         $correo_cliente = intval($request->correo_cliente) == 1 ? true : false;
@@ -81,6 +84,8 @@ class QuejasClienteController extends Controller
         //         'correo' => 'required',
         //     ]);
         // }
+
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
 
         $quejasClientes = QuejasCliente::create([
             'cliente_id' => $request->cliente_id,
@@ -104,7 +109,7 @@ class QuejasClienteController extends Controller
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
             'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
-
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisQuejasClientes::create([
@@ -192,11 +197,11 @@ class QuejasClienteController extends Controller
         $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha : $quejasClientes->cumplio_fecha) == 1 ? true : false;
         $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket : $quejasClientes->cerrar_ticket) == 1 ? true : false;
         $email_realizara_accion_inmediata = intval($request->email_realizara_accion_inmediata ? $request->email_realizara_accion_inmediata : $quejasClientes->email_realizara_accion_inmediata) == 1 ? true : false;
-        //if ($desea_levantar_ac) {
+        // if ($desea_levantar_ac) {
         //     $request->validate([
         //        'responsable_sgi_id' => 'required',
         //    ]);
-        //}
+        // }
         $notificar_atencion_queja_no_aprobada = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
 
         $quejasClientes->update([
@@ -214,7 +219,7 @@ class QuejasClienteController extends Controller
             'fecha_cierre' => $request->fecha_cierre ? $request->fecha_cierre : $quejasClientes->fecha_cierre,
             'ubicacion' => $request->ubicacion ? $request->ubicacion : $quejasClientes->ubicacion,
             'descripcion' => $request->descripcion ? $request->descripcion : $quejasClientes->descripcion,
-            'estatus' => 'En curso' ? 'En curso' : $quejasClientes->estatus,
+            'estatus' => 'En curso' ? 'En curso' : $request->estatus,
             'comentarios' => $request->comentarios ? $request->comentarios : $quejasClientes->comentarios,
             'canal' => $request->canal ? $request->canal : $quejasClientes->canal,
             'otro_canal' => $request->otro_canal ? $request->otro_canal : $quejasClientes->otro_canal,
@@ -580,7 +585,7 @@ class QuejasClienteController extends Controller
             $areas = $ticketArea->area_quejado;
             $areasExplode = explode(',', $areas);
             foreach ($areasExplode as $areaExplode) {
-                //$areasCollect->push(trim($areaExplode));
+                // $areasCollect->push(trim($areaExplode));
                 if (array_key_exists($areaExplode, $areasCollect)) {
                     $areasCollect[trim($areaExplode)] = $areasCollect[trim($areaExplode)] + 1;
                 } else {
@@ -832,5 +837,33 @@ class QuejasClienteController extends Controller
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
 
         return view('admin.desk.quejas-clientes.show', compact('quejasClientes', 'id_quejas'));
+    }
+
+    public function descargarEvidencia($id)
+    {
+
+        $evidencia = EvidenciaQuejasClientes::where('quejas_clientes_id', $id)->first();
+
+        if (! $evidencia) {
+            abort(404, 'No hay evidencias disponibles.');
+        }
+
+        // Reemplaza espacios en blanco en el nombre del archivo
+        $fileName = trim($evidencia->evidencia);
+
+        // Genera la ruta correcta del archivo
+        $filePath = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'evidencias_quejas_clientes'.DIRECTORY_SEPARATOR.$fileName);
+
+        // Verificar si el archivo existe
+        if (! file_exists($filePath)) {
+            return response()->json([
+                'error' => 'Archivo no encontrado',
+                'path' => $filePath,
+                'exists' => file_exists($filePath) ? 'Sí' : 'No',
+            ], 404);
+        }
+
+        return response()->download($filePath);
+
     }
 }

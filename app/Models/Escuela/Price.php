@@ -16,7 +16,7 @@ class Price extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    //Relacion uno a muchos
+    // Relacion uno a muchos
     public function courses()
     {
         return $this->hasMany('App\Models\Course');

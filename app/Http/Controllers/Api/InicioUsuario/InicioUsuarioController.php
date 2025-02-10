@@ -162,7 +162,7 @@ class InicioUsuarioController extends Controller
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($usuario->empleado->id);
-            //Evaluaciones
+            // Evaluaciones
             $last_evaluacion = Evaluacion::getAllLatestFirst();
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {

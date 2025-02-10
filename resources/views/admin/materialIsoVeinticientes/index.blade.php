@@ -120,7 +120,7 @@
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
                         // doc.styles.tableHeader.fontSize = 7.5;
-                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10 
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {

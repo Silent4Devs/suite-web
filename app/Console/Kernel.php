@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CapacitacionesReactivarIntentos;
 use App\Console\Commands\CrearEvaluacionesDesempeno;
 use App\Console\Commands\EnviarCorreoFelicitaciones;
 use App\Console\Commands\NotificarEvaluacion360;
@@ -20,9 +21,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        CapacitacionesReactivarIntentos::class,
+        EnviarCorreoFelicitaciones::class,
         NotificarRecursos::class,
         NotificarEvaluacion360::class,
-        EnviarCorreoFelicitaciones::class,
         NotificarUsuarioCapacitacion::class,
         TransferFile::class,
     ];
@@ -39,20 +41,29 @@ class Kernel extends ConsoleKernel
         // $schedule->command('notify:ev360')->daily()->timezone('America/Mexico_City');
         // $schedule->command('capacitacion:usuario')
         //     ->everyFiveMinutes();
-        //$schedule->command('cache:clearall')->everyTwoHours();
+        // $schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command('queue:retry all')
             ->timezone('America/Mexico_City')
             ->everyFifteenMinutes()
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
-
+        // Envia correo de felicitaciones al personal el día de su cumpleaños
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
+
+        // Reactivalas capacitaciones tras 8 horas
+        $schedule->command(CapacitacionesReactivarIntentos::class)
+            ->timezone('America/Mexico_City')
+            ->everyFifteenMinutes()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor();
+
         $schedule->command(CrearEvaluacionesDesempeno::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('09:00')
@@ -61,26 +72,36 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor();
         $schedule->command('snapshot:create dump'.date('Y-m-d-H'))
             ->timezone('America/Mexico_City')
-            //->days([2, 5])
+            // ->days([2, 5])
             ->daily()
             ->at('22:30')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
 
-        //dump automatico de base de datos
+        // dump automatico de base de datos
         $schedule->command('php artisan snapshot:cleanup --keep=7')
             ->timezone('America/Mexico_City')
-            //->days([2, 5])
+            // ->days([2, 5])
             ->daily()
             ->at('23:30')
             ->withoutOverlapping()
             ->onOneServer()
             ->sentryMonitor();
 
+        // Comando otorgar permisos (777) al storage
+        $schedule->call(function () {
+            exec('chmod -R 777 storage');
+        })->timezone('America/Mexico_City')
+            ->hourly() // Se ejecutará cada hora
+            ->name('set-storage-permissions')
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->sentryMonitor('set-storage-permissions-monitor');
+
         // Limpiar los respaldos diariamente a las 11:00 PM
         $schedule->command('backup:clean')
-            //->days([2, 5])
+            // ->days([2, 5])
             ->daily()
             ->at('23:30')
             ->onOneServer()
@@ -88,7 +109,7 @@ class Kernel extends ConsoleKernel
 
         // Ejecutar el respaldo diariamente a las 11:30 PM
         $schedule->command('backup:run')
-            //->days([2, 5])
+            // ->days([2, 5])
             ->daily()
             ->at('23:40')
             ->onOneServer()
@@ -111,7 +132,7 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor();
 
-        //Schedule certificates the command to run mouthn
+        // Schedule certificates the command to run mouthn
         // $schedule->command(SendCertificateReminder::class)
         //     ->timezone('America/Mexico_City')
         //     ->daily()

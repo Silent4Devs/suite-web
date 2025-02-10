@@ -1,5 +1,7 @@
 <div class="caja_anima_reporte">
     <div class="print-none" style="margin: 0 !important;">
+        <button class="btn btn-success d-none" wire:click="timeDuplicado()">Eliminar registros
+            duplicados</button>
         <div class="card card-body">
             <div class="row">
                 <x-loading-indicator />
@@ -20,7 +22,7 @@
                 <div class="col-md-3 form-group" wire:ignore>
                     <label class="form-label">Fecha de fin</label>
                     <input id="fecha_dia_registros_fin_empleados" class="form-control date_librery" type="date"
-                        name="fecha_fin" wire:model.live="fecha_fin">
+                        name="fecha_fin"  wire:model.live="fecha_fin">
                 </div>
                 <div class="col-md-2 form-group">
                     <label class="form-label">Horas totales</label>
@@ -52,12 +54,21 @@
                 </div>
             </div>
         </div>
+        <div class="text-right">
+            <button class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff;"
+                    wire:click="exportExcel()">
+                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                Exportar&nbsp;Excel
+            </button>
+        </div>
+        <br>
+
         <div class="card card-body">
             <div>
                 <h3 class="title-card-time">Reportes por área</h3>
                 <hr class="my-4">
             </div>
-            <div class="datatable-fix w-100 tabla-calendar-time">
+            <div class="datatable-fix w-100 tabla-calendar-time" wire:ignore.self>
                 <table id="timesheet_empleados_lista"
                     class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
                     data-semanas="{{ $semanas_totales_calendario }}">

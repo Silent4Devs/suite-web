@@ -83,17 +83,36 @@ class Empleado extends Model implements Auditable
         'antiguedad',
     ];
 
-    //public $preventsLazyLoading = true;
-    //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
+    // public $preventsLazyLoading = true;
+    // protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
-        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
-        'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'objetivos_asignados', 'es_supervisor', 'fecha_min_timesheet',
+        'avatar',
+        'avatar_ruta',
+        'resourceId',
+        'empleados_misma_area',
+        'genero_formateado',
+        'puesto',
+        'declaraciones_responsable',
+        'declaraciones_aprobador',
+        'declaraciones_responsable2022',
+        'declaraciones_aprobador2022',
+        'fecha_ingreso',
+        'saludo',
+        'saludo_completo',
+        'actual_birdthday',
+        'actual_aniversary',
+        'obtener_antiguedad',
+        'empleados_pares',
+        'competencias_asignadas',
+        'objetivos_asignados',
+        'es_supervisor',
+        'fecha_min_timesheet',
         // 'disposicion',
     ];
 
     protected $with = ['area', 'supervisor'];
 
-    //, 'jefe_inmediato', 'empleados_misma_area'
+    // , 'jefe_inmediato', 'empleados_misma_area'
     protected $fillable = [
         'name',
         'n_registro',
@@ -115,7 +134,7 @@ class Empleado extends Model implements Auditable
         'resumen',
         'puesto_id',
         'perfil_empleado_id',
-        'tipo_contrato_empleados_id', //Agregados para nueva version de perfil de empleado
+        'tipo_contrato_empleados_id', // Agregados para nueva version de perfil de empleado
         'terminacion_contrato',
         'renovacion_contrato',
         'esquema_contratacion',
@@ -156,7 +175,7 @@ class Empleado extends Model implements Auditable
         'vacante_activa',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Empleados:empleados_exists', 3600 * 8, function () {
@@ -257,7 +276,7 @@ class Empleado extends Model implements Auditable
     public static function getSelectEmpleadosWithArea()
     {
         return Cache::remember('Empleados:empleados_select_area', 3600 * 6, function () {
-            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->get();
+            return self::select('id', 'antiguedad', 'estatus', 'name', 'fecha_baja', 'area_id', 'foto', 'puesto_id')->with('area', 'puesto')->where('estatus', 'alta')->get();
         });
     }
 
@@ -290,8 +309,8 @@ class Empleado extends Model implements Auditable
 
     public static function getAllOrganigramaTree()
     {
-        return Cache::remember('Empleados:empleados_all_organigrama_tree', 3600 * 6, function () {
-            return self::select(
+        $lider = DB::table('empleados')
+            ->select(
                 'id',
                 'name',
                 'area_id',
@@ -306,55 +325,117 @@ class Empleado extends Model implements Auditable
                 'genero',
                 'telefono_movil'
             )
-                ->with([
-                    'supervisor.childrenOrganigrama' => function ($query) {
-                        $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    },
-                    'supervisor.supervisor:id,name,foto,puesto_id,genero',
-                    'area:id,area',
-                    'childrenOrganigrama.supervisor:id,name,foto,puesto_id,genero',
-                    'childrenOrganigrama.childrenOrganigrama',
-                ])
-                ->alta()
-                ->vacanteActiva()
-                ->whereNull('supervisor_id')
+            ->where('supervisor_id', null)
+            ->first();
+
+        $puesto = DB::table('puestos')
+            ->select('puesto')
+            ->where('id', '=', $lider->puesto_id)
+            ->first();
+        $lider->puesto = $puesto->puesto;
+
+        $area = DB::table('areas')
+            ->select('area')
+            ->where('id', '=', $lider->area_id)
+            ->first();
+        $lider->area = $area;
+
+        $childrens = DB::table('empleados')
+            ->select(
+                'id',
+                'name',
+                'area_id',
+                'foto',
+                'puesto_id',
+                'antiguedad',
+                'email',
+                'telefono',
+                'estatus',
+                'n_registro',
+                'n_empleado',
+                'genero',
+                'telefono_movil'
+            )
+            ->where('supervisor_id', '=', $lider->id)
+            ->where('estatus', 'alta')
+            ->whereNull('deleted_at')
+            ->get();
+        foreach ($childrens as $children) {
+            $puesto = DB::table('puestos')
+                ->select('puesto')
+                ->where('id', '=', $children->puesto_id)
                 ->first();
-            // Carga ansiosa (Eager loading)
-        });
+            $children->puesto = $puesto->puesto;
+        }
+
+        $lider->children_organigrama = $childrens;
+
+        return $lider;
+
+        // return self::select(
+        //     'id',
+        //     'name',
+        //     'area_id',
+        //     'foto',
+        //     'puesto_id',
+        //     'antiguedad',
+        //     'email',
+        //     'telefono',
+        //     'estatus',
+        //     'n_registro',
+        //     'n_empleado',
+        //     'genero',
+        //     'telefono_movil',
+        // )
+        // ->with([
+        //     'children' => function ($query) {
+        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
+        //     },
+        //     'supervisor' => function ($query) {
+        //         $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
+        //     },
+        //     'area' => function ($query) {
+        //         $query->select('id', 'area');
+        //     }
+        // ])
+        // ->alta()
+        // ->vacanteActiva()
+        // ->whereNull('supervisor_id')
+        // ->first();
     }
 
     public static function getAllOrganigramaTreeElse($id)
     {
-        return Cache::remember('Empleados:empleados_all_organigrama_tree_else', 3600 * 6, function () use ($id) {
-            return self::select(
-                'id',
-                'name',
-                'area_id',
-                'foto',
-                'puesto_id',
-                'antiguedad',
-                'email',
-                'telefono',
-                'estatus',
-                'n_registro',
-                'n_empleado',
-                'genero',
-                'telefono_movil'
-            )
-                ->alta()
-                ->vacanteActiva()
-                ->with([
-                    'supervisor.childrenOrganigrama' => function ($query) {
-                        $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
-                    },
-                    'supervisor.supervisor:id,name,foto,puesto_id,genero',
-                    'area:id,area',
-                    'childrenOrganigrama.supervisor:id,name,foto,puesto_id,genero',
-                    'childrenOrganigrama.childrenOrganigrama',
-                ])
-                ->where('id', $id)
-                ->first(); //Eager loading
-        });
+        // return Cache::remember('Empleados:empleados_all_organigrama_tree_else', 3600 * 6, function () use ($id) {
+        return self::select(
+            'id',
+            'name',
+            'area_id',
+            'foto',
+            'puesto_id',
+            'antiguedad',
+            'email',
+            'telefono',
+            'estatus',
+            'n_registro',
+            'n_empleado',
+            'genero',
+            'telefono_movil'
+        )
+            ->alta()
+            ->vacanteActiva()
+            ->with([
+                'supervisor.childrenOrganigrama' => function ($query) {
+                    $query->select('id', 'name', 'foto', 'puesto_id', 'genero');
+                },
+                'supervisor.supervisor:id,name,foto,puesto_id,genero',
+                'area:id,area',
+                'childrenOrganigrama.supervisor:id,name,foto,puesto_id,genero',
+                'childrenOrganigrama.childrenOrganigrama',
+            ])
+            ->where('id', $id)
+            ->first(); // Eager loading
+        // });
     }
 
     public static function getAllDataObjetivosEmpleado()
@@ -427,7 +508,7 @@ class Empleado extends Model implements Auditable
     public static function getAltaDataColumns()
     {
         return Cache::remember('Empleados:empleados_alta_data_columns_all', 3600 * 6, function () {
-            return self::alta()->select('id', 'name', 'email', 'foto')->get();
+            return self::alta()->select('id', 'name', 'email', 'foto')->orderBy('name', 'asc')->get();
         });
     }
 
@@ -638,7 +719,7 @@ class Empleado extends Model implements Auditable
 
     public function empleados()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id'); //Sin Eager Loading
+        return $this->hasMany(self::class, 'supervisor_id', 'id'); // Sin Eager Loading
     }
 
     public function entendimiento_organizacions()
@@ -698,19 +779,19 @@ class Empleado extends Model implements Auditable
 
     public function children()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children:id,name,foto,puesto_id,genero', 'supervisor:id,name,foto,puesto_id,genero', 'area:id,area')->alta(); // Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function childrenCrearEvaluacion()
     {
-        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); //Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
+        return $this->hasMany(self::class, 'supervisor_id', 'id')->with('children', 'supervisor', 'area')->select('id', 'name', 'area_id', 'supervisor_id'); // Eager Loading utilizar solo para construir un arbol si no puede desbordar la pila
     }
 
     public function childrenOrganigrama()
     {
         return $this->hasMany(self::class, 'supervisor_id', 'id')
-            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero,estatus', 'supervisor:id,name,foto,puesto_id,genero', 'area')
-            ->vacanteActiva();
+            ->with('childrenOrganigrama:id,name,foto,puesto_id,genero,estatus', 'supervisor:id,name,foto,puesto_id,genero', 'area')->alta();
+        // ->vacanteActiva();
     }
 
     public function scopeAlta($query)
@@ -866,7 +947,7 @@ class Empleado extends Model implements Auditable
 
         return $por_par;
     }
-    //declaraciones
+    // declaraciones
 
     public function getDeclaracionesResponsableAttribute()
     {
@@ -887,7 +968,17 @@ class Empleado extends Model implements Auditable
         return Carbon::parse($this->antiguedad)->format('d-m-Y');
     }
 
-    //declaraciones iso
+    public static function listaSupervisores()
+    {
+        return self::alta()->select('supervisor_id', 'id')
+            ->get()
+            ->filter(function ($emp) {
+                return $emp->es_supervisor;
+            })
+            ->pluck('id');
+    }
+
+    // declaraciones iso
 
     public function getDeclaracionesResponsable2022Attribute()
     {
@@ -1001,9 +1092,4 @@ class Empleado extends Model implements Auditable
     {
         return $this->hasOne(DisponibilidadEmpleados::class, 'empleado_id', 'id');
     }
-
-    // public function getDisposicionAttribute()
-    // {
-    //     return $this->disponibilidad->disposicion;
-    // }
 }

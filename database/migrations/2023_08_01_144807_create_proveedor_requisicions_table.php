@@ -27,10 +27,10 @@ return new class extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->string('cotizacion')->nullable();
-            //foreign
+            // foreign
             $table->unsignedBigInteger('requisiciones_id')->nullable();
             // $table->foreign('requisiciones_id')->references('id')->on('requisiciones')->onUpdate('cascade')->onDelete('cascade');
-            //foreign
+            // foreign
             $table->timestamps();
             $table->softDeletes();
         });

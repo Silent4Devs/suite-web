@@ -96,7 +96,7 @@
                                 <td> <img src="{{ asset('storage/empleados/imagenes') }}/{{ $sol->empleado->avatar }}"
                                         title="{{ $sol->empleado->avatar }}" class="rounded-circle"
                                         style="clip-path: circle(15px at 50% 50%);height: 30px;" />
-                                    <span>{{ $sol->empleado->avatar }}</span>
+                                    <span>{{ $sol->empleado->name }}</span>
                                 </td>
                                 <td>{{ $sol->permiso['nombre'] }}</td>
                                 <td>
@@ -165,6 +165,12 @@
                                                 title="Cancelar solicitud" class="btn btn-sm text-danger"
                                                 style="display:inline-block"><i
                                                     class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                            <button
+                                                    onclick="window.location.href='{{ route('admin.solicitud-permiso-goce-sueldo.respuesta', ['id' => $sol->id]) }}'"
+                                                    title="Aprobar solicitud" class="btn btn-sm text-success"
+                                                    style="display:inline-block">
+                                                    <i class="fa-solid fa-file-pen fa-1x text-info text-aling:center"></i>
+                                                </button>
                                         </div>
                                     @endif
 

@@ -46,7 +46,7 @@ class Cierrecomponent extends Component
                     ->orWhere('observaciones', 'like', '%'.$this->search.'%');
             })
             ->orderBy($this->sort, $this->direction)
-            ->fastPaginate(intval($this->pagination));
+            ->paginate(intval($this->pagination));
 
         $this->dispatch('paginador-cierre-contrato');
 
@@ -72,7 +72,7 @@ class Cierrecomponent extends Component
             'observaciones' => $this->observaciones,
         ]);
 
-        //$this->edit($post->id);
+        // $this->edit($post->id);
         $this->dispatch('recargar-cumplimiento');
         $this->dispatch('contentChanged');
         $this->default();
@@ -96,7 +96,7 @@ class Cierrecomponent extends Component
         $this->validate([
 
             'aspectos' => 'required|max:255',
-            //'observaciones' => 'required'
+            // 'observaciones' => 'required'
         ]);
 
         $cierrC = CierreContrato::find($this->cierre_id);
@@ -109,7 +109,7 @@ class Cierrecomponent extends Component
         ]);
         $this->dispatch('recargar-cumplimiento');
         $this->default();
-        //$this->dispatch('contentChanged');
+        // $this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
     }
 

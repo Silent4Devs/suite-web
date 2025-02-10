@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
-class AnalisDeBrecha2022NVController extends Controller
+class AnalisisDeBrechas2022NVController extends Controller
 {
     public function index()
     {

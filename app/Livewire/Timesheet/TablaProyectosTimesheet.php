@@ -58,7 +58,7 @@ class TablaProyectosTimesheet extends Component
 
     public function render()
     {
-        $this->timesheetproyectoquery = TimesheetProyecto::get();
+        $this->timesheetproyectoquery = TimesheetProyecto::getAll();
 
         $this->proceso_count = $this->timesheetproyectoquery->where('estatus', 'proceso')->count();
         $this->cancelado_count = $this->timesheetproyectoquery->where('estatus', 'cancelado')->count();
@@ -84,9 +84,9 @@ class TablaProyectosTimesheet extends Component
 
         // $this->dispatch('cerrarModal');
 
-        //$this->sedes = Sede::getAll();
+        // $this->sedes = Sede::getAll();
 
-        //$this->areas = Area::getAll();
+        // $this->areas = Area::getAll();
 
         $this->clientes = TimesheetCliente::getAllOrderBy('nombre');
 
@@ -154,7 +154,8 @@ class TablaProyectosTimesheet extends Component
 
     public function terminarProyecto($id)
     {
-        $proyecto = TimesheetProyecto::find($id);
+        $proyecto = TimesheetProyecto::where('id', $id)->first();
+
         $proyecto->update([
             'estatus' => 'terminado',
         ]);
@@ -164,7 +165,7 @@ class TablaProyectosTimesheet extends Component
 
     public function cancelarProyecto($id)
     {
-        $proyecto = TimesheetProyecto::find($id);
+        $proyecto = TimesheetProyecto::where('id', $id)->first();
         $proyecto->update([
             'estatus' => 'cancelado',
         ]);
@@ -174,7 +175,7 @@ class TablaProyectosTimesheet extends Component
 
     public function procesoProyecto($id)
     {
-        $proyecto = TimesheetProyecto::find($id);
+        $proyecto = TimesheetProyecto::where('id', $id)->first();
         $proyecto->update([
             'estatus' => 'proceso',
         ]);

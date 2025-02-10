@@ -16,7 +16,7 @@ class AlmacenarPuestoEnEvaluacion extends Seeder
     public function run()
     {
         $evaluaciones = Evaluacion::with('evaluados')->get();
-        //iterate the evaluations and update pivot evaluado
+        // iterate the evaluations and update pivot evaluado
         foreach ($evaluaciones as $evaluacion) {
             $evaluados = $evaluacion->evaluados;
             $evaluados_puesto = [];

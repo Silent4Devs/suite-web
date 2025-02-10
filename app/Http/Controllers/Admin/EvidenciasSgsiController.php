@@ -30,7 +30,7 @@ class EvidenciasSgsiController extends Controller
 
         if ($request->ajax()) {
             $query = EvidenciasSgsi::select('id', 'nombredocumento', 'fechadocumento', 'objetivodocumento')->get();
-            
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -102,7 +102,7 @@ class EvidenciasSgsiController extends Controller
     public function store(StoreEvidenciasSgsiRequest $request)
     {
         abort_if(Gate::denies('evidencia_asignacion_recursos_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //Esta validado en StoreEvidenciasSgsiRequest
+        // Esta validado en StoreEvidenciasSgsiRequest
         $evidenciasSgsi = EvidenciasSgsi::create($request->all());
 
         if ($request->hasFile('files')) {

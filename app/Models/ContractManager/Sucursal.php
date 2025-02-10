@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\ClausulasOc;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,7 @@ class Sucursal extends Model implements Auditable
 
     public $table = 'sucursales';
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Sucursales:Sucursales_all', 3600 * 6, function () {
@@ -55,5 +56,11 @@ class Sucursal extends Model implements Auditable
         return Cache::remember('Sucursales:Sucursales_pluck_id', 3600 * 6, function () {
             return self::get()->pluck('id');
         });
+    }
+
+    // Relación uno a muchos con ClausulasOc
+    public function clausulas()
+    {
+        return $this->hasMany(ClausulasOc::class, 'sucursal_id');
     }
 }

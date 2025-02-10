@@ -23,19 +23,21 @@
         </div>
     </div>
 
-    {!! Form::open(['route' => 'admin.dayOff.store']) !!}
-    <div class="mt-4 card card-body">
-        <h5>Creación de lineamientos</h5>
+    <form action="{{ route('admin.dayOff.store') }}" method="POST">
+        @csrf
+        <div class="mt-4 card card-body">
+            <h5>Creación de lineamientos</h5>
 
-        @include('admin.dayOff.fields-create')
+            @include('admin.dayOff.fields-create')
 
-    </div>
-    <!-- Submit Field -->
-    <div class="text-right form-group col-12">
-        <a href="{{ route('admin.dayOff.index') }}" class="btn btn-outline-primary">Regresar</a>
-        <button class="btn btn-primary" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-    {!! Form::close() !!}
+        </div>
+        <!-- Submit Field -->
+        <div class="text-right form-group col-12">
+            <a href="{{ route('admin.dayOff.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <button class="btn btn-primary" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
+    </form>
+
 @endsection

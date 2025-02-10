@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Puesto extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'puestos';
 
@@ -65,7 +64,7 @@ class Puesto extends Model implements Auditable
 
     protected $appends = ['utilizada'];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Puestos:Puestos_exists', 3600 * 12, function () {
@@ -115,10 +114,11 @@ class Puesto extends Model implements Auditable
         return $this->hasMany(Empleado::class, 'puesto_id', 'id')->alta()->select('id', 'name', 'puesto_id');
     }
 
-    public function empleados()
-    {
-        return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');
-    }
+    // Causa error, función indeterminada.
+    // public function empleados()
+    // {
+    //     return $this->belongsTo(Empleado::class, 'elaboro_id', 'reviso_id', 'autoriza_id', 'id')->alta()->with('area');
+    // }
 
     public function elaboro()
     {
@@ -191,5 +191,4 @@ class Puesto extends Model implements Auditable
     {
         return $this->empleados ? $this->empleados->count() > 0 : false;
     }
-
 }

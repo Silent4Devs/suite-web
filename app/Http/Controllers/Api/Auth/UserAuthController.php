@@ -22,14 +22,14 @@ class UserAuthController extends Controller
             'password' => 'required',
         ]);
 
-        //valida las credenciales del usuario
+        // valida las credenciales del usuario
         if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Invalid access credentials',
             ], 401);
         }
 
-        //Busca al usuario en la base de datos por email
+        // Busca al usuario en la base de datos por email
         $user = User::select(['id', 'name', 'password', 'email', 'empleado_id', 'n_empleado'])
             ->where('email', request('email'))
             ->firstOrFail()
@@ -76,7 +76,7 @@ class UserAuthController extends Controller
 
         $supervisor = $user->empleado->es_supervisor;
 
-        //Genera un nuevo token para el usuario
+        // Genera un nuevo token para el usuario
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'))->timestamp;
@@ -87,7 +87,7 @@ class UserAuthController extends Controller
             'expiration' => $expiration,
         ], config('sanctum.expiration') * 60); // store in seconds
 
-        //devuelve una respuesta JSON con el token generado y el tipo de token
+        // devuelve una respuesta JSON con el token generado y el tipo de token
         return response()->json([
             'access_token' => $token,
             'user' => $user->toArray(),

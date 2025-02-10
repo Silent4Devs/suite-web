@@ -32,7 +32,7 @@ class EvaluacionListener implements ShouldQueue
      */
     public function handle($event)
     {
-        //corregir
+        // corregir
         User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')
             ->join('role_user', 'role_user.user_id', '=', 'users.id')
             ->where('role_user.role_id', '=', '1')->where('users.id', '!=', auth()->id())

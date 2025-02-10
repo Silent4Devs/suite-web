@@ -81,6 +81,7 @@ class Organizacion extends Model implements Auditable
         'semanas_min_timesheet',
         'semanas_faltantes',
         'semanas_adicionales',
+        'certificado',
     ];
 
     public static function getExists()
@@ -90,7 +91,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getLogo()
     {
         return Cache::remember('Organizacion:getLogo_organizacion', 3600 * 12, function () {
@@ -98,7 +99,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Organizacion:organizacion_all', 3600 * 12, function () {
@@ -106,7 +107,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getFirst()
     {
         return Cache::remember('Organizacion:organizacion_first', 3600 * 12, function () {
@@ -160,5 +161,10 @@ class Organizacion extends Model implements Auditable
     public function panel()
     {
         return $this->hasMany(PanelOrganizacion::class);
+    }
+
+    public function getCertificadoRutaAttribute()
+    {
+        return asset('img/escuela/certificaciones/certificado'.$this->certificado.'.png');
     }
 }

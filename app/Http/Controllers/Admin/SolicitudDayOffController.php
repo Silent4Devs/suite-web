@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
@@ -95,7 +95,6 @@ class SolicitudDayOffController extends Controller
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
-
 
     public function create()
     {
@@ -254,6 +253,58 @@ class SolicitudDayOffController extends Controller
         }
     }
 
+    public function updateAprobacion(Request $request, $id)
+    {
+        $empleado = User::getCurrentUser()->empleado;
+
+        if ($empleado->es_supervisor || Gate::allows('solicitud_dayoff_aprobar')) {
+
+            $request->validate([
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date',
+                'empleado_id' => 'required|int',
+                'dias_solicitados' => 'required|int',
+                'año' => 'required|int',
+                'autoriza' => 'required|int',
+                'aprobacion' => 'required|int',
+            ]);
+
+            $solicitud = SolicitudDayOff::find($id);
+
+            $empleados = Empleado::getAll();
+
+            $supervisor = $empleados->find($request->autoriza);
+            $solicitante = $empleados->find($request->empleado_id);
+
+            $solicitud->update($request->all());
+
+            $informados = ListaInformativa::with('participantes.empleado', 'usuarios.usuario')->where('modelo', '=', $this->modelo)->first();
+
+            if (isset($informados->participantes[0]) || isset($informados->usuarios[0])) {
+
+                if (isset($informados->participantes[0])) {
+                    foreach ($informados->participantes as $participante) {
+                        $correos[] = removeUnicodeCharacters($participante->empleado->email);
+                    }
+                }
+
+                if (isset($informados->usuarios[0])) {
+                    foreach ($informados->usuarios as $usuario) {
+                        $correos[] = removeUnicodeCharacters($usuario->usuario->email);
+                    }
+                }
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud, $correos));
+            } else {
+                Mail::to(removeUnicodeCharacters($solicitante->email))->queue(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
+            }
+            Alert::success('éxito', 'Información añadida con éxito');
+
+            return redirect(route('admin.solicitud-dayoff.aprobacion'));
+        } else {
+            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
+        }
+    }
+
     public function destroy(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -267,12 +318,12 @@ class SolicitudDayOffController extends Controller
 
     public function filtrado_empleados($efecto, $usuario, $año)
     {
-        //Sacamos los ids del empleado
+        // Sacamos los ids del empleado
         $areaId = $usuario->empleado->area_id;
         $puestoId = $usuario->empleado->puesto_id;
         $idempleado = $usuario->empleado->id;
 
-        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        // Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
         $queryArea = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
             ->whereHas('areas', function ($query) use ($areaId) {
                 $query->where('area_id', $areaId);
@@ -288,7 +339,7 @@ class SolicitudDayOffController extends Controller
                 $q->where('empleado_id', $idempleado);
             });
 
-        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();

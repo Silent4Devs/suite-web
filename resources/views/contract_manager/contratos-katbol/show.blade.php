@@ -51,15 +51,15 @@
 
 
                     <!-- <div class="box box-primary">-->
-                    {!! Form::model($contrato, [
-                        'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
-                        'method' => 'patch',
-                        'enctype' => 'multipart/form-data',
-                    ]) !!}
+                        <form action="{{ route('contract_manager.contratos-katbol.update', $contrato->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
 
-                    @include('admin.bitacora.formedit', ['show_contrato' => true])
+                            @include('admin.bitacora.formedit', ['show_contrato' => true])
 
-                    {!! Form::close() !!}
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+
                     <!-- </div>-->
                 </div>
             </div>

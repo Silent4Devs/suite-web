@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AjustesAIA;
@@ -92,7 +92,7 @@ class AnalisisAIAController extends Controller
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //validacion
+        // validacion
         $request->validate([
             'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
@@ -188,7 +188,7 @@ class AnalisisAIAController extends Controller
             'flujo_q_2' => ['required'],
             'flujo_q_5' => ['required'],
 
-            //INFRAESTRUCTURA TECNOLÓGICA
+            // INFRAESTRUCTURA TECNOLÓGICA
             'app_ip' => ['required'],
             'bd_ip' => ['required'],
             'otro_ip' => ['nullable'],

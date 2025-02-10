@@ -53,10 +53,10 @@ class Sede extends Model implements Auditable
         'longitud',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll($columns = ['id', 'sede'])
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('Sede:sedes_all', 3600 * 8, function () use ($columns) {
             return self::select($columns)->get();
         });

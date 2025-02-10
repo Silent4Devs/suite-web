@@ -92,9 +92,9 @@
                         <td>{{ $em->observaciones }}</td>
                         @if (!$show_contrato)
                             <td>
-                                    <button wire:click="edit({{ $em->id }})" class="btn blue">
-                                        <i class="material-icons">editar</i>
-                                    </button>
+                                <button wire:click="edit({{ $em->id }})" class="btn blue">
+                                    <i class="material-icons">editar</i>
+                                </button>
                             </td>
                             <td>
                                 <button wire:click="destroy({{ $em->id }})" class="btn red">
@@ -133,7 +133,7 @@
     @endif
 
     <div class="col-12 d-flex justify-content-end">
-        {{ $cierrecontratos->links('livewire::simple-tailwind') }}
+        {{ $cierrecontratos->links('pagination::TbPagination') }}
     </div>
 
 </div>

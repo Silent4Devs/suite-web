@@ -243,7 +243,7 @@
                                                 @else
                                                 x-data="{open:false}" @endif>
                                     <!--Alphine: El valor de open va ser lo contrario del valor de open a traves del ! es decir si es false
-                                                                                                    se cambia a true y viceversa -->
+                                                                                                                    se cambia a true y viceversa -->
                                     <div class=" px-4" x-on:click="open=!open"
                                         style="display: inline-block; vertical-align: middle;">
                                         <p><span class="material-symbols-outlined" style="vertical-align: middle;">
@@ -263,6 +263,13 @@
                                 </div>
                             @endforeach
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div>
+                        @livewire('escuela.courses-review', ['course' => $course])
                     </div>
                 </div>
             </div>
@@ -287,7 +294,7 @@
                                 {{-- <div class="flex items-center">
                                         <img class="object-cover w-8 h-8 rounded-full shadow-lg"
                                             src="{{ $similar->teacher->profile_photo_url }}" alt=""> --}}
-                                <p class="ml-2 text-sm text-gray-700">{{ $similar->teacher->name }}</p>
+                                <p class="ml-2 text-sm text-gray-700">{{ $similar->instructor->name }}</p>
                                 {{-- </div> --}}
                                 <div class="mt-3 d-flex justify-content-between">
                                     <div style="color: #FFC400; font-size: 15px;">
@@ -333,7 +340,4 @@
 
         </div>
     </div>
-
-    @livewire('escuela.courses-review', ['course' => $course])
-
 @endsection

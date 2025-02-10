@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Carbon\Laravel\ServiceProvider::class,
+        Illuminate\Concurrency\ConcurrencyServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -176,7 +177,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
@@ -240,8 +240,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
@@ -250,5 +248,5 @@ return [
     ],
 
     // css version
-    'cssVersion' => '?v=1.1.2.2',
+    'cssVersion' => '?v=1.1.2.3',
 ];

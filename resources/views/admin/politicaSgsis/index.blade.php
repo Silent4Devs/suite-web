@@ -257,7 +257,7 @@
     @endcan
 
     <div class="row d-flex align-items-center">
-        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión</h5>
+        <h5 class="col-12 titulo_general_funcion">Política del Sistema de Gestión despliegue</h5>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"

@@ -50,7 +50,7 @@
                             </div>
                         @endif
                     </div>
-                    {{ Form::hidden('fecha', date('Y-m-d')) }}
+                    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label class="required" for="estatus"><i

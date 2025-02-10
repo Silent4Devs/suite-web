@@ -218,7 +218,13 @@ class CompetenciasController extends Controller
             $empleado->load('idiomas');
             $lista_docs = ListaDocumentoEmpleado::getAll();
             $empleadosCV = 1;
-            $documents = TBUserTrainingModel::where('empleado_id', $empleado->id)->get();
+            $certificates = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id', 1)->get();
+            $capacitations = TBUserTrainingModel::where('empleado_id', $empleado->id)->where('type_id', '!=', 1)->get();
+            // $documents = TBUserTrainingModel::where('empleado_id', $empleado->id)->get();
+            $documents = [
+                'certificates' => $certificates,
+                'capacitations' => $capacitations,
+            ];
 
             return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs', 'documents', 'empleadosCV'));
         } else {
@@ -320,7 +326,7 @@ class CompetenciasController extends Controller
 
         if ($request->hasFile('file')) {
             $filenameWithExt = $request->file('file')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
@@ -377,7 +383,7 @@ class CompetenciasController extends Controller
         ]);
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();

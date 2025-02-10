@@ -30,6 +30,7 @@ use App\Events\SolicitudPermisoEvent;
 use App\Events\SolicitudVacacionesEvent;
 use App\Events\SugerenciasEvent;
 use App\Events\TaskRecursosEvent;
+use App\Events\TemplateAnalisisRiesgosEvent;
 use App\Events\TimesheetEvent;
 use App\Events\TimesheetProyectoEvent;
 use App\Listeners\AccionCorrectivaListener;
@@ -61,6 +62,7 @@ use App\Listeners\SolicitudPermisoListener;
 use App\Listeners\SolicitudVacacionesListener;
 use App\Listeners\SugerenciasListener;
 use App\Listeners\TaskRecursosListener;
+use App\Listeners\TemplateAnalisisRiesgosListener;
 use App\Listeners\TimesheetListener;
 use App\Listeners\TimesheetProyectoListener;
 use App\Models\AccionCorrectiva;
@@ -144,6 +146,15 @@ use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaActivo;
 use App\Models\Sugerencias;
 use App\Models\TBCatalogueTrainingModel;
+use App\Models\TBEscalaAnalisisRiesgoModel;
+use App\Models\TBFormulaTemplateAnalisisRiesgoModel;
+use App\Models\TBProbabilidadImpactoAnalisisRiesgoModel;
+use App\Models\TBQuestionTemplateAnalisisRiesgoModel;
+use App\Models\TBSectionTemplateAnalisisRiesgoModel;
+use App\Models\TBSettingsTemplateAR_TBFormulaTemplateARModel;
+use App\Models\TBSettingsTemplateAR_TBQuestionTemplateARModel;
+use App\Models\TBTemplateAr_EscalaArModel;
+use App\Models\TBTemplateArProbImpArModel;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
@@ -233,6 +244,7 @@ use App\Observers\SolicitudVacacionesObserver;
 use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\SucursalObserver;
 use App\Observers\SugerenciasObserver;
+use App\Observers\TemplateAnalisisRiesgosObserver;
 use App\Observers\TimeSheetClienteObserver;
 use App\Observers\TimesheetObserver;
 use App\Observers\TimesheetProyectoAreaObserver;
@@ -345,6 +357,9 @@ class EventServiceProvider extends ServiceProvider
         EvaluacionEvent::class => [
             EvaluacionListener::class,
         ],
+        TemplateAnalisisRiesgosEvent::class => [
+            TemplateAnalisisRiesgosListener::class,
+        ],
         ContratoEvent::class => [
             ContratosListener::class,
         ],
@@ -379,7 +394,7 @@ class EventServiceProvider extends ServiceProvider
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
         Recurso::observe(RecursosObserver::class);
-        //Redis
+        // Redis
         PlanImplementacion::observe(PlanImplementacionObserver::class);
         Organizacion::observe(OrganizacionObserver::class);
         Sede::observe(SedesObserver::class);
@@ -451,6 +466,15 @@ class EventServiceProvider extends ServiceProvider
         Sucursal::observe(SucursalObserver::class);
         CatalogoRangosObjetivos::observe(CatalogoRangosObjetivosObserver::class);
         Vulnerabilidad::observe(VulnerabilidadObserver::class);
+        TBEscalaAnalisisRiesgoModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBProbabilidadImpactoAnalisisRiesgoModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBTemplateAr_EscalaArModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBTemplateArProbImpArModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBSectionTemplateAnalisisRiesgoModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBQuestionTemplateAnalisisRiesgoModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBFormulaTemplateAnalisisRiesgoModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBSettingsTemplateAR_TBFormulaTemplateARModel::observe(TemplateAnalisisRiesgosObserver::class);
+        TBSettingsTemplateAR_TBQuestionTemplateARModel::observe(TemplateAnalisisRiesgosObserver::class);
         ListaInformativa::observe(ListaInformativaObserver::class);
         ParticipantesListaInformativa::observe(ParticipantesListaInformativaObserver::class);
         UsuariosListaInformativa::observe(UsuariosListaInformativaObserver::class);

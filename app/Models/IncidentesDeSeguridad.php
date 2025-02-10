@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class IncidentesDeSeguridad extends Model implements Auditable
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'incidentes_de_seguridads';
 
@@ -55,10 +54,10 @@ class IncidentesDeSeguridad extends Model implements Auditable
         return $date->format('Y-m-d H:i:s');
     }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('incidentesSeguridad_all', 3600, function () {
 
             return self::select('id', 'titulo', 'estatus', 'fecha', 'fecha_cierre', 'categoria', 'subcategoria', 'sede', 'ubicacion', 'descripcion', 'areas_afectados', 'procesos_afectados', 'activos_afectados', 'urgencia', 'impacto', 'prioridad', 'comentarios',

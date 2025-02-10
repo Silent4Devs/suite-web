@@ -28,59 +28,36 @@
 
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($cuestionario, [
-                'route' => ['admin.analisis-impacto.updateAjustesBIA', $cuestionario->id],
-                'method' => 'put',
-            ]) !!}
+            <form action="{{ route('admin.analisis-impacto.updateAjustesBIA', $cuestionario->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('impacto_operativo', 'Impacto Operativo:', ['class' => 'required']) !!}
-                    {!! Form::number('impacto_operativo', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                        'max' => '5',
-                    ]) !!}
+                <div class="row">
+                    @foreach ([
+            'impacto_operativo' => 'Impacto Operativo',
+            'impacto_regulatorio' => 'Impacto Regulatorio',
+            'impacto_reputacion' => 'Impacto en la Reputación / Imagen Pública o Política',
+            'impacto_social' => 'Impacto Social',
+        ] as $name => $label)
+                        <div class="form-group col-sm-6">
+                            <i class="fas fa-id-card iconos-crear"></i>
+                            <label for="{{ $name }}" class="required">{{ $label }}:</label>
+                            <input type="number" name="{{ $name }}" id="{{ $name }}" class="form-control"
+                                placeholder="..." max="5" value="{{ old($name, $cuestionario->$name) }}">
+                        </div>
+                    @endforeach
                 </div>
-                <div class="form-group col-sm-6">
-                    <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('impacto_regulatorio', 'Impacto Regulatorio:', ['class' => 'required']) !!}
-                    {!! Form::number('impacto_regulatorio', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                        'max' => '5',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('impacto_reputacion', 'Impacto en la Reputación / Imagen Pública o Política:', [
-                        'class' => 'required',
-                    ]) !!}
-                    {!! Form::number('impacto_reputacion', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                        'max' => '5',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-6">
-                    <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('impacto_social', 'Impacto Social:', ['class' => 'required']) !!}
-                    {!! Form::number('impacto_social', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                        'max' => '5',
-                    ]) !!}
-                </div>
-            </div>
-            <!-- Submit Field -->
-            <div class="row">
-                <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-outline-primary">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
-            </div>
 
-
-            {!! Form::close() !!}
+                <!-- Submit Field -->
+                <div class="row">
+                    <div class="text-right form-group col-12">
+                        <a href="{{ redirect()->getUrlGenerator()->previous() }}"
+                            class="btn btn-outline-primary">Cancelar</a>
+                        <button class="btn btn-primary" type="submit">{{ trans('global.save') }}</button>
+                    </div>
+                </div>
+            </form>
         </div>
+
     </div>
 @endsection

@@ -44,7 +44,7 @@
                             name="action">Agregar nuevo</a>
                     @endcan
                     @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
-                       
+
                     @endcan --}}
 
                     <a class="pr-3 ml-2 rounded btn btn-primary" style=" margin: 13px 12px 12px 10px;"

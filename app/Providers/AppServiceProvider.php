@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\VersionesIso;
 use Carbon\Carbon;
-use Doctrine\DBAL\Types\Type;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
@@ -21,10 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Passport::ignoreRoutes();
-        if (! Type::hasType('enum')) {
-            Type::addType('enum', 'Doctrine\DBAL\Types\StringType');
-        }
+        // // Passport::ignoreRoutes();
+        // if (! Type::hasType('enum')) {
+        //     Type::addType('enum', 'Doctrine\DBAL\Types\StringType');
+        // }
     }
 
     /**
@@ -34,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //https now working by nginx
+        // https now working by nginx
         // if (env('APP_ENV') === 'production') {
         //     $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
 

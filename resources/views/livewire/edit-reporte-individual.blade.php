@@ -300,7 +300,7 @@
                                                 <a class="dropdown-item"
                                                     wire:click.prevent="modal('borrar', {{ $data->id }})">
                                                     <i class="fa-solid fa-trash"
-                                                        wire:click.prevent="$dispatch('eliminarParteInteresada',{{ $data->id }})"></i>&nbsp;Eliminar</a>
+                                                        wire:click.prevent="$dispatch('eliminarParteInteresada',{ id: {{ $data->id }} })"></i>&nbsp;Eliminar</a>
                                             </div>
                                         </div>
                                     </td>

@@ -15,11 +15,13 @@
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>
         </div> --}}
         <div class="card-body">
-            {!! Form::open(['route' => 'admin.envio-documentos.store']) !!}
+            <form action="{{ route('admin.envio-documentos.store') }}" method="POST">
+                @csrf
 
-            @include('admin.envio-documentos.fields')
+                @include('admin.envio-documentos.fields')
 
-            {!! Form::close() !!}
+            </form>
         </div>
+
     </div>
 @endsection

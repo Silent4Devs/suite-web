@@ -53,14 +53,14 @@ class PanelDeclaracionController extends Controller
 
     public function store(Request $request, $id)
     {
-        //cuando mandamos muchos datos es necesario el foreach
+        // cuando mandamos muchos datos es necesario el foreach
         // foreach($request->controles as $control){
         // $declaracion =DeclaracionAplicabilidad::find($id);
 
         $declaracion = DeclaracionAplicabilidad::find($id);
-        //guarda lo que viene en el request
+        // guarda lo que viene en el request
         $responsables = $request->responsables;
-        //sincroniza mi declaracion con lo que le voy a poner
+        // sincroniza mi declaracion con lo que le voy a poner
         $declaracion->responsables()->sync($responsables);
 
         $aprobadores = $request->aprobadores;
@@ -97,7 +97,7 @@ class PanelDeclaracionController extends Controller
         return redirect()->route('admin.panelDeclaracion.index')->with('success', 'Editado con éxito');
     }
 
-    //Ruta donde vamos a guardar el responsable a traves del script
+    // Ruta donde vamos a guardar el responsable a traves del script
     public function relacionarResponsable(Request $request)
     {
         $declaracion = $request->declaracion;
@@ -138,7 +138,7 @@ class PanelDeclaracionController extends Controller
         }
     }
 
-    //QUITAR EL RESPONSABLE
+    // QUITAR EL RESPONSABLE
     public function quitarRelacionResponsable(Request $request)
     {
         $declaracion = $request->declaracion;
@@ -155,7 +155,7 @@ class PanelDeclaracionController extends Controller
         }
     }
 
-    //Ruta donde vamos a guardar el aprobador a traves del script
+    // Ruta donde vamos a guardar el aprobador a traves del script
     public function relacionarAprobador(Request $request)
     {
         $declaracion = $request->declaracion;
@@ -188,7 +188,7 @@ class PanelDeclaracionController extends Controller
         }
     }
 
-    //QUITAR EL APROBADOR
+    // QUITAR EL APROBADOR
     public function quitarRelacionAprobador(Request $request)
     {
         $declaracion = $request->declaracion;
@@ -204,7 +204,7 @@ class PanelDeclaracionController extends Controller
         }
     }
 
-    //Enviar Correo
+    // Enviar Correo
 
     public function enviarCorreo(Request $request)
     {

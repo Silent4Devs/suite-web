@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/vacaciones.css') }}{{ config('app.cssVersion') }}">
 @endsection
 @section('content')
-    {{ Breadcrumbs::render('Incidentes-dayoff') }}
+    {{-- {{ Breadcrumbs::render('Incidentes-dayoff') }} --}}
 
 
     <h5 class=" titulo_general_funcion">Excepciones Day Off</h5>

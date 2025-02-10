@@ -23,9 +23,9 @@ class DashboardController extends Controller
     public function index()
     {
         $Contratos = Contrato::getAll();
-        //select count(*) from cedula_cumplimiento left join contratos on cedula_cumplimiento.contrato_id = contratos.id where cedula_cumplimiento.deleted_at is null
-        //and contratos.deleted_at is null;
-        //contadores
+        // select count(*) from cedula_cumplimiento left join contratos on cedula_cumplimiento.contrato_id = contratos.id where cedula_cumplimiento.deleted_at is null
+        // and contratos.deleted_at is null;
+        // contadores
         // ...
 
         $topten = DB::table('timesheet_clientes')
@@ -44,7 +44,7 @@ class DashboardController extends Controller
             ->where('estatus', '=', 'vigente')
             ->get();
 
-        //dd($vigente);
+        // dd($vigente);
 
         $cerrado = CedulaCumplimiento::leftjoin('contratos', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->whereNull('cedula_cumplimiento.deleted_at')
@@ -58,11 +58,11 @@ class DashboardController extends Controller
             ->where('estatus', '=', 'renovaciones')
             ->get();
 
-        //\DB::enableQueryLog();
+        // \DB::enableQueryLog();
         $nocumple = CedulaCumplimiento::leftjoin('contratos', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')->whereNull('cumple')
             ->orWhere('cumple', '=', '0')->where('contratos.deleted_at', '=', null)
             ->count();
-        //dd(\DB::getQueryLog());
+        // dd(\DB::getQueryLog());
         //
         $cumple = CedulaCumplimiento::leftjoin('contratos', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')->where('cumple', '=', '1')
             ->where('contratos.deleted_at', '=', null)
@@ -77,7 +77,7 @@ class DashboardController extends Controller
         // dd($vigente);
         $totalCer = $cerrado->count();
         $totalRev = $renovacion->count();
-        //Grafica 1
+        // Grafica 1
         $fabricaDes = $Contratos->where('tipo_contrato', Contrato::FabricaDesarrollo);
 
         $totalfabricaDes = $fabricaDes->count();
@@ -111,7 +111,7 @@ class DashboardController extends Controller
 
         $Otro = $Contratos->where('tipo_contrato', Contrato::Otro)->count();
 
-        //grafica 2
+        // grafica 2
         $renovacion = $Contratos->where('fase', Contrato::renovacion)->count();
         $solicituCont = $Contratos->where('fase', Contrato::solicituCont)->count();
         $autorizacion = $Contratos->where('fase', Contrato::autorizacion)->count();
@@ -164,7 +164,7 @@ class DashboardController extends Controller
             'modif_contrato' => $modifCont,
             'auditoria_reportes' => $auditRep,
         ];
-        //dd($DashboardCicloVida);
+        // dd($DashboardCicloVida);
         $totales = 'SELECT COUNT(contratos.id) AS totalcontrato, timesheet_clientes.nombre, timesheet_clientes.id
                     FROM timesheet_clientes
                     LEFT JOIN contratos ON timesheet_clientes.id = contratos.proveedor_id
@@ -200,8 +200,8 @@ class DashboardController extends Controller
         $clientesContratos = Contrato::where('proveedor_id', '=', $request->valor)->get();
 
         $res = '
-            <div class="col l12">
-                <div class="ct-chart card z-depth-2 border-radius-6">
+            <div>
+                <div class="ct-chart card border border-0 z-depth-2 border-radius-6">
                     <div class="card-content m-3">
                     ';
         foreach ($clientes as $cliente) {
@@ -275,8 +275,8 @@ class DashboardController extends Controller
             ';
         $res .= $sec2;
         $sec3 = '
-            <div class="col s12 select_ajax_live">
-                <div class="card">
+            <div class="select_ajax_live">
+                <div class="card border border-0">
                     <div class="card-content m-3">
                         <h4 class="card-title graficas_titulos graficas_titulo2">
                            Contratos
@@ -285,7 +285,7 @@ class DashboardController extends Controller
                         <p style="padding:10px 15px; font-size:13px;"><strong>Instrucciones<span style="color:red">*</span>: </strong>
                             Selecciona el <strong>contrato</strong> dando clic en la siguiente lista desplegable.
                         </p>
-                        <select searchable="Buscar..." name="contrato" id="contrato" onchange="buscarcontrato()" class="" style="opacity:1 !important;">
+                        <select searchable="Buscar..." name="contrato" id="contrato" onchange="buscarcontrato()" class="" style="opacity:1 !important; width:100%;">
                             <option value="" selected disabled>Seleccione un contrato</option>
             ';
         $res .= $sec3;

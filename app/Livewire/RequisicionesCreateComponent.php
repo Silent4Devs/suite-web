@@ -18,6 +18,8 @@ use App\Models\FirmasRequisiciones;
 use App\Models\ListaDistribucion;
 use App\Models\Organizacion;
 use App\Models\User;
+use App\Services\RequisicionService;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +32,7 @@ use Throwable;
 class RequisicionesCreateComponent extends Component
 {
     use LivewireAlert;
+    use ObtenerOrganizacion;
     use WithFileUploads;
 
     public $user;
@@ -161,9 +164,84 @@ class RequisicionesCreateComponent extends Component
 
     public $alerta_jefes = false;
 
+    protected $requisicionService;
+
+    public function postData()
+    {
+        $result = $this->requisicionService->postDataToPythonAPI($this->filename);
+
+        return $result;
+    }
+
+    public function __construct()
+    {
+        // Instanciamos el servicio de la clase
+        $this->requisicionService = app(RequisicionService::class);
+    }
+
+    public function postDataLoad()
+    {
+        $result = $this->requisicionService->postDataLoadPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataClean()
+    {
+        $result = $this->requisicionService->postDataCleanPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataScaned()
+    {
+        $result = $this->requisicionService->postDataScanedPythonAPI($this->path);
+
+        return $result;
+    }
+
+    public function postDataExtract()
+    {
+        $result = $this->requisicionService->postDataExtractPythonAPI($this->image);
+
+        return $result;
+    }
+
+    public function postDataText()
+    {
+        $result = $this->requisicionService->postDataTextPythonAPI($this->filePath, $this->filename);
+
+        return $result;
+    }
+
+    public function askQuestion()
+    {
+        $response = $this->requisicionService->postQuestionToPythonAPI($this->question);
+
+        $this->respuesta = response()->json($response);
+
+        $this->respuesta = $response;
+    }
+
     public function actualizarCountProveedores()
     {
         $this->proveedores_count = $this->proveedores_count + 1;
+    }
+
+    public function robot()
+    {
+        $this->filename = 'saulcv.pdf';
+        $this->postData();
+
+        $this->bandera = true;
+
+        $this->filePath = storage_path('app/public/saulcv.pdf');
+
+        $this->postDataText();
+
+        $this->question = 'El presente documento trata de...';
+
+        $this->askQuestion();
     }
 
     public function mount()
@@ -175,7 +253,7 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::getArchivoFalse();
         $this->contratos = KatbolContrato::getAll();
         $this->productos = KatbolProducto::getArchivoFalse();
-        $this->organizacion = Organizacion::getFirst();
+        $this->organizacion = $this->obtenerOrganizacion();
 
         $this->user_name = $this->user->name;
         $this->user_area = $this->user->empleado->area->area;
@@ -234,7 +312,7 @@ class RequisicionesCreateComponent extends Component
             'width' => '1000px', // Asegúrate de que el ancho esté en píxeles
             'onConfirmed' => 'redirigirFaltantes',
             'timerProgressBar' => false,
-            'text' => 'No hay registros en la selección de ' . $name . ', contacte al administrador.',
+            'text' => 'No hay registros en la selección de '.$name.', contacte al administrador.',
             'confirmButtonText' => 'Entendido.',
         ]);
     }
@@ -396,7 +474,7 @@ class RequisicionesCreateComponent extends Component
                     'fecha_fin' => $proveedor['fechaFin'],
                 ]);
 
-                //Agregar cuando se cree la requisicion (Para que sirve?, cambia por cada proveedor registrado)
+                // Agregar cuando se cree la requisicion (Para que sirve?, cambia por cada proveedor registrado)
                 // $this->nueva_requisicion->update([
                 //     'proveedor_catalogo' => $this->proveedores_catalogo->nombre,
                 //     'proveedoroc_id' => $this->proveedores_catalogo->id,
@@ -455,7 +533,7 @@ class RequisicionesCreateComponent extends Component
             }
 
             foreach ($dataProveedoresSugeridos as $key => $provSug) {
-                $name = 'requisicion_' . $this->requisicion_id . 'cotizacion_' . $key . '_' . uniqid() . '.' . $provSug['extArchivo'];
+                $name = 'requisicion_'.$this->requisicion_id.'cotizacion_'.$key.'_'.uniqid().'.'.$provSug['extArchivo'];
                 KatbolProveedorRequisicion::create([
                     'requisiciones_id' => $this->requisicionCreada->id,
                     'proveedor' => $provSug['proveedor'],
@@ -483,12 +561,14 @@ class RequisicionesCreateComponent extends Component
                 ]);
             }
 
+            KatbolRequsicion::desactivarHistorial();
             foreach ($this->provedores_colllection as $keyProvCol => $provCol) {
                 $this->requisicionCreada->update([
                     'proveedor_catalogo' => $provCol->nombre,
                     // 'proveedoroc_id' => $this->provCol->id,
                 ]);
             }
+            KatbolRequsicion::activarHistorial();
 
             $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicionCreada->id)->pluck('proveedor_id')->toArray();
 
@@ -505,8 +585,8 @@ class RequisicionesCreateComponent extends Component
             $this->alert('success', 'Requisicion Creada con exito');
             DB::commit();
         } catch (Throwable $e) {
-            $this->forgetCache();
             DB::rollback();
+            $this->forgetCache();
             dd($e);
         }
         $this->dataFirma();
@@ -534,22 +614,22 @@ class RequisicionesCreateComponent extends Component
         $responsable = null;
 
         $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-        //Traemos participantes
+        // Traemos participantes
         $listaPart = $listaReq->participantes;
 
         $jefe = $this->user->empleado->supervisor;
-        //Buscamos al supervisor por su id
-        $supList = $listaPart->where('empleado_id', $jefe->id)->first();
+        // Buscamos al supervisor por su id
+        $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-        //Buscamos en que nivel se encuentra el supervisor
+        // Buscamos en que nivel se encuentra el supervisor
         $nivel = $supList->nivel;
 
-        //traemos a todos los participantes correspondientes a ese nivel
+        // traemos a todos los participantes correspondientes a ese nivel
         $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-        //Buscamos 1 por 1 los participantes del nivel (area)
+        // Buscamos 1 por 1 los participantes del nivel (area)
         foreach ($participantesNivel as $key => $partNiv) {
-            //Si su estado esta activo se le manda el correo
+            // Si su estado esta activo se le manda el correo
             if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                 $responsable = $partNiv->empleado;
@@ -589,22 +669,22 @@ class RequisicionesCreateComponent extends Component
             $organizacion = Organizacion::first();
 
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-            //Traemos participantes
+            // Traemos participantes
             $listaPart = $listaReq->participantes;
 
             $jefe = $this->user->empleado->supervisor;
-            //Buscamos al supervisor por su id
+            // Buscamos al supervisor por su id
             $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-            //Buscamos en que nivel se encuentra el supervisor
+            // Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
 
-            //traemos a todos los participantes correspondientes a ese nivel
+            // traemos a todos los participantes correspondientes a ese nivel
             $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-            //Buscamos 1 por 1 los participantes del nivel (area)
+            // Buscamos 1 por 1 los participantes del nivel (area)
             foreach ($participantesNivel as $key => $partNiv) {
-                //Si su estado esta activo se le manda el correo
+                // Si su estado esta activo se le manda el correo
                 if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $partNiv->empleado;

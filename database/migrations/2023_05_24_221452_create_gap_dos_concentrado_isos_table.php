@@ -20,10 +20,10 @@ class CreateGapDosConcentradoIsosTable extends Migration
                 $table->string('valoracion')->nullable();
                 $table->longText('evidencia')->nullable();
                 $table->longText('recomendacion')->nullable();
-                //foreign
+                // foreign
                 $table->unsignedBigInteger('id_gap_dos_catalogo')->nullable();
                 $table->foreign('id_gap_dos_catalogo')->references('id')->on('gap_dos_catalogo_isos');
-                //foreign
+                // foreign
                 $table->unsignedBigInteger('id_analisis_brechas')->nullable();
                 $table->foreign('id_analisis_brechas')->references('id')->on('analisis_brechas_isos');
                 $table->timestamps();

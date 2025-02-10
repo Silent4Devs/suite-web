@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\UserEvaluation;
 use App\Models\Escuela\UsuariosCursos;
 use App\Models\User;
 use Illuminate\Http\Request;
+use VXM\Async\AsyncFacade as Async;
 
 class CursoEstudiante extends Controller
 {
@@ -27,22 +29,23 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
+        $cursos_usuario = UsuariosCursos::with(['cursos.lessons'])
+            ->where('user_id', $usuario->id)
+            ->get()
+            ->map(function ($cu) {
+                $completedLessonsCount = $cu->cursos->lessons->where('completed', true)->count();
+                $totalLessonsCount = $cu->cursos->lessons->count();
 
-        foreach ($cursos_usuario as $cu) {
-            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
-                return $lesson->completed;
-            })->count();
+                $advance = $totalLessonsCount > 0 ? ($completedLessonsCount * 100) / $totalLessonsCount : 0;
+                $cu->advance = round($advance, 2);
 
-            $totalLessonsCount = $cu->cursos->lessons->count();
+                return $cu;
+            });
 
-            $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
-            $cu->advance = round($advance, 2);
-        }
-
-        // Obtener el último curso y los últimos tres cursos
-        $lastCourse = $cursos_usuario->sortBy('last_review')->last();
-        $lastThreeCourse = $cursos_usuario->sortByDesc('last_review')->take(3);
+        // Sort and retrieve the last course and the last three courses
+        $sortedCursos = $cursos_usuario->sortByDesc('last_review');
+        $lastCourse = $sortedCursos->first();
+        $lastThreeCourse = $sortedCursos->take(3);
 
         return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'usuario', 'lastThreeCourse', 'lastCourse'));
     }
@@ -50,8 +53,12 @@ class CursoEstudiante extends Controller
     public function cursoEstudiante($curso_id)
     {
         try {
-            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
+            // $results = Async::run([
+            //     fn() => Evaluation::where('course_id', $curso_id)->get(),
+            //     fn() => Course::where('id', $curso_id)->first(),
+            // ]);
 
+            $evaluacionesLeccion = Evaluation::getAll()->where('course_id', $curso_id);
             $curso = Course::getAll()->where('id', $curso_id)->first();
 
             if (! $curso) {
@@ -66,7 +73,6 @@ class CursoEstudiante extends Controller
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-        // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
 
@@ -160,7 +166,7 @@ class CursoEstudiante extends Controller
         $usuario = User::getCurrentUser();
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
 
-        //calculo el porcentaje del curso completado
+        // calculo el porcentaje del curso completado
         // foreach ($cursos_usuario as $cu) {
         //     $i = 0;
         //     $courses_lessons = $cu->cursos->lessons;
@@ -193,5 +199,44 @@ class CursoEstudiante extends Controller
         $lastCourse = $cursos_usuario->sortBy('last_review')->last();
 
         return view('admin.escuela.estudiante.courses-inscribed', compact('usuario', 'cursos_usuario', 'lastCourse'));
+    }
+
+    public function porcentageCourses()
+    {
+        $evaluationUsers = UserEvaluation::where('completed', true)->where('score', 0)->where('last_attempt', null)->get();
+        $approve = false;
+        // dd($evaluationUsers);
+        foreach ($evaluationUsers as $userEvaluation) {
+            $approve = false;
+            $correctAnswers = $userEvaluation->userAnswers->where('is_correct', true)->count();
+            $totalAnswers = $userEvaluation->userAnswers->count();
+            $score = ($correctAnswers / $totalAnswers) * 100;
+            $sizeQuiz = $userEvaluation->evaluations;
+
+            if ($totalAnswers != $sizeQuiz->questions->count()) {
+                switch ($score) {
+                    case $score >= 100:
+                        $score = 100;
+                        break;
+                    case $score >= 80 && $score < 100:
+                        $score = $score;
+                        break;
+                    default:
+                        $newScore = (($correctAnswers) / $sizeQuiz->questions->count()) * 100;
+                        $score = $newScore;
+                        break;
+                }
+            }
+
+            if ($score >= 80) {
+                $approve = true;
+            }
+
+            $userEvaluation->update([
+                'approved' => $approve,
+                'score' => $score,
+            ]);
+
+        }
     }
 }

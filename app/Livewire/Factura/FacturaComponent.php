@@ -140,7 +140,8 @@ class FacturaComponent extends Component
 
         return view('livewire.factura.factura-component', [
             // 'facturas' => Factura::orderBy('id', 'desc')->where('contrato_id', '=', $this->contrato_id)->get(),
-            'facturas' => $facturas, 'organizacion' => $organizacion,
+            'facturas' => $facturas,
+            'organizacion' => $organizacion,
         ]);
     }
 
@@ -155,27 +156,25 @@ class FacturaComponent extends Component
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $contrato_model = Contrato::find($this->contrato_id);
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
-        // dd($contrato_model);
         $this->monto_factura = $this->monto_factura == null ? '$0.00' : $this->monto_factura;
-        // $this->validate([
-        //     'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
-        //     'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato',
-        //     // 'no_revisiones' => 'required|numeric|min:0',
-        //     'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato',
-        //     'monto_factura' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-        //     // 'estatus' => 'required',
-        //     'concepto' => 'required',
-        //     // 'hallazgos_comentarios' => 'nullable'
-        // ], [
-        //     'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser antes de la fecha inicio del contrato',
-        //     'fecha_liberacion.before_or_equal' => 'La fecha de recepción no puede ser despues de la fecha fin del contrato',
-        //     'monto_factura.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-        // ]);
-        //dd($this);
+        $this->validate([
+            // 'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
+            'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato',
+            // 'no_revisiones' => 'required|numeric|min:0',
+            'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato',
+            // 'monto_factura' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            // 'estatus' => 'required',
+            // 'concepto' => 'required',
+            // 'hallazgos_comentarios' => 'nullable'
+        ], [
+            'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser antes de la fecha inicio del contrato',
+            'fecha_liberacion.before_or_equal' => 'La fecha de recepción no puede ser despues de la fecha fin del contrato',
+            // 'monto_factura.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+        ]);
+        // dd($this);
 
         $monto_factura = null;
         if (isset($this->monto_factura)) {
@@ -260,7 +259,7 @@ class FacturaComponent extends Component
                 // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
-            //### Facturas reestructuracion ####
+            // ### Facturas reestructuracion ####
 
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
@@ -286,13 +285,13 @@ class FacturaComponent extends Component
             }
 
             $this->dispatch('recargar-cumplimiento');
-            //$this->dispatch('contentChanged');
+            // $this->dispatch('contentChanged');
             $this->default();
             $this->dispatch('cumple');
             $this->dispatch('firma');
             $this->dispatch('conformidad');
             $this->alert('success', 'Registro añadido!');
-        } //termina else
+        } // termina else
     }
 
     public function edit($id)
@@ -397,8 +396,8 @@ class FacturaComponent extends Component
             $fecha_recepcion_formateada = $this->fecha_recepcion;
             $fecha_liberacion_formateada = $this->fecha_liberacion;
 
-            //Se genera el log
-            //DB::select('call actualiza_user(?, ?, ?)',array('facturacion', auth()->id(), $id_factura));
+            // Se genera el log
+            // DB::select('call actualiza_user(?, ?, ?)',array('facturacion', auth()->id(), $id_factura));
 
             $factura->update([
                 'contrato_id' => $this->contrato_id,
@@ -419,7 +418,7 @@ class FacturaComponent extends Component
 
             $facturaFile = FacturaFile::where('factura_id', $factura->id);
 
-            //### Facturas GESTION ARCHIVOS ####
+            // ### Facturas GESTION ARCHIVOS ####
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
@@ -444,13 +443,13 @@ class FacturaComponent extends Component
             }
 
             $this->dispatch('recargar-cumplimiento');
-            //$this->dispatch('contentChanged');
+            // $this->dispatch('contentChanged');
             $this->default();
             $this->dispatch('cumple');
             $this->dispatch('firma');
             $this->dispatch('conformidad');
             $this->alert('success', 'Registro añadido!');
-        } //terminar else
+        } // terminar else
     }
 
     public function confirmDelete($factura_id)
@@ -463,8 +462,8 @@ class FacturaComponent extends Component
         // dd($request);
         Factura::destroy($id);
 
-        //generacion de log
-        //DB::select('call actualiza_user(?, ?, ?)', array('facturacion', auth()->id(), $id));
+        // generacion de log
+        // DB::select('call actualiza_user(?, ?, ?)', array('facturacion', auth()->id(), $id));
         $this->dispatch('recargar-cumplimiento');
         $this->alert('success', 'Registro eliminado!');
     }
@@ -580,14 +579,14 @@ class FacturaComponent extends Component
         $this->iteration1++;
         $this->dispatch('contentChanged');
 
-        $this->no_revisiones = '';
+        $this->no_revisiones = 0;
         $this->estatus_revision = '';
         $this->hallazgos_comentarios = '';
 
         $this->view = 'create';
     }
 
-    //funcion encargada de actualizar el # de revisiones al crear una revision de factura
+    // funcion encargada de actualizar el # de revisiones al crear una revision de factura
     public function revisionFacturaCreate($facturaRevision_id)
     {
         $revision_factura = Factura::find($facturaRevision_id);
@@ -596,7 +595,7 @@ class FacturaComponent extends Component
         $revision_factura->save();
     }
 
-    //funcion encargada de actualizar el # de revisiones al eliminar una revision de factura
+    // funcion encargada de actualizar el # de revisiones al eliminar una revision de factura
     public function revisionFacturaDelete($id)
     {
         $revision = RevisionesFactura::find($id);

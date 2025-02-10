@@ -61,13 +61,13 @@ class UsersObserver
     {
         Cache::forget('Users:users_all');
         if (auth()->check()) {
-            Cache::forget('Auth_user:user' . auth()->user()->id);
+            Cache::forget('Auth_user:user'.auth()->user()->id);
         }
         Cache::forget('Users:users_exists');
         Cache::forget('Users:users_with_empleado');
         Cache::forget('Users:user_with_role');
 
-        //Empleados
+        // Empleados
         Cache::forget('Empleados:empleados_all');
         Cache::forget('Empleados:empleados_all_borrados');
         Cache::forget('Empleados:empleados_alta');

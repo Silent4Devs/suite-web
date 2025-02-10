@@ -38,7 +38,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     @composer \
     redis-stable \
     #imagick-stable \
-    xdebug \
+    #xdebug-stable \
     bcmath \
     calendar \
     exif \
@@ -61,12 +61,6 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
-
-# Copy custom php.ini
-COPY php.ini /usr/local/etc/php/php.ini
-
-# Copy custom www.conf
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www

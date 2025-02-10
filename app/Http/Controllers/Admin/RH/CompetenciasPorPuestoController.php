@@ -21,17 +21,23 @@ class CompetenciasPorPuestoController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('competencias_por_puesto_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
-                $q->select('id', 'area');
-            }, 'competencias' => function ($q) {
-                $q->with('competencia');
-            }])->orderByDesc('id')->get();
+        // if ($request->ajax()) {
+        //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
+        //         $q->select('id', 'area');
+        //     }, 'competencias' => function ($q) {
+        //         $q->with('competencia');
+        //     }])->orderByDesc('id')->get();
+        //     // dd($puestos);
+        //     return datatables()->of($puestos)->toJson();
+        // }
 
-            return datatables()->of($puestos)->toJson();
-        }
+        $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area' => function ($q) {
+            $q->select('id', 'area');
+        }, 'competencias' => function ($q) {
+            $q->with('competencia');
+        }])->orderByDesc('id')->get();
 
-        //Para Jon
+        // Para Jon
 
         // if ($request->ajax()) {
         //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area'=>function ($q) {
@@ -56,7 +62,9 @@ class CompetenciasPorPuestoController extends Controller
 
         $areas = Area::getIdNameAll();
 
-        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas'));
+        // dd($puestos->competencias);
+
+        return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas', 'puestos'));
     }
 
     public function indexCompetenciasPorPuesto(Request $request, $puesto)

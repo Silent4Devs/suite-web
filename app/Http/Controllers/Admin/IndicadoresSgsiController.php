@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\DashboardIndicadorSG;
 use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
+use App\Models\Permission;
 use App\Models\Proceso;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
@@ -26,13 +27,15 @@ class IndicadoresSgsiController extends Controller
 
         $usuario = User::getCurrentUser();
         $area_empleado = $usuario->empleado->area->id;
-        $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
+
+        // Verificamos si el usuario tiene permiso para ver todos los indicadores
+        $puedeVerTodos = $usuario->can('indicadores_sgsi_ver_todos');
+
         if ($request->ajax()) {
-            if ($isAdmin) {
-                $query = IndicadoresSgsi::select('id', 'nombre', 'descripcion', 'ano', 'unidadmedida', 'frecuencia', 'formula', 'id_area', 'id_empleado')->orderBy('id')->get();
-            } else {
-                $query = IndicadoresSgsi::where('id_area', $area_empleado)->orderBy('id')->get();
-            }
+            // Si el usuario tiene permiso para ver todos, obtiene todos los registros
+            $query = $puedeVerTodos
+                ? IndicadoresSgsi::select('id', 'nombre', 'descripcion', 'ano', 'unidadmedida', 'frecuencia', 'formula', 'id_area', 'id_empleado')->orderBy('id')->get()
+                : IndicadoresSgsi::where('id_area', $area_empleado)->orderBy('id')->get();
 
             $table = Datatables::of($query);
 
@@ -55,11 +58,11 @@ class IndicadoresSgsiController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
+                return $row->id ?? '';
             });
 
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? $row->nombre : '';
+                return $row->nombre ?? '';
             });
 
             $table->editColumn('area', function ($row) {
@@ -67,31 +70,31 @@ class IndicadoresSgsiController extends Controller
             });
 
             $table->editColumn('responsable_name', function ($row) {
-                return $row->empleado ? $row->empleado : '';
+                return $row->empleado ?? '';
             });
 
             $table->editColumn('año', function ($row) {
-                return $row->ano ? $row->ano : '';
+                return $row->ano ?? '';
             });
 
             $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
+                return $row->descripcion ?? '';
             });
 
             $table->editColumn('formula', function ($row) {
-                return $row->formula ? $row->formula : '';
+                return $row->formula ?? '';
             });
 
             $table->editColumn('unidadmedida', function ($row) {
-                return $row->unidadmedida ? $row->unidadmedida : '';
+                return $row->unidadmedida ?? '';
             });
 
             $table->editColumn('frecuencia', function ($row) {
-                return $row->frecuencia ? $row->frecuencia : '';
+                return $row->frecuencia ?? '';
             });
 
             $table->editColumn('enlace', function ($row) {
-                return $row->id ? $row->id : '';
+                return $row->id ?? '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -105,6 +108,7 @@ class IndicadoresSgsiController extends Controller
 
         return view('admin.indicadoresSgsis.index', compact('logo_actual', 'empresa_actual'));
     }
+
 
     public function create()
     {
@@ -121,11 +125,11 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'required|string|max:255',
             'id_area' => 'required',
             'id_empleado' => 'required',
             'id_proceso' => 'required',
-            'descripcion' => 'nullable|string',
+            'descripcion' => 'nullable|string|max:500',
             'rojo' => 'required|numeric',
             'amarillo' => 'required|numeric',
             'verde' => 'required|numeric',
@@ -138,7 +142,7 @@ class IndicadoresSgsiController extends Controller
         ]);
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
 
-        //return redirect()->route('admin.indicadores-sgsis.index');
+        // return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
@@ -177,7 +181,7 @@ class IndicadoresSgsiController extends Controller
         ]);
         $indicadoresSgsi->update($request->all());
 
-        //return redirect()->route('admin.indicadores-sgsis.index');
+        // return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
@@ -224,7 +228,7 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-        //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
+        // dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
 
         // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id, 'variables' => $finish_array]);

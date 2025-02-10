@@ -104,7 +104,7 @@ class AnalisisAIA extends Model implements Auditable
         'flujo_q_2',
         'flujo_q_5',
 
-        //INFRAESTRUCTURA TECNOLÓGICA
+        // INFRAESTRUCTURA TECNOLÓGICA
         'app_ip',
         'bd_ip',
         'otro_ip',

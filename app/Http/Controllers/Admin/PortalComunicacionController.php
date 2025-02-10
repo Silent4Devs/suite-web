@@ -27,24 +27,24 @@ class PortalComunicacionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $hoy = Carbon::now();
 
         $politica_existe = PoliticaSgsi::getAll()->count();
-        $user = User::getCurrentUser();
 
+        $comite_existe = Comiteseguridad::getAll()->count();
+
+        $nuevos = Empleado::getNuevos();
+
+        $cumpleaños = Empleado::getCumpleanos();
+
+        $user = User::getCurrentUser();
         $empleado_asignado = $user->n_empleado;
         $authId = $user->id;
 
         $documentos_publicados = Documento::getLastFiveWithMacroproceso();
-        $comite_existe = Comiteseguridad::getAll()->count();
-
-        $nuevos = Empleado::getNuevos();
-        $cumpleaños = Empleado::getCumpleanos();
-
-
         $comunicacionSgis = ComunicacionSgi::getAllwithImagenesBlog();
         $comunicacionSgis_carrusel = ComunicacionSgi::getAllwithImagenesCarrousel();
-
         // $aniversarios = Cache::remember('Portal:portal_aniversarios', 3600 * 4, function () use ($hoy) {
         //     return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         // });

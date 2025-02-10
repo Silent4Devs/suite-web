@@ -61,7 +61,10 @@ class ProbabilidadImpacto extends Component
 
     public function asignarInputs()
     {
-        $getData = TBTemplateArProbImpArModel::find($this->template_id);
+        // dd($this->template_id);
+        // $getData = TBTemplateArProbImpArModel::find($this->template_id);
+        $getData = TBTemplateArProbImpArModel::where('template_id', $this->template_id)->first();
+
         $this->min = $getData->valor_min;
         $this->max = $getData->valor_max;
         if (! $getData->getProbImp->isEmpty()) {
@@ -135,7 +138,7 @@ class ProbabilidadImpacto extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         } else {
@@ -151,7 +154,7 @@ class ProbabilidadImpacto extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         }
@@ -171,7 +174,7 @@ class ProbabilidadImpacto extends Component
             TBProbabilidadImpactoAnalisisRiesgoModel::destroy($id);
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
         unset($this->prob_imp[$key]);

@@ -21,7 +21,7 @@ class DeclaracionAplicabilidadAprobadores extends Mailable
 
     public $controles;
 
-    //inicializa de la clase
+    // inicializa de la clase
     public function __construct($nombre, $tipo, $controles)
     {
         $this->tipo = $tipo;

@@ -116,8 +116,8 @@ class GapTresController extends Controller
                     break;
             }
         }
-        //$gapTre->update($request->all());
-        //return redirect()->route('admin.gap-tres.index');
+        // $gapTre->update($request->all());
+        // return redirect()->route('admin.gap-tres.index');
     }
 
     public function show(GapTre $gapTre)

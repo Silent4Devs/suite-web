@@ -298,11 +298,11 @@ class DocumentosController extends Controller
             // $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
             // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
             $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
-            //Se elimina el archivo anterior
+            // Se elimina el archivo anterior
             if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo)) {
                 Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo]);
             }
-            //Se guarda el nuevo documento
+            // Se guarda el nuevo documento
             $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
         }
 
@@ -428,11 +428,11 @@ class DocumentosController extends Controller
 
             // Manejo del archivo del documento
             $path_documento = $this->getPathDocumento($documento, 'public');
-            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
-            $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-obsoleto.' . $extension;
+            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
+            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto.'.$extension;
 
-            $ruta_documento = $path_documento . '/' . $documento->archivo;
-            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
+            $ruta_documento = $path_documento.'/'.$documento->archivo;
+            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento).'/'.$nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
                 if (Storage::exists($ruta_obsoleto)) {
@@ -452,12 +452,11 @@ class DocumentosController extends Controller
                 return response()->json(['error' => 'Este registro contiene relación con diversas tablas, eliminarlo traería problemas de estabilidad en el sistema.']);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error inesperado: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Error inesperado: '.$e->getMessage()], 500);
         }
 
         return response()->json(['error' => 'No se pudo eliminar el documento'], 500);
     }
-
 
     public function doDocumentObsolete(Documento $documento) {}
 
@@ -481,15 +480,9 @@ class DocumentosController extends Controller
             parse_str($request->datosRevisores, $datos);
             $documento_id = intval($request->documentoCreado);
             $revisores1 = [];
-            $documento = Documento::where('id', $documento_id)->first();
-
-            try {
-                event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento'));
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
-
-            // $documento->load('elaborador', 'macroproceso');
+            $documento = Documento::find($documento_id);
+            // event(new DocumentoEvent($documento, 'publish', 'documentos', 'Documento')); //No funciona correctamente
+            // $documento->load('elaborador', 'macroproceso'); //Tarda demasiado, error de memoria e ¿inncesario?
             Mail::to(removeUnicodeCharacters($documento->elaborador->email))->queue(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 

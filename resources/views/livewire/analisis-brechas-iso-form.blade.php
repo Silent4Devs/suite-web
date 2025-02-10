@@ -137,7 +137,7 @@
                     @endif
                     <label for="Fecha">Fecha</label>
                 </div>
-                {{ Form::hidden('fecha', date('Y-m-d')) }}
+                <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-lg-6 col-sm-12 anima-focus">
@@ -298,7 +298,7 @@
                                             Editar
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" wire:click="$dispatch('delete',{{ $analisis_brecha->id }})">
+                                    <a class="dropdown-item" wire:click="$dispatch('delete',{ id: {{ $analisis_brecha->id }} })">
                                         <div class="d-flex align-items-start">
                                             <i class="material-icons-outlined"
                                                 style="width: 24px;font-size:18px;">delete_outlined</i>

@@ -27,10 +27,14 @@
                 class="row">
                 @csrf
                 <div class="form-group col-md-12 anima-focus">
-                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text"
-                        name="nombredocumento" placeholder="" id="nombredocumento" value="{{ old('nombredocumento', '') }}"
-                        required>
-                    {!! Form::label('nombredocumento', 'Nombre del documento*', ['class' => 'asterisco']) !!}
+                    <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}"
+                           type="text"
+                           name="nombredocumento"
+                           id="nombredocumento"
+                           placeholder=""
+                           value="{{ old('nombredocumento', '') }}"
+                           required>
+                    <label for="nombredocumento" class="asterisco">Nombre del documento*</label>
                     @if ($errors->has('nombredocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombredocumento') }}
@@ -38,10 +42,14 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-12 anima-focus">
-                    <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text"
-                        name="objetivodocumento" id="objetivodocumento" placeholder="" value="{{ old('objetivodocumento', '') }}" required></textarea>
-                    {!! Form::label('objetivodocumento', 'Objetivo del documento*', ['class' => 'asterisco']) !!}
+                    <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}"
+                              name="objetivodocumento"
+                              id="objetivodocumento"
+                              placeholder=""
+                              required>{{ old('objetivodocumento', '') }}</textarea>
+                    <label for="objetivodocumento" class="asterisco">Objetivo del documento*</label>
                     @if ($errors->has('objetivodocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivodocumento') }}
@@ -49,34 +57,38 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
                 </div>
+
                 <div class="form-group col-md-4 anima-focus">
                     <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}"
-                        name="responsable_evidencia_id" id="responsable_evidencia_id">
+                            name="responsable_evidencia_id"
+                            id="responsable_evidencia_id">
                         <option value="">Seleccione una opción</option>
                         @foreach ($empleados as $empleado)
-                            <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
-                                data-area="{{ $empleado->area->area }}">
+                            <option data-puesto="{{ $empleado->puesto }}"
+                                    value="{{ $empleado->id }}"
+                                    data-area="{{ $empleado->area->area }}">
                                 {{ $empleado->name }}
                             </option>
                         @endforeach
                     </select>
-                    {!! Form::label('responsable_evidencia_id', 'Responsable del documento*', ['class' => 'asterisco']) !!}
+                    <label for="responsable_evidencia_id" class="asterisco">Responsable del documento*</label>
                     @if ($errors->has('responsable_evidencia_id'))
                         <div class="invalid-feedback">
                             {{ $errors->first('responsable_evidencia_id') }}
                         </div>
                     @endif
                 </div>
+
                 <div class="form-group col-md-4 anima-focus">
                     <div class="form-control" id="puesto_reviso" readonly></div>
-                    {!! Form::label('puesto_reviso', 'Puesto*', ['class' => 'asterisco']) !!}
-
+                    <label for="puesto_reviso" class="asterisco">Puesto*</label>
                 </div>
-                <div class="form-group col-md-4  anima-focus">
+
+                <div class="form-group col-md-4 anima-focus">
                     <div class="form-control" id="area_reviso" readonly></div>
-                    {!! Form::label('id_area_reviso', 'Área*', ['class' => 'asterisco']) !!}
-
+                    <label for="id_area_reviso" class="asterisco">Área*</label>
                 </div>
+
                 {{-- <div class="form-group col-md-6">
                 <label for="arearesponsable"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.arearesponsable') }}</label>
                 <input class="form-control {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" type="text" name="arearesponsable" id="arearesponsable" value="{{ old('arearesponsable', '') }}">
@@ -89,43 +101,52 @@
             </div> --}}
 
 
-                <div class="form-group col-md-12 col-sm-12 col-lg-6 anima-focus">
-                    <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id"
+            <div class="form-group col-md-12 col-sm-12 col-lg-6 anima-focus">
+                <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}"
+                        name="area_id"
                         id="area_id">
-                        @foreach ($areas as $area)
-                            <option value="{{ $area->id }}">
-                                {{ $area->area }}
-                            </option>
-                        @endforeach
-                    </select>
-                    {!! Form::label('area_id', 'Área reponsable del documento*', ['class' => 'asterisco']) !!}
-
-                    @if ($errors->has('area'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('area') }}
-                        </div>
-                    @endif
-                </div>
-
-                <div class="form-group col-md-6 anima-focus">
-                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
-                        placeholder="" type="date" name="fechadocumento" id="fechadocumento" min="1945-01-01"
-                        value="{{ old('fechadocumento') }}">
-                    {!! Form::label('fechadocumento', 'Fecha de emisión del documento*', ['class' => 'asterisco']) !!}
-                    @if ($errors->has('fechadocumento'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fechadocumento') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
-                </div>
-                <div class="col-sm-12 form-group anima-focus">
-                    <div class="custom-file">
-                        <input type="file" name="files[]" multiple class="form-control" id="evidencia">
-
+                    <option value="">Seleccione un área</option> <!-- Añadir opción de selección -->
+                    @foreach ($areas as $area)
+                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                    @endforeach
+                </select>
+                <label for="area_id" class="asterisco">Área responsable del documento*</label>
+                @if ($errors->has('area_id'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('area_id') }}
                     </div>
-                    {!! Form::label('evidencia', 'Documento*', ['class' => 'asterisco']) !!}
+                @endif
+            </div>
+
+            <div class="form-group col-md-6 anima-focus">
+                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}"
+                       type="date"
+                       name="fechadocumento"
+                       id="fechadocumento"
+                       min="1945-01-01"
+                       value="{{ old('fechadocumento') }}">
+                <label for="fechadocumento" class="asterisco">Fecha de emisión del documento*</label>
+                @if ($errors->has('fechadocumento'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('fechadocumento') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.fechadocumento_helper') }}</span>
+            </div>
+
+            <div class="col-sm-12 form-group anima-focus">
+                <div class="custom-file">
+                    <input type="file" name="files[]" multiple class="form-control {{ $errors->has('evidencia') ? 'is-invalid' : '' }}"
+                           id="evidencia">
+                    <label for="evidencia" class="asterisco">Documento*</label>
                 </div>
+                @if ($errors->has('evidencia'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('evidencia') }}
+                    </div>
+                @endif
+            </div>
+
                 {{-- <div class="form-group col-12">
                 <label for="archivopdf"><i class="far fa-file-pdf iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.archivopdf') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('archivopdf') ? 'is-invalid' : '' }}" id="archivopdf-dropzone">

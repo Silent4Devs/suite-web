@@ -188,173 +188,178 @@ class tbApiMobileControllerRequisiciones extends Controller
                         'solicitante' => $requisicion->user,
                     ];
                 }
+
+                return response(
+                    json_encode([
+                        'requisicion' => $json_requisicion,
+                    ]),
+                    200,
+                )->header('Content-Type', 'application/json');
             }
-
-            return response(json_encode([
-                'requisicion' => $json_requisicion,
-            ]), 200)->header('Content-Type', 'application/json');
-
-        }else {
-
+        } else {
             $requisiciones = KatbolRequsicion::requisicionesAprobadorMobile($user->empleado->id, 'general');
 
-            if($requisiciones->isEmpty()){
-                return response(json_encode([
-                    'requisicion' => [],
-                ]), 200)->header('Content-Type', 'application/json');
+            if ($requisiciones->isEmpty()) {
+                return response(
+                    json_encode([
+                        'requisicion' => [],
+                    ]),
+                    200,
+                )->header('Content-Type', 'application/json');
             }
 
             // dd($requisiciones);
 
             // if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_requisicion')) {
-                // $requisiciones = KatbolRequsicion::getArchivoFalseAll();
-                foreach ($requisiciones as $keyReq => $requisicion) {
-                    if ($requisicion->id_user != null) {
-                        $estado = null;
-                        switch ($requisicion->estado) {
-                            case 'curso':
-                                $estado = 'En curso';
-                                break;
+            // $requisiciones = KatbolRequsicion::getArchivoFalseAll();
+            foreach ($requisiciones as $keyReq => $requisicion) {
+                if ($requisicion->id_user != null) {
+                    $estado = null;
+                    switch ($requisicion->estado) {
+                        case 'curso':
+                            $estado = 'En curso';
+                            break;
 
-                            case 'aprobado':
-                                $estado = 'Aprobado';
-                                break;
+                        case 'aprobado':
+                            $estado = 'Aprobado';
+                            break;
 
-                            case 'rechazado':
-                                $estado = 'Rechazado';
-                                break;
+                        case 'rechazado':
+                            $estado = 'Rechazado';
+                            break;
 
-                            case 'firmada':
-                                $estado = 'Firmada';
-                                break;
+                        case 'firmada':
+                            $estado = 'Firmada';
+                            break;
 
-                            case 'firmada_final':
-                                $estado = 'Firmada';
-                                break;
+                        case 'firmada_final':
+                            $estado = 'Firmada';
+                            break;
 
-                            default:
-                                $estado = 'Por iniciar';
-                                break;
-                        }
-
-                        $user = User::find($requisicion->id_user);
-
-                        // Validar si el usuario tiene relación empleado
-                        if ($user && $user->empleado) {
-                            $empleado = $user->empleado;
-                        } else {
-                            $empleado = null; // O asignar valores predeterminados aquí
-                        }
-
-                        // Foto del solicitante
-                        if ($empleado && ($empleado->foto == null || $empleado->foto == '0')) {
-                            if ($empleado->genero == 'H') {
-                                $ruta = asset('storage/empleados/imagenes/man.png');
-                            } elseif ($empleado->genero == 'M') {
-                                $ruta = asset('storage/empleados/imagenes/woman.png');
-                            } else {
-                                $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                            }
-                        } elseif ($empleado) {
-                            $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
-                        } else {
-                            $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png'); // Valor predeterminado si no hay empleado
-                        }
-
-                        $ruta_foto_user = $this->encodeSpecialCharacters($ruta);
-
-                        $participantes['solicitante'] = [
-                            'nombre_participante' => $empleado->name ?? '', // Si no hay empleado, asignar ''
-                            'foto_participante' => $ruta_foto_user,
-                            'estatus_firma' => is_null($requisicion->firma_solicitante),
-                        ];
-
-                        // Foto y nombre del supervisor
-                        if ($empleado && $empleado->supervisor) {
-                            $supervisorName = $empleado->supervisor->name ?? 'N/A';
-                            $supervisorFoto = $empleado->supervisor->foto ?? 'usuario_no_cargado.png';
-                            if ($supervisorFoto == null || $supervisorFoto == '0') {
-                                if ($empleado->supervisor->genero == 'H') {
-                                    $ruta_supervisor = asset('storage/empleados/imagenes/man.png');
-                                } elseif ($empleado->supervisor->genero == 'M') {
-                                    $ruta_supervisor = asset('storage/empleados/imagenes/woman.png');
-                                } else {
-                                    $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                                }
-                            } else {
-                                $ruta_supervisor = asset('storage/empleados/imagenes/'.$supervisorFoto);
-                            }
-                        } else {
-                            $supervisorName = 'N/A';
-                            $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                        }
-
-                        $ruta_foto_supervisor = $this->encodeSpecialCharacters($ruta_supervisor);
-
-                        $participantes['supervisor'] = [
-                            'nombre_participante' => $supervisorName,
-                            'foto_participante' => $ruta_foto_supervisor,
-                            'estatus_firma' => is_null($requisicion->firma_jefe),
-                        ];
-
-                        $participantes['finanzas'] = [
-                            'nombre_participante' => 'Finanzas',
-                            'foto_participante' => asset('storage/empleados/imagenes/usuario_no_cargado.png'),
-                            'estatus_firma' => is_null($requisicion->firma_finanzas),
-                        ];
-
-                        $comprador = KatbolComprador::with('user')
-                            ->where('id', $requisicion->comprador_id)
-                            ->first();
-
-                        $comp = $comprador->user;
-
-                        if ($comp->foto == null || $comp->foto == '0') {
-                            if ($comp->genero == 'H') {
-                                $ruta_comprador = asset('storage/empleados/imagenes/man.png');
-                            } elseif ($comp->genero == 'M') {
-                                $ruta_comprador = asset('storage/empleados/imagenes/woman.png');
-                            } else {
-                                $ruta_comprador = asset('storage/empleados/imagenes/usuario_no_cargado.png');
-                            }
-                        } else {
-                            $ruta_comprador = asset('storage/empleados/imagenes/'.$comp->foto);
-                        }
-
-                        // Encode spaces in the URL
-                        $ruta_foto_comprador = $this->encodeSpecialCharacters($ruta_comprador);
-
-                        $participantes['comprador'] = [
-                            'nombre_participante' => $comprador->name ?? '',
-                            'foto_participante' => $ruta_foto_comprador,
-                            'estatus_firma' => is_null($requisicion->firma_compras),
-                        ];
-
-                        $json_requisicion[$keyReq] = [
-                            'id' => $requisicion->id,
-                            'folio' => 'RQ-00-00-'.$requisicion->id,
-                            'fecha_solicitud' => $requisicion->fecha,
-                            'referencia' => $requisicion->referencia,
-                            'proveedor' => $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto'),
-                            'estatus' => $estado,
-                            'participantes' => $participantes,
-                            'proyecto' => $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible',
-                            'area_solicita' => $requisicion->area,
-                            'solicitante' => $requisicion->user,
-                        ];
+                        default:
+                            $estado = 'Por iniciar';
+                            break;
                     }
+
+                    $user = User::find($requisicion->id_user);
+
+                    // Validar si el usuario tiene relación empleado
+                    if ($user && $user->empleado) {
+                        $empleado = $user->empleado;
+                    } else {
+                        $empleado = null; // O asignar valores predeterminados aquí
+                    }
+
+                    // Foto del solicitante
+                    if ($empleado && ($empleado->foto == null || $empleado->foto == '0')) {
+                        if ($empleado->genero == 'H') {
+                            $ruta = asset('storage/empleados/imagenes/man.png');
+                        } elseif ($empleado->genero == 'M') {
+                            $ruta = asset('storage/empleados/imagenes/woman.png');
+                        } else {
+                            $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                        }
+                    } elseif ($empleado) {
+                        $ruta = asset('storage/empleados/imagenes/'.$empleado->foto);
+                    } else {
+                        $ruta = asset('storage/empleados/imagenes/usuario_no_cargado.png'); // Valor predeterminado si no hay empleado
+                    }
+
+                    $ruta_foto_user = $this->encodeSpecialCharacters($ruta);
+
+                    $participantes['solicitante'] = [
+                        'nombre_participante' => $empleado->name ?? '', // Si no hay empleado, asignar ''
+                        'foto_participante' => $ruta_foto_user,
+                        'estatus_firma' => is_null($requisicion->firma_solicitante),
+                    ];
+
+                    // Foto y nombre del supervisor
+                    if ($empleado && $empleado->supervisor) {
+                        $supervisorName = $empleado->supervisor->name ?? 'N/A';
+                        $supervisorFoto = $empleado->supervisor->foto ?? 'usuario_no_cargado.png';
+                        if ($supervisorFoto == null || $supervisorFoto == '0') {
+                            if ($empleado->supervisor->genero == 'H') {
+                                $ruta_supervisor = asset('storage/empleados/imagenes/man.png');
+                            } elseif ($empleado->supervisor->genero == 'M') {
+                                $ruta_supervisor = asset('storage/empleados/imagenes/woman.png');
+                            } else {
+                                $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                            }
+                        } else {
+                            $ruta_supervisor = asset('storage/empleados/imagenes/'.$supervisorFoto);
+                        }
+                    } else {
+                        $supervisorName = 'N/A';
+                        $ruta_supervisor = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                    }
+
+                    $ruta_foto_supervisor = $this->encodeSpecialCharacters($ruta_supervisor);
+
+                    $participantes['supervisor'] = [
+                        'nombre_participante' => $supervisorName,
+                        'foto_participante' => $ruta_foto_supervisor,
+                        'estatus_firma' => is_null($requisicion->firma_jefe),
+                    ];
+
+                    $participantes['finanzas'] = [
+                        'nombre_participante' => 'Finanzas',
+                        'foto_participante' => asset('storage/empleados/imagenes/usuario_no_cargado.png'),
+                        'estatus_firma' => is_null($requisicion->firma_finanzas),
+                    ];
+
+                    $comprador = KatbolComprador::with('user')
+                        ->where('id', $requisicion->comprador_id)
+                        ->first();
+
+                    $comp = $comprador->user;
+
+                    if ($comp->foto == null || $comp->foto == '0') {
+                        if ($comp->genero == 'H') {
+                            $ruta_comprador = asset('storage/empleados/imagenes/man.png');
+                        } elseif ($comp->genero == 'M') {
+                            $ruta_comprador = asset('storage/empleados/imagenes/woman.png');
+                        } else {
+                            $ruta_comprador = asset('storage/empleados/imagenes/usuario_no_cargado.png');
+                        }
+                    } else {
+                        $ruta_comprador = asset('storage/empleados/imagenes/'.$comp->foto);
+                    }
+
+                    // Encode spaces in the URL
+                    $ruta_foto_comprador = $this->encodeSpecialCharacters($ruta_comprador);
+
+                    $participantes['comprador'] = [
+                        'nombre_participante' => $comprador->name ?? '',
+                        'foto_participante' => $ruta_foto_comprador,
+                        'estatus_firma' => is_null($requisicion->firma_compras),
+                    ];
+
+                    $json_requisicion[$keyReq] = [
+                        'id' => $requisicion->id,
+                        'folio' => 'RQ-00-00-'.$requisicion->id,
+                        'fecha_solicitud' => $requisicion->fecha,
+                        'referencia' => $requisicion->referencia,
+                        'proveedor' => $requisicion->proveedor_catalogo ?? ($requisicion->provedores_requisiciones->first()->contacto ?? 'Indistinto'),
+                        'estatus' => $estado,
+                        'participantes' => $participantes,
+                        'proyecto' => $requisicion->contrato->nombre_servicio ?? 'Sin servicio disponible',
+                        'area_solicita' => $requisicion->area,
+                        'solicitante' => $requisicion->user,
+                    ];
                 }
-                // $new = [];
-                // foreach($json_requisicion as $item){
-                //     $new[] = $item;
-                // }
+            }
+            // $new = [];
+            // foreach($json_requisicion as $item){
+            //     $new[] = $item;
+            // }
 
-                return response(json_encode([
+            return response(
+                json_encode([
                     'requisicion' => $json_requisicion,
-                ]), 200)->header('Content-Type', 'application/json');
+                ]),
+                200,
+            )->header('Content-Type', 'application/json');
         }
-
-
 
         //     // return view('contract_manager.requisiciones.index', compact('requisiciones', 'empresa_actual', 'logo_actual'));
         // } else {
@@ -527,25 +532,30 @@ class tbApiMobileControllerRequisiciones extends Controller
         $user = User::getCurrentUser();
         $supervisor = User::find($requisicion->id_user)->empleado->supervisor->name;
         $supervisor_email = User::find($requisicion->id_user)->empleado->supervisor->email;
-        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+        $comprador = KatbolComprador::with('user')
+            ->where('id', $requisicion->comprador_id)
+            ->first();
         $solicitante = User::find($requisicion->id_user);
 
         $firma_siguiente = FirmasRequisiciones::where('requisicion_id', $requisicion->id)->first();
 
         if ($requisicion->firma_solicitante === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
-                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
+                if ($user->empleado->id == $firma_siguiente->solicitante_id) {
+                    // solicitante_id
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del solicitante directo:'.$firma_siguiente->solicitante->name.'';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             } else {
-
                 $responsable = User::find($requisicion->id_user)->empleado;
 
                 if ($user->empleado->id == $responsable->id) {
@@ -553,22 +563,29 @@ class tbApiMobileControllerRequisiciones extends Controller
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del solicitante directo';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             }
         } elseif ($requisicion->firma_jefe === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->jefe_id)) {
-                if ($user->empleado->id == $firma_siguiente->jefe_id) { //jefe_id
+                if ($user->empleado->id == $firma_siguiente->jefe_id) {
+                    // jefe_id
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
                     $mensaje = 'No tiene permisos para firmar. En espera del jefe directo:'.$firma_siguiente->jefe->name.'';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             } else {
                 $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
@@ -583,7 +600,6 @@ class tbApiMobileControllerRequisiciones extends Controller
 
                 foreach ($participantesNivel as $key => $partNiv) {
                     if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
                         $responsable = $partNiv->empleado;
 
                         break;
@@ -595,21 +611,28 @@ class tbApiMobileControllerRequisiciones extends Controller
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del jefe directo';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             }
         } elseif ($requisicion->firma_finanzas === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
-                if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
+                if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) {
+                    // responsable_finanzas_id
                     $tipo_firma = 'firma_finanzas';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             } else {
                 $listaReq = ListaDistribucion::where('modelo', $this->modelo)->first();
@@ -619,7 +642,6 @@ class tbApiMobileControllerRequisiciones extends Controller
                     $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
                     if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
                         $responsable = $responsableNivel->empleado;
 
                         break;
@@ -630,31 +652,42 @@ class tbApiMobileControllerRequisiciones extends Controller
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del responsable de finanzas';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             }
         } elseif ($requisicion->firma_compras === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->comprador_id)) {
-                if (($user->empleado->id == $comprador->user->id) && ($user->empleado->id == $firma_siguiente->comprador_id)) { //comprador_id
+                if ($user->empleado->id == $comprador->user->id && $user->empleado->id == $firma_siguiente->comprador_id) {
+                    // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             } else {
-                if (($user->empleado->id == $comprador->user->id)) { //comprador_id
+                if ($user->empleado->id == $comprador->user->id) {
+                    // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
 
-                    return response(json_encode([
-                        'requisicion' => $mensaje,
-                    ]), 200)->header('Content-Type', 'application/json');
+                    return response(
+                        json_encode([
+                            'requisicion' => $mensaje,
+                        ]),
+                        200,
+                    )->header('Content-Type', 'application/json');
                 }
             }
         } elseif ($requisicion->estado != 'rechazado') {
@@ -663,12 +696,17 @@ class tbApiMobileControllerRequisiciones extends Controller
         } else {
             $mensaje = 'Esta requisición ya ha sido rechazada';
 
-            return response(json_encode([
-                'requisicion' => $mensaje,
-            ]), 200)->header('Content-Type', 'application/json');
+            return response(
+                json_encode([
+                    'requisicion' => $mensaje,
+                ]),
+                200,
+            )->header('Content-Type', 'application/json');
         }
 
-        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)
+            ->pluck('proveedor_id')
+            ->toArray();
 
         $proveedores_indistintos = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->get();
 
@@ -751,9 +789,12 @@ class tbApiMobileControllerRequisiciones extends Controller
             }
         }
 
-        return response(json_encode([
-            'requisicion' => $json_requisicion,
-        ]), 200)->header('Content-Type', 'application/json');
+        return response(
+            json_encode([
+                'requisicion' => $json_requisicion,
+            ]),
+            200,
+        )->header('Content-Type', 'application/json');
         // return view('contract_manager.requisiciones.firmar', compact('firma_siguiente', 'firma_finanzas_name', 'requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto', 'alerta'));
     }
 
@@ -776,7 +817,6 @@ class tbApiMobileControllerRequisiciones extends Controller
 
             foreach ($participantesNivel as $key => $partNiv) {
                 if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
                     $responsable = $partNiv->empleado;
                     $supervisor = $responsable->email;
 
@@ -792,7 +832,6 @@ class tbApiMobileControllerRequisiciones extends Controller
                 $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
                 if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
                     $responsable = $responsableNivel->empleado;
                     $userEmail = $responsable->email;
 
@@ -807,7 +846,6 @@ class tbApiMobileControllerRequisiciones extends Controller
 
     public function FirmarUpdate(Request $request, $id)
     {
-
         try {
             $request->validate([
                 'firma' => 'required',
@@ -830,29 +868,28 @@ class tbApiMobileControllerRequisiciones extends Controller
                     'estado' => 'curso',
                 ]);
                 $requisicion->save();
-                //Buscamos supervisor
+                // Buscamos supervisor
                 $user = User::find($requisicion->id_user);
                 $supervisor = $user->empleado->supervisor;
 
-                //Buscamos modelo correspondiente a lideres
+                // Buscamos modelo correspondiente a lideres
                 $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-                //Traemos participantes
+                // Traemos participantes
                 $listaPart = $listaReq->participantes;
 
-                //Buscamos al supervisor por su id
+                // Buscamos al supervisor por su id
                 $supList = $listaPart->where('empleado_id', $supervisor->id)->first();
 
-                //Buscamos en que nivel se encuentra el supervisor
+                // Buscamos en que nivel se encuentra el supervisor
                 $nivel = $supList->nivel;
 
-                //traemos a todos los participantes correspondientes a ese nivel
+                // traemos a todos los participantes correspondientes a ese nivel
                 $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-                //Buscamos 1 por 1 los participantes del nivel (area)
+                // Buscamos 1 por 1 los participantes del nivel (area)
                 foreach ($participantesNivel as $key => $partNiv) {
-                    //Si su estado esta activo se le manda el correo
+                    // Si su estado esta activo se le manda el correo
                     if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
-
                         $responsable = $partNiv->empleado;
                         $userEmail = $responsable->email;
                         break;
@@ -868,7 +905,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     [
                         'solicitante_id' => $user->empleado->id,
                         'jefe_id' => $responsable->id,
-                    ]
+                    ],
                     // 'responsable_finanzas_id' => $responsable->id,
                     // 'comprador_id' => $comprador->user->empleado->id,
                 );
@@ -892,7 +929,6 @@ class tbApiMobileControllerRequisiciones extends Controller
                     $responsableNivel = $listaPart->where('nivel', $i)->where('numero_orden', 1)->first();
 
                     if ($responsableNivel->empleado->disponibilidad->disponibilidad == 1) {
-
                         $responsable = $responsableNivel->empleado;
                         $userEmail = $responsable->email;
 
@@ -921,23 +957,26 @@ class tbApiMobileControllerRequisiciones extends Controller
                     [
                         'solicitante_id' => $solicitante->empleado->id,
                         'responsable_finanzas_id' => $responsable->id,
-                    ]
+                    ],
                 );
 
                 if ($responsable->id == $firmas_requi->jefe_id || $responsable->id == $firmas_requi->solicitante_id) {
                     Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->queue(new RequisicionesFirmaDuplicadaEmail($requisicion, $organizacion, $request->tipo_firma));
                 } else {
-                    Mail::to(trim($this->removeUnicodeCharacters($userEmail)))->cc($correosCopia)->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
+                    Mail::to(trim($this->removeUnicodeCharacters($userEmail)))
+                        ->cc($correosCopia)
+                        ->queue(new RequisicionesEmail($requisicion, $organizacion, $request->tipo_firma));
                 }
             }
             if ($request->tipo_firma == 'firma_finanzas') {
-
                 $fecha = date('d-m-Y');
                 $requisicion->fecha_firma_finanzas_requi = $fecha;
                 $user = User::getCurrentUser();
                 $requisicion->id_finanzas = $user->id;
                 $requisicion->save();
-                $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+                $comprador = KatbolComprador::with('user')
+                    ->where('id', $requisicion->comprador_id)
+                    ->first();
                 $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
 
                 $solicitante = User::find($requisicion->id_user);
@@ -951,7 +990,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                     [
                         'solicitante_id' => $solicitante->empleado->id,
                         'comprador_id' => $comprador->user->id,
-                    ]
+                    ],
                 );
 
                 if ($comprador->user->id == $firmas_requi->responsable_finanzas_id || $comprador->user->id == $firmas_requi->jefe_id || $comprador->user->id == $firmas_requi->solicitante_id) {

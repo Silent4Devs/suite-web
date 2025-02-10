@@ -16,6 +16,7 @@ use App\Models\Mejoras;
 use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\User;
+use App\Services\SentimentService;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,6 +50,8 @@ class MejorasController extends Controller
             'beneficios' => 'required',
         ]);
 
+        $sentimientos = json_encode(SentimentService::analyzeSentiment($request->descripcion));
+
         $mejoras = Mejoras::create([
             'empleado_mejoro_id' => optional(User::getCurrentUser()->empleado)->id ?? '',
             'descripcion' => $request->descripcion,
@@ -59,6 +62,7 @@ class MejorasController extends Controller
             'tipo' => $request->tipo,
             'otro' => $request->otro,
             'estatus' => 'nuevo',
+            'sentimientos' => $sentimientos,
         ]);
 
         AnalisisSeguridad::create([

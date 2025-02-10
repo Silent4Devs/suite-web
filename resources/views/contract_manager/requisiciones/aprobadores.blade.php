@@ -25,26 +25,36 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
 
-    <div class="d-flex flex-nowrap gap-4">
-        <!-- Botón 1 -->
-        <button type="button"
-            class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn2">Filtrar Requisiciones Pendientes Solicitantes</button>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <!-- Botón 1 -->
+            <button type="button"
+                class="btn @if ($buttonSolicitante) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn2" style="width: 100%;">Filtrar Requisiciones pendientes
+                solicitantes</button>
+        </div>
 
-        <!-- Botón 2 -->
-        <button type="button"
-            class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn1">Filtrar Requisiciones Pendientes Jefes</button>
-
-        <!-- Botón 3 -->
-        <button type="button"
-            class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn">Filtrar Requisiciones Pendientes Finanzas</button>
-
-        <!-- Botón 4 -->
-        <button type="button"
-            class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
-            id="filtrarBtn3">Filtrar Requisiciones Pendientes Compradores</button>
+        <div class="col-md-6">
+            <!-- Botón 2 -->
+            <button type="button"
+                class="btn @if ($buttonJefe) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn1" style="width: 100%;">Filtrar requisiciones pendientes jefes</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <!-- Botón 3 -->
+            <button type="button"
+                class="btn @if ($buttonFinanzas) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn" style="width: 100%;">Filtrar requisiciones pendientes finanzas</button>
+        </div>
+        <div class="col-md-6">
+            <!-- Botón 4 -->
+            <button type="button"
+                class="btn @if ($buttonCompras) btn-success-custom @else tb-btn-primary-custom @endif"
+                id="filtrarBtn3" style="width: 100%;">Filtrar requisiciones pendientes
+                compradores</button>
+        </div>
     </div>
 
     <div class="mt-5 card">
@@ -87,6 +97,10 @@
                                         <h5><span class="badge badge-pill badge-danger">Rechazado</span></h5>
                                     @break
 
+                                    @case('cancelada')
+                                        <h5><span class="badge badge-pill badge-danger">Cancelada</span></h5>
+                                    @break
+
                                     @case('firmada')
                                     @case('firmada_final')
                                         <h5><span class="badge badge-pill badge-success">Firmada</span></h5>
@@ -105,41 +119,94 @@
                             <td>
                                 @switch(true)
                                     @case(is_null($requisicion->firma_solicitante))
-                                        <p>Solicitante: {{ $user->name ?? '' }}</p>
+                                        <p>Solicitante: {{ $requisicion->userSolicitante->name ?? '' }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_jefe))
                                         @php
-                                            $employee = App\Models\User::find($requisicion->id_user);
+                                            $employee = $requisicion->userSolicitante?->empleado ?? null;
                                             if ($requisicion->registroFirmas) {
-                                                $supervisorName = $requisicion->registroFirmas->jefe->name;
-                                            } elseif ($employee !== null) {
-                                                if (
-                                                    $employee->empleado !== null &&
-                                                    $employee->empleado->supervisor !== null
-                                                ) {
-                                                    $supervisorName = $employee->empleado->supervisor->name;
-                                                } else {
-                                                    $supervisorName = 'N/A';
-                                                }
+                                                $supervisorName =
+                                                    $requisicion->obtener_responsable_lider->name ?? false;
+                                            } elseif ($employee !== null && $employee->supervisor !== null) {
+                                                $supervisorName = $employee->supervisor->name;
                                             } else {
                                                 $supervisorName = 'N/A';
                                             }
                                         @endphp
+
+                                        @if ($supervisorName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'Líder no identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
                                         <p>Jefe: {{ $supervisorName ?? '' }} </p>
                                     @break
 
                                     @case(is_null($requisicion->firma_finanzas))
-                                        <p>Finanzas</p>
+                                        @php
+                                            if ($requisicion->registroFirmas) {
+                                                $finanzasName =
+                                                    $requisicion->obtener_responsable_finanzas->name ?? false;
+                                            } else {
+                                                $finanzasName = 'Sin identificar';
+                                            }
+                                        @endphp
+
+                                        @if ($finanzasName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El responsable de finanzas no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Finanzas: {{ $finanzasName }}</p>
                                     @break
 
                                     @case(is_null($requisicion->firma_compras))
                                         @php
-                                            $comprador = App\Models\ContractManager\Comprador::with('user')
-                                                ->where('id', $requisicion->comprador_id)
-                                                ->first();
+                                            if ($requisicion->registroFirmas) {
+                                                $compradorName =
+                                                    $requisicion->obtener_responsable_comprador->name ?? false;
+                                            } else {
+                                                $compradorName = $requisicion->comprador->user->name;
+                                            }
                                         @endphp
-                                        <p>Comprador: {{ $comprador->user->name }}</p>
+
+                                        @if ($compradorName === false)
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    Swal.fire({
+                                                        title: 'Advertencia',
+                                                        text: 'El comprador no ha sido identificado y sus suplentes no están disponibles. Por favor, contacte a un administrador.',
+                                                        icon: 'warning',
+                                                        confirmButtonText: 'Aceptar',
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        window.location.href = "{{ route('admin.inicio-Usuario.index') }}";
+                                                    });
+                                                });
+                                            </script>
+                                        @endif
+                                        <p>Comprador: {{ $compradorName }}</p>
                                     @break
 
                                     @default
@@ -150,14 +217,17 @@
                             <td>{{ $requisicion->area }}</td>
                             <td>{{ $requisicion->user }}</td>
                             <td>
-                                <form
-                                    action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
-                                    method="GET">
-                                    @method('GET')
-                                    <a
-                                        href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
-                                            class="fas fa-edit"></i></a>
-                                </form>
+                                @if ($requisicion->estado != 'rechazado' && $requisicion->estado != 'cancelada')
+                                    <form
+                                        action="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"
+                                        method="GET">
+                                        @method('GET')
+                                        <a
+                                            href="{{ route('contract_manager.requisiciones.firmarAprobadores', $requisicion->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                    </form>
+                                @endif
+
                                 @if (isset($requisicion->registroFirmas))
                                     @if ($requisicion->registroFirmas->duplicados($empleadoActual->id))
                                         <!-- Button trigger modal -->
@@ -185,11 +255,14 @@
                                                             <div class="col-12">
                                                                 <div class="anima-focus">
                                                                     <select class="form-control" name="nuevo_responsable"
-                                                                        id="nuevo_responsable-{{ $requisicion->id }}">
-                                                                        @foreach ($sustitutosLD as $key => $sustituto)
+                                                                    id="nuevo_responsable-{{ $requisicion->id }}">
+                                                                        @forelse ($requisicion->lista_sustitutos ?? [] as $sustituto)
                                                                             <option value="{{ $sustituto->id }}">
                                                                                 {{ $sustituto->name }}</option>
-                                                                        @endforeach
+                                                                        @empty
+                                                                            <option value="">Sin Sustitutos
+                                                                                disponibles</option>
+                                                                        @endforelse
                                                                     </select>
                                                                     <label
                                                                         for="nuevo_responsable-{{ $requisicion->id }}">Responsable</label>

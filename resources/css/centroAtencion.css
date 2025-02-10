@@ -52,3 +52,35 @@
     font-weight: bolder;
     font-size: 13px;
 }
+
+.cards-status-centro-atencion{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card-status-centro{
+    width: 100%;
+    height: 80px;
+    padding: 15px;
+    background-color: #DBDBDB;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+.card-status-centro i{
+    font-size: 40px;
+}
+.card-status-centro .info{
+    text-align: right;
+}
+
+table {
+    width: auto;
+    height: auto;
+}
+.textoCentroCard {
+    font-size: 12pt !important;
+}

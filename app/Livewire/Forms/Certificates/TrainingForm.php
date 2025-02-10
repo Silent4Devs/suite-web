@@ -33,7 +33,7 @@ class TrainingForm extends Form
 
     public $isChecked = false;
 
-    //Document
+    // Document
     public $document;
 
     public function verifyDocument(&$document_id)

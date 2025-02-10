@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class AccionCorrectiva extends Model implements Auditable, HasMedia
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     public $table = 'accion_correctivas';
 
@@ -98,7 +97,7 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
         'comentarios_aprobacion',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('AccionCorrectiva:get_all', 3600 * 10, function () {
@@ -144,7 +143,7 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
 
     public function nombrereporta()
     {
-        return $this->belongsTo(User::class, 'nombrereporta_id');
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id');
     }
 
     public function puestoreporta()
@@ -189,7 +188,8 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
 
     public function reporto()
     {
-        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'id_reporto', 'id')->select('id', 'name', 'foto')
+            ->alta();
     }
 
     public function area()

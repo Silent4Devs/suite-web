@@ -61,7 +61,7 @@
                                                         </div>
                                                     </a>
                                                     <a class="dropdown-item"
-                                                        wire:click="$dispatch('delete',{{ $fortaleza->id }})">
+                                                        wire:click="$dispatch('delete',{ id: {{ $fortaleza->id }} })">
                                                         <div class="d-flex align-items-start">
                                                             <i class="material-icons-outlined"
                                                                 style="width: 24px;font-size:18px;">delete_outlined</i>

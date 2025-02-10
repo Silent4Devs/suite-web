@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\ClearsResponseCache;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class ComunicacionSgi extends Model implements Auditable, HasMedia
 {
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
-    use HasFactory, InteractsWithMedia, MultiTenantModelTrait, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     public $table = 'comunicacion_sgis';
 
@@ -59,7 +58,7 @@ class ComunicacionSgi extends Model implements Auditable, HasMedia
         'fecha_programable_fin',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAllwithImagenes()
     {
         return Cache::remember('ComunicacionSGI:get_all_with_imagenes', 3600 * 8, function () {

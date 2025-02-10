@@ -115,12 +115,12 @@
                     <!-- Descripcion Field -->
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
-                            <textarea class="form-control" id="edescripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
+                            <label for="descripcion">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del solicitante:
+                            </label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
-
 
                     {{-- Respuesta --}}
                     <div class="text-center form-group"
@@ -147,11 +147,13 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
-                            <textarea class="form-control" name="comentarios_aprobador" rows="2" disabled>{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
+                            <label for="comentarios_aprobador">
+                                <i class="fas fa-file-alt iconos-crear"></i> Comentarios del aprobador:
+                            </label>
+                            <textarea class="form-control" id="comentarios_aprobador" name="comentarios_aprobador" rows="2" disabled>{{ old('comentarios_aprobador', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>
+
                     <!-- Submit Field -->
                     <div class="text-right form-group col-12">
                         <a href="{{ redirect()->getUrlGenerator()->previous() }}"

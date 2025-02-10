@@ -84,7 +84,7 @@ class ReportesRegistros extends Component
     public function render()
     {
         $this->areas = Area::getIdNameAll();
-        //Query para obtener los timesheet y filtrarlo
+        // Query para obtener los timesheet y filtrarlo
         if ($this->area_id == 0) {
             $this->emp = Empleado::select('id', 'name')->where('estatus', 'alta')->orderBy('id', 'desc')->get();
         } else {
@@ -133,7 +133,7 @@ class ReportesRegistros extends Component
             $timesExcel = null;
         }
 
-        //Funcion para pintar contadores en los filtros de estatus
+        // Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();
 
         $this->dispatch('scriptTabla');
@@ -143,14 +143,12 @@ class ReportesRegistros extends Component
 
     public function exportExcel()
     {
-        // dd(1);
-
         $export = new ReporteColaboradorRegistro($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
         return Excel::download($export, 'reporte_colaborador_registro.xlsx');
     }
 
-    //apipost
+    // apipost
     public function RegistroTimesheet()
     {
         $data = [
@@ -187,7 +185,7 @@ class ReportesRegistros extends Component
             dd($response->json());
             $this->dispatch('apiPostConsumido', $response->json());
         } else {
-            //dd("no entro");
+            // dd("no entro");
             $this->dispatch('apiPostError', $response->status());
         }
     }
@@ -208,14 +206,14 @@ class ReportesRegistros extends Component
             dd($response->json());
             $this->dispatch('apiPostConsumido', $response->json());
         } else {
-            //dd("no entro");
+            // dd("no entro");
             $this->dispatch('apiPostError', $response->status());
         }
     }
 
     public function establecerContadores()
     {
-        //Contador Todos los registros timesheet
+        // Contador Todos los registros timesheet
         $querybase = Timesheet::whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
@@ -234,10 +232,10 @@ class ReportesRegistros extends Component
         $this->pendientes_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
             $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
-        //Contador Todos los registros timesheet aprobados
+        // Contador Todos los registros timesheet aprobados
         $this->aprobados_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();
 
-        //Contador Todos los registros timesheet rechazados
+        // Contador Todos los registros timesheet rechazados
         $this->rechazos_contador = $querybase->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
     }
 

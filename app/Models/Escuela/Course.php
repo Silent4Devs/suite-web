@@ -2,8 +2,8 @@
 
 namespace App\Models\Escuela;
 
+use App\Models\Organizacion;
 use App\Traits\ClearsResponseCache;
-use Chelout\RelationshipEvents\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +22,7 @@ class Course extends Model implements Auditable
 
     protected $withCount = ['students', 'reviews'];
 
-    protected $append = ['sections_order', 'rating', 'last_finished_lesson'];
+    protected $append = ['sections_order', 'rating', 'last_finished_lesson', 'certificado_ruta'];
 
     const BORRADOR = 1;
 
@@ -32,7 +32,7 @@ class Course extends Model implements Auditable
 
     const CERRADO = 4;
 
-    //query redis cache
+    // query redis cache
     public static function getAll()
     {
         return Cache::remember('Courses:courses_all', 3600 * 7, function () {
@@ -50,7 +50,7 @@ class Course extends Model implements Auditable
         }
     }
 
-    //Query Scopes
+    // Query Scopes
 
     public function scopeCategory($query, $category_id)
     {
@@ -86,7 +86,7 @@ class Course extends Model implements Auditable
                 }
             }
 
-            $querys_unidos = $sectionsRegisters->merge($this->sections)->unique();
+            $querys_unidos = $sectionsRegisters;
 
             return $querys_unidos;
         } else {
@@ -96,7 +96,7 @@ class Course extends Model implements Auditable
         }
     }
 
-    //Relacion uno a muchos
+    // Relacion uno a muchos
 
     public function reviews()
     {
@@ -123,7 +123,7 @@ class Course extends Model implements Auditable
         return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
     }
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
     public function teacher()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
@@ -160,20 +160,20 @@ class Course extends Model implements Auditable
         return $this->hasMany('App\Models\Escuela\UsuariosCursos');
     }
 
-    //Relacion muchos a muchos
+    // Relacion muchos a muchos
     public function students()
     {
         return $this->belongsToMany('App\Models\User');
     }
 
-    //Relacion uno a uno polimorfica
+    // Relacion uno a uno polimorfica
 
     public function image()
     {
         return $this->morphOne('App\Models\Escuela\Image', 'imageable');
     }
 
-    //Relacion hasManyThrough
+    // Relacion hasManyThrough
     // Relación entre course y lessons
     public function lessons()
     {
@@ -193,5 +193,21 @@ class Course extends Model implements Auditable
         }
 
         return null;
+    }
+
+    public function getCertificadoRutaAttribute()
+    {
+        $certificado_general = Organizacion::select('certificado')->first()->certificado;
+
+        return asset('img/escuela/certificaciones/certificado'.$certificado_general.'.png');
+    }
+
+    public function getFirmaInstructorRutaAttribute()
+    {
+        if ($this->firma_instructor) {
+            return asset('storage/cursos/firmas-instructores/'.$this->firma_instructor);
+        } else {
+            return null;
+        }
     }
 }

@@ -21,7 +21,7 @@ class EvaluacionesDesempenoErrorEvaluadorCompetencias extends Mailable
      */
     public function __construct($nombre_evaluacion, $evaluados)
     {
-        //$nombre_evaluacion
+        // $nombre_evaluacion
         $this->nombre_evaluacion = $nombre_evaluacion;
         $this->evaluados = $evaluados;
     }

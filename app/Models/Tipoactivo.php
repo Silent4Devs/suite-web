@@ -38,7 +38,7 @@ class Tipoactivo extends Model implements Auditable
         'tipo',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('tipoactivos_all', 3600 * 24, function () {

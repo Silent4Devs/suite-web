@@ -16,7 +16,7 @@ class Review extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
 
     public function user()
     {
