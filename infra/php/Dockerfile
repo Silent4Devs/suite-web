@@ -66,7 +66,7 @@ RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
 # Install npm
-RUN npm install -g npm@latest
+# RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
