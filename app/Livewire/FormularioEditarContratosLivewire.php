@@ -410,6 +410,10 @@ class FormularioEditarContratosLivewire extends Component
                 ]
             );
 
+            if (!$this->file_contrato) {
+                return; // Evita el error si no hay archivo
+            }
+
             // Manejo de archivos
             if ($this->file_contrato) {
                 $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato;

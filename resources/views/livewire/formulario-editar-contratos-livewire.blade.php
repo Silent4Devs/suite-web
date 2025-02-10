@@ -288,8 +288,8 @@
                         </div>
                     </div>
                     @if (!is_null($organizacion))
-                        <input class="form-control input_file_validar" type="file" wire:model.lazy="file_contrato"
-                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff" {{ $show_contrato ? 'disabled' : '' }}>
+                        <input class="form-control" type="file" wire:model.lazy="file_contrato"
+                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
 
                         <div wire:loading wire:target="file_contrato">
                             <div class="spinner-grow text-primary" role="status">
