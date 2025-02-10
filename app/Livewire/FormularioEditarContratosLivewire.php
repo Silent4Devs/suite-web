@@ -100,37 +100,7 @@ class FormularioEditarContratosLivewire extends Component
     public $firmar;
     public $firmado;
 
-    // Reglas de validación
-    protected $rules = [
-        // 'no_contrato' => ['required', new NumeroContrato],
-        'no_proyecto' => 'required',
-        'nombre_servicio' => 'required|max:500',
-        'tipo_contrato' => 'required',
-        'proveedor_id' => 'required',
-        'objetivo' => 'required|max:500',
-        'estatus' => 'required|max:255',
-        'cargo_administrador' => 'nullable|max:250',
-        'area_administrador' => 'nullable|max:250',
-        'puesto' => 'nullable|max:250',
-        'area' => 'nullable|max:250',
-        'fase' => 'required',
-        'vigencia_contrato' => 'required|max:255',
-        'fecha_inicio' => 'required|date',
-        'fecha_fin' => 'required|date|after:fecha_inicio',
-        'area_id' => 'required',
-        'fecha_firma' => 'required|date|before_or_equal:fecha_fin',
-        'no_pagos' => 'required|numeric|lte:500000',
-        'tipo_cambio' => 'required',
-        'monto_pago' => 'required|numeric|min:0|max:99999999999.99',
-        'minimo' => 'nullable|numeric|max:99999999999.99',
-        'maximo' => 'nullable|numeric|max:99999999999.99',
-        'monto_dolares' => 'nullable|numeric|max:99999999999.99',
-        'maximo_dolares' => 'nullable|numeric|max:99999999999.99',
-        'minimo_dolares' => 'nullable|numeric|max:99999999999.99',
-        'pmp_asignado' => 'required|max:250',
-        'administrador_contrato' => 'nullable|max:250',
-        'folio' => 'nullable|max:250',
-    ];
+    // public $aprobadores_firma;
 
     // Inicialización del componente
     public function mount($IDContrato, $showC = false)
@@ -221,220 +191,6 @@ class FormularioEditarContratosLivewire extends Component
             }
         }
         $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $this->contrato->id)->orderBy('id', 'DESC')->first();
-    }
-
-    // Función para actualizar el contrato
-    public function updateContrato()
-    {
-
-        try {
-            // Validar los campos
-            if (!$this->validarCampos()) {
-                return;
-            }
-
-            // Limpiar valores monetarios
-            $monto_pago = str_replace(['$', ','], '', $this->monto_pago);
-            $minimo = str_replace(['$', ','], '', $this->minimo);
-            $maximo = str_replace(['$', ','], '', $this->maximo);
-            $monto_dolares = str_replace(['$', ','], '', $this->monto_dolares);
-            $maximo_dolares = str_replace(['$', ','], '', $this->maximo_dolares);
-            $minimo_dolares = str_replace(['$', ','], '', $this->minimo_dolares);
-
-            // Actualizar el contrato
-            $this->contrato->update([
-                'no_contrato' => $this->no_contrato,
-                'no_proyecto' => $this->no_proyecto,
-                'nombre_servicio' => $this->nombre_servicio,
-                'tipo_contrato' => $this->tipo_contrato,
-                'proveedor_id' => $this->proveedor_id,
-                'objetivo' => $this->objetivo,
-                'estatus' => $this->estatus,
-                'cargo_administrador' => $this->cargo_administrador,
-                'area_administrador' => $this->area_administrador,
-                'puesto' => $this->puesto,
-                'area' => $this->area,
-                'fase' => $this->fase,
-                'vigencia_contrato' => $this->vigencia_contrato,
-                'fecha_inicio' => $this->fecha_inicio,
-                'fecha_fin' => $this->fecha_fin,
-                'area_id' => $this->area_id,
-                'fecha_firma' => $this->fecha_firma,
-                'no_pagos' => $this->no_pagos,
-                'tipo_cambio' => $this->tipo_cambio,
-                'monto_pago' => $monto_pago,
-                'minimo' => $minimo,
-                'maximo' => $maximo,
-                'razon_soc_id' => $this->razon_soc_id,
-                'pmp_asignado' => $this->pmp_asignado,
-                'administrador_contrato' => $this->administrador_contrato,
-                'folio' => $this->folio,
-            ]);
-
-            $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $this->no_proyecto)->first();
-
-            $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
-
-            if (isset($convergencia)) {
-                $convergencia->update([
-                    'timesheet_proyecto_id' => $proyecto->id,
-                    'timesheet_cliente_id' => $this->proveedor_id,
-                ]);
-            }
-
-            // Actualizar los datos en dólares
-            DolaresContrato::updateOrCreate(
-                ['contrato_id' => $this->contrato->id],
-                [
-                    'monto_dolares' => $monto_dolares,
-                    'maximo_dolares' => $maximo_dolares,
-                    'minimo_dolares' => $minimo_dolares,
-                    'valor_dolar' => $this->valor_dolar,
-                ]
-            );
-            // Manejo de archivos
-            if ($this->file_contrato) {
-                $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato;
-                $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->file_contrato->getClientOriginalName();
-                $this->file_contrato->storeAs($storagePath, $nombre_f);
-                $this->contrato->update(['file_contrato' => $nombre_f]);
-            }
-
-            if ($this->documento) {
-                $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/penalizaciones';
-                $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->documento->getClientOriginalName();
-                $this->documento->storeAs($storagePath, $nombre_f);
-                $this->contrato->update(['documento' => $nombre_f]);
-            }
-
-            // Emitir evento de actualización
-            // event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
-
-            // Notificar éxito
-            $this->alert('success', 'Contrato actualizado correctamente.', [
-                'position' => 'center',
-                'timer' => 5000,
-                'toast' => true,
-                'text' => 'Modificado con éxito',
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th);
-            $this->alert('error', 'Error al actualizar contrato', [
-                'position' => 'center',
-                'timer' => 5000,
-                'toast' => true,
-                'text' => $th,
-            ]);
-        }
-    }
-
-    public function changeTipoCambio($value)
-    {
-        $this->tipo_cambio = $value;
-        if ($value != 'MXN') {
-            $this->moneda_extranjera = true;
-            $convertedAmount = CurrencyConverter::convert(1.0)
-                ->from($value)
-                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-                ->format();
-
-            $this->valor_dolar = floatval($convertedAmount);
-        } else {
-            $this->moneda_extranjera = false;
-            $this->valor_dolar = 0;
-            $this->edit_moneda = false;
-        }
-    }
-
-    public function actualizarMontos()
-    {
-        $monto_pago = $this->monto_pago; // Asumiendo que estos valores se definen en el componente
-        $maximo = $this->maximo;
-        $minimo = $this->minimo;
-
-        $this->dispatch('actualizarValores', [
-            'monto_pago' => $monto_pago,
-            'maximo' => $maximo,
-            'minimo' => $minimo,
-        ]);
-    }
-
-    public function updatedEditMoneda($bool)
-    {
-        // dd($bool);
-        if (! $bool) {
-            $convertedAmount = CurrencyConverter::convert(1.0)
-                ->from($this->tipo_cambio)
-                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-                ->format();
-
-            $this->valor_dolar = floatval($convertedAmount);
-
-            $this->valorManual($this->valor_dolar);
-        } else {
-            $this->valorManual($this->valor_dolar);
-        }
-    }
-
-    public function valorManual($val)
-    {
-        $valor = floatval($val);
-
-        $this->valor_dolar = $val;
-
-        // Usa bcmul para multiplicar la cantidad por la tasa de cambio con 2 decimales
-        $this->monto_pago = bcmul($valor, (floatval($this->monto_dolares)), 2);
-
-        $this->maximo = bcmul($valor, (floatval($this->maximo_dolares)), 2);
-
-        $this->minimo = bcmul($valor, (floatval($this->minimo_dolares)), 2);
-
-        $this->actualizarMontos();
-    }
-
-    public function convertirME($valor, $tipo)
-    {
-        if ($this->edit_moneda) {
-            $convertirDolares = $this->valor_dolar;
-        } else {
-            $convertirDolares = CurrencyConverter::convert(1)
-                ->from($this->tipo_cambio)
-                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
-                ->format();
-        }
-
-        $conversion = floor(bcmul(floatval($convertirDolares), floatval($valor), 2) * 100) / 100;
-        $conversion = number_format($conversion, 2, '.', '');
-
-        switch ($tipo) {
-            case 'monto':
-                // code...
-                $this->monto_dolares = $valor;
-                // $this->monto_pago = floatval($convertirDolares);
-                $this->monto_pago = $conversion;
-                break;
-
-            case 'maximo':
-                // code...
-                $this->maximo_dolares = $valor;
-                // $this->maximo = floatval($convertirDolares);
-                $this->maximo = $conversion;
-                break;
-
-            case 'minimo':
-                // code...
-                $this->minimo_dolares = $valor;
-                // $this->minimo = floatval($convertirDolares);
-                $this->minimo = $conversion;
-                break;
-
-            default:
-                // code...
-                break;
-        }
-
-        $this->actualizarMontos();
     }
 
     // Renderizar la vista
@@ -581,6 +337,229 @@ class FormularioEditarContratosLivewire extends Component
         }
 
         return true;
+    }
+
+    // Función para actualizar el contrato
+    public function updateContrato()
+    {
+        ob_start();
+        try {
+            // Validar los campos
+            if (!$this->validarCampos()) {
+                return;
+            }
+
+            // Limpiar valores monetarios
+            $monto_pago = str_replace(['$', ','], '', $this->monto_pago);
+            $minimo = str_replace(['$', ','], '', $this->minimo);
+            $maximo = str_replace(['$', ','], '', $this->maximo);
+            $monto_dolares = str_replace(['$', ','], '', $this->monto_dolares);
+            $maximo_dolares = str_replace(['$', ','], '', $this->maximo_dolares);
+            $minimo_dolares = str_replace(['$', ','], '', $this->minimo_dolares);
+
+            // Actualizar el contrato
+            $this->contrato->update([
+                'no_contrato' => $this->no_contrato,
+                'no_proyecto' => $this->no_proyecto,
+                'nombre_servicio' => $this->nombre_servicio,
+                'tipo_contrato' => $this->tipo_contrato,
+                'proveedor_id' => $this->proveedor_id,
+                'objetivo' => $this->objetivo,
+                'estatus' => $this->estatus,
+                'cargo_administrador' => $this->cargo_administrador,
+                'area_administrador' => $this->area_administrador,
+                'puesto' => $this->puesto,
+                'area' => $this->area,
+                'fase' => $this->fase,
+                'vigencia_contrato' => $this->vigencia_contrato,
+                'fecha_inicio' => $this->fecha_inicio,
+                'fecha_fin' => $this->fecha_fin,
+                'area_id' => $this->area_id,
+                'fecha_firma' => $this->fecha_firma,
+                'no_pagos' => $this->no_pagos,
+                'tipo_cambio' => $this->tipo_cambio,
+                'monto_pago' => $monto_pago,
+                'minimo' => $minimo,
+                'maximo' => $maximo,
+                'razon_soc_id' => $this->razon_soc_id,
+                'pmp_asignado' => $this->pmp_asignado,
+                'administrador_contrato' => $this->administrador_contrato,
+                'folio' => $this->folio,
+            ]);
+
+            $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $this->no_proyecto)->first();
+
+            $convergencia = ConvergenciaContratos::where('contrato_id', $this->contrato->id)->first();
+
+            if (isset($convergencia)) {
+                $convergencia->update([
+                    'timesheet_proyecto_id' => $proyecto->id,
+                    'timesheet_cliente_id' => $this->proveedor_id,
+                ]);
+            }
+
+            // Actualizar los datos en dólares
+            DolaresContrato::updateOrCreate(
+                ['contrato_id' => $this->contrato->id],
+                [
+                    'monto_dolares' => $monto_dolares,
+                    'maximo_dolares' => $maximo_dolares,
+                    'minimo_dolares' => $minimo_dolares,
+                    'valor_dolar' => $this->valor_dolar,
+                ]
+            );
+
+            // Manejo de archivos
+            if ($this->file_contrato) {
+                $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato;
+                $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->file_contrato->getClientOriginalName();
+                $this->file_contrato->storeAs($storagePath, $nombre_f);
+                $this->contrato->update(['file_contrato' => $nombre_f]);
+
+                $output = ob_get_contents();
+            }
+
+            // Limpiar el buffer sin enviar la salida al navegador
+            ob_end_clean();
+
+            if ($this->documento) {
+                $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/penalizaciones';
+                $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->documento->getClientOriginalName();
+                $this->documento->storeAs($storagePath, $nombre_f);
+                $this->contrato->update(['documento' => $nombre_f]);
+            }
+
+            // Emitir evento de actualización
+            // event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
+
+            // Notificar éxito
+            $this->alert('success', 'Contrato actualizado correctamente.', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => true,
+                'text' => 'Modificado con éxito',
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $output = ob_get_contents();
+
+            // Limpiar el buffer
+            ob_end_clean();
+            $this->alert('error', 'Error al actualizar contrato', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => true,
+                'text' => $th,
+            ]);
+        }
+    }
+
+    public function changeTipoCambio($value)
+    {
+        $this->tipo_cambio = $value;
+        if ($value != 'MXN') {
+            $this->moneda_extranjera = true;
+            $convertedAmount = CurrencyConverter::convert(1.0)
+                ->from($value)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+
+            $this->valor_dolar = floatval($convertedAmount);
+        } else {
+            $this->moneda_extranjera = false;
+            $this->valor_dolar = 0;
+            $this->edit_moneda = false;
+        }
+    }
+
+    public function actualizarMontos()
+    {
+        $monto_pago = $this->monto_pago; // Asumiendo que estos valores se definen en el componente
+        $maximo = $this->maximo;
+        $minimo = $this->minimo;
+
+        $this->dispatch('actualizarValores', [
+            'monto_pago' => $monto_pago,
+            'maximo' => $maximo,
+            'minimo' => $minimo,
+        ]);
+    }
+
+    public function updatedEditMoneda($bool)
+    {
+        // dd($bool);
+        if (! $bool) {
+            $convertedAmount = CurrencyConverter::convert(1.0)
+                ->from($this->tipo_cambio)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+
+            $this->valor_dolar = floatval($convertedAmount);
+
+            $this->valorManual($this->valor_dolar);
+        } else {
+            $this->valorManual($this->valor_dolar);
+        }
+    }
+
+    public function valorManual($val)
+    {
+        $valor = floatval($val);
+
+        $this->valor_dolar = $val;
+
+        // Usa bcmul para multiplicar la cantidad por la tasa de cambio con 2 decimales
+        $this->monto_pago = bcmul($valor, (floatval($this->monto_dolares)), 2);
+
+        $this->maximo = bcmul($valor, (floatval($this->maximo_dolares)), 2);
+
+        $this->minimo = bcmul($valor, (floatval($this->minimo_dolares)), 2);
+
+        $this->actualizarMontos();
+    }
+
+    public function convertirME($valor, $tipo)
+    {
+        if ($this->edit_moneda) {
+            $convertirDolares = $this->valor_dolar;
+        } else {
+            $convertirDolares = CurrencyConverter::convert(1)
+                ->from($this->tipo_cambio)
+                ->to('MXN') // you don't need to specify the to method if you want to convert all currencies
+                ->format();
+        }
+
+        $conversion = floor(bcmul(floatval($convertirDolares), floatval($valor), 2) * 100) / 100;
+        $conversion = number_format($conversion, 2, '.', '');
+
+        switch ($tipo) {
+            case 'monto':
+                // code...
+                $this->monto_dolares = $valor;
+                // $this->monto_pago = floatval($convertirDolares);
+                $this->monto_pago = $conversion;
+                break;
+
+            case 'maximo':
+                // code...
+                $this->maximo_dolares = $valor;
+                // $this->maximo = floatval($convertirDolares);
+                $this->maximo = $conversion;
+                break;
+
+            case 'minimo':
+                // code...
+                $this->minimo_dolares = $valor;
+                // $this->minimo = floatval($convertirDolares);
+                $this->minimo = $conversion;
+                break;
+
+            default:
+                // code...
+                break;
+        }
+
+        $this->actualizarMontos();
     }
 
 }
