@@ -8,12 +8,14 @@
 
     @php
         use App\Models\Organizacion;
+        use App\Models\User;
         $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
             $logotipo = 'silent4business.png';
         }
+        $user = User::getCurrentUser();
     @endphp
 
 @if($user && $user->password_changed_at == null)
