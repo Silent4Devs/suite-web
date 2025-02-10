@@ -2464,12 +2464,12 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'planes_de_accion_visualizar_diagrama',
                 'name' => 'Este permiso permite al usuario realizar la acción de visualizar diagrama del Plan de Trabajo en el módulo de Planes de Trabajo',
             ],
-            //Centro de Atención
+            // Centro de Atención
             [
                 'title' => 'centro_de_atencion_acceder',
                 'name' => 'Este permiso permite acceder al menú "Centro de Atención"',
             ],
-            //Centro de Atención: Incidentes de Seguridad
+            // Centro de Atención: Incidentes de Seguridad
             [
                 'title' => 'centro_atencion_incidentes_de_seguridad_acceder',
                 'name' => 'Este permiso permite al usuario acceder a"Incidentes de Seguridad" en el módulo de Centro de Atención',
@@ -2486,7 +2486,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_incidentes_de_seguridad_ver',
                 'name' => 'Este permiso permite al usuario ver "Incidentes de Seguridad" en el módulo de Centro de Atención',
             ],
-            //Centro de Atención: Riesgos
+            // Centro de Atención: Riesgos
             [
                 'title' => 'centro_atencion_riesgos_acceder',
                 'name' => 'Este permiso permite al usuario acceder a"Riesgos" en el módulo de Centro de Atención',
@@ -2503,7 +2503,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_riesgos_ver',
                 'name' => 'Este permiso permite al usuario ver "Riesgos" en el módulo de Centro de Atención',
             ],
-            //Centro de Atención: Quejas
+            // Centro de Atención: Quejas
             [
                 'title' => 'centro_atencion_quejas_acceder',
                 'name' => 'Este permiso permite al usuario acceder a "Quejas" en el módulo de Centro de Atención',
@@ -2520,7 +2520,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_quejas_ver',
                 'name' => 'Este permiso permite al usuario ver "Quejas" en el módulo de Centro de Atención',
             ],
-            //Centro de Atención: Quejas Clientes
+            // Centro de Atención: Quejas Clientes
             [
                 'title' => 'centro_atencion_quejas_clientes_acceder',
                 'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista "Queja Cliente"',
@@ -2540,7 +2540,7 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Ese permiso permite al usuario acceder al módulo de "Centro de Atención", a la vista dashboard de "Queja Cliente"',
 
             ],
-            //Centro de Atención: Denuncias
+            // Centro de Atención: Denuncias
             [
                 'title' => 'centro_atencion_denuncias_acceder',
                 'name' => 'Este permiso permite al usuario acceder a "Denuncias" en el módulo de Centro de Atención',
@@ -2557,7 +2557,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_denuncias_ver',
                 'name' => 'Este permiso permite al usuario ver "Denuncias" en el módulo de Centro de Atención',
             ],
-            //Centro de Atención: Mejoras
+            // Centro de Atención: Mejoras
             [
                 'title' => 'centro_atencion_mejoras_acceder',
                 'name' => 'Este permiso permite al usuario acceder a "Mejoras" en el módulo de Centro de Atención',
@@ -2574,7 +2574,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_mejoras_ver',
                 'name' => 'Este permiso permite al usuario ver "Mejoras" en el módulo de Centro de Atención',
             ],
-            //Centro de Atención: Sugerencias
+            // Centro de Atención: Sugerencias
             [
                 'title' => 'centro_atencion_sugerencias_acceder',
                 'name' => 'Este permiso permite al usuario acceder a "Sugerencias" en el módulo de Centro de Atención',
@@ -2591,7 +2591,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'centro_atencion_sugerencias_ver',
                 'name' => 'Este permiso permite al usuario ver "Sugerencias" en el módulo de Centro de Atención',
             ],
-            //Capital Humano
+            // Capital Humano
             [
                 'title' => 'capital_humano_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Capital Humano", permite visualizar las pestañas (Empleados, Calendrario y Comunicación)',
@@ -3034,7 +3034,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'analisis_de_riesgo_integral_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
-            //Sistema de Gestión Integral
+            // Sistema de Gestión Integral
             [
                 'title' => 'sistema_de_gestion_acceder',
                 'name' => 'Este permiso permite acceder al módulo "Sistema de Gestión"',
@@ -3391,7 +3391,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'comunicados_generales_vinculo',
                 'name' => 'Este permiso redirije a "Ver evidencias"',
             ],
-            //Sistema de Gestión:Soporte
+            // Sistema de Gestión:Soporte
             [
                 'title' => 'sistema_gestion_soporte_acceso',
                 'name' => 'Este permiso permite al usuario acceder a la pestaña "Soporte" del módulo de Sistema de Gestión',
@@ -3432,7 +3432,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'planificacion_y_control_acceder',
                 'name' => 'Este permiso permite al usuario acceder al módulo de "Planificacion y Control"',
             ],
-            //Sistema de gestión:Operacion
+            // Sistema de gestión:Operacion
             [
                 'title' => 'sistema_gestion_operacion_acceso',
                 'name' => 'Este permiso permite al usuario acceder a la pestaña "Operacion" del módulo de Sistema de Gestión',
@@ -3581,7 +3581,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'revision_por_direccion_ver',
                 'name' => 'Este permiso permite al usuario ver  detalles del registro',
             ],
-            //MEJORA SISTEMA DE GESTIÓN
+            // MEJORA SISTEMA DE GESTIÓN
             [
                 'title' => 'sistema_gestion_mejora_acceso',
                 'name' => 'Este permiso permite al usuario acceder a la pestaña "Mejora" del módulo de Sistema de Gestión',

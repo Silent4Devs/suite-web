@@ -146,7 +146,7 @@ class ReportesProyectos extends Component
 
         $this->areas = Area::getIdNameAll();
 
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
 
         $fecha_registro_timesheet = $this->organizacion->fecha_registro_timesheet;
@@ -320,7 +320,7 @@ class ReportesProyectos extends Component
         }
 
         $this->totalRegistrosMostrando = count($proyectos_array);
-        //$proyectos_array = $this->paginate($proyectos_array, $this->perPage);
+        // $proyectos_array = $this->paginate($proyectos_array, $this->perPage);
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');

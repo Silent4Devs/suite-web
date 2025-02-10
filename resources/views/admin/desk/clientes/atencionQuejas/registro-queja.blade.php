@@ -313,10 +313,10 @@
                 <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
             </div>
             <div class="form-group col-md-4">
-                <span type="button" class="mt-5 mr-5" data-toggle="modal" data-target="#largeModal">
-                    <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>Ver
-                    evidencia(s) de la queja
-                </span>
+                <a href="{{ url('admin/desk/descargar-evidencia/' . $quejasClientes->id) }}" class="btn btn-link mt-5">
+                    <i class="mr-2 fas fa-file-download text-primary" style="font-size:14pt"></i>
+                    Descargar evidencia(s)
+                </a>
             </div>
         @endif
 

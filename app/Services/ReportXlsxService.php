@@ -19,7 +19,7 @@ $result = ReportXlsxService::ReportCustomerPost('endpoint_post', $attributes);
 // Ejemplo de uso para ReportConsumer
 $result = ReportXlsxService::ReportConsumer('endpoint_get');*/
 
-    //idea
+    // idea
     public static function ReportCustomerPost($endpoint, $data)
     {
 
@@ -45,7 +45,7 @@ $result = ReportXlsxService::ReportConsumer('endpoint_get');*/
         }
     }
 
-    //default
+    // default
     public static function ReportConsumer($Endpoint)
     {
         $apiEndpoint = env('REPORTSERVICE_API');

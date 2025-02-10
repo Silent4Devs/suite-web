@@ -33,7 +33,7 @@ class EditEvaluacionDesempeno extends Component
 
     public $paso = 1;
 
-    //Variables primer paso
+    // Variables primer paso
     public $nombre_evaluacion = null;
 
     public $descripcion_evaluacion = null;
@@ -48,7 +48,7 @@ class EditEvaluacionDesempeno extends Component
 
     public $datosPaso1;
 
-    //Variables segundo paso
+    // Variables segundo paso
     public $periodo_evaluacion;
 
     public $mensual = false;
@@ -63,12 +63,12 @@ class EditEvaluacionDesempeno extends Component
 
     public $abierta = false;
 
-    //Arreglo para recopilar periodos
+    // Arreglo para recopilar periodos
     public $arreglo_periodos = [];
 
     public $datosPaso2;
 
-    //Variables paso 3
+    // Variables paso 3
     public $select_evaluados = 'toda';
 
     public $areas;
@@ -85,7 +85,7 @@ class EditEvaluacionDesempeno extends Component
 
     public $evaluados_grupos = '';
 
-    //verificacion objetivos y competencias
+    // verificacion objetivos y competencias
     public $hayEmpleadosSinCompetencias = false;
 
     public $totalEmpleadosSinCompetencias = 0;
@@ -112,7 +112,7 @@ class EditEvaluacionDesempeno extends Component
 
     public $bloquear_evaluacion = true;
 
-    //Variables paso 4
+    // Variables paso 4
     public $evaluados;
 
     public $array_evaluados;

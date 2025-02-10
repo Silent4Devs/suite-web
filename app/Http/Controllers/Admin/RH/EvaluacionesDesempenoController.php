@@ -238,7 +238,7 @@ class EvaluacionesDesempenoController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             // dd($th);
             return response()->json(['success' => false]);
         }

@@ -142,7 +142,7 @@ class Escalas extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         } else {
@@ -159,7 +159,7 @@ class Escalas extends Component
                 DB::commit();
                 $this->send = true;
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         }
@@ -179,7 +179,7 @@ class Escalas extends Component
             TBEscalaAnalisisRiesgoModel::destroy($id);
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
         unset($this->escalas[$key]);

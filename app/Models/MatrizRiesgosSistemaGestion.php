@@ -51,7 +51,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
         'riesgototal' => 'float',
         'resultadoponderacion' => 'float',
         'riesgoresidual' => 'float',
-        //'controles_id' => 'int',
+        // 'controles_id' => 'int',
         'team_id' => 'int',
         'id_analisis' => 'int',
         'id_sede' => 'int',
@@ -120,7 +120,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
     }*/
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('matriz_riesgos_sistema_gestion_all', 3600 * 4, function () {
             return self::orderBy('id')->get();
         });
@@ -128,7 +128,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
 
     public static function getAllWithControlesPivotProceso($columns = 'id')
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('matriz_riesgos_sistema_gestion_'.Auth::user()->id, 3600 * 4, function () use ($columns) {
             return self::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])
                 ->find($columns);

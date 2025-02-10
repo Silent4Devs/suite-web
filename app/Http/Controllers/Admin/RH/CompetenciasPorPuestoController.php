@@ -37,7 +37,7 @@ class CompetenciasPorPuestoController extends Controller
             $q->with('competencia');
         }])->orderByDesc('id')->get();
 
-        //Para Jon
+        // Para Jon
 
         // if ($request->ajax()) {
         //     $puestos = Puesto::select('id', 'puesto', 'id_area')->with(['area'=>function ($q) {

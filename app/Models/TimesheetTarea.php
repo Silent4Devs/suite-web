@@ -26,7 +26,7 @@ class TimesheetTarea extends Model implements Auditable
         'todos',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TimesheetTarea:timesheettarea_all', 3600 * 4, function () {

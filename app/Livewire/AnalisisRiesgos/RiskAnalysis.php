@@ -115,7 +115,7 @@ class RiskAnalysisComponent extends Component
                         'section_id' => $newSection->id,
                         'question_id' => $newQuestion->id,
                     ]);
-                    //Settings Risk Analysis here
+                    // Settings Risk Analysis here
 
                     $settingQuestion = TBSettingsTemplateAR_TBQuestionTemplateARModel::where('question_id', $question->id)->first();
                     $copySettingQuestion = $settingQuestion->replicate();
@@ -182,7 +182,7 @@ class RiskAnalysisComponent extends Component
     private function cloneTemplateAR($generalId, $templateId)
     {
         $template = TBTemplateAnalisisRiesgoModel::find($templateId);
-        //get info scales and probability/impact
+        // get info scales and probability/impact
         $scalePivote = $template->getAr_Escala;
         $probPivote = $template->getAR_Probabilidad_Impacto;
         $scales = $template->getAr_Escala->getEscalas;
@@ -191,7 +191,7 @@ class RiskAnalysisComponent extends Component
         $formulas = TBFormulaTemplateAnalisisRiesgoModel::where('template_id', $template->id)->get();
         $questionsFormulas = [];
 
-        //clone template risk analysis
+        // clone template risk analysis
         $riskAnalysis = TBRiskAnalysisModel::create([
             'nombre' => $template->nombre,
             'norma_id' => $template->norma_id,

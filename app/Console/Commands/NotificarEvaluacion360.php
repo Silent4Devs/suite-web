@@ -42,7 +42,7 @@ class NotificarEvaluacion360 extends Command
      */
     public function handle()
     {
-        //One hour is added to compensate for PHP being one hour faster
+        // One hour is added to compensate for PHP being one hour faster
         $now = date('Y-m-d', strtotime(Carbon::now()));
         logger($now);
         $evaluaciones_no_enviadas = Evaluacion::getAll();
@@ -66,7 +66,7 @@ class NotificarEvaluacion360 extends Command
                         // $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
                         if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
                             if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
-                                sleep(1); //use usleep(500000) for half a second or less
+                                sleep(1); // use usleep(500000) for half a second or less
                             }
                         }
                     }

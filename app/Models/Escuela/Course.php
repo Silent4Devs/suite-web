@@ -32,7 +32,7 @@ class Course extends Model implements Auditable
 
     const CERRADO = 4;
 
-    //query redis cache
+    // query redis cache
     public static function getAll()
     {
         return Cache::remember('Courses:courses_all', 3600 * 7, function () {
@@ -50,7 +50,7 @@ class Course extends Model implements Auditable
         }
     }
 
-    //Query Scopes
+    // Query Scopes
 
     public function scopeCategory($query, $category_id)
     {
@@ -96,7 +96,7 @@ class Course extends Model implements Auditable
         }
     }
 
-    //Relacion uno a muchos
+    // Relacion uno a muchos
 
     public function reviews()
     {
@@ -123,7 +123,7 @@ class Course extends Model implements Auditable
         return $this->hasMany('App\Models\Escuela\Section')->orderBy('created_at', 'asc');
     }
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
     public function teacher()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
@@ -160,20 +160,20 @@ class Course extends Model implements Auditable
         return $this->hasMany('App\Models\Escuela\UsuariosCursos');
     }
 
-    //Relacion muchos a muchos
+    // Relacion muchos a muchos
     public function students()
     {
         return $this->belongsToMany('App\Models\User');
     }
 
-    //Relacion uno a uno polimorfica
+    // Relacion uno a uno polimorfica
 
     public function image()
     {
         return $this->morphOne('App\Models\Escuela\Image', 'imageable');
     }
 
-    //Relacion hasManyThrough
+    // Relacion hasManyThrough
     // Relación entre course y lessons
     public function lessons()
     {

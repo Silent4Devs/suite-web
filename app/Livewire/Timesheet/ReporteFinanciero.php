@@ -97,7 +97,7 @@ class ReporteFinanciero extends Component
 
                 ];
             }
-            //dd($selectedProjectId);
+            // dd($selectedProjectId);
 
             $this->proyectos = $empleados;
         }

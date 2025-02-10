@@ -21,7 +21,7 @@ class IncidentesVacacionesController extends Controller
     {
         abort_if(Gate::denies('incidentes_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            //Se le quito la relacion a empleados porque no es necesaria
+            // Se le quito la relacion a empleados porque no es necesaria
             $query = IncidentesVacaciones::getAll();
             $table = datatables()::of($query);
 

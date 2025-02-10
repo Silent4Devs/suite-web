@@ -66,7 +66,7 @@ class Questions extends Component
         $this->edit = $edit;
         $this->onlyIcon = $onlyIcon;
 
-        //edit
+        // edit
         if ($this->edit) {
             $this->explanation = $this->questionModel->explanation;
             $this->question = $this->questionModel->question;
@@ -166,7 +166,7 @@ class Questions extends Component
                 'answer' => '',
             ]]),
         ]);
-        //cerra el modal
+        // cerra el modal
         $this->open = false;
         $this->edit = false;
     }

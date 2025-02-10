@@ -36,7 +36,7 @@ class SubcategoriaActivo extends Model implements Auditable
         'categoria_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('SubCategoriaActivo_all', 3600 * 24, function () {

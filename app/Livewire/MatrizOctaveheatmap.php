@@ -35,7 +35,7 @@ class MatrizOctaveheatmap extends Component
 
     public $mapas = [];
 
-    //cards count
+    // cards count
     public $critico;
 
     public $alto;
@@ -46,7 +46,7 @@ class MatrizOctaveheatmap extends Component
 
     public $muy_bajo;
 
-    //count mapa calor
+    // count mapa calor
     public $nula_muyalto = 0;
 
     public $nula_alto = 0;
@@ -104,13 +104,13 @@ class MatrizOctaveheatmap extends Component
         $sedes = Sede::getAll(['id', 'sede']);
         $areas = Area::getIdNameAll();
         $procesos = Proceso::select('id', 'nombre')->get();
-        //Contadores
+        // Contadores
         $critico = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['25', '20']);
         $alto = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['10', '12', '15', '16']);
         $medio = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['9', '8', '6', '5', '4']);
         $bajo = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['4', '3', '2']);
         $muy_bajo = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis)->whereIn('valor', ['1']);
-        //query matriz
+        // query matriz
         $matriz_query = MatrizOctave::select('id', 'vp', 'valor')->where('id_analisis', '=', $this->id_analisis);
 
         if ($this->sede_id != '') {
@@ -270,7 +270,7 @@ class MatrizOctaveheatmap extends Component
         $this->proceso_id = '';
         $this->changer = '';
         $this->listados = [];
-        //$this->conteo = '';
+        // $this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
 
