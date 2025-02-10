@@ -523,7 +523,7 @@
                         </div>
                         <div class="" style=" position: relative; ">
                             <h5 style=" position: ;"><b>Acciones para la Atención de la Mejora</b></h5>
-                            <button style="position:absolute; right: 2px; top:2px;"
+                            <button style="position:absolute; right: 2px; bottom:2px;"
                                 class="btn btn-primary btn_modal_form">Agregar actividad</button>
                             @if (count($mejoras->planes))
                                 <a style="position:absolute; right: 170px; top:2px;"
