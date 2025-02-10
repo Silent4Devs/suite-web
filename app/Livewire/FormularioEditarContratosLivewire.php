@@ -362,21 +362,13 @@ class FormularioEditarContratosLivewire extends Component
                 return;
             }
 
-
-            // Verificar si el archivo está dañado (accediendo a su contenido)
-            if (!$this->file_contrato->isReadable()) {
-                $this->error_message = "El archivo parece estar dañado o inaccesible.";
-                $this->reset('file_contrato');
-                return;
-            }
-
             // Si todo está bien, mostrar mensaje de éxito
             $this->success_message = "Archivo válido y listo para subir.";
         } catch (\Illuminate\Validation\ValidationException $e) {
-            dd($e);
+
             // Captura el error de validación
             $this->error_message = "El archivo no cumple con los requisitos: máximo 50MB y formatos permitidos.";
-            $this->reset('file_contrato'); // Limpia el archivo cargado
+            dd($e);
         }
     }
 }
