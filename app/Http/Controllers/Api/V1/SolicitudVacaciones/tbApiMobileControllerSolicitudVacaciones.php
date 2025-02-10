@@ -43,7 +43,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionIndex()
     {
-        //abort_if(Gate::denies('solicitud_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario = User::getCurrentUser();
         $data = $usuario->empleado->id;
 
@@ -111,7 +111,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
     public function tbFunctionCreate()
     {
         $usuario = User::getCurrentUser();
-        //abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ingreso = Carbon::parse($usuario->empleado->antiguedad);
         $dia_hoy = Carbon::now();
         $no_vacaciones = $ingreso->format('d-m-Y');
@@ -240,7 +240,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionStore(Request $request)
     {
-        //abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $newSolicitud = $request->input('solicitud');
         $empleados = Empleado::getAll();
@@ -358,7 +358,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionUpdate(Request $request, $id)
     {
-        //abort_if(Gate::denies('solicitud_vacaciones_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('solicitud_vacaciones_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $respuestaSolicitud = $request->input('solicitud');
         $solicitud = SolicitudVacaciones::find($id);
         $usuario = User::getCurrentUser();
@@ -415,12 +415,12 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionFiltradoEmpleados($efecto, $usuario, $año)
     {
-        //Sacamos los ids del empleado
+        // Sacamos los ids del empleado
         $areaId = $usuario->empleado->area_id;
         $puestoId = $usuario->empleado->puesto_id;
         $idempleado = $usuario->empleado->id;
 
-        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        // Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
         $queryArea = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)
             ->whereHas('areas', function ($query) use ($areaId) {
                 $query->where('area_id', $areaId);
@@ -436,7 +436,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
                 $q->where('empleado_id', $idempleado);
             });
 
-        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();
@@ -473,10 +473,10 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
         if ($año >= 1) {
             $dias_otorgados = Vacaciones::where('inicio_conteo', '=', $año)->pluck('dias')->first();
 
-            //Se llama a la nueva función, con los parametros de efecto(1-suma y/o 2-resta), el usuario y el año)
+            // Se llama a la nueva función, con los parametros de efecto(1-suma y/o 2-resta), el usuario y el año)
             $dias_extra = $this->tbFunctionFiltradoEmpleados(1, $usuario, $año);
             $dias_restados = $this->tbFunctionFiltradoEmpleados(2, $usuario, $año);
-            //funcion anterior
+            // funcion anterior
             // $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
             //     $q->where('empleado_id', $usuario->empleado->id);
             // })->pluck('dias_aplicados')->sum();
@@ -569,7 +569,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionAprobacion()
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
         $solicitudesVacaciones = SolicitudVacaciones::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
@@ -645,7 +645,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionRespuesta($id)
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         switch ($vacacion->aprobacion) {
@@ -733,7 +733,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionArchivo()
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = User::getCurrentUser()->empleado->id;
 
         $solicitudesVacaciones = SolicitudVacaciones::with('empleado')
@@ -789,7 +789,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionArchivoShow($id)
     {
-        //abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         switch ($vacacion->aprobacion) {
@@ -884,7 +884,7 @@ class tbApiMobileControllerSolicitudVacaciones extends Controller
 
     public function tbFunctionShowVistaGlobal($id)
     {
-        //abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
         switch ($vacacion->aprobacion) {

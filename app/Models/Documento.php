@@ -15,7 +15,7 @@ class Documento extends Model implements Auditable
     use ClearsResponseCache, \OwenIt\Auditing\Auditable;
     use HasFactory, SoftDeletes;
 
-    //REVISION DE DOCUMENTOS ESTATUS
+    // REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
 
     const APROBADO = 2;
@@ -70,7 +70,7 @@ class Documento extends Model implements Auditable
         return 'posts_index';
     }
 
-    //Redis methods
+    // Redis methods
 
     public static function getAll()
     {
@@ -193,7 +193,7 @@ class Documento extends Model implements Auditable
         return asset($path_documento.'/'.$this->archivo);
     }
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
     public function empleado()
     {
         return $this->belongsTo(Empleado::class)->alta();

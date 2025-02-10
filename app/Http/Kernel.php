@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Cors::class,
-        //\App\Http\Middleware\XFrameHeadersMiddleware::class,
+        // \App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
     protected $middlewareGroups = [
@@ -31,13 +31,13 @@ class Kernel extends HttpKernel
             // \App\Http\Middleware\LazyLoadImages::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
-            //laravel-page-speed
+            // laravel-page-speed
             // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
             // //\RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
         ],
         'api' => [
             'throttle:200,1',

@@ -60,7 +60,7 @@ class Calendario extends Model implements Auditable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Calendario:calendario_all', 3600 * 8, function () {

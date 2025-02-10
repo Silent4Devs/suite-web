@@ -22,7 +22,7 @@ class OrdenCompraAprobada extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($nueva_requisicion, $organizacion, $tipo)
     {
         $this->requisicion = $nueva_requisicion;

@@ -71,8 +71,8 @@ class GlobalSearchComponent extends Component
                 // Mapear rutas a un arreglo de información de ruta
                 return [
                     'uri' => $route->uri(),
-                    //'method' => implode('|', $route->methods()),
-                    //'name' => $route->getName(),
+                    // 'method' => implode('|', $route->methods()),
+                    // 'name' => $route->getName(),
                     // Agregar más detalles de ruta según sea necesario
                 ];
             })->values()->all();

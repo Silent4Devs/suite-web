@@ -93,7 +93,7 @@ class NivelesComponent extends Component
             'area' => 'required|max:255',
             'descripcion' => 'required',
         ]);
-        //dd(request()->all());
+        // dd(request()->all());
         // $formatoFecha = new FormatearFecha;
         // $fecha_compromiso_formateada = $formatoFecha->formatearFecha($this->fecha_compromiso, 'd-m-Y', 'Y-m-d');
         // $fecha_real_formateada = $formatoFecha->formatearFecha($this->fecha_real, 'd-m-Y', 'Y-m-d');
@@ -115,7 +115,7 @@ class NivelesComponent extends Component
         ]);
 
         $this->evaluacion($nivelesservicio->id, $nivelesservicio->periodo_evaluacion, $nivelesservicio->revisiones, $nivelesservicio->nombre, $nivelesservicio->metrica, $nivelesservicio->unidad);
-        //$this->dispatch('contentChanged');
+        // $this->dispatch('contentChanged');
         $this->dispatch('recargar-cumplimiento');
         $this->default();
 
@@ -175,7 +175,7 @@ class NivelesComponent extends Component
             'area' => 'required',
             'descripcion' => 'required',
         ]);
-        //$this->updateEvaluacion($this->nivel_id, $this->periodo_evaluacion, $this->revisiones, $this->nombre, $this->metrica, $this->unidad);
+        // $this->updateEvaluacion($this->nivel_id, $this->periodo_evaluacion, $this->revisiones, $this->nombre, $this->metrica, $this->unidad);
         $nivelesservicio = NivelesServicio::find($this->nivel_id);
 
         $nivelesservicio->update([
@@ -191,7 +191,7 @@ class NivelesComponent extends Component
         ]);
         $this->dispatch('recargar-cumplimiento');
         $this->default();
-        //$this->dispatch('contentChanged');
+        // $this->dispatch('contentChanged');
         $this->alert('success', 'Registro actualizado!');
     }
 
@@ -238,7 +238,7 @@ class NivelesComponent extends Component
 
     public function evaluacion($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad)
     {
-        //Conteo fechas por calendario
+        // Conteo fechas por calendario
         /*$dataEnt = new EvaluacionServiciosData();
         $res = $dataEnt->TraerDatos($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad);
         EvaluacionServicio::insert($res);*/
@@ -251,6 +251,6 @@ class NivelesComponent extends Component
     {
         $dataEnt = new EvaluacionServiciosData;
         $res = $dataEnt->ActualizarDatos($id_evaluacion, $periodo_evaluacion, $revisiones, $nombre, $metrica, $unidad);
-        //EvaluacionServicio::insert($res);
+        // EvaluacionServicio::insert($res);
     }
 }

@@ -11,7 +11,7 @@ class CustomFormatter extends NormalizerFormatter
     {
         $result = parent::format($record);
         $result['app_name'] = env('APP_NAME');
-        $result['@timestamp'] = $this->normalize($record->datetime); //Needed for Kibana
+        $result['@timestamp'] = $this->normalize($record->datetime); // Needed for Kibana
 
         /**
          * You can add any other property that you need

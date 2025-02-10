@@ -42,8 +42,8 @@ class TableQuestions extends Component
     {
         // dd($question_id);
         $question = Question::find($question_id);
-        //si lo agregas el delete() a lado me retorna un booleano  por eso se coloca
-        //de la siguiente forma porque tengo que acceder al modelo y después a answer
+        // si lo agregas el delete() a lado me retorna un booleano  por eso se coloca
+        // de la siguiente forma porque tengo que acceder al modelo y después a answer
         $question->delete();
         foreach ($question->answers as $answer) {
             $answer->delete();

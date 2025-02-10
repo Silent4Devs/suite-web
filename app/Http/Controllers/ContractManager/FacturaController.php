@@ -58,7 +58,7 @@ class FacturaController extends Controller
 
         $xml = $request->file('xml');
         $pdf = $request->file('pdf');
-        //$dataImg = $file->get();
+        // $dataImg = $file->get();
         $nombrex = $xml->getClientOriginalName();
         $nombrep = $pdf->getClientOriginalName();
 
@@ -71,7 +71,7 @@ class FacturaController extends Controller
         $facturafile->factura_id = $factura->id;
         $facturafile->save();
 
-        //dd($factura, $facturafile, $nombrep, $nombrex);
+        // dd($factura, $facturafile, $nombrep, $nombrex);
         // notify()->success('¡Se ha registrado satisfactoriamente el contrato!');
 
         return redirect(route('contratos.create'));

@@ -19,7 +19,7 @@ class TipoObjetivo extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TipoObjetivo_all', 3600 * 24, function () {

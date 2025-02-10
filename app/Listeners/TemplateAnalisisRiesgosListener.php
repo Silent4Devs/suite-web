@@ -79,7 +79,7 @@ class TemplateAnalisisRiesgosListener
                         'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
             case 'TBFormulaTemplateAnalisisRiesgoModel':

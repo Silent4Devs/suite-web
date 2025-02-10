@@ -12,7 +12,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 {
     use LivewireAlert;
 
-    //Basicos
+    // Basicos
     public $evaluador;
 
     public $id_evaluacion;
@@ -27,7 +27,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $array_periodos;
 
-    //Traer datos de la evaluación
+    // Traer datos de la evaluación
     public $evaluacion;
 
     public $evaluado;
@@ -36,7 +36,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $competencias_autoevaluado;
 
-    //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
+    // Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_competencias_evaluador;
 
     public $escalas;
@@ -45,10 +45,10 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $porcentajeCalificado = 0;
 
-    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
-        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        // Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
         $this->dispatch('dataFromChild2', dataFromChild2: $this->porcentajeCalificado);
     }
 

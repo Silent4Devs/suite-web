@@ -14,7 +14,7 @@ class AddColumns3ToEntendimientoOrganizacionsTable extends Migration
     public function up()
     {
         Schema::table('entendimiento_organizacions', function (Blueprint $table) {
-            //$table->foreign('elaboro_id')->references('id')->on('empleados');
+            // $table->foreign('elaboro_id')->references('id')->on('empleados');
             $table->string('analisis')->before('amenazas')->nullable();
             $table->date('fecha')->before('analisis')->nullable();
         });

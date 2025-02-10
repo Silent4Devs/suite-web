@@ -266,11 +266,6 @@
                                                         wire:model.live="file"
                                                         wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                 </div>
-                                                {{-- <div class="row">
-                                                        <input type="file" id="file" name="file"
-                                                            wire:model.live="file"
-                                                            wire:change="asignarObjArchivo({{ $obj_evld->id }})">
-                                                    </div> --}}
 
                                                 @if (!empty($obj_evidencias[$key]))
                                                     @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
@@ -302,18 +297,23 @@
                             </td>
                             <td>
                                 <div class="p-3">
-                                    <div class="form-group">
-                                        <input class="form-control" id="pregunta_n{{ $key }}"
-                                            style="width: 97px;"
-                                            value="{{ $obj_evld->calificacion_objetivo ?? null }}"
-                                            wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
-                                            type="number" placeholder="Calificación">
-                                    </div>
+                                    @if (!empty($obj_evidencias[$key]))
+                                        <div class="form-group">
+                                            <input class="form-control" id="pregunta_n{{ $key }}"
+                                                style="width: 97px;"
+                                                value="{{ $obj_evld->calificacion_objetivo ?? null }}"
+                                                wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
+                                                type="number" placeholder="Calificación">
+                                        </div>
 
-                                    <p
-                                        style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
-                                        {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
-                                    </p>
+                                        <p style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
+                                            {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
+                                        </p>
+                                    @else
+                                        <p>
+                                            Proporcione evidencias en el objetivo antes de calificarlo.
+                                        </p>
+                                    @endif
                                 </div>
                             </td>
                             <td></td>

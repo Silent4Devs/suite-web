@@ -22,7 +22,7 @@ class FelicitarCumpleaños extends Model implements Auditable
         'like',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAllWhereYear($usuario, $hoy)
     {
         return Cache::remember('Cumpleaños:cumpleaños_'.$usuario, 3600 * 2, function () use ($hoy, $usuario) {

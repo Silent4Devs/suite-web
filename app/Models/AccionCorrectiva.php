@@ -97,7 +97,7 @@ class AccionCorrectiva extends Model implements Auditable, HasMedia
         'comentarios_aprobacion',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('AccionCorrectiva:get_all', 3600 * 10, function () {

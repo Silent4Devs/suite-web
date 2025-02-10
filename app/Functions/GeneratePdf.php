@@ -29,7 +29,7 @@ class GeneratePdf
 
                 break;
             case 'planAuditoria':
-                //dd("Entra a plan auditoria", $datavalues);
+                // dd("Entra a plan auditoria", $datavalues);
                 $pdf_obj = App::make('dompdf.wrapper');
                 $pdf_obj->loadView('PDF.lista_verificacion.lista_verificacion', compact('datavalues'));
 
@@ -38,12 +38,12 @@ class GeneratePdf
 
                 Storage::disk('Iso27001')->put('Evaluación/Auditoría Interna/'.$file, $content);
                 // unlink("data/" . $file);
-                //dd("Termina");
+                // dd("Termina");
                 Alert::success('éxito', 'Información añadida con éxito');
 
                 break;
             default:
                 Alert::error('error', 'Intente de nuevo');
-        } //end switch
+        } // end switch
     }
 }

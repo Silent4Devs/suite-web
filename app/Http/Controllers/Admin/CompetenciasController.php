@@ -326,7 +326,7 @@ class CompetenciasController extends Controller
 
         if ($request->hasFile('file')) {
             $filenameWithExt = $request->file('file')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
@@ -383,7 +383,7 @@ class CompetenciasController extends Controller
         ]);
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();

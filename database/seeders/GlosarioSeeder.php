@@ -977,7 +977,7 @@ class GlosarioSeeder extends Seeder
                             anómalo o irregularidad en el sistema, los datos o el comportamiento del usuario.',
             ],
 
-            ////////////ISO 9001/////////////////////////////
+            // //////////ISO 9001/////////////////////////////
             [
                 'numero' => '3.1.1',
                 'norma' => 'ISO 9001',

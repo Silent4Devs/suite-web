@@ -31,7 +31,7 @@ class CreateRegistrarVisitantesTable extends Migration
             $table->boolean('registro_salida')->default(false);
             $table->dateTime('fecha_salida')->nullable();
             $table->longText('firma')->nullable();
-            //foreign keys
+            // foreign keys
             $table->foreign('empleado_id')->references('id')->on('empleados');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->softDeletes();
