@@ -350,16 +350,28 @@ class FormularioEditarContratosLivewire extends Component
             $this->error_message = null;
             $this->success_message = null;
 
-            // Verificar si el archivo está presente
-            if (!$this->file_contrato) {
-                $this->error_message = "No se ha seleccionado ningún archivo.";
+            // Asegurar que la variable existe antes de validarla
+            if (!isset($this->file_contrato) || empty($this->file_contrato)) {
+                $this->error_message = "Error: No se ha recibido ningún archivo.";
                 return;
             }
 
-            // Verificar si el archivo es válido
+            // Verificar si el archivo no es válido
             if ($this->file_contrato->getError()) {
                 $this->error_message = "Hubo un problema al cargar el archivo. Inténtalo nuevamente.";
                 return;
+            }
+
+            // Validaciones estándar
+            try {
+                $this->validate([
+                    'file_contrato' => 'required|file|max:51200|mimes:docx,pdf,doc,xlsx,pptx,txt,jpg,jpeg,png,tiff',
+                ]);
+
+                $this->success_message = "Archivo válido y listo para subir.";
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                $this->error_message = "El archivo no cumple con los requisitos.";
+                dd($e);
             }
 
             // Si todo está bien, mostrar mensaje de éxito
