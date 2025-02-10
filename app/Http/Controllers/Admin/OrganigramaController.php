@@ -27,6 +27,7 @@ class OrganigramaController extends Controller
 
                     $area = $this->getAreaWithLiderAndChildren($request->area_id);
                     $childrenArea = $area->lider;
+
                     return response()->json($childrenArea);
                 } else {
                     if ($request->id === null) {
@@ -37,10 +38,12 @@ class OrganigramaController extends Controller
 
                         $organizacionArray = $organizacionTree;
                         $this->traverseAllOrganigrama($organizacionArray->children_organigrama, $organizacionArray->area_id);
+
                         return response()->json($organizacionTree);
                     } else {
                         $organizacionTree = $this->getSearchEmployOrganizationChart($request->id);
                         $organizacionTree->children = $this->transverseChildrens($organizacionTree->id);
+
                         return response()->json($organizacionTree);
 
                         // return $organizacionTree
@@ -51,7 +54,7 @@ class OrganigramaController extends Controller
             }
 
             $rutaImagenes = asset('storage/empleados/imagenes/');
-            $organizacionDB = Async::run(fn() => Organizacion::first());
+            $organizacionDB = Async::run(fn () => Organizacion::first());
             $areas = Area::all();
 
             if ($organizacionDB && property_exists($organizacionDB, 'empresa')) {
@@ -74,10 +77,10 @@ class OrganigramaController extends Controller
         }
     }
 
-    function traverseArea(&$areasChildren)
+    public function traverseArea(&$areasChildren)
     {
         foreach ($areasChildren as $areaChildren) {
-            $puesto =  $areaChildren->puesto;
+            $puesto = $areaChildren->puesto;
             $areaChildren->setAppends([]);
             $areaChildren->area->setAppends([]);
             $areaChildren->supervisor->setAppends([]);
@@ -88,7 +91,7 @@ class OrganigramaController extends Controller
         }
     }
 
-    function traverseAllOrganigrama(&$allsChildren, $liderAreaId)
+    public function traverseAllOrganigrama(&$allsChildren, $liderAreaId)
     {
         foreach ($allsChildren as $allChildren) {
 
@@ -148,7 +151,6 @@ class OrganigramaController extends Controller
         }
     }
 
-
     public function getAreaWithLiderAndChildren($areaId)
     {
         // Obtener el área con el líder y sus hijos
@@ -166,7 +168,7 @@ class OrganigramaController extends Controller
         $area->lider = $lider;
 
         // Comprobar si el área no fue encontrada
-        if (!$area) {
+        if (! $area) {
             return response()->json(['error' => 'Área no encontrada'], 404);
         }
 
@@ -174,7 +176,7 @@ class OrganigramaController extends Controller
         return $area;
     }
 
-    //obtener los childres de un lider, mediante su id
+    // obtener los childres de un lider, mediante su id
     public function transverseChildrens($liderId)
     {
 

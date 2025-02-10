@@ -99,7 +99,7 @@ class EvDesempenoDashboardEvaluacion extends Component
 
     public function render()
     {
-        //Datos generales
+        // Datos generales
         $this->evaluados_tabla = EvaluacionDesempeno::with('evaluados');
 
         if ($this->select_area_tabla != 'todos') {

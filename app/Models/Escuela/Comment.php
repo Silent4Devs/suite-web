@@ -21,14 +21,14 @@ class Comment extends Model implements Auditable
         return $this->morphTo();
     }
 
-    //relacion uno a muchos inversa
+    // relacion uno a muchos inversa
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    //Relacion uno a muchos polimorfica
+    // Relacion uno a muchos polimorfica
 
     public function comments()
     {

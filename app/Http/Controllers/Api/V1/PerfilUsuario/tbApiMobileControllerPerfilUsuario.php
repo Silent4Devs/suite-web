@@ -200,7 +200,7 @@ class tbApiMobileControllerPerfilUsuario extends Controller
                 'resumen',
                 'puesto_id',
                 'perfil_empleado_id',
-                'tipo_contrato_empleados_id', //Agregados para nueva version de perfil de empleado
+                'tipo_contrato_empleados_id', // Agregados para nueva version de perfil de empleado
                 'terminacion_contrato',
                 'renovacion_contrato',
                 'esquema_contratacion',

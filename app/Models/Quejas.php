@@ -40,10 +40,10 @@ class Quejas extends Model implements Auditable
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_reporte', 'fecha_de_cierre'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('quejas_all', 3600, function () {
             return self::get();
         });

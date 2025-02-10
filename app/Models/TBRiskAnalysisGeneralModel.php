@@ -25,7 +25,7 @@ class TBRiskAnalysisGeneralModel extends Model
         'template_id',
     ];
 
-    //Relationships
+    // Relationships
 
     public function elaboro()
     {

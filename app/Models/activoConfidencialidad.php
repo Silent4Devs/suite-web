@@ -21,7 +21,7 @@ class activoConfidencialidad extends Model implements Auditable
         'valor',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('ActivosConfidencial_all', 3600 * 12, function () {

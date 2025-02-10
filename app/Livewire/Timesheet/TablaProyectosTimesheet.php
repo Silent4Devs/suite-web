@@ -84,9 +84,9 @@ class TablaProyectosTimesheet extends Component
 
         // $this->dispatch('cerrarModal');
 
-        //$this->sedes = Sede::getAll();
+        // $this->sedes = Sede::getAll();
 
-        //$this->areas = Area::getAll();
+        // $this->areas = Area::getAll();
 
         $this->clientes = TimesheetCliente::getAllOrderBy('nombre');
 

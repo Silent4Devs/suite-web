@@ -18,7 +18,7 @@ use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\Matriz31000ActivosInfo;
 use App\Models\MatrizIso31000;
 use App\Models\MatrizIso31000ControlesPivot;
-//use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 use App\Models\MatrizNist;
 use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
@@ -115,7 +115,7 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //$ver = VersionesIso::select('version_historico')->first();
+        // $ver = VersionesIso::select('version_historico')->first();
         $ver = VersionesIso::getFirst();
         if ($ver->version_historico === true) {
             $version_historico = 'true';
@@ -124,7 +124,7 @@ class MatrizRiesgosController extends Controller
         }
 
         $sedes = Sede::getAll(['id', 'sede']);
-        //$areas = Area::getAll();
+        // $areas = Area::getAll();
         $procesos = Proceso::getAll(['id', 'codigo', 'nombre']);
         $responsables = Empleado::select('id', 'name', 'area_id', 'puesto_id')->alta()->get();
 
@@ -614,7 +614,7 @@ class MatrizRiesgosController extends Controller
                 return $row->resultado_ponderacion ? $row->resultado_ponderacion : '';
             });
             $table->editColumn('probabilidad', function ($row) {
-                //return $row->probabilidad ? $row->probabilidad : "";
+                // return $row->probabilidad ? $row->probabilidad : "";
                 switch ($row->probabilidad) {
                     case 0:
                         return 'NULA' ? 'NULA' : '';
@@ -633,7 +633,7 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('impacto', function ($row) {
-                //return $row->impacto ? $row->impacto : "";
+                // return $row->impacto ? $row->impacto : "";
                 switch ($row->impacto) {
                     case 0:
                         return 'BAJO' ? 'BAJO' : '';
@@ -756,7 +756,7 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('probabilidad_residual', function ($row) {
-                //return $row->probabilidad_residual ? $row->probabilidad_residual : "";
+                // return $row->probabilidad_residual ? $row->probabilidad_residual : "";
                 switch ($row->probabilidad_residual) {
                     case 0:
                         return 'NULA' ? 'NULA' : '';
@@ -775,7 +775,7 @@ class MatrizRiesgosController extends Controller
                 }
             });
             $table->editColumn('impacto_residual', function ($row) {
-                //return $row->impacto_residual ? $row->impacto_residual : "";
+                // return $row->impacto_residual ? $row->impacto_residual : "";
                 switch ($row->impacto_residual) {
                     case 0:
                         return 'BAJO' ? 'BAJO' : '';
@@ -1152,7 +1152,7 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000(Request $request)
     {
-        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizIso31000::get();
             $table = Datatables::of($query);
@@ -1286,7 +1286,7 @@ class MatrizRiesgosController extends Controller
 
     public function NIST(Request $request)
     {
-        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizNist::get();
             $table = Datatables::of($query);

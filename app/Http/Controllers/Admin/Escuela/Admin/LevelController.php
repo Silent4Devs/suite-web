@@ -79,7 +79,7 @@ class LevelController extends Controller
 
         $level = Level::create($request->all());
 
-        //Alert::toast('El nivel se creó con éxito', 'success');
+        // Alert::toast('El nivel se creó con éxito', 'success');
         return redirect()->route('admin.levels.index', $level);
     }
 
@@ -119,7 +119,7 @@ class LevelController extends Controller
 
         $level->update($request->all());
 
-        //Alert::toast('El nivel se actualizó con éxito', 'success');
+        // Alert::toast('El nivel se actualizó con éxito', 'success');
         return redirect()->route('admin.levels.index', $level);
     }
 
@@ -133,7 +133,7 @@ class LevelController extends Controller
     {
         $level = Level::find($id)->delete();
 
-        //Alert::toast('El nivel se eliminó con éxito', 'success');
+        // Alert::toast('El nivel se eliminó con éxito', 'success');
         return redirect()->route('admin.levels.index');
     }
 }

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
 
-            //Foreign
+            // Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');
         });
     }

@@ -13,7 +13,7 @@ class AnswersValidationRule implements Rule
      */
     public function __construct()
     {
-        //Datos del new
+        // Datos del new
     }
 
     /**

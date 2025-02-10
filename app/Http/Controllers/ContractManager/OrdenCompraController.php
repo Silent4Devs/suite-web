@@ -32,10 +32,10 @@ use DB;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use NumberFormatter;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
-use Maatwebsite\Excel\Facades\Excel;
 
 class OrdenCompraController extends Controller
 {
@@ -130,7 +130,6 @@ class OrdenCompraController extends Controller
         return view('contract_manager.ordenes-compra.clausulas', compact('clausulas'));
     }
 
-
     public function clausulas_save(Request $request)
     {
         // Verifica si ya existe un registro para la organización
@@ -141,6 +140,7 @@ class OrdenCompraController extends Controller
             $clausulas->update([
                 'descripcion' => $request->descripcion,
             ]);
+
             return redirect('/contract_manager/orden-compra')->with('message', 'Clausula modificada.');
         } else {
             // Si no existe, se crea un nuevo registro
@@ -152,7 +152,6 @@ class OrdenCompraController extends Controller
 
         return redirect('/contract_manager/katbol')->with('message', 'Cláusula creada con éxito.');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -282,21 +281,21 @@ class OrdenCompraController extends Controller
         $data = $request->all();
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $producto_nuevo = KatbolProductoRequisicion::create([
-                'cantidad' => $data['cantidad' . $i],
-                'producto_id' => $data['producto' . $i],
-                'centro_costo_id' => $data['centro_costo' . $i],
-                'espesificaciones' => $data['especificaciones' . $i],
-                'contrato_id' => $data['contrato' . $i],
+                'cantidad' => $data['cantidad'.$i],
+                'producto_id' => $data['producto'.$i],
+                'centro_costo_id' => $data['centro_costo'.$i],
+                'espesificaciones' => $data['especificaciones'.$i],
+                'contrato_id' => $data['contrato'.$i],
                 'requisiciones_id' => $requisicion->id,
-                'no_personas' => $data['no_personas' . $i],
-                'porcentaje_involucramiento' => $data['porcentaje_involucramiento' . $i],
-                'sub_total' => $data['sub_total' . $i],
-                'iva' => $data['iva' . $i],
-                'iva_retenido' => $data['iva_retenido' . $i],
-                'descuento' => $data['descuento' . $i],
-                'otro_impuesto' => $data['otro_impuesto' . $i],
-                'isr_retenido' => $data['isr_retenido' . $i],
-                'total' => $data['total' . $i],
+                'no_personas' => $data['no_personas'.$i],
+                'porcentaje_involucramiento' => $data['porcentaje_involucramiento'.$i],
+                'sub_total' => $data['sub_total'.$i],
+                'iva' => $data['iva'.$i],
+                'iva_retenido' => $data['iva_retenido'.$i],
+                'descuento' => $data['descuento'.$i],
+                'otro_impuesto' => $data['otro_impuesto'.$i],
+                'isr_retenido' => $data['isr_retenido'.$i],
+                'total' => $data['total'.$i],
             ]);
         }
 
@@ -444,21 +443,21 @@ class OrdenCompraController extends Controller
         // Procesar productos nuevos y detectar cambios
         for ($i = 1; $i <= $request->count_productos; $i++) {
             $productosNuevos[] = [
-                'id_prod' => $request['id_prod' . $i] ?? null,
-                'cantidad' => $request['cantidad' . $i],
-                'producto_id' => $request['producto' . $i],
-                'centro_costo_id' => $request['centro_costo' . $i],
-                'espesificaciones' => $request['especificaciones' . $i],
-                'contrato_id' => $request['contrato' . $i],
-                'no_personas' => $request['no_personas' . $i],
-                'porcentaje_involucramiento' => $request['porcentaje_involucramiento' . $i],
-                'sub_total' => $request['sub_total' . $i],
-                'iva' => $request['iva' . $i],
-                'iva_retenido' => $request['iva_retenido' . $i],
-                'descuento' => $request['descuento' . $i],
-                'otro_impuesto' => $request['otro_impuesto' . $i],
-                'isr_retenido' => $request['isr_retenido' . $i],
-                'total' => $request['total' . $i],
+                'id_prod' => $request['id_prod'.$i] ?? null,
+                'cantidad' => $request['cantidad'.$i],
+                'producto_id' => $request['producto'.$i],
+                'centro_costo_id' => $request['centro_costo'.$i],
+                'espesificaciones' => $request['especificaciones'.$i],
+                'contrato_id' => $request['contrato'.$i],
+                'no_personas' => $request['no_personas'.$i],
+                'porcentaje_involucramiento' => $request['porcentaje_involucramiento'.$i],
+                'sub_total' => $request['sub_total'.$i],
+                'iva' => $request['iva'.$i],
+                'iva_retenido' => $request['iva_retenido'.$i],
+                'descuento' => $request['descuento'.$i],
+                'otro_impuesto' => $request['otro_impuesto'.$i],
+                'isr_retenido' => $request['isr_retenido'.$i],
+                'total' => $request['total'.$i],
             ];
         }
 
@@ -878,14 +877,14 @@ class OrdenCompraController extends Controller
         $clausulasArray = preg_split('/(?=\d+\.)/', $clausulas->descripcion, -1, PREG_SPLIT_NO_EMPTY);
 
         // Limpiar cada cláusula eliminando saltos de línea adicionales
-        $clausulasArray = array_map(fn($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
+        $clausulasArray = array_map(fn ($clausula) => trim(preg_replace('/\s+/', ' ', $clausula)), $clausulasArray);
 
         // Reunir números que fueron separados incorrectamente
         $correctedClauses = [];
         for ($key = 0; $key < count($clausulasArray); $key++) {
             if (isset($clausulasArray[$key + 1]) && preg_match('/^\d+$/', trim($clausulasArray[$key]))) {
                 // Combinar número separado con la siguiente cláusula sin espacio adicional
-                $correctedClauses[] = $clausulasArray[$key] . $clausulasArray[$key + 1];
+                $correctedClauses[] = $clausulasArray[$key].$clausulasArray[$key + 1];
                 $key++; // Saltar la siguiente entrada ya que se ha combinado
             } else {
                 $correctedClauses[] = $clausulasArray[$key];
@@ -906,7 +905,7 @@ class OrdenCompraController extends Controller
         $textoIzquierdoHtml = implode('<br><br>', $textoIzquierdo);
         $textoDerechoHtml = implode('<br><br>', $textoDerecho);
 
-        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'firstClause','textoIzquierdoHtml','textoDerechoHtml'));
+        $pdf = PDF::loadView('orden_compra_pdf', compact('firma_finanzas_name', 'requisiciones', 'organizacion', 'proveedores', 'letras', 'firstClause', 'textoIzquierdoHtml', 'textoDerechoHtml'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->download('orden_compra.pdf');
@@ -1048,10 +1047,10 @@ class OrdenCompraController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1059,21 +1058,21 @@ class OrdenCompraController extends Controller
 
                 $responsable = $requisicion->obtener_responsable_comprador;
 
-                if (($user->empleado->id == $responsable->id)) { //comprador_id
+                if (($user->empleado->id == $responsable->id)) { // comprador_id
                     $tipo_firma = 'firma_comprador_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del comprador: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
             }
         } elseif ($requisicion->firma_solicitante_orden === null) {
             if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
-                if ($user->empleado->id == $firma_siguiente->solicitante_id) { //solicitante_id
+                if ($user->empleado->id == $firma_siguiente->solicitante_id) { // solicitante_id
                     $tipo_firma = 'firma_solicitante_orden';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $firma_siguiente->solicitante->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$firma_siguiente->solicitante->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1084,7 +1083,7 @@ class OrdenCompraController extends Controller
                 if ($user->empleado->id == $responsable->id) {
                     $tipo_firma = 'firma_solicitante_orden';
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del solicitante directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1099,7 +1098,7 @@ class OrdenCompraController extends Controller
                     $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
                     // $alerta = $this->validacionLista($tipo_firma, $comprador->user->id);
                 } else {
-                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>' . $responsable->name . '</strong>';
+                    $mensaje = 'No tiene permisos para firmar<br> En espera del jefe directo: <br> <strong>'.$responsable->name.'</strong>';
 
                     return view('contract_manager.requisiciones.error', compact('mensaje'));
                 }
@@ -1259,7 +1258,7 @@ class OrdenCompraController extends Controller
 
     public function excel(Request $request)
     {
-        $export = new RequsicionExport();
+        $export = new RequsicionExport;
 
         return Excel::download($export, 'oc.xlsx');
     }

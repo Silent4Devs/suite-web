@@ -28,7 +28,7 @@ class VistaGlobalVacacionesExport implements FromCollection, WithHeadings
             )
             ->get();
 
-        //Cambiar valor numerico por Texto correspondiente
+        // Cambiar valor numerico por Texto correspondiente
         function mapAprobacionStatus($value)
         {
             switch ($value) {

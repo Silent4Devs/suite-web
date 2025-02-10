@@ -55,8 +55,6 @@ use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('orden-compra/excel', [OrdenCompraController::class, 'excel'])->name('orden-compra.excel');
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -101,7 +99,6 @@ Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
     ->name('password.update')
     ->middleware('auth');
 
-
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -109,7 +106,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/', [PortalComunicacionController::class, 'index']);
     Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
     Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
-    //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
+    // Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
     // Agrupamos las rutas relacionadas con el controlador UsersController
     Route::controller(UsersController::class)->group(function () {
@@ -252,7 +249,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('puestos', PuestosController::class);
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
-        //Se puso aqui debido a problema de cross-origin
+        // Se puso aqui debido a problema de cross-origin
         Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
 
         // Rutas para Visitantes
@@ -296,7 +293,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('/', 'obtenerArbol')->name('octave.arbol-riesgos.obtener'); // Obtener datos del árbol de riesgos
         });
 
-        //Modulo Capital Humano
+        // Modulo Capital Humano
         Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
         // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
@@ -349,13 +346,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('lista-distribucion/{lista}/update', 'ListaDistribucionController@update')->name('lista-distribucion.update');
         Route::get('lista-distribucion/{id}/show', 'ListaDistribucionController@show')->name('lista-distribucion.show');
 
-        //Lista Informativa
+        // Lista Informativa
         Route::get('lista-informativa', 'ListaInformativaController@index')->name('lista-informativa.index');
         Route::get('lista-informativa/{id}/edit', 'ListaInformativaController@edit')->name('lista-informativa.edit');
         Route::post('lista-informativa/{lista}/update', 'ListaInformativaController@update')->name('lista-informativa.update');
         Route::get('lista-informativa/{id}/show', 'ListaInformativaController@show')->name('lista-informativa.show');
 
-        //Control de Ausencias- Day-Off
+        // Control de Ausencias- Day-Off
         Route::controller(DayOffController::class)->group(function () {
             Route::get('vista-global-dayoff', 'vistaGlobal')->name('vista-global-dayoff');
             Route::get('ExportDayOff', 'exportExcel')->name('descarga-dayOff');
@@ -387,7 +384,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'destroy' => 'permisos-goce-sueldo.destroy',
         ]);
 
-        //Control de Solicitud- Vacaciones
+        // Control de Solicitud- Vacaciones
         Route::prefix('solicitud-vacaciones')->group(function () {
             Route::controller(SolicitudVacacionesController::class)->group(function () {
                 Route::get('perido-adicional/create', 'periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
@@ -513,7 +510,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         // Agrupar rutas de 'recursos-humanos'
         Route::prefix('recursos-humanos')->group(function () {
-            //Tipos de contratos
+            // Tipos de contratos
             Route::resource('tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
             Route::resource('entidades-crediticias', 'RH\EntidadCrediticiaController');
             Route::resource('dependientes-empleados', 'RH\DependientesEconomicosEmpleadosController');
@@ -525,7 +522,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('evaluacion-360/normalizar/{evaluacion}/resultados', 'RH\EV360EvaluacionesController@normalizarResultados')->name('ev360-normalizar-resultados');
             Route::get('evaluacion-360', 'RH\EV360EvaluacionesController@index')->name('rh-evaluacion360.index');
 
-            //Consulta de evaluación
+            // Consulta de evaluación
             Route::get('evaluacion-360/{evaluacion}/{evaluado}/mis-evaluaciones', 'RH\EV360EvaluacionesController@misEvaluaciones')->name('ev360-evaluaciones.misEvaluaciones');
             Route::get('evaluacion-360/{evaluacion}/{evaluador}/evaluaciones-mi-equipo', 'RH\EV360EvaluacionesController@evaluacionesDeMiEquipo')->name('ev360-evaluaciones.evaluacionesDeMiEquipo');
 
@@ -708,13 +705,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::view('visualizar-logs', 'admin.visualizar-logs.index')->name('visualizar-logs.index');
 
         Route::middleware(['auth', 'password.expired'])->group(function () {
-        Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
-        Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
-        Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
-        Route::post('portal-comunicacion/cumpleaños_comentarios/{id}', 'PortalComunicacionController@felicitarCumplesComentarios')->name('portal-comunicacion.cumples-comentarios');
-        Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
-        // Route::resource('portal-comunicacion', 'PortalComunicacionController');
-        Route::resource('portal-comunicacion', 'PortalComunicacionController');
+            Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
+            Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
+            Route::post('portal-comunicacion/cumpleaños-dislike/{id}', 'PortalComunicacionController@felicitarCumpleañosDislike')->name('portal-comunicacion.cumples-dislike');
+            Route::post('portal-comunicacion/cumpleaños_comentarios/{id}', 'PortalComunicacionController@felicitarCumplesComentarios')->name('portal-comunicacion.cumples-comentarios');
+            Route::post('portal-comunicacion/cumpleaños_comentarios_update/{id}', 'PortalComunicacionController@felicitarCumplesComentariosUpdate')->name('portal-comunicacion.cumples-comentarios-update');
+            // Route::resource('portal-comunicacion', 'PortalComunicacionController');
+            Route::resource('portal-comunicacion', 'PortalComunicacionController');
         });
 
         Route::get('plantTrabajoBase/{data}', 'PlanTrabajoBaseController@showTarea');
@@ -756,10 +753,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('desk/{quejas}/quejas-clientes-update', 'QuejasClienteController@updateQuejasClientes')->name('desk.quejasClientes-update');
         Route::post('desk/planes/quejas-clientes', 'QuejasClienteController@planesQuejasClientes')->name('desk.planesQuejasClientes');
 
-        //Dashboard Queja Cliente
+        // Dashboard Queja Cliente
         Route::get('desk/quejas-clientes/dashboard', 'QuejasClienteController@quejasClientesDashboard')->name('desk.quejasClientes-dashboard');
 
-        //Archivo QuejaCliente
+        // Archivo QuejaCliente
         Route::post('desk/{incidente}/archivarQuejasClientes', 'QuejasClienteController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
         Route::get('desk/quejas-cliente-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
         Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'QuejasClienteController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
@@ -771,7 +768,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('desk/{denuncias}/denuncias-update', 'DenunciasController@updateDenuncias')->name('desk.denuncias-update');
         Route::post('desk/{denuncias}/analisis_denuncia-update', 'DenunciasController@updateAnalisisDenuncias')->name('desk.analisis_denuncia-update');
 
-        //flujo de archivado denuncias
+        // flujo de archivado denuncias
         Route::get('desk/denuncias', 'DenunciasController@indexDenuncia')->name('desk.denuncia-index');
         Route::post('desk/{incidente}/archivarDenuncias', 'DenunciasController@archivadoDenuncia')->name('desk.denuncia-archivar');
         Route::get('desk/denuncias-archivo', 'DenunciasController@archivoDenuncia')->name('desk.denuncia-archivo');
@@ -784,7 +781,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('desk/{mejoras}/mejoras-edit', 'MejorasController@editMejoras')->name('desk.mejoras-edit');
         Route::post('desk/{mejoras}/mejoras-update', 'MejorasController@updateMejoras')->name('desk.mejoras-update');
 
-        //flujo de archivado mejoras
+        // flujo de archivado mejoras
         Route::get('desk/mejoras', 'MejorasController@indexMejora')->name('desk.mejora-index');
         Route::post('desk/{incidente}/archivarMejoras', 'MejorasController@archivadoMejora')->name('desk.mejora-archivar');
         Route::get('desk/mejoras-archivo', 'MejorasController@archivoMejora')->name('desk.mejora-archivo');
@@ -797,7 +794,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('desk/{sugerencias}/sugerencias-edit', 'SugerenciasController@editSugerencias')->name('desk.sugerencias-edit');
         Route::post('desk/{sugerencias}/sugerencias-update', 'SugerenciasController@updateSugerencias')->name('desk.sugerencias-update');
         Route::get('desk/sugerencias', 'SugerenciasController@indexSugerencia')->name('desk.sugerencia-index');
-        //flujo de archivado Sugerencias
+        // flujo de archivado Sugerencias
         Route::post('desk/{incidente}/archivarSugerencia', 'SugerenciasController@archivadoSugerencia')->name('desk.sugerencia-archivar');
         Route::get('desk/sugerencia-archivo', 'SugerenciasController@archivoSugerencia')->name('desk.sugerencia-archivo');
         Route::post('desk/sugerencia-archivo/recuperar/{id}', 'SugerenciasController@recuperarArchivadoSugerencia')->name('desk.sugerencia-archivo.recuperar');
@@ -809,7 +806,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('desk/{seguridad}/analisis_seguridad-update', 'SeguridadController@updateAnalisisSeguridad')->name('desk.analisis_seguridad-update');
         Route::get('desk/{seguridad}/seguridad-edit', 'SeguridadController@editSeguridad')->name('desk.seguridad-edit');
         Route::post('desk/{seguridad}/seguridad-update', 'SeguridadController@updateSeguridad')->name('desk.seguridad-update');
-        //flujo de archivado seguridad
+        // flujo de archivado seguridad
         Route::post('desk/{incidente}/archivar', 'SeguridadController@archivadoSeguridad')->name('desk.seguridad-archivar');
         Route::get('desk/seguridad-archivo', 'SeguridadController@archivoSeguridad')->name('desk.seguridad-archivo');
         Route::post('desk/seguridad-archivo/recuperar/{id}', 'SeguridadController@recuperarArchivadoSeguridad')->name('desk.seguridad-archivo.recuperar');
@@ -821,7 +818,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('desk/{riesgos}/analisis_riesgo-update', 'RiesgosController@updateAnalisisReisgos')->name('desk.analisis_riesgo-update');
         Route::get('desk/{riesgos}/riesgos-edit', 'RiesgosController@editRiesgos')->name('desk.riesgos-edit');
         Route::post('desk/{riesgos}/riesgos-update', 'RiesgosController@updateRiesgos')->name('desk.riesgos-update');
-        //flujo de archivado riesgos
+        // flujo de archivado riesgos
         Route::post('desk/{incidente}/archivarRiesgos', 'RiesgosController@archivadoRiesgo')->name('desk.riesgo-archivar');
         Route::get('desk/riesgos-archivo', 'RiesgosController@archivoRiesgo')->name('desk.riesgo-archivo');
         Route::post('desk/riesgos-archivo/recuperar/{id}', 'RiesgosController@recuperarArchivadoRiesgo')->name('desk.riesgo-archivo.recuperar');
@@ -883,14 +880,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         // Route::get('desk/{quejas}/quejas-edit', 'QuejasController@editQuejas')->name('desk.quejas-edit');
         // Route::post('desk/{quejas}/quejas-update', 'QuejasController@updateQuejas')->name('desk.quejas-update');
-        //flujo de archivado quejas
+        // flujo de archivado quejas
         // Route::post('desk/{incidente}/archivarQuejas', 'QuejasController@archivadoQueja')->name('desk.queja-archivar');
         // Route::get('desk/quejas-archivo', 'QuejasController@archivoQueja')->name('desk.queja-archivo');
         // Route::post('desk/quejas-archivo/recuperar/{id}', 'QuejasController@recuperarArchivadoQueja')->name('desk.queja-archivo.recuperar');
         // Route::get('desk/quejas', 'QuejasController@indexQueja')->name('desk.queja-index');
         //
 
-        //Archivo QuejaCliente
+        // Archivo QuejaCliente
         // Route::post('desk/{incidente}/archivarQuejasClientes', 'QuejasClienteController@archivadoQuejaClientes')->name('desk.quejasclientes-archivar');
         // Route::get('desk/quejas-archivo', 'QuejasClienteController@archivoQuejaClientes')->name('desk.quejacliente-archivo');
         // Route::post('desk/quejas-clientes-archivo/recuperar/{id}', 'QuejasClienteController@recuperarArchivadoQuejaCliente')->name('desk.quejaClientes-archivo.recuperar');
@@ -925,7 +922,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         // Route::get('desk/{sugerencias}/sugerencias-edit', 'SugerenciasController@editSugerencias')->name('desk.sugerencias-edit');
         // Route::post('desk/{sugerencias}/sugerencias-update', 'SugerenciasController@updateSugerencias')->name('desk.sugerencias-update');
 
-        //Quejas clientes
+        // Quejas clientes
         // Route::get('desk/quejas-clientes', 'QuejasClienteController@quejasClientes')->name('desk.quejas-clientes');
         // Route::get('desk/quejas-clientes/index', 'QuejasClienteController@indexQuejasClientes')->name('desk.quejasClientes-index');
         // Route::post('desk/reportes/quejas-clientes', 'QuejasClienteController@storeQuejasClientes')->name('desk.quejasClientes-store');
@@ -969,14 +966,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
-        //Template Analisis de Brechas
+        // Template Analisis de Brechas
         Route::get('templates/create', 'TemplateController@create')->name('templates.create');
         Route::get('templates/{id}/edit', 'TemplateController@edit')->name('templates.edit');
         // Route::post('templates/store', 'TemplateController@store')->name('templates.store');
 
-        //Analisis brechas
+        // Analisis brechas
         Route::group(['middleware' => ['version_iso_2013']], function () {
-            //Route::resource('analisis-brechas', 'AnalisisBController');
+            // Route::resource('analisis-brechas', 'AnalisisBController');
             Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
             Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
             Route::post('analisis-brechas/update', 'AnalisisBController@update');
@@ -989,8 +986,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('evaluacion-analisis-brechas-2022/{id}', 'FormularioAnalisisBrechasController@index')->name('formulario_brecha');
 
         Route::group(['middleware' => ['version_iso_2022']], function () {
-            //Analisis brechas 2022
-            //Template Analisis de Brechas
+            // Analisis brechas 2022
+            // Template Analisis de Brechas
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');
             Route::get('/top', 'TopController@index')->name('top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
@@ -1005,11 +1002,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
             // Gap Dos 2022
-            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            // Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
             Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
             // Gap Tres 2022
-            //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            // Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
             // });
         });
@@ -1039,7 +1036,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
             Route::get('getEmployeeData', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@getEmployeeData')->name('getEmployeeData');
 
-            //Panel declaracione-2022
+            // Panel declaracione-2022
             Route::post('paneldeclaracion-2022/controles', 'PanelDeclaracionIsoController@controles')->name('paneldeclaracion-2022.controles');
             Route::post('paneldeclaracion-2022/responsables-quitar', 'PanelDeclaracionIsoController@quitarRelacionResponsable')->name('paneldeclaracion-2022.responsables.quitar');
             Route::post('paneldeclaracion-2022/responsables', 'PanelDeclaracionIsoController@relacionarResponsable')->name('paneldeclaracion-2022.responsables');
@@ -1058,7 +1055,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
             Route::resource('paneldeclaracion', 'PanelDeclaracionController');
 
-            //Analisis brechas 2022
+            // Analisis brechas 2022
             // Route::get('/top', 'TopController@index')->name('top');
             Route::get('analisis/{id}/dashboard', 'FormularioAnalisisBrechasController@index')->name('formulario');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
@@ -1070,8 +1067,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
             // Route::group(['middleware' => ['version_iso_2022']], function () {
-            //Analisis brechas 2022
-            //Template Analisis de Brechas
+            // Analisis brechas 2022
+            // Template Analisis de Brechas
             Route::post('templates/store', 'TemplateController@store')->name('templates.store');
             Route::get('/template-brechas-2022-top', 'TopController@index')->name('template-top');
             Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
@@ -1086,16 +1083,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
 
             // Gap Dos 2022
-            //Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            // Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
             Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
 
             // Gap Tres 2022
-            //Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            // Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
             Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
             // });
         });
 
-        //gantt
+        // gantt
         Route::get('gantt', 'GanttController@index');
         Route::post('gantt/update', 'GanttController@update');
 
@@ -1108,7 +1105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
         Route::resource('roles', 'RolesController');
 
-        //procesos
+        // procesos
 
         Route::get('mapa-procesos', 'ProcesoController@mapaProcesos')->name('procesos.mapa');
         Route::get('procesos/{documento?}/vista', 'ProcesoController@obtenerDocumentoProcesos')->name('procesos.obtenerDocumentoProcesos');
@@ -1117,7 +1114,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
         Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
 
-        //macroprocesos
+        // macroprocesos
         Route::resource('macroprocesos', 'MacroprocesoController');
 
         // Timesheet
@@ -1174,7 +1171,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
 
-        //Competencia Tipo
+        // Competencia Tipo
 
         Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
@@ -1182,7 +1179,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
         Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
-        //Directorio
+        // Directorio
 
         Route::get('directorio', 'DirectorioEmpleadosController@index')->name('directorio.index');
 
@@ -1232,14 +1229,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('partes-interesadas/{id}/update', 'PartesInteresadasController@update')->name('partes-interesadas.update');
         Route::resource('partes-interesadas', 'PartesInteresadasController')->except(['edit', 'update']);
 
-        //Configuración Soporte
+        // Configuración Soporte
         Route::delete('configurar-soporte/destroy', 'ConfigurarSoporteController@massDestroy')->name('configurar-soporte.massDestroy');
         Route::resource('configurar-soporte', 'ConfigurarSoporteController');
         Route::get('getgetEmployeeData', 'ConfigurarSoporteController@getgetEmployeeData')->name('getgetEmployeeData');
         Route::get('soporte', 'ConfigurarSoporteController@visualizarSoporte')->name('soporte');
         Route::view('actualizaciones', 'actualizaciones')->name('actualizaciones');
 
-        //Configuración Consultores
+        // Configuración Consultores
         // Route::delete('configurar-consultor/destroy', 'ConfigurarConsultorController@massDestroy')->name('configurar-consultor.massDestroy');
         // Route::resource('configurar-consultor', 'ConfigurarConsultorController');
 
@@ -1459,7 +1456,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
-        //Clasificacion Auditorias
+        // Clasificacion Auditorias
         Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
         Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
         Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
@@ -1468,7 +1465,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
         Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
 
-        //Clausulas Auditorias
+        // Clausulas Auditorias
         Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
         Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
         Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
@@ -1534,7 +1531,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('sede-ubicacion/{data}', 'SedeController@ubicacion');
         Route::get('sedes/sede-ubicacionorganizacion/{id}', 'SedeController@ubicacionorg');
 
-        //Grupo Areas
+        // Grupo Areas
         Route::post('grupoarea/areas-relacionadas', [GrupoAreaController::class, 'getRelationatedAreas'])->name('grupoarea.getRelationatedAreas');
         Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
         Route::post('grupoarea/parse-csv-import', 'GrupoAreaController@parseCsvImport')->name('grupoarea.parseCsvImport');
@@ -1647,13 +1644,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
         Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
-        //amenzas
+        // amenzas
         Route::resource('amenazas', 'AmenazaController');
         Route::delete('amenazas/destroy', 'AmenazaController@massDestroy')->name('amenazas.massDestroy');
         Route::post('amenazas/parse-csv-import', 'AmenazaController@parseCsvImport')->name('amenazas.parseCsvImport');
         Route::post('amenazas/process-csv-import', 'AmenazaController@processCsvImport')->name('amenazas.processCsvImport');
 
-        //vulnerabilidades
+        // vulnerabilidades
         // Route::post('CargaAmenaza', 'SubidaExcel@Vulnerabilidad')->name('cargaExcel-vulnerabilidad');
         Route::resource('vulnerabilidads', 'VulnerabilidadController');
         Route::delete('vulnerabilidads/destroy', 'VulnerabilidadController@massDestroy')->name('vulnerabilidads.massDestroy');
@@ -1708,15 +1705,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'analisis-aia.update',
         ])->except(['edit']);
 
-        //Carta de Aceptación
+        // Carta de Aceptación
         // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
         Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
         Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
         Route::post('carta-aceptacion/aprobacion', 'CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
-        //Tabla de impactos
+        // Tabla de impactos
         Route::resource('tabla-impacto', 'TablaImpactoController');
 
-        //niveles de impacto
+        // niveles de impacto
         Route::get('niveles-impacto/get-niveles/{id?}', 'NivelesImpactoController@getNivelesImpactos')->name('niveles.getNivelesImpactos');
         Route::resource('niveles-impacto', 'NivelesImpactoController');
 
@@ -1807,11 +1804,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::resource('procesos-octave', ProcesosOctaveController::class)->except(['index', 'create', 'edit', 'destroy']);
 
-        //Servicios
+        // Servicios
         Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
         Route::resource('servicios', 'ServiciosController')->except('destroy');
 
-        //Revisiones Documentos
+        // Revisiones Documentos
         Route::prefix('revisiones')->controller(RevisionDocumentoController::class)->group(function () {
             Route::post('approve', 'approve')->name('revisiones.approve');
             Route::post('reject', 'reject')->name('revisiones.reject');
@@ -1826,7 +1823,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::post('documentos-me-deben-aprobar-archivo', 'obtenerDocumentosMeDebenAprobarArchivo')->name('revisiones.obtenerDocumentosMeDebenAprobarArchivo');
         });
 
-        //Documentos
+        // Documentos
         Route::controller(DocumentosController::class)->group(function () {
             Route::get('documentos/publicados', 'publicados')->name('documentos.publicados');
             Route::patch('documentos/{documento}/update-when-publish', 'updateDocumentWhenPublish')->name('documentos.updateDocumentWhenPublish');
@@ -1851,7 +1848,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
         Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
 
-        //REPORTES CONTEXTO 27001
+        // REPORTES CONTEXTO 27001
         Route::get('reportes-contexto/', 'ReporteContextoController@index')->name('reportes-contexto.index');
         Route::post('reportes-contexto/create', 'ReporteContextoController@store')->name('reportes-contexto.store');
 
@@ -1864,7 +1861,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('lista-documentos/destroy/{id}', 'ListaDocumentosEmpleados@destroy')->name('lista-documentos-empleados-destroy');
     });
 
-    //Escuela cursos instructor
+    // Escuela cursos instructor
     Route::get('capacitaciones-inicio', [CapacitacionesController::class, 'capacitacionesInicio']);
 
     Route::resource('courses', 'Escuela\Instructor\CourseController');
@@ -1885,7 +1882,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('panel-cursos', 'PanelCursosController@index')->name('panel-cursos');
 
-    //categorias para el administrador de escuela
+    // categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
     Route::get('categories/destroy/{id}', 'Escuela\Admin\CategoryController@destroy');
     Route::resource('levels', 'Escuela\Admin\LevelController');
@@ -1917,9 +1914,9 @@ Route::group(['prefix' => 'iso9001'], function () {
     Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 });
 
-//#######################
-//### NOTIFICACIONES ###
-//#####################
+// #######################
+// ### NOTIFICACIONES ###
+// #####################
 
 // Route::get('/notificaciones', [\App\Livewire\NotificacionesComponent::class, '__invoke'])->name('notificaciones');
 Route::get('/notificaciones', 'NotificacionesController@index')->name('notificaciones');
@@ -1934,7 +1931,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
     }
 });
 Route::group(['middleware' => ['auth', '2fa']], function () {
-    //Ruta ImportExcel
+    // Ruta ImportExcel
     // Ruta independiente para CargaDocs
     Route::get('CargaDocs', 'CargaDocs@index')->name('cargadocs');
 
@@ -1968,7 +1965,7 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
         Route::post('CargaEmpleado', 'Empleado')->name('carga-empleado');
     });
 
-    //Ruta ExportExcel
+    // Ruta ExportExcel
     // Agrupación de todas las rutas que pertenecen a ExportExcelReport
     Route::controller(ExportExcelReport::class)->group(function () {
         Route::get('ExportUsuario', 'Users')->name('descarga-usuario');
@@ -2017,24 +2014,24 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     Route::view('sitemap', 'admin.sitemap.index');
     // Route::view('stepper', 'stepper');
-    //Route::view('admin/gantt', 'admin.gantt.grap');
+    // Route::view('admin/gantt', 'admin.gantt.grap');
 
-    //URL::forceScheme('https');
+    // URL::forceScheme('https');
 
     Route::view('post_register', 'auth.post_register');
 });
 
-//KATBOL
+// KATBOL
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
     // Route::view('katbol', 'contract_manager.katbol.index')->name('katbol')->middleware('cacheResponse');
     Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
-    //Proveedores
+    // Proveedores
     Route::resource('proveedor', 'ProveedoresController');
 
     // Rutas para Contratos
     Route::controller(ContratosController::class)->prefix('contratos-katbol')->group(function () {
-        //## API - Revisar en tiempo real si contrato ya existe ###
+        // ## API - Revisar en tiempo real si contrato ya existe ###
         Route::post('numero/existe', 'revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
         Route::post('{id}/ampliacion', 'updateAmpliacion')->name('contratos-katbol.ampliacion');
         Route::post('{id}/convenios', 'updateConvenios')->name('contratos-katbol.convenios');
@@ -2111,7 +2108,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::resource('reportes', 'ReporteRequisicionController');
     Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
 
-    //requisiciones
+    // requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
     Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
     Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');

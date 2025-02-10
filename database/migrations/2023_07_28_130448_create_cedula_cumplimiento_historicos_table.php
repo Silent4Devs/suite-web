@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->unsignedBigInteger('id_cedula');
-            //Foreign
+            // Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');
             $table->foreign('id_cedula')->references('id')->on('cedula_cumplimiento');
         });

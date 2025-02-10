@@ -15,7 +15,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
-//mejora apunta a este modelo
+// mejora apunta a este modelo
 
 class DeskController extends Controller
 {

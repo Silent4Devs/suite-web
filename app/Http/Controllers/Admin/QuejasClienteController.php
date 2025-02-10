@@ -28,7 +28,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use ZipArchive;
 
 class QuejasClienteController extends Controller
 {
@@ -198,11 +197,11 @@ class QuejasClienteController extends Controller
         $cumplio_fecha = intval($request->cumplio_fecha ? $request->cumplio_fecha : $quejasClientes->cumplio_fecha) == 1 ? true : false;
         $cerrar_ticket = intval($request->cerrar_ticket ? $request->cerrar_ticket : $quejasClientes->cerrar_ticket) == 1 ? true : false;
         $email_realizara_accion_inmediata = intval($request->email_realizara_accion_inmediata ? $request->email_realizara_accion_inmediata : $quejasClientes->email_realizara_accion_inmediata) == 1 ? true : false;
-        //if ($desea_levantar_ac) {
+        // if ($desea_levantar_ac) {
         //     $request->validate([
         //        'responsable_sgi_id' => 'required',
         //    ]);
-        //}
+        // }
         $notificar_atencion_queja_no_aprobada = intval($request->notificar_atencion_queja_no_aprobada) == 1 ? true : false;
 
         $quejasClientes->update([
@@ -586,7 +585,7 @@ class QuejasClienteController extends Controller
             $areas = $ticketArea->area_quejado;
             $areasExplode = explode(',', $areas);
             foreach ($areasExplode as $areaExplode) {
-                //$areasCollect->push(trim($areaExplode));
+                // $areasCollect->push(trim($areaExplode));
                 if (array_key_exists($areaExplode, $areasCollect)) {
                     $areasCollect[trim($areaExplode)] = $areasCollect[trim($areaExplode)] + 1;
                 } else {
@@ -845,7 +844,7 @@ class QuejasClienteController extends Controller
 
         $evidencia = EvidenciaQuejasClientes::where('quejas_clientes_id', $id)->first();
 
-        if (!$evidencia) {
+        if (! $evidencia) {
             abort(404, 'No hay evidencias disponibles.');
         }
 
@@ -853,14 +852,14 @@ class QuejasClienteController extends Controller
         $fileName = trim($evidencia->evidencia);
 
         // Genera la ruta correcta del archivo
-        $filePath = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'evidencias_quejas_clientes' . DIRECTORY_SEPARATOR . $fileName);
+        $filePath = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'evidencias_quejas_clientes'.DIRECTORY_SEPARATOR.$fileName);
 
         // Verificar si el archivo existe
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             return response()->json([
                 'error' => 'Archivo no encontrado',
                 'path' => $filePath,
-                'exists' => file_exists($filePath) ? 'Sí' : 'No'
+                'exists' => file_exists($filePath) ? 'Sí' : 'No',
             ], 404);
         }
 

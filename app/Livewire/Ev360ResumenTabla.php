@@ -314,7 +314,7 @@ class Ev360ResumenTabla extends Component
             $promedio_general_competencias = min($promedio_general_competencias, $evaluacion->peso_general_competencias);
             $calificacion_final += $promedio_general_competencias;
         } else {
-            //Logica para cuando no se evaluan competencias
+            // Logica para cuando no se evaluan competencias
         }
 
         $promedio_objetivos = 0;
@@ -428,7 +428,7 @@ class Ev360ResumenTabla extends Component
     public function obtenerInformacionDeLaEvaluacionDeCompetencia($evaluador_empleado, $evaluador, $evaluado, $evaluaciones_competencias, $evaluacion = null)
     {
         $competencias = $this->obtenerCompetenciasDelPuestoDelEvaluadoEnLaEvaluacion($evaluacion->id, $evaluado->id);
-        //$supervisorId = $evaluado->supervisorEv360 ? $evaluado->supervisorEv360->id : null;
+        // $supervisorId = $evaluado->supervisorEv360 ? $evaluado->supervisorEv360->id : null;
 
         return [
             'id' => $evaluador_empleado->id,

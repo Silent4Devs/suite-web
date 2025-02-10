@@ -101,12 +101,14 @@ class CoursesLesson extends Component
     public function platformFormatEdit()
     {
         $platf = Platform::where('id', $this->formPlatformId)->first();
+
         return $platf->name;
     }
 
     public function platformFormat()
     {
         $platf = Platform::where('id', $this->platform_id)->first();
+
         return $platf->name;
         //  dd($this->formatType);
     }
@@ -130,7 +132,7 @@ class CoursesLesson extends Component
 
         switch ($this->formatType) {
             case 'Youtube':
-                # code...
+                // code...
 
                 try {
                     $this->validateOnly('name');
@@ -140,7 +142,7 @@ class CoursesLesson extends Component
                     $resource = Lesson::create([
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
-                        'url' => $this->url . '?rel=0',
+                        'url' => $this->url.'?rel=0',
                         'section_id' => $this->section->id,
                         'description' => $this->description,
                     ]);
@@ -161,17 +163,17 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
             case 'Vimeo':
-                # code...
+                // code...
                 try {
                     $this->validateOnly('name');
                     $this->validateOnly('platform_id');
                     $this->validateOnly('url');
-                    //code...
+                    // code...
                     if ($this->formatType == 'Vimeo') {
                         $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
                     }
@@ -181,7 +183,7 @@ class CoursesLesson extends Component
                     $resource = Lesson::create([
                         'name' => $this->name,
                         'platform_id' => $this->platform_id,
-                        'url' => $this->url . '?rel=0',
+                        'url' => $this->url.'?rel=0',
                         'section_id' => $this->section->id,
                         'description' => $this->description,
                     ]);
@@ -202,13 +204,13 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
 
                 break;
 
             case 'Texto':
-                # code...
+                // code...
 
                 try {
                     $this->validateOnly('name');
@@ -230,12 +232,12 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
             case 'Documento':
-                # code...
+                // code...
 
                 try {
                     if ($this->file) {
@@ -254,15 +256,15 @@ class CoursesLesson extends Component
 
                             $uuid = Str::uuid(); // Generar un UUID único
                             $originalName = $this->file->getClientOriginalName(); // Obtener el nombre original del archivo
-                            $newFileName = $uuid . '_' . $originalName; // Concatenar UUID y nombre original
+                            $newFileName = $uuid.'_'.$originalName; // Concatenar UUID y nombre original
 
-                            $urlresorce = $this->file->storeAs('cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
+                            $urlresorce = $this->file->storeAs('cursos/'.'section/'.$this->section->id.'/lesson'.'/'.$resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
                             $resource->resource()->create([
                                 'url' => $urlresorce,
                             ]);
 
-                            $this->file->storeAs('public/cursos/' . 'section/' . $this->section->id . '/lesson' . '/' . $resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
+                            $this->file->storeAs('public/cursos/'.'section/'.$this->section->id.'/lesson'.'/'.$resource->id, $newFileName); // Almacenar el archivo con el nuevo nombre
 
                             $this->reset('name', 'platform_id', 'url', 'description', 'file');
 
@@ -278,12 +280,12 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
         $this->formatType = 'Youtube';
@@ -316,12 +318,12 @@ class CoursesLesson extends Component
 
         switch ($this->lesson->platform_format) {
             case 'Youtube':
-                # code...
+                // code...
                 try {
                     if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
-                    //code...
+                    // code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
                     $this->validateOnly('formUrl');
@@ -338,7 +340,7 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce . '?rel=0',
+                            'url' => $urlresorce.'?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();
@@ -347,19 +349,19 @@ class CoursesLesson extends Component
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
                     // redirect()->route('admin.courses.edit', $this->course);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     $this->render_alerta('error', 'Completa los campos obligatorios');
                 }
 
                 break;
 
             case 'Vimeo':
-                # code...
+                // code...
                 try {
                     if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
-                    //code...
+                    // code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
                     $this->validateOnly('formUrl');
@@ -376,7 +378,7 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce . '?rel=0',
+                            'url' => $urlresorce.'?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();
@@ -385,14 +387,14 @@ class CoursesLesson extends Component
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
                     // redirect()->route('admin.courses.edit', $this->course);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     $this->render_alerta('error', 'Completa los campos obligatorios');
                 }
 
                 break;
 
             case 'Texto':
-                # code...
+                // code...
 
                 try {
 
@@ -418,12 +420,12 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
             case 'Documento':
-                # code...
+                // code...
 
                 try {
 
@@ -443,7 +445,7 @@ class CoursesLesson extends Component
                     if ($this->file) {
                         $urlresorce = $this->file->store('cursos');
                         $this->lesson->resource()->create([
-                            'url' => $urlresorce . '?rel=0',
+                            'url' => $urlresorce.'?rel=0',
                         ]);
                     }
                     // $this->lesson = new Lesson();
@@ -453,12 +455,12 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
     }

@@ -162,7 +162,7 @@ class IndicadoresSgsiComponent extends Component
         $evaluaciones = EvaluacionIndicador::find($id);
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
-        //$this->resultado = $evaluaciones->resultado;
+        // $this->resultado = $evaluaciones->resultado;
         // $this->default();
         $this->view = 'edit';
 
@@ -183,7 +183,7 @@ class IndicadoresSgsiComponent extends Component
         }
 
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
+        // dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
         try {
             $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {

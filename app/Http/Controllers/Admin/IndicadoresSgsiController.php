@@ -142,7 +142,7 @@ class IndicadoresSgsiController extends Controller
         ]);
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
 
-        //return redirect()->route('admin.indicadores-sgsis.index');
+        // return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
@@ -181,7 +181,7 @@ class IndicadoresSgsiController extends Controller
         ]);
         $indicadoresSgsi->update($request->all());
 
-        //return redirect()->route('admin.indicadores-sgsis.index');
+        // return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
@@ -228,7 +228,7 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-        //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
+        // dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
 
         // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id, 'variables' => $finish_array]);

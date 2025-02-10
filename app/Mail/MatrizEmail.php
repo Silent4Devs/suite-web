@@ -23,7 +23,7 @@ class MatrizEmail extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($id_matriz)
     {
         $this->id_matriz = $id_matriz;

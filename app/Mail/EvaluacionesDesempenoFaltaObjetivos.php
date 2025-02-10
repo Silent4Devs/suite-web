@@ -23,7 +23,7 @@ class EvaluacionesDesempenoFaltaObjetivos extends Mailable
      */
     public function __construct($nombre_evaluacion, $nombre_periodo, $evaluados)
     {
-        //$nombre_evaluacion
+        // $nombre_evaluacion
         $this->nombre_evaluacion = $nombre_evaluacion;
         $this->nombre_periodo = $nombre_periodo;
         $this->evaluados = $evaluados;

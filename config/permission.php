@@ -75,8 +75,8 @@ return [
         /*
          * Change this if you want to name the related pivots other than defaults
          */
-        'role_pivot_key' => null, //default 'role_id',
-        'permission_pivot_key' => null, //default 'permission_id',
+        'role_pivot_key' => null, // default 'role_id',
+        'permission_pivot_key' => null, // default 'permission_id',
 
         /*
          * Change this if you want to name the related model primary key other than
@@ -156,7 +156,7 @@ return [
          * file. Using 'default' here means to use the `default` set in cache.php.
          */
 
-        //'store' => 'default',
+        // 'store' => 'default',
         'store' => 'redis',
     ],
 ];

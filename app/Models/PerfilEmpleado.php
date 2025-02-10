@@ -29,7 +29,7 @@ class PerfilEmpleado extends Model implements Auditable
         'updated_at',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('PerfilEmpleado:perfiles_empleados_all', 3600 * 4, function () {

@@ -18,7 +18,7 @@ class CreateDeclaracionAplicabilidadConcentradoIsosTable extends Migration
             function (Blueprint $table) {
                 $table->id();
                 $table->string('valoracion')->nullable();
-                //foreign
+                // foreign
                 $table->unsignedBigInteger('id_gap_dos_catalogo')->nullable();
                 $table->foreign('id_gap_dos_catalogo')->references('id')->on('gap_dos_catalogo_isos');
                 $table->timestamps();

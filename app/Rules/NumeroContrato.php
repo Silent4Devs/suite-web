@@ -30,7 +30,7 @@ class NumeroContrato implements Rule
             $existe_numero_contrato = Contrato::where('no_contrato', '=', $no_contrato)->exists();
             if ($pertenece_no_contrato_editable) {
                 if ($existe_numero_contrato) {
-                    //dd($pertenece_no_contrato_editable);
+                    // dd($pertenece_no_contrato_editable);
                     return true;
                 } else {
                     return true;
