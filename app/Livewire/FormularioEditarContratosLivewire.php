@@ -100,6 +100,10 @@ class FormularioEditarContratosLivewire extends Component
     public $firmar;
     public $firmado;
 
+    public $error_message;
+
+    public $success_message;
+
     // public $aprobadores_firma;
 
     // Inicialización del componente
@@ -339,11 +343,48 @@ class FormularioEditarContratosLivewire extends Component
         return true;
     }
 
+    public function updated($propertyName)
+{
+    if ($propertyName === 'file_contrato') {
+        try {
+            $this->error_message = null;
+            $this->success_message = null;
+
+            // Verificar si el archivo está presente
+            if (!$this->file_contrato) {
+                $this->error_message = "No se ha seleccionado ningún archivo.";
+                return;
+            }
+
+            // Verificar si el archivo es válido
+            if ($this->file_contrato->getError()) {
+                $this->error_message = "Hubo un problema al cargar el archivo. Inténtalo nuevamente.";
+                return;
+            }
+
+
+            // Verificar si el archivo está dañado (accediendo a su contenido)
+            if (!$this->file_contrato->isReadable()) {
+                $this->error_message = "El archivo parece estar dañado o inaccesible.";
+                $this->reset('file_contrato');
+                return;
+            }
+
+            // Si todo está bien, mostrar mensaje de éxito
+            $this->success_message = "Archivo válido y listo para subir.";
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e);
+            // Captura el error de validación
+            $this->error_message = "El archivo no cumple con los requisitos: máximo 50MB y formatos permitidos.";
+            $this->reset('file_contrato'); // Limpia el archivo cargado
+        }
+    }
+}
+
     // Función para actualizar el contrato
     public function updateContrato()
     {
         ob_start();
-        ini_set('memory_limit', '512M');
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
@@ -409,11 +450,6 @@ class FormularioEditarContratosLivewire extends Component
                     'valor_dolar' => $this->valor_dolar,
                 ]
             );
-
-            if (!$this->file_contrato) {
-                return; // Evita el error si no hay archivo
-            }
-
             // Manejo de archivos
             if ($this->file_contrato) {
                 $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato;
