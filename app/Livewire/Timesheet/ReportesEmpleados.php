@@ -98,7 +98,7 @@ class ReportesEmpleados extends Component
     {
         $this->fecha_fin = $value;
         if (intval(Carbon::parse($this->fecha_fin)->format('Y')) > intval(now()->format('Y'))) {
-            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( '.now()->format('Y').' )', [
+            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( ' . now()->format('Y') . ' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -106,7 +106,7 @@ class ReportesEmpleados extends Component
             $this->fecha_fin = now()->format('Y-m-d');
         } else {
             if ($this->fecha_fin < $this->fecha_inicio) {
-                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
+                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
                     'position' => 'top-end',
                     'timer' => 3000,
                     'toast' => true,
@@ -137,7 +137,7 @@ class ReportesEmpleados extends Component
     public function render()
     {
         $this->areas = Area::getAll();
-        $this->empleadosQuery = Empleado::getSelectEmpleadosWithArea();
+        $this->empleadosQuery = Empleado::get();
 
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
@@ -475,10 +475,10 @@ class ReportesEmpleados extends Component
                 });
             }
         })->get();
-
     }
 
-    public function exportExcel(){
+    public function exportExcel()
+    {
 
         $export = new ReporteEmpleadoExport($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
 
