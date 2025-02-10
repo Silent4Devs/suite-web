@@ -297,11 +297,11 @@ class QuejasClienteController extends Controller
             }
         }
 
-        // if ($queja_procedente == false) {
-        //     $quejasClientes->update([
-        //         'estatus' => 'No procedente',
-        //     ]);
-        // }
+        if ($queja_procedente == false) {
+            $quejasClientes->update([
+                'estatus' => 'No procedente',
+            ]);
+        }
 
         if ($cerrar_ticket) {
             $quejasClientes->update([
