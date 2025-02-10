@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AprobadorFirmaContratoMail;
 use App\Events\ContratoEvent;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+ini_set('memory_limit', '512M');
 
 class FormularioEditarContratosLivewire extends Component
 {
@@ -343,7 +344,6 @@ class FormularioEditarContratosLivewire extends Component
     public function updateContrato()
     {
         ob_start();
-        ini_set('memory_limit', '512M');
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
