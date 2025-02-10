@@ -9,7 +9,8 @@ class PasswordController extends Controller
 {
     public function showExpiredForm()
     {
-        return view('auth.passwords.reset');
+        $user = auth()->user();
+        return view('auth.passwords.reset', compact('user'));
     }
 
     public function updatePassword(Request $request)
