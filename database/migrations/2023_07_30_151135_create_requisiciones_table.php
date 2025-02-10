@@ -64,22 +64,22 @@ return new class extends Migration
             $table->string('area');
             $table->string('email')->nullable();
 
-            //foreign
+            // foreign
             $table->unsignedBigInteger('proveedor_id')->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onUpdate('cascade')->onDelete('cascade');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('centro_costos_id')->nullable();
             $table->foreign('centro_costos_id')->references('id')->on('contratos');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('comprador_id')->nullable();
             $table->foreign('comprador_id')->references('id')->on('compradores');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('sucursal_id')->nullable();
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->timestamps();

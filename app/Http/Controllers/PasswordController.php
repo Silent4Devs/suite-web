@@ -10,6 +10,7 @@ class PasswordController extends Controller
     public function showExpiredForm()
     {
         $user = auth()->user();
+
         return view('auth.passwords.reset', compact('user'));
     }
 
@@ -26,5 +27,4 @@ class PasswordController extends Controller
 
         return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Contraseña actualizada correctamente.');
     }
-
 }

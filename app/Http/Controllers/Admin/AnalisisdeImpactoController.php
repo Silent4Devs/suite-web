@@ -100,9 +100,9 @@ class AnalisisdeImpactoController extends Controller
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //validacion
+        // validacion
         $request->validate([
-            //'id' => ['required'],
+            // 'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
             'puesto' => ['required'],
@@ -211,7 +211,7 @@ class AnalisisdeImpactoController extends Controller
             'flujo_meses' => ['required', 'numeric'],
             'flujo_semanas' => ['required', 'numeric'],
             'flujo_dias' => ['required', 'numeric'],
-            'flujo_otro', //quitar
+            'flujo_otro', // quitar
             'flujo_otro_txt' => ['nullable'],
             // RESPALDOS DE INFORMACIÓN
             'respaldo_q_20' => ['required'],

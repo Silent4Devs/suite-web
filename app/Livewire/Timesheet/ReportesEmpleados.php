@@ -10,11 +10,11 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
+use Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Excel;
 
 class ReportesEmpleados extends Component
 {
@@ -98,7 +98,7 @@ class ReportesEmpleados extends Component
     {
         $this->fecha_fin = $value;
         if (intval(Carbon::parse($this->fecha_fin)->format('Y')) > intval(now()->format('Y'))) {
-            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( ' . now()->format('Y') . ' )', [
+            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( '.now()->format('Y').' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -106,7 +106,7 @@ class ReportesEmpleados extends Component
             $this->fecha_fin = now()->format('Y-m-d');
         } else {
             if ($this->fecha_fin < $this->fecha_inicio) {
-                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
                     'position' => 'top-end',
                     'timer' => 3000,
                     'toast' => true,
@@ -153,7 +153,7 @@ class ReportesEmpleados extends Component
             $empleados_list = $this->empleadosQuery;
         }
 
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
 
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();

@@ -24,7 +24,7 @@ class PermisosEscuelaAdminSeeder extends Seeder
                 'title' => 'escuela_admin_dashboar',
                 'name' => 'Este permiso permite al usuario ver el dashboard de escuela',
             ],
-            //modulo de categorias
+            // modulo de categorias
             [
                 'title' => 'escuela_admin_categorias',
                 'name' => 'Este permiso permite al usuario acceder al modulo de categorias de escuela',
@@ -45,7 +45,7 @@ class PermisosEscuelaAdminSeeder extends Seeder
                 'title' => 'escuela_admin_eliminar_categorias',
                 'name' => 'Este permiso permite al usuario eliminar categorias',
             ],
-            //modulo de niveles
+            // modulo de niveles
             [
                 'title' => 'escuela_admin_niveles',
                 'name' => 'Este permiso permite al usuario acceder al modulo de niveles de escuela',

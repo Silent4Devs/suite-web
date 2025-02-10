@@ -50,7 +50,7 @@ class IdiomasEmpleadosController extends Controller
 
         if ($request->hasFile('certificado')) {
             $filenameWithExt = $request->file('certificado')->getClientOriginalName();
-            //Get just filename
+            // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
             $extension = $request->file('certificado')->getClientOriginalExtension();
@@ -111,7 +111,7 @@ class IdiomasEmpleadosController extends Controller
 
             if ($request->hasFile('certificado')) {
                 $filenameWithExt = $request->file('certificado')->getClientOriginalName();
-                //Get just filename
+                // Get just filename
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 // Get just ext
                 $extension = $request->file('certificado')->getClientOriginalExtension();

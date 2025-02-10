@@ -25,7 +25,7 @@ class PlanImplementacionNueveUnoController extends Controller
         // $write_empleados = $json_code;
         // file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
-        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        // NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
@@ -39,7 +39,7 @@ class PlanImplementacionNueveUnoController extends Controller
         $file_gant = json_decode(file_get_contents($gant_readed), true);
         $name_file_gantt = 'gantt_inicial_9001.json';
         $texto = false;
-        //FIN
+        // FIN
 
         $empleados = Empleado::getaltaAll();
 
@@ -55,7 +55,7 @@ class PlanImplementacionNueveUnoController extends Controller
         // $write_empleados = $json_code;
         // file_put_contents($path . '/gantt_inicial_9001.json', json_encode($write_empleados));
 
-        //NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
+        // NECESITA REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $files = glob('storage/gantt/versiones/gantt_inicial_9001*.json');
         $archivos_gantt = [];
 
@@ -70,7 +70,7 @@ class PlanImplementacionNueveUnoController extends Controller
         $name_file_gantt = 'gantt_inicial_9001.json';
         $sinTexto = true;
         $texto = true;
-        //FIN
+        // FIN
 
         $empleados = Empleado::getaltaAll();
 

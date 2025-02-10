@@ -255,7 +255,7 @@ class AccionCorrectivaController extends Controller
         ]);
 
         // $accionCorrectiva = AccionCorrectiva::create($request->all());;
-        //dd($request['pdf-value']);
+        // dd($request['pdf-value']);
 
         /*     if ($request->input('documentometodo', false)) {
                  $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');

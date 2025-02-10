@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-//use Eloquent as Model;
+// use Eloquent as Model;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

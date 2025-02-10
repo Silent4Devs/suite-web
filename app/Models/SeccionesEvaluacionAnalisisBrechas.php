@@ -20,7 +20,7 @@ class SeccionesEvaluacionAnalisisBrechas extends Model implements Auditable
         'porcentaje_seccion',
     ];
 
-    //Relaciones
+    // Relaciones
 
     public function preguntas()
     {

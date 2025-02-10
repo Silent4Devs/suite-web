@@ -55,7 +55,7 @@ class BajaEmpleadoComponent extends Component
         $this->dispatch('select2');
     }
 
-    //mount
+    // mount
     public function mount($empleado)
     {
         $this->empleado = $empleado;

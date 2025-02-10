@@ -21,7 +21,7 @@ class CreateGapDosCatalogoIsosTable extends Migration
                 $table->longText('anexo_politica')->nullable();
                 $table->longText('anexo_descripcion')->nullable();
                 $table->string('valoracion')->nullable();
-                //foreign
+                // foreign
                 $table->unsignedBigInteger('id_clasificacion')->nullable();
                 $table->foreign('id_clasificacion')->references('id')->on('clasificacion_isos');
                 $table->timestamps();

@@ -17,10 +17,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->longText('espesificaciones');
             $table->integer('cantidad');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('producto_id')->nullable();
             // $table->foreign('producto_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('requisiciones_id')->nullable();
             // $table->foreign('requisiciones_id')->references('id')->on('requsiciones')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('contrato_id')->nullable();

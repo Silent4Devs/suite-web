@@ -21,7 +21,7 @@ class TBRiskAnalysisModel extends Model
         'general_id',
     ];
 
-    //Relations
+    // Relations
     public function riskAnalysisGeneral()
     {
         return $this->belongsTo(TBRiskAnalysisGeneralModel::class, 'general_id');

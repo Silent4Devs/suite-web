@@ -44,7 +44,7 @@ class EntregaMensual extends Model implements Auditable
         'updated_by',
     ];
 
-    //Relaciones
+    // Relaciones
     public function factura()
     {
         return $this->belongsTo(Factura::class, 'factura_id', 'id');

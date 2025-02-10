@@ -91,7 +91,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function storeEdit(Request $request)
     {
-        //dd(request()->all());
+        // dd(request()->all());
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
         $accionCorrectiva = AccionCorrectiva::find($planaccionCorrectiva->accioncorrectiva_id);
         $users = User::getAll();
@@ -126,13 +126,13 @@ class PlanaccionCorrectivaController extends Controller
     public function store(StorePlanaccionCorrectivaRequest $request)
     {
         $planaccionCorrectiva = PlanaccionCorrectiva::create($request->all());
-        //dd($planaccionCorrectiva);
+        // dd($planaccionCorrectiva);
         $id = $request->get('accioncorrectiva_id');
         Alert::success('éxito', 'Información añadida con éxito');
 
-        //return redirect()->route('admin.actionsCorrective.edit');
+        // return redirect()->route('admin.actionsCorrective.edit');
         return redirect('admin/plan-correctiva?param='.$id);
-        //return view('admin.actionsCorrective.plan_accion')->with('ids', $id)->with('users', $users);
+        // return view('admin.actionsCorrective.plan_accion')->with('ids', $id)->with('users', $users);
     }
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
@@ -144,7 +144,7 @@ class PlanaccionCorrectivaController extends Controller
         $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
-        //dd($planaccionCorrectiva);
+        // dd($planaccionCorrectiva);
 
         return view('admin.planaccionCorrectivas.edit', compact('accioncorrectivas', 'responsables', 'planaccionCorrectiva'));
     }

@@ -25,7 +25,7 @@ class RevisionMinuta extends Model implements Auditable
 
     const RECHAZADO_POR_NUEVA_EDICION = 5;
 
-    //ARCHIVADO?
+    // ARCHIVADO?
     const ARCHIVADO = '1';
 
     const NO_ARCHIVADO = '0';

@@ -193,7 +193,7 @@ class CargaObjetivos extends Component
                     'confirmButtonText' => 'Entendido',
                 ]);
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 $this->alert('error', 'Notificación Fallida.', [
                     'position' => 'center',
                     'timer' => '6000',

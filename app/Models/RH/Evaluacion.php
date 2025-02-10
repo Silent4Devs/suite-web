@@ -65,7 +65,7 @@ class Evaluacion extends Model implements Auditable
 
     const SELECCION_MANUAL = '2';
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Evaluacion:Evaluacion_all', 3600 * 3, function () {
