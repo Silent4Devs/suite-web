@@ -89,7 +89,7 @@ class ConvenioModificatorioComponent extends Component
 
         $convenios = ConveniosModificatorios::where('contrato_id', '=', $this->contrato_id)->get();
         // if ($contrato->convenios) {
-        //Ampliación
+        // Ampliación
         // $convenio_modificatorio = ConveniosModificatorios::find($this->convenio_id);
 
         // $formatoFecha = new FormatearFecha;
@@ -169,7 +169,7 @@ class ConvenioModificatorioComponent extends Component
     {
         $convenios = ConveniosModificatorios::find($this->convenio_id);
         // if ($contrato->convenios ) {
-        //ampliacion
+        // ampliacion
         // $formatoFecha = new FormatearFecha;
         // $fecha_formateada = $formatoFecha->formatearFecha($convenios->fecha, 'Y-m-d', 'd-m-Y');
 
@@ -225,7 +225,7 @@ class ConvenioModificatorioComponent extends Component
         if ($convenios_file->convenios_file == null) {
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
-            //return Storage::disk('pdf')->download($pdf->pdf);
+            // return Storage::disk('pdf')->download($pdf->pdf);
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
 
             return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/convenios/pdf/'.$convenios_file->convenios_file));

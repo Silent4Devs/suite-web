@@ -394,7 +394,7 @@ class EV360EvaluacionesController extends Controller
                             return $competencia;
                         }
                     }
-                }); //Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
+                }); // Filtro para obtener solo las competencias evaluadas al momento de la creación de la evaluacion
             } else {
                 $competencias_por_puesto_nivel_esperado = collect();
             }
@@ -444,7 +444,7 @@ class EV360EvaluacionesController extends Controller
             ->with('error', 'El registro no existe.');
         }
         $lista_evaluados = [];
-        //close evaluation if the end date is passed and if the evaluation is not closed
+        // close evaluation if the end date is passed and if the evaluation is not closed
         if ($evaluacion->estatus == Evaluacion::ACTIVE) {
             if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
                 $this->cerrarEvaluacion($evaluacion->id);
@@ -910,7 +910,7 @@ class EV360EvaluacionesController extends Controller
 
     public function consultaPorEvaluado($evaluacion, $evaluado)
     {
-        //Inhabilidato temporalmente
+        // Inhabilidato temporalmente
         $usuario = User::getCurrentUser()->empleado->id;
         if ($usuario == $evaluado) {
             $cons_evaluacion = Evaluacion::with('rangos')->where('id', intval($evaluacion))->first();
@@ -1718,7 +1718,7 @@ class EV360EvaluacionesController extends Controller
                 $calificacion_final += $evaluacion->peso_general_competencias;
             }
         } else {
-            //Logica para cuando no se evaluan competencias
+            // Logica para cuando no se evaluan competencias
         }
         $promedio_objetivos = 0;
         $promedio_general_objetivos = 0;
@@ -2065,13 +2065,14 @@ class EV360EvaluacionesController extends Controller
                 ->get(); // Ahora es una colección de objetos Empleado
 
             $empleados = Empleado::select('id', 'name', 'area_id', 'puesto_id')->get();
-
-            $evaluador_model = $empleados->get($evaluador_id);
-
-            if ($evaluados->count() && $evaluador_model) {
-                $email = removeUnicodeCharacters($evaluador_model->email);
-                if ($email) {
-                    Mail::to($email)->send(new RecordatorioEvaluadores($evaluacion, $evaluador_model, $evaluados));
+            $evaluados = $empleados->find($evaluados);
+            $evaluador_model = $empleados->find($evaluador);
+            if (count($evaluados)) {
+                $this->enviarNotificacionAlEvaluador($evaluador_model->email, $evaluacion, $evaluador_model, $evaluados);
+                if (env('APP_ENV') == 'local') { // solo funciona en desarrollo, es una muy mala práctica, es para que funcione con mailtrap y la limitación del plan gratuito
+                    if (env('MAIL_HOST') == 'smtp.mailtrap.io') {
+                        sleep(4); // use usleep(500000) for half a second or less
+                    }
                 }
             }
         }
@@ -2243,14 +2244,14 @@ class EV360EvaluacionesController extends Controller
             'evaluado' => 'false',
         ]);
 
-        //Cambio de fecha
+        // Cambio de fecha
         // $fecha=Evaluacion::find('24');
         // $fecha->update([
         //     'fecha_fin' => '2023-04-15'
         // ]);
 
-        //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
-        //se tuvieron que buscar los registros especificos al no haber relacion directa
+        // Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
+        // se tuvieron que buscar los registros especificos al no haber relacion directa
         //     $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
         //     $borrarrut2=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
         //     $borrarrut3=ObjetivoRespuesta::where('objetivo_id', '1087')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
@@ -2274,9 +2275,9 @@ class EV360EvaluacionesController extends Controller
         // $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
         // $borradoEvaEvaluados->each->delete();
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //PUESTO ID 176
+        // PUESTO ID 176
 
         // CompetenciaPuesto::firstOrCreate([
         //     'competencia_id' => '2',
@@ -2326,7 +2327,7 @@ class EV360EvaluacionesController extends Controller
         //     'nivel_esperado' => '3',
         // ]);
 
-        //Puesto id 175
+        // Puesto id 175
 
         // CompetenciaPuesto::firstOrCreate([
         //     'competencia_id' => '2',
@@ -2382,7 +2383,7 @@ class EV360EvaluacionesController extends Controller
         //     'nivel_esperado' => '2',
         // ]);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EvaluacionesEvaluados::firstOrCreate([
         //     'evaluacion_id' => '24',
         //     'evaluado_id' => '242',
@@ -2919,7 +2920,7 @@ class EV360EvaluacionesController extends Controller
         //     'evaluado' => 'false',
         // ]);
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // ObjetivoRespuesta::create([
         //     'meta_alcanzada' => 'Sin evaluar',
@@ -3074,7 +3075,7 @@ class EV360EvaluacionesController extends Controller
         //     'evaluador_id' => '132',
         // ]);
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // $cambioA = EvaluadoEvaluador::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)
         // ->where('evaluador_id', '=', 132)->first();
@@ -3138,11 +3139,11 @@ class EV360EvaluacionesController extends Controller
         //     'evaluador_id' => '132',
         // ]);
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Funcion para reactivar evaluaciones 360,
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Funcion para reactivar evaluaciones 360,
         // a algunos usuarios se les agregaron sus objetivos tras finalizar su evaluacion360,
-        //por lo que hubo la necesidad de reactivar la evaluacion
-        //Se busca al evaluado y al evaluador en la evaluacion actual (24) y se rectivan al cambiar el estatus
+        // por lo que hubo la necesidad de reactivar la evaluacion
+        // Se busca al evaluado y al evaluador en la evaluacion actual (24) y se rectivan al cambiar el estatus
         // de true a false para que puedan volver a contestar
 
         // $reacGG=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 254)->where('evaluador_id', '=', 254);
@@ -3150,13 +3151,13 @@ class EV360EvaluacionesController extends Controller
         //     'evaluado' => 'false',
         // ]);
 
-        //CESAR 152
+        // CESAR 152
         // $reacCC=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 152)->where('evaluador_id', '=', 152);
         //      $reacCC->update([
         //          'evaluado' => 'false',
         //      ]);
 
-        //REACTIVAR A LAURA(305) y MARCO (138)
+        // REACTIVAR A LAURA(305) y MARCO (138)
 
         //     $reacLL=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 305);
         //     $reacLL->update([
@@ -3185,12 +3186,12 @@ class EV360EvaluacionesController extends Controller
         //     'evaluado' => 'false',
         // ]);
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //Funcion para agregar los objetivos pendientes, esta funcion toma todos los objetivos de la tabla
+        // Funcion para agregar los objetivos pendientes, esta funcion toma todos los objetivos de la tabla
         // ev_360_objetivos_empleados que no se agregaron a la tabla ev360_objetivos_respuestas
-        //por estar en estado "Pendiente" y los agrega a dicha tabla cambiando su
-        //estatus a aprobado en el proceso
+        // por estar en estado "Pendiente" y los agrega a dicha tabla cambiando su
+        // estatus a aprobado en el proceso
 
         //     $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
         //     // dd($objetivo);

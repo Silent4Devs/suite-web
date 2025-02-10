@@ -176,7 +176,7 @@ class OrganigramaController extends Controller
         return $area;
     }
 
-    //obtener los childres de un lider, mediante su id
+    // obtener los childres de un lider, mediante su id
     public function transverseChildrens($liderId)
     {
 

@@ -24,7 +24,7 @@ class TBTemplateAnalisisRiesgoModel extends Model
         'top',
     ];
 
-    //Relations
+    // Relations
     public function norma()
     {
         return $this->belongsTo(Norma::class, 'norma_id');

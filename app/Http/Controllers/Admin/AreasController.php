@@ -75,7 +75,7 @@ class AreasController extends Controller
 
         if ($request->hasFile('foto_area')) {
             $file = $request->file('foto_area');
-            //$name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            // $name_image = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $hash_name = pathinfo($file->hashName(), PATHINFO_FILENAME);
             $new_name_image = 'UID_'.$area->id.'_'.$hash_name.'.png';
 
@@ -142,7 +142,7 @@ class AreasController extends Controller
         $image = $area->foto_area;
 
         if ($request->hasFile('foto_area')) {
-            //Si existe la imagen entonces se elimina al editarla
+            // Si existe la imagen entonces se elimina al editarla
             $file = $request->file('foto_area');
 
             $filePath = '/app/public/areas/'.$area->foto_area;
@@ -225,7 +225,7 @@ class AreasController extends Controller
         abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $numero_grupos = Grupo::count();
 
-        $areasTree = Area::getExists(); //Eager loading
+        $areasTree = Area::getExists(); // Eager loading
         // dd($areasTree);
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
@@ -244,7 +244,7 @@ class AreasController extends Controller
 
         abort_if(Gate::denies('niveles_jerarquicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); //Eager loading
+        $areasTree = Area::with(['lider', 'supervisor.children', 'supervisor.supervisor', 'grupo', 'children.supervisor', 'children.children'])->whereNull('id_reporta')->first(); // Eager loading
 
         return json_encode($areasTree);
     }

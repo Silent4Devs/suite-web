@@ -19,7 +19,7 @@ class DenunciasObserver
         try {
             event(new DenunciasEvent($denuncias, 'create', 'denuncias', 'Denuncia'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
         $this->forgetCache();
     }
@@ -35,7 +35,7 @@ class DenunciasObserver
         try {
             event(new DenunciasEvent($denuncias, 'update', 'denuncias', 'Denuncia'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
         $this->forgetCache();
     }
@@ -51,7 +51,7 @@ class DenunciasObserver
         try {
             event(new DenunciasEvent($denuncias, 'delete', 'denuncias', 'Denuncia'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
         $this->forgetCache();
     }

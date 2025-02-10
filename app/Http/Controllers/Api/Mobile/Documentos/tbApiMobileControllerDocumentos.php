@@ -128,7 +128,7 @@ class tbApiMobileControllerDocumentos extends Controller
         ], 200);
     }
 
-    public function aprobar($id) //Request $request
+    public function aprobar($id) // Request $request
     {
         $empleado = User::getCurrentUser()->empleado;
         $numero_revision = RevisionDocumento::where('documento_id', $id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $id)->max('no_revision')) + 1 : 1;
@@ -525,7 +525,7 @@ class tbApiMobileControllerDocumentos extends Controller
 
         $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
-        //dd($ruta_publicacion);
+        // dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
             if (Storage::exists($ruta_publicacion_documento_anterior)) {
                 $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);

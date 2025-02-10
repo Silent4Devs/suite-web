@@ -75,7 +75,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
                         'enviado' => true,
                     ]);
                 } else {
-                    //No hace nada
+                    // No hace nada
                 }
             }
         }

@@ -19,7 +19,7 @@ class PreguntasEvaluacionAnalisisBrechas extends Model implements Auditable
         'numero_pregunta',
     ];
 
-    //Relaciones
+    // Relaciones
     public function respuesta()
     {
         return $this->hasOne(RespuestasEvaluacionAnalisisBrechas::class, 'pregunta_id', 'id');

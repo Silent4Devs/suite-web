@@ -309,12 +309,12 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
 
     public function filtrado_empleados($efecto, $usuario, $año)
     {
-        //Sacamos los ids del empleado
+        // Sacamos los ids del empleado
         $areaId = $usuario->empleado->area_id;
         $puestoId = $usuario->empleado->puesto_id;
         $idempleado = $usuario->empleado->id;
 
-        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        // Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
         $queryArea = IncidentesDayoff::where('efecto', $efecto)->where('aniversario', $año)
             ->whereHas('areas', function ($query) use ($areaId) {
                 $query->where('area_id', $areaId);
@@ -330,7 +330,7 @@ class tbApiMobileControllerSolicitudDayOff extends Controller
                 $q->where('empleado_id', $idempleado);
             });
 
-        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();

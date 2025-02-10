@@ -228,7 +228,7 @@ class tbApiMobileControllerOrdenesCompra extends Controller
                 }
             } elseif ($requisicion->firma_finanzas_orden === null && $requisicion->estado != 'rechazado') {
                 if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
-                    if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { //responsable_finanzas_id
+                    if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) { // responsable_finanzas_id
                         $tipo_firma = 'firma_finanzas_orden';
                     } else {
                         $mensaje = 'No tiene permisos para firmar En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;

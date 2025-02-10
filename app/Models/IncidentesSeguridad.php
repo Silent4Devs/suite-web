@@ -58,10 +58,10 @@ class IncidentesSeguridad extends Model implements Auditable, HasMedia
     //     return $this->fecha ? Carbon::parse($this->fecha)->format('d-m-Y'):'';
     // }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('incidentes_seguridad_all', 3600 * 4, function () {
             return self::orderBy('id')->get();
         });

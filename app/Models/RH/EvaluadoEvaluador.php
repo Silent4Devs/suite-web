@@ -42,7 +42,7 @@ class EvaluadoEvaluador extends Model implements Auditable
                 return 'Equipo a Cargo';
                 break;
             default:
-                //Code...
+                // Code...
                 break;
         }
     }

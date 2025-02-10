@@ -26,10 +26,10 @@ class Sugerencias extends Model implements Auditable
 
     protected $appends = ['folio', 'fecha_de_cierre', 'fecha_reporte'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
-        //retrieve all data or can pass columns to retrieve
+        // retrieve all data or can pass columns to retrieve
         return Cache::remember('sugerencias_all', 3600, function () {
             return self::orderBy('id')->get();
         });

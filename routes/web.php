@@ -23,6 +23,7 @@ use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContractManager\ContratosController;
 use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\TbLoginController;
@@ -45,6 +46,14 @@ Route::view('tenant', 'central.landing')->name('central.landing');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
 Auth::routes();
+
+Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
+    ->name('password.expired')
+    ->middleware('auth');
+
+Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+    ->name('password.update')
+    ->middleware('auth');
 
 // Tabla-Calendario
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {

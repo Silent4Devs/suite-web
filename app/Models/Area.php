@@ -66,7 +66,7 @@ class Area extends Model implements Auditable
 
     protected $appends = ['grupo_name', 'foto_ruta', 'utilizada'];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Areas:Areas_exists', 3600 * 12, function () {

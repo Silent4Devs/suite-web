@@ -50,7 +50,7 @@ class EV360CompetenciasController extends Controller
         $competencia = Competencia::create($request->all());
         $imagen = $competencia->imagen;
         if ($request->hasFile('foto')) {
-            Storage::makeDirectory('public/competencias/img'); //Crear si no existe
+            Storage::makeDirectory('public/competencias/img'); // Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
             $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.png';
             $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;
@@ -116,7 +116,7 @@ class EV360CompetenciasController extends Controller
         $competencia_u = $competencia->update($request->all());
 
         if ($request->hasFile('foto')) {
-            Storage::makeDirectory('public/competencias/img'); //Crear si no existe
+            Storage::makeDirectory('public/competencias/img'); // Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
             $nombre_imagen = 'COMPETENCIA_'.$competencia->id.'_'.$competencia->nombre.'.'.$extension;
             $route = storage_path().'/app/public/competencias/img/'.$nombre_imagen;

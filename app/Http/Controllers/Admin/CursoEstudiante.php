@@ -161,7 +161,7 @@ class CursoEstudiante extends Controller
         $usuario = User::getCurrentUser();
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
 
-        //calculo el porcentaje del curso completado
+        // calculo el porcentaje del curso completado
         // foreach ($cursos_usuario as $cu) {
         //     $i = 0;
         //     $courses_lessons = $cu->cursos->lessons;

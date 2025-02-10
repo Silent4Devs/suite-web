@@ -123,7 +123,7 @@
                         <tr>
                             <td>{{ $empleado->n_empleado ?? 'Sin Asignar' }}</td>
                             <td>{{ $empleado->name }}</td>
-                            <td>{{ $empleado->puestoRelacionado->puesto }}</td>
+                            <td>{{ $empleado->puestoRelacionado->puesto ?? 'Sin Asignar' }}</td>
                             <td>{{ $empleado->area->area }}</td>
                             <td>{{ $empleado->perfil->nombre ?? 'Sin Definir' }}</td>
                             <td>{{ count($empleado->objetivos) . ' Objetivos Asignados' ?? 'Sin Objetivos Asignados' }}

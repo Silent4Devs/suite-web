@@ -71,8 +71,8 @@
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>
@@ -110,8 +110,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>
@@ -136,8 +136,8 @@
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>
@@ -175,8 +175,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>
@@ -201,8 +201,8 @@
                         <canvas id="signature-pad-evaluado" class="signature-pad" width="450" height="250"
                             style="border: 1px solid black;"></canvas>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>
@@ -240,8 +240,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                        <button id="save" type="button" class="btn btn-outline-primary"
+                    <div style="justify-content: center; display: flex; margin-top: 10px;">
+                        <button id="save" type="button" class="btn btn-outline-primary" style="display: inline-block;"
                             identificador-evaluacion="{{ $evaluacionDesempeno->id }}"
                             identificador-evaluado="{{ $evaluado->evaluado_desempeno_id }}"
                             identificador-periodo="{{ $periodo }}">Confirmar</button>

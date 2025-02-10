@@ -48,7 +48,7 @@ class SolicitudDayofListener implements ShouldQueue
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
     }
 }

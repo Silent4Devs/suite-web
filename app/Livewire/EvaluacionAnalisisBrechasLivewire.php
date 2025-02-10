@@ -155,7 +155,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         }
 
         $this->totalAnalisis = $this->porcentajeTotal()[0]['percentage'];
-        //sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
+        // sirve para mostrar las respuesta ya existentes, no se pudo poner en hydrate()
 
         // $this->dispatch('renderAreas', $grafica_cuentas, $grafica_colores);
         // $this->dispatch('mounted');
@@ -269,7 +269,7 @@ class EvaluacionAnalisisBrechasLivewire extends Component
         return $sectionPercentages;
     }
 
-    //Se comento porque sale el total de todas las preguntas de todas las secciones,
+    // Se comento porque sale el total de todas las preguntas de todas las secciones,
     // y debe ser por seccion, podria ser util
     public function sumaParametrosTotal()
     {
@@ -364,8 +364,8 @@ class EvaluacionAnalisisBrechasLivewire extends Component
 
     public function saveDataParametros($preguntaID, $parametroID)
     {
-        //Se recolectan los valores, el id de la pregunta, y el id del parametro,
-        //asi se obtendran los valores de esa relacion
+        // Se recolectan los valores, el id de la pregunta, y el id del parametro,
+        // asi se obtendran los valores de esa relacion
         // $this->selectedValues["parametro_id"] = $parametroID;
         // $this->selectedValues["pregunta_id"] = $preguntaID;
 

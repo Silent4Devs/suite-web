@@ -53,7 +53,7 @@ class MatrizHeatmap extends Component
 
     public $bajo_residual;
 
-    //var conta
+    // var conta
     public $nula_muyalto = 0;
 
     public $nula_alto = 0;
@@ -86,7 +86,7 @@ class MatrizHeatmap extends Component
 
     public $alta_muyalto = 0;
 
-    //var conta residual
+    // var conta residual
     public $nula_muyalto_r = 0;
 
     public $nula_alto_r = 0;
@@ -135,7 +135,7 @@ class MatrizHeatmap extends Component
         $this->listados = [];
         $this->changer_residual = '';
         $this->listados_residual = [];
-        //$this->conteo = '';
+        // $this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
 
@@ -169,7 +169,7 @@ class MatrizHeatmap extends Component
         $alto_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['27', '36']);
         $medio_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
         $bajo_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
-        //querys contador en grafica
+        // querys contador en grafica
         $matriz_query = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis);
         $matriz_query_r = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis);
 
@@ -230,7 +230,7 @@ class MatrizHeatmap extends Component
             }
         }
 
-        //$matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+        // $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
 
         foreach ($matriz_query->get() as $key => $value) {
             switch ($value->probabilidad) {
@@ -383,7 +383,7 @@ class MatrizHeatmap extends Component
             'altos_residual' => $alto_residual->count(),
             'medios_residual' => $medio_residual->count(),
             'bajos_residual' => $bajo_residual->count(),
-            //conta
+            // conta
             'nula_bajo' => $this->nula_bajo,
             'nula_medio' => $this->nula_medio,
             'nula_alto' => $this->nula_alto,
@@ -400,7 +400,7 @@ class MatrizHeatmap extends Component
             'alta_medio' => $this->alta_medio,
             'alta_alto' => $this->alta_alto,
             'alta_muyalto' => $this->alta_muyalto,
-            //conta residuales
+            // conta residuales
             'nula_bajo_r' => $this->nula_bajo_r,
             'nula_medio_r' => $this->nula_medio_r,
             'nula_alto_r' => $this->nula_alto_r,
@@ -437,7 +437,7 @@ class MatrizHeatmap extends Component
             $matriz_riesgos->Where('id_proceso', '=', $this->proceso_id);
         }
 
-        //dd($matriz_riesgos->toSql());
+        // dd($matriz_riesgos->toSql());
 
         if ($matriz_riesgos->count() == 0) {
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo', false, 'Por favor ingrese un nuevo valor');
@@ -467,7 +467,7 @@ class MatrizHeatmap extends Component
             $matriz_riesgos_residual->Where('id_proceso', '=', $this->proceso_id);
         }
 
-        //dd($matriz_riesgos->toSql());
+        // dd($matriz_riesgos->toSql());
 
         if ($matriz_riesgos_residual->count() == 0) {
             $this->callAlert('warning', 'No se encontro registro con este nivel de riesgo', false, 'Por favor ingrese un nuevo valor');
