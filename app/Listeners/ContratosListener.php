@@ -50,7 +50,7 @@ class ContratosListener implements ShouldQueue
             // Enviar la notificación a cada usuario
             Notification::send($usuarios, new ContratoNotification($event->contratos, $event->tipo_consulta, $event->tabla, $event->slug));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
     }
 }

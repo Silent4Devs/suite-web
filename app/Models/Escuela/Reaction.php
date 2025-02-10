@@ -20,7 +20,7 @@ class Reaction extends Model implements Auditable
 
     const DISLIKE = 2;
 
-    //relacion uno a muchos inversa
+    // relacion uno a muchos inversa
 
     public function user()
     {

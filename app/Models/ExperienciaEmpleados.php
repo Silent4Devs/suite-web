@@ -40,7 +40,7 @@ class ExperienciaEmpleados extends Model implements Auditable
 
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('experienciaempleados_all', 3600 * 24, function () {

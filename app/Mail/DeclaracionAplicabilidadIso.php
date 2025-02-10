@@ -21,7 +21,7 @@ class DeclaracionAplicabilidadIso extends Mailable
 
     public $controles_name;
 
-    //inicializa de la clase
+    // inicializa de la clase
     public function __construct($nombre, $tipo, $controles_name)
     {
         $this->tipo = $tipo;

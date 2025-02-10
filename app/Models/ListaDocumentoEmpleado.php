@@ -21,7 +21,7 @@ class ListaDocumentoEmpleado extends Model implements Auditable
         'tipo',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('listasdocumentosempleados_all', 3600 * 24, function () {

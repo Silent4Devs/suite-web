@@ -31,7 +31,7 @@ class EntendimientoOrganizacion extends Model implements Auditable
         'deleted_at',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAllWithEmpleadoParticipantes()
     {
         return Cache::remember('EntendimientoOrganizacion:entendimientoorganizacion_with_empleado_participantes', 3600 * 7, function () {

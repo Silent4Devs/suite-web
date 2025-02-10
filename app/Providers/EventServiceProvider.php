@@ -394,7 +394,7 @@ class EventServiceProvider extends ServiceProvider
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
         Recurso::observe(RecursosObserver::class);
-        //Redis
+        // Redis
         PlanImplementacion::observe(PlanImplementacionObserver::class);
         Organizacion::observe(OrganizacionObserver::class);
         Sede::observe(SedesObserver::class);

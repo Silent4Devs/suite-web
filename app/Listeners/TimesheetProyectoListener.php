@@ -45,7 +45,7 @@ class TimesheetProyectoListener implements ShouldQueue
                 Notification::send($user, new TimesheetProyectoNotification($event->timeshet_proyecto, $event->tipo_consulta, $event->tabla, $event->slug));
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
     }
 }

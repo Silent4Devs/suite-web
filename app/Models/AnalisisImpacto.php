@@ -79,7 +79,7 @@ class AnalisisImpacto extends Model implements Auditable
         'flujo_meses',
         'flujo_semanas',
         'flujo_dias',
-        'flujo_otro', //quitar
+        'flujo_otro', // quitar
         'flujo_otro_txt',
         // RESPALDOS DE INFORMACIÓN
         'respaldo_q_20',

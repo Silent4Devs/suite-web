@@ -435,8 +435,7 @@
                         {{-- <div class="btn btn-accion">
                                 <span>OK</span>
                             </div> --}}
-                        <input class="form-control input_file_validar" type="file" name="file_contrato"
-                            accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }} readonly>
+                        <input class="form-control input_file_validar" type="file" name="file_contrato" {{ $show_contrato ? 'disabled' : '' }} readonly>
                         @if ($errors->has('file_contrato'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('file_contrato') }}
@@ -615,7 +614,7 @@
                         </td>
                         <td>
                             <div class="td_fianza">
-                                <input class="form-control" type="file" name="documento" accept=".pdf" readonly>
+                                <input class="form-control" type="file" name="documento"  readonly>
                             </div>
                             <div class="ml-4 display-flex">
                                 <label class="red-text">{{ $errors->first('Type') }}</label>

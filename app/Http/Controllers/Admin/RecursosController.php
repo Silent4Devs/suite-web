@@ -480,7 +480,7 @@ class RecursosController extends Controller
     public function obtenerCapacitacionesPrincipales(Request $request)
     {
         $empleado = User::getCurrentUser()->empleado->id;
-        //Capacitaciones Cards
+        // Capacitaciones Cards
         // $capacitacionesEnCurso = $this->obtenerCapacitacionesEnCursoDelParticipante($empleado);
         // $capacitacionesProximas = $this->obtenerCapacitacionesProximasDelParticipante($empleado);
         // $capacitacionesTerminadas = $this->obtenerCapacitacionesTerminadasDelParticipante($empleado);
@@ -638,7 +638,7 @@ class RecursosController extends Controller
                 'fecha_fin' => $request->fecha_fin,
                 'fecha_limite' => $request->fecha_limite,
             ]);
-            //Enviar correo avisando reprogramacion
+            // Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CapacitacionReprogramadaMail($recurso, $empleado));
             }
@@ -655,7 +655,7 @@ class RecursosController extends Controller
             $recurso->update([
                 'estatus' => 'Cancelado',
             ]);
-            //Enviar correo avisando reprogramacion
+            // Enviar correo avisando reprogramacion
             foreach ($recurso->empleados as $empleado) {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CapacitacionCanceladaMail($recurso, $empleado));
             }

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\ClausulasOc;
 use App\Models\Organizacion;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ClausulaocSeeder extends Seeder
@@ -15,12 +14,12 @@ class ClausulaocSeeder extends Seeder
     public function run(): void
     {
 
-$organizacion = Organizacion::first();
+        $organizacion = Organizacion::first();
 
         $clausula = [
             'organizacion_id' => $organizacion->id,
             'sucursal_id' => null,
-            'descripcion' => "Los términos y condiciones que se establecen a continuación regirán la relación con carácter de contrato comercial de la presente orden de compra (“OC”), entre SILENT4BUSINESS, S.A.
+            'descripcion' => 'Los términos y condiciones que se establecen a continuación regirán la relación con carácter de contrato comercial de la presente orden de compra (“OC”), entre SILENT4BUSINESS, S.A.
                             de C.V(“Cliente”) y la persona física o moral señalada en el anverso y/o anexo a la presente OC (“presentador”) por la prestación de cualquier tipo de servicios y/o entrega de bienes o productos (“los servicios”) de conformidad con las
 
                             <br<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLAUSULAS
@@ -54,7 +53,7 @@ $organizacion = Organizacion::first();
 
                             14.	Para la interpretación y cumplimiento de los términos y condiciones de la OC, las partes se someten a la jurisdicción de los tribunales de la ciudad de México, renunciando expresamente a cualquier otro fuero que pudiera corresponderles por razón de sus domicilios presentes o futuros.
 
-                            15.	Temas relacionados con pagos facturas y de temas de OC al correo de recepción.factura@silent4business.com",
+                            15.	Temas relacionados con pagos facturas y de temas de OC al correo de recepción.factura@silent4business.com',
         ];
 
         ClausulasOc::insert($clausula);

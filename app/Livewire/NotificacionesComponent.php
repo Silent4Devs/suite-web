@@ -75,7 +75,7 @@ class NotificacionesComponent extends Component
         $this->view = 'no-leidas';
         $this->resetPage();
 
-        //$this->getUnreadNotifications();
+        // $this->getUnreadNotifications();
         return response()->noContent();
     }
 
@@ -84,7 +84,7 @@ class NotificacionesComponent extends Component
         $this->view = 'leidas';
         $this->resetPage();
 
-        //$this->getReadedNotifications();
+        // $this->getReadedNotifications();
         return response()->noContent();
     }
 

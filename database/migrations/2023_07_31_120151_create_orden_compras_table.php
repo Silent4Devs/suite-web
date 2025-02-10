@@ -30,22 +30,22 @@ return new class extends Migration
             $table->string('atencion')->nullable();
             $table->string('comentario')->nullable();
 
-            //foreign
+            // foreign
             $table->unsignedBigInteger('centro_costos_id')->nullable();
             $table->foreign('centro_costos_id')->references('id')->on('contratos');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('requisiciones_id')->nullable();
             $table->foreign('requisiciones_id')->references('id')->on('requisiciones');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('proveedor_id')->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('comprador_id')->nullable();
             $table->foreign('comprador_id')->references('id')->on('compradores');
-            //foreign
+            // foreign
             $table->unsignedBigInteger('sucursal_id')->nullable();
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->timestamps();

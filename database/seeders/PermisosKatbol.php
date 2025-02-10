@@ -16,7 +16,7 @@ class PermisosKatbol extends Seeder
     {
         //
         $permissions = [
-            //Acceso a Katbol
+            // Acceso a Katbol
             [
                 'title' => 'sistema_gestion_contratos_acceder',
                 'name' => 'Permite Acceder al Sistema de Gestion de Contratos',
@@ -25,7 +25,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'administracion_sistema_gestion_contratos_acceder',
                 'name' => 'Permite Acceder a la Administracion del Sistema de Gestion de Contratos',
             ],
-            //Contratos
+            // Contratos
             [
                 'title' => 'katbol_contratos_acceso',
                 'name' => 'Permite Acceder al modulo Contratos',
@@ -42,7 +42,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_contratos_eliminar',
                 'name' => 'Permite Eliminar registros del Modulo Contratos',
             ],
-            //Requisiciones
+            // Requisiciones
             [
                 'title' => 'katbol_requisiciones_acceso',
                 'name' => 'Permite Acceder al Modulo Requisiciones',
@@ -63,7 +63,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_requisiciones_imprimir',
                 'name' => 'Permite Imprimir registros del Modulo Requisiciones',
             ],
-            //Proveedores
+            // Proveedores
             [
                 'title' => 'katbol_proveedores_acceso',
                 'name' => 'Permite Acceder al Modulo Proveedores',
@@ -80,7 +80,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_proveedores_eliminar',
                 'name' => 'Permite Eliminar registros del Modulo Proveedores',
             ],
-            //Ordenes Compra
+            // Ordenes Compra
             [
                 'title' => 'katbol_ordenes_compra_acceso',
                 'name' => 'Permite Acceder al Modulo Ordenes de Compra',
@@ -89,7 +89,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_ordenes_compra_modificar',
                 'name' => 'Permite Modificar registros del Modulo Proveedores',
             ],
-            //Proveedores Ordenes de Compra
+            // Proveedores Ordenes de Compra
             [
                 'title' => 'katbol_proveedores_ordenes_compra_acceso',
                 'name' => 'Permite Acceder al Modulo Proveedores Ordenes de Compra',
@@ -106,7 +106,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_proveedores_ordenes_compra_archivar',
                 'name' => 'Permite Archivar registros de Ordenes de Compra del Modulo Proveedores Ordenes de Compra',
             ],
-            //Productos
+            // Productos
             [
                 'title' => 'katbol_producto_acceso',
                 'name' => 'Permite Acceder al modulo Producto',
@@ -123,7 +123,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_producto_archivar',
                 'name' => 'Permite Archivar registros del Modulo Producto',
             ],
-            //Compradores
+            // Compradores
             [
                 'title' => 'katbol_compradores_acceso',
                 'name' => 'Permite Acceder al modulo Compradores',
@@ -140,7 +140,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_compradores_archivar',
                 'name' => 'Permite Archivar registros del Modulo Compradores',
             ],
-            //Centro Costos
+            // Centro Costos
             [
                 'title' => 'katbol_centro_costos_acceso',
                 'name' => 'Permite Acceder al modulo Centro de Costos',
@@ -157,7 +157,7 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_centro_costos_archivar',
                 'name' => 'Permite Archivar registros del Modulo Centro de Costos',
             ],
-            //Sucursales
+            // Sucursales
             [
                 'title' => 'katbol_sucursales_acceso',
                 'name' => 'Permite Acceder al modulo Sucursales',
@@ -174,12 +174,12 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_sucursales_archivar',
                 'name' => 'Permite Archivar registros del Modulo Sucursales',
             ],
-            //Reportes Requisicion
+            // Reportes Requisicion
             [
                 'title' => 'katbol_reportes_requisicion_acceso',
                 'name' => 'Permite Acceder al modulo Reportes Requisicion',
             ],
-            //Dashboard Contratos
+            // Dashboard Contratos
             [
                 'title' => 'dashboard_gestion_contratos_acceder',
                 'name' => 'Permite acceder el dashboard de gestion de contratos',

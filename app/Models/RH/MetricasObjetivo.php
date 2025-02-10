@@ -23,7 +23,7 @@ class MetricasObjetivo extends Model implements Auditable
         'valor_maximo',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('MetricasObjetivos_all', 3600 * 24, function () {

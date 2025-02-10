@@ -58,12 +58,12 @@ class AmpliacionComponent extends Component
             'importe.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
         ]);
 
-        //Contrato
+        // Contrato
         $contrato = Contrato::find($this->contrato_id);
         $monto_pago = $contrato->monto_pago;
         $contrato_ampliado = AmpliacionContrato::where('contrato_id', '=', $this->contrato_id)->get();
         if ($contrato->contrato_ampliado) {
-            //Ampliación
+            // Ampliación
             if (count($contrato_ampliado) == 0) {
                 $importe_decimal = preg_replace('([$,])', '', $this->importe);
 
@@ -127,12 +127,12 @@ class AmpliacionComponent extends Component
             'importe.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
         ]);
 
-        //Contrato
+        // Contrato
         $contrato = Contrato::find($this->contrato_id);
         $monto_pago = $contrato->monto_pago;
         $contrato_ampliado = AmpliacionContrato::find($this->ampliacion_id);
         if ($contrato->contrato_ampliado) {
-            //Ampliación
+            // Ampliación
             $importe_decimal = preg_replace('([$,])', '', $this->importe);
 
             $monto_pago_ampliado = $monto_pago + $importe_decimal;

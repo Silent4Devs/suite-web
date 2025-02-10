@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->string('rfc')->nullable();
             $table->string('mylogo')->nullable();
-            //foreign
+            // foreign
             $table->unsignedBigInteger('centro_costos_id')->nullable();
             $table->foreign('centro_costos_id')->references('id')->on('contratos');
             $table->timestamps();

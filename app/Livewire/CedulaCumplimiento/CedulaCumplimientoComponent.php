@@ -163,7 +163,7 @@ class CedulaCumplimientoComponent extends Component
             'autorizo' => $this->autorizo,
             'cumple' => $this->cumple_cedula,
         ]);
-        //$this->dispatch('renderHistorico');
+        // $this->dispatch('renderHistorico');
         $this->default();
         $this->alert('success', 'Registro actualizado!');
         $this->dispatch('cedulaEventChanged');

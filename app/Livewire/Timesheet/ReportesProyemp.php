@@ -74,7 +74,7 @@ class ReportesProyemp extends Component
 
     public function refreshComponent()
     {
-        //$this->areas = Area::getIdNameAll();
+        // $this->areas = Area::getIdNameAll();
         $this->emp = Empleado::getIdNameAll();
         $this->proy = TimesheetProyecto::getIdNameAll();
     }
@@ -107,8 +107,8 @@ class ReportesProyemp extends Component
             ->select(
                 'timesheet.*',
                 'timesheet.fecha_dia',
-                //'empleados.name as empleado_name',
-                //'aprobadores.name as supervisor_name',
+                // 'empleados.name as empleado_name',
+                // 'aprobadores.name as supervisor_name',
                 'timesheet_proyectos.proyecto',
                 'timesheet_tareas.tarea',
                 'timesheet_horas.*',

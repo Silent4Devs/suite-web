@@ -34,9 +34,9 @@ class Recurso extends Model implements Auditable, HasMedia
     ];
 
     const ESTATUS = [
-        'Borrador', //Borrador
-        'Enviado', //Enviado (cuando se envia en este momento las invitaciones)
-        'Programado', //Programado (cuando se programa el envio de invitaciones)
+        'Borrador', // Borrador
+        'Enviado', // Enviado (cuando se envia en este momento las invitaciones)
+        'Programado', // Programado (cuando se programa el envio de invitaciones)
         // 'Re-Programado', //Re Programado (cuando se re programa)
         'Cancelado', // Cuando se cancela
     ];
@@ -95,7 +95,7 @@ class Recurso extends Model implements Auditable, HasMedia
         'deleted_at',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('recursos_all', 3600 * 24, function () {

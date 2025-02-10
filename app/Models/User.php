@@ -64,7 +64,7 @@ class User extends Authenticatable implements Auditable
         'empleado_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Users:users_exists', 3600 * 12, function () {
@@ -75,6 +75,7 @@ class User extends Authenticatable implements Auditable
     public function passwordExpired()
     {
         $diasExpiracion = 182; // Cambia esto según tus necesidades
+
         return $this->password_changed_at === null ||
             Carbon::parse($this->password_changed_at)->addDays($diasExpiracion)->isPast();
     }
@@ -124,7 +125,7 @@ class User extends Authenticatable implements Auditable
         }
     }
 
-    //Funcion para capacitaciones devuelve pocos datos
+    // Funcion para capacitaciones devuelve pocos datos
     public function profesor()
     {
         if ($this->empleado_id != null) {
@@ -134,7 +135,7 @@ class User extends Authenticatable implements Auditable
         }
     }
 
-    //empleadoId attribute
+    // empleadoId attribute
     public function getEmpleadoIdAttribute($value)
     {
         return $value ? $value : null;
@@ -254,7 +255,7 @@ class User extends Authenticatable implements Auditable
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
-    //# Get empleado_id
+    // # Get empleado_id
     public function getEmpleadoId()
     {
         return $this->empleado_id;

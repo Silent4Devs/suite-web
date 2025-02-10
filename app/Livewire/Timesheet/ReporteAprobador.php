@@ -168,7 +168,7 @@ class ReporteAprobador extends Component
             $empleados_list = $empleados->find($equipo_a_cargo);
             $this->empleados_list_global = $empleados->find($equipo_a_cargo);
         }
-        //calendario tabla
+        // calendario tabla
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::getFechaRegistroTimesheet();
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);

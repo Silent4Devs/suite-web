@@ -24,7 +24,7 @@ class Goal extends Model implements Auditable
         'course_id',
     ];
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
     public function course()
     {
         return $this->belongsTo('App\Models\Course');
