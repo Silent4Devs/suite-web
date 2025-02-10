@@ -95,6 +95,11 @@ class FormularioEditarContratosLivewire extends Component
     public $maximo = 0;
     public $minimo = 0;
 
+    public $firma;
+    public $aprobacionFirmaContrato;
+    public $firmar;
+    public $firmado;
+
     // Reglas de validación
     protected $rules = [
         // 'no_contrato' => ['required', new NumeroContrato],
@@ -198,6 +203,24 @@ class FormularioEditarContratosLivewire extends Component
             'MXN',
             'USD',
         ];
+
+        // firmas aprobadores
+        $this->firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
+
+        $this->aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $this->contrato->id)->get();
+        $this->firmar = false;
+        $this->firmado = false;
+        foreach ($this->aprobacionFirmaContrato as $firma_item) {
+            if ($firma_item->aprobador_id == User::getCurrentUser()->empleado->id) {
+                if (! isset($firma_item->firma)) {
+                    $this->firmar = true;
+                }
+            }
+            if ($firma_item->firma) {
+                $this->firmado = true;
+            }
+        }
+        $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $this->contrato->id)->orderBy('id', 'DESC')->first();
     }
 
     // Función para actualizar el contrato
@@ -205,8 +228,11 @@ class FormularioEditarContratosLivewire extends Component
     {
 
         try {
-            // Validar los datos del formulario
-            // $this->validate();
+            // Validar los campos
+            if (!$this->validarCampos()) {
+                return;
+            }
+
             // Limpiar valores monetarios
             $monto_pago = str_replace(['$', ','], '', $this->monto_pago);
             $minimo = str_replace(['$', ','], '', $this->minimo);
@@ -245,11 +271,16 @@ class FormularioEditarContratosLivewire extends Component
                 'folio' => $this->folio,
             ]);
 
-            // $convergencia = ConvergenciaContratos::create([
-            //     'timesheet_proyecto_id' => $proyecto->id,
-            //     'timesheet_cliente_id' => $request->proveedor_id,
-            //     'contrato_id' => $contrato->id,
-            // ]);
+            $proyecto = TimesheetProyecto::select('id', 'identificador')->where('identificador', $this->no_proyecto)->first();
+
+            $convergencia = ConvergenciaContratos::where('contrato_id', $contrato->id)->first();
+
+            if (isset($convergencia)) {
+                $convergencia->update([
+                    'timesheet_proyecto_id' => $proyecto->id,
+                    'timesheet_cliente_id' => $this->proveedor_id,
+                ]);
+            }
 
             // Actualizar los datos en dólares
             DolaresContrato::updateOrCreate(
@@ -288,6 +319,7 @@ class FormularioEditarContratosLivewire extends Component
             ]);
         } catch (\Throwable $th) {
             //throw $th;
+            dd($th);
             $this->alert('error', 'Error al actualizar contrato', [
                 'position' => 'center',
                 'timer' => 5000,
@@ -410,4 +442,145 @@ class FormularioEditarContratosLivewire extends Component
     {
         return view('livewire.formulario-editar-contratos-livewire');
     }
+
+    // Función para validar los campos
+    public function validarCampos()
+    {
+        $errores = [];
+
+        // Validación de campos
+        if (empty($this->no_contrato)) {
+            $errores[] = 'El campo Número de Contrato es obligatorio.';
+        }else{
+            $id_contrato = $this->contrato->id;
+            $no_contrato = $this->no_contrato;
+            $pertenece_no_contrato_editable = Contrato::where('id', '=', $id_contrato)->where('no_contrato', '=', $no_contrato)->exists();
+            $existe_numero_contrato = Contrato::where('no_contrato', '=', $no_contrato)->exists();
+            if (!$pertenece_no_contrato_editable) {
+                if ($existe_numero_contrato) {
+                    $errores[] = 'El campo Número de Proyecto ya existe en otro proyecto.';
+                }
+            }
+        }
+
+        // Validación de campos
+        if (empty($this->no_proyecto)) {
+            $errores[] = 'El campo Número de Proyecto es obligatorio.';
+        }
+
+        if (empty($this->nombre_servicio) || strlen($this->nombre_servicio) > 500) {
+            $errores[] = 'El campo Nombre del Servicio es obligatorio y debe tener máximo 500 caracteres.';
+        }
+
+        if (empty($this->tipo_contrato)) {
+            $errores[] = 'El campo Tipo de Contrato es obligatorio.';
+        }
+
+        if (empty($this->proveedor_id)) {
+            $errores[] = 'El campo Proveedor es obligatorio.';
+        }
+
+        if (empty($this->objetivo) || strlen($this->objetivo) > 500) {
+            $errores[] = 'El campo Objetivo es obligatorio y debe tener máximo 500 caracteres.';
+        }
+
+        if (empty($this->estatus) || strlen($this->estatus) > 255) {
+            $errores[] = 'El campo Estatus es obligatorio y debe tener máximo 255 caracteres.';
+        }
+
+        if (strlen($this->cargo_administrador) > 250) {
+            $errores[] = 'El campo Cargo del Administrador debe tener máximo 250 caracteres.';
+        }
+
+        if (strlen($this->area_administrador) > 250) {
+            $errores[] = 'El campo Área del Administrador debe tener máximo 250 caracteres.';
+        }
+
+        if (strlen($this->puesto) > 250) {
+            $errores[] = 'El campo Puesto debe tener máximo 250 caracteres.';
+        }
+
+        if (strlen($this->area) > 250) {
+            $errores[] = 'El campo Área debe tener máximo 250 caracteres.';
+        }
+
+        if (empty($this->fase)) {
+            $errores[] = 'El campo Fase es obligatorio.';
+        }
+
+        if (empty($this->vigencia_contrato) || strlen($this->vigencia_contrato) > 255) {
+            $errores[] = 'El campo Vigencia del Contrato es obligatorio y debe tener máximo 255 caracteres.';
+        }
+
+        if (empty($this->fecha_inicio)) {
+            $errores[] = 'El campo Fecha de Inicio es obligatorio.';
+        }
+
+        if (empty($this->fecha_fin) || $this->fecha_fin <= $this->fecha_inicio) {
+            $errores[] = 'El campo Fecha de Fin es obligatorio y debe ser posterior a la Fecha de Inicio.';
+        }
+
+        if (empty($this->area_id)) {
+            $errores[] = 'El campo Área es obligatorio.';
+        }
+
+        if (empty($this->fecha_firma) || $this->fecha_firma > $this->fecha_fin) {
+            $errores[] = 'El campo Fecha de Firma es obligatorio y debe ser anterior o igual a la Fecha de Fin.';
+        }
+
+        if (empty($this->no_pagos) || !is_numeric($this->no_pagos) || $this->no_pagos > 500000) {
+            $errores[] = 'El campo Número de Pagos es obligatorio, debe ser numérico y menor o igual a 500,000.';
+        }
+
+        if (empty($this->tipo_cambio)) {
+            $errores[] = 'El campo Tipo de Cambio es obligatorio.';
+        }
+
+        if (empty($this->monto_pago) || !is_numeric($this->monto_pago) || $this->monto_pago < 0 || $this->monto_pago > 99999999999.99) {
+            $errores[] = 'El campo Monto de Pago es obligatorio, debe ser numérico y estar entre 0 y 99,999,999,999.99.';
+        }
+
+        if (!empty($this->minimo) && (!is_numeric($this->minimo) || $this->minimo > 99999999999.99)) {
+            $errores[] = 'El campo Mínimo debe ser numérico y menor o igual a 99,999,999,999.99.';
+        }
+
+        if (!empty($this->maximo) && (!is_numeric($this->maximo) || $this->maximo > 99999999999.99)) {
+            $errores[] = 'El campo Máximo debe ser numérico y menor o igual a 99,999,999,999.99.';
+        }
+
+        if (!empty($this->monto_dolares) && (!is_numeric($this->monto_dolares) || $this->monto_dolares > 99999999999.99)) {
+            $errores[] = 'El campo Monto en Dólares debe ser numérico y menor o igual a 99,999,999,999.99.';
+        }
+
+        if (!empty($this->maximo_dolares) && (!is_numeric($this->maximo_dolares) || $this->maximo_dolares > 99999999999.99)) {
+            $errores[] = 'El campo Máximo en Dólares debe ser numérico y menor o igual a 99,999,999,999.99.';
+        }
+
+        if (!empty($this->minimo_dolares) && (!is_numeric($this->minimo_dolares) || $this->minimo_dolares > 99999999999.99)) {
+            $errores[] = 'El campo Mínimo en Dólares debe ser numérico y menor o igual a 99,999,999,999.99.';
+        }
+
+        if (empty($this->pmp_asignado) || strlen($this->pmp_asignado) > 250) {
+            $errores[] = 'El campo Nombre del Supervisor 1 es obligatorio y debe tener máximo 250 caracteres.';
+        }
+
+        if (strlen($this->administrador_contrato) > 250) {
+            $errores[] = 'El campo Nombre del Supervisor 2 debe tener máximo 250 caracteres.';
+        }
+
+        if (strlen($this->folio) > 250) {
+            $errores[] = 'El campo Folio debe tener máximo 250 caracteres.';
+        }
+
+        // Mostrar errores si existen
+        if (!empty($errores)) {
+            foreach ($errores as $error) {
+                $this->alert('error', $error);
+            }
+            return false;
+        }
+
+        return true;
+    }
+
 }

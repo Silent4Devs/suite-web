@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            {{-- @if (!$show_contrato)
+            @if (!$show_contrato)
                 <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
                     @if (!$firmado)
                         <div class="col-12">
@@ -49,7 +49,7 @@
                         </div>
                     @endif
                 </div>
-            @endif --}}
+            @endif
 
             <div class="row mt-4" style="margin-left: 10px; margin-right: 10px;">
                 <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
