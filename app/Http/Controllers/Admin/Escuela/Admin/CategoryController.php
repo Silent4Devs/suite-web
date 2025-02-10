@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
         $category = Category::create($request->all());
 
-        //Alert::toast('La categoría se creó con éxito', 'success');
+        // Alert::toast('La categoría se creó con éxito', 'success');
         return redirect()->route('admin.categories.index', $category);
     }
 
@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        //Alert::toast('La categoría se editó con éxito', 'success');
+        // Alert::toast('La categoría se editó con éxito', 'success');
         return redirect()->route('admin.categories.index', $category);
     }
 
@@ -136,7 +136,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id)->delete();
 
-        //Alert::toast('La categoría fue eliminada exitosamente', 'success');
+        // Alert::toast('La categoría fue eliminada exitosamente', 'success');
         return redirect()->route('admin.categories.index');
     }
 }

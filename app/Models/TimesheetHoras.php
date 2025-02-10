@@ -35,7 +35,7 @@ class TimesheetHoras extends Model implements Auditable
         'empleado_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TimesheetHoras:timesheet_horas_all', 3600 * 2, function () {

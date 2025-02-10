@@ -17,7 +17,7 @@ class PorcentajeDecApl2022
             'porcentaje' => $porcentaje,
             'faltante' => $faltante,
         ];
-    }//termina func
+    }// termina func
 
     public function GAPTotal($porcentajeGap1, $porcentajeGap2, $porcentajeGap3)
     {

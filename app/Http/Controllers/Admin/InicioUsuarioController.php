@@ -241,7 +241,7 @@ class InicioUsuarioController extends Controller
 
             $contador_revisiones = $revisiones->where('estatus', Documento::SOLICITUD_REVISION)->count();
             $mis_documentos = Documento::getWithMacroproceso($empleado->id);
-            //Evaluaciones
+            // Evaluaciones
             $last_evaluacion = Evaluacion::getAllLatestFirst();
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
@@ -380,7 +380,7 @@ class InicioUsuarioController extends Controller
         $redirigirEvaluacion = false;
 
         try {
-            //Evaluaciones desempeno
+            // Evaluaciones desempeno
             $evDes = EvaluacionDesempeno::where('estatus', 1)->get();
 
             $id_evaluado = null;
@@ -409,14 +409,14 @@ class InicioUsuarioController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
         $mostrarCargaObjetivos = false;
 
         try {
-            //code...
-            //Carga de objetivos propios
+            // code...
+            // Carga de objetivos propios
             $carga_objetivos_activo = PeriodoCargaObjetivos::first();
 
             $permisos = PermisosCargaObjetivos::get();
@@ -438,14 +438,14 @@ class InicioUsuarioController extends Controller
                 $mostrarCargaObjetivos = true;
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
         $mostrarCargaObjetivosArea = false;
 
         try {
-            //code...
-            //Carga de objetivos area
+            // code...
+            // Carga de objetivos area
             $carga_objetivos_activo_area = PeriodoCargaObjetivos::first();
 
             $permisosArea = PermisosCargaObjetivos::get();
@@ -461,7 +461,7 @@ class InicioUsuarioController extends Controller
                 $mostrarCargaObjetivosArea = true;
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
         return view(

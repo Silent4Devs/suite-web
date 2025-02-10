@@ -55,7 +55,7 @@ class CourseUser extends Model implements Auditable
         $results = UserEvaluation::where('user_id', $this->user_id)->where('approved', true)->whereIn('evaluation_id', $ids)->count();
         $i = $i + $results;
 
-        //calcular el porcentaje de la
+        // calcular el porcentaje de la
         $advance = ($i * 100) / ($i_less + $evaluaciones->count());
 
         return round($advance, 2);

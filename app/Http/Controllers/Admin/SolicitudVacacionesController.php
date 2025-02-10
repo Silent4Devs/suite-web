@@ -255,7 +255,7 @@ class SolicitudVacacionesController extends Controller
             'año' => 'required|int',
             'autoriza' => 'required|int',
         ]);
-        //envio de email
+        // envio de email
         $empleados = Empleado::getAll();
 
         $supervisor = $empleados->find($request->autoriza);
@@ -421,12 +421,12 @@ class SolicitudVacacionesController extends Controller
 
     public function filtrado_empleados($efecto, $usuario, $año)
     {
-        //Sacamos los ids del empleado
+        // Sacamos los ids del empleado
         $areaId = $usuario->empleado->area_id;
         $puestoId = $usuario->empleado->puesto_id;
         $idempleado = $usuario->empleado->id;
 
-        //Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
+        // Preparamos los querys que se van a utilizar, buscando si existe coincidencia con el area, puesto o id del empleado
         $queryArea = IncidentesVacaciones::where('efecto', $efecto)->where('aniversario', $año)
             ->whereHas('areas', function ($query) use ($areaId) {
                 $query->where('area_id', $areaId);
@@ -442,7 +442,7 @@ class SolicitudVacacionesController extends Controller
                 $q->where('empleado_id', $idempleado);
             });
 
-        //Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
+        // Se realizan las consultas buscando coincidencias por jerarquia, 1ro area, 2do puesto
         // y 3ro empleado, de no existir ninguna se manda 0
         if (($queryArea->get())->isNotEmpty()) {
             $dias = $queryArea->pluck('dias_aplicados')->sum();
@@ -479,10 +479,10 @@ class SolicitudVacacionesController extends Controller
         if ($año >= 1) {
             $dias_otorgados = Vacaciones::where('inicio_conteo', '=', $año)->pluck('dias')->first();
 
-            //Se llama a la nueva función, con los parametros de efecto(1-suma y/o 2-resta), el usuario y el año)
+            // Se llama a la nueva función, con los parametros de efecto(1-suma y/o 2-resta), el usuario y el año)
             $dias_extra = $this->filtrado_empleados(1, $usuario, $año);
             $dias_restados = $this->filtrado_empleados(2, $usuario, $año);
-            //funcion anterior
+            // funcion anterior
             // $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
             //     $q->where('empleado_id', $usuario->empleado->id);
             // })->pluck('dias_aplicados')->sum();

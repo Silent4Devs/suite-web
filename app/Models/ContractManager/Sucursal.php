@@ -29,7 +29,7 @@ class Sucursal extends Model implements Auditable
 
     public $table = 'sucursales';
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Sucursales:Sucursales_all', 3600 * 6, function () {

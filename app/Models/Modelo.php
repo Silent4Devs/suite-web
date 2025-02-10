@@ -36,7 +36,7 @@ class Modelo extends Model implements Auditable
         'nombre',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Modelos_all', 3600 * 24, function () {

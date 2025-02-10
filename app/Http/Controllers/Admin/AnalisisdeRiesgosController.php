@@ -29,7 +29,7 @@ class AnalisisdeRiesgosController extends Controller
     {
         abort_if(Gate::denies('matriz_de_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            //Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
+            // Esta es el error , activo_id no lo encuentra, hay que modificar la relacion en el modelo de matrizriesgo
             $query = AnalisisDeRiesgo::orderByDesc('id')->get();
             $table = Datatables::of($query);
 
@@ -104,7 +104,7 @@ class AnalisisdeRiesgosController extends Controller
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::getaltaAll();
 
-        //$tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $tipoactivos = Tipoactivo::getAll()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.analisis-riesgos.create', compact('empleados'));
     }
@@ -203,7 +203,7 @@ class AnalisisdeRiesgosController extends Controller
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
     }
 
-    //new design
+    // new design
     public function inicioRiesgos()
     {
         return view('admin.analisis-riesgos.inicio-riesgos');

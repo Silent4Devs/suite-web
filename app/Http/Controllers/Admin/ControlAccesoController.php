@@ -84,7 +84,7 @@ class ControlAccesoController extends Controller
     public function store(StoreControlAccesoRequest $request)
     {
         abort_if(Gate::denies('control_de_accesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //dd($request->all());
+        // dd($request->all());
         $controlAcceso = ControlAcceso::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');

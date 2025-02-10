@@ -58,7 +58,7 @@ class ComunicacionSgi extends Model implements Auditable, HasMedia
         'fecha_programable_fin',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAllwithImagenes()
     {
         return Cache::remember('ComunicacionSGI:get_all_with_imagenes', 3600 * 8, function () {

@@ -81,7 +81,7 @@ class EnviarCorreoFelicitaciones extends Command
                         'enviado' => true,
                     ]);
                 } else {
-                    //No hace nada
+                    // No hace nada
                 }
             }
         }

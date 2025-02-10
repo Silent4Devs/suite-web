@@ -23,6 +23,7 @@ use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContractManager\ContratosController;
 use App\Http\Controllers\ContractManager\OrdenCompraController;
 use App\Http\Controllers\ExportExcelReport;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\QueueCorreo;
 use App\Http\Controllers\SubidaExcel;
 use App\Http\Controllers\UsuarioBloqueado;
@@ -41,6 +42,14 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
 Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
 Auth::routes();
+
+Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
+    ->name('password.expired')
+    ->middleware('auth');
+
+Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+    ->name('password.update')
+    ->middleware('auth');
 
 // Tabla-Calendario
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -1108,7 +1117,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('selectIndicador', 'ProcesoController@AjaxRequestIndicador')->name('selectIndicador');
         Route::post('selectRiesgos', 'ProcesoController@AjaxRequestRiesgos')->name('selectRiesgos');
 
-        //macroprocesos
+        // macroprocesos
         Route::resource('macroprocesos', 'MacroprocesoController');
 
         //Competencia Tipo
@@ -1240,7 +1249,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('auditoria-reportes/cards', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 
-        //Clasificacion Auditorias
+        // Clasificacion Auditorias
         Route::get('auditorias/clasificacion-auditorias', 'ClasificacionesAuditoriasController@index')->name('auditoria-clasificacion');
         Route::get('auditorias/clasificacion-auditorias/create', 'ClasificacionesAuditoriasController@create')->name('auditoria-clasificacion.create');
         Route::post('auditorias/clasificacion-auditorias/store', 'ClasificacionesAuditoriasController@store')->name('auditoria-clasificacion.store');
@@ -1249,7 +1258,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('auditorias/clasificacion-auditorias/delete/{id}', 'ClasificacionesAuditoriasController@destroy')->name('auditoria-clasificacion.destroy');
         Route::get('auditorias/clasificacion-auditorias/datatable', 'ClasificacionesAuditoriasController@datatable')->name('auditoria-clasificacion.datatable');
 
-        //Clausulas Auditorias
+        // Clausulas Auditorias
         Route::get('auditorias/clausulas-auditorias', 'ClausulasAuditoriasController@index')->name('auditoria-clausula');
         Route::get('auditorias/clausulas-auditorias/create', 'ClausulasAuditoriasController@create')->name('auditoria-clausula.create');
         Route::post('auditorias/clausulas-auditorias/store', 'ClausulasAuditoriasController@store')->name('auditoria-clausula.store');
@@ -1781,9 +1790,9 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
     Route::view('sitemap', 'admin.sitemap.index');
     // Route::view('stepper', 'stepper');
-    //Route::view('admin/gantt', 'admin.gantt.grap');
+    // Route::view('admin/gantt', 'admin.gantt.grap');
 
-    //URL::forceScheme('https');
+    // URL::forceScheme('https');
 
     Route::view('post_register', 'auth.post_register');
 });

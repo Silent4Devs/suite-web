@@ -151,7 +151,7 @@ class GenerarPdfComponent extends Component
         $documentProtection = $phpWord->getSettings()->getDocumentProtection();
         $documentProtection->setEditing(DocProtect::READ_ONLY);
         $documentProtection->setPassword(self::PASSWORD_WORD);
-        //$phpWord->getSettings()->setUpdateFields(true);
+        // $phpWord->getSettings()->setUpdateFields(true);
         $propiedades = $phpWord->getDocInfo();
         $propiedades->setCreator($organizacion->empresa);
         $propiedades->setTitle('Estudio de Contexto');
@@ -185,7 +185,7 @@ class GenerarPdfComponent extends Component
         $cellRowContinue = ['vMerge' => 'continue'];
 
         $section = $phpWord->addSection();
-        //$section->getStyle()->setPageNumberingStart(1);
+        // $section->getStyle()->setPageNumberingStart(1);
         $header = $section->addHeader();
         $tableStyle = [
             'borderColor' => '000000',
@@ -233,7 +233,7 @@ class GenerarPdfComponent extends Component
         $texto_introduccion = $organizacion->empresa.' determinará a través de este documento las cuestiones externas e internas que son pertinentes para su propósito y que afectan su capacidad para lograr los resultados previstos de su Sistema de Gestión de Seguridad de la Información (SGSI) para entender su contexto en las dos perspectivas mencionadas.';
         $section->addText($texto_introduccion, null, $texto_justificado);
 
-        //OBJETIVO
+        // OBJETIVO
         $section->addTextBreak(1);
         $section->addTitle('Objetivo', 1);
         $texto_objetivo = 'Establecer en'.$organizacion->empresa.' el contexto del SGSI en cumplimiento de los requisitos de la norma ISO 27001 recogidos en la cláusula 4 de la Norma.';
@@ -383,7 +383,7 @@ class GenerarPdfComponent extends Component
         $table_foda->addRow();
         $table_foda->addCell(1000, $secundario_tabla)->addText('ORIGEN INTERNO');
         $fortalezas = $table_foda->addCell(7000);
-        Html::addHtml($fortalezas, preg_replace("/\t/", '', preg_replace("/\r|\n/", '', $foda->fortalezas))); //Se eliminan tabs,return,nueva linea de los tag html
+        Html::addHtml($fortalezas, preg_replace("/\t/", '', preg_replace("/\r|\n/", '', $foda->fortalezas))); // Se eliminan tabs,return,nueva linea de los tag html
         $debilidades = $table_foda->addCell(7000);
         Html::addHtml($debilidades, preg_replace("/\t/", '', preg_replace("/\r|\n/", '', $foda->debilidades)));
         $table_foda->addRow();

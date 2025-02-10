@@ -28,7 +28,7 @@ class ImplementacionController extends Controller
         $responsable = $users;
         $responsablenom = $users->where('id', '=', '3');
 
-        //dd($planbase, $responsable, $responsablenom);
+        // dd($planbase, $responsable, $responsablenom);
         return view('admin.implementacions.index', compact('planbase', 'responsable', 'fases', 'archivos_gantt', 'path_asset', 'gant_readed'))
             ->with('planbases', $planbase);
     }

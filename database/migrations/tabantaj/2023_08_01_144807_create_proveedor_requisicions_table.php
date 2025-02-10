@@ -30,7 +30,7 @@ return new class extends Migration
             //foreign
             $table->integer('requisiciones_id')->nullable();
             // $table->foreign('requisiciones_id')->references('id')->on('requisiciones')->onUpdate('cascade')->onDelete('cascade');
-            //foreign
+            // foreign
             $table->timestamps();
             $table->softDeletes();
         });

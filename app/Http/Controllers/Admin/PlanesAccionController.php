@@ -319,8 +319,8 @@ class PlanesAccionController extends Controller
 
     public function loadProject($plan)
     {
-        //$implementacion = PlanImplementacion::find($plan);
-        //$users = DB::table('users')->select('name', 'email as user_email')->get();
+        // $implementacion = PlanImplementacion::find($plan);
+        // $users = DB::table('users')->select('name', 'email as user_email')->get();
         $implementacion = DB::table('plan_implementacions')
             ->select('*')
             ->where('id', $plan)

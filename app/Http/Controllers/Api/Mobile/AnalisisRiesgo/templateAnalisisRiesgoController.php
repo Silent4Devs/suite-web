@@ -159,7 +159,7 @@ class templateAnalisisRiesgoController extends Controller
             }
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
     }
@@ -304,7 +304,7 @@ class templateAnalisisRiesgoController extends Controller
                     $this->filterSaveDataQuestion($question, $questionCreate);
                     DB::commit();
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     DB::rollback();
 
                     continue;
@@ -420,7 +420,7 @@ class templateAnalisisRiesgoController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
     }
@@ -439,7 +439,7 @@ class templateAnalisisRiesgoController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
     }
@@ -460,7 +460,7 @@ class templateAnalisisRiesgoController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
     }
@@ -479,7 +479,7 @@ class templateAnalisisRiesgoController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
     }
@@ -503,7 +503,7 @@ class templateAnalisisRiesgoController extends Controller
 
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
 
                 continue;
@@ -527,7 +527,7 @@ class templateAnalisisRiesgoController extends Controller
                     ]);
                     DB::commit();
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     DB::rollback();
 
                     continue;
@@ -576,7 +576,7 @@ class templateAnalisisRiesgoController extends Controller
 
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 // dd($th);
                 DB::rollback();
 
@@ -602,7 +602,7 @@ class templateAnalisisRiesgoController extends Controller
 
                     DB::commit();
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     DB::rollback();
 
                     continue;
@@ -622,7 +622,7 @@ class templateAnalisisRiesgoController extends Controller
 
                     DB::commit();
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     DB::rollback();
 
                     continue;
@@ -646,7 +646,7 @@ class templateAnalisisRiesgoController extends Controller
             ]);
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollback();
         }
 
@@ -677,7 +677,7 @@ class templateAnalisisRiesgoController extends Controller
 
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
             }
         }
@@ -1054,8 +1054,7 @@ class templateAnalisisRiesgoController extends Controller
 
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
-                dd($th);
+                // throw $th;
                 DB::rollback();
 
                 continue;
@@ -1073,7 +1072,7 @@ class templateAnalisisRiesgoController extends Controller
 
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
 
                 continue;

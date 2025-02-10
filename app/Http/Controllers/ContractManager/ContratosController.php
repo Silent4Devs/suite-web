@@ -146,9 +146,9 @@ class ContratosController extends AppBaseController
             'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
             'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
             'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
-            'sede_id' => 'nullable|integer|exists:sedes,id', //required_if:creacion_proyecto,true|
-            'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
-            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
+            'sede_id' => 'nullable|integer|exists:sedes,id', // required_if:creacion_proyecto,true|
+            'fecha_inicio_proyecto' => 'nullable|date', // required_if:creacion_proyecto,true|
+            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', // required_if:creacion_proyecto,true|
             'horas_proyecto' => 'nullable|integer|min:0',
             'razon_soc_id' => 'required|integer',
         ], [
@@ -302,7 +302,7 @@ class ContratosController extends AppBaseController
             'valor_dolar' => $resultado8,
         ]);
 
-        //########## SE CREAN DIRECTORIOS VACÍOS ###################
+        // ########## SE CREAN DIRECTORIOS VACÍOS ###################
 
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio')) {
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
@@ -322,7 +322,7 @@ class ContratosController extends AppBaseController
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml');
         }
 
-        //############# GESTIÓN ARCHIVOS ##################
+        // ############# GESTIÓN ARCHIVOS ##################
 
         $file = $request->file('documento');
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
@@ -383,7 +383,7 @@ class ContratosController extends AppBaseController
             'file_contrato' => $nombre_f,
         ]);
 
-        //############# FIN REESTRUCTURACION DE ARCHIVOS ##################
+        // ############# FIN REESTRUCTURACION DE ARCHIVOS ##################
 
         // $dataEnt = new EntregablesData();
         // $res = $dataEnt->TraerDatos($contrato->id);
@@ -737,14 +737,14 @@ class ContratosController extends AppBaseController
             $fecha_firma = null;
         }
 
-        //#Cambiar nombre de carpeta
+        // #Cambiar nombre de carpeta
         if ($contrato->no_contrato != $request->no_contrato) {
             if (Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); //rename folder
+                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); // rename folder
             }
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
-        //### RESTRUCTURACION DE CARPETAS UPDATE #############
+        // ### RESTRUCTURACION DE CARPETAS UPDATE #############
 
         $areas = Area::getIdNameAll();
 

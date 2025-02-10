@@ -298,11 +298,11 @@ class DocumentosController extends Controller
             // $nombre_original = $documento->codigo . '-' . $request->nombre . '-v' . $version;
             // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
             $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
-            //Se elimina el archivo anterior
+            // Se elimina el archivo anterior
             if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo)) {
                 Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo]);
             }
-            //Se guarda el nuevo documento
+            // Se guarda el nuevo documento
             $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
         }
 

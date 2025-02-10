@@ -29,7 +29,7 @@ class MultiStepForm extends Component
 {
     use LivewireAlert;
 
-    //TABLA
+    // TABLA
     use WithPagination;
 
     // Properties for all steps
@@ -409,10 +409,10 @@ class MultiStepForm extends Component
             // If both competencias and objetivos are included
             $this->sumaTotalPesoGeneral = intval(((float) $this->pesoGeneralCompetencias ?: 0) + ((float) $this->pesoGeneralObjetivos ?: 0));
             $this->validate(array_merge($commonRules, [
-                //'pesoGeneralCompetencias' => 'required|numeric|min:100|max:100',
+                // 'pesoGeneralCompetencias' => 'required|numeric|min:100|max:100',
                 'pesoGeneralObjetivos' => 'required|numeric',
                 'catalogoObjetivos' => 'required|numeric',
-                //'sumaTotalPesoGeneral' => 'required|numeric|in:100',
+                // 'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
         } elseif ($this->includeCompetencias && ! $this->includeObjetivos) {
             // If only competencias are included
@@ -427,9 +427,9 @@ class MultiStepForm extends Component
             $this->sumaTotalPesoGeneral = $this->pesoGeneralObjetivos;
             $this->pesoGeneralCompetencias = 0;
             $this->validate(array_merge($commonRules, [
-                //'pesoGeneralObjetivos' => 'required|numeric|in:100',
+                // 'pesoGeneralObjetivos' => 'required|numeric|in:100',
                 'catalogoObjetivos' => 'required|numeric',
-                //'sumaTotalPesoGeneral' => 'required|numeric|in:100',
+                // 'sumaTotalPesoGeneral' => 'required|numeric|in:100',
             ]));
         } else {
             // If neither competencias nor objetivos are included
@@ -521,7 +521,7 @@ class MultiStepForm extends Component
     {
         $this->validate([
             'periodos' => 'required|array|min:1',
-            //"periodos.*"  => "required|date|distinct|min:2"
+            // "periodos.*"  => "required|date|distinct|min:2"
         ]);
     }
 
@@ -661,7 +661,7 @@ class MultiStepForm extends Component
             }
         }
 
-        //Se asignan los valores que tendra la evaluacion
+        // Se asignan los valores que tendra la evaluacion
         $catalogo = CatalogoRangosObjetivos::with('rangos')->findOrFail($this->catalogoObjetivos);
 
         foreach ($catalogo->rangos as $r) {
@@ -788,7 +788,7 @@ class MultiStepForm extends Component
 
     public function crearCuestionario($evaluacion, $evaluado, $evaluadores, $includeCompetencias, $includeObjetivos)
     {
-        //se modifico el codigo para no generar consultas de mas y hacer cargas batch
+        // se modifico el codigo para no generar consultas de mas y hacer cargas batch
         $empleado = Empleado::select(
             'id',
             'name',
